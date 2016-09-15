@@ -7,7 +7,7 @@ use App\Model\BuyDeal;
 
 use Illuminate\Database\Eloquent\Model;
 
-class buy_order extends Model
+class BuyOrder extends Model
 {
     protected $table = 'buy_order';
 
