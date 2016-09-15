@@ -16,7 +16,7 @@ class BuyersTableSeeder extends Seeder
     {
         Buyer::create([
             'id' => '1' ,
-            'trader_id' => '2' ,
+            'user_id' => '2' ,
             'company_name' => 'PT.Wilmar Nabati Indonesia' ,
             'phone' => '(031) 3979414' ,
             'email' => 'info@wilmar-international.com' ,
@@ -32,7 +32,7 @@ class BuyersTableSeeder extends Seeder
 
         Buyer::create([
             'id' => '2' ,
-            'trader_id' => '3' ,
+            'user_id' => '3' ,
             'company_name' => 'Jawa Manis Rafinasi' ,
             'phone' => '(0254) 605520' ,
             'email' => 'info@jawamanis.com' ,
@@ -48,7 +48,7 @@ class BuyersTableSeeder extends Seeder
 
         Buyer::create([
             'id' => '3' ,
-            'trader_id' => '3' ,
+            'user_id' => '3' ,
             'company_name' => 'PT. SMART Dumai' ,
             'phone' => '+622150338899' ,
             'email' => 'investor@smart-tbk.com' ,

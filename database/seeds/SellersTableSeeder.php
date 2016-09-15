@@ -16,7 +16,7 @@ class SellersTableSeeder extends Seeder
     {
         Seller::create([                
             'company_name' => 'PT Kuansing Inti Makmur',            
-            'trader_id' => '2',
+            'user_id' => '2',
             'phone' => '+6276132317',
             'email' => 'info@kuansing.com',
             'web' => 'https://www.kim.com',
@@ -31,7 +31,7 @@ class SellersTableSeeder extends Seeder
 
         Seller::create([                
             'company_name' => 'PT Borneo Indobara',
-            'trader_id' => '3',
+            'user_id' => '3',
             'phone' => '+622131990092',
             'email' => 'info@borneo.com',
             'web' => 'https://www.borneo-indobara.com',
@@ -46,7 +46,7 @@ class SellersTableSeeder extends Seeder
 
         Seller::create([                
             'company_name' => 'PT Golden Energy Mines',        
-            'trader_id' => '3',
+            'user_id' => '3',
             'phone' => '+622150186888',
             'email' => 'info@.com',
             'web' => 'https://www..com',
