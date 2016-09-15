@@ -1,10 +1,8 @@
 'use strict';
 
-angular.module('auth').controller('AuthController', ['$scope', '$auth', '$state', '$urlRouter', 'Authentication',
-  function AuthController($scope, $auth, $state, $urlRouter, Authentication) {
-    // Satellizer configuration that specifies which API
+angular.module('auth').controller('AuthController', ['$scope', '$state', '$urlRouter', 'Authentication',
+  function AuthController($scope, $state, $urlRouter, Authentication) {
     // route the JWT should be retrieved from
-    $auth.loginUrl = '/api/authenticate';  
     $scope.Authentication = Authentication;
 
     $scope.login = function() {
@@ -12,11 +10,8 @@ angular.module('auth').controller('AuthController', ['$scope', '$auth', '$state'
         email: $scope.auth.email,
         password: $scope.auth.password
       }
-      
-      // Use Satellizer's $auth service to login
-      $auth.login(credentials).then(function(data) {
-        // If login is successful, redirect to the users state
-        Authentication.login();
+
+      Authentication.login(credentials, function(){
         $state.go('home', {});
       });
     };
@@ -35,12 +30,8 @@ angular.module('auth').controller('AuthController', ['$scope', '$auth', '$state'
         }
         
         // Use Satellizer's $auth service to login
-        $auth.signup(registration).then(function(data) {
-          $auth.login(credentials).then(function(data) {
-            // If login is successful, redirect to the users state
-            Authentication.login();
-            $state.go('home', {});
-          });
+        Authentication.signup(registration, function(){
+          $state.go('home', {});
         });
       } else {
         alert('Confirm Password did not match!');
@@ -48,7 +39,6 @@ angular.module('auth').controller('AuthController', ['$scope', '$auth', '$state'
     };
 
     $scope.logout = function () {
-      Authentication.user = undefined;
-      $auth.logout();
+      Authentication.logout();
     };
 }]);
