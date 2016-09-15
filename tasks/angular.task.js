@@ -69,6 +69,6 @@ Elixir.extend('angular', function(src, output, outputFilename) {
         icon: __dirname + '/../node_modules/laravel-elixir/icons/laravel.png',
         message: ' '
       }));
-  }).watch(baseDir + '**/*.*.scss');
+  }).watch([baseDir + '*.scss', baseDir + '**/*.scss']);
 
 });

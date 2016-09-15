@@ -13,42 +13,42 @@ angular.module('lead').config(['$stateProvider', '$urlRouterProvider',
       .state('lead.index', {
         url: '',
         templateUrl: '/angular/views/lead/index.view.html',
-        roles: ['user']
+        roles: ['user', 'trader']
   	  })
   	  .state('lead.buyer', {
         url: '/buyer',
         templateUrl: '/angular/views/lead/buyer.view.html',
-        roles: ['user']
+        roles: ['user', 'trader']
       })
       .state('lead.seller', {
         url: '/seller',
         templateUrl: '/angular/views/lead/seller.view.html',
-        roles: ['user']
+        roles: ['user', 'trader']
       })
       .state('lead.vendor', {
         url: '/vendor',
         templateUrl: '/angular/views/lead/vendor.view.html',
-        roles: ['user']
+        roles: ['user', 'trader']
       })
       .state('lead.contact', {
         url: '/contact',
         templateUrl: '/angular/views/lead/contact.view.html',
-        roles: ['user']
+        roles: ['user', 'trader']
       })
   	  .state('lead.view-buyer', {
         url: '/buyer/{id}',
         templateUrl: '/angular/views/lead/view-buyer.view.html',
-        roles: ['user']
+        roles: ['user', 'trader']
       })
       .state('lead.view-seller', {
         url: '/seller/{id}',
         templateUrl: '/angular/views/lead/view-seller.view.html',
-        roles: ['user']
+        roles: ['user', 'trader']
       })
       .state('lead.view-vendor', {
         url: '/vendor/{id}',
         templateUrl: '/angular/views/lead/view-vendor.view.html',
-        roles: ['user']
+        roles: ['user', 'trader']
       })
       .state('lead.view-contact', {
         url: '/contact/{id}',
