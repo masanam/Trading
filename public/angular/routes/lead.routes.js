@@ -12,7 +12,8 @@ angular.module('lead').config(['$stateProvider', '$urlRouterProvider',
       })
       .state('lead.index', {
         url: '',
-        templateUrl: '/angular/views/lead/index.view.html'
+        templateUrl: '/angular/views/lead/index.view.html',
+        roles: ['user']
   	  })
   	  .state('lead.buyer', {
         url: '/buyer',

@@ -45,48 +45,50 @@ angular.module(ApplicationConfiguration.applicationModuleName).config(['$urlRout
 
     // Redirect to the auth state if any other states
     // are requested other than users 
-    $urlRouterProvider.otherwise('/auth/signin');
+    // $urlRouterProvider.otherwise('/auth/signin');
   }
 ]);
 
-angular.module(ApplicationConfiguration.applicationModuleName).run(function ($rootScope, $state, $uibModalStack) {
+//initialize application authentication & authorization before starting
+angular.module(ApplicationConfiguration.applicationModuleName).run(function ($rootScope, $state, $http, $uibModalStack, Authentication) {
+  //Load authorization event listener once all authentication done 
+  Authentication.authenticate(function(user){
+    // Always check authentication before changing state
+    $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+      if (toState.roles && toState.roles.length > 0) {
+        var allowed = false;
 
-  // Check authentication before changing state
-  // $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
-  //   if (toState.data && toState.data.roles && toState.data.roles.length > 0) {
-  //     var allowed = false;
-  //     toState.data.roles.forEach(function (role) {
-  //       if (Authentication.user.roles !== undefined && Authentication.user.roles.indexOf(role) !== -1) {
-  //         allowed = true;
-  //         return true;
-  //       }
-  //     });
+        toState.roles.forEach(function (role) {
+          if (role === 'guest' || (Authentication.user !== undefined && Authentication.user.role === role)){
+            allowed = true;
+            return true;
+          }
+        });
 
-  //     if (!allowed) {
-  //       event.preventDefault();
-  //       if (Authentication.user !== undefined && typeof Authentication.user === 'object') {
-  //         $state.go('forbidden');
-  //       } else {
-  //         $state.go('home').then(function () {
-  //           storePreviousState(toState, toParams);
-  //         });
-  //       }
-  //     }
-  //   }
-  // });
-  
-  // $rootScope.dialogFullScreen = $mdMedia('sm') || $mdMedia('xs');
+        if (!allowed) {
+          event.preventDefault();
+          if (Authentication.user !== undefined && typeof Authentication.user === 'object') {
+            $state.go('forbidden');
+          } else {
+            $state.go('auth.signin').then(function () {
+              storePreviousState(toState, toParams);
+            });
+          }
+        }
+      }
+    });
 
-  // Record previous state
-  $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
-    storePreviousState(fromState, fromParams);
-    $uibModalStack.dismissAll();
+    // Always record previous state
+    $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
+      storePreviousState(fromState, fromParams);
+      $uibModalStack.dismissAll();
+    });
   });
 
   // Store previous state
   function storePreviousState(state, params) {
     // only store this state if it shouldn't be ignored 
-    if (!state.data || !state.data.ignoreState) {
+    if (!state || !state.ignoreState) {
       $state.previous = {
         state: state,
         params: params,
@@ -95,26 +97,3 @@ angular.module(ApplicationConfiguration.applicationModuleName).run(function ($ro
     }
   }
 });
-
-//Then define the init function for starting up the application
-// angular.element(document).ready(function () {
-//   //Fixing facebook bug with redirect
-//   if (window.location.hash && window.location.hash === '#_=_') {
-//     if (window.history && history.pushState) {
-//       window.history.pushState('', document.title, window.location.pathname);
-//     } else {
-//       // Prevent scrolling by storing the page's current scroll offset
-//       var scroll = {
-//         top: document.body.scrollTop,
-//         left: document.body.scrollLeft
-//       };
-//       window.location.hash = '';
-//       // Restore the scroll offset, should be flicker free
-//       document.body.scrollTop = scroll.top;
-//       document.body.scrollLeft = scroll.left;
-//     }
-//   }
-
-//   //Then init the app
-//   angular.bootstrap(document, [ApplicationConfiguration.applicationModuleName]);
-// });

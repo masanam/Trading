@@ -5,16 +5,19 @@ angular.module('user').factory('Authentication', ['$http', '$auth',
   function ($http, $auth) {
   	var auth = {};
 
-  	auth.login = function(){
-	  	if($auth.isAuthenticated()) 
+    auth.authenticate = function (callback){
+      if($auth.isAuthenticated() && !auth.user) {
         $http.get('/api/authenticate/user').success(function(res){
-  	  		auth.user = res.user;
-  	  	}).error(function(err){
-          console.log(err);
-        });
-  	};
+          Authentication.user = res.user;
 
-  	auth.login();
+          return callback(auth.user);
+        }).error(function(err){
+          console.log(err);
+
+          return callback();
+        });
+      } else callback();
+    }
 
     return auth;
   }
