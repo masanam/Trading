@@ -96,7 +96,7 @@ Elixir.extend('bower', function(jsOutputFile, jsOutputFolder, ttfOutputFolder, c
       // .pipe(gulp.dest(jsOutputFolder || Elixir.config.js.outputFolder))
       .pipe(gulp.dest('public/js'))
       .pipe(notify({
-        title: 'Laravel Elixir',
+        title: 'Bower JS',
         subtitle: 'Javascript Bower Files Imported!',
         icon: __dirname + '/../node_modules/laravel-elixir/icons/laravel.png',
         message: ' '
@@ -125,7 +125,7 @@ Elixir.extend('bower', function(jsOutputFile, jsOutputFolder, ttfOutputFolder, c
       //.pipe(gulp.dest(cssOutputFolder || Elixir.config.css.outputFolder))
       .pipe(gulp.dest('public/css'))
       .pipe(notify({
-        title: 'Laravel Elixir',
+        title: 'Bower CSS',
         subtitle: 'CSS Bower Files Imported!',
         icon: __dirname + '/../node_modules/laravel-elixir/icons/laravel.png',
         message: ' '
