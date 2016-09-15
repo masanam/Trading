@@ -1,0 +1,66 @@
+<div class="modal-content">
+  <div class="modal-header">
+  	New Asking Price
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+  </div>
+  <div class="modal-body">
+    <div class="row with-divider">
+      <div class="col-lg-12">
+        <h2>{{ buyer.company_name }}</h2>
+        <span class="label label-primary">BUYER</span> <span class="label label-default">STARTER</span>
+        <p>{{ buyer.phone }}</p>
+        <p>{{ buyer.email }}</p>
+
+        <ul class="list-group">
+          <li class="list-group-item" ng-repeat="contact in buyer.contact">
+            {{ contact.name }}
+            <i class="glyphicon glyphicon-envelope" style="margin-left: 20px;"></i> {{ contact.email }}
+            <i class="glyphicon glyphicon-earphone" style="margin-left: 20px;"></i> {{ contact.phone }}
+          </li>
+        </ul>
+      </div>
+    </div>
+
+
+    <div class="row with-divider">
+      <div class="col-lg-6">
+        <p class="form-group">
+          <label>Current Asking Price</label>
+          <p style="margin-top:-20px; margin-bottom:20px;">USD 5.600.000.000,-</p>
+        </p>
+        <p class="form-group">
+          <label>Current Volume</label>
+          <p style="margin-top:-20px; margin-bottom:20px;">5000 tones</p>
+        </p>
+        <div class="btn-group">
+          <label class="btn btn-default" ng-model="radioModel" uib-btn-radio="'FOB'">FOB</label>
+          <label class="btn btn-primary" ng-model="radioModel" uib-btn-radio="'CIF'">CIF</label>
+          <label class="btn btn-default" ng-model="radioModel" uib-btn-radio="'DES'">DES</label>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <p class="form-group">
+          <label>New Asking Price</label>
+          <input type="text" ng-model="format" class="form-control">
+        </p>
+        <p class="form-group">
+          <label>Volume</label>
+          <input type="text" ng-model="format" class="form-control">
+        </p>
+        <p class="form-group">
+          <label>Notes</label>
+          <input type="text" ng-model="format" class="form-control">
+        </p>
+        <div class="btn-group">
+          <label class="btn btn-default" ng-model="radioModel" uib-btn-radio="'FOB'">FOB</label>
+          <label class="btn btn-default" ng-model="radioModel" uib-btn-radio="'CIF'">CIF</label>
+          <label class="btn btn-default" ng-model="radioModel" uib-btn-radio="'DES'">DES</label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+		<button class="btn btn-success" data-dismiss="modal">Submit</button>
+		<button class="btn btn-default" data-dismiss="modal">Cancel</button>
+  </div>
+</div>

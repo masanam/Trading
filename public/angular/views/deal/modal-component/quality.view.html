@@ -1,0 +1,46 @@
+<ul class="list-group">
+  <li class="list-group-item list-group-item-danger">
+    GCV arb :
+    <span class="pull-right">{{ order.gcv_arb_min }} ~ {{ order.gcv_arb_max }} kcal</span>
+  </li>
+  <li class="list-group-item list-group-item-danger">
+    GCV adb :
+    <span class="pull-right">{{ order.gcv_adb_min }} ~ {{ order.gcv_adb_max }} kcal</span>
+  </li>
+  <li class="list-group-item list-group-item-danger">
+    NCV :
+    <span class="pull-right">{{ order.ncv_min }} - {{ order.ncv_max }} kcal</span>
+  </li>
+  <li class="list-group-item list-group-item-warning">
+    Ash :
+    <span class="pull-right">{{ order.ash_min }} - {{ order.ash_max }} %</span>
+  </li>
+  <li class="list-group-item list-group-item-warning">
+    TS :
+    <span class="pull-right">{{ order.ts_min }} - {{ order.ts_max }} %</span>
+  </li>
+  <li class="list-group-item list-group-item-info">
+     TM :
+    <span class="pull-right">{{ order.tm_min | number }} ~ {{ order.tm_max | number }} %</span>
+  </li>
+  <li class="list-group-item list-group-item-info">
+     IM :
+    <span class="pull-right">{{ order.im_min | number }} ~ {{ order.im_max | number }} %</span>
+  </li>
+  <li class="list-group-item list-group-item-success">
+     FC :
+    <span class="pull-right">{{ order.fc_min | number }} ~ {{ order.fc_max | number }} %</span>
+  </li>
+  <li class="list-group-item list-group-item-success">
+     VM :
+    <span class="pull-right">{{ order.vm_min | number }} ~ {{ order.vm_max | number }} %</span>
+  </li>
+  <li class="list-group-item list-group-item-success">
+    HGI :
+    <span class="pull-right">{{ order.hgi_min }} - {{ order.hgi_max }}</span>
+  </li>
+  <li class="list-group-item list-group-item-success">
+    Size :
+    <span class="pull-right">{{ order.size_min }} - {{ order.size_max }} mm</span>
+  </li>
+</ul>

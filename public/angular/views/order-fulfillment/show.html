@@ -1,0 +1,29 @@
+<div ng-controller="TradeController">
+<a class="btn btn-primary" ui-sref="trade.index">Back</a>
+
+    <table class="table table-striped" ng-init="findOne(tradeId)">
+        <thead>
+            <tr>
+                <th>Mine</th>
+                <th>Volume</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="trx in trade.transaction">
+                <td>{{ trx.product.mine.mine_name }}</td>
+                <td>{{ trx.tonnage }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h1>Buyer/Seller Positions</h1>
+
+    <ng-map zoom="4" center="Indonesia" style="height:600px;" map-lazy-load="https://maps.google.com/maps/api/js">
+        <marker ng-repeat="mine in mines" position="{{ mine.latitude }}, {{ mine.longitude }}"
+          icon="/images/mine.png" animation="Animation.DROP">
+        </marker>
+        <marker position="{{ buyer.latitude }}, {{ buyer.longitude }}"
+          icon="/images/buyer.png" animation="Animation.DROP">      
+        </marker>
+    </ng-map>
+</div>

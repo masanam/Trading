@@ -1,0 +1,289 @@
+<div class="col-lg-4">
+  <div class="form-group">
+    <label for="order_date">Order Date :</label>
+    <p class="input-group">
+      <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="demand.order_date" is-open="popup.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+      <span class="input-group-btn">
+        <button type="button" class="btn btn-default" ng-click="open()"><i class="glyphicon glyphicon-calendar"></i></button>
+      </span>
+    </p>
+  </div>
+
+  <div class="form-group">
+    <label for="deadline">Deadline :</label>
+    <p class="input-group">
+      <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="demand.deadline" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+      <span class="input-group-btn">
+        <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+      </span>
+    </p>
+  </div>
+  
+  <div class="form-group">
+    <label for="penalty">Penalty Description :</label>
+    <textarea class="form-control" id="penalty_description" ng-model="order.penalty"></textarea>
+  </div>
+
+  <div class="row">
+      <label>Pickup Location</label>
+      <div class="input-group" style="margin-bottom: 5px;">
+          <span class="input-group-addon" id="basic-addon1">Address</span>
+          <input type="text" class="form-control" placeholder="Address" ng-model="demand.address">
+      </div>
+      <div class="input-group" style="margin-bottom: 5px;">
+          <span class="input-group-addon" style="width: 200px;">Latitude</span>
+          <input type="text" class="form-control" placeholder="Latitude" ng-model="demand.latitude">
+      </div>
+      <div class="input-group" style="margin-bottom: 5px;">
+          <span class="input-group-addon" style="width: 200px;">Longitude</span>
+          <input type="text" class="form-control" placeholder="Longitude" ng-model="demand.longitude">
+      </div>
+  </div>
+</div>
+
+<div class="col-lg-8">
+  <div class="form-group">
+    <label>Coal Quality :</label>
+    <table class="table table-striped">
+      <tr align="center">
+        <th>
+          Characteristic
+        </th>
+        <th>
+          Min
+        </th>
+        <th>
+          Max
+        </th>
+        <th>
+          Reject
+        </th>
+        <th>
+          Bonus
+        </th>
+      </tr>
+      <tr>
+        <td>
+          Gross Caloric ARB
+        </td>
+        <td>
+          <input type="text" class="form-control" placeholder="kcal" ng-model="demand.gcv_arb_min">
+        </td>
+        <td>
+          <input type="text" class="form-control" placeholder="kcal" ng-model="demand.gcv_arb_max">
+        </td>
+        <td>
+          <input type="text" class="form-control" placeholder="kcal" ng-model="demand.gcv_arb_reject">
+        </td>
+        <td>
+          <input type="text" class="form-control" placeholder="kcal" ng-model="demand.gcv_arb_bonus">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Gross Caloric ADB
+        </td>
+        <td>
+          <input type="text" class="form-control" placeholder="kcal" ng-model="demand.gcv_adb_min">
+        </td>
+        <td>
+          <input type="text" class="form-control" placeholder="kcal" ng-model="demand.gcv_adb_max">
+        </td>
+        <td>
+          <input type="text" class="form-control" placeholder="kcal" ng-model="demand.gcv_adb_reject">
+        </td>
+        <td>
+          <input type="text" class="form-control" placeholder="kcal" ng-model="demand.gcv_adb_bonus">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Nett Caloric Value
+        </td>
+        <td>
+          <input type="text" class="form-control" placeholder="kcal" ng-model="demand.ncv_min">
+        </td>
+        <td>
+          <input type="text" class="form-control" placeholder="kcal" ng-model="demand.ncv_max">
+        </td>
+        <td>
+          <input type="text" class="form-control" placeholder="kcal" ng-model="demand.ncv_reject">
+        </td>
+        <td>
+          <input type="text" class="form-control" placeholder="kcal" ng-model="demand.ncv_bonus">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Ash
+        </td>
+        <td>
+          <input type="text" class="form-control" placeholder="%" ng-model="demand.ash_min">
+        </td>
+        <td>
+          <input type="text" class="form-control" placeholder="%" ng-model="demand.ash_max">
+        </td>
+        <td>
+          <input type="text" class="form-control" placeholder="%" ng-model="demand.ash_reject">
+        </td>
+        <td>
+          <input type="text" class="form-control" placeholder="%" ng-model="demand.ash_bonus">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Sulphur
+        </td>
+        <td>
+          <input type="text" class="form-control" placeholder="%" ng-model="demand.ts_min">
+        </td>
+        <td>
+          <input type="text" class="form-control" placeholder="%" ng-model="demand.ts_max">
+        </td>
+        <td>
+          <input type="text" class="form-control" placeholder="%" ng-model="demand.ts_reject">
+        </td>
+        <td>
+          <input type="text" class="form-control" placeholder="%" ng-model="demand.ts_bonus">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Total Moisture
+        </td>
+        <td>
+          <input type="text" class="form-control" placeholder="%" ng-model="demand.tm_min">
+        </td>
+        <td>
+          <input type="text" class="form-control" placeholder="%" ng-model="demand.tm_max">
+        </td>
+        <td>
+          <input type="text" class="form-control" placeholder="%" ng-model="demand.tm_reject">
+        </td>
+        <td>
+          <input type="text" class="form-control" placeholder="%" ng-model="demand.tm_bonus">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Inherent Moisture
+        </td>
+        <td>
+          <input type="text" class="form-control" placeholder="%" ng-model="demand.im_min">
+        </td>
+        <td>
+          <input type="text" class="form-control" placeholder="%" ng-model="demand.im_max">
+        </td>
+        <td>
+          <input type="text" class="form-control" placeholder="%" ng-model="demand.im_reject">
+        </td>
+        <td>
+          <input type="text" class="form-control" placeholder="%" ng-model="demand.im_bonus">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Fixed Carbon
+        </td>
+        <td>
+          <input type="text" class="form-control" placeholder="%" ng-model="demand.fc_min">
+        </td>
+        <td>
+          <input type="text" class="form-control" placeholder="%" ng-model="demand.fc_max">
+        </td>
+        <td>
+          <input type="text" class="form-control" placeholder="%" ng-model="demand.fc_reject">
+        </td>
+        <td>
+          <input type="text" class="form-control" placeholder="%" ng-model="demand.fc_bonus">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Volatile Matter
+        </td>
+        <td>
+          <input type="text" class="form-control" placeholder="%" ng-model="demand.vm_min">
+        </td>
+        <td>
+          <input type="text" class="form-control" placeholder="%" ng-model="demand.vm_max">
+        </td>
+        <td>
+          <input type="text" class="form-control" placeholder="%" ng-model="demand.vm_reject">
+        </td>
+        <td>
+          <input type="text" class="form-control" placeholder="%" ng-model="demand.vm_bonus">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Hardness
+        </td>
+        <td>
+          <input type="text" class="form-control" placeholder="%" ng-model="demand.hgi_min">
+        </td>
+        <td>
+          <input type="text" class="form-control" placeholder="%" ng-model="demand.hgi_max">
+        </td>
+        <td>
+          <input type="text" class="form-control" placeholder="%" ng-model="demand.hgi_reject">
+        </td>
+        <td>
+          <input type="text" class="form-control" placeholder="%" ng-model="demand.hgi_bonus">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Size
+        </td>
+        <td>
+          <input type="text" class="form-control" placeholder="%" ng-model="demand.size_min">
+        </td>
+        <td>
+          <input type="text" class="form-control" placeholder="%" ng-model="demand.size_max">
+        </td>
+        <td>
+          <input type="text" class="form-control" placeholder="%" ng-model="demand.size_reject">
+        </td>
+        <td>
+          <input type="text" class="form-control" placeholder="%" ng-model="demand.size_bonus">
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<div class="form-group col-lg-12" style="text-align: center;">
+  <a class="btn btn-success" data-toggle="modal" data-target="#submitModal">Submit</a>
+  <a class="btn btn-danger" data-toggle="modal" data-target="#resetModal">Reset</a>
+</div>
+
+<div id="submitModal" class="modal fade" role="dialog">
+  <!--div class="modal-dialog"-->
+    <!-- Modal content-->
+  <div class="modal-content container">
+    <div class="modal-header row">
+      <button type="button" class="close" data-dismiss="modal">&times;</button>
+      <h4 class="modal-title">Are you sure you want to submit the form?</h4>
+    </div>
+    <div class="modal-body row">
+      <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="createDemand()">Yes</button>
+      <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+    </div>
+  </div>
+</div>
+
+<div id="resetModal" class="modal fade" role="dialog">
+  <!--div class="modal-dialog"-->
+    <!-- Modal content-->
+  <div class="modal-content container">
+    <div class="modal-header row">
+      <button type="button" class="close" data-dismiss="modal">&times;</button>
+      <h4 class="modal-title">Are you sure you want to reset the form?</h4>
+    </div>
+    <div class="modal-body row">
+      <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="demand = {}">Yes</button>
+      <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,31 @@
+<span class="btn-group small-btn">
+  <a uib-tooltip="open" class="btn btn-info">
+    <i class="glyphicon glyphicon-earphone"></i>
+  </a> <!-- open -->
+  <a uib-tooltip="progress" class="btn {{ ['o'].includes(orderFulfillment.status) ? 'btn-default' : 'btn-info' }}">
+    <i class="glyphicon glyphicon-refresh"></i>
+  </a> <!-- progress -->
+  <a uib-tooltip="shipping" class="btn {{ ['o', 'p'].includes(orderFulfillment.status) ? 'btn-default' : 'btn-info' }}">
+    <i class="glyphicon glyphicon-usd"></i>
+  </a> <!-- deals -->
+  <a uib-tooltip="shipping" class="btn {{ ['o', 'p', 'd'].includes(orderFulfillment.status) ? 'btn-default' : 'btn-info' }}">
+    <i class="glyphicon glyphicon-export"></i>
+  </a> <!-- shipping -->
+  <a uib-tooltip="arrived" class="btn {{ ['o', 'p', 'd', 's'].includes(orderFulfillment.status) ? 'btn-default' : 'btn-info' }}">
+    <i class="glyphicon glyphicon-import"></i>
+  </a> <!-- arrived -->
+
+  <a uib-tooltip="status pending" ng-if="['o', 'p', 'd', 's', 'a'].includes(orderFulfillment.status)" class="btn btn-default">
+    <i class="glyphicon glyphicon-time"></i> 
+  </a> <!-- ??? -->
+
+  <a uib-tooltip="finish" ng-if="orderFulfillment.status === 'f'" class="btn btn-success">
+    <i class="glyphicon glyphicon-ok-circle"></i> 
+  </a> <!-- finish -->
+  <a uib-tooltip="reject" ng-if="orderFulfillment.status === 'r'" class="btn btn-warning">
+    <i class="glyphicon glyphicon-backward"></i> 
+  </a> <!-- reject -->
+  <a uib-tooltip="cancel" ng-if="orderFulfillment.status === 'c'" class="btn btn-danger">
+    <i class="glyphicon glyphicon-remove-circle"></i>
+  </a> <!-- cancel -->
+</span>

@@ -1,0 +1,110 @@
+<div class="modal-header">
+  <button type="button" class="close" ng-click="close()">&times;</button>
+  <h4 class="modal-title">Order Fulfillment</h4>
+</div>
+<div class="modal-body" ng-init="findOne(id)">
+  <div class="row with-divider">
+    <div class="col-lg-12">
+      <div class="col-lg-9">
+        <button class="col-lg-3 btn btn-primary" ng-click="progressOrder(orderFulfillment)">Mark as In-Progress</button>
+        <button class="col-lg-3 btn btn-primary" ng-click="dealOrder(orderFulfillment)">Mark as Deal</button>
+        <button class="col-lg-3 btn btn-default" ng-click="shipOrder(orderFulfillment)">Mark as Shipped</button>
+        <button class="col-lg-3 btn btn-default" ng-click="destOrder(orderFulfillment)">Mark as Arrived</button>
+        <button class="col-lg-3 btn btn-default" ng-click="finishOrder(orderFulfillment)">Mark as Finished</button>
+        <button class="col-lg-3 btn btn-default" ng-click="cancelOrder(orderFulfillment)">Mark as Cancelled</button>
+        <button class="col-lg-3 btn btn-default" ng-click="rejectOrder(orderFulfillment)">Mark as Rejected</button>
+      </div>
+      <div class="col-lg-3">
+        <span class="pull-right">
+          Status : {{ status[orderFulfillment.status] }}
+        </span>
+      </div>
+    </div>
+    <div class="col-lg-12">
+      <hr/>
+      <div class="col-lg-12 alert alert-danger" ng-show="errorMessage">
+        {{ errorMessage }}
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-3">
+    <ng-map ng-if="render" zoom="4" center="Indonesia" style="height:400px;">
+      <marker position="{{ orderFulfillment.product.mine.latitude }} {{ orderFulfillment.product.mine.longitude }}"
+        icon="/images/mine.png" animation="Animation.DROP">
+      </marker>
+      <marker position="{{ orderFulfillment.order.latitude }} {{ orderFulfillment.order.longitude }}"
+        icon="/images/buyer.png" animation="Animation.DROP">      
+      </marker>
+    </ng-map>
+    </div>
+    <div class="col-lg-3">
+      <ul class="list-group">
+        <li class="list-group-item">
+          TM <span class="pull-right"> {{ orderFulfillment.product.tm_min }} ~ {{ orderFulfillment.product.tm_max }} %</span>
+        </li>
+        <li class="list-group-item">
+          IM <span class="pull-right"> {{ orderFulfillment.product.im_min }} ~ {{ orderFulfillment.product.im_max }} %</span>
+        </li>
+        <li class="list-group-item">
+          Ash <span class="pull-right"> {{ orderFulfillment.product.ash_min }} ~ {{ orderFulfillment.product.ash_max }} %</span>
+        </li>
+        <li class="list-group-item">
+          VM <span class="pull-right"> {{ orderFulfillment.product.vm_min }} ~ {{ orderFulfillment.product.vm_max }} %</span>
+        </li>
+        <li class="list-group-item">
+          TS <span class="pull-right"> {{ orderFulfillment.product.ts_min }} ~ {{ orderFulfillment.product.ts_max }} %</span>
+        </li>
+        <li class="list-group-item">
+          NCV <span class="pull-right"> {{ orderFulfillment.product.ncv_min }} ~ {{ orderFulfillment.product.ncv_max }} kcal</span>
+        </li>
+        <li class="list-group-item">
+          GCV arb<span class="pull-right"> {{ orderFulfillment.product.gcv_arb_min }} ~ {{ orderFulfillment.product.gcv_arb_max }} kcal</span>
+        </li>
+        <li class="list-group-item">
+          GCV adb<span class="pull-right"> {{ orderFulfillment.product.gcv_adb_min }} ~ {{ orderFulfillment.product.gcv_adb_max }} kcal</span>
+        </li>
+        <li class="list-group-item">
+          HGI <span class="pull-right"> {{ orderFulfillment.product.hgi_min }} ~ {{ orderFulfillment.product.hgi_max }}</span>
+        </li>
+        <li class="list-group-item">
+          Size <span class="pull-right"> {{ orderFulfillment.product.size_min }} ~ {{ orderFulfillment.product.size_max }} mm</span>
+        </li>
+      </ul>
+    
+    </div>
+    <div class="col-lg-3">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="trx in orderFulfillment.order_fulfillment_history">
+            <td>{{ trx.created_at }}</td>
+            <td>{{ trx.status }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-lg-3">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Value (USD)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="prc in orderFulfillment.order_fulfillment_pricing">
+            <td>{{ prc.item }}</td>
+            <td>{{ prc.price | number : 0 }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+

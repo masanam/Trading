@@ -1,0 +1,14 @@
+{
+    "js": {
+        "outputFolder": "public/js"
+    },
+    "css": {
+        "outputFolder": "public/css",
+        "less": {
+            "folder": "../../public/angular/"
+        }
+    },
+    "fonts": {
+        "outputFolder": "public/fonts"
+    }
+}

@@ -1,0 +1,12 @@
+<span class="btn-group small-btn">
+  <a uib-tooltip="progress" ng-if="deal.status === 'o'" class="btn btn-success">
+    <i class="glyphicon glyphicon-refresh"></i>
+  </a> <!-- progress -->
+
+  <a uib-tooltip="finish" ng-if="deal.status === 'f'" class="btn btn-success">
+    <i class="glyphicon glyphicon-ok-circle"></i> 
+  </a> <!-- finish -->
+  <a uib-tooltip="cancel" ng-if="deal.status === 'c'" class="btn btn-danger">
+    <i class="glyphicon glyphicon-remove-circle"></i>
+  </a> <!-- cancel -->
+</span>

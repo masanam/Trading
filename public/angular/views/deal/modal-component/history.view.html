@@ -1,0 +1,139 @@
+<div class="row with-divider" style="margin-top:20px;">
+  <div class="col-lg-12">
+    <h4>Summary</h4>
+    <div class="col-lg-8">
+      <table datatable="" dt-options="options" class="row-border hover">
+        <thead>
+            <tr>
+              <th>Activity</th>
+              <th>Company</th>
+              <th>Pricing Type</th>
+              <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>DEMAND</td>
+            <td>PT Wilmar Nabati Indonesia</td>
+            <td>FOB</td>
+            <td>USD {{ 5600000000 | number }}</td>
+          </tr>
+          <tr>
+            <td>SUPPLY</td>
+            <td>PT Kuansing Inti Makmur</td>
+            <td>FOB</td>
+            <td>USD {{ 2800000000 | number }}</td>
+          </tr>
+          <tr>
+            <td>SUPPLY</td>
+            <td>PT Golden Energy Mines</td>
+            <td>FOB</td>
+            <td>USD {{ 2400000000 | number }}</td>
+          </tr>
+          <tr>
+            <td>SERVICES</td>
+            <td>PT Mitra Bahari Sentosa</td>
+            <td>Freight</td>
+            <td>USD {{ 75000000 | number }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- <div class="col-lg-6">
+      <div class="row alert alert-info">
+        <b>DEMAND</b><br/>
+
+        PT Wilmar Nabati Indonesia<br/>
+        FOB <span class="pull-right">USD {{ 5600000000 | number }}</span><br/>
+        <br/>
+        <br/>
+      </div>
+      <div class="row alert alert-info">
+        <b>SUPPLY</b><br/>
+
+        PT Kuansing Inti Makmur<br/>
+        FOB <span class="pull-right">USD {{ 2800000000 | number }}</span><br/>
+        PT Golden Energy Mines<br/>
+        FOB <span class="pull-right">USD {{ 2400000000 | number }}</span>
+      </div>
+      <div class="row alert alert-info">
+        <b>SERVICES</b><br/>
+
+        PT Mitra Bahari Sentosa<br/>
+        Freight <span class="pull-right">USD {{ 75000000 | number }}</span><br/>
+        <br/>
+        <br/>
+      </div>
+    </div> -->
+    <div class="col-lg-4">
+      <div class="row summary">
+        <b>Sales Total</b><br/>
+
+        <h4>USD {{ 5600000000 | number }}</h4>
+        <br/>
+      </div>
+      <div class="row summary">
+        <b>CoGS Total</b><br/>
+
+        <h4>USD {{ 5200000000 | number }}</h4>
+        <br/>
+      </div>
+      <div class="row summary">
+        <b>MARGIN</b><br/>
+
+        <h4>USD {{ 325000000 | number }}</h4>
+        <br/>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-12">
+    <h4>Downloads</h4>
+    <p class="btn-group">
+      <button class="btn btn-primary">
+        <i class="glyphicon glyphicon-download"></i>
+        Purchase Order (.pdf)
+      </button>
+      <button class="btn btn-primary">
+        <i class="glyphicon glyphicon-download"></i>
+        Invoice (.pdf)
+      </button>
+      <button class="btn btn-default">
+        <i class="glyphicon glyphicon-download"></i>
+        Envelope (.pdf)
+      </button>
+      <button class="btn btn-default">
+        <i class="glyphicon glyphicon-download"></i>
+        Dispatch Letter (.docx)
+      </button>
+      <button class="btn btn-default">
+        <i class="glyphicon glyphicon-download"></i>
+        Legal Draft (.docx)
+      </button>
+    </p>
+  </div>
+</div>
+
+<div class="row">
+      <h3>Shipment</h3>
+
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Company</th>
+            <th>Mine</th>
+            <th>Sourcing Date</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="orderFulfillment in orderFulfillments">
+            <td>{{ orderFulfillment.company }}</td>
+            <td>{{ orderFulfillment.mine }}</td>
+            <td >{{ orderFulfillment.order_date | date }}</td>
+            <td ><order-fulfillment-status status="orderFulfillment.status"></order-fulfillment-status></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+</div>

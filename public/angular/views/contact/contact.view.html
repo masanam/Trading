@@ -1,0 +1,32 @@
+<div ng-controller="ContactController">
+  <div class="col-lg-3">
+    <h1>Filter</h1>
+  </div>
+  <div class="col-lg-9">
+    <table datatable="ng" class="row-border hover" ng-init="find()">
+      <thead>
+          <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Phone</th>
+              <th>Email</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr ng-repeat="contact in contacts" ng-click="findOne(contact.id)">
+              <td>{{ contact.id }}</td>
+              <td>{{ contact.name }}</td>
+              <td>{{ contact.phone }}</td>
+              <td>{{ contact.email }}</td>
+          </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div ng-show="contact" class="col-lg-4">
+    <p>{{ contact.id }}</p>
+    <h2>{{ contact.name }}</h2>
+    <p>{{ contact.phone }}</p>
+    <p>{{ contact.email }}</p>
+  </div>
+</div>

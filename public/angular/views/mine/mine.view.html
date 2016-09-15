@@ -1,0 +1,38 @@
+<div ng-controller="MineController">
+	<a class="btn btn-primary" ui-sref="mine.create">Create New</a>
+
+	<table class="table table-striped" ng-init="find()">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>Name</th>
+				<th>Latitude</th>
+				<th>Longitude</th>
+				<th>Port Name</th>
+				<th>Source</th>
+				<th>Contact</th>
+				<th>Phone</th>
+				<th></th>
+			</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="mine in mines">
+				<td>{{ mine.id }}</td>
+				<td>{{ mine.mine_name }}</td>
+				<td>{{ mine.latitude }}</td>
+				<td>{{ mine.longitude }}</td>
+				<td>{{ mine.port_name }}</td>
+				<td>{{ mine.source }}</td>
+				<td>{{ mine.contact }}</td>
+				<td>{{ mine.phone }}</td>
+				<td>
+					<a ui-sref="mine.update({ id: mine.id })"><i class="glyphicon glyphicon-pencil"></i></a>
+					<a ng-click="delete(mine)"><i class="glyphicon glyphicon-trash"></i></a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+seller_id
+            

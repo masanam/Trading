@@ -1,0 +1,51 @@
+<ul class="list-group">
+	<li class="list-group-item">
+		<div class="row">
+			<div class="col-lg-10">
+				<span class="label label-primary">BUY</span> {{ buyer.company_name }}
+				<span class="pull-right">
+					USD {{ buyer.price | number }}
+				</span><br/>
+				{{ buyer.volume }} Tones
+				<span class="label label-default pull-right">CIF</span>
+			</div>
+			<div class="col-lg-2">
+				<button class="btn btn-default" data-toggle="modal" data-target="#negoModal">Nego</button>
+			</div>
+		</div>
+	</li>
+	<li class="list-group-item" ng-repeat="seller in sellers">
+		<div class="row">
+			<div class="col-lg-10">
+				<span class="label label-success">SELL</span> {{ seller.company_name }}
+				<span class="pull-right">
+					USD {{ seller.price | number }}
+				</span><br/>
+				{{ seller.volume }} Tones
+				<span class="label label-default pull-right">FOB</span>
+			</div>
+			<div class="col-lg-2">
+				<button class="btn btn-default" data-toggle="modal" data-target="#negoModal">Nego</button>
+			</div>
+		</div>
+	</li>
+	<li class="list-group-item" ng-repeat="vendor in vendors">
+		<div class="row">
+			<div class="col-lg-10">
+				<span class="label label-warning">SVC</span> {{ vendor.company_name }}
+				<span class="pull-right">
+					USD {{ vendor.price | number }}
+				</span><br/>
+				<span class="label label-default pull-right">Freight</span>
+			</div>
+			<div class="col-lg-2">
+				<button class="btn btn-default" data-toggle="modal" data-target="#negoModal">Nego</button>
+			</div>
+		</div>
+	</li>
+</ul>
+
+
+<div class="modal fade" id="negoModal" role="dialog">
+	<div class="modal-dialog" ng-include="'./angular/views/deal/modal-component/nego.view.html'"></div>
+</div>

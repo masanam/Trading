@@ -1,0 +1,166 @@
+<div class="col-lg-3" ng-init="loadNews(); loadICI(); loadMines(); loadBuyers(); loadSupply(); loadDemand(); loadActivities();">
+
+  <h3>Activities</h3>
+  <a ng-repeat="feed in activities | orderBy:'-published' | limitTo: showNews" class="thumbnail btn-default" ng-href="{{feed.url}}" target="_blank"
+    style="width:100%; text-align: left; margin:2px 0;">
+    <div style="font-size:6pt;">{{ feed.published | date }}</div>
+    <div style="font-size:10pt;">{{ feed.caption }}</div>
+    <!--div style="font-size:8pt;">{{ feed.thread.section_title }}</div-->
+  </a>
+
+  <h3>ICI</h3>
+  <p>[ {{ ici[0][0] }} ] {{ ici[0][1] }}</p>
+  <canvas id="line" class="chart chart-line" chart-data="data" height="200px"
+    chart-labels="labels" chart-series="series" chart-options="options"
+    chart-dataset-override="datasetOverride" chart-click="onClick">
+  </canvas> 
+
+  <h3>Coal News</h3>
+  <a ng-repeat="feed in news | orderBy:'-published' | limitTo: showNews" class="thumbnail btn-default" ng-href="{{feed.url}}" target="_blank"
+    style="width:100%; text-align: left; margin:2px 0;">
+    <div style="font-size:6pt;">{{ feed.published | date }}</div>
+    <div style="font-size:10pt;">{{ feed.title }}</div>
+    <div style="font-size:8pt;">{{ feed.thread.section_title }}</div>
+  </a>
+  <button class="btn btn-default" style="width:100%" ng-click="showNews = false" ng-show="showNews == 5">SHOW ALL</button>
+  <button class="btn btn-default" style="width:100%" ng-click="showNews = 5" ng-show="showNews == false">SHOW LESS</button>
+</div>
+
+<div class="col-lg-9">
+  <div class="row" ng-show="msg1 === true">
+    <div class="col-lg-12">
+      <div class="alert alert-info">
+        Congratulations! You achieved 110% of your performance this month!! Keep it up!
+        <i class="glyphicon glyphicon-remove pull-right" ng-click="msg1 = false"></i>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row" ng-show="msg2 === true">
+    <div class="col-lg-12">
+      <div class="alert alert-info">
+        <span class="glyphicon glyphicon-gift"></span> Happy Birthday! Another year is added, but also another opportunity for growth and experience. :)
+        <i class="glyphicon glyphicon-remove pull-right" ng-click="msg2 = false"></i>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-6">
+      <div style="height: 300px; overflow-y:auto;" ng-init="loadTodayOrder(); loadDeals();">
+        <h3>Orders:</h3>
+        <ul>
+          <li ng-repeat="order in todayOrders | limitTo:5" class="list-link">
+            <a ui-sref="order.due-today">{{ order.order_date }} - {{ order.company_name }}</a>
+          </li>
+        </ul>
+
+        <!--h3>Shipments:</h3>
+        <ul>
+          <li ng-repeat="orderFulfillment in todayOrderFulfillments | limitTo:5" class="list-link">
+            <a ui-sref="order-fulfillment.due-today">
+              {{ orderFulfillment.order_date }} - {{ orderFulfillment.seller }} - {{ orderFulfillment.buyer }}
+            </a>
+          </li>
+        </ul-->
+        
+        <h3>Deals:</h3>
+        <table class="table table-striped">
+          <tr>
+            <th width="100px">
+              Start Date
+            </th>
+            <th>
+              Buyer
+            </th>
+            <th>
+              Seller
+            </th>
+          </tr>
+          <tr ng-repeat="deal in deals | limitTo:5">
+            <td>
+              {{ deal.deal_date | date : 'dd-MM-yyyy' }}
+            </td>
+            <td>
+              {{ deal.buyer_name }}
+            </td>
+            <td>
+              {{ deal.seller_name }}
+            </td>
+          </tr>
+        </table>
+      </div>
+
+    </div>
+
+    <div class="col-lg-6" style="height: 300px; overflow-y:auto;">
+      <h3>To-do List</h3>
+      <a class="btn btn primary" ng-click="addtodo = true"><i class="glyphicon glyphicon-plus"></i>Add new</a>
+      <table class="table table-hover">
+        <tr ng-repeat="todo in todos">
+          <td><input type="checkbox" name="done" ng-click="doneToDo($index, todo); donebtn = true"></td>
+          <td>{{todo}}</td>
+        </tr>
+        <tr>
+          <td ng-show="addtodo == true"><input type="text" placeholder="todo" ng-model="newToDo"></td>
+          <td ng-show="addtodo == true"><a class="btn btn-success" ng-click="createToDo(newToDo); addtodo = false;"><i class="glyphicon glyphicon-plus"></i>Add</a><a class="btn btn-primary" ng-click="addtodo = false">Cancel</a></td>
+        </tr>
+      </table>
+      <div ng-show="dones.length !== 0">
+        <h3>Done Task</h3>
+        <table class="table table-hover">
+          <tr ng-repeat="done in dones">
+            <td>{{done}}</td>
+          </tr>
+        </table>
+        <a class="btn btn-success" ng-click="save()">Save</a>
+        <a class="btn btn-primary" ng-click="cancel()">Cancel</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12"> 
+      <div class="col-lg-6">
+        <h3>Leads Target</h3>
+        <span class="label label-danger">Deal Unattended</span> : 18
+        <span style="margin-left:20px;" class="label label-warning">Deal in Progress</span> : 29 
+        <span style="margin-left:20px;" class="label label-success">Deal Closed</span> : 15 <br/><br/>
+
+        <uib-progress max=100>
+          <uib-bar value=30 uib-tooltip="Deal Unattended" type="danger">32%</uib-bar>
+          <uib-bar value=50 uib-tooltip="Deal in Progress" type="warning">44%</uib-bar>
+          <uib-bar value=20 uib-tooltip="Deal Closed" type="success">24%</uib-bar>
+        </uib-progress>
+      </div>
+      <div class="col-lg-6">
+        <h3>Revenue Target</h3>
+          <uib-progressbar max=2000000 value=1725000>1725000k USD / 2000000k USD</uib-progressbar>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top:20px;">
+    <div class="col-lg-6">
+      <ng-map zoom="4" center="Indonesia" style="height:400px;">
+        <marker ng-repeat="order in orders" position="{{ order.latitude }}, {{ order.longitude }}"
+          icon="{path:'CIRCLE', scale:{{ order.volume/200 }}, fillColor:'lime', fillOpacity:0.3, strokeOpacity:0.5, strokeWeight:1, strokeColor:'white'}" dragglele="true" animation="Animation.DROP">
+        </marker>
+        <marker ng-repeat="supply in supplies" position="{{ supply.latitude }}, {{ supply.longitude }}"
+          icon="{path:'CIRCLE', scale:{{ supply.volume/200 }}, fillColor:'grey', fillOpacity:0.3, strokeOpacity:0.5, strokeWeight:1, strokeColor:'white'}" dragglele="true" animation="Animation.DROP">      
+        </marker>
+      </ng-map>
+    </div>
+
+    <div class="col-lg-6">
+      <ng-map zoom="4" center="Indonesia" style="height:400px;">
+        <marker ng-repeat="mine in mines" position="{{ mine.latitude }}, {{ mine.longitude }}"
+          icon="/images/mine.png" animation="Animation.DROP">
+        </marker>
+        <marker ng-repeat="buyer in buyers" position="{{ buyer.latitude }}, {{ buyer.longitude }}"
+          icon="/images/buyer.png" animation="Animation.DROP">      
+        </marker>
+      </ng-map>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,19 @@
+<section>
+  <div class="col-lg-5" ng-init="loadNews(); loadICI();">
+    <h1>ICI</h1>
+    <p>[ {{ ici[0][0] }} ] {{ ici[0][1] }}</p>
+    <canvas id="line" class="chart chart-line" chart-data="data" height="300"
+      chart-labels="labels" chart-series="series" chart-options="options"
+      chart-dataset-override="datasetOverride" chart-click="onClick">
+    </canvas> 
+  </div>
+  <div class="col-lg-7">
+    <h1>Coal News</h1>
+    <a ng-repeat="feed in news | orderBy:'-published'" class="thumbnail btn-default" ng-href="{{feed.url}}" target="_blank"
+      style="width:100%; text-align: left; margin:2px 0;">
+      <div style="font-size:8pt;">{{ feed.published | date }}</div>
+      <div style="font-size:14pt;">{{ feed.title }}</div>
+      <div style="font-size:8pt;">{{ feed.thread.section_title }}</div>
+    </a>
+  </div>
+</section>

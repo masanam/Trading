@@ -1,0 +1,54 @@
+<div class="container" ng-controller="AuthController">
+  <div class="row">
+    <div class="col-md-4 col-md-offset-4">
+      <div class="panel panel-default">
+        <div class="panel-heading"> <strong class="">Login</strong>
+ 
+        </div>
+        <div class="panel-body">
+          <form class="form-horizontal" role="form" ng-submit="signup()">
+            <div class="form-group">
+              <label for="name" class="col-sm-3 control-label">Name</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" id="name" placeholder="Name" required="" ng-model="registration.name">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="phone" class="col-sm-3 control-label">Phone</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" id="phone" placeholder="Phone" required="" ng-model="registration.phone">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="email" class="col-sm-3 control-label">Email</label>
+              <div class="col-sm-9">
+                <input type="email" class="form-control" id="email" placeholder="Email" required="" ng-model="registration.email">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="password" class="col-sm-3 control-label">Password</label>
+              <div class="col-sm-9">
+                <input type="password" class="form-control" id="password" placeholder="Password" required="" ng-model="registration.password">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="confirmPassword" class="col-sm-3 control-label">Confirm Password</label>
+              <div class="col-sm-9">
+                <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password" required="" ng-model="registration.confirmPassword">
+              </div>
+            </div>
+            
+            <div class="form-group last">
+              <div class="col-sm-offset-3 col-sm-9">
+                <button type="submit" class="btn btn-success btn-sm">Sign up</button>
+                <button type="reset" class="btn btn-default btn-sm">Reset</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,7 @@
+<section ng-controller="BuyerController" ng-init="findOne(buyerId)" >
+	<h1>Update Buyer {{ buyer.company_name }}</h1>
+
+	<form role="form" ng-submit="update()">
+		<div ng-include="'/angular/views/buyer/form.view.html'"></div>
+	</form>
+</section>

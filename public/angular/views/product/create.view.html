@@ -1,0 +1,7 @@
+<section ng-controller="ProductController">
+  <h1>Create New Product</h1>
+
+  <form role="form" ng-submit="create()" ng-init="initializeEmptyForm();">
+    <div ng-include="'/angular/views/product/form.view.html'"></div>
+  </form>
+</section>

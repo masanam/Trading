@@ -1,0 +1,215 @@
+<div class="modal-header">
+  <button type="button" class="close" ng-click="close()">&times;</button>
+  <h4 class="modal-title">Order</h4>
+</div>
+<div class="modal-body">
+  <div class="row with-divider">
+    <div class="col-lg-12">
+      <div class="col-lg-9">
+        <a ng-class="order.status === 'o' ? 'btn btn-default' : 'btn btn-success'" href="#" ng-click="markButton = 'p'">Mark as In-Progress</a>
+        <a ng-class="(order.status === 'o' || order.status === 'p') ? 'btn btn-default' : 'btn btn-success'" href="#" ng-click="markButton = 'm'">Mark as Matched</a>
+        <a ng-class="(order.status === 'o' || order.status === 'p' || order.status === 'm') ? 'btn btn-default' : 'btn btn-success'" href="#" ng-click="markButton = 'd'">Mark as Deal</a>
+      </div>
+
+      <div class="col-lg-3">
+        <span class="pull-right">
+          Status : {{ status[order.status] }}
+        </span>
+      </div>
+    </div>
+    <div class="col-lg-12">
+      <hr/>
+      <div class="col-lg-12 alert alert-success" ng-show="errorMessage">
+        {{errorMessage}}
+      </div>
+      <div class="col-lg-12">
+        <div ng-show="markButton === 'p'">
+          <div class="row">
+            <h4>Are You Sure to mark this order as "In Progress"?</h4>
+          </div>
+          <div class="row">
+            <button type="button" class="btn btn-default" ng-click="markButton = ''; callOrder(order);">Yes</button>
+            <button type="button" class="btn btn-default" ng-click="markButton = ''">No</button>
+          </div>
+        </div>
+
+        <div ng-show="markButton === 'm'">
+          <div class="row">
+            <h4>Are You Sure to mark this order as "Matched"?</h4>
+          </div>
+          <div class="row">
+            <button type="button" class="btn btn-default" ng-click="markButton = ''; matchOrder(order);">Yes</button>
+            <button type="button" class="btn btn-default" ng-click="markButton = ''">No</button>
+          </div>
+        </div>
+        
+        <div ng-show="markButton === 'd'">
+          <div class="row">
+            <h4>Are You Sure to mark this order as "Deal"?</h4>
+          </div>
+          <div class="row">
+            <button type="button" class="btn btn-default" ng-click="markButton = ''; dealOrder(order);">Yes</button>
+            <button type="button" class="btn btn-default" ng-click="markButton = ''">No</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-4 col-md-4 col-sm-4">
+      <ul class="list-group">
+        <li class="list-group-item list-group-item-danger">
+          GCV arb :
+          <span class="pull-right">{{ order.gcv_arb_min }} ~ {{ order.gcv_arb_max }} kcal</span>
+        </li>
+        <li class="list-group-item list-group-item-danger">
+          GCV adb :
+          <span class="pull-right">{{ order.gcv_adb_min }} ~ {{ order.gcv_adb_max }} kcal</span>
+        </li>
+        <li class="list-group-item list-group-item-danger">
+          NCV :
+          <span class="pull-right">{{ order.ncv_min }} - {{ order.ncv_max }} kcal</span>
+        </li>
+        <li class="list-group-item list-group-item-warning">
+          Ash :
+          <span class="pull-right">{{ order.ash_min }} - {{ order.ash_max }} %</span>
+        </li>
+        <li class="list-group-item list-group-item-warning">
+          TS :
+          <span class="pull-right">{{ order.ts_min }} - {{ order.ts_max }} %</span>
+        </li>
+        <li class="list-group-item list-group-item-info">
+           TM :
+          <span class="pull-right">{{ order.tm_min | number }} ~ {{ order.tm_max | number }} %</span>
+        </li>
+        <li class="list-group-item list-group-item-info">
+           IM :
+          <span class="pull-right">{{ order.im_min | number }} ~ {{ order.im_max | number }} %</span>
+        </li>
+        <li class="list-group-item list-group-item-success">
+           FC :
+          <span class="pull-right">{{ order.fc_min | number }} ~ {{ order.fc_max | number }} %</span>
+        </li>
+        <li class="list-group-item list-group-item-success">
+           VM :
+          <span class="pull-right">{{ order.vm_min | number }} ~ {{ order.vm_max | number }} %</span>
+        </li>
+        <li class="list-group-item list-group-item-success">
+          HGI :
+          <span class="pull-right">{{ order.hgi_min }} - {{ order.hgi_max }}</span>
+        </li>
+        <li class="list-group-item list-group-item-success">
+          Size :
+          <span class="pull-right">{{ order.size_min }} - {{ order.size_max }} mm</span>
+        </li>
+      </ul>
+    </div>
+    <div class="col-lg-8 col-md-8 col-sm-8">
+      <a ng-show="matchButton === false" class="col-lg-12 col-md-12 col-sm-12 btn btn-success" ng-click="matchButton = true" name="matching">Show Recommended Products</a>
+      <a ng-show="matchButton === true" class="col-lg-12 col-md-12 col-sm-12 btn btn-warning" ng-click="matchButton = false" name="matching">Hide Recommended Products</a>
+      <div ng-if="matchButton === true" ng-init="matchedProduct(order.id)" style="margin-top: 20px; margin-bottom: 20px;">
+        <h3>Recommended Matches</h3>
+
+        <div class="row">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Mine</th>
+                <th>TM(%)</th>
+                <th>GCV[ARB](%)</th>
+                <th>Distance(km)</th>
+                <th>Volume(tonnes)</th>
+                <!-- <th colspan="4"></th> -->
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="m in match">
+                <td><input type="checkbox"></td>
+                <td>{{ m.mine_name }}</td>
+                <td >{{ m.tm_min }} ~ {{ m.tm_max }}</td>
+                <td >{{ m.gcv_arb_min | number }} ~ {{ m.gcv_arb_max | number }}</td>
+                <td >{{ m.posdif * 111.32 | number }}</td>
+                <td >{{ m.volume | number }}</td>
+                <!-- <td colspan="4" style="text-align: center;">
+                  <a class="btn btn-info" ng-click="createOrderFulfillment(order, m)">SELECT</a>
+                </td> -->
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="row pull-right">
+          <a href="#" class="btn btn-success"> Create Deal</a>
+          <a href="#" class="btn btn-danger"> Reset</a>
+        </div>
+      </div>
+      <div class="row" style="margin-top:20px;">
+        <h3>Order Pricing</h3>
+
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Value (USD)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="prc in order.order_pricing">
+              <td>{{ prc.item }}</td>
+              <td>{{ prc.price | number : 0 }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <h3>Previous Order</h3>
+
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Order</th>
+              <th>Date</th>
+              <th>Status</th>
+              <th colspan="4"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="trx in order.order_fulfillment">
+              <td>{{ trx.order_id }}</td>
+              <td >{{ trx.created_at }}</td>
+              <td >{{ trx.status }}</td>
+              <td colspan="4" style="text-align: center;">
+                <a class="btn btn-info">SELECT</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!--div>
+        <h3>Sourcing History</h3>
+
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Mine</th>
+              <th>Sourcing Date</th>
+              <th>Status</th>
+              <th colspan="4"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="trx in order.order_fulfillment">
+              <td>{{ trx.product.mine.mine_name }}</td>
+              <td >{{ trx.created_at }}</td>
+              <td >{{ trx.status }}</td>
+              <td colspan="4" style="text-align: center;">
+                <a class="btn btn-info">SELECT</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div-->
+    </div>  
+  </div>
+</div>
