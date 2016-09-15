@@ -1,28 +1,60 @@
-<div class="row">
-  <div class="col-xs-12">
-    <button class="create-new-lead-btn" style="padding:10px 15px;border:0;background-color:#2196F3;color:#FFF;border-radius:5px;float:right;">CREATE NEW</button>
-  </div>
-</div>
-
-<div class="container" style="margin-bottom:120px;margin-top:60px;">
+<section ng-controller="LeadController">
   <div class="row">
+    <div class="col-xs-12">
+      <button class="create-new-lead-btn" style="padding:10px 15px;border:0;background-color:#2196F3;color:#FFF;border-radius:5px;float:right;">CREATE NEW</button>
+    </div>
+  </div>
+
+  <div class="container" style="margin-bottom:120px;margin-top:60px;">
+    <div class="row">
       <div style="text-align:center;">
-          <img src="" style="background-color:#000;width:150px;height:150px;">
-          <h1>COALPEDIA</h1>
-          <div class="col-md-offset-2 col-md-8" style="margin-top:40px;">
-            <input type="text" class="form-control" style="width:600px;display:inline;"> <button class="btn btn-success">Search</button>
-            <div class="row text-center">
-              <div class="col-xs-12" style="margin-top:10px;">
-                  <input type="radio" name="filter-search-lead"><label style="margin-left:5px;margin-right:15px;">Buyers</label>
-                  <input type="radio" name="filter-search-lead"><label style="margin-left:5px;margin-right:15px;">Sellers</label>
-                  <input type="radio" name="filter-search-lead"><label style="margin-left:5px;margin-right:15px;">Vendors</label>
-                  <input type="radio" name="filter-search-lead"><label style="margin-left:5px;margin-right:15px;">Contacts</label>
-              </div>              
-            </div>
+        <div>
+          <div class="col-md-4 align-right">
+            <a class="btn btn-default btn-margin full-width">
+              <h2>BUYERS</h2>
+              1029 RECORDS
+            </a><br>
+            <a class="btn btn-default btn-margin full-width">
+              <h2>SELLERS</h2>
+              1029 RECORDS
+            </a>
           </div>
+          <div class="col-md-4">
+            <img src="/images/globe.jpg" style="height:270px;">
+          </div>
+          <div class="col-md-4 align-left">
+            <a class="btn btn-default btn-margin full-width">
+              <h2>VENDORS</h2>
+              1029 RECORDS
+            </a><br>
+            <a class="btn btn-default btn-margin full-width">
+              <h2>CONTACTS</h2>
+              1029 RECORDS
+            </a>
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <h1>COALPEDIA</h1>
+        </div>
+
+        <div class="col-md-12" style="margin-top:40px;">
+          <div class="col-md-8 col-md-offset-2 input-group btn-group">
+            <input type="text" class="form-control" style="width:600px;display:inline;">
+            <button class="btn btn-success">Search</button>
+          </div><br/>
+
+          <div class="btn-group">
+            <label class="btn btn-default" ng-model="searchItem" uib-btn-radio="'Buyer'">Buyer</label>
+            <label class="btn btn-default" ng-model="searchItem" uib-btn-radio="'Seller'">Sellers</label>
+            <label class="btn btn-default" ng-model="searchItem" uib-btn-radio="'Vendor'">Vendors</label>
+            <label class="btn btn-default" ng-model="searchItem" uib-btn-radio="'Contact'">Contacts</label>
+          </div>
+        </div>
           
       </div>
-      
+        
+    </div>
   </div>
-</div>
 
+</section>
