@@ -1,5 +1,7 @@
 var elixir = require('laravel-elixir');
+var gulp = require('gulp');
 
+require('./tasks/serve.task.js');
 require('./tasks/angular.task.js');
 require('./tasks/bower.task.js');
 
@@ -15,15 +17,17 @@ require('./tasks/bower.task.js');
  */
 
 elixir(function(mix) {
-	var assets = [
-		'public/js/vendor.js',
-		'public/js/app.js',
-		'public/css/vendor.css',
-		'public/css/app.css'
-	];
+  var assets = [
+    'public/js/vendor.js',
+    'public/js/app.js',
+    'public/css/vendor.css',
+    'public/css/app.css'
+  ];
 
-	mix
-		.bower()
-		.angular('./public/angular/');
-		// .version(assets);
+  mix
+    .bower()
+    .angular('./public/angular/')
+    .version(assets)
+    .serve();
 });
+
