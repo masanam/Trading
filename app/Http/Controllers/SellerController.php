@@ -40,11 +40,25 @@ class SellerController extends Controller
         }
 
         $Seller = new Seller();
-        $Seller->name = $request->name;
-        $Seller->image = $request->image;
-        $Seller->title = $request->title;
-        $Seller->email = $request->email;
+        $Seller->user_id = $request->user_id;
+            
+        $Seller->company_name = $request->company_name;
+
         $Seller->phone = $request->phone;
+        $Seller->email = $request->email;
+        $Seller->web = $request->web;
+
+        $Seller->industry = $request->industry;
+
+        $Seller->city = $request->city;
+        $Seller->address = $request->address;
+
+        $Seller->latitude = $request->latitude;
+        $Seller->longitude = $request->longitude;
+
+        $Seller->description = $request->description;
+
+        $Seller->status = $request->status;
         $Seller->save();
 
         return response()->json($Seller, 200);
@@ -86,12 +100,25 @@ class SellerController extends Controller
             ] ,404);
         }
 
-        $Seller->name = $request->name;
-        $Seller->image = $request->image;
-        $Seller->title = $request->title;
-        $Seller->email = $request->email;
-        $Seller->phone = $request->phone;
+        $Seller->user_id = $request->user_id;
+            
+        $Seller->company_name = $request->company_name;
 
+        $Seller->phone = $request->phone;
+        $Seller->email = $request->email;
+        $Seller->web = $request->web;
+
+        $Seller->industry = $request->industry;
+
+        $Seller->city = $request->city;
+        $Seller->address = $request->address;
+
+        $Seller->latitude = $request->latitude;
+        $Seller->longitude = $request->longitude;
+
+        $Seller->description = $request->description;
+
+        $Seller->status = $request->status;
         $Seller->save();
 
         return response()->json($Seller, 200);

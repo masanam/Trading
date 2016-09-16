@@ -10,9 +10,9 @@ use App\Http\Requests;
 
 class UserController extends Controller
 {
-    public function __construct() {
-        $this->middleware('jwt.auth', ['except' => 'store']);
-    }
+    // public function __construct() {
+    //     $this->middleware('jwt.auth', ['except' => 'store']);
+    // }
     /**
      * Display a listing of the resource.
      *
@@ -20,9 +20,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        $User = User::where('status', 'a')->get();
+        $user = User::where('status', 'a')->get();
 
-        return response()->json($User, 200);
+        return response()->json($user, 200);
     }
 
     /**
@@ -39,21 +39,21 @@ class UserController extends Controller
             ], 400);
         }
 
-        $User = new User();
-        $User->name = $request->name;
-        $User->image = $request->image;
-        $User->title = $request->title;
-        $User->email = $request->email;
-        $User->phone = $request->phone;
-        $User->password = bcrypt($request->password);
+        $user = new User();
+        $user->name = $request->name;
+        $user->image = $request->image;
+        $user->title = $request->title;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+        $user->password = bcrypt($request->password);
 
-        $User->role = 'user';
+        $user->role = 'user';
 
-        $User->status = 'a';
+        $user->status = 'a';
 
-        $User->save();
+        $user->save();
 
-        return response()->json($User, 200);
+        return response()->json($user, 200);
     }
 
     /**
@@ -62,10 +62,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(User $User)
+    public function show(User $user)
     {
-        if($User->status == 'a') {
-            return response()->json($User, 200);
+        if($user->status == 'a') {
+            return response()->json($user, 200);
         } else {
             return response()->json(['message' => 'deactivated record'], 404);
         }    
@@ -78,7 +78,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $User)
+    public function update(Request $request, User $user)
     {
         if (!$request) {
             return response()->json([
@@ -86,26 +86,26 @@ class UserController extends Controller
             ], 400);
         }
 
-        if (!$User) {
+        if (!$user) {
             return response()->json([
                 'message' => 'Not found'
             ] ,404);
         }
 
-        $User->name = $request->name;
-        $User->image = $request->image;
-        $User->title = $request->title;
-        $User->email = $request->email;
-        $User->phone = $request->phone;
-        $User->password = bcrypt($request->password);
+        $user->name = $request->name;
+        $user->image = $request->image;
+        $user->title = $request->title;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+        $user->password = bcrypt($request->password);
 
-        $User->role = $request->role ? $request->role : 'user';
+        $user->role = $request->role ? $request->role : 'user';
 
-        $User->status = 'a';
+        $user->status = 'a';
 
-        $User->save();
+        $user->save();
 
-        return response()->json($User, 200);
+        return response()->json($user, 200);
     }
 
     /**
@@ -114,17 +114,17 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $User)
+    public function destroy(User $user)
     {
-        if (!$User) {
+        if (!$user) {
             return response()->json([
                 'message' => 'Not found'
             ] ,404);
         }
 
-        $User->status = 'x';
-        $User->save();
+        $user->status = 'x';
+        $user->save();
 
-        return response()->json($User, 200);
+        return response()->json($user, 200);
     }
 }

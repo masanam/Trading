@@ -19,9 +19,9 @@ class VendorController extends Controller
      */
     public function index()
     {
-        $Vendor = Vendor::where('status', 'a')->get();
+        $vendor = Vendor::where('status', 'a')->get();
 
-        return response()->json($Vendor, 200);
+        return response()->json($vendor, 200);
     }
 
     /**
@@ -38,24 +38,24 @@ class VendorController extends Controller
             ], 400);
         }
 
-        $Vendor = new Vendor();
-        $Vendor->company_name = $request->company_name;
+        $vendor = new Vendor();
+        $vendor->company_name = $request->company_name;
             
-        $Vendor->phone = $request->phone;
-        $Vendor->email = $request->email;
-        $Vendor->web = $request->web;
+        $vendor->phone = $request->phone;
+        $vendor->email = $request->email;
+        $vendor->web = $request->web;
 
-        $Vendor->industry = $request->industry;
+        $vendor->industry = $request->industry;
 
-        $Vendor->city = $request->city;
-        $Vendor->address = $request->address;
+        $vendor->city = $request->city;
+        $vendor->address = $request->address;
 
-        $Vendor->description = $request->description;
+        $vendor->description = $request->description;
 
-        $Vendor->status = 'a';
-        $Vendor->save();
+        $vendor->status = 'a';
+        $vendor->save();
 
-        return response()->json($Vendor, 200);
+        return response()->json($vendor, 200);
     }
 
     /**
@@ -64,10 +64,10 @@ class VendorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Vendor $Vendor)
+    public function show(Vendor $vendor)
     {
-        if($Vendor->status == 'a') {
-            return response()->json($Vendor, 200);
+        if($vendor->status == 'a') {
+            return response()->json($vendor, 200);
         } else {
             return response()->json(['message' => 'deactivated record'], 404);
         }
@@ -80,7 +80,7 @@ class VendorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Vendor $Vendor)
+    public function update(Request $request, Vendor $vendor)
     {
         if (!$request) {
             return response()->json([
@@ -88,30 +88,28 @@ class VendorController extends Controller
             ], 400);
         }
 
-        if (!$Vendor) {
+        if (!$vendor) {
             return response()->json([
                 'message' => 'Not found'
             ] ,404);
         }
 
-        $Vendor->company_name = $request->company_name;
-            
-        $Vendor->phone = $request->phone;
-        $Vendor->email = $request->email;
-        $Vendor->web = $request->web;
+        $vendor->company_name = $request->company_name;
 
-        $Vendor->industry = $request->industry;
+        $vendor->phone = $request->phone;
+        $vendor->email = $request->email;
+        $vendor->web = $request->web;
 
-        $Vendor->city = $request->city;
-        $Vendor->address = $request->address;
+        $vendor->industry = $request->industry;
 
-        $Vendor->description = $request->description;
+        $vendor->city = $request->city;
+        $vendor->address = $request->address;
 
-        $Vendor->status = 'a';
+        $vendor->description = $request->description;
 
-        $Vendor->save();
+        $vendor->save();
 
-        return response()->json($Vendor, 200);
+        return response()->json($vendor, 200);
     }
 
     /**
@@ -120,17 +118,17 @@ class VendorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Vendor $Vendor)
+    public function destroy(Vendor $vendor)
     {
-        if (!$Vendor) {
+        if (!$vendor) {
             return response()->json([
                 'message' => 'Not found'
             ] ,404);
         }
 
-        $Vendor->status = 'x';
-        $Vendor->save();
+        $vendor->status = 'x';
+        $vendor->save();
 
-        return response()->json($Vendor, 200);
+        return response()->json($vendor, 200);
     }
 }
