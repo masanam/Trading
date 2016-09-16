@@ -18,7 +18,9 @@ class CreateActivitiesTable extends Migration
 
             $table->integer('user_id');
             $table->integer('actor');
-            $table->string('actor');
+            $table->string('action');
+            $table->string('table');
+            $table->string('entity_id');
 
             $table->timestamps();
         });

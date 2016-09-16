@@ -16,7 +16,7 @@ class CreateMinesTable extends Migration
         Schema::create('mines', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->integer('seller_id')->unsigned();
+            $table->integer('seller_id')->nullable();
             
             $table->decimal('latitude', 10, 8);
             $table->decimal('longitude', 11, 8);
@@ -38,10 +38,6 @@ class CreateMinesTable extends Migration
             $table->char('status', 1); // A = Active , X = Deleted
 
             $table->timestamps();
-        });
-
-        Schema::table('mines', function (Blueprint $table) {
-            $table->foreign('seller_id')->references('id')->on('sellers')->onDelete('cascade');
         });
     }
 
