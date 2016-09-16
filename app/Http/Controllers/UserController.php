@@ -45,6 +45,12 @@ class UserController extends Controller
         $User->title = $request->title;
         $User->email = $request->email;
         $User->phone = $request->phone;
+        $User->password = $request->password;
+
+        $User->role = 'user';
+
+        $User->status = 'a';
+
         $User->save();
 
         return response()->json($User, 200);
@@ -62,7 +68,8 @@ class UserController extends Controller
             return response()->json($User, 200);
         } else {
             return response()->json(['message' => 'deactivated record'], 404);
-        }    }
+        }    
+    }
 
     /**
      * Update the specified resource in storage.
@@ -90,6 +97,11 @@ class UserController extends Controller
         $User->title = $request->title;
         $User->email = $request->email;
         $User->phone = $request->phone;
+        $User->password = $request->password;
+
+        $User->role = $request->role ? $request->role : 'user';
+
+        $User->status = 'a';
 
         $User->save();
 
