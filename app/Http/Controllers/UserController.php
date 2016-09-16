@@ -20,9 +20,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user = User::get();
+        $User = User::where('status', 'a')->get();
 
-        return response()->json($user, 200);
+        return response()->json($User, 200);
     }
 
     /**
@@ -39,15 +39,15 @@ class UserController extends Controller
             ], 400);
         }
 
-        $user = new User();
-        $user->name = $request->name;
-        $user->image = $request->image;
-        $user->title = $request->title;
-        $user->email = $request->email;
-        $user->phone = $request->phone;
-        $user->save();
+        $User = new User();
+        $User->name = $request->name;
+        $User->image = $request->image;
+        $User->title = $request->title;
+        $User->email = $request->email;
+        $User->phone = $request->phone;
+        $User->save();
 
-        return response()->json($user, 200);
+        return response()->json($User, 200);
     }
 
     /**
@@ -56,10 +56,13 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(User $User)
     {
-        return response()->json($user, 200);
-    }
+        if($User->status == 'a') {
+            return response()->json($User, 200);
+        } else {
+            return response()->json(['message' => 'deactivated record'], 404);
+        }    }
 
     /**
      * Update the specified resource in storage.
@@ -68,7 +71,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, User $User)
     {
         if (!$request) {
             return response()->json([
@@ -76,21 +79,21 @@ class UserController extends Controller
             ], 400);
         }
 
-        if (!$user) {
+        if (!$User) {
             return response()->json([
                 'message' => 'Not found'
             ] ,404);
         }
 
-        $user->name = $request->name;
-        $user->image = $request->image;
-        $user->title = $request->title;
-        $user->email = $request->email;
-        $user->phone = $request->phone;
+        $User->name = $request->name;
+        $User->image = $request->image;
+        $User->title = $request->title;
+        $User->email = $request->email;
+        $User->phone = $request->phone;
 
-        $user->save();
+        $User->save();
 
-        return response()->json($user, 200);
+        return response()->json($User, 200);
     }
 
     /**
@@ -99,17 +102,17 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(User $User)
     {
-        if (!$user) {
+        if (!$User) {
             return response()->json([
                 'message' => 'Not found'
             ] ,404);
         }
 
-        $user->status = 'x';
-        $user->save();
+        $User->status = 'x';
+        $User->save();
 
-        return response()->json($user, 200);
+        return response()->json($User, 200);
     }
 }
