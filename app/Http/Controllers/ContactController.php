@@ -40,11 +40,14 @@ class ContactController extends Controller
         }
 
         $Contact = new Contact();
+        
+        $Contact->user_id = $request->user_id;
+        $Contact->buyer_id = $request->buyer_id;
+        $Contact->seller_id = $request->seller_id;
+
         $Contact->name = $request->name;
-        $Contact->image = $request->image;
-        $Contact->title = $request->title;
-        $Contact->email = $request->email;
         $Contact->phone = $request->phone;
+        $Contact->email = $request->email;
         $Contact->save();
 
         return response()->json($Contact, 200);
@@ -86,12 +89,13 @@ class ContactController extends Controller
             ] ,404);
         }
 
-        $Contact->name = $request->name;
-        $Contact->image = $request->image;
-        $Contact->title = $request->title;
-        $Contact->email = $request->email;
-        $Contact->phone = $request->phone;
+        $Contact->user_id = $request->user_id;
+        $Contact->buyer_id = $request->buyer_id;
+        $Contact->seller_id = $request->seller_id;
 
+        $Contact->name = $request->name;
+        $Contact->phone = $request->phone;
+        $Contact->email = $request->email;
         $Contact->save();
 
         return response()->json($Contact, 200);
