@@ -41,9 +41,9 @@ class ContactController extends Controller
 
         $Contact = new Contact();
         
-        $Contact->user_id = $request->user_id;
-        $Contact->buyer_id = $request->buyer_id;
-        $Contact->seller_id = $request->seller_id;
+        $Contact->user_id = $request->user_id  ? $request->user_id : NULL;
+        $Contact->buyer_id = $request->buyer_id  ? $request->buyer_id : NULL;
+        $Contact->seller_id = $request->seller_id  ? $request->seller_id : NULL;
 
         $Contact->name = $request->name;
         $Contact->phone = $request->phone;
@@ -89,9 +89,9 @@ class ContactController extends Controller
             ] ,404);
         }
 
-        $Contact->user_id = $request->user_id;
-        $Contact->buyer_id = $request->buyer_id;
-        $Contact->seller_id = $request->seller_id;
+        $Contact->user_id = $request->user_id  ? $request->user_id : NULL;
+        $Contact->buyer_id = $request->buyer_id  ? $request->buyer_id : NULL;
+        $Contact->seller_id = $request->seller_id  ? $request->seller_id : NULL;
 
         $Contact->name = $request->name;
         $Contact->phone = $request->phone;
