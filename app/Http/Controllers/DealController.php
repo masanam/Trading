@@ -20,9 +20,9 @@ class DealController extends Controller
      */
     public function index()
     {
-        $Deal = Deal::get();
+        $deal = Deal::where('status', 'a')->get();
 
-        return response()->json($Deal, 200);
+        return response()->json($deal, 200);
     }
 
     /**
@@ -39,15 +39,10 @@ class DealController extends Controller
             ], 400);
         }
 
-        $Deal = new Deal();
-        $Deal->name = $request->name;
-        $Deal->image = $request->image;
-        $Deal->title = $request->title;
-        $Deal->email = $request->email;
-        $Deal->phone = $request->phone;
-        $Deal->save();
+        $deal = new Deal();
+        $deal->save();
 
-        return response()->json($Deal, 200);
+        return response()->json($deal, 200);
     }
 
     /**
@@ -56,9 +51,13 @@ class DealController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Deal $Deal)
+    public function show(Deal $deal)
     {
-        return response()->json($Deal, 200);
+        if($deal->status == 'a') {
+            return response()->json($deal, 200);
+        } else {
+            return response()->json(['message' => 'deactivated record'], 404);
+        }
     }
 
     /**
@@ -68,7 +67,7 @@ class DealController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Deal $Deal)
+    public function update(Request $request, Deal $deal)
     {
         if (!$request) {
             return response()->json([
@@ -76,21 +75,15 @@ class DealController extends Controller
             ], 400);
         }
 
-        if (!$Deal) {
+        if (!$deal) {
             return response()->json([
                 'message' => 'Not found'
             ] ,404);
         }
 
-        $Deal->name = $request->name;
-        $Deal->image = $request->image;
-        $Deal->title = $request->title;
-        $Deal->email = $request->email;
-        $Deal->phone = $request->phone;
+        // $deal->save();
 
-        $Deal->save();
-
-        return response()->json($Deal, 200);
+        return response()->json($deal, 200);
     }
 
     /**
@@ -99,17 +92,17 @@ class DealController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Deal $Deal)
+    public function destroy(Deal $deal)
     {
-        if (!$Deal) {
+        if (!$deal) {
             return response()->json([
                 'message' => 'Not found'
             ] ,404);
         }
 
-        $Deal->status = 'x';
-        $Deal->save();
+        $deal->status = 'x';
+        $deal->save();
 
-        return response()->json($Deal, 200);
+        return response()->json($deal, 200);
     }
 }

@@ -20,7 +20,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $product = Product::get();
+        $product = Product::where('status', 'a')->get();
 
         return response()->json($product, 200);
     }
@@ -58,7 +58,11 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        return response()->json($product, 200);
+        if($product->status == 'a') {
+            return response()->json($product, 200);
+        } else {
+            return response()->json(['message' => 'deactivated record'], 404);
+        }
     }
 
     /**

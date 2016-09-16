@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Model\SellDeal;
+
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -18,17 +20,9 @@ class SellDealController extends Controller
      */
     public function index()
     {
-        //
-    }
+        $sell_deal = SellDeal::where('status', 'a')->get();
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return response()->json($sell_deal, 200);
     }
 
     /**
@@ -39,7 +33,19 @@ class SellDealController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if(!$request) {
+            return response()->json([
+                'message' => 'Bad Request'
+            ], 400);
+        }
+
+        $sell_deal = new SellDeal();
+        $sell_deal->sell_order_id = $request->sell_order_id;
+        $sell_deal->user_id = $request->user_id;
+        $sell_deal->deal_id = $request->deal_id;
+        $sell_deal->save();
+
+        return response()->json($sell_deal, 200);
     }
 
     /**
@@ -48,20 +54,13 @@ class SellDealController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(SellDeal $sell_deal)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        if($sell_deal->status == 'a') {
+            return response()->json($sell_deal, 200);
+        } else {
+            return response()->json(['message' => 'deactivated record'], 404);
+        }
     }
 
     /**
@@ -71,9 +70,26 @@ class SellDealController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, SellDeal $sell_deal)
     {
-        //
+        if (!$request) {
+            return response()->json([
+                'message' => 'Bad Request'
+            ], 400);
+        }
+
+        if (!$sell_deal) {
+            return response()->json([
+                'message' => 'Not found'
+            ] ,404);
+        }
+
+        $sell_deal->sell_order_id = $request->sell_order_id;
+        $sell_deal->user_id = $request->user_id;
+        $sell_deal->deal_id = $request->deal_id;
+        $sell_deal->save();
+
+        return response()->json($sell_deal, 200);
     }
 
     /**
@@ -82,8 +98,17 @@ class SellDealController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(SellDeal $sell_deal)
     {
-        //
+        if (!$sell_deal) {
+            return response()->json([
+                'message' => 'Not found'
+            ] ,404);
+        }
+
+        $sell_deal->status = 'x';
+        $sell_deal->save();
+
+        return response()->json($sell_deal, 200);
     }
 }

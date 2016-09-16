@@ -20,7 +20,7 @@ class SellOrderController extends Controller
      */
     public function index()
     {
-        $sell_order = SellOrder::get();
+        $sell_order = SellOrder::where('status', 'a')->get();
 
         return response()->json($sell_order, 200);
     }
@@ -58,7 +58,11 @@ class SellOrderController extends Controller
      */
     public function show(SellOrder $sell_order)
     {
-        return response()->json($sell_order, 200);
+        if($sell_order->status == 'a') {
+            return response()->json($sell_order, 200);
+        } else {
+            return response()->json(['message' => 'deactivated record'], 404);
+        }
     }
 
     /**

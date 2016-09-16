@@ -10,9 +10,9 @@ use App\Http\Requests;
 
 class UserController extends Controller
 {
-    public function __construct() {
-        $this->middleware('jwt.auth', ['except' => 'store']);
-    }
+    // public function __construct() {
+    //     $this->middleware('jwt.auth', ['except' => 'store']);
+    // }
     /**
      * Display a listing of the resource.
      *
@@ -20,7 +20,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user = User::get();
+        $user = User::where('status', 'a')->get();
 
         return response()->json($user, 200);
     }
@@ -45,6 +45,12 @@ class UserController extends Controller
         $user->title = $request->title;
         $user->email = $request->email;
         $user->phone = $request->phone;
+        $user->password = bcrypt($request->password);
+
+        $user->role = 'user';
+
+        $user->status = 'a';
+
         $user->save();
 
         return response()->json($user, 200);
@@ -58,7 +64,11 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return response()->json($user, 200);
+        if($user->status == 'a') {
+            return response()->json($user, 200);
+        } else {
+            return response()->json(['message' => 'deactivated record'], 404);
+        }    
     }
 
     /**
@@ -87,6 +97,11 @@ class UserController extends Controller
         $user->title = $request->title;
         $user->email = $request->email;
         $user->phone = $request->phone;
+        $user->password = bcrypt($request->password);
+
+        $user->role = $request->role ? $request->role : 'user';
+
+        $user->status = 'a';
 
         $user->save();
 

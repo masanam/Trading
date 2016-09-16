@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Model\BuyDeal;
+
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -18,17 +20,9 @@ class BuyDealController extends Controller
      */
     public function index()
     {
-        //
-    }
+        $buy_deal = BuyDeal::where('status', 'a')->get();
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return response()->json($buy_deal, 200);
     }
 
     /**
@@ -39,7 +33,19 @@ class BuyDealController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if(!$request) {
+            return response()->json([
+                'message' => 'Bad Request'
+            ], 400);
+        }
+
+        $buy_deal = new BuyDeal();
+        $buy_deal->buy_order_id = $request->buy_order_id;
+        $buy_deal->user_id = $request->user_id;
+        $buy_deal->deal_id = $request->deal_id;
+        $buy_deal->save();
+
+        return response()->json($buy_deal, 200);
     }
 
     /**
@@ -48,20 +54,13 @@ class BuyDealController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(BuyDeal $buy_deal)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        if($buy_deal->status == 'a') {
+            return response()->json($buy_deal, 200);
+        } else {
+            return response()->json(['message' => 'deactivated record'], 404);
+        }
     }
 
     /**
@@ -71,9 +70,26 @@ class BuyDealController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, BuyDeal $buy_deal)
     {
-        //
+        if (!$request) {
+            return response()->json([
+                'message' => 'Bad Request'
+            ], 400);
+        }
+
+        if (!$buy_deal) {
+            return response()->json([
+                'message' => 'Not found'
+            ] ,404);
+        }
+
+        $buy_deal->buy_order_id = $request->buy_order_id;
+        $buy_deal->user_id = $request->user_id;
+        $buy_deal->deal_id = $request->deal_id;
+        $buy_deal->save();
+
+        return response()->json($buy_deal, 200);
     }
 
     /**
@@ -82,8 +98,17 @@ class BuyDealController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(BuyDeal $buy_deal)
     {
-        //
+        if (!$buy_deal) {
+            return response()->json([
+                'message' => 'Not found'
+            ] ,404);
+        }
+
+        $buy_deal->status = 'x';
+        $buy_deal->save();
+
+        return response()->json($buy_deal, 200);
     }
 }

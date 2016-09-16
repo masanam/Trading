@@ -20,9 +20,9 @@ class ContactController extends Controller
      */
     public function index()
     {
-        $Contact = Contact::get();
+        $contact = Contact::where('status', 'a')->get();
 
-        return response()->json($Contact, 200);
+        return response()->json($contact, 200);
     }
 
     /**
@@ -39,15 +39,18 @@ class ContactController extends Controller
             ], 400);
         }
 
-        $Contact = new Contact();
-        $Contact->name = $request->name;
-        $Contact->image = $request->image;
-        $Contact->title = $request->title;
-        $Contact->email = $request->email;
-        $Contact->phone = $request->phone;
-        $Contact->save();
+        $contact = new Contact();
+        
+        $contact->user_id = $request->user_id  ? $request->user_id : NULL;
+        $contact->buyer_id = $request->buyer_id  ? $request->buyer_id : NULL;
+        $contact->seller_id = $request->seller_id  ? $request->seller_id : NULL;
 
-        return response()->json($Contact, 200);
+        $contact->name = $request->name;
+        $contact->phone = $request->phone;
+        $contact->email = $request->email;
+        $contact->save();
+
+        return response()->json($contact, 200);
     }
 
     /**
@@ -56,9 +59,13 @@ class ContactController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Contact $Contact)
+    public function show(Contact $contact)
     {
-        return response()->json($Contact, 200);
+        if($contact->status == 'a') {
+            return response()->json($contact, 200);
+        } else {
+            return response()->json(['message' => 'deactivated record'], 404);
+        }
     }
 
     /**
@@ -68,7 +75,7 @@ class ContactController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Contact $Contact)
+    public function update(Request $request, Contact $contact)
     {
         if (!$request) {
             return response()->json([
@@ -76,21 +83,22 @@ class ContactController extends Controller
             ], 400);
         }
 
-        if (!$Contact) {
+        if (!$contact) {
             return response()->json([
                 'message' => 'Not found'
             ] ,404);
         }
 
-        $Contact->name = $request->name;
-        $Contact->image = $request->image;
-        $Contact->title = $request->title;
-        $Contact->email = $request->email;
-        $Contact->phone = $request->phone;
+        $contact->user_id = $request->user_id  ? $request->user_id : NULL;
+        $contact->buyer_id = $request->buyer_id  ? $request->buyer_id : NULL;
+        $contact->seller_id = $request->seller_id  ? $request->seller_id : NULL;
 
-        $Contact->save();
+        $contact->name = $request->name;
+        $contact->phone = $request->phone;
+        $contact->email = $request->email;
+        $contact->save();
 
-        return response()->json($Contact, 200);
+        return response()->json($contact, 200);
     }
 
     /**
@@ -99,17 +107,17 @@ class ContactController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Contact $Contact)
+    public function destroy(Contact $contact)
     {
-        if (!$Contact) {
+        if (!$contact) {
             return response()->json([
                 'message' => 'Not found'
             ] ,404);
         }
 
-        $Contact->status = 'x';
-        $Contact->save();
+        $contact->status = 'x';
+        $contact->save();
 
-        return response()->json($Contact, 200);
+        return response()->json($contact, 200);
     }
 }

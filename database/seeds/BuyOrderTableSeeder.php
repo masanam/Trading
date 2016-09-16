@@ -16,6 +16,7 @@ class BuyOrderTableSeeder extends Seeder
       $faker = Faker\Factory::create();
 
       BuyOrder::create([
+            'user_id' => 1 ,
             'buyer_id' => 1 ,
 
             'address' => 'Jl. Kapten Darmo Sugondo No.56, Sidorukun, Kec. Gresik, Kabupaten Gresik, Jawa Timur',
@@ -53,6 +54,7 @@ class BuyOrderTableSeeder extends Seeder
       ]);
 
       BuyOrder::create([
+            'user_id' => 1 ,
             'buyer_id' => 1 ,
 
             'address' => 'Jl. Kapten Darmo Sugondo No.56, Sidorukun, Kec. Gresik, Kabupaten Gresik, Jawa Timur',
@@ -90,6 +92,7 @@ class BuyOrderTableSeeder extends Seeder
       ]);
 
       BuyOrder::create([
+            'user_id' => 2 ,
             'buyer_id' => 1 ,
 
             'address' => 'Jl. Kapten Darmo Sugondo No.56, Sidorukun, Kec. Gresik, Kabupaten Gresik, Jawa Timur',
@@ -127,6 +130,7 @@ class BuyOrderTableSeeder extends Seeder
       ]);
 
       BuyOrder::create([
+            'user_id' => 3 ,
             'buyer_id' => 2 ,
 
             'address' => 'Jalan Raya Anyer KM 11. Ciwandan Cilegon 42446. Banten' ,
@@ -164,6 +168,7 @@ class BuyOrderTableSeeder extends Seeder
       ]);
 
       BuyOrder::create([
+            'user_id' => 1 ,
             'buyer_id' => 3 ,
 
             'address' => 'Jl. MH Thamrin No. 51, Jakarta 10350' ,
@@ -201,6 +206,7 @@ class BuyOrderTableSeeder extends Seeder
       ]);
 
       BuyOrder::create([
+            'user_id' => 3 ,
             'buyer_id' => 3 ,
 
             'address' => 'Jl. MH Thamrin No. 51, Jakarta 10350' ,

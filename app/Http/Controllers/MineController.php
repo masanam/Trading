@@ -20,9 +20,9 @@ class MineController extends Controller
      */
     public function index()
     {
-        $Mine = Mine::get();
+        $mine = Mine::where('status', 'a')->get();
 
-        return response()->json($Mine, 200);
+        return response()->json($mine, 200);
     }
 
     /**
@@ -39,15 +39,15 @@ class MineController extends Controller
             ], 400);
         }
 
-        $Mine = new Mine();
-        $Mine->name = $request->name;
-        $Mine->image = $request->image;
-        $Mine->title = $request->title;
-        $Mine->email = $request->email;
-        $Mine->phone = $request->phone;
-        $Mine->save();
+        $mine = new Mine();
+        $mine->name = $request->name;
+        $mine->image = $request->image;
+        $mine->title = $request->title;
+        $mine->email = $request->email;
+        $mine->phone = $request->phone;
+        $mine->save();
 
-        return response()->json($Mine, 200);
+        return response()->json($mine, 200);
     }
 
     /**
@@ -56,9 +56,13 @@ class MineController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Mine $Mine)
+    public function show(Mine $mine)
     {
-        return response()->json($Mine, 200);
+        if($mine->status == 'a') {
+            return response()->json($mine, 200);
+        } else {
+            return response()->json(['message' => 'deactivated record'], 404);
+        }
     }
 
     /**
@@ -68,7 +72,7 @@ class MineController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Mine $Mine)
+    public function update(Request $request, Mine $mine)
     {
         if (!$request) {
             return response()->json([
@@ -76,21 +80,21 @@ class MineController extends Controller
             ], 400);
         }
 
-        if (!$Mine) {
+        if (!$mine) {
             return response()->json([
                 'message' => 'Not found'
             ] ,404);
         }
 
-        $Mine->name = $request->name;
-        $Mine->image = $request->image;
-        $Mine->title = $request->title;
-        $Mine->email = $request->email;
-        $Mine->phone = $request->phone;
+        $mine->name = $request->name;
+        $mine->image = $request->image;
+        $mine->title = $request->title;
+        $mine->email = $request->email;
+        $mine->phone = $request->phone;
 
-        $Mine->save();
+        $mine->save();
 
-        return response()->json($Mine, 200);
+        return response()->json($mine, 200);
     }
 
     /**
@@ -99,17 +103,17 @@ class MineController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Mine $Mine)
+    public function destroy(Mine $mine)
     {
-        if (!$Mine) {
+        if (!$mine) {
             return response()->json([
                 'message' => 'Not found'
             ] ,404);
         }
 
-        $Mine->status = 'x';
-        $Mine->save();
+        $mine->status = 'x';
+        $mine->save();
 
-        return response()->json($Mine, 200);
+        return response()->json($mine, 200);
     }
 }

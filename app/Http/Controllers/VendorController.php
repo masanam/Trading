@@ -19,7 +19,7 @@ class VendorController extends Controller
      */
     public function index()
     {
-        $vendor = Vendor::get();
+        $vendor = Vendor::where('status', 'a')->get();
 
         return response()->json($vendor, 200);
     }
@@ -39,11 +39,20 @@ class VendorController extends Controller
         }
 
         $vendor = new Vendor();
-        $vendor->name = $request->name;
-        $vendor->image = $request->image;
-        $vendor->title = $request->title;
-        $vendor->email = $request->email;
+        $vendor->company_name = $request->company_name;
+            
         $vendor->phone = $request->phone;
+        $vendor->email = $request->email;
+        $vendor->web = $request->web;
+
+        $vendor->industry = $request->industry;
+
+        $vendor->city = $request->city;
+        $vendor->address = $request->address;
+
+        $vendor->description = $request->description;
+
+        $vendor->status = 'a';
         $vendor->save();
 
         return response()->json($vendor, 200);
@@ -57,7 +66,11 @@ class VendorController extends Controller
      */
     public function show(Vendor $vendor)
     {
-        return response()->json($vendor, 200);
+        if($vendor->status == 'a') {
+            return response()->json($vendor, 200);
+        } else {
+            return response()->json(['message' => 'deactivated record'], 404);
+        }
     }
 
     /**
@@ -81,11 +94,18 @@ class VendorController extends Controller
             ] ,404);
         }
 
-        $vendor->name = $request->name;
-        $vendor->image = $request->image;
-        $vendor->title = $request->title;
-        $vendor->email = $request->email;
+        $vendor->company_name = $request->company_name;
+
         $vendor->phone = $request->phone;
+        $vendor->email = $request->email;
+        $vendor->web = $request->web;
+
+        $vendor->industry = $request->industry;
+
+        $vendor->city = $request->city;
+        $vendor->address = $request->address;
+
+        $vendor->description = $request->description;
 
         $vendor->save();
 

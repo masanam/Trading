@@ -17,7 +17,7 @@ class CreateSellDealTable extends Migration
             $table->increments('id');
             $table->integer('sell_order_id')->unsigned();
             $table->integer('user_id')->unsigned();
-            $table->integer('deal_id');
+            $table->integer('deal_id')->nullable();
             
             $table->timestamps();
         });

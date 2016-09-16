@@ -20,7 +20,7 @@ class SellerController extends Controller
      */
     public function index()
     {
-        $seller = Seller::get();
+        $seller = Seller::where('status', 'a')->get();
 
         return response()->json($seller, 200);
     }
@@ -40,11 +40,25 @@ class SellerController extends Controller
         }
 
         $seller = new Seller();
-        $seller->name = $request->name;
-        $seller->image = $request->image;
-        $seller->title = $request->title;
-        $seller->email = $request->email;
+        $seller->user_id = $request->user_id;
+            
+        $seller->company_name = $request->company_name;
+
         $seller->phone = $request->phone;
+        $seller->email = $request->email;
+        $seller->web = $request->web;
+
+        $seller->industry = $request->industry;
+
+        $seller->city = $request->city;
+        $seller->address = $request->address;
+
+        $seller->latitude = $request->latitude;
+        $seller->longitude = $request->longitude;
+
+        $seller->description = $request->description;
+
+        $seller->status = $request->status;
         $seller->save();
 
         return response()->json($seller, 200);
@@ -58,7 +72,11 @@ class SellerController extends Controller
      */
     public function show(Seller $seller)
     {
-        return response()->json($seller, 200);
+        if($seller->status == 'a') {
+            return response()->json($seller, 200);
+        } else {
+            return response()->json(['message' => 'deactivated record'], 404);
+        }
     }
 
     /**
@@ -82,12 +100,25 @@ class SellerController extends Controller
             ] ,404);
         }
 
-        $seller->name = $request->name;
-        $seller->image = $request->image;
-        $seller->title = $request->title;
-        $seller->email = $request->email;
-        $seller->phone = $request->phone;
+        $seller->user_id = $request->user_id;
+            
+        $seller->company_name = $request->company_name;
 
+        $seller->phone = $request->phone;
+        $seller->email = $request->email;
+        $seller->web = $request->web;
+
+        $seller->industry = $request->industry;
+
+        $seller->city = $request->city;
+        $seller->address = $request->address;
+
+        $seller->latitude = $request->latitude;
+        $seller->longitude = $request->longitude;
+
+        $seller->description = $request->description;
+
+        $seller->status = $request->status;
         $seller->save();
 
         return response()->json($seller, 200);
