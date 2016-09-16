@@ -39,11 +39,20 @@ class VendorController extends Controller
         }
 
         $Vendor = new Vendor();
-        $Vendor->name = $request->name;
-        $Vendor->image = $request->image;
-        $Vendor->title = $request->title;
-        $Vendor->email = $request->email;
+        $Vendor->company_name = $request->company_name;
+            
         $Vendor->phone = $request->phone;
+        $Vendor->email = $request->email;
+        $Vendor->web = $request->web;
+
+        $Vendor->industry = $request->industry;
+
+        $Vendor->city = $request->city;
+        $Vendor->address = $request->address;
+
+        $Vendor->description = $request->description;
+
+        $Vendor->status = 'a';
         $Vendor->save();
 
         return response()->json($Vendor, 200);
@@ -85,11 +94,20 @@ class VendorController extends Controller
             ] ,404);
         }
 
-        $Vendor->name = $request->name;
-        $Vendor->image = $request->image;
-        $Vendor->title = $request->title;
-        $Vendor->email = $request->email;
+        $Vendor->company_name = $request->company_name;
+            
         $Vendor->phone = $request->phone;
+        $Vendor->email = $request->email;
+        $Vendor->web = $request->web;
+
+        $Vendor->industry = $request->industry;
+
+        $Vendor->city = $request->city;
+        $Vendor->address = $request->address;
+
+        $Vendor->description = $request->description;
+
+        $Vendor->status = 'a';
 
         $Vendor->save();
 

@@ -40,11 +40,6 @@ class DealController extends Controller
         }
 
         $Deal = new Deal();
-        $Deal->name = $request->name;
-        $Deal->image = $request->image;
-        $Deal->title = $request->title;
-        $Deal->email = $request->email;
-        $Deal->phone = $request->phone;
         $Deal->save();
 
         return response()->json($Deal, 200);
@@ -86,13 +81,7 @@ class DealController extends Controller
             ] ,404);
         }
 
-        $Deal->name = $request->name;
-        $Deal->image = $request->image;
-        $Deal->title = $request->title;
-        $Deal->email = $request->email;
-        $Deal->phone = $request->phone;
-
-        $Deal->save();
+        // $Deal->save();
 
         return response()->json($Deal, 200);
     }
