@@ -20,7 +20,7 @@ class DealController extends Controller
      */
     public function index()
     {
-        $Deal = Deal::get();
+        $Deal = Deal::where('status', 'a')->get();
 
         return response()->json($Deal, 200);
     }
@@ -58,7 +58,11 @@ class DealController extends Controller
      */
     public function show(Deal $Deal)
     {
-        return response()->json($Deal, 200);
+        if($Deal->status == 'a') {
+            return response()->json($Deal, 200);
+        } else {
+            return response()->json(['message' => 'deactivated record'], 404);
+        }
     }
 
     /**
