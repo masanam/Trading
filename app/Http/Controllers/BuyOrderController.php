@@ -20,7 +20,7 @@ class BuyOrderController extends Controller
      */
     public function index()
     {
-        $BuyOrder = BuyOrder::get();
+        $BuyOrder = BuyOrder::where('status', 'a')->get();
 
         return response()->json($BuyOrder, 200);
     }
@@ -58,7 +58,11 @@ class BuyOrderController extends Controller
      */
     public function show(BuyOrder $BuyOrder)
     {
-        return response()->json($BuyOrder, 200);
+        if($BuyOrder->status == 'a') {
+            return response()->json($BuyOrder, 200);
+        } else {
+            return response()->json(['message' => 'deleted'], 404);
+        }
     }
 
     /**
