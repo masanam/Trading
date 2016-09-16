@@ -16,6 +16,8 @@ class CreateBuyOrderTable extends Migration
         Schema::create('buy_order', function (Blueprint $table) {
             $table->increments('id');
 
+            $table->integer('user_id');
+
             $table->integer('buyer_id')->unsigned();
 
             $table->date('order_date');

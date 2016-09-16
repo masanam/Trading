@@ -1,0 +1,27 @@
+<?php
+
+/**
+ *	Created by : Aryo Pradipta Gema 
+ *	Date : September 15th 2016
+ */
+
+namespace App\Http\Traits;
+
+use App\Model\Activity;
+use App\Model\User;
+
+trait ActivityTrait {
+	/*
+	 *	Create activity log for every user
+	 */
+    public function storeActivity($actor, $action, $table, $entity_id) {
+        $activity = new Activity();
+        $activity->actor = $actor;
+        $activity->action = $action;
+        $activity->table = $table;
+        $activity->entity_id = $entity_id;
+        $activity->save();
+
+        return response()->json($activity, 200);
+    }
+}

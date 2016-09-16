@@ -16,6 +16,8 @@ class CreateSellOrderTable extends Migration
         Schema::create('sell_order', function (Blueprint $table) {
             $table->increments('id');
 
+            $table->integer('user_id');
+
             $table->integer('seller_id')->unsigned();
 
             $table->date('order_date');
