@@ -20,7 +20,7 @@ class BuyOrderController extends Controller
      */
     public function index()
     {
-        $BuyOrder = BuyOrder::get();
+        $BuyOrder = BuyOrder::where('status', 'a')->get();
 
         return response()->json($BuyOrder, 200);
     }

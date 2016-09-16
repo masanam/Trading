@@ -20,7 +20,7 @@ class BuyerController extends Controller
      */
     public function index()
     {
-        $Buyer = Buyer::get();
+        $Buyer = Buyer::where('status', 'a')->get();
 
         return response()->json($Buyer, 200);
     }
@@ -58,7 +58,11 @@ class BuyerController extends Controller
      */
     public function show(Buyer $Buyer)
     {
-        return response()->json($Buyer, 200);
+        if($Buyer->status == 'a') {
+            return response()->json($Buyer, 200);
+        } else {
+            return response()->json(['message' => 'deactivated record'], 404);
+        }
     }
 
     /**

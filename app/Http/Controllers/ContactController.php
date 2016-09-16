@@ -20,7 +20,7 @@ class ContactController extends Controller
      */
     public function index()
     {
-        $Contact = Contact::get();
+        $Contact = Contact::where('status', 'a')->get();
 
         return response()->json($Contact, 200);
     }
@@ -58,7 +58,11 @@ class ContactController extends Controller
      */
     public function show(Contact $Contact)
     {
-        return response()->json($Contact, 200);
+        if($Contact->status == 'a') {
+            return response()->json($Contact, 200);
+        } else {
+            return response()->json(['message' => 'deactivated record'], 404);
+        }
     }
 
     /**
