@@ -20,7 +20,7 @@ class MineController extends Controller
      */
     public function index()
     {
-        $Mine = Mine::get();
+        $Mine = Mine::where('status', 'a')->get();
 
         return response()->json($Mine, 200);
     }
@@ -58,7 +58,11 @@ class MineController extends Controller
      */
     public function show(Mine $Mine)
     {
-        return response()->json($Mine, 200);
+        if($Mine->status == 'a') {
+            return response()->json($Mine, 200);
+        } else {
+            return response()->json(['message' => 'deactivated record'], 404);
+        }
     }
 
     /**
