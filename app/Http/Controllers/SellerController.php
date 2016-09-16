@@ -20,9 +20,9 @@ class SellerController extends Controller
      */
     public function index()
     {
-        $seller = Seller::get();
+        $Seller = Seller::where('status', 'a')->get();
 
-        return response()->json($seller, 200);
+        return response()->json($Seller, 200);
     }
 
     /**
@@ -39,15 +39,15 @@ class SellerController extends Controller
             ], 400);
         }
 
-        $seller = new Seller();
-        $seller->name = $request->name;
-        $seller->image = $request->image;
-        $seller->title = $request->title;
-        $seller->email = $request->email;
-        $seller->phone = $request->phone;
-        $seller->save();
+        $Seller = new Seller();
+        $Seller->name = $request->name;
+        $Seller->image = $request->image;
+        $Seller->title = $request->title;
+        $Seller->email = $request->email;
+        $Seller->phone = $request->phone;
+        $Seller->save();
 
-        return response()->json($seller, 200);
+        return response()->json($Seller, 200);
     }
 
     /**
@@ -56,9 +56,13 @@ class SellerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Seller $seller)
+    public function show(Seller $Seller)
     {
-        return response()->json($seller, 200);
+        if($Seller->status == 'a') {
+            return response()->json($Seller, 200);
+        } else {
+            return response()->json(['message' => 'deactivated record'], 404);
+        }
     }
 
     /**
@@ -68,7 +72,7 @@ class SellerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Seller $seller)
+    public function update(Request $request, Seller $Seller)
     {
         if (!$request) {
             return response()->json([
@@ -76,21 +80,21 @@ class SellerController extends Controller
             ], 400);
         }
 
-        if (!$seller) {
+        if (!$Seller) {
             return response()->json([
                 'message' => 'Not found'
             ] ,404);
         }
 
-        $seller->name = $request->name;
-        $seller->image = $request->image;
-        $seller->title = $request->title;
-        $seller->email = $request->email;
-        $seller->phone = $request->phone;
+        $Seller->name = $request->name;
+        $Seller->image = $request->image;
+        $Seller->title = $request->title;
+        $Seller->email = $request->email;
+        $Seller->phone = $request->phone;
 
-        $seller->save();
+        $Seller->save();
 
-        return response()->json($seller, 200);
+        return response()->json($Seller, 200);
     }
 
     /**
@@ -99,17 +103,17 @@ class SellerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Seller $seller)
+    public function destroy(Seller $Seller)
     {
-        if (!$seller) {
+        if (!$Seller) {
             return response()->json([
                 'message' => 'Not found'
             ] ,404);
         }
 
-        $seller->status = 'x';
-        $seller->save();
+        $Seller->status = 'x';
+        $Seller->save();
 
-        return response()->json($seller, 200);
+        return response()->json($Seller, 200);
     }
 }
