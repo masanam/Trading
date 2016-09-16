@@ -40,11 +40,25 @@ class BuyerController extends Controller
         }
 
         $Buyer = new Buyer();
-        $Buyer->name = $request->name;
-        $Buyer->image = $request->image;
-        $Buyer->title = $request->title;
-        $Buyer->email = $request->email;
+        $Buyer->user_id = $request->user_id;
+
+        $Buyer->company_name = $request->company_name;
+        
         $Buyer->phone = $request->phone;
+        $Buyer->email = $request->email;
+        $Buyer->web = $request->web;
+
+        $Buyer->industry = $request->industry;
+
+        $Buyer->city = $request->city;
+        $Buyer->address = $request->address;
+
+        $Buyer->latitude = $request->latitude;
+        $Buyer->longitude = $request->longitude;
+
+        $Buyer->description = $request->description;
+
+        $Buyer->status = $request->status;
         $Buyer->save();
 
         return response()->json($Buyer, 200);
@@ -86,12 +100,25 @@ class BuyerController extends Controller
             ] ,404);
         }
 
-        $Buyer->name = $request->name;
-        $Buyer->image = $request->image;
-        $Buyer->title = $request->title;
-        $Buyer->email = $request->email;
-        $Buyer->phone = $request->phone;
+        $Buyer->user_id = $request->user_id;
 
+        $Buyer->company_name = $request->company_name;
+        
+        $Buyer->phone = $request->phone;
+        $Buyer->email = $request->email;
+        $Buyer->web = $request->web;
+
+        $Buyer->industry = $request->industry;
+
+        $Buyer->city = $request->city;
+        $Buyer->address = $request->address;
+
+        $Buyer->latitude = $request->latitude;
+        $Buyer->longitude = $request->longitude;
+
+        $Buyer->description = $request->description;
+
+        $Buyer->status = $request->status;
         $Buyer->save();
 
         return response()->json($Buyer, 200);
