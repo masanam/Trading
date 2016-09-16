@@ -20,9 +20,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $Product = Product::where('status', 'a')->get();
+        $product = Product::where('status', 'a')->get();
 
-        return response()->json($Product, 200);
+        return response()->json($product, 200);
     }
 
     /**
@@ -39,15 +39,15 @@ class ProductController extends Controller
             ], 400);
         }
 
-        $Product = new Product();
-        $Product->name = $request->name;
-        $Product->image = $request->image;
-        $Product->title = $request->title;
-        $Product->email = $request->email;
-        $Product->phone = $request->phone;
-        $Product->save();
+        $product = new Product();
+        $product->name = $request->name;
+        $product->image = $request->image;
+        $product->title = $request->title;
+        $product->email = $request->email;
+        $product->phone = $request->phone;
+        $product->save();
 
-        return response()->json($Product, 200);
+        return response()->json($product, 200);
     }
 
     /**
@@ -56,10 +56,10 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $Product)
+    public function show(Product $product)
     {
-        if($Product->status == 'a') {
-            return response()->json($Product, 200);
+        if($product->status == 'a') {
+            return response()->json($product, 200);
         } else {
             return response()->json(['message' => 'deactivated record'], 404);
         }
@@ -72,7 +72,7 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $Product)
+    public function update(Request $request, Product $product)
     {
         if (!$request) {
             return response()->json([
@@ -80,21 +80,21 @@ class ProductController extends Controller
             ], 400);
         }
 
-        if (!$Product) {
+        if (!$product) {
             return response()->json([
                 'message' => 'Not found'
             ] ,404);
         }
 
-        $Product->name = $request->name;
-        $Product->image = $request->image;
-        $Product->title = $request->title;
-        $Product->email = $request->email;
-        $Product->phone = $request->phone;
+        $product->name = $request->name;
+        $product->image = $request->image;
+        $product->title = $request->title;
+        $product->email = $request->email;
+        $product->phone = $request->phone;
 
-        $Product->save();
+        $product->save();
 
-        return response()->json($Product, 200);
+        return response()->json($product, 200);
     }
 
     /**
@@ -103,17 +103,17 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $Product)
+    public function destroy(Product $product)
     {
-        if (!$Product) {
+        if (!$product) {
             return response()->json([
                 'message' => 'Not found'
             ] ,404);
         }
 
-        $Product->status = 'x';
-        $Product->save();
+        $product->status = 'x';
+        $product->save();
 
-        return response()->json($Product, 200);
+        return response()->json($product, 200);
     }
 }

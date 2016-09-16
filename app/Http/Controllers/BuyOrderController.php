@@ -24,9 +24,9 @@ class BuyOrderController extends Controller
      */
     public function index()
     {
-        $BuyOrder = BuyOrder::where('status', 'a')->get();
+        $buy_order = BuyOrder::where('status', 'a')->get();
 
-        return response()->json($BuyOrder, 200);
+        return response()->json($buy_order, 200);
     }
 
     /**
@@ -43,72 +43,72 @@ class BuyOrderController extends Controller
             ], 400);
         }
 
-        $BuyOrder = new BuyOrder();
+        $buy_order = new BuyOrder();
 
-        $BuyOrder->user_id = $request->user_id;
-        $BuyOrder->buyer_id = $request->buyer_id;
+        $buy_order->user_id = $request->user_id;
+        $buy_order->buyer_id = $request->buyer_id;
 
-        $BuyOrder->order_date = $request->order_date;
-        $BuyOrder->deadline = $request->deadline;
+        $buy_order->order_date = $request->order_date;
+        $buy_order->deadline = $request->deadline;
 
-        $BuyOrder->address = $request->address;
-        $BuyOrder->latitude = $request->latitude;
-        $BuyOrder->longitude = $request->longitude;
+        $buy_order->address = $request->address;
+        $buy_order->latitude = $request->latitude;
+        $buy_order->longitude = $request->longitude;
 
-        $BuyOrder->gcv_arb_min = $request->gcv_arb_min;
-        $BuyOrder->gcv_arb_max = $request->gcv_arb_max;
-        $BuyOrder->gcv_arb_reject = $request->gcv_arb_reject;
-        $BuyOrder->gcv_arb_bonus = $request->gcv_arb_bonus;
-        $BuyOrder->gcv_adb_min = $request->gcv_adb_min;
-        $BuyOrder->gcv_adb_max = $request->gcv_adb_max;
-        $BuyOrder->gcv_adb_reject = $request->gcv_adb_reject;
-        $BuyOrder->gcv_adb_bonus = $request->gcv_adb_bonus;
-        $BuyOrder->ncv_min = $request->ncv_min;
-        $BuyOrder->ncv_max = $request->ncv_max;
-        $BuyOrder->ncv_reject = $request->ncv_reject;
-        $BuyOrder->ncv_bonus = $request->ncv_bonus;
-        $BuyOrder->ash_min = $request->ash_min;
-        $BuyOrder->ash_max = $request->ash_max;
-        $BuyOrder->ash_reject = $request->ash_reject;
-        $BuyOrder->ash_bonus = $request->ash_bonus;
-        $BuyOrder->ts_min = $request->ts_min;
-        $BuyOrder->ts_max = $request->ts_max;
-        $BuyOrder->ts_reject = $request->ts_reject;
-        $BuyOrder->ts_bonus = $request->ts_bonus;
-        $BuyOrder->tm_min = $request->tm_min;
-        $BuyOrder->tm_max = $request->tm_max;
-        $BuyOrder->tm_reject = $request->tm_reject;
-        $BuyOrder->tm_bonus = $request->tm_bonus;
-        $BuyOrder->im_min = $request->im_min;
-        $BuyOrder->im_max = $request->im_max;
-        $BuyOrder->im_reject = $request->im_reject;
-        $BuyOrder->im_bonus = $request->im_bonus;
-        $BuyOrder->fc_min = $request->fc_min;
-        $BuyOrder->fc_max = $request->fc_max;
-        $BuyOrder->fc_reject = $request->fc_reject;
-        $BuyOrder->fc_bonus = $request->fc_bonus;
-        $BuyOrder->vm_min = $request->vm_min;
-        $BuyOrder->vm_max = $request->vm_max;
-        $BuyOrder->vm_reject = $request->vm_reject;
-        $BuyOrder->vm_bonus = $request->vm_bonus;
-        $BuyOrder->hgi_min = $request->hgi_min;
-        $BuyOrder->hgi_max = $request->hgi_max;
-        $BuyOrder->hgi_reject = $request->hgi_reject;
-        $BuyOrder->hgi_bonus = $request->hgi_bonus;
-        $BuyOrder->size_min = $request->size_min;
-        $BuyOrder->size_max = $request->size_max;
-        $BuyOrder->size_reject = $request->size_reject;
-        $BuyOrder->size_bonus = $request->size_bonus;
+        $buy_order->gcv_arb_min = $request->gcv_arb_min;
+        $buy_order->gcv_arb_max = $request->gcv_arb_max;
+        $buy_order->gcv_arb_reject = $request->gcv_arb_reject;
+        $buy_order->gcv_arb_bonus = $request->gcv_arb_bonus;
+        $buy_order->gcv_adb_min = $request->gcv_adb_min;
+        $buy_order->gcv_adb_max = $request->gcv_adb_max;
+        $buy_order->gcv_adb_reject = $request->gcv_adb_reject;
+        $buy_order->gcv_adb_bonus = $request->gcv_adb_bonus;
+        $buy_order->ncv_min = $request->ncv_min;
+        $buy_order->ncv_max = $request->ncv_max;
+        $buy_order->ncv_reject = $request->ncv_reject;
+        $buy_order->ncv_bonus = $request->ncv_bonus;
+        $buy_order->ash_min = $request->ash_min;
+        $buy_order->ash_max = $request->ash_max;
+        $buy_order->ash_reject = $request->ash_reject;
+        $buy_order->ash_bonus = $request->ash_bonus;
+        $buy_order->ts_min = $request->ts_min;
+        $buy_order->ts_max = $request->ts_max;
+        $buy_order->ts_reject = $request->ts_reject;
+        $buy_order->ts_bonus = $request->ts_bonus;
+        $buy_order->tm_min = $request->tm_min;
+        $buy_order->tm_max = $request->tm_max;
+        $buy_order->tm_reject = $request->tm_reject;
+        $buy_order->tm_bonus = $request->tm_bonus;
+        $buy_order->im_min = $request->im_min;
+        $buy_order->im_max = $request->im_max;
+        $buy_order->im_reject = $request->im_reject;
+        $buy_order->im_bonus = $request->im_bonus;
+        $buy_order->fc_min = $request->fc_min;
+        $buy_order->fc_max = $request->fc_max;
+        $buy_order->fc_reject = $request->fc_reject;
+        $buy_order->fc_bonus = $request->fc_bonus;
+        $buy_order->vm_min = $request->vm_min;
+        $buy_order->vm_max = $request->vm_max;
+        $buy_order->vm_reject = $request->vm_reject;
+        $buy_order->vm_bonus = $request->vm_bonus;
+        $buy_order->hgi_min = $request->hgi_min;
+        $buy_order->hgi_max = $request->hgi_max;
+        $buy_order->hgi_reject = $request->hgi_reject;
+        $buy_order->hgi_bonus = $request->hgi_bonus;
+        $buy_order->size_min = $request->size_min;
+        $buy_order->size_max = $request->size_max;
+        $buy_order->size_reject = $request->size_reject;
+        $buy_order->size_bonus = $request->size_bonus;
 
-        $BuyOrder->volume = $request->volume;
+        $buy_order->volume = $request->volume;
         
-        $BuyOrder->status = 'a';
+        $buy_order->status = 'a';
 
-        $BuyOrder->save();
+        $buy_order->save();
 
-        // $activity = $this->storeActivity($BuyOrder->buyer_id, 'create', 'BuyOrder', $BuyOrder->id);
+        // $activity = $this->storeActivity($buy_order->buyer_id, 'create', 'BuyOrder', $buy_order->id);
 
-        return response()->json($BuyOrder, 200);
+        return response()->json($buy_order, 200);
     }
 
     /**
@@ -117,10 +117,10 @@ class BuyOrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(BuyOrder $BuyOrder)
+    public function show(BuyOrder $buy_order)
     {
-        if($BuyOrder->status == 'a') {
-            return response()->json($BuyOrder, 200);
+        if($buy_order->status == 'a') {
+            return response()->json($buy_order, 200);
         } else {
             return response()->json(['message' => 'deactivated record'], 404);
         }
@@ -133,7 +133,7 @@ class BuyOrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, BuyOrder $BuyOrder)
+    public function update(Request $request, BuyOrder $buy_order)
     {
         if (!$request) {
             return response()->json([
@@ -141,74 +141,74 @@ class BuyOrderController extends Controller
             ], 400);
         }
 
-        if (!$BuyOrder) {
+        if (!$buy_order) {
             return response()->json([
                 'message' => 'Not found'
             ] ,404);
         }
 
-        $BuyOrder->user_id = $request->user_id;
-        $BuyOrder->buyer_id = $request->buyer_id;
+        $buy_order->user_id = $request->user_id;
+        $buy_order->buyer_id = $request->buyer_id;
 
-        $BuyOrder->order_date = $request->order_date;
-        $BuyOrder->deadline = $request->deadline;
+        $buy_order->order_date = $request->order_date;
+        $buy_order->deadline = $request->deadline;
 
-        $BuyOrder->address = $request->address;
-        $BuyOrder->latitude = $request->latitude;
-        $BuyOrder->longitude = $request->longitude;
+        $buy_order->address = $request->address;
+        $buy_order->latitude = $request->latitude;
+        $buy_order->longitude = $request->longitude;
 
-        $BuyOrder->gcv_arb_min = $request->gcv_arb_min;
-        $BuyOrder->gcv_arb_max = $request->gcv_arb_max;
-        $BuyOrder->gcv_arb_reject = $request->gcv_arb_reject;
-        $BuyOrder->gcv_arb_bonus = $request->gcv_arb_bonus;
-        $BuyOrder->gcv_adb_min = $request->gcv_adb_min;
-        $BuyOrder->gcv_adb_max = $request->gcv_adb_max;
-        $BuyOrder->gcv_adb_reject = $request->gcv_adb_reject;
-        $BuyOrder->gcv_adb_bonus = $request->gcv_adb_bonus;
-        $BuyOrder->ncv_min = $request->ncv_min;
-        $BuyOrder->ncv_max = $request->ncv_max;
-        $BuyOrder->ncv_reject = $request->ncv_reject;
-        $BuyOrder->ncv_bonus = $request->ncv_bonus;
-        $BuyOrder->ash_min = $request->ash_min;
-        $BuyOrder->ash_max = $request->ash_max;
-        $BuyOrder->ash_reject = $request->ash_reject;
-        $BuyOrder->ash_bonus = $request->ash_bonus;
-        $BuyOrder->ts_min = $request->ts_min;
-        $BuyOrder->ts_max = $request->ts_max;
-        $BuyOrder->ts_reject = $request->ts_reject;
-        $BuyOrder->ts_bonus = $request->ts_bonus;
-        $BuyOrder->tm_min = $request->tm_min;
-        $BuyOrder->tm_max = $request->tm_max;
-        $BuyOrder->tm_reject = $request->tm_reject;
-        $BuyOrder->tm_bonus = $request->tm_bonus;
-        $BuyOrder->im_min = $request->im_min;
-        $BuyOrder->im_max = $request->im_max;
-        $BuyOrder->im_reject = $request->im_reject;
-        $BuyOrder->im_bonus = $request->im_bonus;
-        $BuyOrder->fc_min = $request->fc_min;
-        $BuyOrder->fc_max = $request->fc_max;
-        $BuyOrder->fc_reject = $request->fc_reject;
-        $BuyOrder->fc_bonus = $request->fc_bonus;
-        $BuyOrder->vm_min = $request->vm_min;
-        $BuyOrder->vm_max = $request->vm_max;
-        $BuyOrder->vm_reject = $request->vm_reject;
-        $BuyOrder->vm_bonus = $request->vm_bonus;
-        $BuyOrder->hgi_min = $request->hgi_min;
-        $BuyOrder->hgi_max = $request->hgi_max;
-        $BuyOrder->hgi_reject = $request->hgi_reject;
-        $BuyOrder->hgi_bonus = $request->hgi_bonus;
-        $BuyOrder->size_min = $request->size_min;
-        $BuyOrder->size_max = $request->size_max;
-        $BuyOrder->size_reject = $request->size_reject;
-        $BuyOrder->size_bonus = $request->size_bonus;
+        $buy_order->gcv_arb_min = $request->gcv_arb_min;
+        $buy_order->gcv_arb_max = $request->gcv_arb_max;
+        $buy_order->gcv_arb_reject = $request->gcv_arb_reject;
+        $buy_order->gcv_arb_bonus = $request->gcv_arb_bonus;
+        $buy_order->gcv_adb_min = $request->gcv_adb_min;
+        $buy_order->gcv_adb_max = $request->gcv_adb_max;
+        $buy_order->gcv_adb_reject = $request->gcv_adb_reject;
+        $buy_order->gcv_adb_bonus = $request->gcv_adb_bonus;
+        $buy_order->ncv_min = $request->ncv_min;
+        $buy_order->ncv_max = $request->ncv_max;
+        $buy_order->ncv_reject = $request->ncv_reject;
+        $buy_order->ncv_bonus = $request->ncv_bonus;
+        $buy_order->ash_min = $request->ash_min;
+        $buy_order->ash_max = $request->ash_max;
+        $buy_order->ash_reject = $request->ash_reject;
+        $buy_order->ash_bonus = $request->ash_bonus;
+        $buy_order->ts_min = $request->ts_min;
+        $buy_order->ts_max = $request->ts_max;
+        $buy_order->ts_reject = $request->ts_reject;
+        $buy_order->ts_bonus = $request->ts_bonus;
+        $buy_order->tm_min = $request->tm_min;
+        $buy_order->tm_max = $request->tm_max;
+        $buy_order->tm_reject = $request->tm_reject;
+        $buy_order->tm_bonus = $request->tm_bonus;
+        $buy_order->im_min = $request->im_min;
+        $buy_order->im_max = $request->im_max;
+        $buy_order->im_reject = $request->im_reject;
+        $buy_order->im_bonus = $request->im_bonus;
+        $buy_order->fc_min = $request->fc_min;
+        $buy_order->fc_max = $request->fc_max;
+        $buy_order->fc_reject = $request->fc_reject;
+        $buy_order->fc_bonus = $request->fc_bonus;
+        $buy_order->vm_min = $request->vm_min;
+        $buy_order->vm_max = $request->vm_max;
+        $buy_order->vm_reject = $request->vm_reject;
+        $buy_order->vm_bonus = $request->vm_bonus;
+        $buy_order->hgi_min = $request->hgi_min;
+        $buy_order->hgi_max = $request->hgi_max;
+        $buy_order->hgi_reject = $request->hgi_reject;
+        $buy_order->hgi_bonus = $request->hgi_bonus;
+        $buy_order->size_min = $request->size_min;
+        $buy_order->size_max = $request->size_max;
+        $buy_order->size_reject = $request->size_reject;
+        $buy_order->size_bonus = $request->size_bonus;
 
-        $BuyOrder->volume = $request->volume;
+        $buy_order->volume = $request->volume;
         
-        $BuyOrder->status = 'a';
+        $buy_order->status = 'a';
 
-        $BuyOrder->save();
+        $buy_order->save();
 
-        return response()->json($BuyOrder, 200);
+        return response()->json($buy_order, 200);
     }
 
     /**
@@ -217,17 +217,17 @@ class BuyOrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(BuyOrder $BuyOrder)
+    public function destroy(BuyOrder $buy_order)
     {
-        if (!$BuyOrder) {
+        if (!$buy_order) {
             return response()->json([
                 'message' => 'Not found'
             ] ,404);
         }
 
-        $BuyOrder->status = 'x';
-        $BuyOrder->save();
+        $buy_order->status = 'x';
+        $buy_order->save();
 
-        return response()->json($BuyOrder, 200);
+        return response()->json($buy_order, 200);
     }
 }

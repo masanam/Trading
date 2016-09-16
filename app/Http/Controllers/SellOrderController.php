@@ -20,9 +20,9 @@ class SellOrderController extends Controller
      */
     public function index()
     {
-        $SellOrder = SellOrder::where('status', 'a')->get();
+        $sell_order = SellOrder::where('status', 'a')->get();
 
-        return response()->json($SellOrder, 200);
+        return response()->json($sell_order, 200);
     }
 
     /**
@@ -39,15 +39,15 @@ class SellOrderController extends Controller
             ], 400);
         }
 
-        $SellOrder = new SellOrder();
-        $SellOrder->name = $request->name;
-        $SellOrder->image = $request->image;
-        $SellOrder->title = $request->title;
-        $SellOrder->email = $request->email;
-        $SellOrder->phone = $request->phone;
-        $SellOrder->save();
+        $sell_order = new SellOrder();
+        $sell_order->name = $request->name;
+        $sell_order->image = $request->image;
+        $sell_order->title = $request->title;
+        $sell_order->email = $request->email;
+        $sell_order->phone = $request->phone;
+        $sell_order->save();
 
-        return response()->json($SellOrder, 200);
+        return response()->json($sell_order, 200);
     }
 
     /**
@@ -56,10 +56,10 @@ class SellOrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(SellOrder $SellOrder)
+    public function show(SellOrder $sell_order)
     {
-        if($SellOrder->status == 'a') {
-            return response()->json($SellOrder, 200);
+        if($sell_order->status == 'a') {
+            return response()->json($sell_order, 200);
         } else {
             return response()->json(['message' => 'deactivated record'], 404);
         }
@@ -72,7 +72,7 @@ class SellOrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, SellOrder $SellOrder)
+    public function update(Request $request, SellOrder $sell_order)
     {
         if (!$request) {
             return response()->json([
@@ -80,21 +80,21 @@ class SellOrderController extends Controller
             ], 400);
         }
 
-        if (!$SellOrder) {
+        if (!$sell_order) {
             return response()->json([
                 'message' => 'Not found'
             ] ,404);
         }
 
-        $SellOrder->name = $request->name;
-        $SellOrder->image = $request->image;
-        $SellOrder->title = $request->title;
-        $SellOrder->email = $request->email;
-        $SellOrder->phone = $request->phone;
+        $sell_order->name = $request->name;
+        $sell_order->image = $request->image;
+        $sell_order->title = $request->title;
+        $sell_order->email = $request->email;
+        $sell_order->phone = $request->phone;
 
-        $SellOrder->save();
+        $sell_order->save();
 
-        return response()->json($SellOrder, 200);
+        return response()->json($sell_order, 200);
     }
 
     /**
@@ -103,17 +103,17 @@ class SellOrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(SellOrder $SellOrder)
+    public function destroy(SellOrder $sell_order)
     {
-        if (!$SellOrder) {
+        if (!$sell_order) {
             return response()->json([
                 'message' => 'Not found'
             ] ,404);
         }
 
-        $SellOrder->status = 'x';
-        $SellOrder->save();
+        $sell_order->status = 'x';
+        $sell_order->save();
 
-        return response()->json($SellOrder, 200);
+        return response()->json($sell_order, 200);
     }
 }

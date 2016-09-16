@@ -20,9 +20,9 @@ class BuyerController extends Controller
      */
     public function index()
     {
-        $Buyer = Buyer::where('status', 'a')->get();
+        $buyer = Buyer::where('status', 'a')->get();
 
-        return response()->json($Buyer, 200);
+        return response()->json($buyer, 200);
     }
 
     /**
@@ -39,29 +39,29 @@ class BuyerController extends Controller
             ], 400);
         }
 
-        $Buyer = new Buyer();
-        $Buyer->user_id = $request->user_id;
+        $buyer = new Buyer();
+        $buyer->user_id = $request->user_id;
 
-        $Buyer->company_name = $request->company_name;
+        $buyer->company_name = $request->company_name;
         
-        $Buyer->phone = $request->phone;
-        $Buyer->email = $request->email;
-        $Buyer->web = $request->web;
+        $buyer->phone = $request->phone;
+        $buyer->email = $request->email;
+        $buyer->web = $request->web;
 
-        $Buyer->industry = $request->industry;
+        $buyer->industry = $request->industry;
 
-        $Buyer->city = $request->city;
-        $Buyer->address = $request->address;
+        $buyer->city = $request->city;
+        $buyer->address = $request->address;
 
-        $Buyer->latitude = $request->latitude;
-        $Buyer->longitude = $request->longitude;
+        $buyer->latitude = $request->latitude;
+        $buyer->longitude = $request->longitude;
 
-        $Buyer->description = $request->description;
+        $buyer->description = $request->description;
 
-        $Buyer->status = $request->status;
-        $Buyer->save();
+        $buyer->status = $request->status;
+        $buyer->save();
 
-        return response()->json($Buyer, 200);
+        return response()->json($buyer, 200);
     }
 
     /**
@@ -70,10 +70,10 @@ class BuyerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Buyer $Buyer)
+    public function show(Buyer $buyer)
     {
-        if($Buyer->status == 'a') {
-            return response()->json($Buyer, 200);
+        if($buyer->status == 'a') {
+            return response()->json($buyer, 200);
         } else {
             return response()->json(['message' => 'deactivated record'], 404);
         }
@@ -86,7 +86,7 @@ class BuyerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Buyer $Buyer)
+    public function update(Request $request, Buyer $buyer)
     {
         if (!$request) {
             return response()->json([
@@ -94,34 +94,34 @@ class BuyerController extends Controller
             ], 400);
         }
 
-        if (!$Buyer) {
+        if (!$buyer) {
             return response()->json([
                 'message' => 'Not found'
             ] ,404);
         }
 
-        $Buyer->user_id = $request->user_id;
+        $buyer->user_id = $request->user_id;
 
-        $Buyer->company_name = $request->company_name;
+        $buyer->company_name = $request->company_name;
         
-        $Buyer->phone = $request->phone;
-        $Buyer->email = $request->email;
-        $Buyer->web = $request->web;
+        $buyer->phone = $request->phone;
+        $buyer->email = $request->email;
+        $buyer->web = $request->web;
 
-        $Buyer->industry = $request->industry;
+        $buyer->industry = $request->industry;
 
-        $Buyer->city = $request->city;
-        $Buyer->address = $request->address;
+        $buyer->city = $request->city;
+        $buyer->address = $request->address;
 
-        $Buyer->latitude = $request->latitude;
-        $Buyer->longitude = $request->longitude;
+        $buyer->latitude = $request->latitude;
+        $buyer->longitude = $request->longitude;
 
-        $Buyer->description = $request->description;
+        $buyer->description = $request->description;
 
-        $Buyer->status = $request->status;
-        $Buyer->save();
+        $buyer->status = $request->status;
+        $buyer->save();
 
-        return response()->json($Buyer, 200);
+        return response()->json($buyer, 200);
     }
 
     /**
@@ -130,17 +130,17 @@ class BuyerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Buyer $Buyer)
+    public function destroy(Buyer $buyer)
     {
-        if (!$Buyer) {
+        if (!$buyer) {
             return response()->json([
                 'message' => 'Not found'
             ] ,404);
         }
 
-        $Buyer->status = 'x';
-        $Buyer->save();
+        $buyer->status = 'x';
+        $buyer->save();
 
-        return response()->json($Buyer, 200);
+        return response()->json($buyer, 200);
     }
 }
