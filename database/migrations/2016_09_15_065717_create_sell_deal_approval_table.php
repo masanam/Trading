@@ -17,6 +17,8 @@ class CreateSellDealApprovalTable extends Migration
             $table->integer('sell_deal_id')->unsigned();
             $table->integer('user_id')->unsigned();
 
+            $table->string('approver');
+
             $table->char('status'); // A = Approved ; R = Reject
 
             $table->timestamps();
