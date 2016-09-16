@@ -20,9 +20,9 @@ class SellerController extends Controller
      */
     public function index()
     {
-        $Seller = Seller::where('status', 'a')->get();
+        $seller = Seller::where('status', 'a')->get();
 
-        return response()->json($Seller, 200);
+        return response()->json($seller, 200);
     }
 
     /**
@@ -39,29 +39,29 @@ class SellerController extends Controller
             ], 400);
         }
 
-        $Seller = new Seller();
-        $Seller->user_id = $request->user_id;
+        $seller = new Seller();
+        $seller->user_id = $request->user_id;
             
-        $Seller->company_name = $request->company_name;
+        $seller->company_name = $request->company_name;
 
-        $Seller->phone = $request->phone;
-        $Seller->email = $request->email;
-        $Seller->web = $request->web;
+        $seller->phone = $request->phone;
+        $seller->email = $request->email;
+        $seller->web = $request->web;
 
-        $Seller->industry = $request->industry;
+        $seller->industry = $request->industry;
 
-        $Seller->city = $request->city;
-        $Seller->address = $request->address;
+        $seller->city = $request->city;
+        $seller->address = $request->address;
 
-        $Seller->latitude = $request->latitude;
-        $Seller->longitude = $request->longitude;
+        $seller->latitude = $request->latitude;
+        $seller->longitude = $request->longitude;
 
-        $Seller->description = $request->description;
+        $seller->description = $request->description;
 
-        $Seller->status = $request->status;
-        $Seller->save();
+        $seller->status = $request->status;
+        $seller->save();
 
-        return response()->json($Seller, 200);
+        return response()->json($seller, 200);
     }
 
     /**
@@ -70,10 +70,10 @@ class SellerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Seller $Seller)
+    public function show(Seller $seller)
     {
-        if($Seller->status == 'a') {
-            return response()->json($Seller, 200);
+        if($seller->status == 'a') {
+            return response()->json($seller, 200);
         } else {
             return response()->json(['message' => 'deactivated record'], 404);
         }
@@ -86,7 +86,7 @@ class SellerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Seller $Seller)
+    public function update(Request $request, Seller $seller)
     {
         if (!$request) {
             return response()->json([
@@ -94,34 +94,34 @@ class SellerController extends Controller
             ], 400);
         }
 
-        if (!$Seller) {
+        if (!$seller) {
             return response()->json([
                 'message' => 'Not found'
             ] ,404);
         }
 
-        $Seller->user_id = $request->user_id;
+        $seller->user_id = $request->user_id;
             
-        $Seller->company_name = $request->company_name;
+        $seller->company_name = $request->company_name;
 
-        $Seller->phone = $request->phone;
-        $Seller->email = $request->email;
-        $Seller->web = $request->web;
+        $seller->phone = $request->phone;
+        $seller->email = $request->email;
+        $seller->web = $request->web;
 
-        $Seller->industry = $request->industry;
+        $seller->industry = $request->industry;
 
-        $Seller->city = $request->city;
-        $Seller->address = $request->address;
+        $seller->city = $request->city;
+        $seller->address = $request->address;
 
-        $Seller->latitude = $request->latitude;
-        $Seller->longitude = $request->longitude;
+        $seller->latitude = $request->latitude;
+        $seller->longitude = $request->longitude;
 
-        $Seller->description = $request->description;
+        $seller->description = $request->description;
 
-        $Seller->status = $request->status;
-        $Seller->save();
+        $seller->status = $request->status;
+        $seller->save();
 
-        return response()->json($Seller, 200);
+        return response()->json($seller, 200);
     }
 
     /**
@@ -130,17 +130,17 @@ class SellerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Seller $Seller)
+    public function destroy(Seller $seller)
     {
-        if (!$Seller) {
+        if (!$seller) {
             return response()->json([
                 'message' => 'Not found'
             ] ,404);
         }
 
-        $Seller->status = 'x';
-        $Seller->save();
+        $seller->status = 'x';
+        $seller->save();
 
-        return response()->json($Seller, 200);
+        return response()->json($seller, 200);
     }
 }
