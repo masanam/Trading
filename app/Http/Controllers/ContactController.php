@@ -120,4 +120,10 @@ class ContactController extends Controller
 
         return response()->json($contact, 200);
     }
+
+    public function getContactByName($name) {
+        $contact = Contact::where('company_name', 'like', '%'.$name.'%')->get();
+
+        return response()->json($contact, 200);
+    }
 }

@@ -143,4 +143,10 @@ class BuyerController extends Controller
 
         return response()->json($buyer, 200);
     }
+
+    public function getBuyerByName($name) {
+        $buyer = Buyer::where('company_name', 'like', '%'.$name.'%')->get();
+
+        return response()->json($buyer, 200);
+    }
 }
