@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 
 use App\Model\BuyDeal;
 use App\Model\SellDeal;
+use App\Model\BuyOrder;
+use App\Model\SellOrder;
+use App\Model\User;
 
 use App\Http\Requests;
 
@@ -18,10 +21,12 @@ class BuySellDealController extends Controller
      */
     public function index()
     {
-        $buy_deal = BuyDeal::where('status', 'a')->get();
-        $sell_deal = SellDeal::where('status', 'a')->get();
+        $buy_sell_deal = new \Illuminate\Database\Eloquent\Collection();
 
-        $buy_sell_deal = array_merge($buy_deal->toArray(), $sell_deal->toArray());
+        $buy_sell_deal->add(BuyDeal::where('status', 'a')->with('BuyOrder.order_date', 'BuyOrder.volume', 'BuyOrder.Buyer.company_name', 'BuyOrder.BuyOrderPricing', 'User.id', 'User.name', 'User.title')->get());
+        $buy_sell_deal->add(SellDeal::where('status', 'a')->with('SellOrder.order_date', 'SellOrder.volume', 'SellOrder.Seller.company_name', 'SellOrder.SellOrderPricing', 'User.id', 'User.name', 'User.title')->get());
+
+        $buy_sell_deal = $buy_sell_deal->sortBy('order_date');
 
         return response()->json($buy_sell_deal, 200);
     }
