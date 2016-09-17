@@ -1,7 +1,7 @@
 <section ng-controller="DealController">
   <h1>Create New Deals</h1>
-  
-  <section>
+  <hr/>
+  <section class="row">
     <div class="col-md-6">
       <h1>Buy Order</h1>
       <section ng-if="buyOrders.length > 0">
@@ -12,8 +12,10 @@
               {{order.volume | number}} tonnes - 
               {{ (order.volume*order.max_price) | number }}
             </span>
-            <button type="button" class="check" ng-click="markBuyOrder(order)"></button>
-            <button type="button" class="close" ng-click="deleteBuyOrder(order)"></button>
+            <span class="pull-right">
+              <!--button type="button" class="check" ng-click="markBuyOrder(order)"></button-->
+              <button type="button" class="close" ng-click="deleteBuyOrder(order)"></button>
+            </span>
           </div>
         </div>
       </section>
@@ -41,8 +43,10 @@
               {{order.volume | number}} tonnes - 
               {{ (order.volume*order.max_price) | number }}
             </span>
-            <button type="button" class="check" ng-click="markSellOrder(order)"></button>
-            <button type="button" class="close" ng-click="deleteSellOrder(order)"></button>
+            <span class="pull-right">
+              <!--button type="button" class="check" ng-click="markSellOrder(order)"></button-->
+              <button type="button" class="close" ng-click="deleteSellOrder(order)"></button>
+            </span>
           </div>
         </div>
       </section>
@@ -59,6 +63,12 @@
           </div>
         </div>
       </section-->
+    </div>
+  </section>
+  <br/>
+  <section class="row">
+    <div class="col-md-12">
+      <button ng-click="createDeal()" class="col-md-12 btn-success btn"><i class="glyphicon glyphicon-save"></i> Save Deal</button>
     </div>
   </section>
 </section>

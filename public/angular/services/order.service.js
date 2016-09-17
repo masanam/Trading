@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('order').factory('Order', ['$resource',
+angular.module('order').factory('SellOrder', ['$resource',
 	function ($resource) {
 		return $resource('api/order/:option/:status/:id/:action/:buyerId', {
 			id: undefined,
@@ -14,7 +14,7 @@ angular.module('order').factory('Order', ['$resource',
 	}
 ]);
 
-angular.module('order').factory('OrderFulfillment', ['$resource',
+angular.module('order').factory('BuyOrder', ['$resource',
 	function ($resource) {
 		return $resource('api/order-fulfillment/:option/:id/:action/:status/:sellerId', {
       option:undefined,

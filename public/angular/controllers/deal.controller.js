@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Deal', 'Order', 'Product',
-	function($scope, $uibModal, Deal, Order, Product) {
+angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Deal', 'SellOrder', 'BuyOrder', 'Product',
+	function($scope, $uibModal, Deal, SellOrder, BuyOrder, Product) {
     $scope.findDeals = function(){
       $scope.deals = Deal.query;
     };
@@ -62,7 +62,7 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
       id: 1,
       buyer_id: 1,
       company_name: 'PT. Sinarmas Master Lain',
-      order_date: '2008-10-01',
+      order_date: new Date('2008-10-01'),
       volume: 1000,
       gcv_arb_min: 2000,
       gcv_arb_max: 2500,
@@ -75,7 +75,7 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
       id: 2,
       buyer_id: 2,
       company_name: 'PT. Master Batu Bara',
-      order_date: '2008-12-01',
+      order_date: new Date('2008-10-01'),
       volume: 2500,
       gcv_arb_min: 2000,
       gcv_arb_max: 2500,
@@ -90,7 +90,7 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
       id: 1,
       seller_id: 1,
       company_name: 'PT. Master Batu Bara',
-      order_date: '2008-12-01',
+      order_date: new Date('2008-10-01'),
       volume: 2500,
       gcv_arb_min: 2000,
       gcv_arb_max: 2500,
@@ -168,10 +168,69 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
 
 }]);
 
-angular.module('deal').controller('CreateSellModalController', function ($scope, $uibModalInstance, Deal, Order) {
+angular.module('deal').controller('CreateSellModalController', function ($scope, $uibModalInstance, Deal, SellOrder, BuyOrder) {
   
-  $scope.createSellOrder = function(order){
-    $scope.sellOrders.push(order);
+  $scope.initializeOrder = function(){
+    $scope.order = {
+      id: undefined,
+      seller_id: undefined,
+      order_date: new Date(),
+      deadline: new Date(),
+      address: undefined,
+      latitude: undefined,
+      longitude: undefined,
+      penalty: undefined,
+      volume: undefined,
+      status: undefined,
+      ash_min: undefined,
+      ash_max: undefined,
+      ash_reject: undefined,
+      ash_bonus: undefined,
+      gcv_arb_min: undefined,
+      gcv_arb_max: undefined,
+      gcv_arb_reject: undefined,
+      gcv_arb_bonus: undefined,
+      gcv_adb_min: undefined,
+      gcv_adb_max: undefined,
+      gcv_adb_reject: undefined,
+      gcv_adb_bonus: undefined,
+      fc_min: undefined,
+      fc_max: undefined,
+      fc_reject: undefined,
+      fc_bonus: undefined,
+      hgi_min: undefined,
+      hgi_max: undefined,
+      hgi_reject: undefined,
+      hgi_bonus: undefined,
+      im_min: undefined,
+      im_max: undefined,
+      im_reject: undefined,
+      im_bonus: undefined,
+      ncv_min: undefined,
+      ncv_max: undefined,
+      ncv_reject: undefined,
+      ncv_bonus: undefined,
+      size_min: undefined,
+      size_max: undefined,
+      size_reject: undefined,
+      size_bonus: undefined,
+      tm_min: undefined,
+      tm_max: undefined,
+      tm_reject: undefined,
+      tm_bonus: undefined,
+      ts_min: undefined,
+      ts_max: undefined,
+      ts_reject: undefined,
+      ts_bonus: undefined,
+      vm_min: undefined,
+      vm_max: undefined,
+      vm_reject: undefined,
+      vm_bonus: undefined,
+    };
+  };
+  
+  $scope.createSellOrder = function(){
+    $scope.sellOrders.push($scope.order);
   };
   
   $scope.close = function () {
@@ -179,10 +238,69 @@ angular.module('deal').controller('CreateSellModalController', function ($scope,
   };
 });
 
-angular.module('deal').controller('CreateBuyModalController', function ($scope, $uibModalInstance, Deal, Order) {
+angular.module('deal').controller('CreateBuyModalController', function ($scope, $uibModalInstance, Deal, SellOrder, BuyOrder) {
+  
+  $scope.initializeOrder = function(){
+    $scope.order = {
+      id: undefined,
+      buyer_id: undefined,
+      order_date: new Date(),
+      deadline: new Date(),
+      address: undefined,
+      latitude: undefined,
+      longitude: undefined,
+      penalty: undefined,
+      volume: undefined,
+      status: undefined,
+      ash_min: undefined,
+      ash_max: undefined,
+      ash_reject: undefined,
+      ash_bonus: undefined,
+      gcv_arb_min: undefined,
+      gcv_arb_max: undefined,
+      gcv_arb_reject: undefined,
+      gcv_arb_bonus: undefined,
+      gcv_adb_min: undefined,
+      gcv_adb_max: undefined,
+      gcv_adb_reject: undefined,
+      gcv_adb_bonus: undefined,
+      fc_min: undefined,
+      fc_max: undefined,
+      fc_reject: undefined,
+      fc_bonus: undefined,
+      hgi_min: undefined,
+      hgi_max: undefined,
+      hgi_reject: undefined,
+      hgi_bonus: undefined,
+      im_min: undefined,
+      im_max: undefined,
+      im_reject: undefined,
+      im_bonus: undefined,
+      ncv_min: undefined,
+      ncv_max: undefined,
+      ncv_reject: undefined,
+      ncv_bonus: undefined,
+      size_min: undefined,
+      size_max: undefined,
+      size_reject: undefined,
+      size_bonus: undefined,
+      tm_min: undefined,
+      tm_max: undefined,
+      tm_reject: undefined,
+      tm_bonus: undefined,
+      ts_min: undefined,
+      ts_max: undefined,
+      ts_reject: undefined,
+      ts_bonus: undefined,
+      vm_min: undefined,
+      vm_max: undefined,
+      vm_reject: undefined,
+      vm_bonus: undefined,
+    };
+  };
   
   $scope.createBuyOrder = function(order){
-    $scope.buyOrders.push(order);
+    $scope.buyOrders.push($scope.order);
   };
   
   $scope.close = function () {
@@ -190,53 +308,33 @@ angular.module('deal').controller('CreateBuyModalController', function ($scope, 
   };
 });
 
-angular.module('deal').controller('BuyModalController', function ($scope, $uibModalInstance, Deal, Order, Product) {
+angular.module('deal').controller('BuyModalController', function ($scope, $uibModalInstance, Deal, SellOrder, BuyOrder, Product) {
   
-  console.log($scope.order);
+  $scope.index = $scope.buyOrders.indexOf($scope.order);
   
-  /*$scope.order = {
-    id: 1,
-    company_name: 'PT. Sinarmas Master Lain',
-    order_date: '2008-10-01',
-    volume: 1000,
-    gcv_arb_min: 2000,
-    gcv_arb_max: 2500,
-    gcv_adb_min: 1000,
-    gcv_adb_max: 1500,
-    ncv_min: 1000,
-    ncv_max: 1500,
-    max_price: 20,
-  };*/
+  $scope.updateBuyOrder = function(index){
+    $scope.buyOrders[$scope.index] = $scope.order;
+  };
   
   $scope.close = function () {
     $uibModalInstance.dismiss('cancel');
   };
 });
 
-angular.module('deal').controller('SellModalController', function ($scope, $uibModalInstance, Deal, Order, Product) {
+angular.module('deal').controller('SellModalController', function ($scope, $uibModalInstance, Deal, SellOrder, BuyOrder, Product) {
   
-  console.log($scope.order);
+  $scope.index = $scope.sellOrders.indexOf($scope.order);
   
-  /*$scope.order = {
-    id: 1,
-    company_name: 'PT. Master Batu Bara',
-    order_date: '2008-12-01',
-    volume: 2500,
-    gcv_arb_min: 2000,
-    gcv_arb_max: 2500,
-    gcv_adb_min: 1100,
-    gcv_adb_max: 1500,
-    ncv_min: 1300,
-    ncv_max: 1500,
-    max_price: 10,
-  };*/
+  $scope.updateSellOrder = function(index){
+    $scope.sellOrders[$scope.index] = $scope.order;
+  };
   
   $scope.close = function () {
     $uibModalInstance.dismiss('cancel');
   };
 });
 
-angular.module('deal').controller('DealModalController', function ($scope, $uibModalInstance, Deal, Order, Product) {
+angular.module('deal').controller('DealModalController', function ($scope, $uibModalInstance, Deal, SellOrder, BuyOrder, Product) {
 	$scope.tab = 'call';
 	$scope.states = ['call', 'match', 'deal'];
 
