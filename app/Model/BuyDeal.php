@@ -8,7 +8,7 @@ use App\Model\Deal;
 
 use Illuminate\Database\Eloquent\Model;
 
-class buy_deal extends Model
+class BuyDeal extends Model
 {
     protected $table = 'buy_deal';
 

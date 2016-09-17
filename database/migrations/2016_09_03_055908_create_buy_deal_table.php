@@ -18,6 +18,8 @@ class CreateBuyDealTable extends Migration
             $table->integer('buy_order_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->integer('deal_id')->nullable();
+
+            $table->char('status');
             
             $table->timestamps();
         });

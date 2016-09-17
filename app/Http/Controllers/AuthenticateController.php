@@ -40,7 +40,7 @@ class AuthenticateController extends Controller
             // something went wrong
             return response()->json(['error' => 'could_not_create_token'], 500);
         }
- 
+
         // if no errors are encountered we can return a JWT
         return response()->json(compact('token', 'user'));
     }
@@ -51,8 +51,8 @@ class AuthenticateController extends Controller
         $user->name = trim($request->name);
         $user->title = trim($request->title);
         $user->image = trim($request->image);
-        $user->role = trim($request->role);
-        $user->status = trim($request->status);
+        $user->role = $request->role  ? $request->role : 'user';
+        $user->status = 'a';
         $user->email = trim(strtolower($request->email));
         $user->phone = trim($request->phone);
         $user->password = bcrypt($request->password);
