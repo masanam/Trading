@@ -4,6 +4,7 @@ namespace App\Model;
 
 use App\Model\Buyer;
 use App\Model\BuyDeal;
+use App\Model\BuyOrderPricing;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,5 +18,9 @@ class BuyOrder extends Model
 
     public function BuyDeal() {
     	return $this->hasMany('BuyDeal');
+    }
+
+    public function BuyOrderPricing() {
+    	return $this->hasMany('BuyOrderPricing');
     }
 }
