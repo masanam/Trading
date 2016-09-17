@@ -12,7 +12,7 @@ class SellOrder extends Model
 {
     protected $table = 'sell_order';
 
-    public function seller() {
+    public function Seller() {
     	return $this->belongsTo('Seller');
     }
 

@@ -12,7 +12,7 @@ class BuyOrder extends Model
 {
     protected $table = 'buy_order';
 
-    public function buyer() {
+    public function Buyer() {
     	return $this->belongsTo('Buyer');
     }
 

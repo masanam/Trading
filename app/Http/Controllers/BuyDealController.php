@@ -20,7 +20,11 @@ class BuyDealController extends Controller
      */
     public function index()
     {
-        $buy_deal = BuyDeal::where('status', 'a')->get();
+        $buy_deal = BuyDeal::where('status', 'a')
+                        ->with(
+                            'BuyOrder', 'BuyOrder.BuyOrderPricing', 'BuyOrder.Buyer',
+                             'BuyOrder.Buyer.User', 'User', 'Deal'
+                        )->get();
 
         return response()->json($buy_deal, 200);
     }
@@ -57,7 +61,10 @@ class BuyDealController extends Controller
     public function show(BuyDeal $buy_deal)
     {
         if($buy_deal->status == 'a') {
-            return response()->json($buy_deal, 200);
+            return response()->json($buy_deal->with(
+                            'BuyOrder', 'BuyOrder.BuyOrderPricing', 'BuyOrder.Buyer',
+                             'BuyOrder.Buyer.User', 'User', 'Deal'
+                        )->get(), 200);
         } else {
             return response()->json(['message' => 'deactivated record'], 404);
         }
