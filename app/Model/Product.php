@@ -11,11 +11,11 @@ class Product extends Model
 {
     protected $table = 'products';
 
-    public function buyer() {
+    public function Buyer() {
     	return $this->belongsTo('Buyer');
     }
 
-    public function seller() {
+    public function Seller() {
     	return $this->belongsTo('Seller');
     }
 }

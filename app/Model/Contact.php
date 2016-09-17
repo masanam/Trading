@@ -12,15 +12,15 @@ class Contact extends Model
 {
     protected $table = 'contacts';
 
-    public function user() {
+    public function User() {
     	return $this->belongsTo('User');
     }
 
-    public function buyer() {
+    public function Buyer() {
     	return $this->belongsTo('Buyer');
     }
 
-    public function seller() {
+    public function Seller() {
     	return $this->belongsTo('Seller');
     }
 }

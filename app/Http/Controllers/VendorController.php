@@ -131,4 +131,10 @@ class VendorController extends Controller
 
         return response()->json($vendor, 200);
     }
+
+    public function getVendorByName($name) {
+        $vendor = Buyer::wherewhere('company_name', 'like', '%'.$name.'%')->get();
+
+        return response()->json($vendor, 200);
+    }
 }

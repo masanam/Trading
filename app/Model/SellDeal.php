@@ -20,7 +20,7 @@ class SellDeal extends Model
     	return $this->hasMany('SellDealChat');
     }
 
-    public function deal() {
+    public function Deal() {
     	return $this->belongsTo('Deal');
     }
 }

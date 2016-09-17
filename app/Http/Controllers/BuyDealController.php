@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Model\BuyDeal;
+use App\Model\BuyDeal;
 
 use Illuminate\Http\Request;
 
@@ -20,7 +20,11 @@ class BuyDealController extends Controller
      */
     public function index()
     {
-        $buy_deal = BuyDeal::where('status', 'a')->get();
+        $buy_deal = BuyDeal::where('status', 'a')
+                        ->with(
+                            'BuyOrder', 'BuyOrder.BuyOrderPricing', 'BuyOrder.Buyer',
+                             'BuyOrder.Buyer.User', 'User', 'Deal'
+                        )->get();
 
         return response()->json($buy_deal, 200);
     }
@@ -42,7 +46,7 @@ class BuyDealController extends Controller
         $buy_deal = new BuyDeal();
         $buy_deal->buy_order_id = $request->buy_order_id;
         $buy_deal->user_id = $request->user_id;
-        $buy_deal->deal_id = $request->deal_id;
+        $buy_deal->deal_id = $request->deal_id  ? $request->deal_id : NULL;
         $buy_deal->save();
 
         return response()->json($buy_deal, 200);
@@ -56,10 +60,14 @@ class BuyDealController extends Controller
      */
     public function show(BuyDeal $buy_deal)
     {
-        if($buy_deal->status == 'a') {
-            return response()->json($buy_deal, 200);
+        if($buy_deal) {
+            if($buy_deal->status == 'a') {
+                return response()->json($buy_deal, 200);
+            } else {
+                return response()->json(['message' => 'deactivated record'], 404);
+            }
         } else {
-            return response()->json(['message' => 'deactivated record'], 404);
+            return response()->json('Not found', 404);
         }
     }
 
@@ -86,7 +94,7 @@ class BuyDealController extends Controller
 
         $buy_deal->buy_order_id = $request->buy_order_id;
         $buy_deal->user_id = $request->user_id;
-        $buy_deal->deal_id = $request->deal_id;
+        $buy_deal->deal_id = $request->deal_id  ? $request->deal_id : NULL;
         $buy_deal->save();
 
         return response()->json($buy_deal, 200);

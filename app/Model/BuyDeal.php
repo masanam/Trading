@@ -8,7 +8,7 @@ use App\Model\Deal;
 
 use Illuminate\Database\Eloquent\Model;
 
-class buy_deal extends Model
+class BuyDeal extends Model
 {
     protected $table = 'buy_deal';
 
@@ -20,7 +20,7 @@ class buy_deal extends Model
     	return $this->hasMany('BuyDealChat');
     }
 
-    public function deal() {
+    public function Deal() {
     	return $this->belongsTo('Deal');
     }
 }

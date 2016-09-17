@@ -73,6 +73,8 @@ class CreateBuyOrderTable extends Migration
             $table->integer('size_bonus')->nullable();
 
             $table->integer('volume');
+
+            $table->longText('penalty_desc');
             
             $table->char('status', 1); // open(o), progress(p), finish(f), cancel(c) 
             $table->timestamps();

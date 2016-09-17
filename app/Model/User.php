@@ -35,19 +35,19 @@ class User extends Authenticatable
 
     protected $table = 'users';
 
-    public function contact() {
+    public function Contact() {
         return $this->hasMany('Contact');
     }
 
-    public function buyer() {
+    public function Buyer() {
         return $this->hasMany('Buyer');
     }
 
-    public function seller() {
+    public function Seller() {
         return $this->hasMany('Seller');
     }
 
-    public function activity() {
+    public function Activity() {
         return $this->hasMany('Activity');
     }
 }

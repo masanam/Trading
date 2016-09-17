@@ -13,11 +13,11 @@ class Buyer extends Model
 {
     protected $table = 'buyers';
 
-    public function user() {
+    public function User() {
     	return $this->belongsTo('User');
     }
 
-    public function contact() {
+    public function Contact() {
         return $this->hasMany('Contact');
     }
 
@@ -25,7 +25,7 @@ class Buyer extends Model
     	return $this->hasMany('BuyOrder');
     }
 
-    public function product() {
+    public function Product() {
     	return $this->hasMany('Product');
     }
 }

@@ -10,7 +10,7 @@ class Mine extends Model
 {
     protected $table = 'mines';
 
-    public function seller() {
+    public function Seller() {
     	return $this->belongsTo('Seller');
     }
 }
