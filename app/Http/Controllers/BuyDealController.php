@@ -60,13 +60,14 @@ class BuyDealController extends Controller
      */
     public function show(BuyDeal $buy_deal)
     {
-        if($buy_deal->status == 'a') {
-            return response()->json($buy_deal->with(
-                            'BuyOrder', 'BuyOrder.BuyOrderPricing', 'BuyOrder.Buyer',
-                             'BuyOrder.Buyer.User', 'User', 'Deal'
-                        )->get(), 200);
+        if($buy_deal) {
+            if($buy_deal->status == 'a') {
+                return response()->json($buy_deal, 200);
+            } else {
+                return response()->json(['message' => 'deactivated record'], 404);
+            }
         } else {
-            return response()->json(['message' => 'deactivated record'], 404);
+            return response()->json('Not found', 404);
         }
     }
 
