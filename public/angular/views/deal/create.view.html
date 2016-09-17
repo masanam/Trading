@@ -1,0 +1,64 @@
+<section ng-controller="DealController">
+  <h1>Create New Deals</h1>
+  
+  <section>
+    <div class="col-md-6">
+      <h1>Buy Order</h1>
+      <section ng-if="buyOrders.length > 0">
+        <div ng-repeat="order in buyOrders" class="panel panel-default">
+          <div class="panel-body">
+            <span ng-click="openBuyModal(order)">
+              {{order.company_name}} - 
+              {{order.volume | number}} tonnes - 
+              {{ (order.volume*order.max_price) | number }}
+            </span>
+            <button type="button" class="check" ng-click="markBuyOrder(order)"></button>
+            <button type="button" class="close" ng-click="deleteBuyOrder(order)"></button>
+          </div>
+        </div>
+      </section>
+      <section ng-if="buyOrders.length <= 0">
+        There is no buy orders.
+      </section>
+      <button ng-click="openCreateBuyModal()" class="btn-primary btn">+ Create Buy Order</button>
+      <!--section>
+        <div class="panel panel-default">
+          <div class="panel-body">
+          <form role="form" ng-submit="createBuyOrder()">
+            <div ng-include="'/angular/views/deal/buy-order-form.view.html'"></div>
+          </form>
+          </div>
+        </div>
+      </section-->
+    </div>
+    <div class="col-md-6">
+      <h1>Sell Order</h1>
+      <section ng-show="sellOrders.length > 0">
+        <div ng-repeat="order in sellOrders" ng-click="openSellModal(order)" class="panel panel-default">
+          <div class="panel-body">
+            <span ng-click="openSellModal(order)">
+              {{order.company_name}} - 
+              {{order.volume | number}} tonnes - 
+              {{ (order.volume*order.max_price) | number }}
+            </span>
+            <button type="button" class="check" ng-click="markSellOrder(order)"></button>
+            <button type="button" class="close" ng-click="deleteSellOrder(order)"></button>
+          </div>
+        </div>
+      </section>
+      <section ng-show="sellOrders.length <= 0">
+        There is no sell orders.
+      </section>
+      <button ng-click="openCreateSellModal()" class="btn-primary btn">+ Create Sell Order</button>
+      <!--section>
+        <div class="panel panel-default">
+          <div class="panel-body">
+          <form role="form" ng-submit="createSellOrder()">
+            <div ng-include="'/angular/views/deal/sell-order-form.view.html'"></div>
+          </form>
+          </div>
+        </div>
+      </section-->
+    </div>
+  </section>
+</section>

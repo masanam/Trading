@@ -14,13 +14,137 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
       $scope.deals = Deal.query;
     };
     
+    $scope.findAllSellers = function(){
+      $scope.sellers = [
+        {
+          company_name: 'PT Kuansing Inti Makmur',
+          phone: '+6276132317',
+          email: 'info@kim.com',
+          price: 2400000000,
+          volume: 2400,
+
+          contact: [
+            { name: 'Albert Santos', email: 'albert@kim.com', phone: '+6276132317 ext 12' },
+          ]
+        },
+        {
+          company_name: 'PT Golden Energy Mines',
+          phone: '+62811123456',
+          email: 'info@gems.com',
+          price: 2600000000,
+          volume: 2600,
+
+          contact: [
+            { name: 'Mochtar Suhadi', email: 'mosu@gems.com', phone: '+62811123456 ext 12' },
+          ]
+        }
+      ];
+    };
+    
+    $scope.findAllBuyers = function(){
+      $scope.buyers = [
+        {
+          company_name: 'PT Mitra Bahari Sentosa',
+          phone: '+6212345678',
+          email: 'info@mbs.com',
+          price: 75000000,
+
+          contact: [
+            { name: 'Jimmy Sunarko', email: 'jimmy@mbs.com', phone: '+6212345678 ext 12' },
+          ]
+        }
+      ];
+    };
+    
 		$scope.deal = Deal.get;
+    
+    $scope.buyOrders = [{
+      id: 1,
+      buyer_id: 1,
+      company_name: 'PT. Sinarmas Master Lain',
+      order_date: '2008-10-01',
+      volume: 1000,
+      gcv_arb_min: 2000,
+      gcv_arb_max: 2500,
+      gcv_adb_min: 1000,
+      gcv_adb_max: 1500,
+      ncv_min: 1000,
+      ncv_max: 1500,
+      max_price: 20,
+    },{
+      id: 2,
+      buyer_id: 2,
+      company_name: 'PT. Master Batu Bara',
+      order_date: '2008-12-01',
+      volume: 2500,
+      gcv_arb_min: 2000,
+      gcv_arb_max: 2500,
+      gcv_adb_min: 1100,
+      gcv_adb_max: 1500,
+      ncv_min: 1300,
+      ncv_max: 1500,
+      max_price: 10,
+    }];
+    
+    $scope.sellOrders = [{
+      id: 1,
+      seller_id: 1,
+      company_name: 'PT. Master Batu Bara',
+      order_date: '2008-12-01',
+      volume: 2500,
+      gcv_arb_min: 2000,
+      gcv_arb_max: 2500,
+      gcv_adb_min: 1100,
+      gcv_adb_max: 1500,
+      ncv_min: 1300,
+      ncv_max: 1500,
+      max_price: 10,
+    }];
 
     $scope.openModal = function () {
       var modalInstance = $uibModal.open({
         windowClass: 'xl-modal',
         templateUrl: './angular/views/deal/modal.view.html',
         controller: 'DealModalController',
+        scope: $scope,
+      });
+    };
+    
+    $scope.openBuyModal = function (order) {
+      $scope.order = order;
+      var modalInstance = $uibModal.open({
+        windowClass: 'xl-modal',
+        templateUrl: './angular/views/deal/buy-order-modal.view.html',
+        controller: 'BuyModalController',
+        scope: $scope,
+      });
+    };
+    
+    $scope.openSellModal = function (order) {
+      $scope.order = order;
+      var modalInstance = $uibModal.open({
+        windowClass: 'xl-modal',
+        templateUrl: './angular/views/deal/sell-order-modal.view.html',
+        controller: 'SellModalController',
+        scope: $scope,
+      });
+    };
+    
+    $scope.openCreateBuyModal = function () {
+      var modalInstance = $uibModal.open({
+        windowClass: 'xl-modal',
+        templateUrl: './angular/views/deal/create-buy-order-modal.view.html',
+        controller: 'CreateBuyModalController',
+        scope: $scope,
+      });
+    };
+    
+    $scope.openCreateSellModal = function () {
+      var modalInstance = $uibModal.open({
+        windowClass: 'xl-modal',
+        templateUrl: './angular/views/deal/create-sell-order-modal.view.html',
+        controller: 'CreateSellModalController',
+        scope: $scope,
       });
     };
     
@@ -43,6 +167,74 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
     };
 
 }]);
+
+angular.module('deal').controller('CreateSellModalController', function ($scope, $uibModalInstance, Deal, Order) {
+  
+  $scope.createSellOrder = function(order){
+    $scope.sellOrders.push(order);
+  };
+  
+  $scope.close = function () {
+    $uibModalInstance.dismiss('cancel');
+  };
+});
+
+angular.module('deal').controller('CreateBuyModalController', function ($scope, $uibModalInstance, Deal, Order) {
+  
+  $scope.createBuyOrder = function(order){
+    $scope.buyOrders.push(order);
+  };
+  
+  $scope.close = function () {
+    $uibModalInstance.dismiss('cancel');
+  };
+});
+
+angular.module('deal').controller('BuyModalController', function ($scope, $uibModalInstance, Deal, Order, Product) {
+  
+  console.log($scope.order);
+  
+  /*$scope.order = {
+    id: 1,
+    company_name: 'PT. Sinarmas Master Lain',
+    order_date: '2008-10-01',
+    volume: 1000,
+    gcv_arb_min: 2000,
+    gcv_arb_max: 2500,
+    gcv_adb_min: 1000,
+    gcv_adb_max: 1500,
+    ncv_min: 1000,
+    ncv_max: 1500,
+    max_price: 20,
+  };*/
+  
+  $scope.close = function () {
+    $uibModalInstance.dismiss('cancel');
+  };
+});
+
+angular.module('deal').controller('SellModalController', function ($scope, $uibModalInstance, Deal, Order, Product) {
+  
+  console.log($scope.order);
+  
+  /*$scope.order = {
+    id: 1,
+    company_name: 'PT. Master Batu Bara',
+    order_date: '2008-12-01',
+    volume: 2500,
+    gcv_arb_min: 2000,
+    gcv_arb_max: 2500,
+    gcv_adb_min: 1100,
+    gcv_adb_max: 1500,
+    ncv_min: 1300,
+    ncv_max: 1500,
+    max_price: 10,
+  };*/
+  
+  $scope.close = function () {
+    $uibModalInstance.dismiss('cancel');
+  };
+});
 
 angular.module('deal').controller('DealModalController', function ($scope, $uibModalInstance, Deal, Order, Product) {
 	$scope.tab = 'call';
