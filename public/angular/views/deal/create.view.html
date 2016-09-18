@@ -41,9 +41,11 @@
           <section ng-if="buyOrders.length <= 0">
             There is no buy orders.
           </section>
-          <div class="form-group">
-            <button ng-click="openCreateBuyModal()" class="btn-primary btn">+ Create Buy Order</button>
-          </div>
+          <section class="row">
+            <div class="form-group col-md-12">
+              <button ng-click="openCreateBuyModal()" class="col-md-12 btn btn-primary">+ Create Buy Order</button>
+            </div>
+          </section>
         </div>
       </div>
       <div class="col-md-6">
@@ -84,9 +86,11 @@
           <section ng-show="sellOrders.length <= 0">
             There is no sell orders.
           </section>
-          <div class="form-group">
-            <button ng-click="openCreateSellModal()" class="btn-primary btn">+ Create Sell Order</button>
-          </div>
+          <section class="row">
+            <div class="form-group col-md-12">
+              <button ng-click="openCreateSellModal()" class="col-md-12 btn btn-primary">+ Create Sell Order</button>
+            </div>
+          </section>
         </div>
       </div>
     </div>
