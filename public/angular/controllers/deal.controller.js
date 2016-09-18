@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Deal', 'SellOrder', 'BuyOrder', 'Product',
-	function($scope, $uibModal, Deal, SellOrder, BuyOrder, Product) {
+angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Deal', 'SellOrder', 'BuyOrder', 'Buyer', 'Seller',
+	function($scope, $uibModal, Deal, SellOrder, BuyOrder, Buyer, Seller) {
     $scope.findDeals = function(){
       $scope.deals = Deal.query;
     };
@@ -15,45 +15,11 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
     };
     
     $scope.findAllSellers = function(){
-      $scope.sellers = [
-        {
-          company_name: 'PT Kuansing Inti Makmur',
-          phone: '+6276132317',
-          email: 'info@kim.com',
-          price: 2400000000,
-          volume: 2400,
-
-          contact: [
-            { name: 'Albert Santos', email: 'albert@kim.com', phone: '+6276132317 ext 12' },
-          ]
-        },
-        {
-          company_name: 'PT Golden Energy Mines',
-          phone: '+62811123456',
-          email: 'info@gems.com',
-          price: 2600000000,
-          volume: 2600,
-
-          contact: [
-            { name: 'Mochtar Suhadi', email: 'mosu@gems.com', phone: '+62811123456 ext 12' },
-          ]
-        }
-      ];
+      $scope.sellers = Seller.query();
     };
     
     $scope.findAllBuyers = function(){
-      $scope.buyers = [
-        {
-          company_name: 'PT Mitra Bahari Sentosa',
-          phone: '+6212345678',
-          email: 'info@mbs.com',
-          price: 75000000,
-
-          contact: [
-            { name: 'Jimmy Sunarko', email: 'jimmy@mbs.com', phone: '+6212345678 ext 12' },
-          ]
-        }
-      ];
+      $scope.buyers = Buyer.query();
     };
     
 		$scope.deal = Deal.get;
@@ -130,6 +96,14 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
       });
     };
     
+    $scope.deleteSellOrder = function (order) {
+      $scope.sellOrders.splice($scope.sellOrders.indexOf(order), 1);
+    };
+    
+    $scope.deleteBuyOrder = function (order) {
+      $scope.buyOrders.splice($scope.buyOrders.indexOf(order), 1);
+    };
+    
     $scope.openCreateBuyModal = function () {
       var modalInstance = $uibModal.open({
         windowClass: 'xl-modal',
@@ -165,8 +139,31 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
         }
         return total;
     };
+    
+    $scope.createDeal = function(){
+      if($scope.buyOrders.length > 0 && $scope.sellOrders.length > 0){
+        //Add BuyOrders
+        //Add SellOrders
+        //Add Deals
+      }else{
+        $scope.error = "You need at least one buy order and one sell order!";
+        var modalInstance = $uibModal.open({
+          windowClass: 'xl-modal',
+          templateUrl: 'alertModal.html',
+          controller: 'AlertModalController',
+          scope: $scope,
+        });
+        
+      }
+    };
 
 }]);
+
+angular.module('deal').controller('AlertModalController', function ($scope, $uibModalInstance) {
+  $scope.close = function () {
+    $uibModalInstance.dismiss('cancel');
+  };
+});
 
 angular.module('deal').controller('CreateSellModalController', function ($scope, $uibModalInstance, Deal, SellOrder, BuyOrder) {
   
