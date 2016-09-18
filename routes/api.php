@@ -46,6 +46,10 @@ Route::group(['middleware' => ['cors']], function() {
         'create', 'edit'
     ]]);
 
+    Route::resource('buy_sell_order', 'BuySellOrderController', ['only' => [
+        'index'
+    ]]);
+
     Route::resource('product', 'ProductController', ['except' => [
         'create', 'edit'
     ]]);

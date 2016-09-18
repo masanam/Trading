@@ -29,3 +29,19 @@ angular.module('order').factory('BuyOrder', ['$resource',
 		});
 	}
 ]);
+
+angular.module('order').factory('Order', ['$resource',
+	function ($resource) {
+		return $resource('api/buy_sell_order/:option/:id/:action/:status/:sellerId', {
+      option:undefined,
+			id: undefined,
+			action: undefined,
+			status: undefined,
+      sellerId:undefined
+		}, {
+			update: {
+				method: 'PUT'
+			}
+		});
+	}
+]);
