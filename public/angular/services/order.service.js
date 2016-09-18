@@ -2,7 +2,7 @@
 
 angular.module('order').factory('SellOrder', ['$resource',
 	function ($resource) {
-		return $resource('api/order/:option/:status/:id/:action/:buyerId', {
+		return $resource('api/sell_order/:option/:status/:id/:action/:buyerId', {
 			id: undefined,
 			action: undefined,
 			buyerId: undefined,
@@ -16,7 +16,7 @@ angular.module('order').factory('SellOrder', ['$resource',
 
 angular.module('order').factory('BuyOrder', ['$resource',
 	function ($resource) {
-		return $resource('api/order-fulfillment/:option/:id/:action/:status/:sellerId', {
+		return $resource('api/buy_order/:option/:id/:action/:status/:sellerId', {
       option:undefined,
 			id: undefined,
 			action: undefined,
