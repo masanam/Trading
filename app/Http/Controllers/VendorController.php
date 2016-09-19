@@ -17,9 +17,13 @@ class VendorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($search)
     {
-        $vendor = Vendor::where('status', 'a')->get();
+        if (!$search) {
+            $vendor = Vendor::where('status', 'a')->get();
+        } else {
+            $vendor = Vendor::where('status', 'a')->search($search)->get();
+        }
 
         return response()->json($vendor, 200);
     }

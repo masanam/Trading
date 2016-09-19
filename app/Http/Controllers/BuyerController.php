@@ -18,9 +18,13 @@ class BuyerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($search)
     {
-        $buyer = Buyer::where('status', 'a')->get();
+        if (!$search) {
+            $buyer = Buyer::where('status', 'a')->get();
+        } else {
+            $buyer = Buyer::where('status', 'a')->search($search)->get();
+        }
 
         return response()->json($buyer, 200);
     }
