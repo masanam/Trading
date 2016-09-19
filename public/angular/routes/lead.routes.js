@@ -24,6 +24,26 @@ angular.module('lead').config(['$stateProvider', '$urlRouterProvider',
         url: '/seller',
         templateUrl: '/angular/views/lead/seller.view.html',
         roles: ['user', 'trader']
+      })      
+      .state('lead.search-buyer', {
+        url: '/search/buyer/{keyword}',
+        templateUrl: '/angular/views/lead/search.view.html',
+        roles: ['user', 'trader']
+      })
+      .state('lead.search-seller', {
+        url: '/search/seller/{keyword}',
+        templateUrl: '/angular/views/lead/search.view.html',
+        roles: ['user', 'trader']
+      })
+      .state('lead.search-vendor', {
+        url: '/search/vendor/{keyword}',
+        templateUrl: '/angular/views/lead/search.view.html',
+        roles: ['user', 'trader']
+      })
+      .state('lead.search-contact', {
+        url: '/search/contact/{keyword}',
+        templateUrl: '/angular/views/lead/search.view.html',
+        roles: ['user', 'trader']
       })
       .state('lead.vendor', {
         url: '/vendor',

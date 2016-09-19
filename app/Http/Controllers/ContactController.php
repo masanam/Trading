@@ -21,7 +21,6 @@ class ContactController extends Controller
     public function index()
     {
         $contact = Contact::where('status', 'a')->get();
-
         return response()->json($contact, 200);
     }
 
@@ -61,10 +60,17 @@ class ContactController extends Controller
      */
     public function show(Contact $contact)
     {
+<<<<<<< HEAD
         if($contact->status == 'a') {
             return response()->json($contact, 200);
         } else {
             return response()->json(['message' => 'deactivated record'], 404);
+=======
+        if($Contact->status == 'a') {
+            return response()->json($Contact, 200);
+        } else {
+            return response()->json(['message' => 'deleted'], 404);
+>>>>>>> b2ec0e9fc90dcffd481a1157ff7620b95306027d
         }
     }
 
