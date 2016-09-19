@@ -2,6 +2,8 @@
 
 namespace App\Model;
 
+use Laravel\Scout\Searchable;
+
 use App\Model\User;
 use App\Model\SellOrder;
 use App\Model\Product;
@@ -11,6 +13,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Seller extends Model
 {
+    use Searchable;
+
     protected $table = 'sellers';
 
     public function User() {

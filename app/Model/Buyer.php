@@ -2,6 +2,8 @@
 
 namespace App\Model;
 
+use Laravel\Scout\Searchable;
+
 use App\Model\User;
 use App\Model\BuyerUser;
 use App\Model\BuyOrder;
@@ -11,6 +13,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Buyer extends Model
 {
+    use Searchable;
+
     protected $table = 'buyers';
 
     public function User() {
