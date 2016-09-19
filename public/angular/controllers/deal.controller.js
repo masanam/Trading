@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Deal', 'SellOrder', 'BuyOrder', 'Buyer', 'Seller',
-	function($scope, $uibModal, Deal, SellOrder, BuyOrder, Buyer, Seller) {
+angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Deal', 'SellOrder', 'BuyOrder', 'Buyer', 'Seller', 'SellDeal', 'BuyDeal', 'Authentication',
+	function($scope, $uibModal, Deal, SellOrder, BuyOrder, Buyer, Seller, SellDeal, BuyDeal, Authentication) {
     $scope.findDeals = function(){
       $scope.deals = Deal.query;
     };
@@ -103,9 +103,9 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
     
     $scope.createDeal = function(){
       if($scope.buyOrders.length > 0 && $scope.sellOrders.length > 0){
+        //Add Deals
         //Add BuyOrders
         //Add SellOrders
-        //Add Deals
       }else{
         $scope.error = "You need at least one buy order and one sell order!";
         var modalInstance = $uibModal.open({
@@ -126,7 +126,7 @@ angular.module('deal').controller('AlertModalController', function ($scope, $uib
   };
 });
 
-angular.module('deal').controller('CreateSellModalController', function ($scope, $uibModalInstance, Deal, SellOrder, BuyOrder) {
+angular.module('deal').controller('CreateSellModalController', function ($scope, $filter, $uibModalInstance, Deal, SellOrder, BuyOrder, Authentication) {
   
   $scope.initializeOrder = function(){
     $scope.order = {
@@ -189,13 +189,26 @@ angular.module('deal').controller('CreateSellModalController', function ($scope,
   };
   
   $scope.createSellOrder = function(){
-    for (var i in $scope.sellers) {
-      if ($scope.sellers[i].id === $scope.order.seller_id) {
-        $scope.order.company_name = $scope.sellers[i].company_name;
-      }
-    }
-    $scope.sellOrders.push($scope.order);
-    $scope.close();
+    
+    $scope.success = $scope.error = null;
+      
+    $scope.order.deadline = $filter('date')($scope.order.deadline, "yyyy-MM-dd");
+    $scope.order.order_date = $filter('date')($scope.order.order_date, "yyyy-MM-dd");
+    $scope.order.user_id = Authentication.user.id;
+
+    var sellOrder = new SellOrder($scope.order);
+    
+    sellOrder.$save(function (response) {
+      $scope.order = response;
+      $scope.order.deadline = new Date($scope.order.deadline);
+      $scope.order.order_date = new Date($scope.order.order_date);
+      $scope.sellOrders.push($scope.order);
+      $scope.close();
+      $scope.success = true;
+    }, function (response) {
+      $scope.error = response.data.message;
+    });
+    
   };
   
   $scope.close = function () {
@@ -203,7 +216,7 @@ angular.module('deal').controller('CreateSellModalController', function ($scope,
   };
 });
 
-angular.module('deal').controller('CreateBuyModalController', function ($scope, $uibModalInstance, Deal, SellOrder, BuyOrder) {
+angular.module('deal').controller('CreateBuyModalController', function ($scope, $filter, $uibModalInstance, Deal, SellOrder, BuyOrder, Authentication) {
   
   $scope.initializeOrder = function(){
     $scope.order = {
@@ -266,14 +279,29 @@ angular.module('deal').controller('CreateBuyModalController', function ($scope, 
   };
   
   $scope.createBuyOrder = function(){
-    for (var i in $scope.buyers) {
-      if ($scope.buyers[i].id === $scope.order.buyer_id) {
-        $scope.order.company_name = $scope.buyers[i].company_name;
-      }
-    }
+    
+    $scope.success = $scope.error = null;
+      
+    //$scope.order.deadline = new Date($scope.order.deadline);
+    $scope.order.deadline = $filter('date')($scope.order.deadline, "yyyy-MM-dd");
+    $scope.order.order_date = $filter('date')($scope.order.order_date, "yyyy-MM-dd");
+    $scope.order.user_id = Authentication.user.id;
+
+    var buyOrder = new BuyOrder($scope.order);
+    
+    buyOrder.$save(function (response) {
+      $scope.order = response;
+      $scope.order.deadline = new Date($scope.order.deadline);
+      $scope.order.order_date = new Date($scope.order.order_date);
+      $scope.buyOrders.push($scope.order);
+      $scope.close();
+      $scope.success = true;
+    }, function (response) {
+      $scope.error = response.data.message;
+    });
+    
     //console.log($scope.buyers[].company_name);
-    $scope.buyOrders.push($scope.order);
-    $scope.close();
+    
   };
   
   $scope.close = function () {
