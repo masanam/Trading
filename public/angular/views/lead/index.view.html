@@ -5,18 +5,18 @@
     </div>
   </div>
 
-  <div class="container" style="margin-bottom:120px;margin-top:60px;">
+  <div class="container" style="margin-bottom:120px;margin-top:60px;" ng-init="total()">
     <div class="row">
       <div style="text-align:center;">
         <div>
           <div class="col-md-4 align-right">
             <a class="btn btn-default btn-margin full-width">
               <h2>BUYERS</h2>
-              1029 RECORDS
+                <span>{{ totalBuyer.count }} Records</span>
             </a><br>
             <a class="btn btn-default btn-margin full-width">
               <h2>SELLERS</h2>
-              1029 RECORDS
+              <span>{{ totalSeller.count }} Records</span>
             </a>
           </div>
           <div class="col-md-4">
@@ -25,11 +25,11 @@
           <div class="col-md-4 align-left">
             <a class="btn btn-default btn-margin full-width">
               <h2>VENDORS</h2>
-              1029 RECORDS
+              <span>{{ totalVendor.count }} Records</span>
             </a><br>
             <a class="btn btn-default btn-margin full-width">
               <h2>CONTACTS</h2>
-              1029 RECORDS
+              <span>{{ totalContact.count }} Records</span>
             </a>
           </div>
         </div>
@@ -40,15 +40,15 @@
 
         <div class="col-md-12" style="margin-top:40px;">
           <div class="col-md-8 col-md-offset-2 input-group btn-group">
-            <input type="text" class="form-control" style="width:600px;display:inline;">
-            <button class="btn btn-success">Search</button>
+            <input type="text" class="form-control" style="width:600px;display:inline;" ng-model= "keyword">
+            <button class="btn btn-success" ui-sref="lead.search({ searchType: searchType , keyword: keyword })">Search</button>
           </div><br/>
 
           <div class="btn-group">
-            <label class="btn btn-default" ng-model="searchItem" uib-btn-radio="'Buyer'">Buyer</label>
-            <label class="btn btn-default" ng-model="searchItem" uib-btn-radio="'Seller'">Sellers</label>
-            <label class="btn btn-default" ng-model="searchItem" uib-btn-radio="'Vendor'">Vendors</label>
-            <label class="btn btn-default" ng-model="searchItem" uib-btn-radio="'Contact'">Contacts</label>
+            <label class="btn btn-default"> <input type="radio" name="searchButton" ng-click="searchType = 'Buyer'"> Buyer</label>
+            <label class="btn btn-default"> <input type="radio" name="searchButton" ng-click="searchType = 'Seller'"> Sellers</label>
+            <label class="btn btn-default"> <input type="radio" name="searchButton" ng-click="searchType = 'Vendor'"> Vendors</label>
+            <label class="btn btn-default"> <input type="radio" name="searchButton" ng-click="searchType = 'Contact'"> Contacts</label>
           </div>
         </div>
           

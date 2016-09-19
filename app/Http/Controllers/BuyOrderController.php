@@ -24,8 +24,8 @@ class BuyOrderController extends Controller
      */
     public function index()
     {
-        $buy_order = BuyOrder::where('status', 'a')->get();
 
+        $buy_order = BuyOrder::where('status', 'a')->get();
         return response()->json($buy_order, 200);
     }
 
@@ -119,6 +119,7 @@ class BuyOrderController extends Controller
      */
     public function show(BuyOrder $buy_order)
     {
+
         if($buy_order->status == 'a') {
             return response()->json($buy_order, 200);
         } else {

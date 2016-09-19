@@ -10,9 +10,9 @@ use App\Http\Requests;
 
 class UserController extends Controller
 {
-    // public function __construct() {
-    //     $this->middleware('jwt.auth', ['except' => 'store']);
-    // }
+    public function __construct() {
+        $this->middleware('jwt.auth', ['except' => 'store']);
+    }
     /**
      * Display a listing of the resource.
      *

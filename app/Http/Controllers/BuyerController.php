@@ -11,17 +11,22 @@ use App\Http\Requests;
 class BuyerController extends Controller
 {
     public function __construct() {
-        $this->middleware('jwt.auth');
+        // $this->middleware('jwt.auth');
     }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($search)
     {
-        $buyer = Buyer::where('status', 'a')->get();
 
+        if (!$search) {
+            $buyer = Buyer::where('status', 'a')->get();
+        } else {
+            // $buyer = Buyer::search($search)->where('status', 'a')->get();
+            $buyer = Buyer::where('status', 'a')->where('company_name', 'LIKE', '%'.$search.'%')->get();
+        }
         return response()->json($buyer, 200);
     }
 
@@ -72,6 +77,7 @@ class BuyerController extends Controller
      */
     public function show(Buyer $buyer)
     {
+
         if($buyer->status == 'a') {
             return response()->json($buyer, 200);
         } else {
@@ -142,5 +148,17 @@ class BuyerController extends Controller
         $buyer->save();
 
         return response()->json($buyer, 200);
+    }
+
+    public function getBuyerByName($name) {
+        $buyer = Buyer::where('company_name', 'like', '%'.$name.'%')->get();
+
+        return response()->json($buyer, 200);
+    }
+
+    public function getTotalBuyer() {
+        $total = Buyer::count();
+        $status = array('count' => $total);        
+        return response()->json($status,200);
     }
 }

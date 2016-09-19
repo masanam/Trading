@@ -1,5 +1,5 @@
 <div ng-controller="DealController">
-  <h1>Deals <span ng-show="buyer !== undefined">for: {{buyer.company_name}}</span></h1>
+  <h1>Deals <span ng-show="buyer !== undefined">for: {{buyer.company_name}}</span> <button ui-sref="deal.create" class="btn-primary btn">+ Create</button></h1>
   <hr/>
 
 	<ul class="nav nav-tabs nav-justified" ng-init="findDeals()">

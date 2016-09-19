@@ -10,7 +10,7 @@ class Activity extends Model
 {
     protected $table = 'activities';
 
-    public function user() {
+    public function User() {
     	return $this->belongsTo('User');
     }
 }

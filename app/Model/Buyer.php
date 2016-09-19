@@ -2,6 +2,8 @@
 
 namespace App\Model;
 
+use Laravel\Scout\Searchable;
+
 use App\Model\User;
 use App\Model\BuyerUser;
 use App\Model\BuyOrder;
@@ -11,13 +13,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Buyer extends Model
 {
+    use Searchable;
+
     protected $table = 'buyers';
 
-    public function user() {
+    public function User() {
     	return $this->belongsTo('User');
     }
 
-    public function contact() {
+    public function Contact() {
         return $this->hasMany('Contact');
     }
 
@@ -25,7 +29,12 @@ class Buyer extends Model
     	return $this->hasMany('BuyOrder');
     }
 
-    public function product() {
+    public function Product() {
     	return $this->hasMany('Product');
+    }
+
+    public function searchableAs()
+    {
+        return 'buyers_index';
     }
 }

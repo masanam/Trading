@@ -17,9 +17,13 @@ class VendorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($search)
     {
-        $vendor = Vendor::where('status', 'a')->get();
+        if (!$search) {
+            $vendor = Vendor::where('status', 'a')->get();
+        } else {
+            $vendor = Vendor::where('status', 'a')->where('company_name', 'LIKE', '%'.$search.'%')->get();
+        }
 
         return response()->json($vendor, 200);
     }
@@ -130,5 +134,17 @@ class VendorController extends Controller
         $vendor->save();
 
         return response()->json($vendor, 200);
+    }
+
+    public function getVendorByName($name) {
+        $vendor = Buyer::wherewhere('company_name', 'like', '%'.$name.'%')->get();
+
+        return response()->json($vendor, 200);
+    }
+
+    public function getTotalVendor() {
+        $total = Vendor::count();
+        $status = array('count' => $total);        
+        return response()->json($status,200);
     }
 }
