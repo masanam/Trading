@@ -18,10 +18,14 @@ class BuyerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($search)
     {
 
-        $buyer = Buyer::where('status', 'a')->get();
+        if (!$search) {
+            $buyer = Buyer::where('status', 'a')->get();
+        } else {
+            $buyer = Buyer::where('status', 'a')->where('company_name', 'LIKE', '%'.$search.'%')->get();
+        }
         return response()->json($buyer, 200);
     }
 
@@ -72,17 +76,11 @@ class BuyerController extends Controller
      */
     public function show(Buyer $buyer)
     {
-<<<<<<< HEAD
+
         if($buyer->status == 'a') {
             return response()->json($buyer, 200);
         } else {
             return response()->json(['message' => 'deactivated record'], 404);
-=======
-        if($Buyer->status == 'a') {
-            return response()->json($Buyer, 200);
-        } else {
-            return response()->json(['message' => 'deleted'], 404);
->>>>>>> b2ec0e9fc90dcffd481a1157ff7620b95306027d
         }
     }
 
@@ -155,5 +153,11 @@ class BuyerController extends Controller
         $buyer = Buyer::where('company_name', 'like', '%'.$name.'%')->get();
 
         return response()->json($buyer, 200);
+    }
+
+    public function getTotalBuyer() {
+        $total = Buyer::count();
+
+        return response()->json($total, 200);
     }
 }

@@ -27,7 +27,7 @@ elixir(function(mix) {
   mix
     .bower()
     .angular('./public/angular/')
-    .version(assets)
+    // .version(assets)
     .serve();
 });
 

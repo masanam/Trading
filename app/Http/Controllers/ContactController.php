@@ -18,9 +18,13 @@ class ContactController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($search)
     {
-        $contact = Contact::where('status', 'a')->get();
+        if (!$search) {
+            $contact = Contact::where('status', 'a')->get();
+        } else {
+            $contact = Contact::where('status', 'a')->search($search)->get();
+        }
         return response()->json($contact, 200);
     }
 
@@ -131,5 +135,11 @@ class ContactController extends Controller
         $contact = Contact::where('company_name', 'like', '%'.$name.'%')->get();
 
         return response()->json($contact, 200);
+    }
+
+    public function getTotalContact() {
+        $total = Contact::count();
+
+        return response()->json($total, 200);
     }
 }
