@@ -24,48 +24,9 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
     
 		$scope.deal = Deal.get;
     
-    $scope.buyOrders = [{
-      id: 1,
-      buyer_id: 1,
-      company_name: 'PT. Sinarmas Master Lain',
-      order_date: new Date('2008-10-01'),
-      volume: 1000,
-      gcv_arb_min: 2000,
-      gcv_arb_max: 2500,
-      gcv_adb_min: 1000,
-      gcv_adb_max: 1500,
-      ncv_min: 1000,
-      ncv_max: 1500,
-      max_price: 20,
-    },{
-      id: 2,
-      buyer_id: 2,
-      company_name: 'PT. Master Batu Bara',
-      order_date: new Date('2008-10-01'),
-      volume: 2500,
-      gcv_arb_min: 2000,
-      gcv_arb_max: 2500,
-      gcv_adb_min: 1100,
-      gcv_adb_max: 1500,
-      ncv_min: 1300,
-      ncv_max: 1500,
-      max_price: 10,
-    }];
+    $scope.buyOrders = [];
     
-    $scope.sellOrders = [{
-      id: 1,
-      seller_id: 1,
-      company_name: 'PT. Master Batu Bara',
-      order_date: new Date('2008-10-01'),
-      volume: 2500,
-      gcv_arb_min: 2000,
-      gcv_arb_max: 2500,
-      gcv_adb_min: 1100,
-      gcv_adb_max: 1500,
-      ncv_min: 1300,
-      ncv_max: 1500,
-      max_price: 10,
-    }];
+    $scope.sellOrders = [];
 
     $scope.openModal = function () {
       var modalInstance = $uibModal.open({
@@ -171,6 +132,7 @@ angular.module('deal').controller('CreateSellModalController', function ($scope,
     $scope.order = {
       id: undefined,
       seller_id: undefined,
+      company_name: undefined,
       order_date: new Date(),
       deadline: new Date(),
       address: undefined,
@@ -227,7 +189,13 @@ angular.module('deal').controller('CreateSellModalController', function ($scope,
   };
   
   $scope.createSellOrder = function(){
+    for (var i in $scope.sellers) {
+      if ($scope.sellers[i].id === $scope.order.seller_id) {
+        $scope.order.company_name = $scope.sellers[i].company_name;
+      }
+    }
     $scope.sellOrders.push($scope.order);
+    $scope.close();
   };
   
   $scope.close = function () {
@@ -241,6 +209,7 @@ angular.module('deal').controller('CreateBuyModalController', function ($scope, 
     $scope.order = {
       id: undefined,
       buyer_id: undefined,
+      company_name: undefined,
       order_date: new Date(),
       deadline: new Date(),
       address: undefined,
@@ -296,8 +265,15 @@ angular.module('deal').controller('CreateBuyModalController', function ($scope, 
     };
   };
   
-  $scope.createBuyOrder = function(order){
+  $scope.createBuyOrder = function(){
+    for (var i in $scope.buyers) {
+      if ($scope.buyers[i].id === $scope.order.buyer_id) {
+        $scope.order.company_name = $scope.buyers[i].company_name;
+      }
+    }
+    //console.log($scope.buyers[].company_name);
     $scope.buyOrders.push($scope.order);
+    $scope.close();
   };
   
   $scope.close = function () {
