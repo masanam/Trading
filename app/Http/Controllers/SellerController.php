@@ -23,7 +23,7 @@ class SellerController extends Controller
         if (!$search) {
             $seller = Seller::where('status', 'a')->get();
         } else {
-            $seller = Seller::where('status', 'a')->search($search)->get();
+            $seller = Seller::where('status', 'a')->where('company_name', 'LIKE', '%'.$search.'%')->get();
         }
 
         return response()->json($seller, 200);

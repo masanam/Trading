@@ -24,6 +24,7 @@ class BuyerController extends Controller
         if (!$search) {
             $buyer = Buyer::where('status', 'a')->get();
         } else {
+            // $buyer = Buyer::search($search)->where('status', 'a')->get();
             $buyer = Buyer::where('status', 'a')->where('company_name', 'LIKE', '%'.$search.'%')->get();
         }
         return response()->json($buyer, 200);
