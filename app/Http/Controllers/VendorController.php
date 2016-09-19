@@ -137,4 +137,10 @@ class VendorController extends Controller
 
         return response()->json($vendor, 200);
     }
+
+    public function getTotalVendor() {
+        $total = Vendor::count();
+
+        return response()->json($total, 200);
+    }
 }

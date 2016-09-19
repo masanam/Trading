@@ -149,4 +149,10 @@ class BuyerController extends Controller
 
         return response()->json($buyer, 200);
     }
+
+    public function getTotalBuyer() {
+        $total = Buyer::count();
+
+        return response()->json($total, 200);
+    }
 }

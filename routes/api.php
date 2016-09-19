@@ -23,16 +23,19 @@ Route::group(['middleware' => ['cors']], function() {
         'create', 'edit'
     ]]);
 
+    Route::get('contact/total', 'ContactController@getTotalContact');
     Route::get('contact/{name}', 'ContactController@getContactByName');
     Route::resource('contact', 'ContactController', ['except' => [
         'create', 'edit'
     ]]);
 
+    Route::get('buyer/total', 'BuyerController@getTotalBuyer');
     Route::get('buyer/{name}', 'BuyerController@getBuyerByName');
     Route::resource('buyer', 'BuyerController', ['except' => [
         'create', 'edit'
     ]]);
 
+    Route::get('seller/total', 'SellerController@getTotalSeller');
     Route::get('seller/{name}', 'SellerController@getSellerByName');
     Route::resource('seller', 'SellerController', ['except' => [
         'create', 'edit'
@@ -58,6 +61,7 @@ Route::group(['middleware' => ['cors']], function() {
         'create', 'edit'
     ]]);
 
+    Route::get('vendor/total', 'VendorController@getTotalVendor');
     Route::get('vendor/{name}', 'VendorController@getVendorByName');
     Route::resource('vendor', 'VendorController', ['except' => [
         'create', 'edit'

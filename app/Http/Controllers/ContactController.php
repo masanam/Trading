@@ -126,4 +126,10 @@ class ContactController extends Controller
 
         return response()->json($contact, 200);
     }
+
+    public function getTotalContact() {
+        $total = Contact::count();
+
+        return response()->json($total, 200);
+    }
 }
