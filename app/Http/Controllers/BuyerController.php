@@ -23,7 +23,7 @@ class BuyerController extends Controller
         if (!$search) {
             $buyer = Buyer::where('status', 'a')->get();
         } else {
-            $buyer = Buyer::where('status', 'a')->search($search)->get();
+            $buyer = Buyer::search($search)->where('status', 'a')->get();
         }
 
         return response()->json($buyer, 200);

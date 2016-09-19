@@ -32,4 +32,9 @@ class Buyer extends Model
     public function Product() {
     	return $this->hasMany('Product');
     }
+
+    public function searchableAs()
+    {
+        return 'buyers_index';
+    }
 }
