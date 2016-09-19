@@ -24,21 +24,21 @@ Route::group(['middleware' => ['cors']], function() {
     ]]);
 
     Route::get('contact/total', 'ContactController@getTotalContact');
-    Route::get('contact/{name}', 'ContactController@getContactByName');
+    Route::get('contact/{search?}', 'ContactController@index');
     Route::resource('contact', 'ContactController', ['except' => [
-        'create', 'edit'
+        'index', 'create', 'edit'
     ]]);
 
     Route::get('buyer/total', 'BuyerController@getTotalBuyer');
-    Route::get('buyer/{name}', 'BuyerController@getBuyerByName');
+    Route::get('buyer/{search?}', 'BuyerController@index');
     Route::resource('buyer', 'BuyerController', ['except' => [
-        'create', 'edit'
+        'index', 'create', 'edit'
     ]]);
 
     Route::get('seller/total', 'SellerController@getTotalSeller');
-    Route::get('seller/{name}', 'SellerController@getSellerByName');
+    Route::get('seller/{search?}', 'SellerController@index');
     Route::resource('seller', 'SellerController', ['except' => [
-        'create', 'edit'
+        'index', 'create', 'edit'
     ]]);
 
     Route::resource('buy_order', 'BuyOrderController', ['except' => [
@@ -62,9 +62,9 @@ Route::group(['middleware' => ['cors']], function() {
     ]]);
 
     Route::get('vendor/total', 'VendorController@getTotalVendor');
-    Route::get('vendor/{name}', 'VendorController@getVendorByName');
+    Route::get('vendor/{search?}', 'VendorController@index');
     Route::resource('vendor', 'VendorController', ['except' => [
-        'create', 'edit'
+        'index', 'create', 'edit'
     ]]);
 
     Route::resource('buy_deal', 'BuyDealController', ['except' => [
