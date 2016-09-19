@@ -5,18 +5,18 @@
     </div>
   </div>
 
-  <div class="container" style="margin-bottom:120px;margin-top:60px;">
+  <div class="container" style="margin-bottom:120px;margin-top:60px;" ng-init="total()">
     <div class="row">
       <div style="text-align:center;">
         <div>
           <div class="col-md-4 align-right">
             <a class="btn btn-default btn-margin full-width">
               <h2>BUYERS</h2>
-              1029 RECORDS
+                <span>{{ totalBuyer.count }} Records</span>
             </a><br>
             <a class="btn btn-default btn-margin full-width">
               <h2>SELLERS</h2>
-              1029 RECORDS
+              <span>{{ totalSeller.count }} Records</span>
             </a>
           </div>
           <div class="col-md-4">
@@ -25,11 +25,11 @@
           <div class="col-md-4 align-left">
             <a class="btn btn-default btn-margin full-width">
               <h2>VENDORS</h2>
-              1029 RECORDS
+              <span>{{ totalVendor.count }} Records</span>
             </a><br>
             <a class="btn btn-default btn-margin full-width">
               <h2>CONTACTS</h2>
-              1029 RECORDS
+              <span>{{ totalContact.count }} Records</span>
             </a>
           </div>
         </div>

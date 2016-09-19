@@ -11,7 +11,7 @@ use App\Http\Requests;
 class BuyerController extends Controller
 {
     public function __construct() {
-        $this->middleware('jwt.auth');
+        // $this->middleware('jwt.auth');
     }
     /**
      * Display a listing of the resource.
@@ -158,7 +158,7 @@ class BuyerController extends Controller
 
     public function getTotalBuyer() {
         $total = Buyer::count();
-
-        return response()->json($total, 200);
+        $status = array('count' => $total);        
+        return response()->json($status,200);
     }
 }

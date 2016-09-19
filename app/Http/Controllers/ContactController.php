@@ -64,17 +64,11 @@ class ContactController extends Controller
      */
     public function show(Contact $contact)
     {
-<<<<<<< HEAD
+
         if($contact->status == 'a') {
             return response()->json($contact, 200);
         } else {
             return response()->json(['message' => 'deactivated record'], 404);
-=======
-        if($Contact->status == 'a') {
-            return response()->json($Contact, 200);
-        } else {
-            return response()->json(['message' => 'deleted'], 404);
->>>>>>> b2ec0e9fc90dcffd481a1157ff7620b95306027d
         }
     }
 
@@ -139,7 +133,7 @@ class ContactController extends Controller
 
     public function getTotalContact() {
         $total = Contact::count();
-
-        return response()->json($total, 200);
+        $status = array('count' => $total);        
+        return response()->json($status,200);
     }
 }
