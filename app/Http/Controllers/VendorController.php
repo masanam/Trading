@@ -22,7 +22,7 @@ class VendorController extends Controller
         if (!$search) {
             $vendor = Vendor::where('status', 'a')->get();
         } else {
-            $vendor = Vendor::where('status', 'a')->search($search)->get();
+            $vendor = Vendor::where('status', 'a')->where('company_name', 'LIKE', '%'.$search.'%')->get();
         }
 
         return response()->json($vendor, 200);
