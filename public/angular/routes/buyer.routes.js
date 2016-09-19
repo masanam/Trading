@@ -20,7 +20,7 @@ angular.module('buyer').config(['$stateProvider', '$urlRouterProvider',
       })
   	  .state('buyer.view', {
         url: '/{id}',
-        templateUrl: '/angular/views/buyer/view.view.html'
+        templateUrl: '/angular/views/buyer/buyer.view.html'
       })
       .state('buyer.update', {
         url: '/{id}/update',

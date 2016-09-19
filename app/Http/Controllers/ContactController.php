@@ -18,10 +18,13 @@ class ContactController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($search)
     {
-        $contact = Contact::where('status', 'a')->get();
-
+        if (!$search) {
+            $contact = Contact::where('status', 'a')->get();
+        } else {
+            $contact = Contact::where('status', 'a')->where('company_name', 'LIKE', '%'.$search.'%')->get();
+        }
         return response()->json($contact, 200);
     }
 
@@ -61,6 +64,7 @@ class ContactController extends Controller
      */
     public function show(Contact $contact)
     {
+
         if($contact->status == 'a') {
             return response()->json($contact, 200);
         } else {
@@ -125,5 +129,11 @@ class ContactController extends Controller
         $contact = Contact::where('company_name', 'like', '%'.$name.'%')->get();
 
         return response()->json($contact, 200);
+    }
+
+    public function getTotalContact() {
+        $total = Contact::count();
+        $status = array('count' => $total);        
+        return response()->json($status,200);
     }
 }
