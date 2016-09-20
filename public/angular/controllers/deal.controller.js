@@ -255,6 +255,13 @@ angular.module('deal').controller('CreateSellModalController', function ($scope,
       $scope.order = response;
       $scope.order.deadline = new Date($scope.order.deadline);
       $scope.order.order_date = new Date($scope.order.order_date);
+      for(var i = 0; i < $scope.sellers.length; i++){
+        var seller = $scope.sellers[i];
+        if(seller.id == response.seller_id){
+          $scope.order.company_name = seller.company_name;
+          break;
+        }
+      }
       $scope.sellOrders.push($scope.order);
       $scope.close();
       $scope.success = true;
@@ -344,6 +351,13 @@ angular.module('deal').controller('CreateBuyModalController', function ($scope, 
     
     buyOrder.$save(function (response) {
       $scope.order = response;
+      for(var i = 0; i < $scope.buyers.length; i++){
+        var buyer = $scope.buyers[i];
+        if(buyer.id == response.buyer_id){
+          $scope.order.company_name = buyer.company_name;
+          break;
+        }
+      }
       $scope.order.deadline = new Date($scope.order.deadline);
       $scope.order.order_date = new Date($scope.order.order_date);
       $scope.buyOrders.push($scope.order);
@@ -453,49 +467,6 @@ angular.module('deal').controller('DealModalController', function ($scope, $uibM
 		$scope.matchDemand = Product.query({ action: 'matching', id: id });
 		$scope.loading = false;
 	};
-  
-	$scope.sellers = [
-		{
-			company_name: 'PT Kuansing Inti Makmur',
-			phone: '+6276132317',
-			email: 'info@kim.com',
-			price: 2400000000,
-			volume: 2400,
-
-			contact: [
-				{ name: 'Albert Santos', email: 'albert@kim.com', phone: '+6276132317 ext 12' },
-			]
-		},
-		{
-			company_name: 'PT Golden Energy Mines',
-			phone: '+62811123456',
-			email: 'info@gems.com',
-			price: 2600000000,
-			volume: 2600,
-
-			contact: [
-				{ name: 'Mochtar Suhadi', email: 'mosu@gems.com', phone: '+62811123456 ext 12' },
-			]
-		}
-	];
-
-	$scope.vendors = [
-		{
-			company_name: 'PT Mitra Bahari Sentosa',
-			phone: '+6212345678',
-			email: 'info@mbs.com',
-			price: 75000000,
-
-			contact: [
-				{ name: 'Jimmy Sunarko', email: 'jimmy@mbs.com', phone: '+6212345678 ext 12' },
-			]
-		}
-	];
-
-	$scope.orderFulfillments = [
-		{ company: 'PT Kuansing Inti Makmur', mine: 'KIM West', order_date: Date(), status: 'd' },
-		{ company: 'PT Golden Energy Mines', mine: 'PP', order_date: Date(), status: 's' }
-	];
 
   $scope.close = function () {
     $uibModalInstance.dismiss('cancel');
