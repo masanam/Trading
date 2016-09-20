@@ -1,135 +1,114 @@
 <div ng-controller="LeadController" ng-init="findOne()">
-  <!-- Modal content-->
-  <div class="container">
+  <!-- HEADER -->
+  <div class="row submenu-header">
+    <div class="submenu-header-item">
+      <button type="button" class="btn btn-default" ui-sref="lead.index">
+        <i class="glyphicon glyphicon-arrow-left"></i> Back
+      </button>
+    </div>
+    <div class="submenu-header-item">
+      <h4>{{ $stateParams.type }} Profile</h4>
+    </div>
+  </div>
 
-    <!-- HEADER -->
-    <div class="row submenu-header">
-      <div class="submenu-header-item">
-        <button type="button" class="btn btn-default">
-          <i class="glyphicon glyphicon-arrow-left"></i> Back
+  <!-- PRIMARY DETAIL -->
+  <div style="height:200px; padding:10px; background:#eee;">
+    <div class="col-xs-2" style="background-image:url('/images/default.jpg'); background-size: cover; height:180px"></div>
+    <div class="col-xs-10">
+      <h1>{{ lead.company_name }}</h1>
+      <h3>{{ lead.industry }}</h3>
+      <p>{{ lead.address }}</p>
+    </div>
+  </div>
+
+  <div style="margin-top:10px;">
+    <div class="col-lg-4">
+      <div class="row" style="background:#eee; padding: 10px;">
+        <h3>About</h3>
+
+        <button type="button" class="btn btn-primary" ng-click="goToUpdatePopup(lead.id)">
+          <i class="glyphicon glyphicon-pencil"></i> Update
+        </button><br><br>
+
+        <table class="table table-striped">
+          <tr><td>Address:</td><td>{{ lead.address }}</td></tr>
+          <tr><td>City:</td><td>{{ lead.city }}</td></tr>
+          <tr><td>Phone:</td><td>{{ lead.phone }}</td></tr>
+          <tr><td>Email:</td><td>{{ lead.email }}</td></tr>
+          <tr><td>Web:</td><td>{{ lead.web }}</td></tr>
+          <tr><td>Desc:</td><td>{{ lead.descritrtion }}</td></tr>
+          <tr ng-if="lead.status == 'a'"><td>Status:</td> <td>Active</td></tr>
+          <tr ng-if="lead.status == 'x'"><td>Status:</td> <td>Deactivated</td></tr>
+        </table>
+
+        <ng-map center="{{lead.longitude}}, {{lead.latitude}}">
+          <marker center="{{lead.longitude}}, {{lead.latitude}}"></marker>
+        </ng-map>
+      </div>
+    </div>
+
+    <div class="col-lg-8">
+      <div class="row" style="background:#eee; padding: 10px; margin-left:10px;">
+        <h3>Contacts</h3>
+
+        <button type="button" class="btn btn-info" ng-click="goToContact()">
+          <i class="glyphicon glyphicon-user"></i> Contact
         </button>
-      </div>
-      <div class="submenu-header-item">
-        <h4>{{ $stateParams.type }} Profile</h4>
-      </div>
-    </div>
 
-    <!-- PRIMARY DETAIL -->
-    <div>
-      <img src="/images/default.jpg" width="200px">
-    </div>
-
-    <div class="modal-body row">
-      <h1>{{buyer.company_name}}</h1>
-      <hr class="divider" />
-
-      <button type="button" class="btn btn-primary" ng-click="goToUpdatePopup(buyer.id)">
-        <i class="glyphicon glyphicon-pencil"></i> Update
-      </button>
-      <button type="button" class="btn btn-success" ng-click="goToPendingOrders(buyer.id)">
-        <i class="glyphicon glyphicon-plus"></i> Order
-      </button>
-      <button type="button" class="btn btn-info" ng-click="goToContact()">
-        <i class="glyphicon glyphicon-user"></i> Contact
-      </button>
-
-      <hr class="divider" />
-
-      <div class="row with-divider">
-        <div class="col-md-6">
-          <ng-map ng-if="render" center="{{buyer.latitude}}, {{buyer.longitude}}">
-            <marker position="{{buyer.latitude}}, {{buyer.longitude}}" title="This is the buyer headquarter"></marker>
-          </ng-map>
-        </div>
-
-        <div class="col-md-6">
-          <h3>Information</h3>
-          <p>{{ buyer.headquarter_location }}</p>
-          <p>{{ buyer.phone }}</p>
-          <p>{{ buyer.email }}</p>
-          <p ng-if="buyer.status == 'a'">Active</p>
-          <p ng-if="buyer.status == 'x'">Deactivated</p>
-
-          <h3>Contact Points</h3>
-          <ul class="list-group">
-            <li class="list-group-item" ng-repeat="contact in buyer.user">
-              {{ contact.name }}
-              <i class="glyphicon glyphicon-envelope" style="margin-left: 20px;"></i> {{ contact.email }}
-              <i class="glyphicon glyphicon-earphone" style="margin-left: 20px;"></i> {{ contact.phone }}
-            </li>
-          </ul>
-        </div>
+        <ul class="list-group">
+          <li class="list-group-item" ng-repeat="contact in lead.contact">
+            {{ contact.name }}
+            <i class="glyphicon glyphicon-envelope" style="margin-left: 20px;"></i> {{ contact.email }}
+            <i class="glyphicon glyphicon-earphone" style="margin-left: 20px;"></i> {{ contact.phone }}
+          </li>
+        </ul>
       </div>
 
-      <div class="row with-divider">
-        <div class="col-md-6">
-          <h4>Pending Orders</h4>
-          <hr class="divider" />
-          <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Order Date</th>
-                    <th>Volume</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="(idx, pendingOrder) in pendingOrders">
-                    <td>{{ pendingOrder.id }}</td>
-                    <td>
-                      {{ pendingOrder.created_at | date:'medium' }}
-                    </td>
-                    <td>
-                      {{ pendingOrder.volume | number }}
-                    </td>
-                </tr>
-                <tr ng-hide="pendingOrders.length > 0">
-                  <td colspan="3">There is no pending orders.</td>
-                </tr>
-                <!--tr>
-                  <td colspan="3"><a class="btn btn-block btn-blue" ng-click="goToPendingOrders(buyer.id)">View More</a></td>
-                </tr-->
-            </tbody>
-          </table>
-        </div>
-        <div class="col-md-6">
-          <h4>Previous Orders</h4>
-          <hr class="divider" />
-          <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Last Order Date</th>
-                    <th>Volume</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="(idx, lastOrder) in lastOrders">
-                    <td>{{ lastOrder.id }}</td>
-                    <td>
-                      {{ lastOrder.created_at | date:'medium' }}
-                    </td>
-                    <td>
-                      {{ lastOrder.volume | number }}
-                    </td>
-                </tr>
-                <tr ng-hide="lastOrders.length > 0">
-                  <td colspan="3">There is no previous orders.</td>
-                </tr>
-                <!--tr>
-                  <td colspan="3"><a class="btn btn-block btn-blue" ng-click="goToLastOrders(buyer.id)">View More</a></td>
-                </tr-->
-            </tbody>
-          </table>
-        </div>
+
+      <div class="row" style="background:#eee; padding: 10px; margin-left:10px; margin-top:10px;">
+        <h3>Insights</h3>
+        -- FEATURES COMING SOON --
       </div>
-      <div class="row">
-        <div class="col-md-3" ng-repeat="(idx, lastOrder) in Orders">
-          <ng-map center="{{buyer.longitude}}, {{buyer.latitude}}">
-            <marker center="{{buyer.longitude}}, {{buyer.latitude}}" title="This is the buyer headquarter"></marker>
-          </ng-map>
-        </div>
+
+      <div class="row" style="background:#eee; padding: 10px; margin-left:10px; margin-top:10px;">
+        <h3>Order History</h3>
+        <button type="button" class="btn btn-success" ng-click="goToPendingOrders(lead.id)">
+          <i class="glyphicon glyphicon-plus"></i> Order
+        </button><br><br>
+
+        <table class="table table-striped">
+          <thead>
+              <tr>
+                  <th>#</th>
+                  <th>Last Order Date</th>
+                  <th>Volume</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr ng-repeat="(idx, lastOrder) in lastOrders">
+                  <td>{{ lastOrder.id }}</td>
+                  <td>
+                    {{ lastOrder.created_at | date:'medium' }}
+                  </td>
+                  <td>
+                    {{ lastOrder.volume | number }}
+                  </td>
+              </tr>
+              <tr ng-hide="lastOrders.length > 0">
+                <td colspan="3">There is no previous orders.</td>
+              </tr>
+              <!--tr>
+                <td colspan="3"><a class="btn btn-block btn-blue" ng-click="goToLastOrders(lead.id)">View More</a></td>
+              </tr-->
+          </tbody>
+        </table>
       </div>
+
+      <div class="row" style="background:#eee; padding: 10px; margin-left:10px; margin-top:10px;">
+        <h3>Notes</h3>
+        -- FEATURES COMING SOON --
+      </div>
+
     </div>
   </div>
 </div>

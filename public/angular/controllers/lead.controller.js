@@ -10,7 +10,7 @@ angular.module('lead').controller('LeadController', ['$scope','$http', '$statePa
 		$scope.$stateParams = $stateParams;
 
 		$scope.find = function() {
-			if ($stateParams.searchType === 'Buyer') $scope.leads = Buyer.query({ action: 'search', search: $stateParams.keyword });
+		if ($stateParams.searchType === 'Buyer') $scope.leads = Buyer.query({ action: 'search', search: $stateParams.keyword });
 		 else if ($stateParams.searchType === 'Seller') $scope.leads = Seller.query({ action: 'search', search: $stateParams.keyword });
 		 else if ($stateParams.searchType === 'Vendor') $scope.leads = Vendor.query({ action: 'search', search: $stateParams.keyword });
 		 else if ($stateParams.searchType === 'Contact') $scope.leads = Contact.query({ action: 'search', search: $stateParams.keyword });
@@ -18,10 +18,10 @@ angular.module('lead').controller('LeadController', ['$scope','$http', '$statePa
 		};
 
 		$scope.findOne = function () {
-			if ($stateParams.type === 'Buyer') $scope.leads = Buyer.get({ id: $stateParams.id });
-			else if ($stateParams.type === 'Seller') $scope.leads = Seller.get({ id: $stateParams.id });
-			else if ($stateParams.type === 'Vendor') $scope.leads = Vendor.get({ id: $stateParams.id });
-			else if ($stateParams.type === 'Contact') $scope.leads = Contact.get({ id: $stateParams.id });
+			if ($stateParams.type === 'Buyer') $scope.lead = Buyer.get({ id: $stateParams.id });
+			else if ($stateParams.type === 'Seller') $scope.lead = Seller.get({ id: $stateParams.id });
+			else if ($stateParams.type === 'Vendor') $scope.lead = Vendor.get({ id: $stateParams.id });
+			else if ($stateParams.type === 'Contact') $scope.lead = Contact.get({ id: $stateParams.id });
 		
 		};
 		
