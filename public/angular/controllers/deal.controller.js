@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Deal', 'SellOrder', 'BuyOrder', 'Buyer', 'Seller',
-	function($scope, $uibModal, Deal, SellOrder, BuyOrder, Buyer, Seller) {
+angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Deal', 'SellOrder', 'BuyOrder', 'Buyer', 'Seller', 'SellDeal', 'BuyDeal', 'Authentication',
+	function($scope, $uibModal, Deal, SellOrder, BuyOrder, Buyer, Seller, SellDeal, BuyDeal, Authentication) {
     $scope.findDeals = function(){
       $scope.deals = Deal.query;
     };
@@ -24,48 +24,9 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
     
 		$scope.deal = Deal.get;
     
-    $scope.buyOrders = [{
-      id: 1,
-      buyer_id: 1,
-      company_name: 'PT. Sinarmas Master Lain',
-      order_date: new Date('2008-10-01'),
-      volume: 1000,
-      gcv_arb_min: 2000,
-      gcv_arb_max: 2500,
-      gcv_adb_min: 1000,
-      gcv_adb_max: 1500,
-      ncv_min: 1000,
-      ncv_max: 1500,
-      max_price: 20,
-    },{
-      id: 2,
-      buyer_id: 2,
-      company_name: 'PT. Master Batu Bara',
-      order_date: new Date('2008-10-01'),
-      volume: 2500,
-      gcv_arb_min: 2000,
-      gcv_arb_max: 2500,
-      gcv_adb_min: 1100,
-      gcv_adb_max: 1500,
-      ncv_min: 1300,
-      ncv_max: 1500,
-      max_price: 10,
-    }];
+    $scope.buyOrders = [];
     
-    $scope.sellOrders = [{
-      id: 1,
-      seller_id: 1,
-      company_name: 'PT. Master Batu Bara',
-      order_date: new Date('2008-10-01'),
-      volume: 2500,
-      gcv_arb_min: 2000,
-      gcv_arb_max: 2500,
-      gcv_adb_min: 1100,
-      gcv_adb_max: 1500,
-      ncv_min: 1300,
-      ncv_max: 1500,
-      max_price: 10,
-    }];
+    $scope.sellOrders = [];
 
     $scope.openModal = function () {
       var modalInstance = $uibModal.open({
@@ -142,9 +103,51 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
     
     $scope.createDeal = function(){
       if($scope.buyOrders.length > 0 && $scope.sellOrders.length > 0){
+        //Add Deals
+        var deal = new Deal();
+        
+        deal.$save(function (response) {
+          for(var i = 0; i < $scope.sellOrders.length; i++){
+            var sellOrder = $scope.sellOrders[i];
+            sellOrder.deadline = new Date(sellOrder.deadline);
+            sellOrder.order_date = new Date(sellOrder.order_date);
+            
+            sellOrder = new SellOrder(sellOrder);
+            
+            sellOrder.$save(function (response) {
+              
+            }, function(response){
+              $scope.error = response.data.message;
+            });
+          }
+          
+          for(var i = 0; i < $scope.buyOrders.length; i++){
+            var buyOrder = $scope.buyOrders[i];
+            buyOrder.deadline = new Date(buyOrder.deadline);
+            buyOrder.order_date = new Date(buyOrder.order_date);
+            
+            buyOrder = new BuyOrder(buyOrder);
+            
+            sellOrder.$save(function (response) {
+              
+            }, function(response){
+              $scope.error = response.data.message;
+            });
+          }
+          
+          $scope.sellOrders
+          var buyDeal = new buyDeal
+          $scope.order = response;
+          $scope.order.deadline = new Date($scope.order.deadline);
+          $scope.order.order_date = new Date($scope.order.order_date);
+          $scope.sellOrders.push($scope.order);
+          $scope.close();
+          $scope.success = true;
+        }, function (response) {
+          $scope.error = response.data.message;
+        });
         //Add BuyOrders
         //Add SellOrders
-        //Add Deals
       }else{
         $scope.error = "You need at least one buy order and one sell order!";
         var modalInstance = $uibModal.open({
@@ -165,12 +168,13 @@ angular.module('deal').controller('AlertModalController', function ($scope, $uib
   };
 });
 
-angular.module('deal').controller('CreateSellModalController', function ($scope, $uibModalInstance, Deal, SellOrder, BuyOrder) {
+angular.module('deal').controller('CreateSellModalController', function ($scope, $filter, $uibModalInstance, Deal, SellOrder, BuyOrder, Authentication) {
   
   $scope.initializeOrder = function(){
     $scope.order = {
       id: undefined,
       seller_id: undefined,
+      company_name: undefined,
       order_date: new Date(),
       deadline: new Date(),
       address: undefined,
@@ -227,7 +231,28 @@ angular.module('deal').controller('CreateSellModalController', function ($scope,
   };
   
   $scope.createSellOrder = function(){
-    $scope.sellOrders.push($scope.order);
+    
+    $scope.success = $scope.error = null;
+      
+    $scope.order.deadline = $filter('date')($scope.order.deadline, "yyyy-MM-dd");
+    $scope.order.order_date = $filter('date')($scope.order.order_date, "yyyy-MM-dd");
+    $scope.order.user_id = Authentication.user.id;
+
+    var sellOrder = new SellOrder($scope.order);
+    
+    //console.log(sellOrder);
+    
+    sellOrder.$save(function (response) {
+      $scope.order = response;
+      $scope.order.deadline = new Date($scope.order.deadline);
+      $scope.order.order_date = new Date($scope.order.order_date);
+      $scope.sellOrders.push($scope.order);
+      $scope.close();
+      $scope.success = true;
+    }, function (response) {
+      $scope.error = response.data.message;
+    });
+    
   };
   
   $scope.close = function () {
@@ -235,12 +260,13 @@ angular.module('deal').controller('CreateSellModalController', function ($scope,
   };
 });
 
-angular.module('deal').controller('CreateBuyModalController', function ($scope, $uibModalInstance, Deal, SellOrder, BuyOrder) {
+angular.module('deal').controller('CreateBuyModalController', function ($scope, $filter, $uibModalInstance, Deal, SellOrder, BuyOrder, Authentication) {
   
   $scope.initializeOrder = function(){
     $scope.order = {
       id: undefined,
       buyer_id: undefined,
+      company_name: undefined,
       order_date: new Date(),
       deadline: new Date(),
       address: undefined,
@@ -296,8 +322,30 @@ angular.module('deal').controller('CreateBuyModalController', function ($scope, 
     };
   };
   
-  $scope.createBuyOrder = function(order){
-    $scope.buyOrders.push($scope.order);
+  $scope.createBuyOrder = function(){
+    
+    $scope.success = $scope.error = null;
+      
+    //$scope.order.deadline = new Date($scope.order.deadline);
+    $scope.order.deadline = $filter('date')($scope.order.deadline, "yyyy-MM-dd");
+    $scope.order.order_date = $filter('date')($scope.order.order_date, "yyyy-MM-dd");
+    $scope.order.user_id = Authentication.user.id;
+
+    var buyOrder = new BuyOrder($scope.order);
+    
+    buyOrder.$save(function (response) {
+      $scope.order = response;
+      $scope.order.deadline = new Date($scope.order.deadline);
+      $scope.order.order_date = new Date($scope.order.order_date);
+      $scope.buyOrders.push($scope.order);
+      $scope.close();
+      $scope.success = true;
+    }, function (response) {
+      $scope.error = response.data.message;
+    });
+    
+    //console.log($scope.buyers[].company_name);
+    
   };
   
   $scope.close = function () {
