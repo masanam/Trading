@@ -16,12 +16,10 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
     
     $scope.findAllSellers = function(){
       $scope.sellers = Seller.query();
-      console.log($scope.sellers);
     };
     
     $scope.findAllBuyers = function(){
       $scope.buyers = Buyer.query();
-      console.log($scope.buyers);
     };
     
 		$scope.deal = Deal.get;
@@ -199,6 +197,8 @@ angular.module('deal').controller('CreateSellModalController', function ($scope,
     $scope.order.user_id = Authentication.user.id;
 
     var sellOrder = new SellOrder($scope.order);
+    
+    //console.log(sellOrder);
     
     sellOrder.$save(function (response) {
       $scope.order = response;

@@ -101,6 +101,7 @@ class BuyOrderController extends Controller
         $buy_order->size_bonus = $request->size_bonus;
 
         $buy_order->volume = $request->volume;
+        $buy_order->max_price = $request->max_price;
         
         $buy_order->status = 'a';
 
