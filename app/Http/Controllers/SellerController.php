@@ -18,7 +18,7 @@ class SellerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($search)
+    public function index($search = false)
     {
         if (!$search) {
             $seller = Seller::where('status', 'a')->get();

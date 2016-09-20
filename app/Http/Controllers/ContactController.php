@@ -18,7 +18,7 @@ class ContactController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($search)
+    public function index($search = false)
     {
         if (!$search) {
             $contact = Contact::where('status', 'a')->get();
