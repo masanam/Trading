@@ -25,7 +25,6 @@ class ContactController extends Controller
         } else {
             $contact = Contact::where('status', 'a')->where('company_name', 'LIKE', '%'.$search.'%')->get();
         }
-
         return response()->json($contact, 200);
     }
 
@@ -65,6 +64,7 @@ class ContactController extends Controller
      */
     public function show(Contact $contact)
     {
+
         if($contact->status == 'a') {
             return response()->json($contact, 200);
         } else {
@@ -133,7 +133,7 @@ class ContactController extends Controller
 
     public function getTotalContact() {
         $total = Contact::count();
-
-        return response()->json($total, 200);
+        $status = array('count' => $total);        
+        return response()->json($status,200);
     }
 }

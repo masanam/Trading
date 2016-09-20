@@ -1,37 +1,82 @@
-<div class="container-fluid">
-	<div class="col-xs-2" style="border-right:1px solid #f5f5f5;">
-		<div>
-			<h2>Buyers</h2>
-			<h4>90 Registered</h4>
-		</div>
+<section ng-controller="LeadController">	
+	<div class="container-fluid" ng-init="find()">
+		<div class="col-xs-2" style="border-right:1px solid #f5f5f5;" ng-init="total()">
+			<div>
+				<h2>Buyers</h2>
+				<h4>{{ totalBuyer.count }} Registered</h4>
+			</div>
 
-		<div style="margin-top:40px;">
-			<h2>Sellers</h2>
-			<h4>90 Registered</h4>
-		</div>
+			<div style="margin-top:40px;">
+				<h2>Sellers</h2>
+				<h4>{{ totalSeller.count }} Registered</h4>
+			</div>
 
-		<div style="margin-top:40px;">
-			<h2>Vendors</h2>
-			<h4>90 Registered</h4>
-		</div>
+			<div style="margin-top:40px;">
+				<h2>Vendors</h2>
+				<h4>{{ totalVendor.count }} Registered</h4>
+			</div>
 
-		<div style="margin-top:40px;">
-			<h2>Browse Contact</h2>			
-		</div>
+			<div style="margin-top:40px;">
+				<h2>Browse Contact</h2>			
+				<h4>{{ totalContact.count }} Registered</h4>
+			</div>
 
-		<div style="margin-top:40px;">
-			<h2>Recent Orders</h2>
-			<h5>Product ABC/h5>
-			<h5>Product DSA</h5>
-			<h5>Product ZXC</h5>
-		</div>
+			<div style="margin-top:40px;">
+				<h2>Recent Orders</h2>
+				<h5>Product ABC/h5>
+				<h5>Product DSA</h5>
+				<h5>Product ZXC</h5>
+			</div>
 
+		</div>
+		<div class="col-xs-10">
+			<div>
+				<input type="text" class="form-control" style="width:500px;display:inline;" ng-model="keyword">
+				<button class="btn btn-success" ui-sref="lead.search({ searchType: searchType , keyword: keyword })">Search</button>
+				</br>
+				<div class="btn-group">
+		            <label class="btn btn-default"> <input type="radio" name="searchButton" ng-click="searchType = 'Buyer'"> Buyer</label>
+		            <label class="btn btn-default"> <input type="radio" name="searchButton" ng-click="searchType = 'Seller'"> Sellers</label>
+		            <label class="btn btn-default"> <input type="radio" name="searchButton" ng-click="searchType = 'Vendor'"> Vendors</label>
+		            <label class="btn btn-default"> <input type="radio" name="searchButton" ng-click="searchType = 'Contact'"> Contacts</label>
+		          </div>
+				<button class="create-new-lead-btn" style="padding:10px 15px;border:0;background-color:#2196F3;color:#FFF;border-radius:5px;float:right;">CREATE NEW</button>
+				<table datatable="ng" dt-options="options" class="row-bdeal hover">
+				  <div class="pull-right">
+				    <a href="#" class="alert alert-primary"><i class="glyphicon glyphicon-save-file"></i> Export CSV</a>
+				    <a href="#" class="alert alert-primary"><i class="glyphicon glyphicon-print"></i> Print Report</a>
+				  </div>
+				  <thead>
+				      <tr>
+				        <th>Company Name</th>
+				        <th>Phone</th>
+				        <th>Email</th>
+				        <th>Web</th>
+				        <th width="75px">Industry</th>
+				        <th>City</th>
+				      </tr>
+				  </thead>
+				  <tbody>
+				    <tr ng-repeat="lead in leads">
+				      <td>{{lead.company_name}}</td>
+				      <td>{{lead.phone}}</td>
+				      <td>{{lead.email}}</td>
+				      <td>{{lead.web}}</td>
+				      <td>{{lead.industry}}</td>
+				      <td>{{lead.city}}</td>
+				    </tr>
+				  </tbody>
+				</table>
+
+				<div class="panel panel-primary">
+				  <div class="panel-heading">
+				    Total Sales: {{ getTotalPrice() | number }} USD
+				  </div>
+				  <div class="panel-body">
+				    Total Volume: {{ getTotalVolume() | number }}
+				  </div>
+				</div>
+			</div>
+		</div>
 	</div>
-	<div class="col-xs-10">
-		<div>
-			<input type="text" class="form-control" style="width:500px;display:inline;">
-			<button class="btn btn-success">Search</button>
-			<button class="create-new-lead-btn" style="padding:10px 15px;border:0;background-color:#2196F3;color:#FFF;border-radius:5px;float:right;">CREATE NEW</button>
-		</div>
-	</div>
-</div>
+</section>

@@ -156,7 +156,7 @@ class SellerController extends Controller
 
     public function getTotalSeller() {
         $total = Seller::count();
-
-        return response()->json($total, 200);
+        $status = array('count' => $total);        
+        return response()->json($status,200);
     }
 }
