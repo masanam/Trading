@@ -10,11 +10,11 @@
       <div style="text-align:center;">
         <div>
           <div class="col-md-4 align-right">
-            <a class="btn btn-default btn-margin full-width">
+            <a class="btn btn-default btn-margin full-width" ui-sref="lead.search({ searchType: 'Buyer', keyword: 'a' })">
               <h2>BUYERS</h2>
                 <span>{{ totalBuyer.count }} Records</span>
             </a><br>
-            <a class="btn btn-default btn-margin full-width">
+            <a class="btn btn-default btn-margin full-width" ui-sref="lead.search({ searchType: 'Seller', keyword: 'a' })">
               <h2>SELLERS</h2>
               <span>{{ totalSeller.count }} Records</span>
             </a>
@@ -23,11 +23,11 @@
             <img src="/images/globe.jpg" style="height:270px;">
           </div>
           <div class="col-md-4 align-left">
-            <a class="btn btn-default btn-margin full-width">
+            <a class="btn btn-default btn-margin full-width" ui-sref="lead.search({ searchType: 'Vendor', keyword: 'a' })">
               <h2>VENDORS</h2>
               <span>{{ totalVendor.count }} Records</span>
             </a><br>
-            <a class="btn btn-default btn-margin full-width">
+            <a class="btn btn-default btn-margin full-width" ui-sref="lead.search({ searchType: 'Contact', keyword: 'a' })">
               <h2>CONTACTS</h2>
               <span>{{ totalContact.count }} Records</span>
             </a>
