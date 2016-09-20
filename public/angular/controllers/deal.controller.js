@@ -104,6 +104,48 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
     $scope.createDeal = function(){
       if($scope.buyOrders.length > 0 && $scope.sellOrders.length > 0){
         //Add Deals
+        var deal = new Deal();
+        
+        deal.$save(function (response) {
+          for(var i = 0; i < $scope.sellOrders.length; i++){
+            var sellOrder = $scope.sellOrders[i];
+            sellOrder.deadline = new Date(sellOrder.deadline);
+            sellOrder.order_date = new Date(sellOrder.order_date);
+            
+            sellOrder = new SellOrder(sellOrder);
+            
+            sellOrder.$save(function (response) {
+              
+            }, function(response){
+              $scope.error = response.data.message;
+            });
+          }
+          
+          for(var i = 0; i < $scope.buyOrders.length; i++){
+            var buyOrder = $scope.buyOrders[i];
+            buyOrder.deadline = new Date(buyOrder.deadline);
+            buyOrder.order_date = new Date(buyOrder.order_date);
+            
+            buyOrder = new BuyOrder(buyOrder);
+            
+            sellOrder.$save(function (response) {
+              
+            }, function(response){
+              $scope.error = response.data.message;
+            });
+          }
+          
+          $scope.sellOrders
+          var buyDeal = new buyDeal
+          $scope.order = response;
+          $scope.order.deadline = new Date($scope.order.deadline);
+          $scope.order.order_date = new Date($scope.order.order_date);
+          $scope.sellOrders.push($scope.order);
+          $scope.close();
+          $scope.success = true;
+        }, function (response) {
+          $scope.error = response.data.message;
+        });
         //Add BuyOrders
         //Add SellOrders
       }else{
