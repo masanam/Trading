@@ -47,6 +47,7 @@ class BuyDealController extends Controller
         $buy_deal->buy_order_id = $request->buy_order_id;
         $buy_deal->user_id = $request->user_id;
         $buy_deal->deal_id = $request->deal_id  ? $request->deal_id : NULL;
+        $buy_deal->status = "a";
         $buy_deal->save();
 
         return response()->json($buy_deal, 200);
@@ -100,6 +101,7 @@ class BuyDealController extends Controller
         $buy_deal->buy_order_id = $request->buy_order_id;
         $buy_deal->user_id = $request->user_id;
         $buy_deal->deal_id = $request->deal_id  ? $request->deal_id : NULL;
+        $buy_deal->status = "a";
         $buy_deal->save();
 
         return response()->json($buy_deal, 200);
