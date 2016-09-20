@@ -49,6 +49,7 @@ class BuyOrderController extends Controller
         $buy_order->buyer_id = $request->buyer_id;
 
         $buy_order->order_date = $request->order_date;
+        $sell_order->penalty_desc = $request->penalty_desc;
         $buy_order->deadline = $request->deadline;
 
         $buy_order->address = $request->address;
@@ -153,6 +154,7 @@ class BuyOrderController extends Controller
         $buy_order->buyer_id = $request->buyer_id;
 
         $buy_order->order_date = $request->order_date;
+        $sell_order->penalty_desc = $request->penalty_desc;
         $buy_order->deadline = $request->deadline;
 
         $buy_order->address = $request->address;

@@ -45,6 +45,7 @@ class SellOrderController extends Controller
         $sell_order->seller_id = $request->seller_id;
 
         $sell_order->order_date = $request->order_date;
+        $sell_order->penalty_desc = $request->penalty_desc;
         $sell_order->deadline = $request->deadline;
 
         $sell_order->address = $request->address;
@@ -146,6 +147,7 @@ class SellOrderController extends Controller
         $sell_order->seller_id = $request->seller_id;
 
         $sell_order->order_date = $request->order_date;
+        $sell_order->penalty_desc = $request->penalty_desc;
         $sell_order->deadline = $request->deadline;
 
         $sell_order->address = $request->address;
