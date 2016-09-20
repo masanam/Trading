@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Deal', 'SellOrder', 'BuyOrder', 'Buyer', 'Seller', 'SellDeal', 'BuyDeal', 'Authentication',
-	function($scope, $uibModal, Deal, SellOrder, BuyOrder, Buyer, Seller, SellDeal, BuyDeal, Authentication) {
+angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Deal', 'SellOrder', 'BuyOrder', 'Buyer', 'Seller', 'SellDeal', 'BuyDeal', 'Authentication', '$location',
+	function($scope, $uibModal, Deal, SellOrder, BuyOrder, Buyer, Seller, SellDeal, BuyDeal, Authentication, $location) {
     $scope.findDeals = function(){
       $scope.deals = Deal.query;
     };
@@ -22,7 +22,7 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
       $scope.buyers = Buyer.query();
     };
     
-		$scope.deal = Deal.get;
+		//$scope.deal = Deal.get;
     
     $scope.buyOrders = [];
     
@@ -104,18 +104,30 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
     $scope.createDeal = function(){
       if($scope.buyOrders.length > 0 && $scope.sellOrders.length > 0){
         //Add Deals
-        var deal = new Deal();
+        $scope.deal = {
+          id: '',
+        };
+        
+        var deal = new Deal($scope.deal);
+        
+        console.log(Authentication.user.id);
         
         deal.$save(function (response) {
+          var dealId = response.id;
+          var userId = Authentication.user.id;
           for(var i = 0; i < $scope.sellOrders.length; i++){
             var sellOrder = $scope.sellOrders[i];
-            sellOrder.deadline = new Date(sellOrder.deadline);
-            sellOrder.order_date = new Date(sellOrder.order_date);
             
-            sellOrder = new SellOrder(sellOrder);
+            var sellDeal = {
+              sell_order_id: sellOrder.id,
+              user_id: userId,
+              deal_id: dealId
+            };
             
-            sellOrder.$save(function (response) {
-              
+            sellDeal = new SellDeal(sellDeal);
+            
+            sellDeal.$save(function (response) {
+              console.log('sell');
             }, function(response){
               $scope.error = response.data.message;
             });
@@ -123,33 +135,30 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
           
           for(var i = 0; i < $scope.buyOrders.length; i++){
             var buyOrder = $scope.buyOrders[i];
-            buyOrder.deadline = new Date(buyOrder.deadline);
-            buyOrder.order_date = new Date(buyOrder.order_date);
             
-            buyOrder = new BuyOrder(buyOrder);
+            var buyDeal = {
+              buy_order_id: buyOrder.id,
+              user_id: userId,
+              deal_id: dealId
+            };
             
-            sellOrder.$save(function (response) {
-              
+            buyDeal = new BuyDeal(buyDeal);
+            
+            buyDeal.$save(function (response) {
+              console.log('buy');
             }, function(response){
               $scope.error = response.data.message;
             });
           }
           
-          $scope.sellOrders
-          var buyDeal = new buyDeal
-          $scope.order = response;
-          $scope.order.deadline = new Date($scope.order.deadline);
-          $scope.order.order_date = new Date($scope.order.order_date);
-          $scope.sellOrders.push($scope.order);
-          $scope.close();
-          $scope.success = true;
+          $location.url('/deal/'+response.id);
+          
         }, function (response) {
           $scope.error = response.data.message;
         });
-        //Add BuyOrders
-        //Add SellOrders
       }else{
         $scope.error = "You need at least one buy order and one sell order!";
+        console.log($scope.error);
         var modalInstance = $uibModal.open({
           windowClass: 'xl-modal',
           templateUrl: 'alertModal.html',
