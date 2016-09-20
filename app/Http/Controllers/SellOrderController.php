@@ -97,16 +97,10 @@ class SellOrderController extends Controller
         $sell_order->size_bonus = $request->size_bonus;
 
         $sell_order->volume = $request->volume;
-<<<<<<< HEAD
         $sell_order->max_price = $request->max_price;
         
         $sell_order->status = 'a';
         
-=======
-        
-        $sell_order->status = 'a';
-
->>>>>>> 05c7ada9d28e3eea2b3eb908c90450c44dd2abf1
         $sell_order->save();
 
         return response()->json($sell_order, 200);
@@ -149,11 +143,7 @@ class SellOrderController extends Controller
         }
 
         $sell_order->user_id = $request->user_id;
-<<<<<<< HEAD
         $sell_order->seller_id = $request->seller_id;
-=======
-        $sell_order->buyer_id = $request->buyer_id;
->>>>>>> 05c7ada9d28e3eea2b3eb908c90450c44dd2abf1
 
         $sell_order->order_date = $request->order_date;
         $sell_order->deadline = $request->deadline;
