@@ -10,9 +10,9 @@ use App\Http\Requests;
 
 class BuyerController extends Controller
 {
-    public function __construct() {
-        $this->middleware('jwt.auth');
-    }
+    // public function __construct() {
+    //     $this->middleware('jwt.auth');
+    // }
     /**
      * Display a listing of the resource.
      *
@@ -20,6 +20,7 @@ class BuyerController extends Controller
      */
     public function index($search)
     {
+        Buyer::all()->searchable();
         if (!$search) {
             $buyer = Buyer::where('status', 'a')->get();
         } else {

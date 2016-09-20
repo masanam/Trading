@@ -37,4 +37,10 @@ class Buyer extends Model
     {
         return 'buyers_index';
     }
+
+    public function toSearchableArray() {
+        return array_only($this->toArray(), [
+            'company_name', 'phone', 'email', 'web' , 'industry', 'city', 'address', 'description'
+        ]);
+    }
 }
