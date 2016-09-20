@@ -57,7 +57,7 @@
 				      </tr>
 				  </thead>
 				  <tbody>
-				    <tr ng-repeat="lead in leads">
+				    <tr ng-repeat="lead in leads" ui-sref="lead.view({ type: $stateParams.searchType, id: lead.id })">
 				      <td>{{lead.company_name}}</td>
 				      <td>{{lead.phone}}</td>
 				      <td>{{lead.email}}</td>
@@ -67,6 +67,7 @@
 				    </tr>
 				  </tbody>
 				</table>
+
 
 				<div class="panel panel-primary">
 				  <div class="panel-heading">

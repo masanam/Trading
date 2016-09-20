@@ -77,7 +77,6 @@ class BuyerController extends Controller
      */
     public function show(Buyer $buyer)
     {
-
         if($buyer->status == 'a') {
             return response()->json($buyer, 200);
         } else {

@@ -24,22 +24,23 @@ Route::group(['middleware' => ['cors']], function() {
     ]]);
 
     Route::get('contact/total', 'ContactController@getTotalContact');
-    Route::get('contact/{search?}', 'ContactController@index');
     Route::resource('contact', 'ContactController', ['except' => [
         'index', 'create', 'edit'
     ]]);
+    Route::get('contact/search/{search?}', 'ContactController@index');
 
     Route::get('buyer/total', 'BuyerController@getTotalBuyer');
-    Route::get('buyer/{search?}', 'BuyerController@index');
     Route::resource('buyer', 'BuyerController', ['except' => [
         'index', 'create', 'edit'
     ]]);
+    Route::get('buyer/search/{search?}', 'BuyerController@index');
+
 
     Route::get('seller/total', 'SellerController@getTotalSeller');
-    Route::get('seller/{search?}', 'SellerController@index');
     Route::resource('seller', 'SellerController', ['except' => [
         'index', 'create', 'edit'
     ]]);
+    Route::get('seller/search/{search?}', 'SellerController@index');
 
     Route::resource('buy_order', 'BuyOrderController', ['except' => [
         'create', 'edit'
