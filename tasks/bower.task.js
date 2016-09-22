@@ -50,6 +50,7 @@ Elixir.extend('bower', function(jsOutputFile, jsOutputFolder, ttfOutputFolder, c
     'bower_components/angular-chart.js/dist/angular-chart.js',
     'bower_components/angular-chart.js/dist/angular-chart.css',
     'bower_components/datatables.net/js/jquery.dataTables.js',
+    'bower_components/angular-smart-table/dist/smart-table.js',
     'bower_components/angular-datatables/dist/angular-datatables.js',
     'bower_components/angular-datatables/dist/css/angular-datatables.css',
     'bower_components/angular-datatables/dist/plugins/bootstrap/angular-datatables.bootstrap.js',
@@ -96,7 +97,7 @@ Elixir.extend('bower', function(jsOutputFile, jsOutputFolder, ttfOutputFolder, c
       // .pipe(gulp.dest(jsOutputFolder || Elixir.config.js.outputFolder))
       .pipe(gulp.dest('public/js'))
       .pipe(notify({
-        title: 'Laravel Elixir',
+        title: 'Bower JS',
         subtitle: 'Javascript Bower Files Imported!',
         icon: __dirname + '/../node_modules/laravel-elixir/icons/laravel.png',
         message: ' '
@@ -125,7 +126,7 @@ Elixir.extend('bower', function(jsOutputFile, jsOutputFolder, ttfOutputFolder, c
       //.pipe(gulp.dest(cssOutputFolder || Elixir.config.css.outputFolder))
       .pipe(gulp.dest('public/css'))
       .pipe(notify({
-        title: 'Laravel Elixir',
+        title: 'Bower CSS',
         subtitle: 'CSS Bower Files Imported!',
         icon: __dirname + '/../node_modules/laravel-elixir/icons/laravel.png',
         message: ' '

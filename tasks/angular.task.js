@@ -49,7 +49,7 @@ Elixir.extend('angular', function(src, output, outputFilename) {
       .pipe(concat('app.js'))
       .pipe(gulp.dest('public/js'))
       .pipe(notify({
-        title: 'Laravel Elixir',
+        title: 'Angular JS',
         subtitle: 'Angular Compiled!',
         icon: __dirname + '/../node_modules/laravel-elixir/icons/laravel.png',
         message: ' '
@@ -64,7 +64,7 @@ Elixir.extend('angular', function(src, output, outputFilename) {
       .pipe(concat('app.css'))
       .pipe(gulp.dest('public/css'))
       .pipe(notify({
-        title: 'Laravel Elixir',
+        title: 'SASS',
         subtitle: 'SCSS Files Imported!',
         icon: __dirname + '/../node_modules/laravel-elixir/icons/laravel.png',
         message: ' '

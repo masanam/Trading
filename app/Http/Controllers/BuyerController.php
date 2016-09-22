@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Model\Buyer;
+use App\Model\Contact;
 
 use Illuminate\Http\Request;
 
@@ -74,9 +75,11 @@ class BuyerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Buyer $buyer)
+    public function show($id)
     {
-
+        //$buyer = Contact::find([1,2,3,4,5]);
+        $buyer = Buyer::with('contact')->find($id);
+        
         if($buyer->status == 'a') {
             return response()->json($buyer, 200);
         } else {

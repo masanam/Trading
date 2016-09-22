@@ -40,9 +40,9 @@ angular.module('lead').config(['$stateProvider', '$urlRouterProvider',
         templateUrl: '/angular/views/lead/contact.view.html',
         roles: ['user', 'trader']
       })
-  	  .state('lead.view-buyer', {
-        url: '/buyer/{id}',
-        templateUrl: '/angular/views/lead/view-buyer.view.html',
+  	  .state('lead.view', {
+        url: '/{type}/{id}',
+        templateUrl: '/angular/views/lead/view-lead.view.html',
         roles: ['user', 'trader']
       })
       .state('lead.view-seller', {

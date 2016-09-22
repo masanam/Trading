@@ -26,6 +26,8 @@
     "jquery": "^2",
     "angular-bootstrap": "^2.1.3",
     "bootstrap": "^3.3.7",
-    "ng-sortable": "^1.3.6"
+    "ng-sortable": "^1.3.6",
+    "pusher-angular": "^0.1.9",
+    "angular-smart-table": "^2.1.8"
   }
 }
