@@ -24,6 +24,8 @@ class CreateContactsTable extends Migration
             $table->string('phone');
             $table->string('email')->unique();
             
+            $table->char('status', 1);
+            
             $table->timestamps();
         });
     }

@@ -9,14 +9,16 @@ angular.module('lead').controller('LeadController', ['$scope','$http', '$statePa
 		$scope.totalBuyer = {};
 
 		$scope.find = function() {
-			if ($stateParams.searchType === 'Buyer') {
+			if ($stateParams.searchType === 'buyer') {
 				$scope.leads = Buyer.query({ search: $stateParams.keyword });
-			} else if ($stateParams.searchType === 'Seller') {
+			} else if ($stateParams.searchType === 'seller') {
 				$scope.leads = Seller.query({ search: $stateParams.keyword });
-			} else if ($stateParams.searchType === 'Vendor') {
+			} else if ($stateParams.searchType === 'vendor') {
 				$scope.leads = Vendor.query({ search: $stateParams.keyword });
-			} else if ($stateParams.searchType === 'Contact') {
+			} else if ($stateParams.searchType === 'contact') {
 				$scope.leads = Contact.query({ search: $stateParams.keyword });
+			} else if ($stateParams.searchType === 'all') {
+				$scope.leads = Lead.query({ search: $stateParams.keyword });
 			}
 		} 
 		

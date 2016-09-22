@@ -234,4 +234,8 @@ class BuyOrderController extends Controller
 
         return response()->json($buy_order, 200);
     }
+
+    // public function indexDetailed () {
+    //     $buy_order = BuyOrder::with()
+    // }
 }

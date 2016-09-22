@@ -83,6 +83,8 @@ Route::group(['middleware' => ['cors']], function() {
         'create', 'edit'
     ]]);
 
+    Route::get('lead', 'LeadController@index');
+
     Route::get('news', 'NewsController@news');
     Route::get('news/refresh', 'NewsController@refreshNews');
 });
