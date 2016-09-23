@@ -3,15 +3,15 @@
 angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Deal', 'SellOrder', 'BuyOrder', 'Buyer', 'Seller', 'SellDeal', 'BuyDeal', 'Authentication', '$location',
 	function($scope, $uibModal, Deal, SellOrder, BuyOrder, Buyer, Seller, SellDeal, BuyDeal, Authentication, $location) {
     $scope.findDeals = function(){
-      $scope.deals = Deal.query;
+      $scope.deals = Deal.query();
     };
     
     $scope.findCancelled = function(){
-      $scope.deals = Deal.query;
+      $scope.deals = Deal.query();
     };
     
     $scope.findFinished = function(){
-      $scope.deals = Deal.query;
+      $scope.deals = Deal.query();
     };
     
     $scope.findAllSellers = function(){
@@ -255,6 +255,7 @@ angular.module('deal').controller('CreateSellModalController', function ($scope,
       $scope.order = response;
       $scope.order.deadline = new Date($scope.order.deadline);
       $scope.order.order_date = new Date($scope.order.order_date);
+      
       for(var i = 0; i < $scope.sellers.length; i++){
         var seller = $scope.sellers[i];
         if(seller.id == response.seller_id){
@@ -262,6 +263,7 @@ angular.module('deal').controller('CreateSellModalController', function ($scope,
           break;
         }
       }
+      
       $scope.sellOrders.push($scope.order);
       $scope.close();
       $scope.success = true;
