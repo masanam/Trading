@@ -3,6 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Model\Deal;
+use App\Model\BuyDeal;
+use App\Model\BuyOrder;
+use App\Model\BuyOrderPricing;
+use App\Model\BuyDealApproval;
+use App\Model\SellDeal;
+use App\Model\SellOrder;
+use App\Model\SellOrderPricing;
+use App\Model\SellDealApproval;
 
 use Illuminate\Http\Request;
 
@@ -20,7 +28,7 @@ class DealController extends Controller
      */
     public function index()
     {
-        $deal = Deal::where('status', 'a')->get();
+        $deal = Deal::with('BuyDeal', 'BuyDeal.BuyOrder', 'BuyDeal.BuyOrder.BuyOrderPricing', 'BuyDeal.BuyDealApproval', 'SellDeal', 'SellDeal.SellOrder', 'SellDeal.SellOrder.SellOrderPricing', 'SellDeal.SellDealApproval')->where('status', 'a')->get();
 
         return response()->json($deal, 200);
     }
@@ -53,8 +61,8 @@ class DealController extends Controller
      */
     public function show($deal)
     {
-        $deal = Deal::with('BuyDeal', 'BuyDeal.BuyOrder', 'BuyDeal.BuyOrder.BuyOrderPricing', 'BuyDeal.BuyDealApproval');
-        
+        $deal = Deal::with('BuyDeal', 'BuyDeal.BuyOrder', 'BuyDeal.BuyOrder.BuyOrderPricing', 'BuyDeal.BuyDealApproval', 'SellDeal', 'SellDeal.SellOrder', 'SellDeal.SellOrder.SellOrderPricing', 'SellDeal.SellDealApproval');
+
         if($deal->status == 'a') {
             return response()->json($deal, 200);
         } else {
