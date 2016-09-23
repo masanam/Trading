@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Model\BuyDeal;
+use App\Model\BuyDealApproval;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Auth;
 
 use App\Http\Requests;
 
@@ -125,5 +127,23 @@ class BuyDealController extends Controller
         $buy_deal->save();
 
         return response()->json($buy_deal, 200);
+    }
+
+    public function approval(Request $request, $buy_deal, $approval) {
+        if (!$buy_deal) {
+            return response()->json([
+                'message' => 'Not found'
+            ] ,404);
+        }
+
+        $buy_deal = BuyDeal::find('id');
+
+        $buy_deal_approval = new BuyDealApproval();
+        $buy_deal_approval->buy_deal_id = $buy_deal->id;
+        $buy_deal_approval->user_id = $buy_deal->user_id;
+        $buy_deal_approval->approver = Auth::user()->id;
+        $buy_deal_approval->status = $approval;
+
+        $buy_deal_approval->save();
     }
 }

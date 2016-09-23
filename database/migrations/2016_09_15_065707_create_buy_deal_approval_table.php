@@ -19,7 +19,7 @@ class CreateBuyDealApprovalTable extends Migration
 
             $table->string('approver');
 
-            $table->char('status'); // A = Approved ; R = Reject
+            $table->char('status', 1); // A = Approved ; R = Reject
 
             $table->timestamps();
         });

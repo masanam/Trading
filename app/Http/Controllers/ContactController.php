@@ -23,7 +23,7 @@ class ContactController extends Controller
         if (!$search) {
             $contact = Contact::where('status', 'a')->get();
         } else {
-            $contact = Contact::where('status', 'a')->where('company_name', 'LIKE', '%'.$search.'%')->get();
+            $contact = Contact::where('status', 'a')->where('name', 'LIKE', '%'.$search.'%')->get();
         }
         return response()->json($contact, 200);
     }

@@ -21,11 +21,43 @@ class LeadController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($search = false)
     {
         $leads = new \Illuminate\Database\Eloquent\Collection();
 
-        $leads->add(Buyer::where('status', 'a')->get() , Seller::where('status', 'a')->get() , Vendor::where('status', 'a')->get() , Contact::where('status', 'a')->get());
+        if (!$search) {
+	        $buyer = Buyer::where('status', 'a')->get();
+	        $seller = Seller::where('status', 'a')->get();
+	        $vendor = Vendor::where('status', 'a')->get();
+	        $contact = Contact::where('status', 'a')->get();
+        } else {
+        	$buyer = Buyer::where('status', 'a')->where('company_name', 'LIKE', '%'.$search.'%')->get();
+	        $seller = Seller::where('status', 'a')->where('company_name', 'LIKE', '%'.$search.'%')->get();
+	        $vendor = Vendor::where('status', 'a')->where('company_name', 'LIKE', '%'.$search.'%')->get();
+	        $contact = Contact::where('status', 'a')->where('name', 'LIKE', '%'.$search.'%')->get();
+        }
+        
+        foreach($buyer as $b) {
+            $b['type'] = 'buyer';
+            $leads->add($b);
+        }
+
+        foreach($seller as $s) {
+            $s['type'] = 'seller';
+            $leads->add($s);
+        }
+
+        foreach($vendor as $v) {
+            $v['type'] = 'vendor';
+            $leads->add($v);
+        }
+
+        foreach($contact as $c) {
+            $c['type'] = 'contact';
+            $leads->add($c);
+        }
+
+        $leads = $leads->sortBy('order_date');
 
         return response()->json($leads, 200);
     }

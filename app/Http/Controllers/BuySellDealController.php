@@ -32,7 +32,7 @@ class BuySellDealController extends Controller
                             )->get();
 
         foreach($buy_deal as $bd) {
-            $bd->put('type', 'buy');
+            $bd['type'] = 'buy';
             $buy_sell_deal->add($bd);
         }
 
@@ -42,7 +42,7 @@ class BuySellDealController extends Controller
                             )->get();
 
         foreach($sell_deal as $sd) {
-            $sd->put('type', 'sell');
+            $sd['type'] = 'sell';
             $buy_sell_deal->add($sd);   
         }
 

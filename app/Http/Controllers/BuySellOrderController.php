@@ -29,7 +29,7 @@ class BuySellOrderController extends Controller
                             )->get();
 
         foreach($buy_order as $bo) {
-            $bo->put('type', 'buy');
+            $bo['type'] = 'buy';
             $buy_sell_order->add($bo);
         }
 
@@ -39,7 +39,7 @@ class BuySellOrderController extends Controller
                             )->get();
 
         foreach($sell_order as $so) {
-            $so->put('type', 'sell');
+            $so['type'] = 'sell';
             $buy_sell_order->add($so);   
         }
 

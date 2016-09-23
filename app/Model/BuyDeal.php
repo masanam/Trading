@@ -4,6 +4,7 @@ namespace App\Model;
 
 use App\Model\BuyOrder;
 use App\Model\BuyDealChat;
+use App\Model\BuyDealApproval;
 use App\Model\Deal;
 
 use Illuminate\Database\Eloquent\Model;
@@ -18,6 +19,10 @@ class BuyDeal extends Model
 
     public function BuyDealChat() {
     	return $this->hasMany('BuyDealChat');
+    }
+
+    public function BuyDealApproval() {
+        return $this->hasMany('BuyDealApproval');
     }
 
     public function Deal() {

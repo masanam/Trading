@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Model\SellDeal;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Auth;
 
 use App\Http\Requests;
 
@@ -88,7 +89,7 @@ class SellDealController extends Controller
         $sell_deal->sell_order_id = $request->sell_order_id;
         $sell_deal->user_id = $request->user_id;
         $sell_deal->deal_id = $request->deal_id  ? $request->deal_id : NULL;
-        $buy_deal->status = "a";
+        $sell_deal->status = "a";
         $sell_deal->save();
 
         return response()->json($sell_deal, 200);
@@ -112,5 +113,23 @@ class SellDealController extends Controller
         $sell_deal->save();
 
         return response()->json($sell_deal, 200);
+    }
+
+    public function approval(Request $request, $sell_deal, $approval) {
+        if (!$sell_deal) {
+            return response()->json([
+                'message' => 'Not found'
+            ] ,404);
+        }
+
+        $sell_deal = SellDeal::find('id');
+
+        $sell_deal_approval = new SellDealApproval();
+        $sell_deal_approval->sell_deal_id = $sell_deal->id;
+        $sell_deal_approval->user_id = $sell_deal->user_id;
+        $sell_deal_approval->approver = Auth::user()->id;
+        $sell_deal_approval->status = $approval;
+
+        $sell_deal_approval->save();
     }
 }
