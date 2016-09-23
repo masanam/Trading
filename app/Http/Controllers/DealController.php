@@ -51,8 +51,10 @@ class DealController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Deal $deal)
+    public function show($deal)
     {
+        $deal = Deal::with('BuyDeal', 'BuyDeal.BuyOrder', 'BuyDeal.BuyOrder.BuyOrderPricing', 'BuyDeal.BuyDealApproval');
+        
         if($deal->status == 'a') {
             return response()->json($deal, 200);
         } else {
