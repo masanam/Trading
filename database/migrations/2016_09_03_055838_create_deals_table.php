@@ -15,6 +15,9 @@ class CreateDealsTable extends Migration
     {
         Schema::create('deals', function (Blueprint $table) {
             $table->increments('id');
+
+            $table->char('status', 1);
+            
             $table->timestamps();
         });
     }
