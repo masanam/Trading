@@ -36,6 +36,6 @@ class MessageReceived extends Event implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('channel.'.$this->$message->chat_id);
+        return new PrivateChannel('channel.'.$this->message->chat_id);
     }
 }
