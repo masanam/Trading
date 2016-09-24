@@ -60,7 +60,7 @@ class BuyDealController extends Controller
         $buy_deal_approval->approver = NULL;
         $buy_deal_approval->status = "p";
 
-
+        event(new BuyDealApprovalNotification($buy_deal_approval));
 
         return response()->json($buy_deal, 200);
     }
