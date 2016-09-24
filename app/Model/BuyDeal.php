@@ -14,18 +14,18 @@ class BuyDeal extends Model
     protected $table = 'buy_deal';
 
     public function BuyOrder() {
-    	return $this->belongsTo('BuyOrder');
+    	return $this->belongsTo('App\Model\BuyOrder');
     }
 
     public function BuyDealChat() {
-    	return $this->hasMany('BuyDealChat');
+    	return $this->hasMany('App\Model\BuyDealChat');
     }
 
     public function BuyDealApproval() {
-        return $this->hasMany('BuyDealApproval');
+        return $this->hasMany('App\Model\BuyDealApproval');
     }
 
     public function Deal() {
-    	return $this->belongsTo('Deal');
+    	return $this->belongsTo('App\Model\Deal');
     }
 }

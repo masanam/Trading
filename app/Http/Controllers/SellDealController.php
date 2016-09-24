@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Model\SellDeal;
+use App\Model\SellOrder;
+use App\Model\SellOrderPricing;
+use App\Model\SellDealApproval;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Auth;
@@ -111,6 +114,16 @@ class SellDealController extends Controller
 
         $sell_deal->status = 'x';
         $sell_deal->save();
+
+        return response()->json($sell_deal, 200);
+    }
+    
+    // Get Buy Deal by Deal ID
+    public function getByDeal($dealId) {
+        $sell_deal = SellDeal::with('SellOrder', 'SellOrder.Seller')->where('deal_id', $dealId)
+               ->orderBy('id', 'asc')
+               ->get();
+
 
         return response()->json($sell_deal, 200);
     }

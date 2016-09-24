@@ -28,7 +28,7 @@ class DealController extends Controller
      */
     public function index()
     {
-        $deal = Deal::with('BuyDeal', 'BuyDeal.BuyOrder', 'BuyDeal.BuyOrder.BuyOrderPricing', 'BuyDeal.BuyDealApproval', 'SellDeal', 'SellDeal.SellOrder', 'SellDeal.SellOrder.SellOrderPricing', 'SellDeal.SellDealApproval')->where('status', 'a')->get();
+        $deal = Deal::with('App\Model\BuyDeal')->where('status', 'a')->get();
 
         return response()->json($deal, 200);
     }
@@ -48,6 +48,7 @@ class DealController extends Controller
         }
 
         $deal = new Deal();
+        $deal->status = 'a';
         $deal->save();
 
         return response()->json($deal, 200);
@@ -59,15 +60,16 @@ class DealController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($deal)
+    public function show($id)
     {
-        $deal = Deal::with('BuyDeal', 'BuyDeal.BuyOrder', 'BuyDeal.BuyOrder.BuyOrderPricing', 'BuyDeal.BuyDealApproval', 'SellDeal', 'SellDeal.SellOrder', 'SellDeal.SellOrder.SellOrderPricing', 'SellDeal.SellDealApproval');
+        $deal = Deal::find($id);
+        //$deal = Deal::with('BuyDeal', 'BuyDeal.BuyOrder', 'BuyDeal.BuyOrder.BuyOrderPricing', 'BuyDeal.BuyDealApproval', 'SellDeal', 'SellDeal.SellOrder', 'SellDeal.SellOrder.SellOrderPricing', 'SellDeal.SellDealApproval');
 
-        if($deal->status == 'a') {
+        //if($deal->status == 'a') {
             return response()->json($deal, 200);
-        } else {
+        /*} else {
             return response()->json(['message' => 'deactivated record'], 404);
-        }
+        }*/
     }
 
     /**

@@ -13,14 +13,14 @@ class SellOrder extends Model
     protected $table = 'sell_order';
 
     public function Seller() {
-    	return $this->belongsTo('Seller');
+    	return $this->belongsTo('App\Model\Seller');
     }
 
     public function SellDeal() {
-    	return $this->hasMany('SellDeal');
+    	return $this->hasMany('App\Model\SellDeal');
     }
 
     public function SellOrderPricing() {
-    	return $this->hasMany('SellOrderPricing');
+    	return $this->hasMany('App\Model\SellOrderPricing');
     }
 }

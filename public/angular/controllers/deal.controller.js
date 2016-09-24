@@ -1,9 +1,33 @@
 'use strict';
 
-angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Deal', 'SellOrder', 'BuyOrder', 'Buyer', 'Seller', 'SellDeal', 'BuyDeal', 'Authentication', '$location',
-	function($scope, $uibModal, Deal, SellOrder, BuyOrder, Buyer, Seller, SellDeal, BuyDeal, Authentication, $location) {
+angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Deal', 'SellOrder', 'BuyOrder', 'Buyer', 'Seller', 'SellDeal', 'BuyDeal', 'Authentication', '$location', '$stateParams',
+	function($scope, $uibModal, Deal, SellOrder, BuyOrder, Buyer, Seller, SellDeal, BuyDeal, Authentication, $location, $stateParams) {
     $scope.findDeals = function(){
       $scope.deals = Deal.query();
+    };
+    
+    $scope.findOne = function(){
+      $scope.deal = Deal.get({ id: $stateParams.id });
+      
+      // Get the buy deals
+      BuyDeal.query({action:'getByDeal', dealId: $stateParams.id}, function(buyDeals){
+        for(var i = 0; i < buyDeals.length; i++){
+            var buy_deals = buyDeals[i];
+            var buy_order = buy_deals.buy_order;
+            buy_order.company_name = buy_deals.buy_order.buyer.company_name;
+            $scope.buyOrders.push(buy_order);
+        }
+      });
+      
+      // Get the sell deals
+      SellDeal.query({action:'getByDeal', dealId: $stateParams.id}, function(sellDeals){
+        for(var i = 0; i < sellDeals.length; i++){
+            var sell_deals = sellDeals[i];
+            var sell_order = sell_deals.sell_order;
+            sell_order.company_name = sell_deals.sell_order.seller.company_name;
+            $scope.sellOrders.push(sell_order);
+        }
+      });
     };
     
     $scope.findCancelled = function(){

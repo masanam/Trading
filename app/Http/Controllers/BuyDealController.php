@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Model\BuyDeal;
+use App\Model\BuyOrder;
+use App\Model\BuyOrderPricing;
 use App\Model\BuyDealApproval;
 
 use Illuminate\Http\Request;
@@ -77,6 +79,16 @@ class BuyDealController extends Controller
         } else {
             return response()->json('Not found', 404);
         }
+    }
+    
+    // Get Buy Deal by Deal ID
+    public function getByDeal($dealId) {
+        $buy_deal = BuyDeal::with('BuyOrder', 'BuyOrder.Buyer')->where('deal_id', $dealId)
+               ->orderBy('id', 'asc')
+               ->get();
+
+
+        return response()->json($buy_deal, 200);
     }
 
     /**

@@ -14,18 +14,18 @@ class SellDeal extends Model
     protected $table = 'sell_deal';
 
     public function SellOrder() {
-    	return $this->belongsTo('SellOrder');
+    	return $this->belongsTo('App\Model\SellOrder');
     }
 
     public function SellDealChat() {
-    	return $this->hasMany('SellDealChat');
+    	return $this->hasMany('App\Model\SellDealChat');
     }
 
     public function SellDealApproval() {
-        return $this->hasMany('SellDealApproval');
+        return $this->hasMany('App\Model\SellDealApproval');
     }
 
     public function Deal() {
-    	return $this->belongsTo('Deal');
+    	return $this->belongsTo('App\Model\Deal');
     }
 }

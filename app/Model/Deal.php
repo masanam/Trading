@@ -12,10 +12,10 @@ class Deal extends Model
     protected $table = 'deals';
 
     public function BuyDeal() {
-    	return $this->hasMany('BuyDeal');
+    	return $this->hasMany('App\Model\BuyDeal');
     }
 
     public function SellDeal() {
-    	return $this->hasMany('SellDeal');
+    	return $this->hasMany('App\Model\SellDeal');
     }
 }

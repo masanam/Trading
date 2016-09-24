@@ -1,0 +1,115 @@
+<section ng-controller="DealController" ng-init="findOne()">
+  <h1>View Detail Deals</h1>
+  <hr/>
+  <section class="row">
+    <div class="col-md-12">
+      <div class="col-md-6">
+        <div class="panel panel-default col-md-12">
+          <h1>Buy Order</h1>
+          <section ng-if="buyOrders.length > 0">
+            <div ng-repeat="order in buyOrders" class="panel panel-default">
+              <div class="panel-body">
+                <span ng-click="openBuyModal(order)">
+                  <div class="col-md-7">
+                    <h3>
+                      {{order.company_name}}
+                    </h3>
+                    <h4>
+                      {{order.volume | number}} tonnes - 
+                      $ {{ (order.volume*order.max_price) | number }}
+                    </h4>
+                  </div>
+                  <div class="col-md-5">
+                    <h5>
+                      <b>GCV ARB</b>: {{order.gcv_arb_min | number}} -  {{order.gcv_arb_max | number}}
+                    </h5>
+                    <h5>
+                      <b>GCV ADB</b>: {{order.gcv_adb_min | number}} -  {{order.gcv_adb_max | number}}
+                    </h5>
+                    <h5>
+                      <b>NCV</b>: {{order.ncv_min | number}} -  {{order.ncv_max | number}}
+                    </h5>
+                  </div>
+                </span>
+                <span class="pull-right">
+                  <!--button type="button" class="check" ng-click="markBuyOrder(order)"></button-->
+                  <button type="button" class="close" ng-click="deleteBuyOrder(order)">&times;</button>
+                </span>
+              </div>
+            </div>
+          </section>
+          <section ng-if="buyOrders.length <= 0">
+            There is no buy orders.
+          </section>
+          <section class="row">
+            <div class="form-group col-md-12">
+              <button ng-click="openCreateBuyModal()" class="col-md-12 btn btn-primary">+ Create Buy Order</button>
+            </div>
+          </section>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="panel panel-default col-md-12">
+          <h1>Sell Order</h1>
+          <section ng-show="sellOrders.length > 0">
+            <div ng-repeat="order in sellOrders" ng-click="openSellModal(order)" class="panel panel-default">
+              <div class="panel-body">
+                <span ng-click="openSellModal(order)">
+                  <div class="col-md-7">
+                    <h3>
+                      {{order.company_name}}
+                    </h3>
+                    <h4>
+                      {{order.volume | number}} tonnes - 
+                      $ {{ (order.volume*order.max_price) | number }}
+                    </h4>
+                  </div>
+                  <div class="col-md-5">
+                    <h5>
+                      <b>GCV ARB</b>: {{order.gcv_arb_min | number}} -  {{order.gcv_arb_max | number}}
+                    </h5>
+                    <h5>
+                      <b>GCV ADB</b>: {{order.gcv_adb_min | number}} -  {{order.gcv_adb_max | number}}
+                    </h5>
+                    <h5>
+                      <b>NCV</b>: {{order.ncv_min | number}} -  {{order.ncv_max | number}}
+                    </h5>
+                  </div>
+                </span>
+                <span class="pull-right">
+                  <!--button type="button" class="check" ng-click="markSellOrder(order)"></button-->
+                  <button type="button" class="close" ng-click="deleteSellOrder(order)">&times;</button>
+                </span>
+              </div>
+            </div>
+          </section>
+          <section ng-show="sellOrders.length <= 0">
+            There is no sell orders.
+          </section>
+          <section class="row">
+            <div class="form-group col-md-12">
+              <button ng-click="openCreateSellModal()" class="col-md-12 btn btn-primary">+ Create Sell Order</button>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="row">
+    <div class="col-md-12">
+      <button ng-click="updateDeal()" class="col-md-12 btn-success btn"><i class="glyphicon glyphicon-save"></i> Save Deal</button>
+    </div>
+  </section>
+</section>
+
+<script type="text/ng-template" id="alertModal.html">
+  <div class="modal-header">
+    <h3 class="modal-title" id="modal-title">Submit Failed!</h3>
+  </div>
+  <div class="modal-body" id="modal-body">
+    <p>{{error}}</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="close()">OK</button>
+  </div>
+</script>

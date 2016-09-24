@@ -69,11 +69,13 @@ Route::group(['middleware' => ['cors']], function() {
     Route::resource('vendor', 'VendorController', ['except' => [
         'index', 'create', 'edit'
     ]]);
-
+    
+    Route::get('buy_deal/getByDeal/{dealId?}', 'BuyDealController@getByDeal');
     Route::resource('buy_deal', 'BuyDealController', ['except' => [
         'create', 'edit'
     ]]);
-
+    
+    Route::get('sell_deal/getByDeal/{dealId?}', 'SellDealController@getByDeal');
     Route::resource('sell_deal', 'SellDealController', ['except' => [
         'create', 'edit'
     ]]);

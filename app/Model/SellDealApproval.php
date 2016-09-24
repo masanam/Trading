@@ -11,6 +11,6 @@ class SellDealApproval extends Model
     protected $table = 'sell_deal_approval';
 
     public function SellDeal() {
-    	return $this->belongsTo('SellDeal');
+    	return $this->belongsTo('App\Model\SellDeal');
     }
 }
