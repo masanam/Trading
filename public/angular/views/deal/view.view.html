@@ -1,6 +1,32 @@
-<section ng-controller="DealController" ng-init="findOne()">
-  <h1>View Detail Deals</h1>
-  <hr/>
+<section ng-controller="DealController" ng-init="findOne()">    
+  <button ui-sref="deal.index" class="btn btn-default">< Back</button>
+  <section class="row">
+    <div class="col-md-12">
+      <h1>Detail Deals</h1>
+      <hr/>
+    </div>
+  </section>
+  <section class="row">
+    <div class="col-lg-12">
+      <div class="col-lg-4 alert alert-info">
+        <h4>Trader: {{deal.trader_name}}</h4>
+      </div>
+      
+      <div class="col-lg-4 alert alert-success" ng-if="deal.total_sales-deal.total_cogs > 0">
+        <h4>Profit: USD {{deal.total_sales-deal.total_cogs | number}}</h4>
+      </div>
+      <div class="col-lg-4 alert alert-danger" ng-if="deal.total_sales-deal.total_cogs <= 0">
+        <h4>Profit: USD {{deal.total_sales-deal.total_cogs | number}}</h4>
+      </div>
+    
+      <div class="col-lg-4 alert alert-warning">
+        <h4>Volume: {{deal.volume | number}} tonnes</h4>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <hr/>
+    </div>
+  </section>
   <section class="row">
     <div class="col-md-12">
       <div class="col-md-6">
@@ -97,7 +123,7 @@
   </section>
   <section class="row">
     <div class="col-md-12">
-      <button ng-click="updateDeal()" class="col-md-12 btn-success btn"><i class="glyphicon glyphicon-save"></i> Save Deal</button>
+      <button ng-click="createDeal()" class="col-md-12 btn-success btn"><i class="glyphicon glyphicon-save"></i> Save Deal</button>
     </div>
   </section>
 </section>

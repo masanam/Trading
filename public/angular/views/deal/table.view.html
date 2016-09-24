@@ -18,7 +18,7 @@
       </tr>
   </thead>
   <tbody>
-    <tr ng-repeat="deal in deals" ng-click="openModal(deal.id)">
+    <tr ng-repeat="deal in deals" ui-sref="deal.view({id: deal.id})">
       <td>{{deal.trader_name}}</td>
       <td>{{deal.buyer_name}}</td>
       <td>{{deal.seller_name}}</td>

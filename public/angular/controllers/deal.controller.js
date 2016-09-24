@@ -401,12 +401,38 @@ angular.module('deal').controller('CreateBuyModalController', function ($scope, 
   };
 });
 
-angular.module('deal').controller('BuyModalController', function ($scope, $uibModalInstance, Deal, SellOrder, BuyOrder, Product) {
+angular.module('deal').controller('BuyModalController', function ($scope, $uibModalInstance, Deal, SellOrder, BuyOrder, Product, $filter, Authentication) {
   
   $scope.index = $scope.buyOrders.indexOf($scope.order);
   
   $scope.updateBuyOrder = function(index){
-    $scope.buyOrders[$scope.index] = $scope.order;
+    $scope.success = $scope.error = null;
+      
+    //$scope.order.deadline = new Date($scope.order.deadline);
+    $scope.order.deadline = $filter('date')($scope.order.deadline, "yyyy-MM-dd");
+    $scope.order.order_date = $filter('date')($scope.order.order_date, "yyyy-MM-dd");
+    $scope.order.user_id = Authentication.user.id;
+
+    var buyOrder = new BuyOrder($scope.order);
+    
+    buyOrder.$update(function (response) {
+      $scope.order = response;
+      for(var i = 0; i < $scope.buyers.length; i++){
+        var buyer = $scope.buyers[i];
+        if(buyer.id == response.buyer_id){
+          $scope.order.company_name = buyer.company_name;
+          break;
+        }
+      }
+      $scope.order.deadline = new Date($scope.order.deadline);
+      $scope.order.order_date = new Date($scope.order.order_date);
+      $scope.buyOrders[$scope.index] = $scope.order;
+      $scope.close();
+      $scope.success = true;
+    }, function (response) {
+      $scope.error = response.data.message;
+    });
+    
   };
   
   $scope.close = function () {
@@ -414,12 +440,37 @@ angular.module('deal').controller('BuyModalController', function ($scope, $uibMo
   };
 });
 
-angular.module('deal').controller('SellModalController', function ($scope, $uibModalInstance, Deal, SellOrder, BuyOrder, Product) {
+angular.module('deal').controller('SellModalController', function ($scope, $uibModalInstance, Deal, SellOrder, BuyOrder, Product, $filter, Authentication) {
   
   $scope.index = $scope.sellOrders.indexOf($scope.order);
   
   $scope.updateSellOrder = function(index){
-    $scope.sellOrders[$scope.index] = $scope.order;
+    $scope.success = $scope.error = null;
+      
+    //$scope.order.deadline = new Date($scope.order.deadline);
+    $scope.order.deadline = $filter('date')($scope.order.deadline, "yyyy-MM-dd");
+    $scope.order.order_date = $filter('date')($scope.order.order_date, "yyyy-MM-dd");
+    $scope.order.user_id = Authentication.user.id;
+
+    var sellOrder = new SellOrder($scope.order);
+    
+    sellOrder.$update(function (response) {
+      $scope.order = response;
+      for(var i = 0; i < $scope.sellers.length; i++){
+        var seller = $scope.sellers[i];
+        if(seller.id == response.seller_id){
+          $scope.order.company_name = seller.company_name;
+          break;
+        }
+      }
+      $scope.order.deadline = new Date($scope.order.deadline);
+      $scope.order.order_date = new Date($scope.order.order_date);
+      $scope.sellOrders[$scope.index] = $scope.order;
+      $scope.close();
+      $scope.success = true;
+    }, function (response) {
+      $scope.error = response.data.message;
+    });
   };
   
   $scope.close = function () {
