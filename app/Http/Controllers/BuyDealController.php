@@ -165,5 +165,9 @@ class BuyDealController extends Controller
         $buy_deal_approval->status = $approval;
 
         $buy_deal_approval->save();
+
+        event(new BuyDealApprovalNotification($buy_deal_approval));
+
+        return response()->json($buy_deal_approval, 200);
     }
 }

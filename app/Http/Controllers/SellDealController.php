@@ -152,5 +152,9 @@ class SellDealController extends Controller
         $sell_deal_approval->status = $approval;
 
         $sell_deal_approval->save();
+
+        event(new SellDealApprovalNotification($sell_deal_approval));
+
+        return response()->json($sell_deal_approval, 200);
     }
 }
