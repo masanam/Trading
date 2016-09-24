@@ -28,7 +28,7 @@ class DealController extends Controller
      */
     public function index()
     {
-        $deal = Deal::with('App\Model\BuyDeal')->where('status', 'a')->get();
+        $deal = Deal::with('BuyDeal', 'BuyDeal.BuyOrder', 'BuyDeal.BuyOrder.Buyer', 'BuyDeal.BuyOrder.BuyOrderPricing', 'BuyDeal.BuyDealApproval', 'SellDeal', 'SellDeal.SellOrder', 'SellDeal.SellOrder.SellOrderPricing', 'SellDeal.SellDealApproval', 'SellDeal.SellOrder.Seller', 'User')->where('status', 'a')->get();
 
         return response()->json($deal, 200);
     }
