@@ -50,6 +50,15 @@ class SellDealController extends Controller
         $sell_deal->status = "a";
         $sell_deal->save();
 
+        $sell_deal_approval = new SellDealApproval();
+        $sell_deal_approval->sell_deal_id = $sell_deal->id;
+        $sell_deal_approval->user_id = $sell_deal->user_id;
+        $sell_deal_approval->approver = NULL;
+        $sell_deal_approval->status = "p";
+
+        event(new SellDealNotification($sell_deal));
+        event(new SellDealApprovalNotification($sell_deal_approval));
+
         return response()->json($sell_deal, 200);
     }
 
@@ -144,5 +153,9 @@ class SellDealController extends Controller
         $sell_deal_approval->status = $approval;
 
         $sell_deal_approval->save();
+
+        event(new SellDealApprovalNotification($sell_deal_approval));
+
+        return response()->json($sell_deal_approval, 200);
     }
 }
