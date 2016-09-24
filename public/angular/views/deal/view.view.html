@@ -1,5 +1,6 @@
 <section ng-controller="DealController" ng-init="findOne()">    
   <button ui-sref="deal.index" class="btn btn-default">< Back</button>
+  <button ng-click="cancelDeal()" class="btn btn-danger"> Cancel Deal</button>
   <section class="row">
     <div class="col-md-12">
       <h1>Detail Deals</h1>
@@ -123,7 +124,7 @@
   </section>
   <section class="row">
     <div class="col-md-12">
-      <button ng-click="createDeal()" class="col-md-12 btn-success btn"><i class="glyphicon glyphicon-save"></i> Save Deal</button>
+      <button ng-click="updateDeal()" class="col-md-12 btn-success btn"> Save Deal</button>
     </div>
   </section>
 </section>

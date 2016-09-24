@@ -63,6 +63,10 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
     
     $scope.openBuyModal = function (order) {
       $scope.order = order;
+      
+      $scope.order.deadline = new Date($scope.order.deadline);
+      $scope.order.order_date = new Date($scope.order.order_date);
+      
       var modalInstance = $uibModal.open({
         windowClass: 'xl-modal',
         templateUrl: './angular/views/deal/buy-order-modal.view.html',
@@ -73,6 +77,10 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
     
     $scope.openSellModal = function (order) {
       $scope.order = order;
+      
+      $scope.order.deadline = new Date($scope.order.deadline);
+      $scope.order.order_date = new Date($scope.order.order_date);
+      
       var modalInstance = $uibModal.open({
         windowClass: 'xl-modal',
         templateUrl: './angular/views/deal/sell-order-modal.view.html',
@@ -190,6 +198,15 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
         });
         
       }
+    };
+    
+    $scope.cancelDeal = function () {
+      var deal = new Deal($scope.deal);
+      deal.update(function (response) {
+        $location.url('/deal');
+      }, function (response) {
+        $scope.error = response.data.message;
+      });
     };
 
 }]);
@@ -415,7 +432,7 @@ angular.module('deal').controller('BuyModalController', function ($scope, $uibMo
 
     var buyOrder = new BuyOrder($scope.order);
     
-    buyOrder.$update(function (response) {
+    buyOrder.update(function (response) {
       $scope.order = response;
       for(var i = 0; i < $scope.buyers.length; i++){
         var buyer = $scope.buyers[i];
@@ -454,7 +471,7 @@ angular.module('deal').controller('SellModalController', function ($scope, $uibM
 
     var sellOrder = new SellOrder($scope.order);
     
-    sellOrder.$update(function (response) {
+    sellOrder.update(function (response) {
       $scope.order = response;
       for(var i = 0; i < $scope.sellers.length; i++){
         var seller = $scope.sellers[i];
