@@ -6,7 +6,7 @@ use Illuminate\Console\Command;
 
 // FOR TESTING PURPOSE ONLY
 
-class SendMessage extends Command
+class Chat extends Command
 {
     /**
      * The name and signature of the console command.
@@ -27,10 +27,10 @@ class SendMessage extends Command
      *
      * @return void
      */
-    public function __construct()
-    {
-        parent::__construct();
-    }
+    // public function __construct()
+    // {
+    //     parent::__construct();
+    // }
 
     /**
      * Execute the console command.
@@ -39,14 +39,14 @@ class SendMessage extends Command
      */
     public function handle()
     {
+        $chat = \App\Model\Chat::first();
         $user = \App\Model\User::first();
-        $buy_deal = \App\Model\BuyDeal::first();
-        $message = \App\Model\BuyDealChat::create([
+        $message = \App\Model\Message::create([
+            'chat_id' => $chat->id,
             'user_id' => $user->id,
-            'buy_deal_id' => $buy_deal->id,
             'message' => $this->argument('message')
         ]);
 
-        event(new \App\Events\ChatReceived($message, $user));
+        event(new \App\Events\MessageReceived($message));
     }
 }

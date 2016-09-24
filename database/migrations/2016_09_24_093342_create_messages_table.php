@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSellDealChatTable extends Migration
+class CreateMessagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateSellDealChatTable extends Migration
      */
     public function up()
     {
-        Schema::create('sell_deal_chat', function (Blueprint $table) {
+        Schema::create('messages', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('trader_id')->unsigned();
-            $table->integer('approver_id')->unsigned();
-            $table->integer('sell_deal_id')->unsigned();
+            $table->integer('chat_id');
+            $table->integer('user_id');
             $table->string('message');
             $table->timestamps();
         });
@@ -30,6 +29,6 @@ class CreateSellDealChatTable extends Migration
      */
     public function down()
     {
-        Schema::drop('sell_deal_chat');
+        Schema::dropIfExists('messages');
     }
 }
