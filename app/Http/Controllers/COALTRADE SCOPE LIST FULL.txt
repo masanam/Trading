@@ -1,0 +1,50 @@
+------------------------------------------------------------------------
+-- COALTRADE Scope List
+------------------------------------------------------------------------
+
+0. DASHBOARD
+
+1. COALPEDIA
+	1.1. CRU(no delete)+search --> buyers , sellers , vendors , contacts , mines , products
+	 - User can search buyer , seller , vendor , contact , mine , product , all(without specifying the category)
+	 - User can see list of buyer , seller , vendor , contact , mine , product , all(without specifying the category)
+	 - User can create buyer , seller , vendor , contact , mine , product , all(without specifying the category)
+	 - User can update buyer , seller , vendor , contact , mine , product from the list (use modal)
+	 - User can see detail of buyer , seller , vendor , contact , mine , product , all(without specifying the category)
+
+	1.2. ADD CONTACT IN BUYER , SELLER , VENDOR --> buyers , sellers , vendors , contacts
+	 - User can create existing contact and connect it to buyer , seller , vendor
+	 - User can connect existing contact to buyer , seller , vendor
+
+	1.3. ADD MINE IN SELLER --> sellers , mines
+	 - User can create existing contact and connect it to seller , mine
+	 - User can connect existing contact to seller , mine
+
+	1.4. ADD PRODUCT IN SELLER , BUYER --> buyers , sellers , products
+	 - User can create existing contact and connect it to buyer , seller , product
+	 - User can connect existing contact to buyer , seller , product
+
+2. DEALS
+	2.1. CRU(no delete) --> buy_order, sell_order, deal, buy_deal, sell_deal
+	 - User can create product group (fitur list)
+	 - User can update product group
+	 - User can delete product group
+	2.2 Create from existing buy order and sell order -> buy_order , sell_order
+	2.3 Many to many deal
+	2.4 Deal detail
+
+3. HISTORY
+	3.1. NAMA MODULE --> TABLENYA --> STATUS
+	 - User can create product group (fitur list)
+	 - User can update product group
+	 - User can delete product group
+	 - User can search product group
+
+4. ACTIVITY LOG
+
+
+5. CHAT
+	5.1 SEND MESSAGE --> chat
+	 - 
+
+6. APPROVAL

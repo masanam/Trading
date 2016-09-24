@@ -17,6 +17,7 @@ class CreateBuyDealChatTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->integer('buy_deal_id')->unsigned();
+            $table->string('message');
             $table->timestamps();
         });
 

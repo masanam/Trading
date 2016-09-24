@@ -52,6 +52,7 @@ class BuyOrderTableSeeder extends Seeder
             'penalty_desc' => 'penalty',
 
             'volume' => 5000,
+            'max_price' => 5000,
             'status' => 'o'
       ]);
 
@@ -92,6 +93,7 @@ class BuyOrderTableSeeder extends Seeder
             'penalty_desc' => 'penalty',
 
             'volume' => 3000,
+            'max_price' => 3000,
             'status' => 'p'
       ]);
 
@@ -132,6 +134,7 @@ class BuyOrderTableSeeder extends Seeder
             'penalty_desc' => 'penalty',
 
             'volume' => 2000,
+            'max_price' => 2000,
             'status' => 'f'
       ]);
 
@@ -172,6 +175,7 @@ class BuyOrderTableSeeder extends Seeder
             'penalty_desc' => 'penalty',
 
             'volume' => 4500,
+            'max_price' => 4500,
             'status' => 'p'
       ]);
 
@@ -212,6 +216,7 @@ class BuyOrderTableSeeder extends Seeder
             'penalty_desc' => 'penalty',
 
             'volume' => 6000,
+            'max_price' => 6000,
             'status' => 'f'
       ]);
 
@@ -252,6 +257,7 @@ class BuyOrderTableSeeder extends Seeder
             'penalty_desc' => 'penalty',
 
             'volume' => 1500,
+            'max_price' => 1500,
             'status' => 'c'
       ]);
     }
