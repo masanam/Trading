@@ -36,7 +36,11 @@
           <section ng-if="buyOrders.length > 0">
             <div ng-repeat="order in buyOrders" class="panel panel-default">
               <div class="panel-body">
-                <span ng-click="openBuyModal(order)">
+                <span class="pull-right">
+                  <!--button type="button" class="check" ng-click="markBuyOrder(order)"></button-->
+                  <button type="button" class="btn close" ng-click="deleteBuyOrder(order)">&times;</button>
+                </span>
+                <span>
                   <div class="col-md-7">
                     <h3>
                       {{order.company_name}}
@@ -60,7 +64,8 @@
                 </span>
                 <span class="pull-right">
                   <!--button type="button" class="check" ng-click="markBuyOrder(order)"></button-->
-                  <button type="button" class="close" ng-click="deleteBuyOrder(order)">&times;</button>
+                  <button type="button" class="btn btn-default" ng-click="openBuyModal(order)">Detail</button>
+                  <button type="button" class="btn btn-success" ng-click="openChatModal(order)">Chat</button>
                 </span>
               </div>
             </div>
@@ -81,7 +86,11 @@
           <section ng-show="sellOrders.length > 0">
             <div ng-repeat="order in sellOrders" ng-click="openSellModal(order)" class="panel panel-default">
               <div class="panel-body">
-                <span ng-click="openSellModal(order)">
+                <span class="pull-right">
+                  <!--button type="button" class="check" ng-click="markBuyOrder(order)"></button-->
+                  <button type="button" class="btn close" ng-click="deleteSellOrder(order)">&times;</button>
+                </span>
+                <span>
                   <div class="col-md-7">
                     <h3>
                       {{order.company_name}}
@@ -105,7 +114,8 @@
                 </span>
                 <span class="pull-right">
                   <!--button type="button" class="check" ng-click="markSellOrder(order)"></button-->
-                  <button type="button" class="close" ng-click="deleteSellOrder(order)">&times;</button>
+                  <button type="button" class="btn btn-default" ng-click="openSellModal(order)">Detail</button>
+                  <button type="button" class="btn btn-success" ng-click="openChatModal(order)">Chat</button>
                 </span>
               </div>
             </div>
