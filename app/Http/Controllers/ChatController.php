@@ -16,10 +16,7 @@ class ChatController extends Controller
     	$chat = App\Model\Chat::create([
     		'trader_id' => $request->trader_id,
     		'approver_id' => $request->approver_id,
-    		'message' => $request->message
     	]);
-
-    	event(new MessageReceived($chat));
 
     	return response()->json($chat, 200);
     }
