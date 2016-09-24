@@ -3,7 +3,7 @@
 namespace App\Model;
 
 use App\Model\SellOrder;
-use App\Model\SellDealChat;
+use App\Model\Chat;
 use App\Model\SellDealApproval;
 use App\Model\Deal;
 
@@ -17,8 +17,8 @@ class SellDeal extends Model
     	return $this->belongsTo('App\Model\SellOrder');
     }
 
-    public function SellDealChat() {
-    	return $this->hasMany('App\Model\SellDealChat');
+    public function Chat() {
+        return $this->belongsTo('App\Model\Chat');
     }
 
     public function SellDealApproval() {
