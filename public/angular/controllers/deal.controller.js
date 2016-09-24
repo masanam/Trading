@@ -14,6 +14,7 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
         for(var i = 0; i < buyDeals.length; i++){
             var buy_deals = buyDeals[i];
             var buy_order = buy_deals.buy_order;
+            buy_order.buyer_id = buy_deals.buy_order.buyer.id.toString();
             buy_order.company_name = buy_deals.buy_order.buyer.company_name;
             $scope.buyOrders.push(buy_order);
         }
@@ -24,6 +25,7 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
         for(var i = 0; i < sellDeals.length; i++){
             var sell_deals = sellDeals[i];
             var sell_order = sell_deals.sell_order;
+            sell_order.seller_id = sell_deals.sell_order.seller.id.toString();
             sell_order.company_name = sell_deals.sell_order.seller.company_name;
             $scope.sellOrders.push(sell_order);
         }
@@ -288,8 +290,6 @@ angular.module('deal').controller('CreateSellModalController', function ($scope,
     $scope.order.user_id = Authentication.user.id;
 
     var sellOrder = new SellOrder($scope.order);
-    
-    //console.log(sellOrder);
     
     sellOrder.$save(function (response) {
       $scope.order = response;
