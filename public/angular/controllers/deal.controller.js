@@ -130,11 +130,10 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
         //Add Deals
         $scope.deal = {
           id: '',
+          user_id: Authentication.user.id,
         };
         
         var deal = new Deal($scope.deal);
-        
-        console.log(Authentication.user.id);
         
         deal.$save(function (response) {
           var dealId = response.id;

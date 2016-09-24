@@ -4,6 +4,7 @@ namespace App\Model;
 
 use App\Model\BuyDeal;
 use App\Model\SellDeal;
+use App\Model\User;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,5 +18,9 @@ class Deal extends Model
 
     public function SellDeal() {
     	return $this->hasMany('App\Model\SellDeal');
+    }
+    
+    public function User() {
+    	return $this->belongsTo('App\Model\User');
     }
 }
