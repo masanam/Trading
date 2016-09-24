@@ -83,7 +83,9 @@ Route::group(['middleware' => ['cors']], function() {
     Route::resource('buy_sell_deal', 'BuySellDealController', ['only' => [
         'index'
     ]]);
-
+    
+    Route::get('deal/finish/{id}', 'DealController@finish');
+    Route::delete('deal/{id}', 'DealController@destroy');
     Route::resource('deal', 'DealController', ['except' => [
         'create', 'edit'
     ]]);

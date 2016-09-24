@@ -33,7 +33,8 @@ angular.module('deal').factory('BuyDeal', ['$resource',
 
 angular.module('deal').factory('Deal', ['$resource',
 	function ($resource) {
-		return $resource('api/deal/:id', {
+		return $resource('api/deal/:action/:id', {
+      action: undefined,
 			id: undefined
 		}, {
 			update: {

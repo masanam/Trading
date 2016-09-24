@@ -202,13 +202,38 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
       }
     };
     
-    $scope.cancelDeal = function () {
-      var deal = new Deal($scope.deal);
-      deal.update(function (response) {
+    $scope.finishDeal = function () {
+      var deal = $scope.deal;
+      
+      Deal.get({ action: 'finish', id: deal.id }, function(response) {
+				$location.url('/deal');
+			}, function(err) {
+				console.log(err);
+			});
+
+      
+      /*deal.$remove(function (response) {
         $location.url('/deal');
       }, function (response) {
         $scope.error = response.data.message;
-      });
+      });*/
+    };
+    
+    $scope.cancelDeal = function () {
+      var deal = $scope.deal;
+      
+      Deal.delete({ id: deal.id }, function(response) {
+				$location.url('/deal');
+			}, function(err) {
+				console.log(err);
+			});
+
+      
+      /*deal.$remove(function (response) {
+        $location.url('/deal');
+      }, function (response) {
+        $scope.error = response.data.message;
+      });*/
     };
 
 }]);

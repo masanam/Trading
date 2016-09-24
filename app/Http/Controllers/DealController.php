@@ -173,16 +173,46 @@ class DealController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Deal $deal)
+    public function destroy($id)
     {
-        if (!$deal) {
+        if (!$id) {
             return response()->json([
                 'message' => 'Not found'
             ] ,404);
         }
+        
+        $deal = DB::table('deals')
+        ->where('id', $id)  // find your user by their email
+        ->limit(1)  // optional - to ensure only one record is updated.
+        ->update(array('status' => 'x'));  // update the record in the DB. 
 
-        $deal->status = 'x';
-        $deal->save();
+        /*$deal->status = 'x';
+        $deal->save();*/
+
+        return response()->json($deal, 200);
+    }
+    
+    /**
+     * Mark as finished the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function finish($id)
+    {
+        if (!$id) {
+            return response()->json([
+                'message' => 'Not found'
+            ] ,404);
+        }
+        
+        $deal = DB::table('deals')
+        ->where('id', $id)  // find your user by their email
+        ->limit(1)  // optional - to ensure only one record is updated.
+        ->update(array('status' => 'f'));  // update the record in the DB. 
+
+        /*$deal->status = 'x';
+        $deal->save();*/
 
         return response()->json($deal, 200);
     }
