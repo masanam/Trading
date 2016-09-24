@@ -15,15 +15,11 @@ class CreateBuyDealChatTable extends Migration
     {
         Schema::create('buy_deal_chat', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->unsigned();
+            $table->integer('trader_id')->unsigned();
+            $table->integer('approver_id')->unsigned();
             $table->integer('buy_deal_id')->unsigned();
             $table->string('message');
             $table->timestamps();
-        });
-
-        Schema::table('buy_deal_chat', function (Blueprint $table) {
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('buy_deal_id')->references('id')->on('buy_deal')->onDelete('cascade');
         });
     }
 
