@@ -6,6 +6,7 @@ use App\Model\BuyDeal;
 use App\Model\BuyOrder;
 use App\Model\BuyOrderPricing;
 use App\Model\BuyDealApproval;
+use App\Model\Chat;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Auth;
@@ -15,7 +16,7 @@ use App\Http\Requests;
 class BuyDealController extends Controller
 {
     public function __construct() {
-        $this->middleware('jwt.auth');
+        // $this->middleware('jwt.auth');
     }
     /**
      * Display a listing of the resource.
@@ -47,8 +48,16 @@ class BuyDealController extends Controller
             ], 400);
         }
 
+        $buy_order = BuyOrder::find($request->buy_order_id);
+
+        $chat = New Chat();
+        $chat->trader_id = $buy_order->user_id;
+        $chat->approver_id = 1;
+        $chat->save();
+
         $buy_deal = new BuyDeal();
         $buy_deal->buy_order_id = $request->buy_order_id;
+        $buy_deal->chat_id = $chat->id;
         $buy_deal->user_id = $request->user_id;
         $buy_deal->deal_id = $request->deal_id  ? $request->deal_id : NULL;
         $buy_deal->status = "a";
@@ -57,11 +66,12 @@ class BuyDealController extends Controller
         $buy_deal_approval = new BuyDealApproval();
         $buy_deal_approval->buy_deal_id = $buy_deal->id;
         $buy_deal_approval->user_id = $buy_deal->user_id;
-        $buy_deal_approval->approver = NULL;
+        $buy_deal_approval->approver = '';
         $buy_deal_approval->status = "p";
+        $buy_deal_approval->save();
 
-        event(new BuyDealNotification($buy_deal));
-        event(new BuyDealApprovalNotification($buy_deal_approval));
+        event(new \App\Events\BuyDealNotification($buy_deal));
+        event(new \App\Events\BuyDealApprovalNotification($buy_deal_approval));
 
         return response()->json($buy_deal, 200);
     }
@@ -167,7 +177,7 @@ class BuyDealController extends Controller
 
         $buy_deal_approval->save();
 
-        event(new BuyDealApprovalNotification($buy_deal_approval));
+        event(new \App\Events\BuyDealApprovalNotification($buy_deal_approval));
 
         return response()->json($buy_deal_approval, 200);
     }
