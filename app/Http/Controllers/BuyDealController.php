@@ -54,6 +54,14 @@ class BuyDealController extends Controller
         $buy_deal->status = "a";
         $buy_deal->save();
 
+        $buy_deal_approval = new BuyDealApproval();
+        $buy_deal_approval->buy_deal_id = $buy_deal->id;
+        $buy_deal_approval->user_id = $buy_deal->user_id;
+        $buy_deal_approval->approver = NULL;
+        $buy_deal_approval->status = "p";
+
+
+
         return response()->json($buy_deal, 200);
     }
 
