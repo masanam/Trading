@@ -3,7 +3,15 @@
 angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Deal', 'SellOrder', 'BuyOrder', 'Buyer', 'Seller', 'SellDeal', 'BuyDeal', 'Authentication', '$location', '$stateParams',
 	function($scope, $uibModal, Deal, SellOrder, BuyOrder, Buyer, Seller, SellDeal, BuyDeal, Authentication, $location, $stateParams) {
     $scope.findDeals = function(){
-      $scope.deals = Deal.query();
+      $scope.deals = Deal.query({action:'table', status: 'a'});
+    };
+    
+    $scope.findFinished = function(){
+      $scope.deals = Deal.query({action:'table', status: 'f'});
+    };
+    
+    $scope.findCancelled = function(){
+      $scope.deals = Deal.query({action:'table', status: 'x'});
     };
     
     $scope.findOne = function(){
@@ -30,14 +38,6 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
             $scope.sellOrders.push(sell_order);
         }
       });
-    };
-    
-    $scope.findCancelled = function(){
-      $scope.deals = Deal.query();
-    };
-    
-    $scope.findFinished = function(){
-      $scope.deals = Deal.query();
     };
     
     $scope.findAllSellers = function(){

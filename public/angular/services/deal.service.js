@@ -33,9 +33,10 @@ angular.module('deal').factory('BuyDeal', ['$resource',
 
 angular.module('deal').factory('Deal', ['$resource',
 	function ($resource) {
-		return $resource('api/deal/:action/:id', {
+		return $resource('api/deal/:action/:id/:status', {
       action: undefined,
-			id: undefined
+			id: undefined,
+      status: undefined,
 		}, {
 			update: {
 				method: 'PUT'

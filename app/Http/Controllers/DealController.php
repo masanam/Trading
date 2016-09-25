@@ -22,12 +22,13 @@ class DealController extends Controller
     public function __construct() {
         // $this->middleware('jwt.auth');
     }
+    
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($status = 'a')
     {
         $deal = DB::table('deals')
           ->select(
@@ -52,7 +53,7 @@ class DealController extends Controller
           ->leftJoin('sell_deal_approval', 'sell_deal.id', '=', 'sell_deal_approval.sell_deal_id')
           ->leftJoin('sell_order_pricing', 'sell_order.id', '=', 'sell_order_pricing.sell_order_id')
           ->leftJoin('users', 'users.id', '=', 'deals.user_id')
-          ->where('deals.status', 'a')
+          ->where('deals.status', $status)
           ->groupBy(
             'deals.id', 
             'users.name', 
@@ -132,7 +133,6 @@ class DealController extends Controller
             'buyers.company_name'
           )
           ->first();
-        //$deal = Deal::with('BuyDeal', 'BuyDeal.BuyOrder', 'BuyDeal.BuyOrder.BuyOrderPricing', 'BuyDeal.BuyDealApproval', 'SellDeal', 'SellDeal.SellOrder', 'SellDeal.SellOrder.SellOrderPricing', 'SellDeal.SellDealApproval');
 
         //if($deal->status == 'a') {
             return response()->json($deal, 200);
