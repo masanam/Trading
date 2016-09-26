@@ -156,7 +156,7 @@ class SellDealController extends Controller
           ] ,404);
       }
       
-      $sell_deal = SellDeal::with('SellOrder', 'SellOrder.Seller')->where('deal_id', $dealId)
+      $sell_deal = SellDeal::with('SellOrder', 'SellOrder.Seller')->where([['deal_id', $dealId], ['status', 'a']])
              ->orderBy('id', 'asc')
              ->get();
 

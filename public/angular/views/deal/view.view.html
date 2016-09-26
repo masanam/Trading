@@ -32,8 +32,9 @@
           <h4 ng-show="deal.status === 'a'">Status: Running</h4>
           <h4 ng-show="deal.status === 'f'">Status: Finished</h4>
           <h4 ng-show="deal.status === 'x'">Status: Cancelled</h4>
-          <button ng-click="cancelDeal()" class="btn btn-danger"> Cancel Deal</button>
-          <button ng-click="finishDeal()" class="btn btn-success"> Finish Deal</button>
+          <button ng-click="cancelDeal()" class="btn btn-danger"> Cancel</button>
+          <button ng-click="finishDeal()" class="btn btn-success"> Finish</button>
+          <button ng-click="finishDeal()" class="btn btn-primary"> Running</button>
         </div>
       </div>
     </div>
