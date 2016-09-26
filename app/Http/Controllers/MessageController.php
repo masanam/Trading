@@ -14,8 +14,8 @@ class MessageController extends Controller
         $this->middleware('jwt.auth');
     }
 
-    public function index() {
-        $message = Message::where('user_id', $user)->get();
+    public function index($chat , $user) {
+        $message = Message::where('chat_id', $chat)->andWhere('user_id', $user)->get();
 
         return response()->json($message, 200);
     }
