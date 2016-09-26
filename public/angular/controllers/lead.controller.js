@@ -3,18 +3,19 @@
 angular.module('lead').controller('LeadController', ['$scope','$http', '$stateParams', 'Buyer', 'Seller', 'Vendor', 'Contact',  
 	function($scope, $http, $stateParams, Buyer, Seller, Vendor, Contact) {
 		$scope.keyword = '';
-		$scope.searchType = 'Buyer';
+		$scope.searchType = 'buyer';
 		$scope.leads = [];
 		$scope.lead = {};		
 		$scope.totalBuyer = {};
 		$scope.$stateParams = $stateParams;
 
 		$scope.find = function() {
-		if ($stateParams.searchType === 'Buyer') $scope.leads = Buyer.query({ action: 'search', search: $stateParams.keyword });
-		 else if ($stateParams.searchType === 'Seller') $scope.leads = Seller.query({ action: 'search', search: $stateParams.keyword });
-		 else if ($stateParams.searchType === 'Vendor') $scope.leads = Vendor.query({ action: 'search', search: $stateParams.keyword });
-		 else if ($stateParams.searchType === 'Contact') $scope.leads = Contact.query({ action: 'search', search: $stateParams.keyword });
-		
+			switch($scope.searchType){
+				case 'seller' : $state.go('lead.seller', { keyword: $scope.keyword });
+				case 'vendor' : $state.go('lead.vendor', { keyword: $scope.keyword });
+				case 'contact' : $state.go('lead.contact', { keyword: $scope.keyword });
+				default : $state.go('lead.buyer', { keyword: $scope.keyword });
+			}
 		};
 
 		$scope.findOne = function () {
