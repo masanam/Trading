@@ -10,11 +10,11 @@
       <div style="text-align:center;">
         <div>
           <div class="col-md-4 align-right">
-            <a class="btn btn-default btn-margin full-width" ui-sref="lead.search({ searchType: 'Buyer', keyword: 'a' })">
+            <a class="btn btn-default btn-margin full-width" ui-sref="lead.buyer">
               <h2>BUYERS</h2>
                 <span>{{ totalBuyer.count }} Records</span>
             </a><br>
-            <a class="btn btn-default btn-margin full-width" ui-sref="lead.search({ searchType: 'Seller', keyword: 'a' })">
+            <a class="btn btn-default btn-margin full-width" ui-sref="lead.seller">
               <h2>SELLERS</h2>
               <span>{{ totalSeller.count }} Records</span>
             </a>
@@ -23,11 +23,11 @@
             <img src="/images/globe.jpg" style="height:270px;">
           </div>
           <div class="col-md-4 align-left">
-            <a class="btn btn-default btn-margin full-width" ui-sref="lead.search({ searchType: 'Vendor', keyword: 'a' })">
+            <a class="btn btn-default btn-margin full-width" ui-sref="lead.vendor">
               <h2>VENDORS</h2>
               <span>{{ totalVendor.count }} Records</span>
             </a><br>
-            <a class="btn btn-default btn-margin full-width" ui-sref="lead.search({ searchType: 'Contact', keyword: 'a' })">
+            <a class="btn btn-default btn-margin full-width" ui-sref="lead.contact">
               <h2>CONTACTS</h2>
               <span>{{ totalContact.count }} Records</span>
             </a>
@@ -39,10 +39,10 @@
         </div>
 
         <div class="col-md-12" style="margin-top:40px;">
-          <div class="col-md-8 col-md-offset-2 input-group btn-group">
+          <form class="col-md-8 col-md-offset-2 input-group btn-group">
             <input type="text" class="form-control" style="width:600px;display:inline;" ng-model= "keyword">
-            <button class="btn btn-success" ui-sref="lead.search({ searchType: searchType , keyword: keyword })">Search</button>
-          </div><br/>
+            <button class="btn btn-success" type="submit" ng-click="search">Search</button>
+          </form><br/>
 
           <div class="btn-group">
             <label class="btn btn-default">

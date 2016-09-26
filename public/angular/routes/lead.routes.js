@@ -24,7 +24,10 @@ angular.module('lead').config(['$stateProvider', '$urlRouterProvider',
         url: '/seller',
         templateUrl: '/angular/views/lead/seller.view.html',
         roles: ['user', 'trader']
-      })      
+      })
+
+
+      
       .state('lead.search', {
         url: '/search/{searchType}/{keyword}',
         templateUrl: '/angular/views/lead/search.view.html',

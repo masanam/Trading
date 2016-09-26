@@ -3,7 +3,7 @@
 angular.module('lead').controller('LeadController', ['$scope','$http', '$stateParams', 'Buyer', 'Seller', 'Vendor', 'Contact',  
 	function($scope, $http, $stateParams, Buyer, Seller, Vendor, Contact) {
 		$scope.keyword = '';
-		$scope.searchType = '';
+		$scope.searchType = 'Buyer';
 		$scope.leads = [];
 		$scope.lead = {};		
 		$scope.totalBuyer = {};
