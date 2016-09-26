@@ -1,17 +1,43 @@
 'use strict';
 
-angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Deal', 'SellOrder', 'BuyOrder', 'Buyer', 'Seller', 'SellDeal', 'BuyDeal', 'Authentication', '$location',
-	function($scope, $uibModal, Deal, SellOrder, BuyOrder, Buyer, Seller, SellDeal, BuyDeal, Authentication, $location) {
+angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Deal', 'SellOrder', 'BuyOrder', 'Buyer', 'Seller', 'SellDeal', 'BuyDeal', 'Authentication', '$location', '$stateParams',
+	function($scope, $uibModal, Deal, SellOrder, BuyOrder, Buyer, Seller, SellDeal, BuyDeal, Authentication, $location, $stateParams) {
     $scope.findDeals = function(){
-      $scope.deals = Deal.query;
-    };
-    
-    $scope.findCancelled = function(){
-      $scope.deals = Deal.query;
+      $scope.deals = Deal.query({action:'table', status: 'a'});
     };
     
     $scope.findFinished = function(){
-      $scope.deals = Deal.query;
+      $scope.deals = Deal.query({action:'table', status: 'f'});
+    };
+    
+    $scope.findCancelled = function(){
+      $scope.deals = Deal.query({action:'table', status: 'x'});
+    };
+    
+    $scope.findOne = function(){
+      $scope.deal = Deal.get({ id: $stateParams.id });
+      
+      // Get the buy deals
+      BuyDeal.query({action:'getByDeal', dealId: $stateParams.id}, function(buyDeals){
+        for(var i = 0; i < buyDeals.length; i++){
+            var buy_deals = buyDeals[i];
+            var buy_order = buy_deals.buy_order;
+            buy_order.buyer_id = buy_deals.buy_order.buyer.id.toString();
+            buy_order.company_name = buy_deals.buy_order.buyer.company_name;
+            $scope.buyOrders.push(buy_order);
+        }
+      });
+      
+      // Get the sell deals
+      SellDeal.query({action:'getByDeal', dealId: $stateParams.id}, function(sellDeals){
+        for(var i = 0; i < sellDeals.length; i++){
+            var sell_deals = sellDeals[i];
+            var sell_order = sell_deals.sell_order;
+            sell_order.seller_id = sell_deals.sell_order.seller.id.toString();
+            sell_order.company_name = sell_deals.sell_order.seller.company_name;
+            $scope.sellOrders.push(sell_order);
+        }
+      });
     };
     
     $scope.findAllSellers = function(){
@@ -39,6 +65,10 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
     
     $scope.openBuyModal = function (order) {
       $scope.order = order;
+      
+      $scope.order.deadline = new Date($scope.order.deadline);
+      $scope.order.order_date = new Date($scope.order.order_date);
+      
       var modalInstance = $uibModal.open({
         windowClass: 'xl-modal',
         templateUrl: './angular/views/deal/buy-order-modal.view.html',
@@ -49,6 +79,10 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
     
     $scope.openSellModal = function (order) {
       $scope.order = order;
+      
+      $scope.order.deadline = new Date($scope.order.deadline);
+      $scope.order.order_date = new Date($scope.order.order_date);
+      
       var modalInstance = $uibModal.open({
         windowClass: 'xl-modal',
         templateUrl: './angular/views/deal/sell-order-modal.view.html',
@@ -106,11 +140,10 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
         //Add Deals
         $scope.deal = {
           id: '',
+          user_id: Authentication.user.id,
         };
         
         var deal = new Deal($scope.deal);
-        
-        console.log(Authentication.user.id);
         
         deal.$save(function (response) {
           var dealId = response.id;
@@ -127,7 +160,6 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
             sellDeal = new SellDeal(sellDeal);
             
             sellDeal.$save(function (response) {
-              console.log('sell');
             }, function(response){
               $scope.error = response.data.message;
             });
@@ -145,7 +177,6 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
             buyDeal = new BuyDeal(buyDeal);
             
             buyDeal.$save(function (response) {
-              console.log('buy');
             }, function(response){
               $scope.error = response.data.message;
             });
@@ -158,7 +189,6 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
         });
       }else{
         $scope.error = "You need at least one buy order and one sell order!";
-        console.log($scope.error);
         var modalInstance = $uibModal.open({
           windowClass: 'xl-modal',
           templateUrl: 'alertModal.html',
@@ -168,10 +198,143 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
         
       }
     };
+    
+    $scope.updateDeal = function(){
+      if($scope.buyOrders.length > 0 && $scope.sellOrders.length > 0){
+        var dealId = $scope.deal.id;
+        var userId = Authentication.user.id;
+        
+        // Soft Delete Buy & Sell Deals
+        BuyDeal.delete({ dealId: dealId }, function(response) {
+          //$location.url('/deal');
+        }, function(err) {
+          console.log(err);
+        });
+        
+        SellDeal.delete({ dealId: dealId }, function(response) {
+          //$location.url('/deal');
+        }, function(err) {
+          console.log(err);
+        });
+        
+        // Add Deals
+        /*$scope.deal = {
+          id: '',
+          user_id: Authentication.user.id,
+        };
+        
+        var deal = new Deal($scope.deal);
+        
+        deal.$save(function (response) {*/
+          
+          for(var i = 0; i < $scope.sellOrders.length; i++){
+            var sellOrder = $scope.sellOrders[i];
+            
+            var sellDeal = {
+              sell_order_id: sellOrder.id,
+              user_id: userId,
+              deal_id: dealId
+            };
+            
+            sellDeal = new SellDeal(sellDeal);
+            
+            sellDeal.$save(function (response) {
+            }, function(response){
+              $scope.error = response.data.message;
+            });
+          }
+          
+          for(var i = 0; i < $scope.buyOrders.length; i++){
+            var buyOrder = $scope.buyOrders[i];
+            
+            var buyDeal = {
+              buy_order_id: buyOrder.id,
+              user_id: userId,
+              deal_id: dealId
+            };
+            
+            buyDeal = new BuyDeal(buyDeal);
+            
+            buyDeal.$save(function (response) {
+            }, function(response){
+              $scope.error = response.data.message;
+            });
+          }
+          
+          $location.url('/deal/'+$scope.deal.id);
+          
+        /*}, function (response) {
+          $scope.error = response.data.message;
+        });*/
+      }else{
+        $scope.error = "You need at least one buy order and one sell order!";
+        var modalInstance = $uibModal.open({
+          windowClass: 'xl-modal',
+          templateUrl: 'alertModal.html',
+          controller: 'AlertModalController',
+          scope: $scope,
+        });
+        
+      }
+    };
+    
+    $scope.finishDeal = function () {
+      var deal = $scope.deal;
+      
+      Deal.get({ action: 'status', id: deal.id, status: 'f' }, function(response) {
+				$location.url('/deal');
+			}, function(err) {
+				console.log(err);
+			});
+
+      
+      /*deal.$remove(function (response) {
+        $location.url('/deal');
+      }, function (response) {
+        $scope.error = response.data.message;
+      });*/
+    };
+    
+    $scope.cancelDeal = function () {
+      var deal = $scope.deal;
+      
+      Deal.get({ action: 'status', id: deal.id, status: 'x' }, function(response) {
+				$location.url('/deal');
+			}, function(err) {
+				console.log(err);
+			});
+    };
+    
+    $scope.openChatModal = function () {
+      var modalInstance = $uibModal.open({
+        windowClass: 'xl-modal',
+        templateUrl: 'chatModal.html',
+        controller: 'ChatModalController',
+        scope: $scope,
+      });
+    };
 
 }]);
 
 angular.module('deal').controller('AlertModalController', function ($scope, $uibModalInstance) {
+  $scope.close = function () {
+    $uibModalInstance.dismiss('cancel');
+  };
+});
+
+angular.module('deal').controller('ChatModalController', function ($scope, $uibModalInstance) {
+  $scope.message = {
+    
+  };
+  
+  $scope.findMessage = function(order){
+    
+  };
+  
+  $scope.sendMessage = function(order){
+    
+  };
+  
   $scope.close = function () {
     $uibModalInstance.dismiss('cancel');
   };
@@ -249,12 +412,11 @@ angular.module('deal').controller('CreateSellModalController', function ($scope,
 
     var sellOrder = new SellOrder($scope.order);
     
-    //console.log(sellOrder);
-    
     sellOrder.$save(function (response) {
       $scope.order = response;
       $scope.order.deadline = new Date($scope.order.deadline);
       $scope.order.order_date = new Date($scope.order.order_date);
+      
       for(var i = 0; i < $scope.sellers.length; i++){
         var seller = $scope.sellers[i];
         if(seller.id == response.seller_id){
@@ -262,6 +424,7 @@ angular.module('deal').controller('CreateSellModalController', function ($scope,
           break;
         }
       }
+      
       $scope.sellOrders.push($scope.order);
       $scope.close();
       $scope.success = true;
@@ -367,7 +530,44 @@ angular.module('deal').controller('CreateBuyModalController', function ($scope, 
       $scope.error = response.data.message;
     });
     
-    //console.log($scope.buyers[].company_name);
+  };
+  
+  $scope.close = function () {
+    $uibModalInstance.dismiss('cancel');
+  };
+});
+
+angular.module('deal').controller('BuyModalController', function ($scope, $uibModalInstance, Deal, SellOrder, BuyOrder, Product, $filter, Authentication) {
+  
+  $scope.index = $scope.buyOrders.indexOf($scope.order);
+  
+  $scope.updateBuyOrder = function(index){
+    $scope.success = $scope.error = null;
+      
+    //$scope.order.deadline = new Date($scope.order.deadline);
+    $scope.order.deadline = $filter('date')($scope.order.deadline, "yyyy-MM-dd");
+    $scope.order.order_date = $filter('date')($scope.order.order_date, "yyyy-MM-dd");
+    $scope.order.user_id = Authentication.user.id;
+
+    var buyOrder = new BuyOrder($scope.order);
+    
+    buyOrder.update(function (response) {
+      $scope.order = response;
+      for(var i = 0; i < $scope.buyers.length; i++){
+        var buyer = $scope.buyers[i];
+        if(buyer.id == response.buyer_id){
+          $scope.order.company_name = buyer.company_name;
+          break;
+        }
+      }
+      $scope.order.deadline = new Date($scope.order.deadline);
+      $scope.order.order_date = new Date($scope.order.order_date);
+      $scope.buyOrders[$scope.index] = $scope.order;
+      $scope.close();
+      $scope.success = true;
+    }, function (response) {
+      $scope.error = response.data.message;
+    });
     
   };
   
@@ -376,25 +576,37 @@ angular.module('deal').controller('CreateBuyModalController', function ($scope, 
   };
 });
 
-angular.module('deal').controller('BuyModalController', function ($scope, $uibModalInstance, Deal, SellOrder, BuyOrder, Product) {
-  
-  $scope.index = $scope.buyOrders.indexOf($scope.order);
-  
-  $scope.updateBuyOrder = function(index){
-    $scope.buyOrders[$scope.index] = $scope.order;
-  };
-  
-  $scope.close = function () {
-    $uibModalInstance.dismiss('cancel');
-  };
-});
-
-angular.module('deal').controller('SellModalController', function ($scope, $uibModalInstance, Deal, SellOrder, BuyOrder, Product) {
+angular.module('deal').controller('SellModalController', function ($scope, $uibModalInstance, Deal, SellOrder, BuyOrder, Product, $filter, Authentication) {
   
   $scope.index = $scope.sellOrders.indexOf($scope.order);
   
   $scope.updateSellOrder = function(index){
-    $scope.sellOrders[$scope.index] = $scope.order;
+    $scope.success = $scope.error = null;
+      
+    //$scope.order.deadline = new Date($scope.order.deadline);
+    $scope.order.deadline = $filter('date')($scope.order.deadline, "yyyy-MM-dd");
+    $scope.order.order_date = $filter('date')($scope.order.order_date, "yyyy-MM-dd");
+    $scope.order.user_id = Authentication.user.id;
+
+    var sellOrder = new SellOrder($scope.order);
+    
+    sellOrder.update(function (response) {
+      $scope.order = response;
+      for(var i = 0; i < $scope.sellers.length; i++){
+        var seller = $scope.sellers[i];
+        if(seller.id == response.seller_id){
+          $scope.order.company_name = seller.company_name;
+          break;
+        }
+      }
+      $scope.order.deadline = new Date($scope.order.deadline);
+      $scope.order.order_date = new Date($scope.order.order_date);
+      $scope.sellOrders[$scope.index] = $scope.order;
+      $scope.close();
+      $scope.success = true;
+    }, function (response) {
+      $scope.error = response.data.message;
+    });
   };
   
   $scope.close = function () {

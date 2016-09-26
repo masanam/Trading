@@ -2,6 +2,7 @@
 
 namespace App\Model;
 
+use App\Model\Deal;
 use App\Model\Buyer;
 use App\Model\Seller;
 use App\Model\Contact;
@@ -49,5 +50,9 @@ class User extends Authenticatable
 
     public function Activity() {
         return $this->hasMany('Activity');
+    }
+    
+    public function Deal() {
+        return $this->hasMany('Deal');
     }
 }

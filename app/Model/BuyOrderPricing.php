@@ -11,6 +11,6 @@ class BuyOrderPricing extends Model
     protected $table = 'buy_order_pricing';
 
     public function BuyOrder() {
-    	return $this->belongsTo('BuyOrder');
+    	return $this->belongsTo('App\Model\BuyOrder');
     }
 }

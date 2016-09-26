@@ -4,14 +4,12 @@ namespace App\Model;
 
 use App\Model\BuyDeal;
 use App\Model\SellDeal;
-use App\Model\User;
+use App\Model\Message;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Deal extends Model
+class Chat extends Model
 {
-    protected $table = 'deals';
-
     public function BuyDeal() {
     	return $this->hasMany('App\Model\BuyDeal');
     }
@@ -19,8 +17,8 @@ class Deal extends Model
     public function SellDeal() {
     	return $this->hasMany('App\Model\SellDeal');
     }
-    
-    public function User() {
-    	return $this->belongsTo('App\Model\User');
+
+    public function Message() {
+    	return $this->hasMany('App\Model\Message');
     }
 }

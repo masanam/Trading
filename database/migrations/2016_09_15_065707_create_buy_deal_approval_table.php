@@ -14,12 +14,13 @@ class CreateBuyDealApprovalTable extends Migration
     public function up()
     {
         Schema::create('buy_deal_approval', function (Blueprint $table) {
+            $table->increments('id');
             $table->integer('buy_deal_id')->unsigned();
             $table->integer('user_id')->unsigned();
 
-            $table->string('approver');
+            $table->string('approver')->nullable();
 
-            $table->char('status'); // A = Approved ; R = Reject
+            $table->char('status', 1); // A = Approved ; R = Reject
 
             $table->timestamps();
         });

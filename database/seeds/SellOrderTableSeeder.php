@@ -48,6 +48,9 @@ class SellOrderTableSeeder extends Seeder
             'hgi_max' => 40,
             'size_min' => 0,
             'size_max' => 50,
+            'max_price' => 5000,
+
+            'penalty_desc' => 'penalty',
 
             'volume' => 5000,
             'status' => 'o'
@@ -86,6 +89,9 @@ class SellOrderTableSeeder extends Seeder
             'hgi_max' => 50,
             'size_min' => 0,
             'size_max' => 200,
+            'max_price' => 5000,
+
+            'penalty_desc' => 'penalty',
 
             'volume' => 3000,
             'status' => 'p'
@@ -124,6 +130,9 @@ class SellOrderTableSeeder extends Seeder
             'hgi_max' => 50,
             'size_min' => 0,
             'size_max' => 150,
+            'max_price' => 5000,
+
+            'penalty_desc' => 'penalty',
 
             'volume' => 2000,
             'status' => 'f'
@@ -162,6 +171,9 @@ class SellOrderTableSeeder extends Seeder
             'hgi_max' => 60,
             'size_min' => 0,
             'size_max' => 50,
+            'max_price' => 5000,
+
+            'penalty_desc' => 'penalty',
 
             'volume' => 4500,
             'status' => 'p'
@@ -200,6 +212,9 @@ class SellOrderTableSeeder extends Seeder
             'hgi_max' => 50,
             'size_min' => 0,
             'size_max' => 100,
+            'max_price' => 5000,
+
+            'penalty_desc' => 'penalty',
 
             'volume' => 6000,
             'status' => 'f'
@@ -238,6 +253,9 @@ class SellOrderTableSeeder extends Seeder
             'hgi_max' => 60,
             'size_min' => 0,
             'size_max' => 150,
+            'max_price' => 5000,
+
+            'penalty_desc' => 'penalty',
 
             'volume' => 1500,
             'status' => 'c'

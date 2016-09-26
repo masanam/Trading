@@ -6,11 +6,11 @@ use App\Model\BuyDeal;
 
 use Illuminate\Database\Eloquent\Model;
 
-class BuyDealChat extends Model
+class BuyDealApproval extends Model
 {
-    protected $table = 'buy_deal_chat';
+    protected $table = 'buy_deal_approval';
 
     public function BuyDeal() {
-    	return $this->belongsTo('BuyDeal');
+    	return $this->belongsTo('App\Model\BuyDeal');
     }
 }

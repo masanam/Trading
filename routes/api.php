@@ -24,23 +24,25 @@ Route::group(['middleware' => ['cors']], function() {
     ]]);
 
     Route::get('contact/total', 'ContactController@getTotalContact');
+    Route::get('contact/{search?}', 'ContactController@index');
     Route::resource('contact', 'ContactController', ['except' => [
         'index', 'create', 'edit'
     ]]);
-    Route::get('contact/search/{search?}', 'ContactController@index');
+    // Route::get('contact/search/{search?}', 'ContactController@index');
 
     Route::get('buyer/total', 'BuyerController@getTotalBuyer');
+    Route::get('buyer/{search?}', 'BuyerController@index');
     Route::resource('buyer', 'BuyerController', ['except' => [
         'index', 'create', 'edit'
     ]]);
-    Route::get('buyer/search/{search?}', 'BuyerController@index');
-
+    // Route::get('buyer/search/{search?}', 'BuyerController@index');
 
     Route::get('seller/total', 'SellerController@getTotalSeller');
+    Route::get('seller/{search?}', 'SellerController@index');
     Route::resource('seller', 'SellerController', ['except' => [
         'index', 'create', 'edit'
     ]]);
-    Route::get('seller/search/{search?}', 'SellerController@index');
+    // Route::get('seller/search/{search?}', 'SellerController@index');
 
     Route::resource('buy_order', 'BuyOrderController', ['except' => [
         'create', 'edit'
@@ -67,11 +69,15 @@ Route::group(['middleware' => ['cors']], function() {
     Route::resource('vendor', 'VendorController', ['except' => [
         'index', 'create', 'edit'
     ]]);
-
+    
+    Route::delete('buy_deal/{dealId}', 'BuyDealController@destroyByDeal');
+    Route::get('buy_deal/getByDeal/{dealId?}', 'BuyDealController@getByDeal');
     Route::resource('buy_deal', 'BuyDealController', ['except' => [
         'create', 'edit'
     ]]);
-
+    
+    Route::delete('sell_deal/{dealId}', 'SellDealController@destroyByDeal');
+    Route::get('sell_deal/getByDeal/{dealId?}', 'SellDealController@getByDeal');
     Route::resource('sell_deal', 'SellDealController', ['except' => [
         'create', 'edit'
     ]]);
@@ -79,10 +85,18 @@ Route::group(['middleware' => ['cors']], function() {
     Route::resource('buy_sell_deal', 'BuySellDealController', ['only' => [
         'index'
     ]]);
-
+    
+    Route::get('deal/table/{status}', 'DealController@index');
+    Route::get('deal/status/{deal}/{status}', 'DealController@changeStatus');
     Route::resource('deal', 'DealController', ['except' => [
-        'create', 'edit'
+        'create', 'edit', 'destroy'
     ]]);
+
+    Route::get('chat/{user}', 'ChatController@index');
+
+    Route::get('chat/message/{chat}/{user}', 'MessageController@index');
+
+    Route::get('lead/{search?}', 'LeadController@index');
 
     Route::get('news', 'NewsController@news');
     Route::get('news/refresh', 'NewsController@refreshNews');

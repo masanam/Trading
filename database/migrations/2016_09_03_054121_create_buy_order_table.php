@@ -73,6 +73,7 @@ class CreateBuyOrderTable extends Migration
             $table->integer('size_bonus')->nullable();
 
             $table->integer('volume');
+            $table->integer('max_price');
 
             $table->longText('penalty_desc');
             

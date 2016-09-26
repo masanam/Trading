@@ -48,8 +48,12 @@ class BuyOrderTableSeeder extends Seeder
             'hgi_max' => 40,
             'size_min' => 0,
             'size_max' => 50,
+            'max_price' => 5000,
+
+            'penalty_desc' => 'penalty',
 
             'volume' => 5000,
+            'max_price' => 5000,
             'status' => 'o'
       ]);
 
@@ -86,8 +90,12 @@ class BuyOrderTableSeeder extends Seeder
             'hgi_max' => 50,
             'size_min' => 0,
             'size_max' => 200,
+            'max_price' => 5000,
+
+            'penalty_desc' => 'penalty',
 
             'volume' => 3000,
+            'max_price' => 3000,
             'status' => 'p'
       ]);
 
@@ -124,8 +132,12 @@ class BuyOrderTableSeeder extends Seeder
             'hgi_max' => 50,
             'size_min' => 0,
             'size_max' => 150,
+            'max_price' => 5000,
+
+            'penalty_desc' => 'penalty',
 
             'volume' => 2000,
+            'max_price' => 2000,
             'status' => 'f'
       ]);
 
@@ -162,8 +174,12 @@ class BuyOrderTableSeeder extends Seeder
             'hgi_max' => 60,
             'size_min' => 0,
             'size_max' => 50,
+            'max_price' => 5000,
+
+            'penalty_desc' => 'penalty',
 
             'volume' => 4500,
+            'max_price' => 4500,
             'status' => 'p'
       ]);
 
@@ -200,8 +216,12 @@ class BuyOrderTableSeeder extends Seeder
             'hgi_max' => 50,
             'size_min' => 0,
             'size_max' => 100,
+            'max_price' => 5000,
+
+            'penalty_desc' => 'penalty',
 
             'volume' => 6000,
+            'max_price' => 6000,
             'status' => 'f'
       ]);
 
@@ -238,8 +258,12 @@ class BuyOrderTableSeeder extends Seeder
             'hgi_max' => 60,
             'size_min' => 0,
             'size_max' => 150,
+            'max_price' => 5000,
+
+            'penalty_desc' => 'penalty',
 
             'volume' => 1500,
+            'max_price' => 1500,
             'status' => 'c'
       ]);
     }

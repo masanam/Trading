@@ -8,8 +8,8 @@
         <th>Trader</th>
         <th>Buyer(s)</th>
         <th>Seller(s)</th>
-        <th>Vendor(s)</th>
-        <th width="75px">Start Date</th>
+        <!--th>Vendor(s)</th-->
+        <th width="75px">Created</th>
         <th>Volume (tonnes)</th>
         <th width="120px">Total Sales (USD)</th>
         <th width="120px">Total CoGS (USD)</th>
@@ -18,12 +18,21 @@
       </tr>
   </thead>
   <tbody>
-    <tr ng-repeat="deal in deals" ng-click="openModal(deal.id)">
+    <tr ng-repeat="deal in deals" ui-sref="deal.view({id: deal.id})">
       <td>{{deal.trader_name}}</td>
       <td>{{deal.buyer_name}}</td>
       <td>{{deal.seller_name}}</td>
-      <td>{{deal.vendor_name}}</td>
-      <td>{{deal.deal_date  | convertToDate | date : 'd MMMM yy' }}</td>
+      <!--td>
+        <span ng-repeat="sell_deal in deal.sell_deal">
+          {{sell_deal.sell_order.seller.company_name}}
+        </span>
+      </td>
+      <td>
+        <span ng-repeat="buy_deal in deal.buy_deal">
+          {{buy_deal.buy_order.buyer.company_name}}
+        </span>
+      </td-->
+      <td>{{deal.created_at  | convertToDate | date : 'd MMMM yy' }}</td>
       <td>{{deal.volume | number}}</td>
       <td>{{deal.total_sales | number }}</td>
       <td>{{deal.total_cogs | number }}</td>

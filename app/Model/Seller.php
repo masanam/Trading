@@ -18,22 +18,22 @@ class Seller extends Model
     protected $table = 'sellers';
 
     public function User() {
-    	return $this->belongsTo('User');
+    	return $this->belongsTo('App\Model\User');
     }
 
     public function Contact() {
-        return $this->hasMany('Contact');
+        return $this->hasMany('App\Model\Contact');
     }
 
     public function SellOrder() {
-    	return $this->hasMany('SellOrder');
+    	return $this->hasMany('App\Model\SellOrder');
     }
 
     public function Product() {
-    	return $this->hasMany('Product');
+    	return $this->hasMany('App\Model\Product');
     }
 
     public function Mine() {
-    	return $this->hasMany('Mine');
+    	return $this->hasMany('App\Model\Mine');
     }
 }
