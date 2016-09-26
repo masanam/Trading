@@ -70,11 +70,13 @@ Route::group(['middleware' => ['cors']], function() {
         'index', 'create', 'edit'
     ]]);
     
+    Route::delete('buy_deal/{dealId}', 'BuyDealController@destroyByDeal');
     Route::get('buy_deal/getByDeal/{dealId?}', 'BuyDealController@getByDeal');
     Route::resource('buy_deal', 'BuyDealController', ['except' => [
         'create', 'edit'
     ]]);
     
+    Route::delete('sell_deal/{dealId}', 'SellDealController@destroyByDeal');
     Route::get('sell_deal/getByDeal/{dealId?}', 'SellDealController@getByDeal');
     Route::resource('sell_deal', 'SellDealController', ['except' => [
         'create', 'edit'

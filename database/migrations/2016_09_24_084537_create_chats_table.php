@@ -21,8 +21,8 @@ class CreateChatsTable extends Migration
         });
 
         Schema::table('chats', function (Blueprint $table) {
-            $table->foreign('trader_id')->references('id')->on('user')->onDelete('cascade');
-            $table->foreign('approver_id')->references('id')->on('user')->onDelete('cascade');
+            $table->foreign('trader_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('approver_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

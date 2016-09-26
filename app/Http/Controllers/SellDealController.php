@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Auth;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\DB;
 
 class SellDealController extends Controller
 {
@@ -128,14 +129,39 @@ class SellDealController extends Controller
         return response()->json($sell_deal, 200);
     }
     
+    /**
+     * Remove the specified resource from storage by dealId
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroyByDeal($dealId)
+    {
+        if (!$dealId) {
+            return response()->json([
+                'message' => 'Not found'
+            ] ,404);
+        }
+
+       $sell_deal = DB::table('sell_deal')->where('deal_id', $dealId)->update(['status' => 'x']);
+
+       return response()->json($sell_deal, 200);
+    }
+    
     // Get Buy Deal by Deal ID
     public function getByDeal($dealId) {
-        $sell_deal = SellDeal::with('SellOrder', 'SellOrder.Seller')->where('deal_id', $dealId)
-               ->orderBy('id', 'asc')
-               ->get();
+      if (!$dealId) {
+          return response()->json([
+              'message' => 'Not found'
+          ] ,404);
+      }
+      
+      $sell_deal = SellDeal::with('SellOrder', 'SellOrder.Seller')->where('deal_id', $dealId)
+             ->orderBy('id', 'asc')
+             ->get();
 
 
-        return response()->json($sell_deal, 200);
+      return response()->json($sell_deal, 200);
     }
 
     public function approval(Request $request, $sell_deal, $approval) {
