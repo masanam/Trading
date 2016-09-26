@@ -44,8 +44,14 @@ class SellDealController extends Controller
             ], 400);
         }
 
+        $chat = New Chat();
+        $chat->trader_id = $sell_order->user_id;
+        $chat->approver_id = 1;
+        $chat->save();
+
         $sell_deal = new SellDeal();
         $sell_deal->sell_order_id = $request->sell_order_id;
+        $sell_deal->chat_id = $chat->id;
         $sell_deal->user_id = $request->user_id;
         $sell_deal->deal_id = $request->deal_id  ? $request->deal_id : NULL;
         $sell_deal->status = "a";
@@ -54,7 +60,7 @@ class SellDealController extends Controller
         $sell_deal_approval = new SellDealApproval();
         $sell_deal_approval->sell_deal_id = $sell_deal->id;
         $sell_deal_approval->user_id = $sell_deal->user_id;
-        $sell_deal_approval->approver = NULL;
+        $sell_deal_approval->approver = '';
         $sell_deal_approval->status = "p";
         $sell_deal_approval->save();
 
@@ -148,7 +154,7 @@ class SellDealController extends Controller
        return response()->json($sell_deal, 200);
     }
     
-    // Get Buy Deal by Deal ID
+    // Get Sell Deal by Deal ID
     public function getByDeal($dealId) {
       if (!$dealId) {
           return response()->json([

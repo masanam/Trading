@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Model\Message;
 
+use App\Events\MessageReceived;
+
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -15,7 +17,10 @@ class MessageController extends Controller
     }
 
     public function index($chat , $user) {
-        $message = Message::where('chat_id', $chat)->andWhere('user_id', $user)->get();
+        $message = Message::where([
+            ['chat_id', '=' , $chat],
+            ['user_id', '=' , $user]
+            ])->get();
 
         return response()->json($message, 200);
     }
