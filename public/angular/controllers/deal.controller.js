@@ -205,7 +205,7 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
     $scope.finishDeal = function () {
       var deal = $scope.deal;
       
-      Deal.get({ action: 'finish', id: deal.id }, function(response) {
+      Deal.get({ action: 'f', id: deal.id }, function(response) {
 				$location.url('/deal');
 			}, function(err) {
 				console.log(err);
@@ -222,7 +222,7 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
     $scope.cancelDeal = function () {
       var deal = $scope.deal;
       
-      Deal.delete({ id: deal.id }, function(response) {
+      Deal.get({ action: 'x', id: deal.id }, function(response) {
 				$location.url('/deal');
 			}, function(err) {
 				console.log(err);
