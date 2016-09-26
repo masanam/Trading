@@ -143,8 +143,6 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
           user_id: Authentication.user.id,
         };
         
-        console.log($scope.deal);
-        
         var deal = new Deal($scope.deal);
         
         deal.$save(function (response) {
@@ -313,9 +311,9 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
 			});
     };
     
-    $scope.cancelDeal = function () {
+    $scope.openChatModal = function () {
       var modalInstance = $uibModal.open({
-        windowClass: 'xl-modal',
+        //windowClass: 'xl-modal',
         templateUrl: 'chatModal.html',
         controller: 'ChatModalController',
         scope: $scope,
