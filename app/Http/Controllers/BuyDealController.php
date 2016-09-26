@@ -62,7 +62,7 @@ class BuyDealController extends Controller
         $buy_deal->user_id = $request->user_id;
         $buy_deal->deal_id = $request->deal_id  ? $request->deal_id : NULL;
         $buy_deal->status = "a";
-        $buy_deal->save();        
+        $buy_deal->save();
 
         $buy_deal_approval = new BuyDealApproval();
         $buy_deal_approval->buy_deal_id = $buy_deal->id;

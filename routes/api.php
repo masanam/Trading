@@ -92,6 +92,10 @@ Route::group(['middleware' => ['cors']], function() {
         'create', 'edit', 'destroy'
     ]]);
 
+    Route::get('chat/{user}', 'ChatController@index');
+
+    Route::get('chat/message/{chat}/{user}', 'MessageController@index');
+
     Route::get('lead/{search?}', 'LeadController@index');
 
     Route::get('news', 'NewsController@news');

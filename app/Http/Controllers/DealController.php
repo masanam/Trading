@@ -210,6 +210,7 @@ class DealController extends Controller
 
         if ($status) {
           $deal->status = $status;
+          $deal->save();
         }
         
         // $deal = DB::table('deals')
