@@ -84,6 +84,7 @@ class DealController extends Controller
         }
 
         $deal = new Deal();
+        $deal->user_id = $request->user_id;
         $deal->status = 'a';
         $deal->save();
 
@@ -162,7 +163,8 @@ class DealController extends Controller
             ] ,404);
         }
 
-        // $deal->save();
+        $deal->user_id = $request->user_id;
+        $deal->save();
 
         return response()->json($deal, 200);
     }
