@@ -84,6 +84,7 @@ class DealController extends Controller
         }
 
         $deal = new Deal();
+        $deal->user_id = $request->user_id;
         $deal->status = 'a';
         $deal->save();
 
@@ -162,7 +163,8 @@ class DealController extends Controller
             ] ,404);
         }
 
-        // $deal->save();
+        $deal->user_id = $request->user_id;
+        $deal->save();
 
         return response()->json($deal, 200);
     }
@@ -173,24 +175,24 @@ class DealController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        if (!$id) {
-            return response()->json([
-                'message' => 'Not found'
-            ] ,404);
-        }
+    // public function destroy($id)
+    // {
+    //     if (!$id) {
+    //         return response()->json([
+    //             'message' => 'Not found'
+    //         ] ,404);
+    //     }
         
-        $deal = DB::table('deals')
-        ->where('id', $id)  // find your user by their email
-        ->limit(1)  // optional - to ensure only one record is updated.
-        ->update(array('status' => 'x'));  // update the record in the DB. 
+    //     $deal = DB::table('deals')
+    //     ->where('id', $id)  // find your user by their email
+    //     ->limit(1)  // optional - to ensure only one record is updated.
+    //     ->update(array('status' => 'x'));  // update the record in the DB. 
 
-        /*$deal->status = 'x';
-        $deal->save();*/
+    //     /*$deal->status = 'x';
+    //     $deal->save();*/
 
-        return response()->json($deal, 200);
-    }
+    //     return response()->json($deal, 200);
+    // }
     
     /**
      * Mark as finished the specified resource from storage.
@@ -198,21 +200,22 @@ class DealController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function finish($id)
+    public function changeStatus(Deal $deal , $status)
     {
         if (!$id) {
             return response()->json([
                 'message' => 'Not found'
             ] ,404);
         }
-        
-        $deal = DB::table('deals')
-        ->where('id', $id)  // find your user by their email
-        ->limit(1)  // optional - to ensure only one record is updated.
-        ->update(array('status' => 'f'));  // update the record in the DB. 
 
-        /*$deal->status = 'x';
-        $deal->save();*/
+        if ($status) {
+          $deal->status = $status;
+        }
+        
+        // $deal = DB::table('deals')
+        // ->where('id', $id)  // find your user by their email
+        // ->limit(1)  // optional - to ensure only one record is updated.
+        // ->update(array('status' => 'f'));  // update the record in the DB. 
 
         return response()->json($deal, 200);
     }

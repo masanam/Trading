@@ -87,10 +87,9 @@ Route::group(['middleware' => ['cors']], function() {
     ]]);
     
     Route::get('deal/table/{status}', 'DealController@index');
-    Route::get('deal/finish/{id}', 'DealController@finish');
-    Route::delete('deal/{id}', 'DealController@destroy');
+    Route::get('deal/status/{deal}/{status}', 'DealController@changeStatus');
     Route::resource('deal', 'DealController', ['except' => [
-        'create', 'edit'
+        'create', 'edit', 'destroy'
     ]]);
 
     Route::get('lead/{search?}', 'LeadController@index');
