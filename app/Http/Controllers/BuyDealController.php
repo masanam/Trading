@@ -63,16 +63,22 @@ class BuyDealController extends Controller
         $buy_deal->deal_id = $request->deal_id  ? $request->deal_id : NULL;
         $buy_deal->status = "a";
         $buy_deal->save();
+        
+        $config_approver = [1,2,3];
+        
+        foreach($config_approver as $approver){
 
-        $buy_deal_approval = new BuyDealApproval();
-        $buy_deal_approval->buy_deal_id = $buy_deal->id;
-        $buy_deal_approval->user_id = $buy_deal->user_id;
-        $buy_deal_approval->approver = '';
-        $buy_deal_approval->status = "p";
-        $buy_deal_approval->save();
+          $buy_deal_approval = new BuyDealApproval();
+          $buy_deal_approval->buy_deal_id = $buy_deal->id;
+          $buy_deal_approval->user_id = $buy_deal->user_id;
+          $buy_deal_approval->approver = $approver;
+          $buy_deal_approval->status = "p";
+          $buy_deal_approval->save();
 
-        event(new \App\Events\BuyDealNotification($buy_deal));
-        event(new \App\Events\BuyDealApprovalNotification($buy_deal_approval));
+          event(new \App\Events\BuyDealNotification($buy_deal));
+          event(new \App\Events\BuyDealApprovalNotification($buy_deal_approval));
+        
+        }
 
         return response()->json($buy_deal, 200);
     }

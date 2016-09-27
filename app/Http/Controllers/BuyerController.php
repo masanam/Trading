@@ -29,6 +29,22 @@ class BuyerController extends Controller
         }
         return response()->json($buyer, 200);
     }
+    
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search($search = false)
+    {
+        if (!$search) {
+            $buyer = Buyer::where('status', 'a')->get();
+        } else {
+            // $buyer = Buyer::search($search)->where('status', 'a')->get();
+            $buyer = Buyer::where('status', 'a')->where('company_name', 'LIKE', '%'.$search.'%')->get();
+        }
+        return response()->json($buyer, 200);
+    }
 
     /**
      * Store a newly created resource in storage.

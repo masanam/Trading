@@ -323,7 +323,8 @@ angular.module('deal').controller('AlertModalController', function ($scope, $uib
 });
 
 angular.module('deal').controller('ChatModalController', function ($scope, $uibModalInstance) {
-  $scope.message = {
+  /*$scope.message = {
+    chat_id: ,
     
   };
   
@@ -333,7 +334,7 @@ angular.module('deal').controller('ChatModalController', function ($scope, $uibM
   
   $scope.sendMessage = function(order){
     
-  };
+  };*/
   
   $scope.close = function () {
     $uibModalInstance.dismiss('cancel');
