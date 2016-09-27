@@ -36,7 +36,7 @@
               <span ng-if="!buyer.last_order">N/A</span>
             </td>
             <td>
-              <a href="#" data-toggle="modal" data-target="#buyerModal" ng-click="findOne(buyer.id)"><i class="glyphicon glyphicon-info-sign"></i></a>
+              <a ui-sref="lead.view-buyer({ id: buyer.id })"><i class="glyphicon glyphicon-info-sign"></i></a>
               <!--a href="#" data-toggle="modal" data-target="#createDemandModal" ng-click=findOne(buyer.id)><i class="glyphicon glyphicon-plus"></i></a-->
               <a href="#" data-toggle="modal" data-target="#updateBuyerModal" ng-click="findOne(buyer.id)"><i class="glyphicon glyphicon-pencil"></i></a>
               <a href="#" ng-click="deactivate(buyer)"><i class="glyphicon glyphicon-trash"></i></a>
