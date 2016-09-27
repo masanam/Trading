@@ -84,6 +84,7 @@
             <i class="glyphicon glyphicon-scale" style="margin-left: 50px;"></i> {{ product.gcv_arb_min }} - {{ product.gcv_arb_max }}
             <i class="glyphicon glyphicon-scale" style="margin-left: 50px;"></i> {{ product.ncv_min }} - {{ product.ncv_max }}
             <span class="pull-right">
+              <a ui-sref="lead.view-product({ id: product.id })"><i class="glyphicon glyphicon-eye-open"></i></a>
               <a href="#" ng-click="deleteProduct(product)"><i class="glyphicon glyphicon-remove"></i></a>
             </span>
           </li>
@@ -100,8 +101,9 @@
           <ul class="list-group">
             <li class="list-group-item" ng-repeat="mine in seller.mine">
               {{ mine.mine_name }}
-              <i class="glyphicon glyphicon-map-marker" style="margin-left: 50px;"></i> {{ mine.port_name }}
-              <i class="glyphicon glyphicon-scale" style="margin-left: 50px;"></i> {{ mine.mineable_reserve }}
+              <i class="glyphicon glyphicon-map-marker" style="margin-left: 50px;"></i>
+                {{ mine.longitude | number }}, {{ mine.latitude | number }} ({{ mine.port_name }})
+              <i class="glyphicon glyphicon-scale" style="margin-left: 50px;"></i> {{ mine.mineable_reserve | number }} tones
               <span class="pull-right">
                 <a href="#" ng-click="deleteMine(mine)"><i class="glyphicon glyphicon-remove"></i></a>
               </span>
