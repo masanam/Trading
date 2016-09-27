@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call(SellersTableSeeder::class);
         $this->call(BuyOrderTableSeeder::class);
         $this->call(SellOrderTableSeeder::class);
+        $this->call(VendorsTableSeeder::class);
 
         Model::reguard();
     }
