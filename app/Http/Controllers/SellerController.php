@@ -13,12 +13,29 @@ class SellerController extends Controller
     public function __construct() {
         $this->middleware('jwt.auth');
     }
+    
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index($search = false)
+    {
+        if (!$search) {
+            $seller = Seller::where('status', 'a')->get();
+        } else {
+            $seller = Seller::where('status', 'a')->where('company_name', 'LIKE', '%'.$search.'%')->get();
+        }
+
+        return response()->json($seller, 200);
+    }
+    
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search($search = false)
     {
         if (!$search) {
             $seller = Seller::where('status', 'a')->get();
@@ -76,6 +93,7 @@ class SellerController extends Controller
      */
     public function show(Seller $seller)
     {
+      var_dump($seller);
         if($seller->status == 'a') {
             return response()->json($seller, 200);
         } else {

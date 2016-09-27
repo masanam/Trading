@@ -32,16 +32,16 @@ Route::group(['middleware' => ['cors']], function() {
     // Route::get('contact/search/{search?}', 'ContactController@index');
 
     Route::get('buyer/total', 'BuyerController@getTotalBuyer');
-    Route::get('buyer/search/{search?}', 'BuyerController@index');
+    Route::get('buyer/search/{search?}', 'BuyerController@search');
     Route::resource('buyer', 'BuyerController', ['except' => [
-        'index', 'create', 'edit'
+        'create', 'edit'
     ]]);
     // Route::get('buyer/search/{search?}', 'BuyerController@index');
 
     Route::get('seller/total', 'SellerController@getTotalSeller');
-    Route::get('seller/search/{search?}', 'SellerController@index');
+    Route::get('seller/search/{search?}', 'SellerController@search');
     Route::resource('seller', 'SellerController', ['except' => [
-        'index', 'create', 'edit'
+        'create', 'edit'
     ]]);
     // Route::get('seller/search/{search?}', 'SellerController@index');
 

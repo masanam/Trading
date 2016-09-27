@@ -322,6 +322,7 @@ angular.module('deal').controller('AlertModalController', function ($scope, $uib
   };
 });
 
+<<<<<<< HEAD
 angular.module('deal').controller('ChatModalController', function ($scope, $uibModalInstance, $pusher, User, Chat) {
   var client = new Pusher(API_KEY);
   var pusher = $pusher(client);
@@ -333,6 +334,11 @@ angular.module('deal').controller('ChatModalController', function ($scope, $uibM
   );
 
   $scope.message = {
+=======
+angular.module('deal').controller('ChatModalController', function ($scope, $uibModalInstance) {
+  /*$scope.message = {
+    chat_id: ,
+>>>>>>> 391ddb847ec297e85c28ef2b8587a38830ed5f10
     
 
   };
@@ -346,11 +352,19 @@ angular.module('deal').controller('ChatModalController', function ($scope, $uibM
   };
 
   $scope.sendMessage = function(order){
+<<<<<<< HEAD
 
   };
 
   $scope.findCurrentUser = function() {
     $scope.user = User.get({ action: current });
+=======
+    
+  };*/
+  
+  $scope.close = function () {
+    $uibModalInstance.dismiss('cancel');
+>>>>>>> 391ddb847ec297e85c28ef2b8587a38830ed5f10
   };
 });
 angular.module('deal').controller('CreateSellModalController', function ($scope, $filter, $uibModalInstance, Deal, SellOrder, BuyOrder, Authentication) {

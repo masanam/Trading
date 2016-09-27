@@ -56,13 +56,19 @@ class SellDealController extends Controller
         $sell_deal->deal_id = $request->deal_id  ? $request->deal_id : NULL;
         $sell_deal->status = "a";
         $sell_deal->save();
+        
+        $config_approver = Config::get('approver');
+        
+        foreach($config_approver as $approver){
 
-        $sell_deal_approval = new SellDealApproval();
-        $sell_deal_approval->sell_deal_id = $sell_deal->id;
-        $sell_deal_approval->user_id = $sell_deal->user_id;
-        $sell_deal_approval->approver = '';
-        $sell_deal_approval->status = "p";
-        $sell_deal_approval->save();
+          $sell_deal_approval = new SellDealApproval();
+          $sell_deal_approval->sell_deal_id = $sell_deal->id;
+          $sell_deal_approval->user_id = $sell_deal->user_id;
+          $sell_deal_approval->approver = '';
+          $sell_deal_approval->status = "p";
+          $sell_deal_approval->save();
+        
+        }
 
         event(new \App\Events\SellDealNotification($sell_deal));
         event(new \App\Events\SellDealApprovalNotification($sell_deal_approval));
