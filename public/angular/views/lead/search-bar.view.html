@@ -1,0 +1,21 @@
+<section ng-controller="LeadController">
+	<form class="col-md-8 input-group btn-group" ng-submit="search()">
+		<input type="text" class="form-control" style="width:600px;display:inline;" ng-model="keyword">
+		<button class="btn btn-success" type="submit">Search</button>
+	</form><br/>
+
+	<div class="btn-group">
+		<label class="btn btn-default" ng-model="searchType" uib-btn-radio="'buyer'">
+		Buyer
+		</label>
+		<label class="btn btn-default" ng-model="searchType" uib-btn-radio="'seller'">
+		Sellers
+		</label>
+		<label class="btn btn-default" ng-model="searchType" uib-btn-radio="'vendor'">
+		Vendors
+		</label>
+		<label class="btn btn-default" ng-model="searchType" uib-btn-radio="'contact'">
+		Contacts
+		</label>
+	</div>
+</section>
