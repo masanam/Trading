@@ -220,6 +220,18 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
         $scope.error = response.data.message;
       });
     };
+
+    $scope.deleteProduct = function(product){
+      Product.delete({ id: product.id }, function (response) {
+        $scope.product = response;
+        
+        $scope.seller.product.splice($scope.seller.product.indexOf(product), 1);
+        $scope.close();
+        $scope.success = true;
+      }, function (response) {
+        $scope.error = response.data.message;
+      });
+    };
     
     $scope.addContact = function () {
       

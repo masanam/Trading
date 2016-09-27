@@ -156,6 +156,20 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
 				console.log(err);
 			});
 		};
+
+		
+    $scope.deleteProduct = function(product){
+      Product.delete({ id: product.id }, function (response) {
+        $scope.product = response;
+        
+        $scope.seller.product.splice($scope.seller.product.indexOf(product), 1);
+        $scope.close();
+        $scope.success = true;
+      }, function (response) {
+        $scope.error = response.data.message;
+      });
+    };
+    
     
     $scope.findAttachedUsers = function() {
 		for(var i = 0; i < $scope.buyer.user.length; i++) {
