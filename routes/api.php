@@ -19,6 +19,7 @@ Route::group(['middleware' => ['cors']], function() {
     Route::post('authenticate/signup', 'AuthenticateController@signup');
     Route::get('authenticate/user', 'AuthenticateController@getAuthenticatedUser');
 
+    Route::get('user/current', 'UserController@currentUser');
 	Route::resource('user', 'UserController', ['except' => [
         'create', 'edit'
     ]]);
@@ -93,7 +94,7 @@ Route::group(['middleware' => ['cors']], function() {
     ]]);
 
     Route::get('chat/{user}', 'ChatController@index');
-
+    Route::get('chat/{buy_order}', 'ChatController@show');
     Route::get('chat/message/{chat}/{user}', 'MessageController@index');
 
     Route::get('lead/{search?}', 'LeadController@index');

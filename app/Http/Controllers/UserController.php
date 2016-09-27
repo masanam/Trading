@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Model\User;
 
 use Illuminate\Http\Request;
+use Auth;
 
 use App\Http\Requests;
 
@@ -69,6 +70,10 @@ class UserController extends Controller
         } else {
             return response()->json(['message' => 'deactivated record'], 404);
         }    
+    }
+
+    public function currentUser() {
+        return response()->json(Auth::user(), 200);
     }
 
     /**

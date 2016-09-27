@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Deal', 'SellOrder', 'BuyOrder', 'Buyer', 'Seller', 'SellDeal', 'BuyDeal', 'Authentication', '$location', '$stateParams',
-	function($scope, $uibModal, Deal, SellOrder, BuyOrder, Buyer, Seller, SellDeal, BuyDeal, Authentication, $location, $stateParams) {
+angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Deal', 'SellOrder', 'BuyOrder', 'Buyer', 'Seller', 'SellDeal', 'BuyDeal', 'Authentication', '$location', '$stateParams', '$pusher', 'Chat',
+	function($scope, $uibModal, Deal, SellOrder, BuyOrder, Buyer, Seller, SellDeal, BuyDeal, Authentication, $location, $stateParams, $pusher, Chat) {
     $scope.findDeals = function(){
       $scope.deals = Deal.query({action:'table', status: 'a'});
     };
@@ -328,7 +328,37 @@ angular.module('deal').controller('AlertModalController', function ($scope, $uib
   };
 });
 
-angular.module('deal').controller('ChatModalController', function ($scope, $uibModalInstance) {
+angular.module('deal').controller('ChatModalController', function ($scope, $uibModalInstance, $pusher, User, Chat) {
+  var client = new Pusher(API_KEY);
+  var pusher = $pusher(client);
+  var my_channel = pusher.subscribe('private-channel.', chat_id);
+  my_channel.bind('MessageReceived',
+    function(data) {
+      // update with new price
+    }
+  );
+
+  $scope.message = {
+    
+
+  };
+
+  $scope.findChatByUser = function(){
+    $chats = Chat.query({ id: $scope.user });
+  };
+
+  $scope.findChatByDeal = function(type_deal) {
+    $chat = Chat.query({ id: type_deal.id });
+  };
+
+  $scope.sendMessage = function(order){
+
+  };
+
+  $scope.findCurrentUser = function() {
+    $scope.user = User.get({ action: current });
+  };
+
   $scope.close = function () {
     $uibModalInstance.dismiss('cancel');
   };
