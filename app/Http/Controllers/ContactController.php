@@ -7,6 +7,7 @@ use App\Model\Contact;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\DB;
 
 class ContactController extends Controller
 {
@@ -127,16 +128,16 @@ class ContactController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Contact $contact)
+    public function destroy($id)
     {
-        if (!$contact) {
+      
+        if (!$id) {
             return response()->json([
                 'message' => 'Not found'
             ] ,404);
         }
 
-        $contact->status = 'x';
-        $contact->save();
+        $contact = DB::table('contacts')->where('id', $id)->update(['status' => 'x']);
 
         return response()->json($contact, 200);
     }

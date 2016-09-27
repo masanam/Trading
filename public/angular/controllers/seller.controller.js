@@ -224,8 +224,7 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
     };
     
     $scope.deleteContact = function(contact){
-      var deletedContact = new Contact(contact);
-      deletedContact.$remove(function (response) {
+      Contact.delete({ id: contact.id }, function (response) {
         $scope.contact = response;
         
         $scope.seller.contact.splice($scope.seller.contact.indexOf(contact), 1);
