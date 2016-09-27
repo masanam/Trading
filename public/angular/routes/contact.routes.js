@@ -12,7 +12,7 @@ angular.module('contact').config(['$stateProvider', '$urlRouterProvider',
       })
       .state('contact.index', {
         url: '',
-        templateUrl: '/angular/views/contact/contact.view.html'
+        templateUrl: '/angular/views/lead/contact/index.view.html'
   	  });
   }
 ]);

@@ -9,7 +9,7 @@ use App\Model\BuyDealApproval;
 use App\Model\Chat;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Auth;
+use Auth;
 
 use App\Http\Requests;
 use Illuminate\Support\Facades\DB;

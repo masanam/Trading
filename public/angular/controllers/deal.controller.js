@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Deal', 'SellOrder', 'BuyOrder', 'Buyer', 'Seller', 'SellDeal', 'BuyDeal', 'Authentication', '$location', '$stateParams',
-	function($scope, $uibModal, Deal, SellOrder, BuyOrder, Buyer, Seller, SellDeal, BuyDeal, Authentication, $location, $stateParams) {
+angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Deal', 'SellOrder', 'BuyOrder', 'Buyer', 'Seller', 'SellDeal', 'BuyDeal', 'Authentication', '$location', '$stateParams', '$pusher', 'Chat',
+	function($scope, $uibModal, Deal, SellOrder, BuyOrder, Buyer, Seller, SellDeal, BuyDeal, Authentication, $location, $stateParams, $pusher, Chat) {
     $scope.findDeals = function(){
       $scope.deals = Deal.query({action:'table', status: 'a'});
     };
@@ -322,25 +322,51 @@ angular.module('deal').controller('AlertModalController', function ($scope, $uib
   };
 });
 
+<<<<<<< HEAD
+angular.module('deal').controller('ChatModalController', function ($scope, $uibModalInstance, $pusher, User, Chat) {
+  var client = new Pusher(API_KEY);
+  var pusher = $pusher(client);
+  var my_channel = pusher.subscribe('private-channel.', chat_id);
+  my_channel.bind('MessageReceived',
+    function(data) {
+      // update with new price
+    }
+  );
+
+  $scope.message = {
+=======
 angular.module('deal').controller('ChatModalController', function ($scope, $uibModalInstance) {
   /*$scope.message = {
     chat_id: ,
+>>>>>>> 391ddb847ec297e85c28ef2b8587a38830ed5f10
     
+
   };
-  
-  $scope.findMessage = function(order){
-    
+
+  $scope.findChatByUser = function(){
+    $chats = Chat.query({ id: $scope.user });
   };
-  
+
+  $scope.findChatByDeal = function(type_deal) {
+    $chat = Chat.query({ id: type_deal.id });
+  };
+
   $scope.sendMessage = function(order){
+<<<<<<< HEAD
+
+  };
+
+  $scope.findCurrentUser = function() {
+    $scope.user = User.get({ action: current });
+=======
     
   };*/
   
   $scope.close = function () {
     $uibModalInstance.dismiss('cancel');
+>>>>>>> 391ddb847ec297e85c28ef2b8587a38830ed5f10
   };
 });
-
 angular.module('deal').controller('CreateSellModalController', function ($scope, $filter, $uibModalInstance, Deal, SellOrder, BuyOrder, Authentication) {
   
   $scope.initializeOrder = function(){
