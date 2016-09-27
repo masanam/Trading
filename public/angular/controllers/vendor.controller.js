@@ -100,8 +100,8 @@ angular.module('vendor').controller('VendorController', ['$scope', '$http', '$st
         $scope.vendorId = $stateParams.id;
       }
 			$scope.vendor = Vendor.get({ id: $scope.vendorId });
-      $scope.lastOrders = Order.query({ action: 'lastOrder', vendorId: $scope.vendorId });
-      $scope.pendingOrders = Order.query({ action: 'pendingOrder', vendorId: $scope.vendorId });
+      //$scope.lastOrders = Order.query({ action: 'lastOrder', vendorId: $scope.vendorId });
+      //$scope.pendingOrders = Order.query({ action: 'pendingOrder', vendorId: $scope.vendorId });
 		};
     
     $scope.goToUpdatePopup = function(id){

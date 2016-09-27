@@ -199,8 +199,8 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
 		}
 
 		$scope.buyer = Buyer.get({ id: $scope.buyerId });
-		$scope.lastOrders = Order.query({ action: 'lastOrder', buyerId: $scope.buyerId });
-		$scope.pendingOrders = Order.query({ action: 'lastOrder' });
+		/*$scope.lastOrders = Order.query({ action: 'lastOrder', buyerId: $scope.buyerId });
+		$scope.pendingOrders = Order.query({ action: 'lastOrder' });*/
 
 		$timeout(function() {
 			$scope.render = true;

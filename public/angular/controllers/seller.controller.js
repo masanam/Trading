@@ -186,7 +186,7 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
 
 		$scope.seller = Seller.get({ id: $scope.sellerId });
 
-		$scope.products = Product.query({ option: 'seller' , sellerId: id });
+		//$scope.products = Product.query({ option: 'seller' , sellerId: id });
 
 		$timeout(function() {
 			$scope.render = true;
