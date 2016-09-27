@@ -319,34 +319,133 @@ angular.module('seller').controller('CreateContactModalController', function ($s
   };
 });
 
-angular.module('seller').controller('CreateProductModalController', function ($scope, $filter, $uibModalInstance, Product, Authentication) {
+angular.module('buyer').controller('CreateProductModalController', function ($scope, $filter, $uibModalInstance, Product, Authentication, Mine) {
   
   $scope.initializeProduct = function(){
+    
+    //$scope.mines = Mine.query();
+    
     $scope.product = {
-      id: undefined,
-      user_id: undefined,
+      //mine_id: undefined,
       buyer_id: undefined,
-      seller_id: undefined,
-      name: undefined,
-      phone: undefined,
-      email: undefined,
-      status: undefined,
+      commercial_term: undefined,
+
+      volume: undefined,
+
+      tm_min: undefined,
+      tm_max: undefined,
+      tm_reject: undefined,
+      tm_bonus: undefined,
+      im_min: undefined,
+      im_max: undefined,
+      im_reject: undefined,
+      im_bonus: undefined,
+      ash_min: undefined,
+      ash_max: undefined,
+      ash_reject: undefined,
+      ash_bonus: undefined,
+      fc_min: undefined,
+      fc_max: undefined,
+      fc_reject: undefined,
+      fc_bonus: undefined,
+      vm_min: undefined,
+      vm_max: undefined,
+      vm_reject: undefined,
+      vm_bonus: undefined,
+      ts_min: undefined,
+      ts_max: undefined,
+      ts_reject: undefined,
+      ts_bonus: undefined,
+      ncv_min: undefined,
+      ncv_max: undefined,
+      ncv_reject: undefined,
+      ncv_bonus: undefined,
+      gcv_arb_min: undefined,
+      gcv_arb_max: undefined,
+      gcv_arb_reject: undefined,
+      gcv_arb_bonus: undefined,
+      gcv_adb_min: undefined,
+      gcv_adb_max: undefined,
+      gcv_adb_reject: undefined,
+      gcv_adb_bonus: undefined,
+      hgi_min: undefined,
+      hgi_max: undefined,
+      hgi_reject: undefined,
+      hgi_bonus: undefined,
+      size_min: undefined,
+      size_max: undefined,
+      size_reject: undefined,
+      size_bonus: undefined,
     };
+    
   };
   
   $scope.createProduct = function(){
     
+    var product = {
+      //mine_id: $scope.product.mine_id,
+      seller_id: $scope.seller.id,
+      commercial_term: $scope.product.commercial_term,
+
+      volume: $scope.product.volume,
+
+      tm_min: $scope.product.tm_min,
+      tm_max: $scope.product.tm_max,
+      tm_reject: $scope.product.tm_reject,
+      tm_bonus: $scope.product.tm_bonus,
+      im_min: $scope.product.im_min,
+      im_max: $scope.product.im_max,
+      im_reject: $scope.product.im_reject,
+      im_bonus: $scope.product.im_bonus,
+      ash_min: $scope.product.ash_min,
+      ash_max: $scope.product.ash_max,
+      ash_reject: $scope.product.ash_reject,
+      ash_bonus: $scope.product.ash_bonus,
+      fc_min: $scope.product.fc_min,
+      fc_max: $scope.product.fc_max,
+      fc_reject: $scope.product.fc_reject,
+      fc_bonus: $scope.product.fc_bonus,
+      vm_min: $scope.product.vm_min,
+      vm_max: $scope.product.vm_max,
+      vm_reject: $scope.product.vm_reject,
+      vm_bonus: $scope.product.vm_bonus,
+      ts_min: $scope.product.ts_min,
+      ts_max: $scope.product.ts_max,
+      ts_reject: $scope.product.ts_reject,
+      ts_bonus: $scope.product.ts_bonus,
+      ncv_min: $scope.product.ncv_min,
+      ncv_max: $scope.product.ncv_max,
+      ncv_reject: $scope.product.ncv_reject,
+      ncv_bonus: $scope.product.ncv_bonus,
+      gcv_arb_min: $scope.product.gcv_arb_min,
+      gcv_arb_max: $scope.product.gcv_arb_max,
+      gcv_arb_reject: $scope.product.gcv_arb_reject,
+      gcv_arb_bonus: $scope.product.gcv_arb_bonus,
+      gcv_adb_min: $scope.product.gcv_adb_min,
+      gcv_adb_max: $scope.product.gcv_adb_max,
+      gcv_adb_reject: $scope.product.gcv_adb_reject,
+      gcv_adb_bonus: $scope.product.gcv_adb_bonus,
+      hgi_min: $scope.product.hgi_min,
+      hgi_max: $scope.product.hgi_max,
+      hgi_reject: $scope.product.hgi_reject,
+      hgi_bonus: $scope.product.hgi_bonus,
+      size_min: $scope.product.size_min,
+      size_max: $scope.product.size_max,
+      size_reject: $scope.product.size_reject,
+      size_bonus: $scope.product.size_bonus,
+    };
+    
     $scope.success = $scope.error = null;
     
-    $scope.product.user_id = Authentication.user.id;
-    $scope.product.seller_id = $scope.seller.id;
+    //$scope.product.user_id = Authentication.user.id;
+    //$scope.product.buyer_id = $scope.buyer.id;
 
-    var product = new Product($scope.product);
+    var product = new Product(product);
     
     product.$save(function (response) {
       $scope.product = response;
       
-      $scope.seller.product.push($scope.product);
+      $scope.buyer.product.push($scope.product);
       $scope.close();
       $scope.success = true;
     }, function (response) {

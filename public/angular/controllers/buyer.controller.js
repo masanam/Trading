@@ -252,7 +252,7 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
       
       var modalInstance = $uibModal.open({
         windowClass: 'xl-modal',
-        templateUrl: './angular/views/lead/product/create-from-seller.view.html',
+        templateUrl: './angular/views/lead/product/create-from-buyer.view.html',
         controller: 'CreateProductModalController',
         scope: $scope,
       });
@@ -275,10 +275,68 @@ angular.module('buyer').controller('CreateProductModalController', function ($sc
   
   $scope.initializeProduct = function(){
     
-    $scope.mines = Mine.query();
+    //$scope.mines = Mine.query();
     
     $scope.product = {
-      mine_id: $scope.product.mine_id,
+      //mine_id: undefined,
+      buyer_id: undefined,
+      commercial_term: undefined,
+
+      volume: undefined,
+
+      tm_min: undefined,
+      tm_max: undefined,
+      tm_reject: undefined,
+      tm_bonus: undefined,
+      im_min: undefined,
+      im_max: undefined,
+      im_reject: undefined,
+      im_bonus: undefined,
+      ash_min: undefined,
+      ash_max: undefined,
+      ash_reject: undefined,
+      ash_bonus: undefined,
+      fc_min: undefined,
+      fc_max: undefined,
+      fc_reject: undefined,
+      fc_bonus: undefined,
+      vm_min: undefined,
+      vm_max: undefined,
+      vm_reject: undefined,
+      vm_bonus: undefined,
+      ts_min: undefined,
+      ts_max: undefined,
+      ts_reject: undefined,
+      ts_bonus: undefined,
+      ncv_min: undefined,
+      ncv_max: undefined,
+      ncv_reject: undefined,
+      ncv_bonus: undefined,
+      gcv_arb_min: undefined,
+      gcv_arb_max: undefined,
+      gcv_arb_reject: undefined,
+      gcv_arb_bonus: undefined,
+      gcv_adb_min: undefined,
+      gcv_adb_max: undefined,
+      gcv_adb_reject: undefined,
+      gcv_adb_bonus: undefined,
+      hgi_min: undefined,
+      hgi_max: undefined,
+      hgi_reject: undefined,
+      hgi_bonus: undefined,
+      size_min: undefined,
+      size_max: undefined,
+      size_reject: undefined,
+      size_bonus: undefined,
+    };
+    
+  };
+  
+  $scope.createProduct = function(){
+    
+    var product = {
+      //mine_id: $scope.product.mine_id,
+      buyer_id: $scope.buyer.id,
       commercial_term: $scope.product.commercial_term,
 
       volume: $scope.product.volume,
@@ -328,16 +386,13 @@ angular.module('buyer').controller('CreateProductModalController', function ($sc
       size_reject: $scope.product.size_reject,
       size_bonus: $scope.product.size_bonus,
     };
-  };
-  
-  $scope.createProduct = function(){
     
     $scope.success = $scope.error = null;
     
     //$scope.product.user_id = Authentication.user.id;
-    $scope.product.buyer_id = $scope.buyer.id;
+    //$scope.product.buyer_id = $scope.buyer.id;
 
-    var product = new Product($scope.product);
+    var product = new Product(product);
     
     product.$save(function (response) {
       $scope.product = response;

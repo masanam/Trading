@@ -58,10 +58,13 @@ class ProductController extends Controller
 
         $product = new Product();
         
-        $product->mine_id= $request->mine_id;
+        //$product->mine_id= $request->mine_id;
         $product->commercial_term= $request->commercial_term;
         
         $product->volume= $request->volume;
+        
+        $product->ready_date = date('Y-m-d');
+        $product->expired_date = date('Y-m-d');
         
         $product->tm_min= $request->tm_min;
         $product->tm_max= $request->tm_max;
@@ -107,6 +110,7 @@ class ProductController extends Controller
         $product->size_max= $request->size_max;
         $product->size_reject= $request->size_reject;
         $product->size_bonus= $request->size_bonus;
+        $product->status = 'a';
         
         $product->save();
 
@@ -149,10 +153,13 @@ class ProductController extends Controller
             ] ,404);
         }
 
-        $product->mine_id= $request->mine_id;
+        //$product->mine_id= $request->mine_id;
         $product->commercial_term= $request->commercial_term;
         
         $product->volume= $request->volume;
+        
+        $product->ready_date = date('Y-m-d');
+        $product->expired_date = date('Y-m-d');
         
         $product->tm_min= $request->tm_min;
         $product->tm_max= $request->tm_max;
