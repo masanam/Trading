@@ -1,8 +1,9 @@
 'use strict';
 
-angular.module('index').controller('DashboardController', ['$scope', '$http', 'NgMap', 'Mine', 'Buyer', 'Order', 'OrderFulfillment', 'News', 'Authentication', 'Activities', 'Deal',
-  function($scope, $http, NgMap, Mine, Buyer, Order, OrderFulfillment, News, Authentication, Activities, Deal) {
+angular.module('index').controller('DashboardController', ['$scope', '$state', '$http', 'NgMap', 'Mine', 'Buyer', 'Order', 'News', 'Authentication', 'Activities', 'Deal',
+  function($scope, $state, $http, NgMap, Mine, Buyer, Order, News, Authentication, Activities, Deal) {
     var heatmap;
+    $state.go('lead.index');
     $scope.Authentication = Authentication;
     $scope.showNews = 5;
     $scope.msg1 = true;
@@ -28,11 +29,6 @@ angular.module('index').controller('DashboardController', ['$scope', '$http', 'N
       $scope.deals = Deal.query;
     };
 
-    $scope.loadTodayOrderFulfillment = function(){
-      $scope.todayOrderFulfillments = OrderFulfillment.query({ option: 'due-today' }, function(){
-        console.log($scope.todayOrderFulfillments);
-      });
-    };
 
     $scope.loadNews = function(){
       $scope.news = News.query();

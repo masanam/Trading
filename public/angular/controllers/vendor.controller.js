@@ -90,7 +90,7 @@ angular.module('vendor').controller('VendorController', ['$scope', '$http', '$st
 		}
 
 		$scope.find = function() {
-			$scope.vendors = Vendor.query();
+			$scope.vendors = Vendor.query({ action: 'search', search: $stateParams.keyword });
 		};
 
 		$scope.findOne = function(id) {

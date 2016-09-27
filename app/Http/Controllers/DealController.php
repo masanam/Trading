@@ -53,7 +53,7 @@ class DealController extends Controller
           //->leftJoin('sell_deal_approval', 'sell_deal.id', '=', 'sell_deal_approval.sell_deal_id')
           //->leftJoin('sell_order_pricing', 'sell_order.id', '=', 'sell_order_pricing.sell_order_id')
           ->leftJoin('users', 'users.id', '=', 'deals.user_id')
-          ->where('deals.status', $status)
+          ->where([['deals.status', $status],['buy_deal.status', '!=', 'x'], ['sell_deal.status', '!=', 'x']])
           ->groupBy(
             'deals.id', 
             'users.name', 
@@ -122,7 +122,7 @@ class DealController extends Controller
           //->leftJoin('sell_deal_approval', 'sell_deal.id', '=', 'sell_deal_approval.sell_deal_id')
           //->leftJoin('sell_order_pricing', 'sell_order.id', '=', 'sell_order_pricing.sell_order_id')
           ->leftJoin('users', 'users.id', '=', 'deals.user_id')
-          ->where('deals.id', $id)
+          ->where([['deals.id', $id, ],['buy_deal.status', '!=', 'x'], ['sell_deal.status', '!=', 'x']])
           ->groupBy(
             'deals.id', 
             'users.name', 
@@ -202,7 +202,7 @@ class DealController extends Controller
      */
     public function changeStatus(Deal $deal , $status)
     {
-        if (!$id) {
+        if (!$deal) {
             return response()->json([
                 'message' => 'Not found'
             ] ,404);

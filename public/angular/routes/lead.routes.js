@@ -8,36 +8,41 @@ angular.module('lead').config(['$stateProvider', '$urlRouterProvider',
       .state('lead', {
         url: '/lead',
         abstract: true,
-        template: '<ui-view>'
+        template: '<ui-view/>'
       })
       .state('lead.index', {
         url: '',
         templateUrl: '/angular/views/lead/index.view.html',
         roles: ['user', 'trader']
   	  })
+
+      //browse page
   	  .state('lead.buyer', {
-        url: '/buyer',
-        templateUrl: '/angular/views/lead/buyer.view.html',
+        url: '/buyer?keyword',
+        templateUrl: '/angular/views/lead/buyer/index.view.html',
         roles: ['user', 'trader']
       })
       .state('lead.seller', {
-        url: '/seller',
-        templateUrl: '/angular/views/lead/seller.view.html',
-        roles: ['user', 'trader']
-      })      
-      .state('lead.search', {
-        url: '/search/{searchType}/{keyword}',
-        templateUrl: '/angular/views/lead/search.view.html',
+        url: '/seller?keyword',
+        templateUrl: '/angular/views/lead/seller/index.view.html',
         roles: ['user', 'trader']
       })
       .state('lead.vendor', {
-        url: '/vendor',
-        templateUrl: '/angular/views/lead/vendor.view.html',
+        url: '/vendor?keyword',
+        templateUrl: '/angular/views/lead/vendor/index.view.html',
         roles: ['user', 'trader']
       })
       .state('lead.contact', {
-        url: '/contact',
-        templateUrl: '/angular/views/lead/contact.view.html',
+        url: '/contact?keyword',
+        templateUrl: '/angular/views/lead/contact/index.view.html',
+        roles: ['user', 'trader']
+      })
+
+
+
+      .state('lead.search', {
+        url: '/search/{searchType}/{keyword}',
+        templateUrl: '/angular/views/lead/search.view.html',
         roles: ['user', 'trader']
       })
   	  .state('lead.view', {

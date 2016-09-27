@@ -160,7 +160,6 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
             sellDeal = new SellDeal(sellDeal);
             
             sellDeal.$save(function (response) {
-              console.log('sell');
             }, function(response){
               $scope.error = response.data.message;
             });
@@ -178,7 +177,6 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
             buyDeal = new BuyDeal(buyDeal);
             
             buyDeal.$save(function (response) {
-              console.log('buy');
             }, function(response){
               $scope.error = response.data.message;
             });
@@ -191,7 +189,6 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
         });
       }else{
         $scope.error = "You need at least one buy order and one sell order!";
-        console.log($scope.error);
         var modalInstance = $uibModal.open({
           windowClass: 'xl-modal',
           templateUrl: 'alertModal.html',
@@ -242,7 +239,6 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
             sellDeal = new SellDeal(sellDeal);
             
             sellDeal.$save(function (response) {
-              console.log('sell');
             }, function(response){
               $scope.error = response.data.message;
             });
@@ -260,7 +256,6 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
             buyDeal = new BuyDeal(buyDeal);
             
             buyDeal.$save(function (response) {
-              console.log('buy');
             }, function(response){
               $scope.error = response.data.message;
             });
@@ -273,7 +268,6 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
         });*/
       }else{
         $scope.error = "You need at least one buy order and one sell order!";
-        console.log($scope.error);
         var modalInstance = $uibModal.open({
           windowClass: 'xl-modal',
           templateUrl: 'alertModal.html',
@@ -287,7 +281,7 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
     $scope.finishDeal = function () {
       var deal = $scope.deal;
       
-      Deal.get({ action: 'f', id: deal.id }, function(response) {
+      Deal.get({ action: 'status', id: deal.id, status: 'f' }, function(response) {
 				$location.url('/deal');
 			}, function(err) {
 				console.log(err);
@@ -304,7 +298,7 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
     $scope.cancelDeal = function () {
       var deal = $scope.deal;
       
-      Deal.get({ action: 'x', id: deal.id }, function(response) {
+      Deal.get({ action: 'status', id: deal.id, status: 'x' }, function(response) {
 				$location.url('/deal');
 			}, function(err) {
 				console.log(err);
@@ -313,7 +307,7 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
     
     $scope.openChatModal = function () {
       var modalInstance = $uibModal.open({
-        //windowClass: 'xl-modal',
+        windowClass: 'xl-modal',
         templateUrl: 'chatModal.html',
         controller: 'ChatModalController',
         scope: $scope,
@@ -358,12 +352,7 @@ angular.module('deal').controller('ChatModalController', function ($scope, $uibM
   $scope.findCurrentUser = function() {
     $scope.user = User.get({ action: current });
   };
-
-  $scope.close = function () {
-    $uibModalInstance.dismiss('cancel');
-  };
 });
-
 angular.module('deal').controller('CreateSellModalController', function ($scope, $filter, $uibModalInstance, Deal, SellOrder, BuyOrder, Authentication) {
   
   $scope.initializeOrder = function(){
@@ -553,8 +542,6 @@ angular.module('deal').controller('CreateBuyModalController', function ($scope, 
     }, function (response) {
       $scope.error = response.data.message;
     });
-    
-    //console.log($scope.buyers[].company_name);
     
   };
   

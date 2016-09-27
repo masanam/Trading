@@ -1,6 +1,10 @@
-<div ng-controller="BuyerController">
-  <h1>Buyers</h1>
-  <a class="btn btn-primary" data-toggle="modal" data-target="#createBuyerModal">Create New</a>
+<section>
+<div class="col-lg-2">
+  <section ng-include="'./angular/views/lead/side-menu.view.html'"></section>
+</div>
+<div class="col-lg-10" ng-controller="VendorController">
+  <h1>Vendors</h1>
+  <a class="btn btn-primary" data-toggle="modal" data-target="#createVendorModal">Create New</a>
   <br/>
   <br/>
 	<table datatable="ng" class="row-border hover" ng-init="find()">
@@ -8,71 +12,48 @@
         <tr>
             <th>#</th>
             <th>Company</th>
+            <th>Industry</th>
             <th>Phone</th>
             <th>Email</th>
             <!--th>Latitude</th>
             <th>Longitude</th-->
-            <th>Last Buy Order Date</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="(idx, buyer) in buyers">
-            <td>{{ buyer.id }}</td>
+        <tr ng-repeat="(idx, vendor) in vendors">
+            <td>{{ vendor.id }}</td>
             <td>
-              {{ buyer.company_name }}
-            </td>
-            <td>{{ buyer.phone }}</td>
-            <td>{{ buyer.email }}</td>
-            <!--td>{{ buyer.latitude }}</td>
-            <td>{{ buyer.longitude }}</td-->
-            <td>
-              <span ng-if="buyer.last_order">{{ buyer.last_order | convertToDate | date : 'd MMMM yy' }}</span>
-              <span ng-if="!buyer.last_order">N/A</span>
+              {{ vendor.company_name }}
             </td>
             <td>
-              <a href="#" data-toggle="modal" data-target="#buyerModal" ng-click="findOne(buyer.id)"><i class="glyphicon glyphicon-info-sign"></i></a>
-              <a href="#" data-toggle="modal" data-target="#createDemandModal" ng-click=findOne(buyer.id)><i class="glyphicon glyphicon-plus"></i></a>
-              <a href="#" data-toggle="modal" data-target="#updateBuyerModal" ng-click="findOne(buyer.id)"><i class="glyphicon glyphicon-pencil"></i></a>
-              <a href="#" ng-click="deactivate(buyer)"><i class="glyphicon glyphicon-trash"></i></a>
+              {{ vendor.industry }}
+            </td>
+            <td>{{ vendor.phone }}</td>
+            <td>{{ vendor.email }}</td>
+            <!--td>{{ vendor.latitude }}</td>
+            <td>{{ vendor.longitude }}</td-->
+            <td>
+              <a href="#" data-toggle="modal" data-target="#vendorModal" ng-click="findOne(vendor.id)"><i class="glyphicon glyphicon-info-sign"></i></a>
+              <a href="#" data-toggle="modal" data-target="#updateVendorModal" ng-click="findOne(vendor.id)"><i class="glyphicon glyphicon-pencil"></i></a>
+              <a href="#" ng-click="deactivate(vendor)"><i class="glyphicon glyphicon-trash"></i></a>
             </td>
         </tr>
     </tbody>
 	</table>
   
-  <div id="createBuyerModal" class="modal fade" role="dialog">
+  <div id="createVendorModal" class="modal fade" role="dialog">
     <!--div class="modal-dialog"-->
     <div>
       <!-- Modal content-->
       <div class="modal-content container">
         <div class="modal-header row">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Create Buyer</h4>
+          <h4 class="modal-title">Create Vendor</h4>
         </div>
         <div class="modal-body row">
           <form role="form" ng-submit="create()">
-            <div ng-include="'/angular/views/buyer/form.view.html'"></div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div id="createDemandModal" class="modal fade" role="dialog">
-    <!--div class="modal-dialog"-->
-    <div>
-      <!-- Modal content-->
-      <div class="modal-content container">
-        <div class="modal-header row">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Create Buy Order</h4>
-        </div>
-        <div class="modal-body row">
-          <form role="form">
-            <div ng-include="'/angular/views/buyer/demand-form.view.html'"></div>
+            <div ng-include="'/angular/views/vendor/form.view.html'"></div>
           </form>
         </div>
         <div class="modal-footer">
@@ -82,18 +63,18 @@
     </div>
   </div>
   
-  <div id="updateBuyerModal" class="modal fade" role="dialog">
+  <div id="updateVendorModal" class="modal fade" role="dialog">
     <!--div class="modal-dialog"-->
     <div>
       <!-- Modal content-->
       <div class="modal-content container">
         <div class="modal-header row">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Update a Buyer</h4>
+          <h4 class="modal-title">Update a Vendor</h4>
         </div>
         <div class="modal-body row">
           <form role="form" ng-submit="update()">
-            <div ng-include="'/angular/views/buyer/form.view.html'"></div>
+            <div ng-include="'/angular/views/vendor/form.view.html'"></div>
           </form>
         </div>
         <div class="modal-footer">
@@ -103,27 +84,24 @@
     </div>
   </div>
   
-
-
-
-  <div id="buyerModal" class="modal fade" role="dialog">
+  <div id="vendorModal" class="modal fade" role="dialog">
     <!--div class="modal-dialog"-->
     <div>
       <!-- Modal content-->
       <div class="modal-content container">
         <div class="modal-header row">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Buyer Profile</h4>
+          <h4 class="modal-title">Vendor Profile</h4>
         </div>
 
         <div class="modal-body row">
-          <h1>{{buyer.company_name}}</h1>
+          <h1>{{vendor.company_name}}</h1>
           <hr class="divider" />
 
-          <button type="button" class="btn btn-primary" ng-click="goToUpdatePopup(buyer.id)">
+          <button type="button" class="btn btn-primary" ng-click="goToUpdatePopup(vendor.id)">
             <i class="glyphicon glyphicon-pencil"></i> Update
           </button>
-          <button type="button" class="btn btn-success" ng-click="goToPendingOrders(buyer.id)">
+          <button type="button" class="btn btn-success" ng-click="goToPendingOrders(vendor.id)">
             <i class="glyphicon glyphicon-plus"></i> Order
           </button>
           <button type="button" class="btn btn-info" ng-click="goToContact()">
@@ -134,22 +112,22 @@
 
           <div class="row with-divider">
             <div class="col-md-6">
-              <ng-map ng-if="render" center="{{buyer.latitude}}, {{buyer.longitude}}">
-                <marker position="{{buyer.latitude}}, {{buyer.longitude}}" title="This is the buyer headquarter"></marker>
+              <ng-map ng-if="render" center="{{vendor.latitude}}, {{vendor.longitude}}">
+                <marker position="{{vendor.latitude}}, {{vendor.longitude}}" title="This is the vendor headquarter"></marker>
               </ng-map>
             </div>
 
             <div class="col-md-6">
               <h3>Information</h3>
-              <p>{{ buyer.headquarter_location }}</p>
-              <p>{{ buyer.phone }}</p>
-              <p>{{ buyer.email }}</p>
-              <p ng-if="buyer.status == 'a'">Active</p>
-              <p ng-if="buyer.status == 'x'">Deactivated</p>
+              <p>{{ vendor.headquarter_location }}</p>
+              <p>{{ vendor.phone }}</p>
+              <p>{{ vendor.email }}</p>
+              <p ng-if="vendor.status == 'a'">Active</p>
+              <p ng-if="vendor.status == 'x'">Deactivated</p>
 
               <h3>Contact Points</h3>
               <ul class="list-group">
-                <li class="list-group-item" ng-repeat="contact in buyer.user">
+                <li class="list-group-item" ng-repeat="contact in vendor.user">
                   {{ contact.name }}
                   <i class="glyphicon glyphicon-envelope" style="margin-left: 20px;"></i> {{ contact.email }}
                   <i class="glyphicon glyphicon-earphone" style="margin-left: 20px;"></i> {{ contact.phone }}
@@ -159,7 +137,7 @@
           </div>
 
           <div class="row with-divider">
-            <div class="col-md-6">
+            <!--div class="col-md-6">
               <h4>Pending Orders</h4>
               <hr class="divider" />
               <table class="table table-striped">
@@ -177,20 +155,20 @@
                           {{ pendingOrder.created_at | date:'medium' }}
                         </td>
                         <td>
-                          {{ pendingOrder.volume | number }}
+                          {{ pendingOrder.volume }}
                         </td>
                     </tr>
                     <tr ng-hide="pendingOrders.length > 0">
                       <td colspan="3">There is no pending orders.</td>
                     </tr>
-                    <!--tr>
-                      <td colspan="3"><a class="btn btn-block btn-blue" ng-click="goToPendingOrders(buyer.id)">View More</a></td>
-                    </tr-->
+                    <tr>
+                      <td colspan="3"><a class="btn btn-block btn-blue" ng-click="goToPendingOrders(vendor.id)">View More</a></td>
+                    </tr>
                 </tbody>
               </table>
             </div>
             <div class="col-md-6">
-              <h4>Previous Orders</h4>
+              <h4>Last Order History</h4>
               <hr class="divider" />
               <table class="table table-striped">
                 <thead>
@@ -207,23 +185,23 @@
                           {{ lastOrder.created_at | date:'medium' }}
                         </td>
                         <td>
-                          {{ lastOrder.volume | number }}
+                          {{ lastOrder.volume }}
                         </td>
                     </tr>
                     <tr ng-hide="lastOrders.length > 0">
-                      <td colspan="3">There is no previous orders.</td>
+                      <td colspan="3">There is no last orders.</td>
                     </tr>
-                    <!--tr>
-                      <td colspan="3"><a class="btn btn-block btn-blue" ng-click="goToLastOrders(buyer.id)">View More</a></td>
-                    </tr-->
+                    <tr>
+                      <td colspan="3"><a class="btn btn-block btn-blue" ng-click="goToLastOrders(vendor.id)">View More</a></td>
+                    </tr>
                 </tbody>
               </table>
-            </div>
+            </div-->
           </div>
           <div class="row">
             <div class="col-md-3" ng-repeat="(idx, lastOrder) in Orders">
-              <ng-map center="{{buyer.longitude}}, {{buyer.latitude}}">
-                <marker center="{{buyer.longitude}}, {{buyer.latitude}}" title="This is the buyer headquarter"></marker>
+              <ng-map center="{{vendor.longitude}}, {{vendor.latitude}}">
+                <marker center="{{vendor.longitude}}, {{vendor.latitude}}" title="This is the vendor headquarter"></marker>
               </ng-map>
             </div>
           </div>
@@ -235,3 +213,4 @@
     </div>
   </div>
 </div>
+</section>

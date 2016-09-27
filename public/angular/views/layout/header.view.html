@@ -16,33 +16,12 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li><a ui-sref="home">Home</a></li>
         <li uib-dropdown>
           <a ui-sref="lead.index">
             Leads
           </a>
         </li>
-        <li uib-dropdown>
-          <a href="#" uib-dropdown-toggle aria-haspopup="true" aria-expanded="false">
-            Order <span class="caret"></span>
-          </a>
-          <ul uib-dropdown-menu>
-            <li><a ui-sref="order.index">Buy Order</a></li>
-            <li><a ui-sref="product.index">Sell Order</a></li>
-          </ul>
-        </li>
         <li><a ui-sref="deal.index">Deal</a></li>
-        <li uib-dropdown>
-          <a href="#" uib-dropdown-toggle aria-haspopup="true" aria-expanded="false">
-            History <span class="caret"></span>
-          </a>
-          <ul uib-dropdown-menu>
-            <li><a ui-sref="order.history">Buy Order</a></li>
-            <li><a ui-sref="product.history">Sell Order</a></li>
-            <li><a ui-sref="deal.history">Deals</a></li>
-            <li><a ui-sref="analytics">Analytics</a></li>
-          </ul>
-        </li>
       </ul>
 
       <ul class="nav navbar-nav navbar-right" ng-controller="AuthController">

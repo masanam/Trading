@@ -51,15 +51,19 @@
       <div class="row" style="background:#eee; padding: 10px; margin-left:10px;">
         <h3>Contacts</h3>
 
-        <button type="button" class="btn btn-info" ng-click="goToContact()">
+        <button type="button" class="btn btn-info" ng-click="addNew()">
           <i class="glyphicon glyphicon-plus"></i> Add New Contact
         </button><br><br>
 
         <ul class="list-group">
           <li class="list-group-item" ng-repeat="contact in lead.contact">
             {{ contact.name }}
-            <i class="glyphicon glyphicon-envelope" style="margin-left: 20px;"></i> {{ contact.email }}
-            <i class="glyphicon glyphicon-earphone" style="margin-left: 20px;"></i> {{ contact.phone }}
+            <i class="glyphicon glyphicon-envelope" style="margin-left: 50px;"></i> {{ contact.email }}
+            <i class="glyphicon glyphicon-earphone" style="margin-left: 50px;"></i> {{ contact.phone }}
+
+            <span class="pull-right">
+              <a></a>
+            </span>
           </li>
         </ul>
       </div>

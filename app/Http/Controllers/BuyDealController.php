@@ -122,7 +122,7 @@ class BuyDealController extends Controller
     
     // Get Buy Deal by Deal ID
     public function getByDeal($dealId) {
-        $buy_deal = BuyDeal::with('BuyOrder', 'BuyOrder.Buyer')->where('deal_id', $dealId)
+        $buy_deal = BuyDeal::with('BuyOrder', 'BuyOrder.Buyer')->where([['deal_id', $dealId], ['status', 'a']])
                ->orderBy('id', 'asc')
                ->get();
 

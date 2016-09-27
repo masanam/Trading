@@ -1,0 +1,21 @@
+<section ng-controller="LeadController" ng-init="total()">
+	<div ui-sref="lead.buyer">
+		<h2>Buyers</h2>
+		<h4>{{ totalBuyer.count }} Registered</h4>
+	</div>
+
+	<div style="margin-top:40px;" ui-sref="lead.seller">
+		<h2>Sellers</h2>
+		<h4>{{ totalSeller.count }} Registered</h4>
+	</div>
+
+	<div style="margin-top:40px;" ui-sref="lead.vendor">
+		<h2>Vendors</h2>
+		<h4>{{ totalVendor.count }} Registered</h4>
+	</div>
+
+	<div style="margin-top:40px;" ui-sref="lead.contact">
+		<h2>Contact</h2>			
+		<h4>{{ totalContact.count }} Registered</h4>
+	</div>
+</section>
