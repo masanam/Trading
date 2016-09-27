@@ -66,7 +66,27 @@
             </span>
           </li>
         </ul>
+        
       </div>
+        
+        <div class="row" style="background:#eee; padding: 10px; margin-left:10px;">
+          <h3>Mines</h3>
+
+          <button type="button" class="btn btn-info" ng-click="addNew()">
+            <i class="glyphicon glyphicon-plus"></i> Add New Mine
+          </button><br><br>
+
+          <ul class="list-group">
+            <li class="list-group-item" ng-repeat="mine in seller.mine">
+              {{ mine.mine_name }}
+              <i class="glyphicon glyphicon-map-marker" style="margin-left: 50px;"></i> {{ mine.port_name }}
+              <i class="glyphicon glyphicon-scale" style="margin-left: 50px;"></i> {{ mine.mineable_reserve }}
+              <span class="pull-right">
+                <a></a>
+              </span>
+            </li>
+          </ul>
+        </div>
 
 
       <div class="row" style="background:#eee; padding: 10px; margin-left:10px; margin-top:10px;">
@@ -116,6 +136,5 @@
         -- FEATURES COMING SOON --
       </div>
 
-    </div>
   </div>
 </div>

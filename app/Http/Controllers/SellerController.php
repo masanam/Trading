@@ -91,14 +91,23 @@ class SellerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Seller $seller)
+    public function show($id)
     {
-        if($seller->status == 'a') {
-            return response()->json($seller, 200);
+        $seller = Seller::with(
+                            'Mine', 'Contact', 'User'
+                             )->find($id);
+
+        if($seller) {
+            if($seller->status == 'a') {
+                return response()->json($seller, 200);
+            } else {
+                return response()->json(['message' => 'deactivated record'], 404);
+            }
         } else {
-            return response()->json(['message' => 'deactivated record'], 404);
+            return response()->json('Not found', 404);
         }
     }
+
 
     /**
      * Update the specified resource in storage.
