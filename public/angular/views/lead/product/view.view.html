@@ -1,36 +1,20 @@
-<div class="modal-header">
-  <button type="button" class="close" ng-click="close()">&times;</button>
-  <h4 class="modal-title">Product Profile</h4>
-</div>
-<div class="modal-body">
+<div ng-controller="ProductController" ng-init="findOne()">
+  <!-- HEADER -->
+  <div class="row submenu-header">
+    <div class="submenu-header-item">
+      <button type="button" class="btn btn-default" ui-sref="lead.product">
+        <i class="glyphicon glyphicon-arrow-left"></i> Back
+      </button>
+    </div>
+    <div class="submenu-header-item">
+      <h4>{{ $stateParams.type }} Profile</h4>
+    </div>
+  </div>
   <div class="row with-divider">
     <div class="col-lg-4">
       <h2>{{ product.commercial_term }}</h2>
       <p>{{ product.mine.mine_name }}</p>
       <p>{{ product.mine.seller.company_name }}</p>
-    </div>
-
-    <div class="col-lg-2">
-      <h3>{{ product.volume | number }}</h3>
-      <p>tones</p>
-    </div>
-
-    <div class="col-lg-2">
-      <h3>{{ product.production[0].created_at | convertToDate | date : 'd MMMM yy' }}</h3>
-      <p>Last Production</p>
-    </div>
-    
-    <div class="col-lg-4 btn-group-vertical" style="padding-top:20px;">
-      <button class="btn btn-primary"  ng-click="close()" ui-sref="product.add({ id: product.id })">
-        <i class="glyphicon glyphicon-plus"></i> Add Production
-      </button>
-
-      <button class="btn btn-default"  ng-click="close()" ui-sref="product.opname({ id: product.id })">
-        <i class="glyphicon glyphicon-refresh"></i> Stock Opname
-      </button>
-      <button class="btn btn-default"  ng-click="close()" ui-sref="product.update({ id: product.id })">
-        <i class="glyphicon glyphicon-pencil"></i> Edit Product
-      </button>
     </div>
   </div>
 
@@ -83,26 +67,6 @@
           <span class="pull-right">{{ product.size_min }} - {{ product.size_max }} mm</span>
         </li>
       </ul>
-    </div>
-    
-    <div class="col-lg-8">
-      <h4>Previous Production</h4>
-      <table class="table table-bproducted">
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Volume</th>
-            <th>Desc</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr ng-repeat="production in product.production">
-            <td>{{ production.created_at | date }}</td>
-            <td>{{ production.volume | number }} tonnes</td>
-            <td>{{ production.description }}</td>
-          </tr>
-        </tbody>
-      </table>  
     </div>
   </div>
 </div>

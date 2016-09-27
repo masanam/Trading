@@ -9,8 +9,8 @@ angular.module('product').controller('ProductController', ['$scope', '$state', '
       $scope.products = Product.query();
     };
 
-    $scope.findOne = function (id) {
-      $scope.product = Product.get({ id: id });
+    $scope.findOne = function () {
+      $scope.product = Product.get({ id: $stateParams.id });
     };
 
     $scope.options = DTOptionsBuilder.newOptions().withPaginationType('full_numbers').withDisplayLength();
