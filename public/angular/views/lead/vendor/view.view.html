@@ -41,14 +41,14 @@
           <tr ng-if="vendor.status == 'x'"><td>Status:</td> <td>Deactivated</td></tr>
         </table>
 
-        <ng-map center="{{vendor.longitude}}, {{vendor.latitude}}">
+        <!--ng-map center="{{vendor.longitude}}, {{vendor.latitude}}">
           <marker center="{{vendor.longitude}}, {{vendor.latitude}}"></marker>
-        </ng-map>
+        </ng-map-->
       </div>
     </div>
 
     <div class="col-lg-8">
-      <div class="row" style="background:#eee; padding: 10px; margin-left:10px;">
+      <!--div class="row" style="background:#eee; padding: 10px; margin-left:10px;">
         <h3>Contacts</h3>
 
         <button type="button" class="btn btn-info" ng-click="addNew()">
@@ -66,15 +66,14 @@
             </span>
           </li>
         </ul>
-      </div>
-
-
+      </div-->
+      
       <div class="row" style="background:#eee; padding: 10px; margin-left:10px; margin-top:10px;">
-        <h3>Insights</h3>
-        -- FEATURES COMING SOON --
-      </div>
+      <h3>Insights</h3>
+      -- FEATURES COMING SOON --
+    </div>
 
-      <div class="row" style="background:#eee; padding: 10px; margin-left:10px; margin-top:10px;">
+      <!--div class="row" style="background:#eee; padding: 10px; margin-left:10px; margin-top:10px;">
         <h3>Order History</h3>
         <button type="button" class="btn btn-success" ng-click="goToPendingOrders(vendor.id)">
           <i class="glyphicon glyphicon-plus"></i> Add New Order
@@ -101,18 +100,19 @@
               <tr ng-hide="lastOrders.length > 0">
                 <td colspan="3">There is no previous orders.</td>
               </tr>
-              <!--tr>
+              <tr>
                 <td colspan="3"><a class="btn btn-block btn-blue" ng-click="goToLastOrders(vendor.id)">View More</a></td>
-              </tr-->
+              </tr>
           </tbody>
         </table>
-      </div>
+      </div-->
 
       <div class="row" style="background:#eee; padding: 10px; margin-left:10px; margin-top:10px;">
         <h3>Notes</h3>
         -- FEATURES COMING SOON --
       </div>
-
+    
     </div>
+
   </div>
 </div>

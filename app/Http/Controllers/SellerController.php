@@ -94,7 +94,7 @@ class SellerController extends Controller
     public function show($id)
     {
         $seller = Seller::with(
-                            'Mine', 'Contact', 'User'
+                            'Mine', 'Contact', 'User', 'Product'
                              )->find($id);
 
         if($seller) {
