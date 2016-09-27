@@ -67,9 +67,9 @@ Route::group(['middleware' => ['cors']], function() {
     ]]);
 
     Route::get('vendor/total', 'VendorController@getTotalVendor');
-    Route::get('vendor/{search?}', 'VendorController@index');
+    Route::get('vendor/search/{search?}', 'VendorController@search');
     Route::resource('vendor', 'VendorController', ['except' => [
-        'index', 'create', 'edit'
+        'create', 'edit'
     ]]);
     
     Route::delete('buy_deal/{dealId}', 'BuyDealController@destroyByDeal');
