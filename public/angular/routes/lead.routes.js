@@ -45,24 +45,29 @@ angular.module('lead').config(['$stateProvider', '$urlRouterProvider',
         templateUrl: '/angular/views/lead/search.view.html',
         roles: ['user', 'trader']
       })
-  	  .state('lead.view', {
+  	  /*.state('lead.view', {
         url: '/{type}/{id}',
         templateUrl: '/angular/views/lead/view-lead.view.html',
+        roles: ['user', 'trader']
+      })*/
+      .state('lead.view-buyer', {
+        url: '/buyer/{id}',
+        templateUrl: '/angular/views/lead/buyer/view.view.html',
         roles: ['user', 'trader']
       })
       .state('lead.view-seller', {
         url: '/seller/{id}',
-        templateUrl: '/angular/views/lead/view-seller.view.html',
+        templateUrl: '/angular/views/lead/seller/view.view.html',
         roles: ['user', 'trader']
       })
       .state('lead.view-vendor', {
         url: '/vendor/{id}',
-        templateUrl: '/angular/views/lead/view-vendor.view.html',
+        templateUrl: '/angular/views/lead/vendor/view.view.html',
         roles: ['user', 'trader']
       })
       .state('lead.view-contact', {
         url: '/contact/{id}',
-        templateUrl: '/angular/views/lead/view-contact.view.html',
+        templateUrl: '/angular/views/lead/contact/view.view.html',
         roles: ['user']
       })
       .state('lead.create', {
