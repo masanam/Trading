@@ -67,6 +67,34 @@
           </li>
         </ul>
       </div>
+      
+      <div class="row" style="background:#eee; padding: 10px; margin-left:10px;">
+        <h3>Products</h3>
+
+        <button type="button" class="btn btn-info" ng-click="addProduct()">
+          <i class="glyphicon glyphicon-plus"></i> Add New Product
+        </button><br><br>
+
+        <ul class="list-group">
+          <li class="list-group-item" ng-repeat="product in buyer.product">
+            Comm Terms
+            <i class="glyphicon glyphicon-map-marker" style="margin-left: 50px;"></i> Volume
+            <i class="glyphicon glyphicon-scale" style="margin-left: 50px;"></i> GCV ADB
+            <i class="glyphicon glyphicon-scale" style="margin-left: 50px;"></i> GCV ARB
+            <i class="glyphicon glyphicon-scale" style="margin-left: 50px;"></i> NCV
+          </li>
+          <li class="list-group-item" ng-repeat="product in buyer.product">
+            {{ product.commercial_term }}
+            <i class="glyphicon glyphicon-map-marker" style="margin-left: 50px;"></i> {{ product.volume }}
+            <i class="glyphicon glyphicon-scale" style="margin-left: 50px;"></i> {{ product.gcv_adb_min }} - {{ product.gcv_adb_max }}
+            <i class="glyphicon glyphicon-scale" style="margin-left: 50px;"></i> {{ product.gcv_arb_min }} - {{ product.gcv_arb_max }}
+            <i class="glyphicon glyphicon-scale" style="margin-left: 50px;"></i> {{ product.ncv_min }} - {{ product.ncv_max }}
+            <span class="pull-right">
+              <a href="#" ng-click="deleteProduct(product)"><i class="glyphicon glyphicon-remove"></i></a>
+            </span>
+          </li>
+        </ul>
+      </div>
 
 
       <div class="row" style="background:#eee; padding: 10px; margin-left:10px; margin-top:10px;">
