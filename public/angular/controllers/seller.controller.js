@@ -170,7 +170,7 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
 		};
 
 		$scope.find = function() {
-			$scope.sellers = Seller.query();
+			$scope.sellers = Seller.query({ action: 'search', search: $stateParams.keyword });
 		};
     
     $scope.findProduction = function(id) {

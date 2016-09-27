@@ -1,4 +1,8 @@
-<div ng-controller="SellerController">
+<section>
+<div class="col-lg-2">
+  <section ng-include="'./angular/views/lead/side-menu.view.html'"></section>
+</div>
+<div class="col-lg-10" ng-controller="SellerController">
   <h1>Sellers</h1>
 	<a class="btn btn-primary" data-toggle="modal" data-target="#createSellerModal">Create New</a>
   <br/>
@@ -258,3 +262,4 @@
     </div>
   </div>
 </div>
+</section>

@@ -8,7 +8,7 @@ angular.module('lead').config(['$stateProvider', '$urlRouterProvider',
       .state('lead', {
         url: '/lead',
         abstract: true,
-        templateUrl: '/angular/views/lead/layout.view.html'
+        template: '<ui-view/>'
       })
       .state('lead.index', {
         url: '',
@@ -18,22 +18,22 @@ angular.module('lead').config(['$stateProvider', '$urlRouterProvider',
 
       //browse page
   	  .state('lead.buyer', {
-        url: '/buyer',
+        url: '/buyer?keyword',
         templateUrl: '/angular/views/lead/buyer/index.view.html',
         roles: ['user', 'trader']
       })
       .state('lead.seller', {
-        url: '/seller',
+        url: '/seller?keyword',
         templateUrl: '/angular/views/lead/seller/index.view.html',
         roles: ['user', 'trader']
       })
       .state('lead.vendor', {
-        url: '/vendor',
+        url: '/vendor?keyword',
         templateUrl: '/angular/views/lead/vendor/index.view.html',
         roles: ['user', 'trader']
       })
       .state('lead.contact', {
-        url: '/contact',
+        url: '/contact?keyword',
         templateUrl: '/angular/views/lead/contact/index.view.html',
         roles: ['user', 'trader']
       })

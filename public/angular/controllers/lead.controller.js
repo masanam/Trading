@@ -2,7 +2,6 @@
 
 angular.module('lead').controller('LeadController', ['$scope', '$state', '$http', '$stateParams', 'Buyer', 'Seller', 'Vendor', 'Contact', 'Lead',  
 	function($scope, $state, $http, $stateParams, Buyer, Seller, Vendor, Contact, Lead) {
-		$scope.keyword = '';
 		$scope.searchType = 'buyer';
 		$scope.leads = [];
 		$scope.lead = {};		
@@ -11,9 +10,9 @@ angular.module('lead').controller('LeadController', ['$scope', '$state', '$http'
 
 		$scope.search = function() {
 			switch($scope.searchType){
-				case 'seller' : $state.go('lead.seller', { keyword: $scope.keyword });
-				case 'vendor' : $state.go('lead.vendor', { keyword: $scope.keyword });
-				case 'contact' : $state.go('lead.contact', { keyword: $scope.keyword });
+				case 'seller' : $state.go('lead.seller', { keyword: $scope.keyword }); break;
+				case 'vendor' : $state.go('lead.vendor', { keyword: $scope.keyword }); break;
+				case 'contact' : $state.go('lead.contact', { keyword: $scope.keyword }); break;
 				default : $state.go('lead.buyer', { keyword: $scope.keyword });
 			}
 		};
