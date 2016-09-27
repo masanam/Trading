@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stateParams', '$state', '$timeout', 'Buyer', 'Order', '$uibModal', 
-	function($scope, $http, $stateParams, $state, $timeout, Buyer, Order, $uibModal) {
+angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stateParams', '$state', '$timeout', 'Buyer', 'Order', '$uibModal', 'Contact',
+	function($scope, $http, $stateParams, $state, $timeout, Buyer, Order, $uibModal, Contact) {
 		$scope.buyers = [];
 		$scope.buyer = {};
 		$scope.demand = {};
@@ -233,6 +233,19 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
         templateUrl: './angular/views/lead/contact/create-from-buyer.view.html',
         controller: 'CreateContactModalController',
         scope: $scope,
+      });
+    };
+    
+    $scope.deleteContact = function(contact){
+      var deletedContact = new Contact(contact);
+      deletedContact.$remove(function (response) {
+        $scope.contact = response;
+        
+        $scope.buyer.contact.splice($scope.buyer.contact.indexOf(contact), 1);
+        $scope.close();
+        $scope.success = true;
+      }, function (response) {
+        $scope.error = response.data.message;
       });
     };
 }]);
