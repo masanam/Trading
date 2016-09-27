@@ -52,7 +52,7 @@ class BuyDealController extends Controller
         $buy_order = BuyOrder::find($request->buy_order_id);
 
         $chat = New Chat();
-        $chat->trader_id = $buy_order->user_id;
+        $chat->trader_id = $request->user_id;
         $chat->approver_id = 1;
         $chat->save();
 
@@ -64,7 +64,7 @@ class BuyDealController extends Controller
         $buy_deal->status = "a";
         $buy_deal->save();
         
-        $config_approver = Config::get('approver');
+        $config_approver = config('approver');
         
         foreach($config_approver as $approver){
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Chat;
 use App\Model\SellDeal;
 use App\Model\SellOrder;
 use App\Model\SellOrderPricing;
@@ -45,7 +46,7 @@ class SellDealController extends Controller
         }
 
         $chat = New Chat();
-        $chat->trader_id = $sell_order->user_id;
+        $chat->trader_id = $request->user_id;
         $chat->approver_id = 1;
         $chat->save();
 
@@ -57,7 +58,7 @@ class SellDealController extends Controller
         $sell_deal->status = "a";
         $sell_deal->save();
         
-        $config_approver = Config::get('approver');
+        $config_approver = config('approver');
         
         foreach($config_approver as $approver){
 
