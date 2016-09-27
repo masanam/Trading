@@ -101,10 +101,10 @@
           <ul class="list-group">
             <li class="list-group-item" ng-repeat="mine in seller.mine">
               {{ mine.mine_name }}
-              <i class="glyphicon glyphicon-map-marker" style="margin-left: 50px;"></i> {{ mine.port_name }}
-              <i class="glyphicon glyphicon-scale" style="margin-left: 50px;"></i> {{ mine.mineable_reserve }}
+              <i class="glyphicon glyphicon-map-marker" style="margin-left: 50px;"></i>
+                {{ mine.longitude | number }}, {{ mine.latitude | number }} ({{ mine.port_name }})
+              <i class="glyphicon glyphicon-scale" style="margin-left: 50px;"></i> {{ mine.mineable_reserve | number }} tones
               <span class="pull-right">
-                <a ui-sref="lead.view-mine({ id: mine.id })"><i class="glyphicon glyphicon-eye-open"></i></a>
                 <a href="#" ng-click="deleteMine(mine)"><i class="glyphicon glyphicon-remove"></i></a>
               </span>
             </li>
