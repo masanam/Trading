@@ -93,7 +93,6 @@ class SellerController extends Controller
      */
     public function show(Seller $seller)
     {
-      var_dump($seller);
         if($seller->status == 'a') {
             return response()->json($seller, 200);
         } else {
