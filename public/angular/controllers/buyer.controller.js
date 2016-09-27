@@ -233,7 +233,70 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
         $scope.error = response.data.message;
       });
     };
+    
+    $scope.addProduct = function () {
+      
+      var modalInstance = $uibModal.open({
+        windowClass: 'xl-modal',
+        templateUrl: './angular/views/lead/product/create-from-seller.view.html',
+        controller: 'CreateProductModalController',
+        scope: $scope,
+      });
+    };
+    
+    $scope.deleteProduct = function(product){
+      Product.delete({ id: product.id }, function (response) {
+        $scope.product = response;
+        
+        $scope.seller.product.splice($scope.seller.product.indexOf(product), 1);
+        $scope.close();
+        $scope.success = true;
+      }, function (response) {
+        $scope.error = response.data.message;
+      });
+    };
 }]);
+
+angular.module('buyer').controller('CreateProductModalController', function ($scope, $filter, $uibModalInstance, Product, Authentication) {
+  
+  $scope.initializeProduct = function(){
+    $scope.product = {
+      id: undefined,
+      user_id: undefined,
+      seller_id: undefined,
+      buyer_id: undefined,
+      name: undefined,
+      phone: undefined,
+      email: undefined,
+      status: undefined,
+    };
+  };
+  
+  $scope.createProduct = function(){
+    
+    $scope.success = $scope.error = null;
+    
+    $scope.product.user_id = Authentication.user.id;
+    $scope.product.buyer_id = $scope.buyer.id;
+
+    var product = new Product($scope.product);
+    
+    product.$save(function (response) {
+      $scope.product = response;
+      
+      $scope.buyer.product.push($scope.product);
+      $scope.close();
+      $scope.success = true;
+    }, function (response) {
+      $scope.error = response.data.message;
+    });
+    
+  };
+  
+  $scope.close = function () {
+    $uibModalInstance.dismiss('cancel');
+  };
+});
 
 angular.module('buyer').controller('CreateContactModalController', function ($scope, $filter, $uibModalInstance, Contact, Authentication) {
   
@@ -242,7 +305,7 @@ angular.module('buyer').controller('CreateContactModalController', function ($sc
       id: undefined,
       user_id: undefined,
       buyer_id: undefined,
-      seller_id: undefined,
+      buyer_id: undefined,
       name: undefined,
       phone: undefined,
       email: undefined,

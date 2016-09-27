@@ -242,6 +242,28 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
         $scope.error = response.data.message;
       });
     };
+    
+    $scope.addProduct = function () {
+      
+      var modalInstance = $uibModal.open({
+        windowClass: 'xl-modal',
+        templateUrl: './angular/views/lead/product/create-from-seller.view.html',
+        controller: 'CreateProductModalController',
+        scope: $scope,
+      });
+    };
+    
+    $scope.deleteProduct = function(product){
+      Product.delete({ id: product.id }, function (response) {
+        $scope.product = response;
+        
+        $scope.seller.product.splice($scope.seller.product.indexOf(product), 1);
+        $scope.close();
+        $scope.success = true;
+      }, function (response) {
+        $scope.error = response.data.message;
+      });
+    };
 }]);
 
 angular.module('seller').controller('CreateContactModalController', function ($scope, $filter, $uibModalInstance, Contact, Authentication) {
@@ -272,6 +294,47 @@ angular.module('seller').controller('CreateContactModalController', function ($s
       $scope.contact = response;
       
       $scope.seller.contact.push($scope.contact);
+      $scope.close();
+      $scope.success = true;
+    }, function (response) {
+      $scope.error = response.data.message;
+    });
+    
+  };
+  
+  $scope.close = function () {
+    $uibModalInstance.dismiss('cancel');
+  };
+});
+
+angular.module('seller').controller('CreateProductModalController', function ($scope, $filter, $uibModalInstance, Product, Authentication) {
+  
+  $scope.initializeProduct = function(){
+    $scope.product = {
+      id: undefined,
+      user_id: undefined,
+      buyer_id: undefined,
+      seller_id: undefined,
+      name: undefined,
+      phone: undefined,
+      email: undefined,
+      status: undefined,
+    };
+  };
+  
+  $scope.createProduct = function(){
+    
+    $scope.success = $scope.error = null;
+    
+    $scope.product.user_id = Authentication.user.id;
+    $scope.product.seller_id = $scope.seller.id;
+
+    var product = new Product($scope.product);
+    
+    product.$save(function (response) {
+      $scope.product = response;
+      
+      $scope.seller.product.push($scope.product);
       $scope.close();
       $scope.success = true;
     }, function (response) {
