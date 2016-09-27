@@ -208,7 +208,19 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
         scope: $scope,
       });
     };
-}]);
+    
+    $scope.deleteContact = function(contact){
+      var deletedContact = new Contact(contact);
+      deletedContact.$remove(function (response) {
+        $scope.contact = response;
+        
+        $scope.seller.contact.splice($scope.seller.contact.indexOf(contact), 1);
+        $scope.close();
+        $scope.success = true;
+      }, function (response) {
+        $scope.error = response.data.message;
+      });
+    };}]);
 
 angular.module('seller').controller('CreateContactModalController', function ($scope, $filter, $uibModalInstance, Contact, Authentication) {
   

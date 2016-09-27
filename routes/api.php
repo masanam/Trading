@@ -20,12 +20,13 @@ Route::group(['middleware' => ['cors']], function() {
     Route::get('authenticate/user', 'AuthenticateController@getAuthenticatedUser');
 
     Route::get('user/current', 'UserController@currentUser');
-	Route::resource('user', 'UserController', ['except' => [
+    Route::resource('user', 'UserController', ['except' => [
         'create', 'edit'
     ]]);
 
     Route::get('contact/total', 'ContactController@getTotalContact');
     Route::get('contact/search/{search?}', 'ContactController@search');
+    Route::delete('contact/{id}', 'ContactController@destroy');
     Route::resource('contact', 'ContactController', ['except' => [
         'create', 'edit'
     ]]);
