@@ -66,6 +66,7 @@ class ContactController extends Controller
         $contact->name = $request->name;
         $contact->phone = $request->phone;
         $contact->email = $request->email;
+        $contact->status = 'a';
         $contact->save();
 
         return response()->json($contact, 200);

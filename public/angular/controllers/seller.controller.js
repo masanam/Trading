@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('seller').controller('SellerController', ['$scope', '$http', '$stateParams', '$state', '$timeout', '$location', 'Seller', 'Production', 'Product', 'Mine',
-	function($scope, $http, $stateParams, $state, $timeout, $location, Seller, Production, Product, Mine) {
+angular.module('seller').controller('SellerController', ['$scope', '$http', '$stateParams', '$state', '$timeout', '$location', 'Seller', 'Production', 'Product', 'Mine', '$uibModal',
+	function($scope, $http, $stateParams, $state, $timeout, $location, Seller, Production, Product, Mine, $uibModal) {
 		$scope.sellers = [];
 		$scope.seller = {};
 		$scope.productButton = false;
@@ -198,4 +198,55 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
       $state.go('order-fulfillment.historySeller', { sellerId: id });
       $('#sellerModal').modal('hide');
     };
+    
+    $scope.addContact = function () {
+      
+      var modalInstance = $uibModal.open({
+        windowClass: 'xl-modal',
+        templateUrl: './angular/views/lead/contact/create-from-seller.view.html',
+        controller: 'CreateContactModalController',
+        scope: $scope,
+      });
+    };
 }]);
+
+angular.module('seller').controller('CreateContactModalController', function ($scope, $filter, $uibModalInstance, Contact, Authentication) {
+  
+  $scope.initializeContact = function(){
+    $scope.contact = {
+      id: undefined,
+      user_id: undefined,
+      buyer_id: undefined,
+      seller_id: undefined,
+      name: undefined,
+      phone: undefined,
+      email: undefined,
+      status: undefined,
+    };
+  };
+  
+  $scope.createContact = function(){
+    
+    $scope.success = $scope.error = null;
+    
+    $scope.contact.user_id = Authentication.user.id;
+    $scope.contact.seller_id = $scope.seller.id;
+
+    var contact = new Contact($scope.contact);
+    
+    contact.$save(function (response) {
+      $scope.contact = response;
+      
+      $scope.seller.contact.push($scope.contact);
+      $scope.close();
+      $scope.success = true;
+    }, function (response) {
+      $scope.error = response.data.message;
+    });
+    
+  };
+  
+  $scope.close = function () {
+    $uibModalInstance.dismiss('cancel');
+  };
+});
