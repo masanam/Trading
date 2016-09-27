@@ -144,20 +144,6 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
         $scope.loading = false;
       });
 		};
-    
-    $scope.deactivate = function(seller) {
-			$scope.loading = true;
-      var lvStatus = 'x';
-      if(seller.status === 'x'){
-        lvStatus = 'a';
-      }
-
-			Seller.get({ id: seller.id, action: 'deactivate', status: lvStatus }, function(response) {
-				$state.go('seller.index');
-				$scope.loading = false;
-        buyer.status = lvStatus;
-			});
-		};
 
 		$scope.delete = function(seller) {
 			$scope.loading = true;

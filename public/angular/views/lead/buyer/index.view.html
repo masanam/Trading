@@ -5,7 +5,7 @@
 <div class="col-lg-10" ng-controller="BuyerController">
   <section ng-include="'./angular/views/lead/search-bar.view.html'"></section>
   <h1>Buyers</h1>
-  <a class="btn btn-primary" data-toggle="modal" data-target="#createBuyerModal">Create New</a>
+  <a class="btn btn-primary" ui-sref="lead.create-buyer">Create New</a>
   <br/>
   <br/>
 	<table datatable="ng" class="row-border hover" ng-init="find()">
@@ -15,8 +15,6 @@
             <th>Company</th>
             <th>Phone</th>
             <th>Email</th>
-            <!--th>Latitude</th>
-            <th>Longitude</th-->
             <th>Last Buy Order Date</th>
             <th></th>
         </tr>
@@ -29,17 +27,14 @@
             </td>
             <td>{{ buyer.phone }}</td>
             <td>{{ buyer.email }}</td>
-            <!--td>{{ buyer.latitude }}</td>
-            <td>{{ buyer.longitude }}</td-->
             <td>
               <span ng-if="buyer.last_order">{{ buyer.last_order | convertToDate | date : 'd MMMM yy' }}</span>
               <span ng-if="!buyer.last_order">N/A</span>
             </td>
             <td>
               <a ui-sref="lead.view-buyer({ id: buyer.id })"><i class="glyphicon glyphicon-info-sign"></i></a>
-              <!--a href="#" data-toggle="modal" data-target="#createDemandModal" ng-click=findOne(buyer.id)><i class="glyphicon glyphicon-plus"></i></a-->
-              <a href="#" data-toggle="modal" data-target="#updateBuyerModal" ng-click="findOne(buyer.id)"><i class="glyphicon glyphicon-pencil"></i></a>
-              <a href="#" ng-click="deactivate(buyer)"><i class="glyphicon glyphicon-trash"></i></a>
+              <a ui-sref="lead.edit-buyer({ id: buyer.id })"><i class="glyphicon glyphicon-pencil"></i></a>
+              <a ng-click="delete(buyer)"><i class="glyphicon glyphicon-trash"></i></a>
             </td>
         </tr>
     </tbody>

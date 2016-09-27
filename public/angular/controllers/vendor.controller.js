@@ -50,20 +50,6 @@ angular.module('vendor').controller('VendorController', ['$scope', '$http', '$st
         $scope.loading = false;
       });
 		};
-    
-    $scope.deactivate = function(vendor) {
-			$scope.loading = true;
-      var lvStatus = 'x';
-      if(vendor.status === 'x'){
-        lvStatus = 'a';
-      }
-
-			Vendor.get({ id: vendor.id, action: 'deactivate', status: lvStatus }, function(response) {
-				$state.go('vendor.index');
-				$scope.loading = false;
-        vendor.status = lvStatus;
-			});
-		};
 
 		$scope.delete = function(vendor) {
 			$scope.loading = true;

@@ -146,21 +146,7 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
         $scope.loading = false;
       });
 		};
-    
-    $scope.deactivate = function(buyer) {
-			$scope.loading = true;
-      var lvStatus = 'x';
-      if(buyer.status === 'x'){
-        lvStatus = 'a';
-      }
-
-			Buyer.get({ id: buyer.id, action: 'deactivate', status: lvStatus }, function(response) {
-				$state.go('buyer.index');
-				$scope.loading = false;
-        buyer.status = lvStatus;
-			});
-		};
-
+		
 		$scope.delete = function(buyer) {
 			$scope.loading = true;
 
