@@ -7,6 +7,16 @@ angular.module('lead').controller('LeadController', ['$scope', '$state', '$http'
 		$scope.lead = {};		
 		$scope.totalBuyer = {};
 		$scope.$stateParams = $stateParams;
+    
+    $scope.initSearch = function(){
+      $scope.keyword = $scope.$stateParams.keyword;
+      switch($state.current.name){
+        case 'lead.seller' : $scope.searchType = 'seller'; break;
+        case 'lead.vendor' : $scope.searchType = 'vendor';  break;
+        case 'lead.contact' : $scope.searchType = 'contact'; break;
+        default : $scope.searchType = 'buyer';
+      }
+    }
 
 		$scope.search = function() {
 			switch($scope.searchType){
