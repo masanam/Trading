@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
+use Illuminate\Support\Facades\DB;
+
 class MineController extends Controller
 {
     public function __construct() {
@@ -58,11 +60,19 @@ class MineController extends Controller
         }
 
         $mine = new Mine();
-        $mine->name = $request->name;
-        $mine->image = $request->image;
-        $mine->title = $request->title;
-        $mine->email = $request->email;
-        $mine->phone = $request->phone;
+        $mine->stripping_ratio = $request->stripping_ratio;
+        $mine->mineable_reserve = $request->mineable_reserve;
+        $mine->mine_name = $request->mine_name;
+        $mine->latitude = $request->latitude;
+        $mine->longitude = $request->longitude;
+        $mine->road_accessibility = $request->road_accessibility;
+        $mine->road_capacity = $request->road_capacity;
+        $mine->river_capacity = $request->river_capacity;
+        $mine->license_expired_date = $request->license_expired_date;
+        $mine->license_type = $request->license_type;
+        $mine->port_name = $request->port_name;
+        $mine->port_distance = $request->port_distance;
+        $mine->status = 'a';
         $mine->save();
 
         return response()->json($mine, 200);
@@ -104,33 +114,40 @@ class MineController extends Controller
             ] ,404);
         }
 
-        $mine->name = $request->name;
-        $mine->image = $request->image;
-        $mine->title = $request->title;
-        $mine->email = $request->email;
-        $mine->phone = $request->phone;
+        $mine->stripping_ratio = $request->stripping_ratio;
+        $mine->mineable_reserve = $request->mineable_reserve;
+        $mine->mine_name = $request->mine_name;
+        $mine->latitude = $request->latitude;
+        $mine->longitude = $request->longitude;
+        $mine->road_accessibility = $request->road_accessibility;
+        $mine->road_capacity = $request->road_capacity;
+        $mine->river_capacity = $request->river_capacity;
+        $mine->license_expired_date = $request->license_expired_date;
+        $mine->license_type = $request->license_type;
+        $mine->port_distance = $request->port_distance;
+        $mine->port_name = $request->port_name;
 
         $mine->save();
 
         return response()->json($mine, 200);
     }
-
+    
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Mine $mine)
+    public function destroy($id)
     {
-        if (!$mine) {
+      
+        if (!$id) {
             return response()->json([
                 'message' => 'Not found'
             ] ,404);
         }
 
-        $mine->status = 'x';
-        $mine->save();
+        $mine = DB::table('mines')->where('id', $id)->update(['status' => 'x']);
 
         return response()->json($mine, 200);
     }

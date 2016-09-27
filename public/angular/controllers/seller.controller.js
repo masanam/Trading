@@ -199,6 +199,28 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
       $('#sellerModal').modal('hide');
     };
     
+    $scope.addMine = function () {
+      
+      var modalInstance = $uibModal.open({
+        windowClass: 'xl-modal',
+        templateUrl: './angular/views/lead/mine/create-from-seller.view.html',
+        controller: 'CreateMineModalController',
+        scope: $scope,
+      });
+    };
+    
+    $scope.deleteMine = function(mine){
+      Mine.delete({ id: mine.id }, function (response) {
+        $scope.mine = response;
+        
+        $scope.seller.mine.splice($scope.seller.mine.indexOf(mine), 1);
+        $scope.close();
+        $scope.success = true;
+      }, function (response) {
+        $scope.error = response.data.message;
+      });
+    };
+    
     $scope.addContact = function () {
       
       var modalInstance = $uibModal.open({
@@ -210,8 +232,7 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
     };
     
     $scope.deleteContact = function(contact){
-      var deletedContact = new Contact(contact);
-      deletedContact.$remove(function (response) {
+      Contact.delete({ id: contact.id }, function (response) {
         $scope.contact = response;
         
         $scope.seller.contact.splice($scope.seller.contact.indexOf(contact), 1);
@@ -220,7 +241,8 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
       }, function (response) {
         $scope.error = response.data.message;
       });
-    };}]);
+    };
+}]);
 
 angular.module('seller').controller('CreateContactModalController', function ($scope, $filter, $uibModalInstance, Contact, Authentication) {
   
@@ -250,6 +272,51 @@ angular.module('seller').controller('CreateContactModalController', function ($s
       $scope.contact = response;
       
       $scope.seller.contact.push($scope.contact);
+      $scope.close();
+      $scope.success = true;
+    }, function (response) {
+      $scope.error = response.data.message;
+    });
+    
+  };
+  
+  $scope.close = function () {
+    $uibModalInstance.dismiss('cancel');
+  };
+});
+
+angular.module('seller').controller('CreateMineModalController', function ($scope, $filter, $uibModalInstance, Mine, Authentication) {
+  
+  $scope.initializeMine = function(){
+    $scope.mine = {
+      id: undefined,
+      seller_id: undefined,
+      mine_name: undefined,
+      port_name: undefined,
+      longitude: undefined,
+      latitude: undefined,
+      mineable_reserve: undefined,
+      stripping_ratio: undefined,
+      port_distance: undefined,
+      road_capacity: undefined,
+      river_capacity: undefined,
+      license_expired_date: undefined,
+      license_type: undefined,
+    };
+  };
+  
+  $scope.createMine = function(){
+    
+    $scope.success = $scope.error = null;
+    $scope.mine.license_expired_date = $filter('date')($scope.mine.license_expired_date, "yyyy-MM-dd");
+    $scope.mine.seller_id = $scope.seller.id;
+
+    var mine = new Mine($scope.mine);
+    
+    mine.$save(function (response) {
+      $scope.mine = response;
+      
+      $scope.seller.mine.push($scope.mine);
       $scope.close();
       $scope.success = true;
     }, function (response) {

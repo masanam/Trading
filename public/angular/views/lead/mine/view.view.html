@@ -1,8 +1,8 @@
-<div ng-controller="SellerController" ng-init="findOne()">
+<div ng-controller="LeadController" ng-init="findOne()">
   <!-- HEADER -->
   <div class="row submenu-header">
     <div class="submenu-header-item">
-      <button type="button" class="btn btn-default" ui-sref="lead.seller">
+      <button type="button" class="btn btn-default" ui-sref="lead.index">
         <i class="glyphicon glyphicon-arrow-left"></i> Back
       </button>
     </div>
@@ -15,9 +15,9 @@
   <div style="height:200px; padding:10px; background:#eee;">
     <div class="col-xs-2" style="background-image:url('/images/default.jpg'); background-size: cover; height:180px"></div>
     <div class="col-xs-10">
-      <h1>{{ seller.company_name }}</h1>
-      <h3>{{ seller.industry }}</h3>
-      <p>{{ seller.address }}</p>
+      <h1>{{ lead.company_name }}</h1>
+      <h3>{{ lead.industry }}</h3>
+      <p>{{ lead.address }}</p>
     </div>
   </div>
 
@@ -26,23 +26,23 @@
       <div class="row" style="background:#eee; padding: 10px;">
         <h3>About</h3>
 
-        <button type="button" class="btn btn-primary" ng-click="goToUpdatePopup(seller.id)">
+        <button type="button" class="btn btn-primary" ng-click="goToUpdatePopup(lead.id)">
           <i class="glyphicon glyphicon-pencil"></i> Update
         </button><br><br>
 
         <table class="table table-striped">
-          <tr><td>Address:</td><td>{{ seller.address }}</td></tr>
-          <tr><td>City:</td><td>{{ seller.city }}</td></tr>
-          <tr><td>Phone:</td><td>{{ seller.phone }}</td></tr>
-          <tr><td>Email:</td><td>{{ seller.email }}</td></tr>
-          <tr><td>Web:</td><td>{{ seller.web }}</td></tr>
-          <tr><td>Desc:</td><td>{{ seller.description }}</td></tr>
-          <tr ng-if="seller.status == 'a'"><td>Status:</td> <td>Active</td></tr>
-          <tr ng-if="seller.status == 'x'"><td>Status:</td> <td>Deactivated</td></tr>
+          <tr><td>Address:</td><td>{{ lead.address }}</td></tr>
+          <tr><td>City:</td><td>{{ lead.city }}</td></tr>
+          <tr><td>Phone:</td><td>{{ lead.phone }}</td></tr>
+          <tr><td>Email:</td><td>{{ lead.email }}</td></tr>
+          <tr><td>Web:</td><td>{{ lead.web }}</td></tr>
+          <tr><td>Desc:</td><td>{{ lead.descritrtion }}</td></tr>
+          <tr ng-if="lead.status == 'a'"><td>Status:</td> <td>Active</td></tr>
+          <tr ng-if="lead.status == 'x'"><td>Status:</td> <td>Deactivated</td></tr>
         </table>
 
-        <ng-map center="{{seller.longitude}}, {{seller.latitude}}">
-          <marker center="{{seller.longitude}}, {{seller.latitude}}"></marker>
+        <ng-map center="{{lead.longitude}}, {{lead.latitude}}">
+          <marker center="{{lead.longitude}}, {{lead.latitude}}"></marker>
         </ng-map>
       </div>
     </div>
@@ -51,12 +51,12 @@
       <div class="row" style="background:#eee; padding: 10px; margin-left:10px;">
         <h3>Contacts</h3>
 
-        <button type="button" class="btn btn-info" ng-click="addContact()">
+        <button type="button" class="btn btn-info" ng-click="addNew()">
           <i class="glyphicon glyphicon-plus"></i> Add New Contact
         </button><br><br>
 
         <ul class="list-group">
-          <li class="list-group-item" ng-repeat="contact in seller.contact">
+          <li class="list-group-item" ng-repeat="contact in lead.contact">
             {{ contact.name }}
             <i class="glyphicon glyphicon-envelope" style="margin-left: 50px;"></i> {{ contact.email }}
             <i class="glyphicon glyphicon-earphone" style="margin-left: 50px;"></i> {{ contact.phone }}
@@ -66,27 +66,7 @@
             </span>
           </li>
         </ul>
-        
       </div>
-        
-        <div class="row" style="background:#eee; padding: 10px; margin-left:10px;">
-          <h3>Mines</h3>
-
-          <button type="button" class="btn btn-info" ng-click="addMine()">
-            <i class="glyphicon glyphicon-plus"></i> Add New Mine
-          </button><br><br>
-
-          <ul class="list-group">
-            <li class="list-group-item" ng-repeat="mine in seller.mine">
-              {{ mine.mine_name }}
-              <i class="glyphicon glyphicon-map-marker" style="margin-left: 50px;"></i> {{ mine.port_name }}
-              <i class="glyphicon glyphicon-scale" style="margin-left: 50px;"></i> {{ mine.mineable_reserve }}
-              <span class="pull-right">
-                <a href="#" ng-click="deleteMine(mine)"><i class="glyphicon glyphicon-remove"></i></a>
-              </span>
-            </li>
-          </ul>
-        </div>
 
 
       <div class="row" style="background:#eee; padding: 10px; margin-left:10px; margin-top:10px;">
@@ -96,7 +76,7 @@
 
       <div class="row" style="background:#eee; padding: 10px; margin-left:10px; margin-top:10px;">
         <h3>Order History</h3>
-        <button type="button" class="btn btn-success" ng-click="goToPendingOrders(seller.id)">
+        <button type="button" class="btn btn-success" ng-click="goToPendingOrders(lead.id)">
           <i class="glyphicon glyphicon-plus"></i> Add New Order
         </button><br><br>
 
@@ -109,7 +89,7 @@
               </tr>
           </thead>
           <tbody>
-              <!--tr ng-repeat="(idx, lastOrder) in lastOrders">
+              <tr ng-repeat="(idx, lastOrder) in lastOrders">
                   <td>{{ lastOrder.id }}</td>
                   <td>
                     {{ lastOrder.created_at | date:'medium' }}
@@ -120,12 +100,9 @@
               </tr>
               <tr ng-hide="lastOrders.length > 0">
                 <td colspan="3">There is no previous orders.</td>
-              </tr-->
-              <tr>
-                <td colspan="3">-- FEATURES COMING SOON --</td>
               </tr>
               <!--tr>
-                <td colspan="3"><a class="btn btn-block btn-blue" ng-click="goToLastOrders(seller.id)">View More</a></td>
+                <td colspan="3"><a class="btn btn-block btn-blue" ng-click="goToLastOrders(lead.id)">View More</a></td>
               </tr-->
           </tbody>
         </table>
@@ -136,17 +113,6 @@
         -- FEATURES COMING SOON --
       </div>
 
+    </div>
   </div>
 </div>
-
-<script type="text/ng-template" id="alertModal.html">
-  <div class="modal-header">
-    <h3 class="modal-title" id="modal-title">Submit Failed!</h3>
-  </div>
-  <div class="modal-body" id="modal-body">
-    <p>{{error}}</p>
-  </div>
-  <div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="close()">OK</button>
-  </div>
-</script>
