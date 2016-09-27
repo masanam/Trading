@@ -59,10 +59,14 @@ Route::group(['middleware' => ['cors']], function() {
         'index'
     ]]);
 
+    Route::get('product/total', 'ProductController@getTotalProduct');
+    Route::get('product/search/{search?}', 'ProductController@search');
     Route::resource('product', 'ProductController', ['except' => [
         'create', 'edit'
     ]]);
 
+    Route::get('mine/total', 'MineController@getTotalMine');
+    Route::get('mine/search/{search?}', 'MineController@search');
     Route::resource('mine', 'MineController', ['except' => [
         'create', 'edit'
     ]]);

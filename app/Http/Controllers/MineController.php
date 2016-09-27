@@ -25,6 +25,24 @@ class MineController extends Controller
         return response()->json($mine, 200);
     }
 
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search($search = false)
+    {
+        if (!$search) {
+            $mine = Mine::where('status', 'a')->get();
+        } else {
+            $mine = Mine::where('status', 'a')->where('mine_name', 'LIKE', '%'.$search.'%')->get();
+        }
+
+        return response()->json($mine, 200);
+    }
+
+
     /**
      * Store a newly created resource in storage.
      *
@@ -115,5 +133,13 @@ class MineController extends Controller
         $mine->save();
 
         return response()->json($mine, 200);
+    }
+
+
+
+    public function getTotalMine() {
+        $total = Mine::count();
+        $status = array('count' => $total);        
+        return response()->json($status,200);
     }
 }
