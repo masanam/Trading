@@ -213,6 +213,8 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
       $('#updateBuyerModal').modal('show');
     };
     
+    
+    
     $scope.goToLastOrders = function(id){
       $('#buyerModal').modal('hide');
       $('.modal-backdrop').hide();
@@ -225,5 +227,53 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
       $state.go('order-buyer.viewBuyer', { buyerId: id });
     };
 
-	}
-]);
+    $scope.addContact = function () {
+      var modalInstance = $uibModal.open({
+        windowClass: 'xl-modal',
+        templateUrl: './angular/views/lead/contact/create-from-buyer.view.html',
+        controller: 'CreateContactModalController',
+        scope: $scope,
+      });
+    };
+}]);
+
+angular.module('buyer').controller('CreateContactModalController', function ($scope, $filter, $uibModalInstance, Contact, Authentication) {
+  
+  $scope.initializeContact = function(){
+    $scope.contact = {
+      id: undefined,
+      user_id: undefined,
+      buyer_id: undefined,
+      seller_id: undefined,
+      name: undefined,
+      phone: undefined,
+      email: undefined,
+      status: undefined,
+    };
+  };
+  
+  $scope.createContact = function(){
+    
+    $scope.success = $scope.error = null;
+    
+    $scope.contact.user_id = Authentication.user.id;
+    $scope.contact.buyer_id = $scope.buyer.id;
+
+    var contact = new Contact($scope.contact);
+    
+    contact.$save(function (response) {
+      $scope.contact = response;
+      
+      $scope.buyer.contact.push($scope.contact);
+      $scope.close();
+      $scope.success = true;
+    }, function (response) {
+      $scope.error = response.data.message;
+    });
+    
+  };
+  
+  $scope.close = function () {
+    $uibModalInstance.dismiss('cancel');
+  };
+});
