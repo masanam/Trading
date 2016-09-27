@@ -305,7 +305,7 @@ angular.module('buyer').controller('CreateContactModalController', function ($sc
       id: undefined,
       user_id: undefined,
       buyer_id: undefined,
-      buyer_id: undefined,
+      seller_id: undefined,
       name: undefined,
       phone: undefined,
       email: undefined,
