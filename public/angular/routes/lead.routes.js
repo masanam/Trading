@@ -32,6 +32,16 @@ angular.module('lead').config(['$stateProvider', '$urlRouterProvider',
         templateUrl: '/angular/views/lead/vendor/index.view.html',
         roles: ['user', 'trader']
       })
+      .state('lead.product', {
+        url: '/product?keyword',
+        templateUrl: '/angular/views/lead/product/index.view.html',
+        roles: ['user', 'trader']
+      })
+      .state('lead.mine', {
+        url: '/mine?keyword',
+        templateUrl: '/angular/views/lead/mine/index.view.html',
+        roles: ['user', 'trader']
+      })
       .state('lead.contact', {
         url: '/contact?keyword',
         templateUrl: '/angular/views/lead/contact/index.view.html',

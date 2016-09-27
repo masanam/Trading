@@ -1,9 +1,7 @@
-<div class="modal-header">
-  <button type="button" class="close" ng-click="close()">&times;</button>
-  <h4 class="modal-title">Create Contact</h4>
-</div>
-<div class="modal-body" ng-init="initializeContact();">
-  <form role="form" ng-submit="createContact()">
-		<div ng-include="'/angular/views/lead/contact/form.view.html'"></div>
+<section ng-controller="MineController">
+	<h1>Create Mine</h1>
+
+	<form role="form" ng-submit="create()">
+		<div ng-include="'/angular/views/mine/form.view.html'"></div>
 	</form>
-</div>
+</section>
