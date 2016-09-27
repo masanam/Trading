@@ -25,9 +25,9 @@ Route::group(['middleware' => ['cors']], function() {
     ]]);
 
     Route::get('contact/total', 'ContactController@getTotalContact');
-    Route::get('contact/search/{search?}', 'ContactController@index');
+    Route::get('contact/search/{search?}', 'ContactController@search');
     Route::resource('contact', 'ContactController', ['except' => [
-        'index', 'create', 'edit'
+        'create', 'edit'
     ]]);
     // Route::get('contact/search/{search?}', 'ContactController@index');
 
@@ -52,7 +52,8 @@ Route::group(['middleware' => ['cors']], function() {
     Route::resource('sell_order', 'SellOrderController', ['except' => [
         'create', 'edit'
     ]]);
-
+    
+    //Route::get('buy_sell_order/lastOrder/{buyerId?}', 'BuySellOrderController@search');
     Route::resource('buy_sell_order', 'BuySellOrderController', ['only' => [
         'index'
     ]]);

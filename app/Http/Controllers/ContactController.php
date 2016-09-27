@@ -27,6 +27,21 @@ class ContactController extends Controller
         }
         return response()->json($contact, 200);
     }
+    
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search($search = false)
+    {
+        if (!$search) {
+            $contact = Contact::where('status', 'a')->get();
+        } else {
+            $contact = Contact::where('status', 'a')->where('name', 'LIKE', '%'.$search.'%')->get();
+        }
+        return response()->json($contact, 200);
+    }
 
     /**
      * Store a newly created resource in storage.

@@ -94,7 +94,7 @@ class BuyerController extends Controller
     public function show($id)
     {
         //$buyer = Contact::find([1,2,3,4,5]);
-        $buyer = Buyer::with('contact, mine, product')->find($id);
+        $buyer = Buyer::with('Contact', 'Product')->find($id);
         
         if($buyer->status == 'a') {
             return response()->json($buyer, 200);
