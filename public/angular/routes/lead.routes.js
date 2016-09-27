@@ -108,6 +108,11 @@ angular.module('lead').config(['$stateProvider', '$urlRouterProvider',
         templateUrl: '/angular/views/lead/product/view.view.html',
         roles: ['user', 'trader']
       })
+      .state('lead.view-mine', {
+        url: '/mine/{id}',
+        templateUrl: '/angular/views/lead/mine/view.view.html',
+        roles: ['user', 'trader']
+      })
       .state('lead.view-contact', {
         url: '/contact/{id}',
         templateUrl: '/angular/views/lead/contact/view.view.html',
