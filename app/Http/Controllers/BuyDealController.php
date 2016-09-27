@@ -64,7 +64,7 @@ class BuyDealController extends Controller
         $buy_deal->status = "a";
         $buy_deal->save();
         
-        $config_approver = [1,2,3];
+        $config_approver = Config::get('approver');
         
         foreach($config_approver as $approver){
 
