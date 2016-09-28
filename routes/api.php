@@ -53,6 +53,8 @@ Route::group(['middleware' => ['cors']], function() {
         'create', 'edit'
     ]]);
 
+
+    Route::get('buy_sell_order/lastOrder/{type}/{id}', 'BuySellOrderController@lastOrderByUser');
     Route::resource('buy_sell_order', 'BuySellOrderController', ['only' => [
         'index'
     ]]);
