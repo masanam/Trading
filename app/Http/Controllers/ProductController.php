@@ -62,8 +62,8 @@ class ProductController extends Controller
 
         $product->commercial_term = $request->commercial_term;
 
-        $product->ready_date = date('Y-m-d', $request->ready_date);
-        $product->expired_date = date('Y-m-d', $request->expired_date);
+        $product->ready_date = $request->ready_date;
+        $product->expired_date = $request->expired_date;
 
         $product->gcv_arb_min = $request->gcv_arb_min;
         $product->gcv_arb_max = $request->gcv_arb_max;
