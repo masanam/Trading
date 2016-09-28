@@ -12,12 +12,29 @@ class VendorController extends Controller
     public function __construct() {
         $this->middleware('jwt.auth');
     }
+    
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index($search = false)
+    {
+        if (!$search) {
+            $vendor = Vendor::where('status', 'a')->get();
+        } else {
+            $vendor = Vendor::where('status', 'a')->where('company_name', 'LIKE', '%'.$search.'%')->get();
+        }
+
+        return response()->json($vendor, 200);
+    }
+    
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search($search = false)
     {
         if (!$search) {
             $vendor = Vendor::where('status', 'a')->get();

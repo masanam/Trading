@@ -3,8 +3,9 @@
   <section ng-include="'./angular/views/lead/side-menu.view.html'"></section>
 </div>
 <div class="col-lg-10" ng-controller="VendorController">
+  <section ng-include="'./angular/views/lead/search-bar.view.html'"></section>
   <h1>Vendors</h1>
-  <a class="btn btn-primary" data-toggle="modal" data-target="#createVendorModal">Create New</a>
+  <a class="btn btn-primary" ui-sref="lead.create-vendor">Create New</a>
   <br/>
   <br/>
 	<table datatable="ng" class="row-border hover" ng-init="find()">
@@ -34,9 +35,9 @@
             <!--td>{{ vendor.latitude }}</td>
             <td>{{ vendor.longitude }}</td-->
             <td>
-              <a href="#" data-toggle="modal" data-target="#vendorModal" ng-click="findOne(vendor.id)"><i class="glyphicon glyphicon-info-sign"></i></a>
-              <a href="#" data-toggle="modal" data-target="#updateVendorModal" ng-click="findOne(vendor.id)"><i class="glyphicon glyphicon-pencil"></i></a>
-              <a href="#" ng-click="deactivate(vendor)"><i class="glyphicon glyphicon-trash"></i></a>
+              <a ui-sref="lead.view-vendor({ id: vendor.id })"><i class="glyphicon glyphicon-info-sign"></i></a>
+              <a ui-sref="lead.update-vendor({ id: vendor.id })"><i class="glyphicon glyphicon-pencil"></i></a>
+              <a ng-click="delete(vendor)"><i class="glyphicon glyphicon-trash"></i></a>
             </td>
         </tr>
     </tbody>

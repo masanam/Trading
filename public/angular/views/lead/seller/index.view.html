@@ -3,8 +3,9 @@
   <section ng-include="'./angular/views/lead/side-menu.view.html'"></section>
 </div>
 <div class="col-lg-10" ng-controller="SellerController">
+  <section ng-include="'./angular/views/lead/search-bar.view.html'"></section>
   <h1>Sellers</h1>
-	<a class="btn btn-primary" data-toggle="modal" data-target="#createSellerModal">Create New</a>
+  <a class="btn btn-primary" ui-sref="lead.create-seller">Create New</a>
   <br/>
   <br/>
 	<table datatable="ng" class="row-border hover" ng-init="find()">
@@ -42,10 +43,9 @@
 					<a ng-click="delete(seller)"><i class="glyphicon glyphicon-trash"></i></a>
 				</td-->
         <td>
-          <a href="#" data-toggle="modal" data-target="#sellerModal" ng-click="findOne(seller.id)"><i class="glyphicon glyphicon-info-sign"></i></a>
-          <a href="#" data-toggle="modal" data-target="#createSupplyModal" ng-click="findOne(seller.id); findMineBySeller(seller.id);"><i class="glyphicon glyphicon-plus"></i></a>
-          <a href="#" data-toggle="modal" data-target="#updateSellerModal" ng-click="findOne(seller.id)"><i class="glyphicon glyphicon-pencil"></i></a>
-          <a href="#" ng-click="deactivate(seller)"><i class="glyphicon glyphicon-trash"></i></a>
+          <a ui-sref="lead.view-seller({ id: seller.id })"><i class="glyphicon glyphicon-info-sign"></i></a>
+          <a ui-sref="lead.update-seller({ id: seller.id })"><i class="glyphicon glyphicon-pencil"></i></a>
+          <a ng-click="delete(seller)"><i class="glyphicon glyphicon-trash"></i></a>
         </td>
 			</tr>
 		</tbody>

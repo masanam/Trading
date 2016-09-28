@@ -1,0 +1,30 @@
+<section>
+<div class="col-lg-2">
+  <section ng-include="'./angular/views/lead/side-menu.view.html'"></section>
+</div>
+<div class="col-lg-10" ng-controller="MineController">
+  <section ng-include="'./angular/views/lead/search-bar.view.html'"></section><br>
+
+	<table datatable="ng" dt-options="options" class="row-border hover" class="table table-striped" ng-init="find()">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>Name</th>
+				<th>Latitude</th>
+				<th>Longitude</th>
+				<th>Port Name</th>
+			</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="mine in mines">
+				<td>{{ mine.id }}</td>
+				<td>{{ mine.mine_name }}</td>
+				<td>{{ mine.latitude }}</td>
+				<td>{{ mine.longitude }}</td>
+				<td>{{ mine.port_name }}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+</section>
+            

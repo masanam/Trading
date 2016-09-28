@@ -7,6 +7,7 @@ use App\Model\Contact;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\DB;
 
 class ContactController extends Controller
 {
@@ -19,6 +20,21 @@ class ContactController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index($search = false)
+    {
+        if (!$search) {
+            $contact = Contact::where('status', 'a')->get();
+        } else {
+            $contact = Contact::where('status', 'a')->where('name', 'LIKE', '%'.$search.'%')->get();
+        }
+        return response()->json($contact, 200);
+    }
+    
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search($search = false)
     {
         if (!$search) {
             $contact = Contact::where('status', 'a')->get();
@@ -51,6 +67,7 @@ class ContactController extends Controller
         $contact->name = $request->name;
         $contact->phone = $request->phone;
         $contact->email = $request->email;
+        $contact->status = 'a';
         $contact->save();
 
         return response()->json($contact, 200);
@@ -111,16 +128,16 @@ class ContactController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Contact $contact)
+    public function destroy($id)
     {
-        if (!$contact) {
+      
+        if (!$id) {
             return response()->json([
                 'message' => 'Not found'
             ] ,404);
         }
 
-        $contact->status = 'x';
-        $contact->save();
+        $contact = DB::table('contacts')->where('id', $id)->update(['status' => 'x']);
 
         return response()->json($contact, 200);
     }

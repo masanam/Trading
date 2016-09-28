@@ -1,0 +1,175 @@
+<div ng-controller="SellerController" ng-init="findOne()">
+  <!-- HEADER -->
+  <div class="row submenu-header">
+    <div class="submenu-header-item">
+      <button type="button" class="btn btn-default" ui-sref="lead.seller">
+        <i class="glyphicon glyphicon-arrow-left"></i> Back
+      </button>
+    </div>
+    <div class="submenu-header-item">
+      <h4>{{ $stateParams.type }} Profile</h4>
+    </div>
+  </div>
+
+  <!-- PRIMARY DETAIL -->
+  <div style="height:200px; padding:10px; background:#eee;">
+    <div class="col-xs-2" style="background-image:url('/images/default.jpg'); background-size: cover; height:180px"></div>
+    <div class="col-xs-10">
+      <h1>{{ seller.company_name }}</h1>
+      <h3>{{ seller.industry }}</h3>
+      <p>{{ seller.address }}</p>
+    </div>
+  </div>
+
+  <div style="margin-top:10px;">
+    <div class="col-lg-4">
+      <div class="row" style="background:#eee; padding: 10px;">
+        <h3>About</h3>
+
+        <button type="button" class="btn btn-primary" ng-click="goToUpdatePopup(seller.id)">
+          <i class="glyphicon glyphicon-pencil"></i> Update
+        </button><br><br>
+
+        <table class="table table-striped">
+          <tr><td>Address:</td><td>{{ seller.address }}</td></tr>
+          <tr><td>City:</td><td>{{ seller.city }}</td></tr>
+          <tr><td>Phone:</td><td>{{ seller.phone }}</td></tr>
+          <tr><td>Email:</td><td>{{ seller.email }}</td></tr>
+          <tr><td>Web:</td><td>{{ seller.web }}</td></tr>
+          <tr><td>Desc:</td><td>{{ seller.description }}</td></tr>
+          <tr ng-if="seller.status == 'a'"><td>Status:</td> <td>Active</td></tr>
+          <tr ng-if="seller.status == 'x'"><td>Status:</td> <td>Deactivated</td></tr>
+        </table>
+
+        <ng-map center="{{seller.longitude}}, {{seller.latitude}}">
+          <marker center="{{seller.longitude}}, {{seller.latitude}}"></marker>
+        </ng-map>
+      </div>
+    </div>
+
+    <div class="col-lg-8">
+      <div class="row" style="background:#eee; padding: 10px; margin-left:10px;">
+        <h3>Contacts</h3>
+
+        <button type="button" class="btn btn-info" ng-click="addContact()">
+          <i class="glyphicon glyphicon-plus"></i> Add New Contact
+        </button><br><br>
+
+        <ul class="list-group">
+          <li class="list-group-item" ng-repeat="contact in seller.contact">
+            {{ contact.name }}
+            <i class="glyphicon glyphicon-envelope" style="margin-left: 50px;"></i> {{ contact.email }}
+            <i class="glyphicon glyphicon-earphone" style="margin-left: 50px;"></i> {{ contact.phone }}
+
+            <span class="pull-right">
+              <a></a>
+            </span>
+          </li>
+        </ul>
+        
+      </div>
+      
+      <div class="row" style="background:#eee; padding: 10px; margin-left:10px;">
+        <h3>Products</h3>
+
+        <button type="button" class="btn btn-info" ng-click="addProduct()">
+          <i class="glyphicon glyphicon-plus"></i> Add New Product
+        </button><br><br>
+
+        <ul class="list-group">
+          <li class="list-group-item" ng-repeat="product in seller.product">
+            {{ product.commercial_term }}
+            <i class="glyphicon glyphicon-map-marker" style="margin-left: 50px;"></i> {{ product.volume }}
+            <i class="glyphicon glyphicon-scale" style="margin-left: 50px;"></i> {{ product.gcv_adb_min }} - {{ product.gcv_adb_max }}
+            <i class="glyphicon glyphicon-scale" style="margin-left: 50px;"></i> {{ product.gcv_arb_min }} - {{ product.gcv_arb_max }}
+            <i class="glyphicon glyphicon-scale" style="margin-left: 50px;"></i> {{ product.ncv_min }} - {{ product.ncv_max }}
+            <span class="pull-right">
+              <a ui-sref="lead.view-product({ id: product.id })"><i class="glyphicon glyphicon-eye-open"></i></a>
+              <a href="#" ng-click="deleteProduct(product)"><i class="glyphicon glyphicon-remove"></i></a>
+            </span>
+          </li>
+        </ul>
+      </div>
+        
+        <div class="row" style="background:#eee; padding: 10px; margin-left:10px;">
+          <h3>Mines</h3>
+
+          <button type="button" class="btn btn-info" ng-click="addMine()">
+            <i class="glyphicon glyphicon-plus"></i> Add New Mine
+          </button><br><br>
+
+          <ul class="list-group">
+            <li class="list-group-item" ng-repeat="mine in seller.mine">
+              {{ mine.mine_name }}
+              <i class="glyphicon glyphicon-map-marker" style="margin-left: 50px;"></i>
+                {{ mine.longitude | number }}, {{ mine.latitude | number }} ({{ mine.port_name }})
+              <i class="glyphicon glyphicon-scale" style="margin-left: 50px;"></i> {{ mine.mineable_reserve | number }} tones
+              <span class="pull-right">
+                <a href="#" ng-click="deleteMine(mine)"><i class="glyphicon glyphicon-remove"></i></a>
+              </span>
+            </li>
+          </ul>
+        </div>
+
+
+      <div class="row" style="background:#eee; padding: 10px; margin-left:10px; margin-top:10px;">
+        <h3>Insights</h3>
+        -- FEATURES COMING SOON --
+      </div>
+
+      <div class="row" style="background:#eee; padding: 10px; margin-left:10px; margin-top:10px;">
+        <h3>Order History</h3>
+        <button type="button" class="btn btn-success" ng-click="goToPendingOrders(seller.id)">
+          <i class="glyphicon glyphicon-plus"></i> Add New Order
+        </button><br><br>
+
+        <table class="table table-striped">
+          <thead>
+              <tr>
+                  <th>#</th>
+                  <th>Last Order Date</th>
+                  <th>Volume</th>
+              </tr>
+          </thead>
+          <tbody>
+              <!--tr ng-repeat="(idx, lastOrder) in lastOrders">
+                  <td>{{ lastOrder.id }}</td>
+                  <td>
+                    {{ lastOrder.created_at | date:'medium' }}
+                  </td>
+                  <td>
+                    {{ lastOrder.volume | number }}
+                  </td>
+              </tr>
+              <tr ng-hide="lastOrders.length > 0">
+                <td colspan="3">There is no previous orders.</td>
+              </tr-->
+              <tr>
+                <td colspan="3">-- FEATURES COMING SOON --</td>
+              </tr>
+              <!--tr>
+                <td colspan="3"><a class="btn btn-block btn-blue" ng-click="goToLastOrders(seller.id)">View More</a></td>
+              </tr-->
+          </tbody>
+        </table>
+      </div>
+
+      <div class="row" style="background:#eee; padding: 10px; margin-left:10px; margin-top:10px;">
+        <h3>Notes</h3>
+        -- FEATURES COMING SOON --
+      </div>
+
+  </div>
+</div>
+
+<script type="text/ng-template" id="alertModal.html">
+  <div class="modal-header">
+    <h3 class="modal-title" id="modal-title">Submit Failed!</h3>
+  </div>
+  <div class="modal-body" id="modal-body">
+    <p>{{error}}</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="close()">OK</button>
+  </div>
+</script>

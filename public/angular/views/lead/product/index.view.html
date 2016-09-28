@@ -1,0 +1,36 @@
+<section>
+<div class="col-lg-2">
+  <section ng-include="'./angular/views/lead/side-menu.view.html'"></section>
+</div>
+<div class="col-lg-10" ng-controller="MineController">
+  <section ng-include="'./angular/views/lead/search-bar.view.html'"></section><br>
+  <div ng-controller="ProductController">
+    <h1>Product Catalogue</h1>
+
+    <table datatable="ng" dt-options="options" class="row-border hover" ng-init="find()">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Volume(tonnes)</th>
+          <th><span uib-tooltip="Gross Calorific Value, as received basis">GCV arb(%)</span></th>
+          <th><span uib-tooltip="Gross Calorific Value, air dried basis">GCV adb(%)</span></th>
+          <th><span uib-tooltip="Nett Caloric Value">NCV(%)</span></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="product in products">
+          <td>{{ product.commercial_term }}</td>
+          <td>{{ product.volume | number }}</td>
+          <td>{{ product.gcv_arb_min | number }}~{{ product.gcv_arb_max | number }}</td>
+          <td>{{ product.gcv_adb_min | number }}~{{ product.gcv_adb_max | number }}</td>
+          <td>{{ product.ncv_min | number }}~{{ product.ncv_max | number }}</td>
+          <td width="70px">
+            <a ui-sref="lead.view-product({ id: product.id })"><i class="glyphicon glyphicon-eye-open"></i></a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</section>

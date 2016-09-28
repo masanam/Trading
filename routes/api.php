@@ -20,14 +20,15 @@ Route::group(['middleware' => ['cors']], function() {
     Route::get('authenticate/user', 'AuthenticateController@getAuthenticatedUser');
 
     Route::get('user/current', 'UserController@currentUser');
-	Route::resource('user', 'UserController', ['except' => [
+    Route::resource('user', 'UserController', ['except' => [
         'create', 'edit'
     ]]);
 
     Route::get('contact/total', 'ContactController@getTotalContact');
-    Route::get('contact/search/{search?}', 'ContactController@index');
+    Route::get('contact/search/{search?}', 'ContactController@search');
+    Route::delete('contact/{id}', 'ContactController@destroy');
     Route::resource('contact', 'ContactController', ['except' => [
-        'index', 'create', 'edit'
+        'create', 'edit'
     ]]);
     // Route::get('contact/search/{search?}', 'ContactController@index');
 
@@ -55,22 +56,28 @@ Route::group(['middleware' => ['cors']], function() {
 
 
     Route::get('buy_sell_order/lastOrder/{type}/{id}', 'BuySellOrderController@lastOrderByUser');
+    
+    //Route::get('buy_sell_order/lastOrder/{buyerId?}', 'BuySellOrderController@search');
     Route::resource('buy_sell_order', 'BuySellOrderController', ['only' => [
         'index'
     ]]);
 
+    Route::get('product/total', 'ProductController@getTotalProduct');
+    Route::get('product/search/{search?}', 'ProductController@search');
     Route::resource('product', 'ProductController', ['except' => [
         'create', 'edit'
     ]]);
 
+    Route::get('mine/total', 'MineController@getTotalMine');
+    Route::get('mine/search/{search?}', 'MineController@search');
     Route::resource('mine', 'MineController', ['except' => [
         'create', 'edit'
     ]]);
 
     Route::get('vendor/total', 'VendorController@getTotalVendor');
-    Route::get('vendor/{search?}', 'VendorController@index');
+    Route::get('vendor/search/{search?}', 'VendorController@search');
     Route::resource('vendor', 'VendorController', ['except' => [
-        'index', 'create', 'edit'
+        'create', 'edit'
     ]]);
     
     Route::delete('buy_deal/{dealId}', 'BuyDealController@destroyByDeal');

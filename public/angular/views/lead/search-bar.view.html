@@ -1,4 +1,4 @@
-<section ng-controller="LeadController">
+<section ng-controller="LeadController" ng-init="initSearch()">
 	<form class="col-md-8 input-group btn-group" ng-submit="search()">
 		<input type="text" class="form-control" style="width:600px;display:inline;" ng-model="keyword">
 		<button class="btn btn-success" type="submit">Search</button>
@@ -13,6 +13,12 @@
 		</label>
 		<label class="btn btn-default" ng-model="searchType" uib-btn-radio="'vendor'">
 		Vendors
+		</label>
+		<label class="btn btn-default" ng-model="searchType" uib-btn-radio="'product'">
+		Products
+		</label>
+		<label class="btn btn-default" ng-model="searchType" uib-btn-radio="'mine'">
+		Mines
 		</label>
 		<label class="btn btn-default" ng-model="searchType" uib-btn-radio="'contact'">
 		Contacts

@@ -1,5 +1,5 @@
 <section ng-controller="LeadController">
-  <div class="row">
+  <!-- <div class="row">
     <div class="col-xs-12">
       <button class="btn btn-primary pull-right">
         <i class="glyphicon glyphicon-plus"></i>
@@ -7,31 +7,39 @@
       </button>
     </div>
   </div>
-
+ -->
   <div class="container" style="margin-bottom:120px;margin-top:60px;" ng-init="total()">
     <div class="row">
       <div style="text-align:center;">
         <div>
           <div class="col-md-4 align-right">
             <a class="btn btn-default btn-margin full-width" ui-sref="lead.buyer">
-              <h2>BUYERS</h2>
+              <h4>BUYERS</h4>
                 <span>{{ totalBuyer.count }} Records</span>
             </a><br>
             <a class="btn btn-default btn-margin full-width" ui-sref="lead.seller">
-              <h2>SELLERS</h2>
+              <h4>SELLERS</h4>
               <span>{{ totalSeller.count }} Records</span>
+            </a><br>
+            <a class="btn btn-default btn-margin full-width" ui-sref="lead.vendor">
+              <h4>VENDORS</h4>
+              <span>{{ totalVendor.count }} Records</span>
             </a>
           </div>
           <div class="col-md-4">
             <img src="/images/globe.jpg" style="height:270px;">
           </div>
           <div class="col-md-4 align-left">
-            <a class="btn btn-default btn-margin full-width" ui-sref="lead.vendor">
-              <h2>VENDORS</h2>
-              <span>{{ totalVendor.count }} Records</span>
+            <a class="btn btn-default btn-margin full-width" ui-sref="lead.product">
+              <h4>PRODUCTS</h4>
+              <span>{{ totalProduct.count }} Records</span>
+            </a><br>
+            <a class="btn btn-default btn-margin full-width" ui-sref="lead.mine">
+              <h4>MINES</h4>
+              <span>{{ totalMine.count }} Records</span>
             </a><br>
             <a class="btn btn-default btn-margin full-width" ui-sref="lead.contact">
-              <h2>CONTACTS</h2>
+              <h4>CONTACTS</h4>
               <span>{{ totalContact.count }} Records</span>
             </a>
           </div>
@@ -56,6 +64,12 @@
             </label>
             <label class="btn btn-default" ng-model="searchType" uib-btn-radio="'vendor'">
               Vendors
+            </label>
+            <label class="btn btn-default" ng-model="searchType" uib-btn-radio="'product'">
+              Products
+            </label>
+            <label class="btn btn-default" ng-model="searchType" uib-btn-radio="'mine'">
+              Mines
             </label>
             <label class="btn btn-default" ng-model="searchType" uib-btn-radio="'contact'">
               Contacts

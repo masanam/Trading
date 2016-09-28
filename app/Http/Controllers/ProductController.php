@@ -26,6 +26,23 @@ class ProductController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search($search = false)
+    {
+        if (!$search) {
+            $product = Product::where('status', 'a')->get();
+        } else {
+            $product = Product::where('status', 'a')->where('product_name', 'LIKE', '%'.$search.'%')->get();
+        }
+
+        return response()->json($product, 200);
+    }
+
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -92,6 +109,7 @@ class ProductController extends Controller
         $product->volume = $request->volume;
 
         $product->status = 'a';
+
         $product->save();
 
         return response()->json($product, 200);
@@ -183,7 +201,7 @@ class ProductController extends Controller
         $product->size_bonus = $request->size_bonus;
 
         $product->volume = $request->volume;
-
+        
         $product->save();
 
         return response()->json($product, 200);
@@ -207,5 +225,11 @@ class ProductController extends Controller
         $product->save();
 
         return response()->json($product, 200);
+    }
+
+    public function getTotalProduct() {
+        $total = Product::count();
+        $status = array('count' => $total);        
+        return response()->json($status,200);
     }
 }

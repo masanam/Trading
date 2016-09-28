@@ -1,12 +1,22 @@
 'use strict';
 
-angular.module('lead').controller('LeadController', ['$scope', '$state', '$http', '$stateParams', 'Buyer', 'Seller', 'Vendor', 'Contact', 'Lead',  
-	function($scope, $state, $http, $stateParams, Buyer, Seller, Vendor, Contact, Lead) {
+angular.module('lead').controller('LeadController', ['$scope', '$state', '$http', '$stateParams', 'Buyer', 'Seller', 'Vendor', 'Contact', 'Mine', 'Product', 'Lead',  
+	function($scope, $state, $http, $stateParams, Buyer, Seller, Vendor, Contact, Mine, Product, Lead) {
 		$scope.searchType = 'buyer';
 		$scope.leads = [];
 		$scope.lead = {};		
 		$scope.totalBuyer = {};
 		$scope.$stateParams = $stateParams;
+    
+    $scope.initSearch = function(){
+      $scope.keyword = $scope.$stateParams.keyword;
+      switch($state.current.name){
+        case 'lead.seller' : $scope.searchType = 'seller'; break;
+        case 'lead.vendor' : $scope.searchType = 'vendor';  break;
+        case 'lead.contact' : $scope.searchType = 'contact'; break;
+        default : $scope.searchType = 'buyer';
+      }
+    }
 
 		$scope.search = function() {
 			switch($scope.searchType){
@@ -30,5 +40,7 @@ angular.module('lead').controller('LeadController', ['$scope', '$state', '$http'
 			$scope.totalSeller = Seller.get({action : 'total'});
 			$scope.totalVendor = Vendor.get({action : 'total'});
 			$scope.totalContact = Contact.get({action : 'total'});
+			$scope.totalMine = Mine.get({action : 'total'});
+			$scope.totalProduct = Product.get({action : 'total'});
 		};
 }]);
