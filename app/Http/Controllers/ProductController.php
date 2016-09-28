@@ -11,7 +11,7 @@ use App\Http\Requests;
 class ProductController extends Controller
 {
     public function __construct() {
-        $this->middleware('jwt.auth');
+        // $this->middleware('jwt.auth');
     }
     /**
      * Display a listing of the resource.
@@ -62,8 +62,8 @@ class ProductController extends Controller
 
         $product->commercial_term = $request->commercial_term;
 
-        $product->ready_date = $request->ready_date;
-        $product->expired_date = $request->expired_date;
+        $product->ready_date = date('Y-m-d', $request->ready_date);
+        $product->expired_date = date('Y-m-d', $request->expired_date);
 
         $product->gcv_arb_min = $request->gcv_arb_min;
         $product->gcv_arb_max = $request->gcv_arb_max;
@@ -82,6 +82,10 @@ class ProductController extends Controller
         $product->ash_reject = $request->ash_reject;
         $product->ash_bonus = $request->ash_bonus;
         $product->ts_min = $request->ts_min; 
+        $product->ts_max = $request->ts_max;
+        $product->ts_reject = $request->ts_reject;
+        $product->ts_bonus = $request->ts_bonus;
+        $product->tm_min = $request->tm_min;
         $product->tm_max = $request->tm_max;
         $product->tm_reject = $request->tm_reject;
         $product->tm_bonus = $request->tm_bonus;
@@ -201,7 +205,7 @@ class ProductController extends Controller
         $product->size_bonus = $request->size_bonus;
 
         $product->volume = $request->volume;
-        
+
         $product->save();
 
         return response()->json($product, 200);
