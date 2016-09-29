@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 
 use App\Model\User;
 
+use Auth;
+
 use App\Http\Requests;
 
 class AuthenticateController extends Controller
@@ -42,7 +44,11 @@ class AuthenticateController extends Controller
         }
 
         // if no errors are encountered we can return a JWT
-        return response()->json(compact('token', 'user'));
+        return response()->json([
+            'success' => TRUE,
+            'token' => compact('token', 'user'),
+            'data' => Auth::user()->id
+            ], 200);
     }
 
     public function signup(Request $request)
@@ -60,7 +66,11 @@ class AuthenticateController extends Controller
 
         $token = JWTAuth::fromUser($user);
 
-        return response()->json(compact('token', 'user'));
+        return response()->json([
+            'success' => TRUE,
+            'token' => compact('token', 'user'),
+            'data' => Auth::user()->id
+            ], 200);
     }
  
     public function getAuthenticatedUser()
@@ -86,6 +96,9 @@ class AuthenticateController extends Controller
         }
  
         // the token is valid and we have found the user via the sub claim
-        return response()->json(compact('user'));
+        return response()->json([
+            'success' => TRUE,
+            'token' => compact('user')
+            ], 200);
     }
 }

@@ -12,7 +12,7 @@ use App\Http\Requests;
 class BuyerController extends Controller
 {
     public function __construct() {
-        $this->middleware('jwt.auth');
+        // $this->middleware('jwt.auth');
     }
     /**
      * Display a listing of the resource.
@@ -27,7 +27,7 @@ class BuyerController extends Controller
             // $buyer = Buyer::search($search)->where('status', 'a')->get();
             $buyer = Buyer::where('status', 'a')->where('company_name', 'LIKE', '%'.$search.'%')->get();
         }
-        return response()->json($buyer, 200);
+        return response()->json(['success' => TRUE, $buyer], 200);
     }
     
     /**
@@ -43,7 +43,7 @@ class BuyerController extends Controller
             // $buyer = Buyer::search($search)->where('status', 'a')->get();
             $buyer = Buyer::where('status', 'a')->where('company_name', 'LIKE', '%'.$search.'%')->get();
         }
-        return response()->json($buyer, 200);
+        return response()->json(['success' => TRUE, $buyer], 200);
     }
 
     /**
@@ -82,7 +82,7 @@ class BuyerController extends Controller
         $buyer->status = $request->status;
         $buyer->save();
 
-        return response()->json($buyer, 200);
+        return response()->json(['success' => TRUE, $buyer], 200);
     }
 
     /**
@@ -97,7 +97,7 @@ class BuyerController extends Controller
         $buyer = Buyer::with('Contact', 'Product')->find($id);
         
         if($buyer->status == 'a') {
-            return response()->json($buyer, 200);
+            return response()->json(['success' => TRUE, $buyer], 200);
         } else {
             return response()->json(['message' => 'deactivated record'], 404);
         }
@@ -145,7 +145,7 @@ class BuyerController extends Controller
         $buyer->status = $request->status;
         $buyer->save();
 
-        return response()->json($buyer, 200);
+        return response()->json(['success' => TRUE, $buyer], 200);
     }
 
     /**
@@ -165,18 +165,18 @@ class BuyerController extends Controller
         $buyer->status = 'x';
         $buyer->save();
 
-        return response()->json($buyer, 200);
+        return response()->json(['success' => TRUE, $buyer], 200);
     }
 
     public function getBuyerByName($name) {
         $buyer = Buyer::where('company_name', 'like', '%'.$name.'%')->get();
 
-        return response()->json($buyer, 200);
+        return response()->json(['success' => TRUE, $buyer], 200);
     }
 
     public function getTotalBuyer() {
         $total = Buyer::count();
         $status = array('count' => $total);        
-        return response()->json($status,200);
+        return response()->json(['success' => TRUE, $status],200);
     }
 }

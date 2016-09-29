@@ -24,7 +24,7 @@ class NewsController extends Controller
 			$news->save();
 		}
 
-		return response()->json(json_decode($news->news), 200);
+		return response()->json(['success'=>TRUE , json_decode($news->news)], 200);
 	}
 
 	public function refreshNews()
@@ -40,6 +40,6 @@ class NewsController extends Controller
 		$news->news = json_encode($json['posts']);
 		$news->save();
 
-		return response()->json(json_decode($news->news), 200);
+		return response()->json(['success'=>TRUE , json_decode($news->news)], 200);
 	}
 }

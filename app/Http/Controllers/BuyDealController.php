@@ -32,7 +32,10 @@ class BuyDealController extends Controller
                              'BuyOrder.Buyer.User', 'User', 'Deal'
                         )->get();
 
-        return response()->json($buy_deal, 200);
+        return response()->json([
+            'success' => TRUE,
+            $buy_deal
+            ], 200);
     }
 
     /**
@@ -45,7 +48,7 @@ class BuyDealController extends Controller
     {
         if(!$request) {
             return response()->json([
-                'message' => 'Bad Request'
+                'error' => 'Bad Request'
             ], 400);
         }
 
@@ -80,7 +83,10 @@ class BuyDealController extends Controller
         
         }
 
-        return response()->json($buy_deal, 200);
+        return response()->json([
+            'success' => TRUE,
+            $buy_deal
+            ], 200);
     }
 
     /**
@@ -98,12 +104,15 @@ class BuyDealController extends Controller
 
         if($buy_deal) {
             if($buy_deal->status == 'a') {
-                return response()->json($buy_deal, 200);
+                return response()->json([
+                    'success' => TRUE,
+                    $buy_deal
+                    ], 200);
             } else {
-                return response()->json(['message' => 'deactivated record'], 404);
+                return response()->json(['error' => 'deactivated record'], 404);
             }
         } else {
-            return response()->json('Not found', 404);
+            return response()->json(['error' => 'Not found'], 404);
         }
     }
     
@@ -117,13 +126,16 @@ class BuyDealController extends Controller
     {
         if (!$dealId) {
             return response()->json([
-                'message' => 'Not found'
+                'error' => 'Not found'
             ] ,404);
         }
 
         $buy_deal = DB::table('buy_deal')->where('deal_id', $dealId)->update(['status' => 'x']);
 
-        return response()->json($buy_deal, 200);
+        return response()->json([
+            'success' => TRUE,
+            $buy_deal
+            ], 200);
     }
     
     // Get Buy Deal by Deal ID
@@ -133,7 +145,10 @@ class BuyDealController extends Controller
                ->get();
 
 
-        return response()->json($buy_deal, 200);
+        return response()->json([
+            'success' => TRUE,
+            $buy_deal
+            ], 200);
     }
 
     /**
@@ -147,13 +162,13 @@ class BuyDealController extends Controller
     {
         if (!$request) {
             return response()->json([
-                'message' => 'Bad Request'
+                'error' => 'Bad Request'
             ], 400);
         }
 
         if (!$buy_deal) {
             return response()->json([
-                'message' => 'Not found'
+                'error' => 'Not found'
             ] ,404);
         }
 
@@ -163,7 +178,10 @@ class BuyDealController extends Controller
         $buy_deal->status = "a";
         $buy_deal->save();
 
-        return response()->json($buy_deal, 200);
+        return response()->json([
+            'success' => TRUE,
+            $buy_deal
+            ], 200);
     }
 
     /**
@@ -176,20 +194,23 @@ class BuyDealController extends Controller
     {
         if (!$buy_deal) {
             return response()->json([
-                'message' => 'Not found'
+                'error' => 'Not found'
             ] ,404);
         }
 
         $buy_deal->status = 'x';
         $buy_deal->save();
 
-        return response()->json($buy_deal, 200);
+        return response()->json([
+            'success' => TRUE,
+            $buy_deal
+            ], 200);
     }
 
     public function approval(Request $request, $buy_deal, $approval) {
         if (!$buy_deal) {
             return response()->json([
-                'message' => 'Not found'
+                'error' => 'Not found'
             ] ,404);
         }
 
@@ -205,6 +226,9 @@ class BuyDealController extends Controller
 
         event(new \App\Events\BuyDealApprovalNotification($buy_deal_approval));
 
-        return response()->json($buy_deal_approval, 200);
+        return response()->json([
+            'success' => TRUE,
+            $buy_deal_approval
+            ], 200);
     }
 }
