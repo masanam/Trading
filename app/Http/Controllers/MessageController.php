@@ -22,7 +22,7 @@ class MessageController extends Controller
             ['user_id', '=' , $user]
             ])->get();
 
-        return response()->json(['success' => TRUE, $message], 200);
+        return response()->json($message, 200);
     }
 
     public function store(Request $request) {
@@ -34,6 +34,6 @@ class MessageController extends Controller
 
     	event(new MessageReceived($message));
 
-    	return response()->json(['success' => TRUE, $message], 200);
+    	return response()->json($message, 200);
     }
 }

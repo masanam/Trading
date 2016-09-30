@@ -59,6 +59,6 @@ class LeadController extends Controller
 
         $leads = $leads->sortBy('order_date');
 
-        return response()->json(['success' => TRUE, $leads], 200);
+        return response()->json($leads, 200);
     }
 }

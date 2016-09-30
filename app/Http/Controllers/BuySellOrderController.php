@@ -45,7 +45,7 @@ class BuySellOrderController extends Controller
 
         $buy_sell_order = $buy_sell_order->sortBy('order_date');
 
-        return response()->json(['success' => TRUE, $buy_sell_order], 200);
+        return response()->json($buy_sell_order, 200);
     }
 
     public function lastOrderByUser($type, $id) {
@@ -61,6 +61,6 @@ class BuySellOrderController extends Controller
                             )->first();
         }
 
-        return response()->json(['success' => TRUE, $buy_sell_order], 200);
+        return response()->json($buy_sell_order, 200);
     }
 }

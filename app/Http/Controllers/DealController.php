@@ -66,7 +66,7 @@ class DealController extends Controller
           )
           ->get();
         
-        return response()->json(['success' => TRUE, $deal], 200);
+        return response()->json($deal, 200);
     }
 
     /**
@@ -88,7 +88,7 @@ class DealController extends Controller
         $deal->status = 'a';
         $deal->save();
 
-        return response()->json(['success' => TRUE, $deal], 200);
+        return response()->json($deal, 200);
     }
 
     /**
@@ -136,7 +136,7 @@ class DealController extends Controller
           ->first();
 
         //if($deal->status == 'a') {
-            return response()->json(['success' => TRUE, $deal], 200);
+            return response()->json($deal, 200);
         /*} else {
             return response()->json(['message' => 'deactivated record'], 404);
         }*/
@@ -166,7 +166,7 @@ class DealController extends Controller
         $deal->user_id = $request->user_id;
         $deal->save();
 
-        return response()->json(['success' => TRUE, $deal], 200);
+        return response()->json($deal, 200);
     }
 
     /**
@@ -191,7 +191,7 @@ class DealController extends Controller
     //     /*$deal->status = 'x';
     //     $deal->save();*/
 
-    //     return response()->json(['success' => TRUE, $deal], 200);
+    //     return response()->json($deal, 200);
     // }
     
     /**
@@ -218,6 +218,6 @@ class DealController extends Controller
         // ->limit(1)  // optional - to ensure only one record is updated.
         // ->update(array('status' => 'f'));  // update the record in the DB. 
 
-        return response()->json(['success' => TRUE, $deal], 200);
+        return response()->json($deal, 200);
     }
 }

@@ -22,7 +22,7 @@ class SellOrderController extends Controller
     {
         $sell_order = SellOrder::where('status', 'a')->get();
 
-        return response()->json(['success' => TRUE, $sell_order], 200);
+        return response()->json($sell_order, 200);
     }
 
     /**
@@ -104,7 +104,7 @@ class SellOrderController extends Controller
         
         $sell_order->save();
 
-        return response()->json(['success' => TRUE, $sell_order], 200);
+        return response()->json($sell_order, 200);
     }
 
     /**
@@ -116,7 +116,7 @@ class SellOrderController extends Controller
     public function show(SellOrder $sell_order)
     {
         if($sell_order->status == 'a') {
-            return response()->json(['success' => TRUE, $sell_order], 200);
+            return response()->json($sell_order, 200);
         } else {
             return response()->json(['message' => 'deactivated record'], 404);
         }
@@ -206,7 +206,7 @@ class SellOrderController extends Controller
 
         $sell_order->save();
 
-        return response()->json(['success' => TRUE, $sell_order], 200);
+        return response()->json($sell_order, 200);
     }
 
     /**
@@ -226,6 +226,6 @@ class SellOrderController extends Controller
         $sell_order->status = 'x';
         $sell_order->save();
 
-        return response()->json(['success' => TRUE, $sell_order], 200);
+        return response()->json($sell_order, 200);
     }
 }

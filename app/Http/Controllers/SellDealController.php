@@ -28,7 +28,7 @@ class SellDealController extends Controller
     {
         $sell_deal = SellDeal::where('status', 'a')->get();
 
-        return response()->json(['success' => TRUE, $sell_deal], 200);
+        return response()->json($sell_deal, 200);
     }
 
     /**
@@ -74,7 +74,7 @@ class SellDealController extends Controller
         event(new \App\Events\SellDealNotification($sell_deal));
         event(new \App\Events\SellDealApprovalNotification($sell_deal_approval));
 
-        return response()->json(['success' => TRUE, $sell_deal], 200);
+        return response()->json($sell_deal, 200);
     }
 
     /**
@@ -86,7 +86,7 @@ class SellDealController extends Controller
     public function show(SellDeal $sell_deal)
     {
         if($sell_deal->status == 'a') {
-            return response()->json(['success' => TRUE, $sell_deal], 200);
+            return response()->json($sell_deal, 200);
         } else {
             return response()->json(['message' => 'deactivated record'], 404);
         }
@@ -119,7 +119,7 @@ class SellDealController extends Controller
         $sell_deal->status = "a";
         $sell_deal->save();
 
-        return response()->json(['success' => TRUE, $sell_deal], 200);
+        return response()->json($sell_deal, 200);
     }
 
     /**
@@ -139,7 +139,7 @@ class SellDealController extends Controller
         $sell_deal->status = 'x';
         $sell_deal->save();
 
-        return response()->json(['success' => TRUE, $sell_deal], 200);
+        return response()->json($sell_deal, 200);
     }
     
     /**
@@ -158,7 +158,7 @@ class SellDealController extends Controller
 
        $sell_deal = DB::table('sell_deal')->where('deal_id', $dealId)->update(['status' => 'x']);
 
-       return response()->json(['success' => TRUE, $sell_deal], 200);
+       return response()->json($sell_deal, 200);
     }
     
     // Get Sell Deal by Deal ID
@@ -174,7 +174,7 @@ class SellDealController extends Controller
              ->get();
 
 
-      return response()->json(['success' => TRUE, $sell_deal], 200);
+      return response()->json($sell_deal, 200);
     }
 
     public function approval(Request $request, $sell_deal, $approval) {
@@ -196,6 +196,6 @@ class SellDealController extends Controller
 
         event(new \App\Events\SellDealApprovalNotification($sell_deal_approval));
 
-        return response()->json(['success' => TRUE, $sell_deal_approval], 200);
+        return response()->json($sell_deal_approval, 200);
     }
 }

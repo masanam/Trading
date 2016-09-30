@@ -22,7 +22,7 @@ class ProductController extends Controller
     {
         $product = Product::where('status', 'a')->get();
 
-        return response()->json(['success' => TRUE, $product], 200);
+        return response()->json($product, 200);
     }
 
     /**
@@ -38,7 +38,7 @@ class ProductController extends Controller
             $product = Product::where('status', 'a')->where('product_name', 'LIKE', '%'.$search.'%')->get();
         }
 
-        return response()->json(['success' => TRUE, $product], 200);
+        return response()->json($product, 200);
     }
 
 
@@ -116,7 +116,7 @@ class ProductController extends Controller
 
         $product->save();
 
-        return response()->json(['success' => TRUE, $product], 200);
+        return response()->json($product, 200);
     }
 
     /**
@@ -128,7 +128,7 @@ class ProductController extends Controller
     public function show(Product $product)
     {
         if($product->status == 'a') {
-            return response()->json(['success' => TRUE, $product], 200);
+            return response()->json($product, 200);
         } else {
             return response()->json(['message' => 'deactivated record'], 404);
         }
@@ -208,7 +208,7 @@ class ProductController extends Controller
 
         $product->save();
 
-        return response()->json(['success' => TRUE, $product], 200);
+        return response()->json($product, 200);
     }
 
     /**
@@ -228,12 +228,12 @@ class ProductController extends Controller
         $product->status = 'x';
         $product->save();
 
-        return response()->json(['success' => TRUE, $product], 200);
+        return response()->json($product, 200);
     }
 
     public function getTotalProduct() {
         $total = Product::count();
         $status = array('count' => $total);        
-        return response()->json(['success' => TRUE, $status], 200);
+        return response()->json($status, 200);
     }
 }

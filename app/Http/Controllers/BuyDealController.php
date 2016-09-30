@@ -32,10 +32,7 @@ class BuyDealController extends Controller
                              'BuyOrder.Buyer.User', 'User', 'Deal'
                         )->get();
 
-        return response()->json([
-            'success' => TRUE,
-            $buy_deal
-            ], 200);
+        return response()->json($buy_deal, 200);
     }
 
     /**
@@ -83,10 +80,7 @@ class BuyDealController extends Controller
         
         }
 
-        return response()->json([
-            'success' => TRUE,
-            $buy_deal
-            ], 200);
+        return response()->json($buy_deal, 200);
     }
 
     /**
@@ -132,23 +126,29 @@ class BuyDealController extends Controller
 
         $buy_deal = DB::table('buy_deal')->where('deal_id', $dealId)->update(['status' => 'x']);
 
-        return response()->json([
-            'success' => TRUE,
-            $buy_deal
-            ], 200);
+        return response()->json($buy_deal, 200);
     }
     
-    // Get Buy Deal by Deal ID
+    // Get All Buy Deal by Deal ID
     public function getByDeal($dealId) {
         $buy_deal = BuyDeal::with('BuyOrder', 'BuyOrder.Buyer')->where([['deal_id', $dealId], ['status', 'a']])
                ->orderBy('id', 'asc')
                ->get();
 
 
-        return response()->json([
-            'success' => TRUE,
-            $buy_deal
-            ], 200);
+        return response()->json($buy_deal, 200);
+    }
+
+    // Get One Buy Deal by Deal ID
+    public function getOneByDeal($buy_deal, $dealId) {
+        $buy_deal = BuyDeal::with('BuyOrder', 'BuyOrder.Buyer')
+                    ->where([['deal_id', $dealId], 
+                      ['status', 'a']])
+               ->orderBy('id', 'asc')
+               ->find($buy_deal);
+
+
+        return response()->json($buy_deal, 200);
     }
 
     /**
@@ -178,10 +178,7 @@ class BuyDealController extends Controller
         $buy_deal->status = "a";
         $buy_deal->save();
 
-        return response()->json([
-            'success' => TRUE,
-            $buy_deal
-            ], 200);
+        return response()->json($buy_deal, 200);
     }
 
     /**
@@ -201,10 +198,7 @@ class BuyDealController extends Controller
         $buy_deal->status = 'x';
         $buy_deal->save();
 
-        return response()->json([
-            'success' => TRUE,
-            $buy_deal
-            ], 200);
+        return response()->json($buy_deal, 200);
     }
 
     public function approval(Request $request, $buy_deal, $approval) {
@@ -226,9 +220,6 @@ class BuyDealController extends Controller
 
         event(new \App\Events\BuyDealApprovalNotification($buy_deal_approval));
 
-        return response()->json([
-            'success' => TRUE,
-            $buy_deal_approval
-            ], 200);
+        return response()->json($buy_deal_approval, 200);
     }
 }

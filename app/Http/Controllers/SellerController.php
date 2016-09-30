@@ -29,7 +29,7 @@ class SellerController extends Controller
             $seller = Seller::where('status', 'a')->where('company_name', 'LIKE', '%'.$search.'%')->get();
         }
 
-        return response()->json(['success' => TRUE, $seller], 200);
+        return response()->json($seller, 200);
     }
     
     /**
@@ -45,7 +45,7 @@ class SellerController extends Controller
             $seller = Seller::where('status', 'a')->where('company_name', 'LIKE', '%'.$search.'%')->get();
         }
 
-        return response()->json(['success' => TRUE, $seller], 200);
+        return response()->json($seller, 200);
     }
 
     /**
@@ -77,7 +77,7 @@ class SellerController extends Controller
         $seller->status = 'a';
         $seller->save();
 
-        return response()->json(['success' => TRUE, $seller], 200);
+        return response()->json($seller, 200);
     }
 
     /**
@@ -94,7 +94,7 @@ class SellerController extends Controller
 
         if($seller) {
             if($seller->status == 'a') {
-                return response()->json(['success' => TRUE, $seller], 200);
+                return response()->json($seller, 200);
             } else {
                 return response()->json(['message' => 'deactivated record'], 404);
             }
@@ -146,7 +146,7 @@ class SellerController extends Controller
         $seller->status = $request->status;
         $seller->save();
 
-        return response()->json(['success' => TRUE, $seller], 200);
+        return response()->json($seller, 200);
     }
 
     /**
@@ -166,18 +166,18 @@ class SellerController extends Controller
         $seller->status = 'x';
         $seller->save();
 
-        return response()->json(['success' => TRUE, $seller], 200);
+        return response()->json($seller, 200);
     }
 
     public function getSellerByName($name) {
         $seller = Seller::wherewhere('company_name', 'like', '%'.$name.'%')->get();
 
-        return response()->json(['success' => TRUE, $seller], 200);
+        return response()->json($seller, 200);
     }
 
     public function getTotalSeller() {
         $total = Seller::count();
         $status = array('count' => $total);        
-        return response()->json(['success' => TRUE, $status], 200);
+        return response()->json($status, 200);
     }
 }

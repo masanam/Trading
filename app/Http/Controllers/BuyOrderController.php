@@ -26,10 +26,7 @@ class BuyOrderController extends Controller
     {
 
         $buy_order = BuyOrder::where('status', 'a')->get();
-        return response()->json([
-            'success' => TRUE,
-            $buy_order
-            ], 200);
+        return response()->json($buy_order, 200);
     }
 
     /**
@@ -113,10 +110,7 @@ class BuyOrderController extends Controller
 
         // $activity = $this->storeActivity($buy_order->buyer_id, 'create', 'BuyOrder', $buy_order->id);
 
-        return response()->json([
-            'success' => TRUE,
-            $buy_order
-            ], 200);
+        return response()->json($buy_order, 200);
     }
 
     /**
@@ -221,10 +215,7 @@ class BuyOrderController extends Controller
 
         $buy_order->save();
 
-        return response()->json([
-            'success' => TRUE,
-            $buy_order
-            ], 200);
+        return response()->json($buy_order, 200);
     }
 
     /**
@@ -244,10 +235,7 @@ class BuyOrderController extends Controller
         $buy_order->status = 'x';
         $buy_order->save();
 
-        return response()->json([
-            'success' => TRUE,
-            $buy_order
-            ], 200);
+        return response()->json($buy_order, 200);
     }
 
     // public function indexDetailed () {

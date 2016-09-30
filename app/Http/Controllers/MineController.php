@@ -24,7 +24,7 @@ class MineController extends Controller
     {
         $mine = Mine::where('status', 'a')->get();
 
-        return response()->json(['success' => TRUE, $mine], 200);
+        return response()->json($mine, 200);
     }
 
 
@@ -41,7 +41,7 @@ class MineController extends Controller
             $mine = Mine::where('status', 'a')->where('mine_name', 'LIKE', '%'.$search.'%')->get();
         }
 
-        return response()->json(['success' => TRUE, $mine], 200);
+        return response()->json($mine, 200);
     }
 
 
@@ -75,7 +75,7 @@ class MineController extends Controller
         $mine->status = 'a';
         $mine->save();
 
-        return response()->json(['success' => TRUE, $mine], 200);
+        return response()->json($mine, 200);
     }
 
     /**
@@ -87,7 +87,7 @@ class MineController extends Controller
     public function show(Mine $mine)
     {
         if($mine->status == 'a') {
-            return response()->json(['success' => TRUE, $mine], 200);
+            return response()->json($mine, 200);
         } else {
             return response()->json(['message' => 'deactivated record'], 404);
         }
@@ -129,7 +129,7 @@ class MineController extends Controller
 
         $mine->save();
 
-        return response()->json(['success' => TRUE, $mine], 200);
+        return response()->json($mine, 200);
     }
     
     /**
@@ -149,7 +149,7 @@ class MineController extends Controller
 
         $mine = DB::table('mines')->where('id', $id)->update(['status' => 'x']);
 
-        return response()->json(['success' => TRUE, $mine], 200);
+        return response()->json($mine, 200);
     }
 
 
@@ -157,6 +157,6 @@ class MineController extends Controller
     public function getTotalMine() {
         $total = Mine::count();
         $status = array('count' => $total);        
-        return response()->json(['success' => TRUE, $status], 200);
+        return response()->json($status, 200);
     }
 }

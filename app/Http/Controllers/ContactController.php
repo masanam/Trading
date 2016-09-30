@@ -26,7 +26,7 @@ class ContactController extends Controller
         } else {
             $contact = Contact::where('status', 'a')->where('name', 'LIKE', '%'.$search.'%')->get();
         }
-        return response()->json(['success' => TRUE, $contact], 200);
+        return response()->json($contact, 200);
     }
     
     /**
@@ -41,7 +41,7 @@ class ContactController extends Controller
         } else {
             $contact = Contact::where('status', 'a')->where('name', 'LIKE', '%'.$search.'%')->get();
         }
-        return response()->json(['success' => TRUE, $contact], 200);
+        return response()->json($contact, 200);
     }
 
     /**
@@ -70,7 +70,7 @@ class ContactController extends Controller
         $contact->status = 'a';
         $contact->save();
 
-        return response()->json(['success' => TRUE, $contact], 200);
+        return response()->json($contact, 200);
     }
 
     /**
@@ -83,7 +83,7 @@ class ContactController extends Controller
     {
 
         if($contact->status == 'a') {
-            return response()->json(['success' => TRUE, $contact], 200);
+            return response()->json($contact, 200);
         } else {
             return response()->json(['message' => 'deactivated record'], 404);
         }
@@ -119,7 +119,7 @@ class ContactController extends Controller
         $contact->email = $request->email;
         $contact->save();
 
-        return response()->json(['success' => TRUE, $contact], 200);
+        return response()->json($contact, 200);
     }
 
     /**
@@ -139,18 +139,18 @@ class ContactController extends Controller
 
         $contact = DB::table('contacts')->where('id', $id)->update(['status' => 'x']);
 
-        return response()->json(['success' => TRUE, $contact], 200);
+        return response()->json($contact, 200);
     }
 
     public function getContactByName($name) {
         $contact = Contact::where('company_name', 'like', '%'.$name.'%')->get();
 
-        return response()->json(['success' => TRUE, $contact], 200);
+        return response()->json($contact, 200);
     }
 
     public function getTotalContact() {
         $total = Contact::count();
         $status = array('count' => $total);        
-        return response()->json(['success' => TRUE, $status], 200);
+        return response()->json($status, 200);
     }
 }
