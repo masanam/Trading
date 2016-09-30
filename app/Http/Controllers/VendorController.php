@@ -26,7 +26,7 @@ class VendorController extends Controller
             $vendor = Vendor::where('status', 'a')->where('company_name', 'LIKE', '%'.$search.'%')->get();
         }
 
-        return response()->json($vendor, 200);
+        return response()->json(['success' => TRUE, $vendor], 200);
     }
     
     /**
@@ -42,7 +42,7 @@ class VendorController extends Controller
             $vendor = Vendor::where('status', 'a')->where('company_name', 'LIKE', '%'.$search.'%')->get();
         }
 
-        return response()->json($vendor, 200);
+        return response()->json(['success' => TRUE, $vendor], 200);
     }
 
     /**
@@ -76,7 +76,7 @@ class VendorController extends Controller
         $vendor->status = 'a';
         $vendor->save();
 
-        return response()->json($vendor, 200);
+        return response()->json(['success' => TRUE, $vendor], 200);
     }
 
     /**
@@ -88,7 +88,7 @@ class VendorController extends Controller
     public function show(Vendor $vendor)
     {
         if($vendor->status == 'a') {
-            return response()->json($vendor, 200);
+            return response()->json(['success' => TRUE, $vendor], 200);
         } else {
             return response()->json(['message' => 'deactivated record'], 404);
         }
@@ -130,7 +130,7 @@ class VendorController extends Controller
 
         $vendor->save();
 
-        return response()->json($vendor, 200);
+        return response()->json(['success' => TRUE, $vendor], 200);
     }
 
     /**
@@ -150,18 +150,18 @@ class VendorController extends Controller
         $vendor->status = 'x';
         $vendor->save();
 
-        return response()->json($vendor, 200);
+        return response()->json(['success' => TRUE, $vendor], 200);
     }
 
     public function getVendorByName($name) {
         $vendor = Buyer::wherewhere('company_name', 'like', '%'.$name.'%')->get();
 
-        return response()->json($vendor, 200);
+        return response()->json(['success' => TRUE, $vendor], 200);
     }
 
     public function getTotalVendor() {
         $total = Vendor::count();
         $status = array('count' => $total);        
-        return response()->json($status,200);
+        return response()->json(['success' => TRUE, $status], 200);
     }
 }

@@ -45,6 +45,22 @@ class BuySellOrderController extends Controller
 
         $buy_sell_order = $buy_sell_order->sortBy('order_date');
 
-        return response()->json($buy_sell_order, 200);
+        return response()->json(['success' => TRUE, $buy_sell_order], 200);
+    }
+
+    public function lastOrderByUser($type, $id) {
+        if($type == 'buyer') {
+            $buy_sell_order = BuyOrder::where('status', 'a')->where('', $id)
+                            ->with(
+                                'Buyer.company_name', 'BuyOrderPricing', 'User'
+                            )->first();
+        } else if($type == 'seller') {
+            $buy_sell_order = SellOrder::where('status', 'a')->where('', $id)
+                            ->with(
+                                'Seller.company_name', 'SellOrderPricing', 'User'
+                            )->first();
+        }
+
+        return response()->json(['success' => TRUE, $buy_sell_order], 200);
     }
 }

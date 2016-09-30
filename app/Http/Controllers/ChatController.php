@@ -22,7 +22,7 @@ class ChatController extends Controller
     public function index($user) {
         $chat = Chat::with('Message', 'BuyOrder.id')->where('trader_id', $user)->orWhere('approver_id', $user)->get();
 
-        return response()->json($chat, 200);
+        return response()->json(['success' => TRUE, $chat], 200);
     }
 
     public function show($buy_order) {
@@ -35,6 +35,6 @@ class ChatController extends Controller
     		'approver_id' => $request->approver_id,
     	]);
 
-    	return response()->json($chat, 200);
+    	return response()->json(['success' => TRUE, $chat], 200);
     }
 }

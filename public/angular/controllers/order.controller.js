@@ -232,7 +232,7 @@ angular.module('order').controller('OrderController', ['$location', '$scope', '$
 
     $scope.find = function() {
       var id = $stateParams.buyerId;
-      $scope.orders = Order.query({ action: 'lastOrder', buyerId: id });
+      $scope.orders = Order.query({ option: 'lastOrder', type: 'buyer', buyerId: id });
       if(id){
         $scope.findBuyer();
       }

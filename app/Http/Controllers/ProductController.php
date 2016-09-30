@@ -11,7 +11,7 @@ use App\Http\Requests;
 class ProductController extends Controller
 {
     public function __construct() {
-        $this->middleware('jwt.auth');
+        // $this->middleware('jwt.auth');
     }
     /**
      * Display a listing of the resource.
@@ -22,7 +22,7 @@ class ProductController extends Controller
     {
         $product = Product::where('status', 'a')->get();
 
-        return response()->json($product, 200);
+        return response()->json(['success' => TRUE, $product], 200);
     }
 
     /**
@@ -38,7 +38,7 @@ class ProductController extends Controller
             $product = Product::where('status', 'a')->where('product_name', 'LIKE', '%'.$search.'%')->get();
         }
 
-        return response()->json($product, 200);
+        return response()->json(['success' => TRUE, $product], 200);
     }
 
 
@@ -57,64 +57,66 @@ class ProductController extends Controller
         }
 
         $product = new Product();
-        
-        //$product->mine_id= $request->mine_id;
-        $product->commercial_term= $request->commercial_term;
-        
-        $product->volume= $request->volume;
-        
-        $product->ready_date = date('Y-m-d');
-        $product->expired_date = date('Y-m-d');
-        
-        $product->tm_min= $request->tm_min;
-        $product->tm_max= $request->tm_max;
-        $product->tm_reject= $request->tm_reject;
-        $product->tm_bonus= $request->tm_bonus;
-        $product->im_min= $request->im_min;
-        $product->im_max= $request->im_max;
-        $product->im_reject= $request->im_reject;
-        $product->im_bonus= $request->im_bonus;
-        $product->ash_min= $request->ash_min;
-        $product->ash_max= $request->ash_max;
-        $product->ash_reject= $request->ash_reject;
-        $product->ash_bonus= $request->ash_bonus;
-        $product->fc_min= $request->fc_min;
-        $product->fc_max= $request->fc_max;
-        $product->fc_reject= $request->fc_reject;
-        $product->fc_bonus= $request->fc_bonus;
-        $product->vm_min= $request->vm_min;
-        $product->vm_max= $request->vm_max;
-        $product->vm_reject= $request->vm_reject;
-        $product->vm_bonus= $request->vm_bonus;
-        $product->ts_min= $request->ts_min;
-        $product->ts_max= $request->ts_max;
-        $product->ts_reject= $request->ts_reject;
-        $product->ts_bonus= $request->ts_bonus;
-        $product->ncv_min= $request->ncv_min;
-        $product->ncv_max= $request->ncv_max;
-        $product->ncv_reject= $request->ncv_reject;
-        $product->ncv_bonus= $request->ncv_bonus;
-        $product->gcv_arb_min= $request->gcv_arb_min;
-        $product->gcv_arb_max= $request->gcv_arb_max;
-        $product->gcv_arb_reject= $request->gcv_arb_reject;
-        $product->gcv_arb_bonus= $request->gcv_arb_bonus;
-        $product->gcv_adb_min= $request->gcv_adb_min;
-        $product->gcv_adb_max= $request->gcv_adb_max;
-        $product->gcv_adb_reject= $request->gcv_adb_reject;
-        $product->gcv_adb_bonus= $request->gcv_adb_bonus;
-        $product->hgi_min= $request->hgi_min;
-        $product->hgi_max= $request->hgi_max;
-        $product->hgi_reject= $request->hgi_reject;
-        $product->hgi_bonus= $request->hgi_bonus;
-        $product->size_min= $request->size_min;
-        $product->size_max= $request->size_max;
-        $product->size_reject= $request->size_reject;
-        $product->size_bonus= $request->size_bonus;
+        $product->seller_id = $request->seller_id ? $request->seller_id : NULL;
+        $product->buyer_id = $request->buyer_id ? $request->buyer_id : NULL;
+
+        $product->commercial_term = $request->commercial_term;
+
+        $product->ready_date = $request->ready_date;
+        $product->expired_date = $request->expired_date;
+
+        $product->gcv_arb_min = $request->gcv_arb_min;
+        $product->gcv_arb_max = $request->gcv_arb_max;
+        $product->gcv_arb_reject = $request->gcv_arb_reject;
+        $product->gcv_arb_bonus = $request->gcv_arb_bonus;
+        $product->gcv_adb_min = $request->gcv_adb_min;
+        $product->gcv_adb_max = $request->gcv_adb_max;
+        $product->gcv_adb_reject = $request->gcv_adb_reject;
+        $product->gcv_adb_bonus = $request->gcv_adb_bonus;
+        $product->ncv_min = $request->ncv_min;
+        $product->ncv_max = $request->ncv_max;
+        $product->ncv_reject = $request->ncv_reject;
+        $product->ncv_bonus = $request->ncv_bonus;
+        $product->ash_min = $request->ash_min;
+        $product->ash_max = $request->ash_max;
+        $product->ash_reject = $request->ash_reject;
+        $product->ash_bonus = $request->ash_bonus;
+        $product->ts_min = $request->ts_min; 
+        $product->ts_max = $request->ts_max;
+        $product->ts_reject = $request->ts_reject;
+        $product->ts_bonus = $request->ts_bonus;
+        $product->tm_min = $request->tm_min;
+        $product->tm_max = $request->tm_max;
+        $product->tm_reject = $request->tm_reject;
+        $product->tm_bonus = $request->tm_bonus;
+        $product->im_min = $request->im_min; 
+        $product->im_max = $request->im_max;
+        $product->im_reject = $request->im_reject;
+        $product->im_bonus = $request->im_bonus;
+        $product->fc_min = $request->fc_min; 
+        $product->fc_max = $request->fc_max;
+        $product->fc_reject = $request->fc_reject;
+        $product->fc_bonus = $request->fc_bonus;
+        $product->vm_min = $request->vm_min; 
+        $product->vm_max = $request->vm_max;
+        $product->vm_reject = $request->vm_reject;
+        $product->vm_bonus = $request->vm_bonus;
+        $product->hgi_min = $request->hgi_min;
+        $product->hgi_max = $request->hgi_max;
+        $product->hgi_reject = $request->hgi_reject;
+        $product->hgi_bonus = $request->hgi_bonus;
+        $product->size_min = $request->size_min;
+        $product->size_max = $request->size_max;
+        $product->size_reject = $request->size_reject;
+        $product->size_bonus = $request->size_bonus;
+
+        $product->volume = $request->volume;
+
         $product->status = 'a';
-        
+
         $product->save();
 
-        return response()->json($product, 200);
+        return response()->json(['success' => TRUE, $product], 200);
     }
 
     /**
@@ -126,7 +128,7 @@ class ProductController extends Controller
     public function show(Product $product)
     {
         if($product->status == 'a') {
-            return response()->json($product, 200);
+            return response()->json(['success' => TRUE, $product], 200);
         } else {
             return response()->json(['message' => 'deactivated record'], 404);
         }
@@ -153,62 +155,60 @@ class ProductController extends Controller
             ] ,404);
         }
 
-        //$product->mine_id= $request->mine_id;
-        $product->commercial_term= $request->commercial_term;
-        
-        $product->volume= $request->volume;
-        
-        $product->ready_date = date('Y-m-d');
-        $product->expired_date = date('Y-m-d');
-        
-        $product->tm_min= $request->tm_min;
-        $product->tm_max= $request->tm_max;
-        $product->tm_reject= $request->tm_reject;
-        $product->tm_bonus= $request->tm_bonus;
-        $product->im_min= $request->im_min;
-        $product->im_max= $request->im_max;
-        $product->im_reject= $request->im_reject;
-        $product->im_bonus= $request->im_bonus;
-        $product->ash_min= $request->ash_min;
-        $product->ash_max= $request->ash_max;
-        $product->ash_reject= $request->ash_reject;
-        $product->ash_bonus= $request->ash_bonus;
-        $product->fc_min= $request->fc_min;
-        $product->fc_max= $request->fc_max;
-        $product->fc_reject= $request->fc_reject;
-        $product->fc_bonus= $request->fc_bonus;
-        $product->vm_min= $request->vm_min;
-        $product->vm_max= $request->vm_max;
-        $product->vm_reject= $request->vm_reject;
-        $product->vm_bonus= $request->vm_bonus;
-        $product->ts_min= $request->ts_min;
-        $product->ts_max= $request->ts_max;
-        $product->ts_reject= $request->ts_reject;
-        $product->ts_bonus= $request->ts_bonus;
-        $product->ncv_min= $request->ncv_min;
-        $product->ncv_max= $request->ncv_max;
-        $product->ncv_reject= $request->ncv_reject;
-        $product->ncv_bonus= $request->ncv_bonus;
-        $product->gcv_arb_min= $request->gcv_arb_min;
-        $product->gcv_arb_max= $request->gcv_arb_max;
-        $product->gcv_arb_reject= $request->gcv_arb_reject;
-        $product->gcv_arb_bonus= $request->gcv_arb_bonus;
-        $product->gcv_adb_min= $request->gcv_adb_min;
-        $product->gcv_adb_max= $request->gcv_adb_max;
-        $product->gcv_adb_reject= $request->gcv_adb_reject;
-        $product->gcv_adb_bonus= $request->gcv_adb_bonus;
-        $product->hgi_min= $request->hgi_min;
-        $product->hgi_max= $request->hgi_max;
-        $product->hgi_reject= $request->hgi_reject;
-        $product->hgi_bonus= $request->hgi_bonus;
-        $product->size_min= $request->size_min;
-        $product->size_max= $request->size_max;
-        $product->size_reject= $request->size_reject;
-        $product->size_bonus= $request->size_bonus;
+        $product->seller_id = $request->seller_id ? $request->seller_id : NULL;
+        $product->buyer_id = $request->buyer_id ? $request->buyer_id : NULL;
+
+        $product->commercial_term = $request->commercial_term;
+
+        $product->ready_date = $request->ready_date;
+        $product->expired_date = $request->expired_date;
+
+        $product->gcv_arb_min = $request->gcv_arb_min;
+        $product->gcv_arb_max = $request->gcv_arb_max;
+        $product->gcv_arb_reject = $request->gcv_arb_reject;
+        $product->gcv_arb_bonus = $request->gcv_arb_bonus;
+        $product->gcv_adb_min = $request->gcv_adb_min;
+        $product->gcv_adb_max = $request->gcv_adb_max;
+        $product->gcv_adb_reject = $request->gcv_adb_reject;
+        $product->gcv_adb_bonus = $request->gcv_adb_bonus;
+        $product->ncv_min = $request->ncv_min;
+        $product->ncv_max = $request->ncv_max;
+        $product->ncv_reject = $request->ncv_reject;
+        $product->ncv_bonus = $request->ncv_bonus;
+        $product->ash_min = $request->ash_min;
+        $product->ash_max = $request->ash_max;
+        $product->ash_reject = $request->ash_reject;
+        $product->ash_bonus = $request->ash_bonus;
+        $product->ts_min = $request->ts_min; 
+        $product->tm_max = $request->tm_max;
+        $product->tm_reject = $request->tm_reject;
+        $product->tm_bonus = $request->tm_bonus;
+        $product->im_min = $request->im_min; 
+        $product->im_max = $request->im_max;
+        $product->im_reject = $request->im_reject;
+        $product->im_bonus = $request->im_bonus;
+        $product->fc_min = $request->fc_min; 
+        $product->fc_max = $request->fc_max;
+        $product->fc_reject = $request->fc_reject;
+        $product->fc_bonus = $request->fc_bonus;
+        $product->vm_min = $request->vm_min; 
+        $product->vm_max = $request->vm_max;
+        $product->vm_reject = $request->vm_reject;
+        $product->vm_bonus = $request->vm_bonus;
+        $product->hgi_min = $request->hgi_min;
+        $product->hgi_max = $request->hgi_max;
+        $product->hgi_reject = $request->hgi_reject;
+        $product->hgi_bonus = $request->hgi_bonus;
+        $product->size_min = $request->size_min;
+        $product->size_max = $request->size_max;
+        $product->size_reject = $request->size_reject;
+        $product->size_bonus = $request->size_bonus;
+
+        $product->volume = $request->volume;
 
         $product->save();
 
-        return response()->json($product, 200);
+        return response()->json(['success' => TRUE, $product], 200);
     }
 
     /**
@@ -228,12 +228,12 @@ class ProductController extends Controller
         $product->status = 'x';
         $product->save();
 
-        return response()->json($product, 200);
+        return response()->json(['success' => TRUE, $product], 200);
     }
 
     public function getTotalProduct() {
         $total = Product::count();
         $status = array('count' => $total);        
-        return response()->json($status,200);
+        return response()->json(['success' => TRUE, $status], 200);
     }
 }

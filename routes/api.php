@@ -51,6 +51,9 @@ Route::group(['middleware' => ['cors']], function() {
     Route::resource('sell_order', 'SellOrderController', ['except' => [
         'create', 'edit'
     ]]);
+
+
+    Route::get('buy_sell_order/lastOrder/{type}/{id}', 'BuySellOrderController@lastOrderByUser');
     
     //Route::get('buy_sell_order/lastOrder/{buyerId?}', 'BuySellOrderController@search');
     Route::resource('buy_sell_order', 'BuySellOrderController', ['only' => [

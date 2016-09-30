@@ -23,7 +23,7 @@ class UserController extends Controller
     {
         $user = User::where('status', 'a')->get();
 
-        return response()->json($user, 200);
+        return response()->json(['success' => TRUE, $user], 200);
     }
 
     /**
@@ -54,7 +54,7 @@ class UserController extends Controller
 
         $user->save();
 
-        return response()->json($user, 200);
+        return response()->json(['success' => TRUE, $user], 200);
     }
 
     /**
@@ -66,7 +66,7 @@ class UserController extends Controller
     public function show(User $user)
     {
         if($user->status == 'a') {
-            return response()->json($user, 200);
+            return response()->json(['success' => TRUE, $user], 200);
         } else {
             return response()->json(['message' => 'deactivated record'], 404);
         }    
@@ -110,7 +110,7 @@ class UserController extends Controller
 
         $user->save();
 
-        return response()->json($user, 200);
+        return response()->json(['success' => TRUE, $user], 200);
     }
 
     /**
@@ -130,6 +130,6 @@ class UserController extends Controller
         $user->status = 'x';
         $user->save();
 
-        return response()->json($user, 200);
+        return response()->json(['success' => TRUE, $user], 200);
     }
 }
