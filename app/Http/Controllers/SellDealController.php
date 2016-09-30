@@ -64,15 +64,18 @@ class SellDealController extends Controller
         $config_approver = config('approver');
         
         foreach($config_approver as $approver){
-
           $sell_deal_approval = new SellDealApproval();
           $sell_deal_approval->sell_deal_id = $sell_deal->id;
           $sell_deal_approval->user_id = $sell_deal->user_id;
           $sell_deal_approval->approver = '';
           $sell_deal_approval->status = "p";
           $sell_deal_approval->save();
-        
         }
+
+        $chat->approver_id = $sell_deal_approval->approver;
+        $chat->order_deal_id = $sell_deal->id;
+        $chat->type = 'sell';
+        $chat->save();
 
         event(new \App\Events\SellDealNotification($sell_deal));
         event(new \App\Events\SellDealApprovalNotification($sell_deal_approval));
@@ -194,7 +197,7 @@ class SellDealController extends Controller
     }
 
     // Get One Sell Deal by Deal ID
-    public function getOneByDeal($dealId, $sell_deal) {
+    public function getOneByDeal($sell_deal, $dealId) {
         $sell_deal = SellDeal::with('SellOrder', 'SellOrder.SellOrderPricing', 'SellOrder.Seller',
                              'SellOrder.Seller.User', 'User', 'Deal', 'Chat')
                     ->where([['deal_id', $dealId], 

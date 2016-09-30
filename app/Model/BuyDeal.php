@@ -18,7 +18,7 @@ class BuyDeal extends Model
     }
 
     public function Chat() {
-    	return $this->belongsTo('App\Model\Chat');
+    	return $this->hasOne('App\Model\Chat');
     }
 
     public function BuyDealApproval() {

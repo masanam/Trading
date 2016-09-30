@@ -30,20 +30,18 @@ Route::group(['middleware' => ['cors']], function() {
     Route::resource('contact', 'ContactController', ['except' => [
         'create', 'edit'
     ]]);
-    // Route::get('contact/search/{search?}', 'ContactController@index');
 
     Route::get('buyer/total', 'BuyerController@getTotalBuyer');
+    Route::get('buyer/search/{search?}', 'BuyerController@search');
     Route::resource('buyer', 'BuyerController', ['except' => [
         'create', 'edit'
     ]]);
-    // Route::get('buyer/search/{search?}', 'BuyerController@index');
 
     Route::get('seller/total', 'SellerController@getTotalSeller');
     Route::get('seller/search/{search?}', 'SellerController@search');
     Route::resource('seller', 'SellerController', ['except' => [
         'create', 'edit'
     ]]);
-    // Route::get('seller/search/{search?}', 'SellerController@index');
 
     Route::resource('order/buy', 'BuyOrderController', ['except' => [
         'create', 'edit'
@@ -81,14 +79,14 @@ Route::group(['middleware' => ['cors']], function() {
     
     Route::delete('buy-deal/{dealId}', 'BuyDealController@destroyByDeal');
     Route::get('buy-deal/getByDeal/{dealId}', 'BuyDealController@getByDeal');
-    Route::get('buy-deal/getOneByDeal/{dealId}/{buy_deal}', 'BuyDealController@getOneByDeal');
+    Route::get('buy-deal/{buy_deal}/getOneByDeal/{dealId}', 'BuyDealController@getOneByDeal');
     Route::resource('buy-deal', 'BuyDealController', ['except' => [
         'create', 'edit'
     ]]);
     
     Route::delete('sell-deal/{dealId}', 'SellDealController@destroyByDeal');
     Route::get('sell-deal/getByDeal/{dealId}', 'SellDealController@getByDeal');
-    Route::get('sell-deal/getByDeal/{dealId}/{sell_deal}', 'SellDealController@getOneByDeal');
+    Route::get('sell-deal/{sell_deal}/getOneByDeal/{dealId}', 'SellDealController@getOneByDeal');
     Route::resource('sell-deal', 'SellDealController', ['except' => [
         'create', 'edit'
     ]]);
@@ -103,9 +101,10 @@ Route::group(['middleware' => ['cors']], function() {
         'create', 'edit', 'destroy'
     ]]);
 
-    Route::get('chat/{user}', 'ChatController@index');
-    Route::get('chat/{buy_order}', 'ChatController@show');
-    Route::get('chat/message/{chat}/{user}', 'MessageController@index');
+    Route::post('chat/sendMessage', 'ChatContoller@sendMessage');
+    Route::get('chat/{type}/{user}', 'ChatController@showAllChatsByUser');
+    Route::get('chat/{type}/{order_deal}', 'ChatController@showAllChatsByOrderDeal');
+    Route::get('chat/{type}/{user}/{order_deal}/{chat_id}', 'ChatController@showChat');
 
     Route::get('lead/{search?}', 'LeadController@index');
 

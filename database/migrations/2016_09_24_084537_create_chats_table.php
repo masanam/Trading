@@ -17,6 +17,10 @@ class CreateChatsTable extends Migration
             $table->increments('id');
             $table->integer('trader_id')->unsigned();
             $table->integer('approver_id')->unsigned();
+            $table->integer('order_deal_id')->unsigned();
+
+            $table->string('type'); // buy OR sell
+            
             $table->timestamps();
         });
 

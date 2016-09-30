@@ -53,7 +53,6 @@ class BuyDealController extends Controller
 
         $chat = New Chat();
         $chat->trader_id = $request->user_id;
-        $chat->approver_id = 1;
         $chat->save();
 
         $buy_deal = new BuyDeal();
@@ -67,18 +66,21 @@ class BuyDealController extends Controller
         $config_approver = config('approver');
         
         foreach($config_approver as $approver){
-
           $buy_deal_approval = new BuyDealApproval();
           $buy_deal_approval->buy_deal_id = $buy_deal->id;
           $buy_deal_approval->user_id = $buy_deal->user_id;
           $buy_deal_approval->approver = $approver;
           $buy_deal_approval->status = "p";
           $buy_deal_approval->save();
-
-          event(new \App\Events\BuyDealNotification($buy_deal));
-          event(new \App\Events\BuyDealApprovalNotification($buy_deal_approval));
-        
         }
+
+        $chat->approver_id = $buy_deal_approval->approver;
+        $chat->order_deal_id = $buy_deal->id;
+        $chat->type = 'buy';
+        $chat->save();
+
+        event(new \App\Events\BuyDealNotification($buy_deal));
+        event(new \App\Events\BuyDealApprovalNotification($buy_deal_approval));
 
         return response()->json($buy_deal, 200);
     }
@@ -141,7 +143,7 @@ class BuyDealController extends Controller
     }
 
     // Get One Buy Deal by Deal ID
-    public function getOneByDeal($dealId, $buy_deal) {
+    public function getOneByDeal($buy_deal, $dealId) {
         $buy_deal = BuyDeal::with('BuyOrder', 'BuyOrder.BuyOrderPricing', 'BuyOrder.Buyer',
                              'BuyOrder.Buyer.User', 'User', 'Deal', 'Chat')
                     ->where([['deal_id', $dealId], 

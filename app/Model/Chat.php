@@ -11,11 +11,11 @@ use Illuminate\Database\Eloquent\Model;
 class Chat extends Model
 {
     public function BuyDeal() {
-    	return $this->hasMany('App\Model\BuyDeal');
+    	return $this->belongsTo('App\Model\BuyDeal');
     }
 
     public function SellDeal() {
-    	return $this->hasMany('App\Model\SellDeal');
+    	return $this->belongsTo('App\Model\SellDeal');
     }
 
     public function Message() {

@@ -306,11 +306,11 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
     };
 
     $scope.findOneBuyDeal = function() {
-      $scope.buyDeal = BuyDeal.get();
+      $scope.buyDeal = BuyDeal.get({ id: $scope.buyDeal , action: 'getOneByDeal' , dealId: $scope.deal });
     };
 
     $scope.findOneSellDeal = function() {
-      $scope.sellDeal = SellDeal.get();
+      $scope.sellDeal = SellDeal.get({ id: $scope.sellDeal , action: 'getOneByDeal' , dealId: $scope.deal });
     };
     
     $scope.openChatModal = function () {

@@ -20,7 +20,7 @@ class BuyerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($q = false)
+    public function index($search = false)
     {
         if (!$search) {
             $buyer = Buyer::where('status', 'a')->get();
@@ -36,7 +36,7 @@ class BuyerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function search($search = false)
+    public function search($q = false)
     {
         $buyer = Buyer::where('status', 'a');
         if ($q) $buyer->where('company_name', 'LIKE', '%'.$q.'%');
