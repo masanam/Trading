@@ -26,7 +26,10 @@ class SellDealController extends Controller
      */
     public function index()
     {
-        $sell_deal = SellDeal::where('status', 'a')->get();
+        $sell_deal = SellDeal::where('status', 'a')->with(
+                            'SellOrder', 'SellOrder.SellOrderPricing', 'SellOrder.Seller',
+                             'SellOrder.Seller.User', 'User', 'Deal', 'Chat'
+                        )->get();
 
         return response()->json($sell_deal, 200);
     }
@@ -85,10 +88,22 @@ class SellDealController extends Controller
      */
     public function show(SellDeal $sell_deal)
     {
-        if($sell_deal->status == 'a') {
-            return response()->json($sell_deal, 200);
+        $sell_deal = SellDeal::with(
+                            'SellOrder', 'SellOrder.SellOrderPricing', 'SellOrder.Seller',
+                             'SellOrder.Seller.User', 'User', 'Deal', 'Chat'
+                             )->find($id);
+
+        if($sell_deal) {
+            if($sell_deal->status == 'a') {
+                return response()->json([
+                    'success' => TRUE,
+                    $sell_deal
+                    ], 200);
+            } else {
+                return response()->json(['error' => 'deactivated record'], 404);
+            }
         } else {
-            return response()->json(['message' => 'deactivated record'], 404);
+            return response()->json(['error' => 'Not found'], 404);
         }
     }
 
@@ -169,12 +184,25 @@ class SellDealController extends Controller
           ] ,404);
       }
       
-      $sell_deal = SellDeal::with('SellOrder', 'SellOrder.Seller')->where([['deal_id', $dealId], ['status', 'a']])
+      $sell_deal = SellDeal::with('SellOrder', 'SellOrder.SellOrderPricing', 'SellOrder.Seller',
+                             'SellOrder.Seller.User', 'User', 'Deal', 'Chat')->where([['deal_id', $dealId], ['status', 'a']])
              ->orderBy('id', 'asc')
              ->get();
 
 
       return response()->json($sell_deal, 200);
+    }
+
+    // Get One Sell Deal by Deal ID
+    public function getOneByDeal($dealId, $sell_deal) {
+        $sell_deal = SellDeal::with('SellOrder', 'SellOrder.SellOrderPricing', 'SellOrder.Seller',
+                             'SellOrder.Seller.User', 'User', 'Deal', 'Chat')
+                    ->where([['deal_id', $dealId], 
+                      ['status', 'a']])
+               ->orderBy('id', 'asc')
+               ->find($sell_deal);
+
+        return response()->json($sell_deal, 200);
     }
 
     public function approval(Request $request, $sell_deal, $approval) {
@@ -189,7 +217,7 @@ class SellDealController extends Controller
         $sell_deal_approval = new SellDealApproval();
         $sell_deal_approval->sell_deal_id = $sell_deal->id;
         $sell_deal_approval->user_id = $sell_deal->user_id;
-        $sell_deal_approval->approver = Auth::user()->id;
+        $buy_deal_approval->approver = $request->approver_id;
         $sell_deal_approval->status = $approval;
 
         $sell_deal_approval->save();

@@ -45,19 +45,19 @@ Route::group(['middleware' => ['cors']], function() {
     ]]);
     // Route::get('seller/search/{search?}', 'SellerController@index');
 
-    Route::resource('buy_order', 'BuyOrderController', ['except' => [
+    Route::resource('order/buy', 'BuyOrderController', ['except' => [
         'create', 'edit'
     ]]);
 
-    Route::resource('sell_order', 'SellOrderController', ['except' => [
+    Route::resource('order/sell', 'SellOrderController', ['except' => [
         'create', 'edit'
     ]]);
 
 
-    Route::get('buy_sell_order/lastOrder/{type}/{id}', 'BuySellOrderController@lastOrderByUser');
+    Route::get('order/lastOrder/{type}/{id}', 'BuySellOrderController@lastOrderByUser');
     
     //Route::get('buy_sell_order/lastOrder/{buyerId?}', 'BuySellOrderController@search');
-    Route::resource('buy_sell_order', 'BuySellOrderController', ['only' => [
+    Route::resource('order', 'BuySellOrderController', ['only' => [
         'index'
     ]]);
 
@@ -79,19 +79,21 @@ Route::group(['middleware' => ['cors']], function() {
         'create', 'edit'
     ]]);
     
-    Route::delete('buy_deal/{dealId}', 'BuyDealController@destroyByDeal');
-    Route::get('buy_deal/getByDeal/{dealId?}', 'BuyDealController@getByDeal');
-    Route::resource('buy_deal', 'BuyDealController', ['except' => [
+    Route::delete('buy-deal/{dealId}', 'BuyDealController@destroyByDeal');
+    Route::get('buy-deal/getByDeal/{dealId}', 'BuyDealController@getByDeal');
+    Route::get('buy-deal/getOneByDeal/{dealId}/{buy_deal}', 'BuyDealController@getOneByDeal');
+    Route::resource('buy-deal', 'BuyDealController', ['except' => [
         'create', 'edit'
     ]]);
     
-    Route::delete('sell_deal/{dealId}', 'SellDealController@destroyByDeal');
-    Route::get('sell_deal/getByDeal/{dealId?}', 'SellDealController@getByDeal');
-    Route::resource('sell_deal', 'SellDealController', ['except' => [
+    Route::delete('sell-deal/{dealId}', 'SellDealController@destroyByDeal');
+    Route::get('sell-deal/getByDeal/{dealId}', 'SellDealController@getByDeal');
+    Route::get('sell-deal/getByDeal/{dealId}/{sell_deal}', 'SellDealController@getOneByDeal');
+    Route::resource('sell-deal', 'SellDealController', ['except' => [
         'create', 'edit'
     ]]);
 
-    Route::resource('buy_sell_deal', 'BuySellDealController', ['only' => [
+    Route::resource('order-deal', 'BuySellDealController', ['only' => [
         'index'
     ]]);
     

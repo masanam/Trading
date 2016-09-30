@@ -29,7 +29,7 @@ class BuyDealController extends Controller
         $buy_deal = BuyDeal::where('status', 'a')
                         ->with(
                             'BuyOrder', 'BuyOrder.BuyOrderPricing', 'BuyOrder.Buyer',
-                             'BuyOrder.Buyer.User', 'User', 'Deal'
+                             'BuyOrder.Buyer.User', 'User', 'Deal', 'Chat'
                         )->get();
 
         return response()->json($buy_deal, 200);
@@ -93,7 +93,7 @@ class BuyDealController extends Controller
     {
         $buy_deal = BuyDeal::with(
                             'BuyOrder', 'BuyOrder.BuyOrderPricing', 'BuyOrder.Buyer',
-                             'BuyOrder.Buyer.User', 'User', 'Deal'
+                             'BuyOrder.Buyer.User', 'User', 'Deal', 'Chat'
                              )->find($id);
 
         if($buy_deal) {
@@ -131,7 +131,8 @@ class BuyDealController extends Controller
     
     // Get All Buy Deal by Deal ID
     public function getByDeal($dealId) {
-        $buy_deal = BuyDeal::with('BuyOrder', 'BuyOrder.Buyer')->where([['deal_id', $dealId], ['status', 'a']])
+        $buy_deal = BuyDeal::with('BuyOrder', 'BuyOrder.BuyOrderPricing', 'BuyOrder.Buyer',
+                             'BuyOrder.Buyer.User', 'User', 'Deal', 'Chat')->where([['deal_id', $dealId], ['status', 'a']])
                ->orderBy('id', 'asc')
                ->get();
 
@@ -140,13 +141,13 @@ class BuyDealController extends Controller
     }
 
     // Get One Buy Deal by Deal ID
-    public function getOneByDeal($buy_deal, $dealId) {
-        $buy_deal = BuyDeal::with('BuyOrder', 'BuyOrder.Buyer')
+    public function getOneByDeal($dealId, $buy_deal) {
+        $buy_deal = BuyDeal::with('BuyOrder', 'BuyOrder.BuyOrderPricing', 'BuyOrder.Buyer',
+                             'BuyOrder.Buyer.User', 'User', 'Deal', 'Chat')
                     ->where([['deal_id', $dealId], 
                       ['status', 'a']])
                ->orderBy('id', 'asc')
                ->find($buy_deal);
-
 
         return response()->json($buy_deal, 200);
     }
@@ -213,7 +214,7 @@ class BuyDealController extends Controller
         $buy_deal_approval = new BuyDealApproval();
         $buy_deal_approval->buy_deal_id = $buy_deal->id;
         $buy_deal_approval->user_id = $buy_deal->user_id;
-        $buy_deal_approval->approver = Auth::user()->id;
+        $buy_deal_approval->approver = $request->approver_id;
         $buy_deal_approval->status = $approval;
 
         $buy_deal_approval->save();

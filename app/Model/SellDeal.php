@@ -28,4 +28,8 @@ class SellDeal extends Model
     public function Deal() {
     	return $this->belongsTo('App\Model\Deal');
     }
+
+    public function User() {
+        return $this->belongsTo('App\Model\User');
+    }
 }

@@ -26,7 +26,7 @@ angular.module('order').factory('BuyOrder', ['$resource',
 
 angular.module('order').factory('Order', ['$resource',
 	function ($resource) {
-		return $resource('api/buy_sell_order/:option/:type/:id/:action/:status/:sellerId', {
+		return $resource('api/order/:option/:type/:id/:action/:status/:sellerId', {
     		option:undefined,
     		type:undefined,
 			id: undefined,
