@@ -1,0 +1,40 @@
+<div class="modal-header">
+  <button type="button" class="close" ng-click="close()">&times;</button>
+  <h4 class="modal-title">Product Profile</h4>
+</div>
+<div class="modal-body">
+  <div class="row with-divider">
+    <div class="col-lg-4">
+      <h2>{{ product.commercial_term }}</h2>
+      <p>{{ product.mine.mine_name }}</p>
+      <p>{{ product.mine.seller.company_name }}</p>
+    </div>
+
+    <div class="col-lg-2">
+      <h3>{{ product.volume | number }}</h3>
+      <p>tones</p>
+    </div>
+
+    <div class="col-lg-2">
+      <h3>{{ product.production[0].created_at | convertToDate | date : 'd MMMM yy' }}</h3>
+      <p>Last Production</p>
+    </div>
+    
+    <div class="col-lg-4 btn-group-vertical" style="padding-top:20px;">
+      <button class="btn btn-primary"  ng-click="close()" ui-sref="product.add({ id: product.id })">
+        <i class="glyphicon glyphicon-plus"></i> Add Production
+      </button>
+
+      <button class="btn btn-default"  ng-click="close()" ui-sref="product.opname({ id: product.id })">
+        <i class="glyphicon glyphicon-refresh"></i> Stock Opname
+      </button>
+      <button class="btn btn-default"  ng-click="close()" ui-sref="product.update({ id: product.id })">
+        <i class="glyphicon glyphicon-pencil"></i> Edit Product
+      </button>
+    </div>
+  </div>
+
+  
+    
+   
+  </div>
