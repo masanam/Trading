@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Model\Buyer;
 use App\Model\Contact;
+use Auth;
 
 use Illuminate\Http\Request;
 
@@ -61,7 +62,7 @@ class BuyerController extends Controller
         }
 
         $buyer = new Buyer();
-        $buyer->user_id = $request->user_id;
+        $buyer->user_id = Auth::User()->id;
 
         $buyer->company_name = $request->company_name;
         
@@ -79,7 +80,7 @@ class BuyerController extends Controller
 
         $buyer->description = $request->description;
 
-        $buyer->status = $request->status;
+        $buyer->status = 'a';
         $buyer->save();
 
         return response()->json($buyer, 200);

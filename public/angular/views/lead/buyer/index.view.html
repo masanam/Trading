@@ -5,45 +5,53 @@
 <div class="col-lg-10" ng-controller="BuyerController">
   <section ng-include="'./angular/views/lead/search-bar.view.html'"></section>
   <h1>Buyers</h1>
-  <a class="btn btn-primary" ui-sref="lead.create-buyer">Create New</a>
+  <button ng-click="openCreateBuyerModal()" class="btn btn-primary">+ Create New Buyer</button>
   <br/>
   <br/>
-	<table datatable="ng" class="row-border hover" ng-init="find()">
+  <table st-table="displayedCollection" st-safe-src="buyers" class="table table-striped" ng-init="find()">
     <thead>
-        <tr>
-            <th>#</th>
-            <th>Company</th>
-            <th>Phone</th>
-            <th>Email</th>
-            <th>Last Buy Order Date</th>
-            <th></th>
-        </tr>
+      <tr>
+        <th colspan="2"><input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
+      </tr>
+      <tr>
+          <th st-sort="id">#</th>
+          <th st-sort="company_name">Company</th>
+          <th st-sort="phone">Phone</th>
+          <th st-sort="email">Email</th>
+          <th st-sort="last_order">Last Buy Order Date</th>
+          <th></th>
+      </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="(idx, buyer) in buyers">
-            <td>{{ buyer.id }}</td>
-            <td>
-              {{ buyer.company_name }}
-            </td>
-            <td>{{ buyer.phone }}</td>
-            <td>{{ buyer.email }}</td>
-            <td>
-              <span ng-if="buyer.last_order">{{ buyer.last_order | convertToDate | date : 'd MMMM yy' }}</span>
-              <span ng-if="!buyer.last_order">N/A</span>
-            </td>
-            <td>
-              <a ui-sref="lead.view-buyer({ id: buyer.id })"><i class="glyphicon glyphicon-info-sign"></i></a>
-              <a ui-sref="lead.edit-buyer({ id: buyer.id })"><i class="glyphicon glyphicon-pencil"></i></a>
-              <a ng-click="delete(buyer)"><i class="glyphicon glyphicon-trash"></i></a>
-            </td>
-        </tr>
+      <tr ng-repeat="(idx, buyer) in displayedCollection">
+        <td>{{ buyer.id }}</td>
+        <td>{{ buyer.company_name }}</td>
+        <td>{{ buyer.phone }}</td>
+        <td>{{ buyer.email }}</td>
+        <td>
+          <span ng-if="buyer.last_order">{{ buyer.last_order | convertToDate | date : 'd MMMM yy' }}</span>
+          <span ng-if="!buyer.last_order">N/A</span>
+        </td>
+        <td>
+          <a ui-sref="lead.view-buyer({ id: buyer.id })"><i class="glyphicon glyphicon-info-sign"></i></a>
+          <a ui-sref="lead.update-buyer({ id: buyer.id })"><i class="glyphicon glyphicon-pencil"></i></a>
+          <a ng-click="delete(buyer)"><i class="glyphicon glyphicon-trash"></i></a>
+        </td>
+      </tr>
     </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="6" class="text-center">
+          <div st-pagination="" st-items-by-page="10" st-displayed-pages="7"></div>
+        </td>
+      </tr>
+    </tfoot>
 	</table>
   
-  <div id="createBuyerModal" class="modal fade" role="dialog">
-    <!--div class="modal-dialog"-->
+   <div id="createBuyerModal" class="modal fade" role="dialog">
+    div class="modal-dialog"
     <div>
-      <!-- Modal content-->
+       Modal content
       <div class="modal-content container">
         <div class="modal-header row">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -59,12 +67,12 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> 
 
   <div id="createDemandModal" class="modal fade" role="dialog">
-    <!--div class="modal-dialog"-->
+    div class="modal-dialog"
     <div>
-      <!-- Modal content-->
+       Modal content
       <div class="modal-content container">
         <div class="modal-header row">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -83,9 +91,9 @@
   </div>
   
   <div id="updateBuyerModal" class="modal fade" role="dialog">
-    <!--div class="modal-dialog"-->
+    div class="modal-dialog"
     <div>
-      <!-- Modal content-->
+       Modal content
       <div class="modal-content container">
         <div class="modal-header row">
           <button type="button" class="close" data-dismiss="modal">&times;</button>

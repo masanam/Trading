@@ -52,6 +52,7 @@ Elixir.extend('bower', function(jsOutputFile, jsOutputFolder, ttfOutputFolder, c
     'bower_components/datatables.net/js/jquery.dataTables.js',
     'bower_components/pusher-angular/lib/pusher-angular.min.js',
     'bower_components/angular-smart-table/dist/smart-table.js',
+    'bower_components/angular-smart-table/smartCss.css',
     'bower_components/angular-datatables/dist/angular-datatables.js',
     'bower_components/angular-datatables/dist/css/angular-datatables.css',
     'bower_components/angular-datatables/dist/plugins/bootstrap/angular-datatables.bootstrap.js',
@@ -66,7 +67,9 @@ Elixir.extend('bower', function(jsOutputFile, jsOutputFolder, ttfOutputFolder, c
     'bower_components/angular-datatables/dist/plugins/buttons/angular-datatables.buttons.js',
     'bower_components/angular-datatables/dist/plugins/select/angular-datatables.select.js',
     'bower_components/ng-sortable/dist/ng-sortable.css',
-    'bower_components/ng-sortable/dist/ng-sortable.js'
+    'bower_components/ng-sortable/dist/ng-sortable.js',
+    'bower_components/jpkleemans-angular-validate/dist/angular-validate.min.js',
+    'bower_components/jquery-validation/dist/jquery.validate.min.js'
   ];
   
   var mainCSSFiles = [];

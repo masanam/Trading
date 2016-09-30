@@ -35,28 +35,109 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
 		$scope.format = 'dd.MM.yyyy';
 
 		$scope.create = function() {
-			$scope.loading = true;
+      if(form.validate()) {
+  			$scope.loading = true;
 
-			var buyer = new Buyer({
-				company_name: $scope.buyer.company_name,
-				email: $scope.buyer.email,
-				phone: $scope.buyer.phone,
-				web: $scope.buyer.web,
-				industry: $scope.buyer.industry,
-				city: $scope.buyer.city,
-				address: $scope.buyer.address,
-				latitude: $scope.buyer.latitude,
-				longitude: $scope.buyer.longitude
-			});
+  			var buyer = new Buyer({
+  				company_name: $scope.buyer.company_name,
+  				email: $scope.buyer.email,
+  				phone: $scope.buyer.phone,
+  				web: $scope.buyer.web,
+  				industry: $scope.buyer.industry,
+          description: $scope.buyer.description,
+  				city: $scope.buyer.city,
+  				address: $scope.buyer.address,
+  				latitude: $scope.buyer.latitude,
+  				longitude: $scope.buyer.longitude
+  			});
 
-			buyer.$save(function(response) {
-				//$state.go('buyer.index');
-		        $('#createBuyerModal').modal('hide');
-		        $('.modal-backdrop').hide();
-		        $scope.find()
-				$scope.loading = false;
-			});
+  			buyer.$save(function(response) {
+  				//$state.go('buyer.index');
+  		        $('#createBuyerModal').modal('hide');
+  		        $('.modal-backdrop').hide();
+  		        $scope.find()
+  				$scope.loading = false;
+  			});
+      }
 		};
+
+    $scope.openCreateBuyerModal = function () {
+      var modalInstance = $uibModal.open({
+        windowClass: 'xl-modal',
+        templateUrl: './angular/views/lead/buyer/create.modal.view.html',
+        controller: 'BuyerModalController',
+        scope: $scope,
+      });
+    };
+
+    $scope.validationOptions = {
+        rules: {
+            company_name: {
+                required: true
+            },
+            email: {
+                required: true,
+                email: true
+            },
+            web: {
+                required: true
+            },
+            phone: {
+                required: true
+            },
+            industry: {
+                required: true
+            },
+            description: {
+                required: true
+            },
+            city: {
+                required: true
+            },
+            address: {
+                required: true
+            },
+            latitude: {
+                required: true
+            },
+            longitude: {
+                required: true
+            }
+        },
+        messages: {
+            company_name: {
+                required: "We need your information"
+            },
+            email: {
+                required: "We need your email address to contact you",
+                email: "Your email address must be in the format of name@domain.com"
+            },
+            web: {
+                required: "We need your information"
+            },
+            phone: {
+                required: "We need your information"
+            },
+            industry: {
+                required: "We need your information"
+            },
+            description: {
+                required: "We need your information"
+            },
+            city: {
+                required: "We need your information"
+            },
+            address: {
+                required: "We need your information"
+            },
+            latitude: {
+                required: "We need your information"
+            },
+            longitude: {
+                required: "We need your information"
+            }
+        }
+    }
 
 		$scope.createDemand = function() {
 			$scope.loading = true;
@@ -270,6 +351,41 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
       });
     };
 }]);
+
+//controller Create Buyer Modal
+angular.module('deal').controller('BuyerModalController', function ($scope, $uibModalInstance, Buyer) {
+  
+  $scope.create = function(createBuyer) {
+    if(createBuyer.validate()) {
+      $scope.loading = true;
+
+      var buyer = new Buyer({
+        company_name: $scope.buyer.company_name,
+        email: $scope.buyer.email,
+        phone: $scope.buyer.phone,
+        web: $scope.buyer.web,
+        industry: $scope.buyer.industry,
+        description: $scope.buyer.description,
+        city: $scope.buyer.city,
+        address: $scope.buyer.address,
+        latitude: $scope.buyer.latitude,
+        longitude: $scope.buyer.longitude
+      });
+
+      buyer.$save(function(response) {
+        $scope.buyers.push(response);
+        $uibModalInstance.close('success');
+        $scope.loading = false;
+      });
+    }else{
+      console.log('error');
+    }
+  };
+
+  $scope.close = function () {
+    $uibModalInstance.dismiss('cancel');
+  };
+});
 
 angular.module('buyer').controller('CreateProductModalController', function ($scope, $filter, $uibModalInstance, Product, Authentication, Mine) {
   

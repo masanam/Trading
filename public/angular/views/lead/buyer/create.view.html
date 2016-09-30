@@ -1,7 +1,7 @@
 <section ng-controller="BuyerController">
 	<h1>Create Buyer</h1>
 
-	<form role="form" ng-submit="create()">
+	<form role="form" ng-submit="create()" ng-validate="validationOptions">
 		<div ng-include="'/angular/views/lead/buyer/form.view.html'"></div>
 	</form>
 </section>
