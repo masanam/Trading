@@ -151,6 +151,6 @@ class ContactController extends Controller
     public function getTotalContact() {
         $total = Contact::count();
         $status = array('count' => $total);        
-        return response()->json($status,200);
+        return response()->json($status, 200);
     }
 }

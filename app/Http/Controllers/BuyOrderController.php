@@ -123,7 +123,10 @@ class BuyOrderController extends Controller
     {
 
         if($buy_order->status == 'a') {
-            return response()->json($buy_order, 200);
+            return response()->json([
+                'success' => TRUE,
+                $buy_order
+                ], 200);
         } else {
             return response()->json(['message' => 'deactivated record'], 404);
         }

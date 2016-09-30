@@ -234,6 +234,6 @@ class ProductController extends Controller
     public function getTotalProduct() {
         $total = Product::count();
         $status = array('count' => $total);        
-        return response()->json($status,200);
+        return response()->json($status, 200);
     }
 }

@@ -45,7 +45,7 @@ class BuyDealController extends Controller
     {
         if(!$request) {
             return response()->json([
-                'message' => 'Bad Request'
+                'error' => 'Bad Request'
             ], 400);
         }
 
@@ -98,12 +98,15 @@ class BuyDealController extends Controller
 
         if($buy_deal) {
             if($buy_deal->status == 'a') {
-                return response()->json($buy_deal, 200);
+                return response()->json([
+                    'success' => TRUE,
+                    $buy_deal
+                    ], 200);
             } else {
-                return response()->json(['message' => 'deactivated record'], 404);
+                return response()->json(['error' => 'deactivated record'], 404);
             }
         } else {
-            return response()->json('Not found', 404);
+            return response()->json(['error' => 'Not found'], 404);
         }
     }
     
@@ -117,7 +120,7 @@ class BuyDealController extends Controller
     {
         if (!$dealId) {
             return response()->json([
-                'message' => 'Not found'
+                'error' => 'Not found'
             ] ,404);
         }
 
@@ -126,11 +129,23 @@ class BuyDealController extends Controller
         return response()->json($buy_deal, 200);
     }
     
-    // Get Buy Deal by Deal ID
+    // Get All Buy Deal by Deal ID
     public function getByDeal($dealId) {
         $buy_deal = BuyDeal::with('BuyOrder', 'BuyOrder.Buyer')->where([['deal_id', $dealId], ['status', 'a']])
                ->orderBy('id', 'asc')
                ->get();
+
+
+        return response()->json($buy_deal, 200);
+    }
+
+    // Get One Buy Deal by Deal ID
+    public function getOneByDeal($buy_deal, $dealId) {
+        $buy_deal = BuyDeal::with('BuyOrder', 'BuyOrder.Buyer')
+                    ->where([['deal_id', $dealId], 
+                      ['status', 'a']])
+               ->orderBy('id', 'asc')
+               ->find($buy_deal);
 
 
         return response()->json($buy_deal, 200);
@@ -147,13 +162,13 @@ class BuyDealController extends Controller
     {
         if (!$request) {
             return response()->json([
-                'message' => 'Bad Request'
+                'error' => 'Bad Request'
             ], 400);
         }
 
         if (!$buy_deal) {
             return response()->json([
-                'message' => 'Not found'
+                'error' => 'Not found'
             ] ,404);
         }
 
@@ -176,7 +191,7 @@ class BuyDealController extends Controller
     {
         if (!$buy_deal) {
             return response()->json([
-                'message' => 'Not found'
+                'error' => 'Not found'
             ] ,404);
         }
 
@@ -189,7 +204,7 @@ class BuyDealController extends Controller
     public function approval(Request $request, $buy_deal, $approval) {
         if (!$buy_deal) {
             return response()->json([
-                'message' => 'Not found'
+                'error' => 'Not found'
             ] ,404);
         }
 

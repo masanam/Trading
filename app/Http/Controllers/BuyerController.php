@@ -22,6 +22,22 @@ class BuyerController extends Controller
      */
     public function index($q = false)
     {
+        if (!$search) {
+            $buyer = Buyer::where('status', 'a')->get();
+        } else {
+            // $buyer = Buyer::search($search)->where('status', 'a')->get();
+            $buyer = Buyer::where('status', 'a')->where('company_name', 'LIKE', '%'.$search.'%')->get();
+        }
+        return response()->json($buyer, 200);
+    }
+    
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search($search = false)
+    {
         $buyer = Buyer::where('status', 'a');
         if ($q) $buyer->where('company_name', 'LIKE', '%'.$q.'%');
         $buyer = $buyer->get();

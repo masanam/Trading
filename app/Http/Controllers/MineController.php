@@ -157,6 +157,6 @@ class MineController extends Controller
     public function getTotalMine() {
         $total = Mine::count();
         $status = array('count' => $total);        
-        return response()->json($status,200);
+        return response()->json($status, 200);
     }
 }
