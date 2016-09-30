@@ -21,6 +21,8 @@ class CreateSellDealTable extends Migration
 
             $table->integer('chat_id')->nullable();
 
+            $table->string('type');
+
             $table->char('status');
             
             $table->timestamps();

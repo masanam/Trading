@@ -19,7 +19,9 @@ class CreateBuyDealTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->integer('deal_id')->nullable();
 
-            $table->integer('chat_id');
+            $table->integer('chat_id')->nullable();
+
+            $table->string('type');
 
             $table->char('status');
             
