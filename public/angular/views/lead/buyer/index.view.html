@@ -8,19 +8,24 @@
   <a class="btn btn-primary" ui-sref="lead.create-buyer">Create New</a>
   <br/>
   <br/>
-	<table datatable="ng" class="row-border hover" ng-init="find()">
+	<table st-table="displayedCollection" st-safe-src="buyers" class="table table-striped" ng-init="find()">
     <thead>
         <tr>
             <th>#</th>
-            <th>Company</th>
-            <th>Phone</th>
-            <th>Email</th>
-            <th>Last Buy Order Date</th>
-            <th></th>
+            <th st-sort="company">Company</th>
+            <th st-sort="phone">Phone</th>
+            <th st-sort="email">Email</th>
+            <th st-sort="lastbut">Last Buy Order Date</th>
+            <th st-sort=""></th>
         </tr>
+
+        <tr>
+          <th colspan="7"><input st-search="" class="form-control" placeholder="search ..." type="text"/></th>
+        </tr>
+
     </thead>
     <tbody>
-        <tr ng-repeat="(idx, buyer) in buyers">
+        <tr ng-repeat="(idx, buyer) in displayedCollection">
             <td>{{ buyer.id }}</td>
             <td>
               {{ buyer.company_name }}

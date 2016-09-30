@@ -19,7 +19,7 @@ class BuyerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($search = false)
+    public function index($q = false)
     {
         if (!$search) {
             $buyer = Buyer::where('status', 'a')->get();
@@ -37,13 +37,10 @@ class BuyerController extends Controller
      */
     public function search($search = false)
     {
-        if (!$search) {
-            $buyer = Buyer::where('status', 'a')->get();
-        } else {
-            // $buyer = Buyer::search($search)->where('status', 'a')->get();
-            $buyer = Buyer::where('status', 'a')->where('company_name', 'LIKE', '%'.$search.'%')->get();
-        }
-        return response()->json(['success' => TRUE, $buyer], 200);
+        $buyer = Buyer::where('status', 'a');
+        if ($q) $buyer->where('company_name', 'LIKE', '%'.$q.'%');
+        $buyer = $buyer->get();
+        return response()->json($buyer, 200);
     }
 
     /**

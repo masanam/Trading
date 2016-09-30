@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
+use Auth;
+
 class SellerController extends Controller
 {
     public function __construct() {
@@ -61,25 +63,18 @@ class SellerController extends Controller
         }
 
         $seller = new Seller();
-        $seller->user_id = $request->user_id;
-            
+        $seller->user_id = Auth::User()->id;
         $seller->company_name = $request->company_name;
-
         $seller->phone = $request->phone;
         $seller->email = $request->email;
         $seller->web = $request->web;
-
         $seller->industry = $request->industry;
-
         $seller->city = $request->city;
         $seller->address = $request->address;
-
         $seller->latitude = $request->latitude;
         $seller->longitude = $request->longitude;
-
         $seller->description = $request->description;
-
-        $seller->status = $request->status;
+        $seller->status = 'a';
         $seller->save();
 
         return response()->json(['success' => TRUE, $seller], 200);
