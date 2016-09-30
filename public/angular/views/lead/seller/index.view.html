@@ -5,23 +5,31 @@
 <div class="col-lg-10" ng-controller="SellerController">
   <section ng-include="'./angular/views/lead/search-bar.view.html'"></section>
   <h1>Sellers</h1>
-  <a class="btn btn-primary" ui-sref="lead.create-seller">Create New</a>
+  <!--<a class="btn btn-primary" ui-sref="lead.create-seller">Create New</a>-->
+  <div class="form-group col-md-2">
+      <button ng-click="openSellerModal()" class="col-md-12 btn btn-primary">+ Create New</button>
+  </div>
   <br/>
   <br/>
-	<table datatable="ng" class="row-border hover" ng-init="find()">
+	<table  ng-init="find()" st-table="displayedCollection" st-safe-src="sellers" class="table table-striped">
 		<thead>
 			<tr>
 				<th>#</th>
-				<th>Company</th>
-				<th>Email</th>
-				<th>Phone</th>
-				<th>Web</th>
-				<th>Last Sell Order Date</th>
-				<th></th>
+				<th st-sort="company">Company</th>
+				<th st-sort="email">Email</th>
+				<th st-sort="phone">Phone</th>
+				<th st-sort="web">Web</th>
+				<th st-sort="last sell order date">Last Sell Order Date</th>
+				<th st-sort=""></th>
 			</tr>
+
+      <tr>
+        <th colspan="7"><input st-search="" class="form-control" placeholder="search ..." type="text"/></th>
+      </tr>
+
 			</thead>
 			<tbody>
-				<tr ng-repeat="seller in sellers">
+				<tr ng-repeat="seller in displayedCollection">
 				<td>{{ seller.id }}</td>
 				<td>{{ seller.company_name }}</td>
 				<td>{{ seller.email }}</td>
@@ -49,6 +57,15 @@
         </td>
 			</tr>
 		</tbody>
+
+    <tfoot>
+      <tr>
+        <td colspan="7" class="text-center">
+          <div st-pagination="" st-items-by-page="5" st-displayed-pages="5"></div>
+        </td>
+      </tr>
+    </tfoot>
+
 	</table>
   
   <!-- Modal -->
