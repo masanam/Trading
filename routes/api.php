@@ -39,7 +39,6 @@ Route::group(['middleware' => ['cors']], function() {
     // Route::get('buyer/search/{search?}', 'BuyerController@index');
 
     Route::get('seller/total', 'SellerController@getTotalSeller');
-    Route::get('seller/search/{search?}', 'SellerController@search');
     Route::resource('seller', 'SellerController', ['except' => [
         'create', 'edit'
     ]]);

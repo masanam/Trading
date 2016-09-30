@@ -19,33 +19,14 @@ class SellerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($search = false)
+    public function index($q = false)
     {
-        if (!$search) {
-            $seller = Seller::where('status', 'a')->get();
-        } else {
-            $seller = Seller::where('status', 'a')->where('company_name', 'LIKE', '%'.$search.'%')->get();
-        }
-
+        $seller = Seller::where('status', 'a');
+        if ($q) $seller->where('company_name', 'LIKE', '%'.$q.'%');
+        $seller = $seller->get();
         return response()->json($seller, 200);
     }
     
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function search($search = false)
-    {
-        if (!$search) {
-            $seller = Seller::where('status', 'a')->get();
-        } else {
-            $seller = Seller::where('status', 'a')->where('company_name', 'LIKE', '%'.$search.'%')->get();
-        }
-
-        return response()->json($seller, 200);
-    }
-
     /**
      * Store a newly created resource in storage.
      *
