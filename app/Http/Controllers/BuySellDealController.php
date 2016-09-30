@@ -48,6 +48,6 @@ class BuySellDealController extends Controller
 
         $buy_sell_deal = $buy_sell_deal->sortBy('order_date');
 
-        return response()->json($buy_sell_deal, 200);
+        return response()->json(['success' => TRUE, $buy_sell_deal], 200);
     }
 }
