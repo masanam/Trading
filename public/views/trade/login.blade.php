@@ -3,19 +3,17 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Coal Trade</title>
+  <title>CoalTrade</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- JS -->
-  @foreach (Config::get('assets.jstrade') as $js)
-      <script src="{{ $js }}"></script>
-  @endforeach
+  
 
   <!-- CSS -->
   @foreach (Config::get('assets.css') as $css)
       <link rel="stylesheet" href="{{ $css }}">
   @endforeach
-  <link rel="stylesheet" href="blue.css">
+  
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -27,7 +25,7 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="../../index2.html"><b>Admin</b>LTE</a>
+    <a href="#"><b>Coaltrade</b></a>
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
@@ -68,22 +66,17 @@
     <!-- /.social-auth-links -->
 
     <a href="#">I forgot my password</a><br>
-    <a href="register.html" class="text-center">Register a new membership</a>
+    <a href="#" class="text-center">Register a new membership</a>
 
   </div>
   <!-- /.login-box-body -->
 </div>
 <!-- /.login-box -->
 
+  @foreach (Config::get('assets.jstrade') as $js)
+      <script src="{{ $js }}"></script>
+  @endforeach
 
-<script>
-  $(function () {
-    $('input').iCheck({
-      checkboxClass: 'icheckbox_square-blue',
-      radioClass: 'iradio_square-blue',
-      increaseArea: '20%' // optional
-    });
-  });
-</script>
+
 </body>
 </html>
