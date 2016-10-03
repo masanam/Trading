@@ -344,11 +344,6 @@ angular.module('deal').controller('ChatModalController', function ($scope, $uibM
     }
   );
 
-  $scope.message = {
-    
-    
-
-  };
 
   $scope.findChatByUser = function(){
     $chats = Chat.query({ id: $scope.user });
