@@ -58,6 +58,7 @@ class SellDealController extends Controller
         $sell_deal->chat_id = $chat->id;
         $sell_deal->user_id = $request->user_id;
         $sell_deal->deal_id = $request->deal_id  ? $request->deal_id : NULL;
+        $sell_deal->type = "sell";
         $sell_deal->status = "a";
         $sell_deal->save();
         

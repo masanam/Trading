@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Deal', 'Order', 'Order', 'Buyer', 'Seller', 'SellDeal', 'BuyDeal', 'Authentication', '$location', '$stateParams', '$pusher', 'Chat',
-	function($scope, $uibModal, Deal, Order, Buyer, Seller, SellDeal, BuyDeal, Authentication, $location, $stateParams, $pusher, Chat) {
+angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Deal', 'Order', 'Order', 'Buyer', 'Seller', 'SellDeal', 'BuyDeal', 'Authentication', '$location', '$stateParams', '$pusher', 'Chat', 'Message',
+	function($scope, $uibModal, Deal, Order, Buyer, Seller, SellDeal, BuyDeal, Authentication, $location, $stateParams, $pusher, Chat, Message) {
     $scope.findDeals = function(){
       $scope.deals = Deal.query({action:'table', status: 'a'});
     };
@@ -334,37 +334,37 @@ angular.module('deal').controller('AlertModalController', function ($scope, $uib
   };
 });
 
-angular.module('deal').controller('ChatModalController', function ($scope, $uibModalInstance, $pusher, User, Chat) {
+angular.module('deal').controller('ChatModalController', function ($scope, $uibModalInstance, $pusher, User, Chat, buyDeal, sellDeal) {
+  $scope.buyDeal = buyDeal;
+  $scope.sellDeal = sellDeal;
+
   var client = new Pusher(API_KEY);
   var pusher = $pusher(client);
-  var my_channel = pusher.subscribe('private-channel.', chat_id);
+  var my_channel = pusher.subscribe('private-channel.', $scope.chat.chat_id);
   my_channel.bind('MessageReceived',
     function(data) {
-      // update with new price
+      $scope.chat.message.push(data);
     }
   );
 
-  $scope.message = {
-    chat_id: ,
-    
+  $scope.sendMessage = function() {
+    $message = new Chat({
+      'chat_id': $scope.chat.chat_id,
+      'user_id': $scope.chat.message.user_id,
+      'message': $scope.chat.message.message
+    });
 
+    $message.$save(function(res) {
+      $scope.chat.message.push(res);
+    });
   };
 
-  $scope.findChatByUser = function(){
-    $chats = Chat.query({ id: $scope.user });
-  };
-
-  $scope.findChatByDeal = function(type_deal) {
-    $chat = Chat.query({ id: type_deal.id });
-  };
-
-  $scope.sendMessage = function(order){
-
+  $scope.findChatByDeal = function($order_deal) {
+    $scope.chat = Chat.query({ type: $order_deal.type , id: $order_deal.id });
   };
 
   $scope.findCurrentUser = function() {
     $scope.user = User.get({ action: current });
-    
   };
   
   $scope.close = function () {

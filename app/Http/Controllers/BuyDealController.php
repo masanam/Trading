@@ -60,6 +60,7 @@ class BuyDealController extends Controller
         $buy_deal->chat_id = $chat->id;
         $buy_deal->user_id = $request->user_id;
         $buy_deal->deal_id = $request->deal_id  ? $request->deal_id : NULL;
+        $buy_deal->type = "buy";
         $buy_deal->status = "a";
         $buy_deal->save();
         
