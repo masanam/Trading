@@ -4,18 +4,21 @@
   </div>
   <div class="col-lg-10">
     <section ng-include="'./angular/views/lead/search-bar.view.html'"></section>
-    <table datatable="ng" class="row-border hover" ng-init="find()">
+    <table ng-init="find()" st-table="displayedCollection" st-safe-src="contacts" class="table table-striped">
       <thead>
           <tr>
-              <th>#</th>
-              <th>Name</th>
-              <th>Phone</th>
-              <th>Email</th>
-              <th></th>
+            <th colspan="5"><input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
+          </tr>
+          <tr>
+              <th st-sort="">#</th>
+              <th st-sort="name">Name</th>
+              <th st-sort="phone">Phone</th>
+              <th st-sort="email">Email</th>
+              <th st-sort=""></th>
           </tr>
       </thead>
       <tbody>
-          <tr ng-repeat="contact in contacts" ng-click="findOne(contact.id)">
+          <tr ng-repeat="contact in displayedCollection" ng-click="findOne(contact.id)">
               <td>{{ contact.id }}</td>
               <td>{{ contact.name }}</td>
               <td>{{ contact.phone }}</td>
@@ -25,6 +28,15 @@
               </td>
           </tr>
       </tbody>
+
+      <tfoot>
+      <tr>
+          <td colspan="5" class="text-center">
+             <div st-pagination="" st-items-by-page="10" st-displayed-pages="7"></div>
+          </td>
+      </tr>
+      </tfoot>
+
     </table>
   </div>
 </section>

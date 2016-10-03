@@ -11,7 +11,7 @@
   <table st-table="displayedCollection" st-safe-src="buyers" class="table table-striped" ng-init="find()">
     <thead>
       <tr>
-        <th colspan="2"><input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
+        <th colspan="7"><input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
       </tr>
       <tr>
           <th st-sort="id">#</th>
@@ -19,7 +19,7 @@
           <th st-sort="phone">Phone</th>
           <th st-sort="email">Email</th>
           <th st-sort="last_order">Last Buy Order Date</th>
-          <th>{{buyers}}</th>
+          <th st-sort=""></th>
       </tr>
     </thead>
     <tbody>
@@ -41,7 +41,7 @@
     </tbody>
     <tfoot>
       <tr>
-        <td colspan="6" class="text-center">
+        <td colspan="7" class="text-center">
           <div st-pagination="" st-items-by-page="10" st-displayed-pages="7"></div>
         </td>
       </tr>
