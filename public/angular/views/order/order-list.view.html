@@ -1,39 +1,24 @@
-<div class="container" style="margin-bottom:120px;margin-top:60px;" >
-  <div class="row">
-    <div style="text-align:center;">
-      <div>
-        <div class="col-md-4 align-right">
-          <a class="btn btn-default btn-margin full-width" >
-            <h4>BUYERS</h4>
-              <span>Records</span>
-          </a><br>
-          <a class="btn btn-default btn-margin full-width" >
-            <h4>SELLERS</h4>
-            <span>Records</span>
-          </a><br>
-          <a class="btn btn-default btn-margin full-width" >
-            <h4>VENDORS</h4>
-            <span>Records</span>
-          </a>
+<section class="row" ng-controller="CreateOrderController">
+    <div class="col-md-12">
+      <div class="col-md-6">
+        <div class="panel panel-default col-md-12">
+          <h1>Buy Order</h1>
+          <section class="row">
+            <div class="form-group col-md-12">
+              <button ng-click="openCreateBuyOrderModal()" class="col-md-12 btn btn-primary">+ Create Buy Order</button>
+            </div>
+          </section>
         </div>
-        <div class="col-md-4">
-          
-        </div>
-        <div class="col-md-4 align-left">
-          <a class="btn btn-default btn-margin full-width" >
-            <h4>PRODUCTS</h4>
-            <span> Records</span>
-          </a><br>
-          <a class="btn btn-default btn-margin full-width" >
-            <h4>MINES</h4>
-            <span> Records</span>
-          </a><br>
-          <a class="btn btn-default btn-margin full-width" >
-            <h4>CONTACTS</h4>
-            <span> Records</span>
-          </a>
+      </div>
+      <div class="col-md-6">
+        <div class="panel panel-default col-md-12">
+          <h1>Sell Order</h1>
+          <section class="row">
+            <div class="form-group col-md-12">
+              <button ng-click="openCreateSellOrderModal()" class="col-md-12 btn btn-primary">+ Create Sell Order</button>
+            </div>
+          </section>
         </div>
       </div>
     </div>
-  </div>
-</div>
+  </section>

@@ -378,3 +378,59 @@ angular.module('order').controller('OrderModalController', function ($scope, $ui
     $scope.render = true;
   }, 1000);
 });
+
+angular.module('order').controller('CreateOrderController', ['$location', '$scope', '$http', '$uibModal', '$stateParams', '$state', 'Order', 'Buyer', '$rootScope',
+  function($location, $scope, $http, $uibModal, $stateParams, $state, Order, Buyer, $rootScope) {
+    $scope.openCreateBuyOrderModal = function () {
+      var modalInstance = $uibModal.open({
+        windowClass: 'xl-modal',
+        templateUrl: './angular/views/order/create-buy-order-modal.view.html',
+        controller: 'BuyOrderModalController',
+        scope: $scope
+      });
+    };
+}]);
+
+angular.module('order').controller('BuyOrderModalController', function ($scope, $uibModalInstance, $filter, Authentication, Buyer, Order) {
+  
+  $scope.create = function(order){
+    $scope.success = $scope.error = null;
+      
+    $scope.order.deadline = $filter('date')($scope.order.deadline, "yyyy-MM-dd");
+    $scope.order.order_date = $filter('date')($scope.order.order_date, "yyyy-MM-dd");
+    $scope.order.user_id = Authentication.user.id;
+    $scope.order.max_price = 0;
+
+    var buyOrder = new Order($scope.order);
+    console.log(buyOrder);
+    
+    buyOrder.$save({ type: buy }, function (response) {
+      $scope.order = response;
+      $scope.order.deadline = new Date($scope.order.deadline);
+      $scope.order.order_date = new Date($scope.order.order_date);
+      
+      // for(var i = 0; i < $scope.sellers.length; i++){
+      //   var seller = $scope.sellers[i];
+      //   if(seller.id == response.seller_id){
+      //     $scope.order.company_name = seller.company_name;
+      //     break;
+      //   }
+      // }
+      
+      $scope.buyOrders.push($scope.order);
+      $scope.close();
+      $scope.success = true;
+    }, function (response) {
+      $scope.error = response.data.message;
+    });
+    
+  };
+
+  $scope.findAllBuyers = function() {
+    $scope.buyers = Buyer.query();
+  }
+
+  $scope.close = function () {
+    $uibModalInstance.dismiss('cancel');
+  };
+});
