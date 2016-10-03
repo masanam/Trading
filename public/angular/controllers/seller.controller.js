@@ -28,7 +28,7 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
       
       var modalInstance = $uibModal.open({
         windowClass: 'xl-modal',
-        templateUrl: './angular/views/lead/create.seller.modal.html',
+        templateUrl: './angular/views/lead/seller/create.seller.modal.html',
         scope: $scope,
         controller: 'CreateSellerModalController'
       });
@@ -382,6 +382,7 @@ angular.module('seller').controller('CreateSellerModalController', function ($sc
         longitude: $scope.seller.longitude,
         description: $scope.seller.description
       });
+
       seller.$save(function(response) {
         $scope.sellers.push(response);
         $uibModalInstance.close('success');
