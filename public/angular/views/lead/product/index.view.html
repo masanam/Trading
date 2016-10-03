@@ -7,19 +7,24 @@
   <div ng-controller="ProductController">
     <h1>Product Catalogue</h1>
 
-    <table datatable="ng" dt-options="options" class="row-border hover" ng-init="find()">
+    <table ng-init="find()" st-table="displayedCollection" st-safe-src="products" class="table table-striped">
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Volume(tonnes)</th>
-          <th><span uib-tooltip="Gross Calorific Value, as received basis">GCV arb(%)</span></th>
-          <th><span uib-tooltip="Gross Calorific Value, air dried basis">GCV adb(%)</span></th>
-          <th><span uib-tooltip="Nett Caloric Value">NCV(%)</span></th>
-          <th></th>
+          <th colspan="6"><input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
         </tr>
+
+        <tr>
+          <th st-sort="name">Name</th>
+          <th st-sort="volume">Volume(tonnes)</th>
+          <th st-sort="gcv_arb"><span uib-tooltip="Gross Calorific Value, as received basis">GCV arb(%)</span></th>
+          <th st-sort="gcv_adb"><span uib-tooltip="Gross Calorific Value, air dried basis">GCV adb(%)</span></th>
+          <th st-sort="ncv"><span uib-tooltip="Nett Caloric Value">NCV(%)</span></th>
+          <th st-sort=""></th>
+        </tr>
+
       </thead>
       <tbody>
-        <tr ng-repeat="product in products">
+        <tr ng-repeat="product in displayedCollection">
           <td>{{ product.commercial_term }}</td>
           <td>{{ product.volume | number }}</td>
           <td>{{ product.gcv_arb_min | number }}~{{ product.gcv_arb_max | number }}</td>
@@ -30,6 +35,15 @@
           </td>
         </tr>
       </tbody>
+
+      <tfoot>
+      <tr>
+        <td colspan="6" class="text-center">
+          <div st-pagination="" st-items-by-page="10" st-displayed-pages="7"></div>
+        </td>
+      </tr>
+    </tfoot>
+
     </table>
   </div>
 </div>
