@@ -105,19 +105,4 @@ Route::group(['middleware' => ['cors']], function() {
     Route::get('chat/{user}', 'ChatController@showAllChatsByUser');
     Route::get('chat/{type}/{order_deal}', 'ChatController@showAllChatsByOrderDeal');
     Route::get('chat/{type}/{user}/{order_deal}/{chat_id}', 'ChatController@showChat');
-
-    Route::get('lead/{search?}', 'LeadController@index');
-
-    Route::get('news', 'NewsController@news');
-    Route::get('news/refresh', 'NewsController@refreshNews');
-
-    Route::get('/bridge', function() {
-        $pusher = App::make('pusher');
-
-        $pusher->trigger( 'test-channel',
-                          'my-event',
-                          array('text' => 'Preparing the Pusher Laracon.eu workshop!'));
-
-        return 'badamtis';
-    });
 });

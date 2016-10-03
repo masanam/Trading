@@ -359,6 +359,10 @@ angular.module('deal').controller('ChatModalController', function ($scope, $uibM
     });
   };
 
+  $scope.findChatByUser = function(){
+    $chats = Chat.query({ id: $scope.user });
+  };
+
   $scope.findChatByDeal = function($order_deal) {
     $scope.chat = Chat.query({ type: $order_deal.type , id: $order_deal.id });
   };
@@ -369,7 +373,7 @@ angular.module('deal').controller('ChatModalController', function ($scope, $uibM
   
   $scope.close = function () {
     $uibModalInstance.dismiss('cancel');
-  };
+x  };
 });
 
 angular.module('deal').controller('CreateSellModalController', function ($scope, $filter, $uibModalInstance, Deal, Order, Authentication) {

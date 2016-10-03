@@ -8,21 +8,25 @@
   <a class="btn btn-primary" ui-sref="lead.create-vendor">Create New</a>
   <br/>
   <br/>
-	<table datatable="ng" class="row-border hover" ng-init="find()">
+
+	<table ng-init="find()" st-table="displayedCollection" st-safe-src="vendors" class="table table-striped">
     <thead>
         <tr>
-            <th>#</th>
-            <th>Company</th>
-            <th>Industry</th>
-            <th>Phone</th>
-            <th>Email</th>
+          <th colspan="7"><input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
+        </tr>
+        <tr>
+            <th st-sort="id">#</th>
+            <th st-sort="company">Company</th>
+            <th st-sort="industry">Industry</th>
+            <th st-sort="phone">Phone</th>
+            <th st-sort="email">Email</th>
             <!--th>Latitude</th>
             <th>Longitude</th-->
             <th></th>
         </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="(idx, vendor) in vendors">
+        <tr ng-repeat="(idx, vendor) in displayedCollection">
             <td>{{ vendor.id }}</td>
             <td>
               {{ vendor.company_name }}
@@ -41,6 +45,13 @@
             </td>
         </tr>
     </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="7" class="text-center">
+          <div st-pagination="" st-items-by-page="10" st-displayed-pages="7"></div>
+        </td>
+      </tr>
+    </tfoot>
 	</table>
   
   <div id="createVendorModal" class="modal fade" role="dialog">

@@ -13,6 +13,10 @@
   <br/>
 	<table  ng-init="find()" st-table="displayedCollection" st-safe-src="sellers" class="table table-striped">
 		<thead>
+      <tr>
+        <th colspan="7"><input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
+      </tr>
+
 			<tr>
 				<th>#</th>
 				<th st-sort="company">Company</th>
@@ -23,10 +27,7 @@
 				<th st-sort=""></th>
 			</tr>
 
-      <tr>
-        <th colspan="7"><input st-search="" class="form-control" placeholder="search ..." type="text"/></th>
-      </tr>
-
+    
 			</thead>
 			<tbody>
 				<tr ng-repeat="seller in displayedCollection">
@@ -61,7 +62,7 @@
     <tfoot>
       <tr>
         <td colspan="7" class="text-center">
-          <div st-pagination="" st-items-by-page="5" st-displayed-pages="5"></div>
+          <div st-pagination="" st-items-by-page="10" st-displayed-pages="5"></div>
         </td>
       </tr>
     </tfoot>
