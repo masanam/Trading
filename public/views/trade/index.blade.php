@@ -1,4 +1,4 @@
-@extends('trade/layout')
+@extends('trade/login')
 
 @section('container')
 	<section ui-view></section>
