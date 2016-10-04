@@ -79,6 +79,10 @@ Elixir.extend('bower', function(jsOutputFile, jsOutputFolder, ttfOutputFolder, c
     'bower_components/AdminLTE/plugins/iCheck/square/icheck.min.js',
     'bower_components/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js',
     'bower_components/AdminLTE/bootstrap/js/bootstrap.min.js'
+
+
+
+
   ];
   
   var mainCSSFiles = [];

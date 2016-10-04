@@ -1,84 +1,161 @@
 <section ng-controller="LeadController">
-  <!-- <div class="row">
-    <div class="col-xs-12">
-      <button class="btn btn-primary pull-right">
-        <i class="glyphicon glyphicon-plus"></i>
-        CREATE NEW
-      </button>
+      <!-- Small boxes (Stat box) -->
+      <div class="row" ng-init="total()">
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-aqua">
+            <div class="inner">
+              <h3>{{ totalBuyer.count }} Records</h3>
+
+              <p>BUYERS</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-bag"></i>
+            </div>
+            <a ui-sref="lead.buyer" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-green">
+            <div class="inner">
+              <h3>{{ totalSeller.count }} Records </h3>
+
+              <p>SELLER</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-stats-bars"></i>
+            </div>
+             <a ui-sref="lead.seller" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-yellow">
+            <div class="inner">
+              <h3>{{ totalVendor.count }} Records</h3>
+
+              <p>VENDOR</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-person-add"></i>
+            </div>
+             <a ui-sref="lead.vendor" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-red">
+            <div class="inner">
+              <h3>{{ totalProduct.count }} Records</h3>
+
+              <p>PRODUCT</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-pie-graph"></i>
+            </div>
+             <a ui-sref="lead.product" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-red">
+            <div class="inner">
+              <h3>{{ totalMine.count }} Records</h3>
+
+              <p>MINE</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-pie-graph"></i>
+            </div>
+            <a ui-sref="lead.mine" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+
+        <div class="col-lg-6 col-xs-6">
+        <div class="box box-info">
+            <div class="box-header">
+              <i class="fa fa-globe"></i>
+
+              <h3 class="box-title">COLPEDIA</h3>
+              <!-- tools box -->
+              <div class="pull-right box-tools">
+                
+              </div>
+              <!-- /. tools -->
+            </div>
+            <div class="box-body">
+            <img src="/images/globe.jpg" class="center-block img-responsive" style="height:270px;">
+            </br>
+              <form class="col-md-5 input-group btn-group" ng-submit="search()">
+                  <input type="text" class="form-control" ng-model="keyword">
+                  <button class="btn btn-success" type="submit">Search</button>
+              </form>
+              <div class="btn-group center-block">
+                <label class="btn btn-default" ng-model="searchType" uib-btn-radio="'buyer'">
+                  Buyer
+                </label>
+                <label class="btn btn-default" ng-model="searchType" uib-btn-radio="'seller'">
+                  Sellers
+                </label>
+                <label class="btn btn-default" ng-model="searchType" uib-btn-radio="'vendor'">
+                  Vendors
+                </label>
+                <label class="btn btn-default" ng-model="searchType" uib-btn-radio="'product'">
+                  Products
+                </label>
+                <label class="btn btn-default" ng-model="searchType" uib-btn-radio="'mine'">
+                  Mines
+                </label>
+                <label class="btn btn-default" ng-model="searchType" uib-btn-radio="'contact'">
+                  Contacts
+                </label>
+              </div>
+            </div>
+          </div>      
+        </div>
+    
+
+
+
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-red">
+            <div class="inner">
+              <h3>{{ totalContact.count }} Records</h3>
+
+              <p>CONTACT</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-pie-graph"></i>
+            </div>
+            <a ui-sref="lead.contact" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+
+        <div class="col-lg-12 col-xs-6 ">
+           
+       </div>
+
+
     </div>
-  </div>
- -->
-  <div class="container" style="margin-bottom:120px;margin-top:60px;" ng-init="total()">
-    <div class="row">
-      <div style="text-align:center;">
-        <div>
-          <div class="col-md-4 align-right">
-            <a class="btn btn-default btn-margin full-width" ui-sref="lead.buyer">
-              <h4>BUYERS</h4>
-                <span>{{ totalBuyer.count }} Records</span>
-            </a><br>
-            <a class="btn btn-default btn-margin full-width" ui-sref="lead.seller">
-              <h4>SELLERS</h4>
-              <span>{{ totalSeller.count }} Records</span>
-            </a><br>
-            <a class="btn btn-default btn-margin full-width" ui-sref="lead.vendor">
-              <h4>VENDORS</h4>
-              <span>{{ totalVendor.count }} Records</span>
-            </a>
-          </div>
-          <div class="col-md-4">
-            <img src="/images/globe.jpg" style="height:270px;">
-          </div>
-          <div class="col-md-4 align-left">
-            <a class="btn btn-default btn-margin full-width" ui-sref="lead.product">
-              <h4>PRODUCTS</h4>
-              <span>{{ totalProduct.count }} Records</span>
-            </a><br>
-            <a class="btn btn-default btn-margin full-width" ui-sref="lead.mine">
-              <h4>MINES</h4>
-              <span>{{ totalMine.count }} Records</span>
-            </a><br>
-            <a class="btn btn-default btn-margin full-width" ui-sref="lead.contact">
-              <h4>CONTACTS</h4>
-              <span>{{ totalContact.count }} Records</span>
-            </a>
-          </div>
-        </div>
+      <!-- /.row -->
+      <!-- Main row -->
+       
+     
+</section>      
 
-        <div class="col-md-12">
-          <h1>COALPEDIA</h1>
-        </div>
 
-        <div class="col-md-12" style="margin-top:40px;">
-          <form class="col-md-8 col-md-offset-2 input-group btn-group" ng-submit="search()">
-            <input type="text" class="form-control" style="width:600px;display:inline;" ng-model="keyword">
-            <button class="btn btn-success" type="submit">Search</button>
-          </form><br/>
 
-          <div class="btn-group">
-            <label class="btn btn-default" ng-model="searchType" uib-btn-radio="'buyer'">
-              Buyer
-            </label>
-            <label class="btn btn-default" ng-model="searchType" uib-btn-radio="'seller'">
-              Sellers
-            </label>
-            <label class="btn btn-default" ng-model="searchType" uib-btn-radio="'vendor'">
-              Vendors
-            </label>
-            <label class="btn btn-default" ng-model="searchType" uib-btn-radio="'product'">
-              Products
-            </label>
-            <label class="btn btn-default" ng-model="searchType" uib-btn-radio="'mine'">
-              Mines
-            </label>
-            <label class="btn btn-default" ng-model="searchType" uib-btn-radio="'contact'">
-              Contacts
-            </label>
-          </div>
-        </div>
-          
-      </div>
-        
-    </div>
-  </div>
-</section>
+
+
+
+
+
+
+

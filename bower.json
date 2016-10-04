@@ -30,6 +30,7 @@
     "pusher-angular": "^0.1.9",
     "angular-smart-table": "^2.1.8",
     "datatables.net-autofill": "^2.1.2",
-    "datatables.net": "^1.10.12"
+    "datatables.net": "^1.10.12",
+    "admin-lte": "^2.3.6"
   }
 }

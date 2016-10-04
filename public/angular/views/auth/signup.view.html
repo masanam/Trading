@@ -1,54 +1,42 @@
-<div class="container" ng-controller="AuthController">
-  <div class="row">
-    <div class="col-md-4 col-md-offset-4">
-      <div class="panel panel-default">
-        <div class="panel-heading"> <strong class="">Login</strong>
- 
-        </div>
-        <div class="panel-body">
-          <form class="form-horizontal" role="form" ng-submit="signup()">
-            <div class="form-group">
-              <label for="name" class="col-sm-3 control-label">Name</label>
-              <div class="col-sm-9">
-                <input type="text" class="form-control" id="name" placeholder="Name" required="" ng-model="registration.name">
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="phone" class="col-sm-3 control-label">Phone</label>
-              <div class="col-sm-9">
-                <input type="text" class="form-control" id="phone" placeholder="Phone" required="" ng-model="registration.phone">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="email" class="col-sm-3 control-label">Email</label>
-              <div class="col-sm-9">
-                <input type="email" class="form-control" id="email" placeholder="Email" required="" ng-model="registration.email">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="password" class="col-sm-3 control-label">Password</label>
-              <div class="col-sm-9">
-                <input type="password" class="form-control" id="password" placeholder="Password" required="" ng-model="registration.password">
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="confirmPassword" class="col-sm-3 control-label">Confirm Password</label>
-              <div class="col-sm-9">
-                <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password" required="" ng-model="registration.confirmPassword">
-              </div>
-            </div>
-            
-            <div class="form-group last">
-              <div class="col-sm-offset-3 col-sm-9">
-                <button type="submit" class="btn btn-success btn-sm">Sign up</button>
-                <button type="reset" class="btn btn-default btn-sm">Reset</button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
+<div class="register-box" ng-controller="AuthController">
+  <div class="register-logo">
+    <img src="./images/sinarmas.png" style="width:40px; margin-top:-10px;"><b> Coaltrade</b></a>
   </div>
-</div>
+
+  <div class="register-box-body">
+    <p class="login-box-msg">Register </p>
+
+    <form  method="post" role="form" ng-submit="signup()">
+      <div class="form-group has-feedback">
+        <input type="text" class="form-control" id="name" placeholder="Name" required="" ng-model="registration.name">
+        <span class="fa fa-user form-control-feedback"></span>
+      </div>
+      <div class="form-group has-feedback">
+        <input type="email" class="form-control" id="email" placeholder="Email" required="" ng-model="registration.email">
+        <span class="fa fa-envelope form-control-feedback"></span>
+      </div>
+      <div class="form-group has-feedback">
+       <input type="password" class="form-control" id="password" placeholder="Password" required="" ng-model="registration.password">
+        <span class="fa fa-lock form-control-feedback"></span>
+      </div>
+      <div class="form-group has-feedback">
+        <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password" required="" ng-model="registration.confirmPassword">
+        <span class="fa fa-retweet form-control-feedback"></span>
+      </div>
+      <div class="row">
+        <div class="col-xs-8">
+          
+        </div>
+        <!-- /.col -->
+        <div class="col-xs-4">
+          <button type="submit" class="btn btn-primary btn-block btn-flat">Register</button>
+          <button type="reset" class="btn btn-default btn-block btn-flat">Reset</button>
+        </div>
+        <!-- /.col -->
+      </div>
+    </form>
+
+   
+
+    <a href="/auth/signin" class="text-center">I already have a username</a>
+  </div>
