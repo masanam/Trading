@@ -77,6 +77,7 @@ Elixir.extend('bower', function(jsOutputFile, jsOutputFolder, ttfOutputFolder, c
     'bower_components/AdminLTE/plugins/iCheck/square/blue.css',
     'bower_components/AdminLTE/plugins/iCheck/icheck.min.js'
 
+
   ];
   
   var mainCSSFiles = [];

@@ -22,7 +22,7 @@
 
 </head> 
 <!-- declare our angular app and controller --> 
-<body ng-app="coaltrade">
+<body ng-app="coaltrade" class="hold-transition skin-blue sidebar-mini">
         
     <!-- LOADING ICON =============================================== -->
     <!-- show loading icon if the loading variable is set to true -->
