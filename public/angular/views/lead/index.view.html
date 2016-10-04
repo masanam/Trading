@@ -1,57 +1,25 @@
 <section class="content" ng-controller="LeadController">
-  <div class="col-md-3 col-sm-6 col-xs-12"> </div>
       <!-- Small boxes (Stat box) -->
       <div class="row" ng-init="total()">
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-aqua">
-            <div class="inner">
-              <h3>{{ totalBuyer.count }} Records</h3>
+  
 
-              <p>BUYERS</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-bag"></i>
-            </div>
-            <a ui-sref="lead.buyer" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-green">
-            <div class="inner">
-              <h3>{{ totalSeller.count }} Records </h3>
-
-              <p>SELLER</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-stats-bars"></i>
-            </div>
-             <a ui-sref="lead.seller" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-yellow">
-            <div class="inner">
-              <h3>{{ totalVendor.count }} Records</h3>
-
-              <p>VENDOR</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-person-add"></i>
-            </div>
-             <a ui-sref="lead.vendor" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
+        <div class="col-lg-4 col-xs-4 hidden-sm hidden-xs ">
           <!-- small box -->
           <div class="small-box bg-red">
             <div class="inner">
-              <h3>{{ totalProduct.count }} Records</h3>
+              <h4>{{ totalContact.count }} Records</h4>
+
+              <p>CONTACT</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-pie-graph"></i>
+            </div>
+            <a ui-sref="lead.contact" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+
+          <div class="small-box bg-red">
+            <div class="inner">
+              <h4>{{ totalProduct.count }} Records</h4>
 
               <p>PRODUCT</p>
             </div>
@@ -60,30 +28,28 @@
             </div>
              <a ui-sref="lead.product" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
-        </div>
-        <!-- ./col -->
 
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-red">
+          <div class="small-box bg-yellow">
             <div class="inner">
-              <h3>{{ totalMine.count }} Records</h3>
+              <h4>{{ totalVendor.count }} Records</h4>
 
-              <p>MINE</p>
+              <p>VENDOR</p>
             </div>
             <div class="icon">
-              <i class="ion ion-pie-graph"></i>
+              <i class="ion ion-person-add"></i>
             </div>
-            <a ui-sref="lead.mine" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+             <a ui-sref="lead.vendor" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
+
         </div>
 
-        <div class="col-lg-6 col-xs-6">
+
+         <div class="col-lg-4 col-xs-12 col-sm-12 col-md-4">
         <div class="box box-info">
             <div class="box-header">
               <i class="fa fa-globe"></i>
 
-              <h3 class="box-title">COLPEDIA</h3>
+              <h3 class="box-title">COALPEDIA</h3>
               <!-- tools box -->
               <div class="pull-right box-tools">
                 
@@ -93,61 +59,89 @@
             <div class="box-body">
             <img src="/images/globe.jpg" class="center-block img-responsive" style="height:270px;">
             </br>
-              <form class="col-md-5 input-group btn-group" ng-submit="search()">
-                  <input type="text" class="form-control" ng-model="keyword">
-                  <button class="btn btn-success" type="submit">Search</button>
+
+        
+              <form ng-submit="search()">
+                  <div class="input-group input-group-sm">
+                    <input type="text" class="col-md-12 form-control" ng-model="keyword">
+                    <span class="input-group-btn">
+                      <button type="button" type="submit" class="btn btn-info btn-flat">Search</button>
+                    </span>
+                  </div>
               </form>
+
               <div class="btn-group center-block">
-                <label class="btn btn-default" ng-model="searchType" uib-btn-radio="'buyer'">
+                <label class="btn btn-sm btn-default" ng-model="searchType" uib-btn-radio="'buyer'">
                   Buyer
                 </label>
-                <label class="btn btn-default" ng-model="searchType" uib-btn-radio="'seller'">
+                <label class="btn btn-sm btn-default" ng-model="searchType" uib-btn-radio="'seller'">
                   Sellers
                 </label>
-                <label class="btn btn-default" ng-model="searchType" uib-btn-radio="'vendor'">
+                <label class="btn btn-sm btn-default" ng-model="searchType" uib-btn-radio="'vendor'">
                   Vendors
                 </label>
-                <label class="btn btn-default" ng-model="searchType" uib-btn-radio="'product'">
+                <label class="btn btn-sm btn-default" ng-model="searchType" uib-btn-radio="'product'">
                   Products
                 </label>
-                <label class="btn btn-default" ng-model="searchType" uib-btn-radio="'mine'">
+                <label class="btn btn-sm btn-default" ng-model="searchType" uib-btn-radio="'mine'">
                   Mines
                 </label>
-                <label class="btn btn-default" ng-model="searchType" uib-btn-radio="'contact'">
+                <label class="btn btn-sm btn-default" ng-model="searchType" uib-btn-radio="'contact'">
                   Contacts
                 </label>
               </div>
-            </div>
-          </div>      
-        </div>
+              </div>
     
+        </div>      
+      </div>
 
-
-
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
+        <div class="col-lg-4 col-xs-4 hidden-sm hidden-xs">
+              <!-- small box -->
           <div class="small-box bg-red">
-            <div class="inner">
-              <h3>{{ totalContact.count }} Records</h3>
+              <div class="inner">
+                <h4>{{ totalMine.count }} Records</h4>
 
-              <p>CONTACT</p>
+                <p>MINE</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-pie-graph"></i>
+              </div>
+              <a ui-sref="lead.mine" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+
+          <div class="small-box bg-green">
+            <div class="inner">
+              <h4>{{ totalSeller.count }} Records </h4>
+
+              <p>SELLER</p>
             </div>
             <div class="icon">
-              <i class="ion ion-pie-graph"></i>
+              <i class="ion ion-stats-bars"></i>
             </div>
-            <a ui-sref="lead.contact" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+             <a ui-sref="lead.seller" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
+
+           <div class="small-box bg-aqua">
+            <div class="inner">
+              <h4>{{ totalBuyer.count }} Records</h4>
+
+              <p>BUYERS</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-bag"></i>
+            </div>
+            <a ui-sref="lead.buyer" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+
         </div>
 
-        <div class="col-lg-12 col-xs-6 ">
-           
-       </div>
+      
+
+     
 
 
     </div>
-      <!-- /.row -->
-      <!-- Main row -->
-       
+    
      
 </section>      
 
