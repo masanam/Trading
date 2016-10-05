@@ -44,8 +44,8 @@
         </div>
 
 
-         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-        <div class="box box-info">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+          <div class="box box-info">
             <div class="box-header">
               <i class="fa fa-globe"></i>
 
@@ -57,20 +57,19 @@
               <!-- /. tools -->
             </div>
             <div class="box-body">
-            <img src="/images/globe.jpg" class="center-block img-responsive" style="height:270px;">
-            </br>
+              <img src="/images/globe.jpg" class="center-block img-responsive" style="height:270px;">
+              </br>
 
-        
               <form ng-submit="search()">
-                  <div class="input-group input-group-sm">
-                    <input type="text" class="col-md-12 form-control" ng-model="keyword">
-                    <span class="input-group-btn">
-                      <button type="button" type="submit" class="btn btn-info btn-flat">Search</button>
-                    </span>
-                  </div>
+                <div class="input-group input-group-sm">
+                  <input type="text" class="col-md-12 form-control" ng-model="keyword">
+                  <span class="input-group-btn">
+                    <button type="btn" type="submit" class="btn btn-info btn-flat">Search</button>
+                  </span>
+                </div>
               </form>
 
-               </br>
+              </br>
 
               <div class="btn-group centered-block">
                 <label class="btn btn-sm btn-default" ng-model="searchType" uib-btn-radio="'buyer'">
@@ -92,50 +91,50 @@
                   Contacts
                 </label>
               </div>
-              </div>
+            </div>
     
         </div>      
       </div>
 
-        <div class="col-xs-3 col-lg-3 hidden-sm hidden-xs">
-              <!-- small box -->
-          <div class="small-box bg-red">
-              <div class="inner">
-                <h4>{{ totalProduct.count }} Records</h4>
-
-                <p>PRODUCTS</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-pie-graph"></i>
-              </div>
-              <a ui-sref="lead.product" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-
-          <div class="small-box bg-green">
-            <div class="inner"> 
-              <h4>{{ totalMine.count }} Records</h4>
-
-              <p>MINES</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-stats-bars"></i>
-            </div>
-             <a ui-sref="lead.mine" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-
-           <div class="small-box bg-aqua">
+      <div class="col-xs-3 col-lg-3 hidden-sm hidden-xs">
+            <!-- small box -->
+        <div class="small-box bg-red">
             <div class="inner">
-              <h4>{{ totalContact.count }} Records</h4>
+              <h4>{{ totalProduct.count }} Records</h4>
 
-              <p>CONTACTS</p>
+              <p>PRODUCTS</p>
             </div>
             <div class="icon">
-              <i class="ion ion-bag"></i>
+              <i class="ion ion-pie-graph"></i>
             </div>
-            <a ui-sref="lead.contact" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-
+            <a ui-sref="lead.product" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
         </div>
+
+        <div class="small-box bg-green">
+          <div class="inner"> 
+            <h4>{{ totalMine.count }} Records</h4>
+
+            <p>MINES</p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-stats-bars"></i>
+          </div>
+           <a ui-sref="lead.mine" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+
+        <div class="small-box bg-aqua">
+          <div class="inner">
+            <h4>{{ totalContact.count }} Records</h4>
+
+            <p>CONTACTS</p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-bag"></i>
+          </div>
+          <a ui-sref="lead.contact" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+
+      </div>
     </div>
     
      

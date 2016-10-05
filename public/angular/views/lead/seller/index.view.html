@@ -1,280 +1,282 @@
-<section>
+<section class="content">
 <div class="col-lg-2">
   <section ng-include="'./angular/views/lead/side-menu.view.html'"></section>
 </div>
 <div class="col-lg-10" ng-controller="SellerController">
   <section ng-include="'./angular/views/lead/search-bar.view.html'"></section>
-  <h1>Sellers</h1>
-  <!--<a class="btn btn-primary" ui-sref="lead.create-seller">Create New</a>-->
-  <div class="form-group col-md-2">
-      <button ng-click="openSellerModal()" class="col-md-12 btn btn-primary">+ Create New</button>
-  </div>
-  <br/>
-  <br/>
-	<table  ng-init="find()" st-table="displayedCollection" st-safe-src="sellers" class="table table-striped">
-		<thead>
-      <tr>
-        <th colspan="7"><input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
-      </tr>
-
-			<tr>
-				<th>#</th>
-				<th st-sort="company">Company</th>
-				<th st-sort="email">Email</th>
-				<th st-sort="phone">Phone</th>
-				<th st-sort="web">Web</th>
-				<th st-sort="last sell order date">Last Sell Order Date</th>
-				<th st-sort=""></th>
-			</tr>
-
-    
-			</thead>
-			<tbody>
-				<tr ng-repeat="seller in displayedCollection">
-				<td>{{ seller.id }}</td>
-				<td>{{ seller.company_name }}</td>
-				<td>{{ seller.email }}</td>
-				<td>{{ seller.phone }}</td>
-				<td><a href="{{seller.web}}">{{ seller.web }}</a></td>
-				<td>
-       <!--    <a ng-if="seller.last_fulfillments" href="#" data-toggle="modal" data-target="#lastFulfillmentModal" ng-click="goToFulfillment(seller.id)">{{ seller.last_fulfillments }}</a>
-          <span ng-if="!seller.last_fulfillments">N/A</span>
-        </td>
-        <td>
-          <a ng-if="seller.last_productions" href="#" data-toggle="modal" data-target="#lastProductionModal" ng-click="goToProductions(seller.id)">{{ seller.last_productions }}</a>
-          <span ng-if="!seller.last_productions">N/A</span>
-        </td> -->
-           {{ seller.last_fulfillments }}
-          <span ng-if="!seller.last_fulfillments">N/A</span>
-        </td>
-				<!--td>
-					<a ui-sref="seller.update({ id: seller.id })"><i class="glyphicon glyphicon-pencil"></i></a>
-					<a ng-click="delete(seller)"><i class="glyphicon glyphicon-trash"></i></a>
-				</td-->
-        <td>
-          <a ui-sref="lead.view-seller({ id: seller.id })"><i class="glyphicon glyphicon-info-sign"></i></a>
-          <a ui-sref="lead.update-seller({ id: seller.id })"><i class="glyphicon glyphicon-pencil"></i></a>
-          <a ng-click="delete(seller)"><i class="glyphicon glyphicon-trash"></i></a>
-        </td>
-			</tr>
-		</tbody>
-
-    <tfoot>
-      <tr>
-        <td colspan="7" class="text-center">
-          <div st-pagination="" st-items-by-page="10" st-displayed-pages="5"></div>
-        </td>
-      </tr>
-    </tfoot>
-
-	</table>
-  
-  <!-- Modal -->
-  <div id="createSellerModal" class="modal fade" role="dialog">
-    <!--div class="modal-dialog"-->
-    <div>
-      <!-- Modal content-->
-      <div class="modal-content container">
-        <div class="modal-header row">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Create Seller</h4>
-        </div>
-        <div class="modal-body row">
-          <form role="form" ng-submit="create()">
-            <div ng-include="'/angular/views/seller/form.view.html'"></div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
+  <div class="box">
+    <div class="box-header with-border">
+      <h1 class="box-title" style="font-size: 25px">Sellers</h1>
+      <div class="box-tools pull-right">
+        <button ng-click="openSellerModal()" class="col-md-12 btn btn-primary">+ Create New</button>
       </div>
     </div>
-  </div>
+    <div class="box-body">
+    	<table  ng-init="find()" st-table="displayedCollection" st-safe-src="sellers" class="table table-striped">
+    		<thead>
+          <tr>
+            <th colspan="7"><input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
+          </tr>
 
-  <div id="createSupplyModal" class="modal fade" role="dialog">
-    <!--div class="modal-dialog"-->
-    <div>
-      <!-- Modal content-->
-      <div class="modal-content container">
-        <div class="modal-header row">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Create Sell Order</h4>
-        </div>
-        <div class="modal-body row">
-          <form role="form">
-            <div ng-include="'/angular/views/seller/supply-form.view.html'"></div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <div id="updateSellerModal" class="modal fade" role="dialog">
-    <!--div class="modal-dialog"-->
-    <div>
-      <!-- Modal content-->
-      <div class="modal-content container">
-        <div class="modal-header row">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Update a Seller</h4>
-        </div>
-        <div class="modal-body row">
-          <form role="form" ng-submit="update()">
-            <div ng-include="'/angular/views/seller/form.view.html'"></div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <div id="sellerModal" class="modal fade" role="dialog">
-    <!--div class="modal-dialog"-->
-    <div>
-      <!-- Modal content-->
-      <div class="modal-content container">
-        <div class="modal-header row">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Seller Profile</h4>
-        </div>
-        <div class="modal-body row">
-          <h1>{{seller.seller_name}}</h1>
-          <hr class="divider" />
+    			<tr>
+    				<th>#</th>
+    				<th st-sort="company">Company</th>
+    				<th st-sort="email">Email</th>
+    				<th st-sort="phone">Phone</th>
+    				<th st-sort="web">Web</th>
+    				<th st-sort="last sell order date">Last Sell Order Date</th>
+    				<th st-sort=""></th>
+    			</tr>
 
-          <button type="button" class="btn btn-primary" ng-click="goToUpdatePopup(seller.id)"><i class="glyphicon glyphicon-pencil"></i> Update</button>
-          <button type="button" class="btn btn-success" ng-click="productButton = true"><i class="glyphicon glyphicon-oil"></i> Products</button>
-          <button type="button" class="btn btn-info" ng-click="goToContacts()"><i class="glyphicon glyphicon-user"></i> Contacts</button>
         
-          <hr class="divider" />
+    			</thead>
+    			<tbody>
+    				<tr ng-repeat="seller in displayedCollection">
+    				<td>{{ seller.id }}</td>
+    				<td>{{ seller.company_name }}</td>
+    				<td>{{ seller.email }}</td>
+    				<td>{{ seller.phone }}</td>
+    				<td><a href="{{seller.web}}">{{ seller.web }}</a></td>
+    				<td>
+           <!--    <a ng-if="seller.last_fulfillments" href="#" data-toggle="modal" data-target="#lastFulfillmentModal" ng-click="goToFulfillment(seller.id)">{{ seller.last_fulfillments }}</a>
+              <span ng-if="!seller.last_fulfillments">N/A</span>
+            </td>
+            <td>
+              <a ng-if="seller.last_productions" href="#" data-toggle="modal" data-target="#lastProductionModal" ng-click="goToProductions(seller.id)">{{ seller.last_productions }}</a>
+              <span ng-if="!seller.last_productions">N/A</span>
+            </td> -->
+               {{ seller.last_fulfillments }}
+              <span ng-if="!seller.last_fulfillments">N/A</span>
+            </td>
+    				<!--td>
+    					<a ui-sref="seller.update({ id: seller.id })"><i class="glyphicon glyphicon-pencil"></i></a>
+    					<a ng-click="delete(seller)"><i class="glyphicon glyphicon-trash"></i></a>
+    				</td-->
+            <td>
+              <a ui-sref="lead.view-seller({ id: seller.id })"><i class="glyphicon glyphicon-info-sign"></i></a>
+              <a ui-sref="lead.update-seller({ id: seller.id })"><i class="glyphicon glyphicon-pencil"></i></a>
+              <a ng-click="delete(seller)"><i class="glyphicon glyphicon-trash"></i></a>
+            </td>
+    			</tr>
+    		</tbody>
 
-          <div class="row with-divider">
-            <div class="col-md-6">
-              <ng-map ng-if="render" center="{{seller.latitude}}, {{seller.longitude}}">
-                <marker position="{{seller.latitude}}, {{seller.longitude}}" title="This is the seller headquarter"></marker>
-              </ng-map>
+        <tfoot>
+          <tr>
+            <td colspan="7" class="text-center">
+              <div st-pagination="" st-items-by-page="10" st-displayed-pages="5"></div>
+            </td>
+          </tr>
+        </tfoot>
+    	</table>
+  
+      <!-- Modal -->
+      <div id="createSellerModal" class="modal fade" role="dialog">
+        <!--div class="modal-dialog"-->
+        <div>
+          <!-- Modal content-->
+          <div class="modal-content container">
+            <div class="modal-header row">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Create Seller</h4>
             </div>
-            <div class="col-md-6">
-              <h3>Seller Informations</h3>
+            <div class="modal-body row">
+              <form role="form" ng-submit="create()">
+                <div ng-include="'/angular/views/seller/form.view.html'"></div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
 
-              <h5>{{seller.phone}}</h5>
-              <h5>{{seller.contact}}</h5>
-              <h5 ng-if="seller.status == 'a'">Active</h5>
-              <h5 ng-if="seller.status == 'x'">Deactivated</h5>
+      <div id="createSupplyModal" class="modal fade" role="dialog">
+        <!--div class="modal-dialog"-->
+        <div>
+          <!-- Modal content-->
+          <div class="modal-content container">
+            <div class="modal-header row">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Create Sell Order</h4>
+            </div>
+            <div class="modal-body row">
+              <form role="form">
+                <div ng-include="'/angular/views/seller/supply-form.view.html'"></div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div id="updateSellerModal" class="modal fade" role="dialog">
+        <!--div class="modal-dialog"-->
+        <div>
+          <!-- Modal content-->
+          <div class="modal-content container">
+            <div class="modal-header row">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Update a Seller</h4>
+            </div>
+            <div class="modal-body row">
+              <form role="form" ng-submit="update()">
+                <div ng-include="'/angular/views/seller/form.view.html'"></div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div id="sellerModal" class="modal fade" role="dialog">
+        <!--div class="modal-dialog"-->
+        <div>
+          <!-- Modal content-->
+          <div class="modal-content container">
+            <div class="modal-header row">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Seller Profile</h4>
+            </div>
+            <div class="modal-body row">
+              <h1>{{seller.seller_name}}</h1>
+              <hr class="divider" />
 
-              <h3>Contact Points</h3>
-              <ul class="list-group">
-                <li class="list-group-item" ng-repeat="contact in seller.user">
-                  {{ contact.name }}
-                  <i class="glyphicon glyphicon-envelope" style="margin-left: 20px;"></i> {{ contact.email }}
-                  <i class="glyphicon glyphicon-earphone" style="margin-left: 20px;"></i> {{ contact.phone }}
-                </li>
-              </ul>
+              <button type="button" class="btn btn-primary" ng-click="goToUpdatePopup(seller.id)"><i class="glyphicon glyphicon-pencil"></i> Update</button>
+              <button type="button" class="btn btn-success" ng-click="productButton = true"><i class="glyphicon glyphicon-oil"></i> Products</button>
+              <button type="button" class="btn btn-info" ng-click="goToContacts()"><i class="glyphicon glyphicon-user"></i> Contacts</button>
+            
+              <hr class="divider" />
 
-              <h3>Product</h3>
-              <div>
-                <table class="table table-striped">
-                  <thead>
-                      <tr>
-                        <th>Mine Pit</th>
-                        <th>Volume tonnes</th>
-                        <th>GCV(arb) kcal</th>
-                        <th>GCV(adb) kcal</th>
-                        <th>NCV kcal</th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                    <tr ng-repeat="product in products">
-                      <td>{{product.mine.mine_name}}</td>
-                      <td>{{product.volume | number}}</td>
-                      <td>{{product.gcv_arb_min | number}} <br/> {{product.gcv_arb_max | number}}</td>
-                      <td>{{product.gcv_adb_min | number}} <br/> {{product.gcv_adb_max | number}}</td>
-                      <td>{{product.ncv_min | number}} <br/> {{product.ncv_max | number}}</td>
-                    </tr>
-                  </tbody>
-                </table>
+              <div class="row with-divider">
+                <div class="col-md-6">
+                  <ng-map ng-if="render" center="{{seller.latitude}}, {{seller.longitude}}">
+                    <marker position="{{seller.latitude}}, {{seller.longitude}}" title="This is the seller headquarter"></marker>
+                  </ng-map>
+                </div>
+                <div class="col-md-6">
+                  <h3>Seller Informations</h3>
+
+                  <h5>{{seller.phone}}</h5>
+                  <h5>{{seller.contact}}</h5>
+                  <h5 ng-if="seller.status == 'a'">Active</h5>
+                  <h5 ng-if="seller.status == 'x'">Deactivated</h5>
+
+                  <h3>Contact Points</h3>
+                  <ul class="list-group">
+                    <li class="list-group-item" ng-repeat="contact in seller.user">
+                      {{ contact.name }}
+                      <i class="glyphicon glyphicon-envelope" style="margin-left: 20px;"></i> {{ contact.email }}
+                      <i class="glyphicon glyphicon-earphone" style="margin-left: 20px;"></i> {{ contact.phone }}
+                    </li>
+                  </ul>
+
+                  <h3>Product</h3>
+                  <div>
+                    <table class="table table-striped">
+                      <thead>
+                          <tr>
+                            <th>Mine Pit</th>
+                            <th>Volume tonnes</th>
+                            <th>GCV(arb) kcal</th>
+                            <th>GCV(adb) kcal</th>
+                            <th>NCV kcal</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                        <tr ng-repeat="product in products">
+                          <td>{{product.mine.mine_name}}</td>
+                          <td>{{product.volume | number}}</td>
+                          <td>{{product.gcv_arb_min | number}} <br/> {{product.gcv_arb_max | number}}</td>
+                          <td>{{product.gcv_adb_min | number}} <br/> {{product.gcv_adb_max | number}}</td>
+                          <td>{{product.ncv_min | number}} <br/> {{product.ncv_max | number}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <!--div class="col-md-6">
+                  <h5>Pending Orders</h5>
+                  <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Date</th>
+                            <th>Product</th>
+                            <th>Volume</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="(idx, production) in productions">
+                            <td>{{ production.id }}</td>
+                            <td>
+                              {{ production.created_at | date:'medium' }}
+                            </td>
+                            <td>
+                              {{ production.name }}
+                            </td>
+                            <td>
+                              {{ production.volume }}
+                            </td>
+                        </tr>
+                        <tr ng-show="productions.length > 0">
+                          <td colspan="3">There is no pending orders.</td>
+                        </tr>
+                        <tr>
+                          <td colspan="3"><a href="#" ng-click="goToProductions(seller.id)" class="btn btn-block btn-blue">View More</a></td>
+                        </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-md-6">
+                  <h5>Last Order History</h5>
+                  <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Last Order Date</th>
+                            <th>Volume</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="(idx, lastOrder) in lastOrderFulfillment">
+                            <td>{{ lastOrder.id }}</td>
+                            <td>
+                              {{ lastOrder.created_at | date:'medium' }}
+                            </td>
+                            <td>
+                              {{ lastOrder.volume }}
+                            </td>
+                        </tr>
+                        <tr ng-show="lastOrders.length > 0">
+                          <td colspan="3">There is no last orders.</td>
+                        </tr>
+                        <tr>
+                          <td colspan="3"><a href="#" ng-click="goToOrderFulfillment(seller.id)" class="btn btn-block btn-blue">View More</a></td>
+                        </tr>
+                    </tbody>
+                  </table>
+                </div-->
+              </div>
+              <div class="row">
+                <div class="col-md-3" ng-repeat="(idx, lastOrder) in Orders">
+                  <ng-map center="{{seller.longitude}}, {{seller.latitude}}">
+                    <marker center="{{seller.longitude}}, {{seller.latitude}}" title="This is the seller headquarter"></marker>
+                  </ng-map>
+                </div>
               </div>
             </div>
-          </div>
-
-          <div class="row">
-            <!--div class="col-md-6">
-              <h5>Pending Orders</h5>
-              <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Date</th>
-                        <th>Product</th>
-                        <th>Volume</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="(idx, production) in productions">
-                        <td>{{ production.id }}</td>
-                        <td>
-                          {{ production.created_at | date:'medium' }}
-                        </td>
-                        <td>
-                          {{ production.name }}
-                        </td>
-                        <td>
-                          {{ production.volume }}
-                        </td>
-                    </tr>
-                    <tr ng-show="productions.length > 0">
-                      <td colspan="3">There is no pending orders.</td>
-                    </tr>
-                    <tr>
-                      <td colspan="3"><a href="#" ng-click="goToProductions(seller.id)" class="btn btn-block btn-blue">View More</a></td>
-                    </tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="col-md-6">
-              <h5>Last Order History</h5>
-              <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Last Order Date</th>
-                        <th>Volume</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="(idx, lastOrder) in lastOrderFulfillment">
-                        <td>{{ lastOrder.id }}</td>
-                        <td>
-                          {{ lastOrder.created_at | date:'medium' }}
-                        </td>
-                        <td>
-                          {{ lastOrder.volume }}
-                        </td>
-                    </tr>
-                    <tr ng-show="lastOrders.length > 0">
-                      <td colspan="3">There is no last orders.</td>
-                    </tr>
-                    <tr>
-                      <td colspan="3"><a href="#" ng-click="goToOrderFulfillment(seller.id)" class="btn btn-block btn-blue">View More</a></td>
-                    </tr>
-                </tbody>
-              </table>
-            </div-->
-          </div>
-          <div class="row">
-            <div class="col-md-3" ng-repeat="(idx, lastOrder) in Orders">
-              <ng-map center="{{seller.longitude}}, {{seller.latitude}}">
-                <marker center="{{seller.longitude}}, {{seller.latitude}}" title="This is the seller headquarter"></marker>
-              </ng-map>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>

@@ -12,7 +12,7 @@ angular.module('auth').controller('AuthController', ['$scope', '$state', '$urlRo
       }
 
       Authentication.login(credentials, function(){
-        $state.go('home', {});
+        $state.go('lead.index', {});
       });
     };
 
@@ -40,5 +40,6 @@ angular.module('auth').controller('AuthController', ['$scope', '$state', '$urlRo
 
     $scope.logout = function () {
       Authentication.logout();
+      $state.go('home', {});
     };
 }]);
