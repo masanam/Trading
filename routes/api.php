@@ -101,8 +101,11 @@ Route::group(['middleware' => ['cors']], function() {
         'create', 'edit', 'destroy'
     ]]);
 
-    Route::post('chat/send', 'ChatController@sendMessage');
-    Route::get('chat/{user}', 'ChatController@showAllChatsByUser');
-    Route::get('chat/{type}/{order_deal}', 'ChatController@showAllChatsByOrderDeal');
-    Route::get('chat/{type}/{user}/{order_deal}/{chat_id}', 'ChatController@showChat');
+    Route::post('buy-deal/chat/send', 'BuyDealChatController@sendChat');
+    Route::get('buy-deal/chat/{user}', 'BuyDealChatController@showAllBuyDealChatsByUser');
+    Route::get('buy-deal/chat/{buy_deal}', 'BuyDealChatController@showAllBuyDealChatsByOrderDeal');
+
+    Route::post('sell-deal/chat/send', 'SellDealChatController@sendChat');
+    Route::get('sell-deal/chat/{user}', 'SellDealChatController@showAllSellDealChatsByUser');
+    Route::get('sell-deal/chat/{sell_deal}', 'SellDealChatController@showAllSellDealChatsByOrderDeal');
 });

@@ -2,12 +2,13 @@
 
 namespace App\Listeners;
 
-use App\Events\SomeEvent;
+use App\Events\MessageReceived;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class EventListener
+class EventListener implements ShouldQueue
 {
+    use InteractsWithQueue;
     /**
      * Create the event listener.
      *
@@ -24,8 +25,10 @@ class EventListener
      * @param  SomeEvent  $event
      * @return void
      */
-    public function handle(SomeEvent $event)
+    public function handle(MessageReceived $event)
     {
-        //
+        if (true) {
+            $this->release(30);
+        }
     }
 }

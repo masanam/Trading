@@ -10,11 +10,11 @@
         "barryvdh/laravel-cors": "^0.8.2",
         "laravel/passport": "^1.0",
         "tymon/jwt-auth": "0.5.*",
-        "pusher/pusher-php-server": "^2.6",
         "laravel/scout": "^1.1",
         "algolia/algoliasearch-client-php": "^1.10",
         "jeylabs/laravel-scout-elastic": "^1.0",
-        "vinkla/pusher": "^2.4"
+        "vinkla/pusher": "^2.4",
+        "pusher/pusher-php-server": "^2.6"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

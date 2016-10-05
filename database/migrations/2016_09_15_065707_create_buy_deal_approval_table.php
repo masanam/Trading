@@ -18,7 +18,7 @@ class CreateBuyDealApprovalTable extends Migration
             $table->integer('buy_deal_id')->unsigned();
             $table->integer('user_id')->unsigned();
 
-            $table->string('approver')->nullable();
+            $table->integer('approver_id')->nullable();
 
             $table->char('status', 1); // A = Approved ; R = Reject
 

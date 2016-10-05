@@ -70,7 +70,7 @@ class ChatController extends Controller
 
         event(new \App\Events\MessageReceived($message));
 
-        $this->pusher->trigger($this->chatChannel, 'new-message', $message);
+        // $this->pusher->trigger($this->chatChannel, 'new-message', $message);
         return response()->json($message, 200);
     }
 
