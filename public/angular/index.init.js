@@ -49,7 +49,7 @@ angular.module(ApplicationConfiguration.applicationModuleName).config(['$urlRout
   }
 ]);
 
-angular.module(ApplicationConfiguration.applicationModuleName)config(['PusherServiceProvider',
+angular.module(ApplicationConfiguration.applicationModuleName).config(['PusherServiceProvider',
   function(PusherServiceProvider) {
     PusherServiceProvider
     .setToken(env('APP_KEY'))
