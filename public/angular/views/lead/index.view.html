@@ -3,37 +3,37 @@
       <div class="row" ng-init="total()">
   
 
-        <div class="col-lg-4 col-xs-4 hidden-sm hidden-xs ">
+        <div class="col-xs-3 col-lg-3 hidden-xs hidden-sm">
           <!-- small box -->
           <div class="small-box bg-red">
             <div class="inner">
-              <h4>{{ totalContact.count }} Records</h4>
+              <h4>{{ totalBuyer.count }} Records</h4>
 
-              <p>CONTACT</p>
+              <p>BUYER</p>
             </div>
             <div class="icon">
               <i class="ion ion-pie-graph"></i>
             </div>
-            <a ui-sref="lead.contact" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+            <a ui-sref="lead.buyer" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
 
-          <div class="small-box bg-red">
+          <div class="small-box bg-green">
             <div class="inner">
-              <h4>{{ totalProduct.count }} Records</h4>
+              <h4>{{ totalSeller.count }} Records </h4>
 
-              <p>PRODUCT</p>
+              <p>SELLERS</p>
             </div>
             <div class="icon">
               <i class="ion ion-pie-graph"></i>
             </div>
-             <a ui-sref="lead.product" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+             <a ui-sref="lead.seller" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
 
-          <div class="small-box bg-yellow">
+          <div class="small-box bg-aqua">
             <div class="inner">
               <h4>{{ totalVendor.count }} Records</h4>
 
-              <p>VENDOR</p>
+              <p>VENDORS</p>
             </div>
             <div class="icon">
               <i class="ion ion-person-add"></i>
@@ -44,7 +44,7 @@
         </div>
 
 
-         <div class="col-lg-4 col-xs-12 col-sm-12 col-md-4">
+         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
         <div class="box box-info">
             <div class="box-header">
               <i class="fa fa-globe"></i>
@@ -70,7 +70,9 @@
                   </div>
               </form>
 
-              <div class="btn-group center-block">
+               </br>
+
+              <div class="btn-group centered-block">
                 <label class="btn btn-sm btn-default" ng-model="searchType" uib-btn-radio="'buyer'">
                   Buyer
                 </label>
@@ -95,51 +97,45 @@
         </div>      
       </div>
 
-        <div class="col-lg-4 col-xs-4 hidden-sm hidden-xs">
+        <div class="col-xs-3 col-lg-3 hidden-sm hidden-xs">
               <!-- small box -->
           <div class="small-box bg-red">
               <div class="inner">
-                <h4>{{ totalMine.count }} Records</h4>
+                <h4>{{ totalProduct.count }} Records</h4>
 
-                <p>MINE</p>
+                <p>PRODUCTS</p>
               </div>
               <div class="icon">
                 <i class="ion ion-pie-graph"></i>
               </div>
-              <a ui-sref="lead.mine" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+              <a ui-sref="lead.product" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
 
           <div class="small-box bg-green">
-            <div class="inner">
-              <h4>{{ totalSeller.count }} Records </h4>
+            <div class="inner"> 
+              <h4>{{ totalMine.count }} Records</h4>
 
-              <p>SELLER</p>
+              <p>MINES</p>
             </div>
             <div class="icon">
               <i class="ion ion-stats-bars"></i>
             </div>
-             <a ui-sref="lead.seller" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+             <a ui-sref="lead.mine" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
 
            <div class="small-box bg-aqua">
             <div class="inner">
-              <h4>{{ totalBuyer.count }} Records</h4>
+              <h4>{{ totalContact.count }} Records</h4>
 
-              <p>BUYERS</p>
+              <p>CONTACTS</p>
             </div>
             <div class="icon">
               <i class="ion ion-bag"></i>
             </div>
-            <a ui-sref="lead.buyer" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+            <a ui-sref="lead.contact" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
 
         </div>
-
-      
-
-     
-
-
     </div>
     
      

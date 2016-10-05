@@ -5,42 +5,31 @@
   </div>
   <thead>
       <tr>
-        <th colspan="9"><input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
+        <th colspan="9" st-ratio="100"><input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
       </tr>
       <tr>
-        <th st-sort="trader">Trader</th>
-        <th st-sort="buyer">Buyer(s)</th>
-        <th st-sort="seller">Seller(s)</th>
-        <!--th>Vendor(s)</th-->
-        <th st-sort="created" width="75px">Created</th>
-        <th st-sort="volume" >Volume (tonnes)</th>
-        <th st-sort="total_sales" width="120px">Total Sales (USD)</th>
-        <th st-sort="total_cogs" width="120px">Total CoGS (USD)</th>
-        <th st-sort="margin" width="100px">Margin (USD)</th>
-        <th st-sort="status">Status</th>
+        <th st-sort="trader" st-ratio="20">Trader</th>
+        <th st-sort="buyer" st-ratio="10">Buyer(s)</th>
+        <th st-sort="seller" st-ratio="10">Seller(s)</th>
+        <th st-sort="created" st-ratio="10">Created</th>
+        <th st-sort="volume" st-ratio="10">Volume (tonnes)</th>
+        <th st-sort="total_sales" st-ratio="10">Total Sales (USD)</th>
+        <th st-sort="total_cogs" st-ratio="10">Total CoGS (USD)</th>
+        <th st-sort="margin" st-ratio="10">Margin (USD)</th>
+        <th st-sort="status" st-ratio="10">Status</th>
       </tr>
   </thead>
   <tbody>
     <tr ng-repeat="deal in displayedCollection" ui-sref="deal.view({id: deal.id})">
-      <td>{{deal.trader_name}}</td>
-      <td>{{deal.buyer_name}}</td>
-      <td>{{deal.seller_name}}</td>
-      <!--td>
-        <span ng-repeat="sell_deal in deal.sell_deal">
-          {{sell_deal.sell_order.seller.company_name}}
-        </span>
-      </td>
-      <td>
-        <span ng-repeat="buy_deal in deal.buy_deal">
-          {{buy_deal.buy_order.buyer.company_name}}
-        </span>
-      </td-->
-      <td>{{deal.created_at  | convertToDate | date : 'd MMMM yy' }}</td>
-      <td>{{deal.volume | number}}</td>
-      <td>{{deal.total_sales | number }}</td>
-      <td>{{deal.total_cogs | number }}</td>
-      <td>{{ (deal.total_sales-deal.total_cogs) | number }}</td>
-      <td>
+      <td st-ratio="20">{{deal.trader_name}}</td>
+      <td st-ratio="10">{{deal.buyer_name}}</td>
+      <td st-ratio="10">{{deal.seller_name}}</td>
+      <td st-ratio="10">{{deal.created_at  | convertToDate | date : 'd MMMM yy' }}</td>
+      <td st-ratio="10">{{deal.volume | number}}</td>
+      <td st-ratio="10">{{deal.total_sales | number }}</td>
+      <td st-ratio="10">{{deal.total_cogs | number }}</td>
+      <td st-ratio="10">{{ (deal.total_sales-deal.total_cogs) | number }}</td>
+      <td st-ratio="10">
           <deal-status status=deal.status></deal-status>
       </td>
     </tr>

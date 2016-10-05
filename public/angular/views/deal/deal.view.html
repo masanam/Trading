@@ -1,63 +1,34 @@
-<div ng-controller="DealController">
-  <h1>Deals <span ng-show="buyer !== undefined">for: {{buyer.company_name}}</span> <button ui-sref="deal.create" class="btn-primary btn">+ Create</button></h1>
-  <hr/>
-  
-  <uib-tabset active="activeJustified" justified="true" ng-init="findDeals()">
-    <uib-tab index="0">
-      <uib-tab-heading ng-click="findDeals()">
-        <i class='glyphicon glyphicon-fire'></i>  Running<i class='glyphicon glyphicon-chevron-right pull-right'></i>
-      </uib-tab-heading>
-      <section ng-include="'/angular/views/deal/table.view.html'"></section>
-    </uib-tab>
-    <uib-tab index="1">
-      <uib-tab-heading ng-click="findFinished()">
-        <i class='glyphicon glyphicon-earphone'></i>  Finished<i class='glyphicon glyphicon-chevron-right pull-right'></i>
-      </uib-tab-heading>
-      <section ng-include="'/angular/views/deal/table.view.html'"></section>
-    </uib-tab>
-    <uib-tab index="2">
-      <uib-tab-heading ng-click="findCancelled()">
-        <i class='glyphicon glyphicon-magnet'></i>  Cancelled<i class='glyphicon glyphicon-chevron-right pull-right'></i>
-      </uib-tab-heading>
-      <section ng-include="'/angular/views/deal/table.view.html'"></section>
-    </uib-tab>
-  </uib-tabset>
+	<section class="content" ng-controller="DealController">
+		<div class="box box-info">
+            <div class="box-header">
+               <h3>Deals <span ng-show="buyer !== undefined">for: {{buyer.company_name}}</span> </h3>
+            </div>
 
-	<!--ul class="nav nav-tabs nav-justified" ng-init="findDeals()">
-		<li class="active">
-			<a data-toggle="tab" href="#running" ng-click="findDeals()">
-				<i class="glyphicon glyphicon-fire"></i>
-				<span> Running Deals </span>
-				<i class="glyphicon glyphicon-chevron-right pull-right"></i>
-			</a>
-		</li>
-		<li>
-			<a data-toggle="tab" href="#finished" ng-click="findFinished()">
-				<i class="glyphicon glyphicon-earphone"></i>
-				<span> Finished Deals </span>
-				<i class="glyphicon glyphicon-chevron-right pull-right"></i>
-			</a>
-		</li>
-		<li>
-			<a data-toggle="tab" href="#cancelled" ng-click="findCancelled()">
-				<i class="glyphicon glyphicon-magnet"></i>
-				<span> Cancelled Deals </span>
-			</a>
-		</li>
-	</ul>
+            	<div class="box-body">
+            		<button ui-sref="deal.create" class="btn-primary btn">+ Create</button>	
 
-	<div class="tab-content">
-		<div id="running" class="tab-pane fade in active">
-			<br/>
-  			<section ng-include="'/angular/views/deal/table.view.html'"></section>
-		</div>                                             
-		<div id="finished" class="tab-pane fade">              
-			<br/>                          
-  			<section ng-include="'/angular/views/deal/table.view.html'"></section>
-		</div>                                             
-		<div id="cancelled" class="tab-pane fade">             
-			<br/>                         
-  			<section ng-include="'/angular/views/deal/table.view.html'"></section>
-		</div>
-	</div-->
-</div>
+            		<uib-tabset active="activeJustified" justified="true" ng-init="findDeals()">
+					    <uib-tab index="0">
+					      <uib-tab-heading ng-click="findDeals()">
+					        <i class='glyphicon glyphicon-fire'></i>  Running<i class='glyphicon glyphicon-chevron-right pull-right'></i>
+					      </uib-tab-heading>
+					      <section ng-include="'/angular/views/deal/table.view.html'"></section>
+					    </uib-tab>
+					    <uib-tab index="1">
+					      <uib-tab-heading ng-click="findFinished()">
+					        <i class='glyphicon glyphicon-earphone'></i>  Finished<i class='glyphicon glyphicon-chevron-right pull-right'></i>
+					      </uib-tab-heading>
+					      <section ng-include="'/angular/views/deal/table.view.html'"></section>
+					    </uib-tab>
+					    <uib-tab index="2">
+					      <uib-tab-heading ng-click="findCancelled()">
+					        <i class='glyphicon glyphicon-magnet'></i>  Cancelled<i class='glyphicon glyphicon-chevron-right pull-right'></i>
+					      </uib-tab-heading>
+					      <section ng-include="'/angular/views/deal/table.view.html'"></section>
+					    </uib-tab>
+					</uib-tabset>
+
+            	</div>
+        </div>   
+    </section>
+       
