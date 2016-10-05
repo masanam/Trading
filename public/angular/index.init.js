@@ -49,13 +49,13 @@ angular.module(ApplicationConfiguration.applicationModuleName).config(['$urlRout
   }
 ]);
 
-// angular.module(ApplicationConfiguration.applicationModuleName)config(['PusherServiceProvider',
-//   function(PusherServiceProvider) {
-//     PusherServiceProvider
-//     .setToken(env('APP_KEY'))
-//     .setOptions({});
-//   }
-// ]);
+angular.module(ApplicationConfiguration.applicationModuleName)config(['PusherServiceProvider',
+  function(PusherServiceProvider) {
+    PusherServiceProvider
+    .setToken(env('APP_KEY'))
+    .setOptions({});
+  }
+]);
 
 
 //initialize application authentication & authorization before starting

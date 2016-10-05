@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Deal', 'Order', 'Order', 'Buyer', 'Seller', 'SellDeal', 'BuyDeal', 'Authentication', '$location', '$stateParams', '$pusher', 'BuyDealChat', 'SellDealChat',
-	function($scope, $uibModal, Deal, Order, Buyer, Seller, SellDeal, BuyDeal, Authentication, $location, $stateParams, $pusher, BuyDealChat, SellDealChat) {
+angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Deal', 'Order', 'Order', 'Buyer', 'Seller', 'SellDeal', 'BuyDeal', 'Authentication', '$location', '$stateParams', 'Pusher', 'BuyDealChat', 'SellDealChat',
+	function($scope, $uibModal, Deal, Order, Buyer, Seller, SellDeal, BuyDeal, Authentication, $location, $stateParams, Pusher, BuyDealChat, SellDealChat) {
     $scope.findDeals = function(){
       $scope.deals = Deal.query({action:'table', status: 'a'});
     };
@@ -334,24 +334,27 @@ angular.module('deal').controller('AlertModalController', function ($scope, $uib
   };
 });
 
-angular.module('deal').controller('ChatModalController', function ($scope, $uibModalInstance, $pusher, User, Chat, buyDeal, sellDeal) {
+angular.module('deal').controller('ChatModalController', function ($scope, $uibModalInstance, Pusher, User, Chat, buyDeal, sellDeal) {
   $scope.buy_deal = buyDeal;
   $scope.sell_deal = sellDeal;
 
-  var client = new Pusher(API_KEY);
-  var pusher = $pusher(client);
-  var buy_deal_channel = pusher.subscribe('private-buy-deal-channel.', $scope.buy_deal.id);
-  var sell_deal_channel = pusher.subscribe('private-sell-deal-channel.', $scope.sell_deal.id);
-  buy_deal_channel.bind('MessageReceived',
-    function(data) {
-      $scope.buy_deal.chat.push(data);
+  Pusher.subscribe('private-buy-deal-channel.'.$scope.buy_deal.id, 'new-message', function (chat) {
+    for (var i = 0; i < $scope.buy_deal.chat.length; i++) {
+      if ($scope.buy_deal.chat[i].id === chat.id) {
+        $scope.buy_deal.chat[i] = chat;
+        break;
+      }
     }
-  );
-  sell_deal_channel.bind('MessageReceived',
-    function(data) {
-      $scope.sell_deal.chat.push(data);
+  });
+
+  Pusher.subscribe('private-sell-deal-channel.'.$scope.sell_deal.id, 'new-message', function (chat) {
+    for (var i = 0; i < $scope.sell_deal.chat.length; i++) {
+      if ($scope.sell_deal.chat[i].id === chat.id) {
+        $scope.sell_deal.chat[i] = chat;
+        break;
+      }
     }
-  );
+  });
 
   $scope.sendBuyDealMessage = function() {
     $buy_deal_chat = new BuyDealChat({
