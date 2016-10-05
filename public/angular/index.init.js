@@ -5,7 +5,7 @@ var ApplicationConfiguration = (function () {
   // Init module configuration options
   var applicationModuleName = 'coaltrade';
   var applicationModuleVendorDependencies = [
-    'ngResource', 'ui.router', 'satellizer', 'ngMap', 'chart.js', 'ui.bootstrap', 'datatables', 'as.sortable', 'smart-table', 'doowb.angular-pusher', 'ngValidate',
+    'ngResource', 'ui.router', 'satellizer', 'ngMap', 'chart.js', 'ui.bootstrap', 'smart-table', 'doowb.angular-pusher', 'ngValidate',
   ];
 
   // Add a new vertical module
@@ -52,7 +52,7 @@ angular.module(ApplicationConfiguration.applicationModuleName).config(['$urlRout
 angular.module(ApplicationConfiguration.applicationModuleName).config(['PusherServiceProvider',
   function(PusherServiceProvider) {
     PusherServiceProvider
-    .setToken(env('APP_KEY'))
+    .setToken('base64:e8DFx9VH+ILynmv54ScfP9JyRQdLjcDzvkCcuNYtSFI=')
     .setOptions({});
   }
 ]);
