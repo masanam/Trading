@@ -1,27 +1,35 @@
-<section ng-controller="LeadController" ng-init="initSearch()">
-	<form class="col-md-8 input-group btn-group" ng-submit="search()">
-		<input type="text" class="form-control" style="width:600px;display:inline;" ng-model="keyword">
-		<button class="btn btn-success" type="submit">Search</button>
-	</form><br/>
+<div class="box">
+	<div class="box-body">
+		<section ng-controller="LeadController" ng-init="initSearch()">
+			<div class="text-center">
+				<form class="form-group" ng-submit="search()">
+					<div class="has-feedback">
+				        <input type="text" class="form-control input-sm" placeholder="Search..." style="height:35px;" ng-model="keyword">
+				        <span class="glyphicon glyphicon-search form-control-feedback"></span>
+				    </div>
+			    </form>
 
-	<div class="btn-group">
-		<label class="btn btn-default" ng-model="searchType" uib-btn-radio="'buyer'">
-		Buyer
-		</label>
-		<label class="btn btn-default" ng-model="searchType" uib-btn-radio="'seller'">
-		Sellers
-		</label>
-		<label class="btn btn-default" ng-model="searchType" uib-btn-radio="'vendor'">
-		Vendors
-		</label>
-		<label class="btn btn-default" ng-model="searchType" uib-btn-radio="'product'">
-		Products
-		</label>
-		<label class="btn btn-default" ng-model="searchType" uib-btn-radio="'mine'">
-		Mines
-		</label>
-		<label class="btn btn-default" ng-model="searchType" uib-btn-radio="'contact'">
-		Contacts
-		</label>
+				<div class="btn-group">
+					<label class="btn btn-default" ng-model="searchType" uib-btn-radio="'buyer'">
+					Buyer
+					</label>
+					<label class="btn btn-default" ng-model="searchType" uib-btn-radio="'seller'">
+					Sellers
+					</label>
+					<label class="btn btn-default" ng-model="searchType" uib-btn-radio="'vendor'">
+					Vendors
+					</label>
+					<label class="btn btn-default" ng-model="searchType" uib-btn-radio="'product'">
+					Products
+					</label>
+					<label class="btn btn-default" ng-model="searchType" uib-btn-radio="'mine'">
+					Mines
+					</label>
+					<label class="btn btn-default" ng-model="searchType" uib-btn-radio="'contact'">
+					Contacts
+					</label>
+				</div>
+			</div>
+		</section>
 	</div>
-</section>
+</div>

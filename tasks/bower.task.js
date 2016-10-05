@@ -75,7 +75,8 @@ Elixir.extend('bower', function(jsOutputFile, jsOutputFolder, ttfOutputFolder, c
     'bower_components/AdminLTE/dist/css/AdminLTE.min.css',
     'bower_components/AdminLTE/dist/css/skins/skin-blue.min.css',
     'bower_components/AdminLTE/plugins/iCheck/square/blue.css',
-    'bower_components/AdminLTE/plugins/iCheck/icheck.min.js'
+    'bower_components/AdminLTE/plugins/iCheck/icheck.min.js',
+    'bower_components/AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js'
 
 
   ];

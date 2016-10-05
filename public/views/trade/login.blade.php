@@ -29,12 +29,14 @@
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
 </head>
-<body class="hold-transition login-page sidebar-collapse skin-blue sidebar-mini" ng-app="coaltrade">
-  <div ng-include="'./angular/views/layout/header_lte.view.html'"></div>
-  <div ng-include="'./angular/views/layout/sidebar.view.html'"></div>
+<body class="hold-transition login-page sidebar-collapse skin-blue sidebar-mini fixed" ng-app="coaltrade">
+  <div class="wrapper">
+  <div ng-include="'./angular/views/layout/header_lte.view.html'" ng-controller="AuthController"></div>
+  <div ng-include="'./angular/views/layout/sidebar.view.html'" ng-controller="AuthController" ng-show="Authentication.user"></div>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     @yield('container')
+  </div>
   </div>
 </body>
 </html>

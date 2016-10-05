@@ -1,5 +1,5 @@
 <!-- Left side column. contains the logo and sidebar -->
-<aside class="main-sidebar" ng-controller="AuthController">
+<aside class="main-sidebar fixed" ng-controller="AuthController">
   <!-- sidebar: style can be found in sidebar.less -->
   <section class="sidebar">
     <!-- Sidebar user panel -->
@@ -20,6 +20,10 @@
           <i class="fa fa-files-o"></i>
           <span>Lead</span>
         </a>
+        <ul class="treeview-menu">
+          <li><a ui-sref="lead.buyer"><i class="fa fa-circle-o"></i> Buyer</a></li>
+          <li class="active"><a ui-sref="lead.seller"><i class="fa fa-circle-o"></i> Seller</a></li>
+        </ul>
       </li>
       <li class="active treeview">
         <a ui-sref="deal.index">
