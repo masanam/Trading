@@ -2,6 +2,7 @@
 
 angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Deal', 'Order', 'Order', 'Buyer', 'Seller', 'SellDeal', 'BuyDeal', 'Authentication', '$location', '$stateParams', '$pusher', 'Chat',
 	function($scope, $uibModal, Deal, Order, Buyer, Seller, SellDeal, BuyDeal, Authentication, $location, $stateParams, $pusher, Chat) {
+    
     $scope.findDeals = function(){
       $scope.deals = Deal.query({action:'table', status: 'a'});
     };
@@ -16,7 +17,9 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
     
     $scope.findOne = function(){
       $scope.deal = Deal.get({ id: $stateParams.id });
-      
+    
+
+
       // Get the buy deals
       BuyDeal.query({action:'getByDeal', dealId: $stateParams.id}, function(buyDeals){
         for(var i = 0; i < buyDeals.length; i++){

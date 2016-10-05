@@ -1,11 +1,12 @@
 	<section class="content" ng-controller="DealController">
-		<div class="box box-info">
-            <div class="box-header">
-               <h3>Deals <span ng-show="buyer !== undefined">for: {{buyer.company_name}}</span> </h3>
+		<div class="box box-primary box-solid">
+            <div class="box-header ">
+                <h3 class="box-title">Deals <span ng-show="buyer !== undefined">for: {{buyer.company_name}}</span>
+               <button ui-sref="deal.create" class="btn-default btn">+ Create</button>	 </h3>
             </div>
 
             	<div class="box-body">
-            		<button ui-sref="deal.create" class="btn-primary btn">+ Create</button>	
+            		
 
             		<uib-tabset active="activeJustified" justified="true" ng-init="findDeals()">
 					    <uib-tab index="0">
