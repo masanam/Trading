@@ -29,7 +29,7 @@
       <td st-ratio="10">{{deal.total_sales | number }}</td>
       <td st-ratio="10">{{deal.total_cogs | number }}</td>
       <td st-ratio="10">{{ (deal.total_sales-deal.total_cogs) | number }}</td>
-      <td st-ratio="10">
+      <td>
           <deal-status status=deal.status></deal-status>
       </td>
     </tr>
@@ -43,11 +43,22 @@
   </tfoot>
 </table>
 
-<div class="panel panel-primary">
-  <div class="panel-heading">
-    Total Sales: {{ getTotalPrice() | number }} USD
-  </div>
-  <div class="panel-body">
-    Total Volume: {{ getTotalVolume() | number }}
-  </div>
-</div>
+        <div class="col-lg-12">
+          <div class="box box-warning box-solid">
+            <div class="box-header with-border">
+              <h3 class="box-title">Total Sales: {{ getTotalPrice() | number }} USD</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+              <!-- /.box-tools -->
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              Total Volume: {{ getTotalVolume() | number }}
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+
