@@ -272,7 +272,56 @@ angular.module('order').controller('OrderController', ['$location', '$scope', '$
         } 
       }
     });
+
     
+}]);
+
+angular.module('order').controller('BuyOrderController', ['$location', '$scope', '$http', '$uibModal', '$stateParams', '$state', 'Order', 'Buyer', '$rootScope',
+  function($location, $scope, $http, $uibModal, $stateParams, $state, Order, Buyer, $rootScope) {
+    
+    $scope.findBuyOrder = function() {
+      $scope.buy_orders = Order.query({ type: 'buy' });
+    };
+
+    $scope.findOne = function(id) {
+
+      if(id !== undefined){
+        $scope.buy_orderId = id;
+      } else {
+        $scope.buy_orderId = $stateParams.id;
+      }
+
+      $scope.buy_order = Order.get({ type: 'buy', id: $scope.buy_orderId });
+    };
+
+    $scope.openModal = function () {
+      var modalInstance = $uibModal.open({
+        templateUrl: './angular/views/order/buy-order/create.modal.view.html',
+        controller: 'BuyOrderModalController',
+        scope: $scope,
+        size: 'lg'
+      });
+    };
+
+}]);
+
+angular.module('order').controller('BuyOrderModalController', function ($scope, $uibModalInstance, Buyer) {
+  $scope.findAllBuyers = function() {
+      $scope.buyers = Buyer.query();
+    }
+
+  $scope.close = function () {
+    $uibModalInstance.dismiss('cancel');
+  };
+});
+
+angular.module('order').controller('SellOrderController', ['$location', '$scope', '$http', '$uibModal', '$stateParams', '$state', 'Order', 'Seller', '$rootScope',
+  function($location, $scope, $http, $uibModal, $stateParams, $state, Order, Seller, $rootScope) {
+    
+    $scope.findSellOrder = function() {
+      $scope.sell_orders = Order.query({ type: 'sell' });
+    };
+
 }]);
 
 angular.module('order').controller('OrderModalController', function ($scope, $uibModalInstance, $timeout, order, Order, OrderFulfillment) {

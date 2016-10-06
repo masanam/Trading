@@ -25,7 +25,7 @@ class BuyOrderController extends Controller
     public function index()
     {
 
-        $buy_order = BuyOrder::where('status', 'a')->get();
+        $buy_order = BuyOrder::with('buyer')->where('order_status', 'a')->get();
         return response()->json($buy_order, 200);
     }
 
@@ -104,7 +104,7 @@ class BuyOrderController extends Controller
         $buy_order->volume = $request->volume;
         $buy_order->max_price = $request->max_price;
 
-        $buy_order->status = 'a';
+        $buy_order->order_status = 'a';
 
         $buy_order->save();
 
@@ -121,8 +121,8 @@ class BuyOrderController extends Controller
      */
     public function show(BuyOrder $buy_order)
     {
-
-        if($buy_order->status == 'a') {
+        var_dump($buy_order->id);
+        if($buy_order->order_status == 'a') {
             return response()->json([
                 'success' => TRUE,
                 $buy_order
@@ -211,7 +211,7 @@ class BuyOrderController extends Controller
 
         $buy_order->volume = $request->volume;
         
-        $buy_order->status = 'a';
+        $buy_order->order_status = 'a';
 
         $buy_order->save();
 
@@ -232,7 +232,7 @@ class BuyOrderController extends Controller
             ] ,404);
         }
 
-        $buy_order->status = 'x';
+        $buy_order->order_status = 'x';
         $buy_order->save();
 
         return response()->json($buy_order, 200);

@@ -54,7 +54,7 @@ class BuyOrderTableSeeder extends Seeder
 
             'volume' => 5000,
             'max_price' => 5000,
-            'status' => 'o'
+            'order_status' => 'o'
       ]);
 
       BuyOrder::create([
@@ -96,7 +96,7 @@ class BuyOrderTableSeeder extends Seeder
 
             'volume' => 3000,
             'max_price' => 3000,
-            'status' => 'p'
+            'order_status' => 'p'
       ]);
 
       BuyOrder::create([
@@ -138,7 +138,7 @@ class BuyOrderTableSeeder extends Seeder
 
             'volume' => 2000,
             'max_price' => 2000,
-            'status' => 'f'
+            'order_status' => 'f'
       ]);
 
       BuyOrder::create([
@@ -180,7 +180,7 @@ class BuyOrderTableSeeder extends Seeder
 
             'volume' => 4500,
             'max_price' => 4500,
-            'status' => 'p'
+            'order_status' => 'p'
       ]);
 
       BuyOrder::create([
@@ -222,7 +222,7 @@ class BuyOrderTableSeeder extends Seeder
 
             'volume' => 6000,
             'max_price' => 6000,
-            'status' => 'f'
+            'order_status' => 'f'
       ]);
 
       BuyOrder::create([
@@ -264,7 +264,7 @@ class BuyOrderTableSeeder extends Seeder
 
             'volume' => 1500,
             'max_price' => 1500,
-            'status' => 'c'
+            'order_status' => 'c'
       ]);
 
       $address = array([
@@ -330,7 +330,7 @@ class BuyOrderTableSeeder extends Seeder
 
             'volume' => $faker->numberBetween($min = 1000, $max = 2000),
             'max_price' => $faker->numberBetween($min = 100, $max = 5000),
-            'status' => $faker->randomElement($array = array ('a','f'))
+            'order_status' => $faker->randomElement($array = array ('a','f'))
           ]));
       }
     }

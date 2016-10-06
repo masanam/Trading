@@ -1,0 +1,60 @@
+<div ng-hide="state != 0">
+  <div class="form-group" ng-init="findAllBuyers()">
+    <label for="buyer">Buyer:</label>
+    <!-- <select class="form-control" id="mine" ng-model="order.mine" ng-change="order.mine_id = order.mine.id" ng-options="mine as mine.mine_name for mine in mines track by mine.id">
+    </select> -->
+    <select class="form-control" id="buyer" ng-model="order.buyer_id">
+      <option ng-repeat="buyer in buyers" value="{{ buyer.id }}">{{ buyer.company_name }}</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="order_date">Order Date :</label>
+    <input type="date" class="form-control" id="order_date" ng-model="order.order_date">
+  </div>
+
+  <div class="form-group">
+    <label for="deadline">Deadline :</label>
+    <input type="date" class="form-control" id="deadline" ng-model="order.deadline">
+  </div>
+
+  <div class="form-group">
+    <label for="penalty">Penalty Description :</label>
+    <textarea class="form-control" id="penalty_description" ng-model="order.penalty"></textarea>
+  </div>
+
+  <div class="form-group">
+      <label>Pickup Location</label>
+      <div class="input-group" style="margin-bottom: 5px;">
+          <span class="input-group-addon" id="basic-addon1">Address</span>
+          <input type="text" class="form-control" placeholder="Address" ng-model="order.address">
+      </div>
+      <div class="input-group" style="margin-bottom: 5px;">
+          <span class="input-group-addon" style="width: 200px;">Latitude</span>
+          <input type="text" class="form-control" placeholder="Latitude" ng-model="order.latitude">
+          <span class="input-group-addon">Longitude</span>
+          <input type="text" class="form-control" placeholder="Longitude" ng-model="order.longitude">
+      </div>
+  </div>
+</div>
+<div ng-show="state == 1">
+  <div class="form-group">
+    <p>
+      <input type="radio" name="cp" class="flat-red" ng-model="choose" uib-btn-radio="'available'"> From Available Product
+    </p>
+    <p>
+      <input type="radio" name="cp" class="flat-red" ng-model="choose" uib-btn-radio="'manual'"> Manually
+    </p>
+  </div>
+  <div class="form-group" ng-show="choose == 'manual'">
+    <label for="product_name">Product Name :</label>
+    <input type="text" class="form-control" ng-model="product_name">
+  </div>
+  <div class="form-group" ng-show="choose == 'available'">
+    <ul class="list-group">
+      <li class="list-group-item" ng-model="radioModel" uib-btn-radio="'1'">New </li>
+      <li class="list-group-item" ng-model="radioModel" uib-btn-radio="'2'">Deleted </li> 
+      <li class="list-group-item" ng-model="radioModel" uib-btn-radio="'3'">Warnings </li> 
+    </ul>
+  </div>
+</div>

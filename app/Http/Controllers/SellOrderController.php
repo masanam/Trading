@@ -20,7 +20,7 @@ class SellOrderController extends Controller
      */
     public function index()
     {
-        $sell_order = SellOrder::where('status', 'a')->get();
+        $sell_order = SellOrder::with('seller')->where('order_status', 'a')->get();
 
         return response()->json($sell_order, 200);
     }
