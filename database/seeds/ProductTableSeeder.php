@@ -23,6 +23,7 @@ class ProductTableSeeder extends Seeder
 
           Product::create([
             'commercial_term' => $product_name[$index],
+			'product_name' => $product_name[$index],
             'tm_min' => $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 0.5),
             'tm_max' => $faker->randomFloat($nbMaxDecimals = 2, $min = 0.5, $max = 1.5),
             'im_min' => $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 0.3),

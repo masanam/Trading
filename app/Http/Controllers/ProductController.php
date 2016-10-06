@@ -59,12 +59,10 @@ class ProductController extends Controller
         $product = new Product();
         $product->seller_id = $request->seller_id ? $request->seller_id : NULL;
         $product->buyer_id = $request->buyer_id ? $request->buyer_id : NULL;
-
         $product->commercial_term = $request->commercial_term;
-
+        $product->product_name = $request->product_name;
         $product->ready_date = $request->ready_date;
         $product->expired_date = $request->expired_date;
-
         $product->gcv_arb_min = $request->gcv_arb_min;
         $product->gcv_arb_max = $request->gcv_arb_max;
         $product->gcv_arb_reject = $request->gcv_arb_reject;
@@ -109,11 +107,8 @@ class ProductController extends Controller
         $product->size_max = $request->size_max;
         $product->size_reject = $request->size_reject;
         $product->size_bonus = $request->size_bonus;
-
         $product->volume = $request->volume;
-
         $product->status = 'a';
-
         $product->save();
 
         return response()->json($product, 200);
