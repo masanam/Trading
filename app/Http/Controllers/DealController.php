@@ -141,8 +141,10 @@ class DealController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Deal $deal)
+    public function update(Request $request, $deal)
     {
+        $deal = Deal::find($deal);
+     
         if (!$request) {
             return response()->json([
                 'message' => 'Bad Request'
@@ -192,8 +194,10 @@ class DealController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function changeStatus(Deal $deal , $status)
+    public function changeStatus($deal , $status)
     {
+        $deal = Deal::find($deal);
+
         if (!$deal) {
             return response()->json([
                 'message' => 'Not found'

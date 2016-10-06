@@ -63,8 +63,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show($user)
     {
+        $user = User::find($user);
+
         if($user->status == 'a') {
             return response()->json($user, 200);
         } else {
@@ -83,8 +85,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, $user)
     {
+        $user = User::find($user);
+
         if (!$request) {
             return response()->json([
                 'message' => 'Bad Request'
@@ -119,8 +123,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy($user)
     {
+        $user = User::find($user);
+        
         if (!$user) {
             return response()->json([
                 'message' => 'Not found'

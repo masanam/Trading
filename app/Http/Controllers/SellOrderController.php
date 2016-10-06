@@ -113,8 +113,10 @@ class SellOrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(SellOrder $sell_order)
+    public function show($sell_order)
     {
+        $sell_order = SellOrder::find($sell_order);
+
         if($sell_order->status == 'a') {
             return response()->json($sell_order, 200);
         } else {
@@ -129,8 +131,10 @@ class SellOrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, SellOrder $sell_order)
+    public function update(Request $request, $sell_order)
     {
+        $sell_order = SellOrder::find($sell_order);
+
         if (!$request) {
             return response()->json([
                 'message' => 'Bad Request'
@@ -215,8 +219,10 @@ class SellOrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(SellOrder $sell_order)
+    public function destroy($sell_order)
     {
+        $sell_order = SellOrder::find($sell_order);
+        
         if (!$sell_order) {
             return response()->json([
                 'message' => 'Not found'

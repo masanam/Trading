@@ -133,14 +133,15 @@ class BuyDealController extends Controller
         return response()->json($buy_deal, 200);
     }
 
-    // Get One Buy Deal by Deal ID
-    public function getOneByDeal($buy_deal, $dealId) {
+    // Get One Buy Deal by Deal ID and Buy Order ID
+    public function getOneByDealAndOrder($buy_order, $dealId) {
         $buy_deal = BuyDeal::with('BuyOrder', 'BuyOrder.BuyOrderPricing', 'BuyOrder.Buyer',
                              'BuyOrder.Buyer.User', 'User', 'Deal', 'BuyDealChat')
                     ->where([['deal_id', $dealId], 
-                      ['status', 'a']])
+                      ['status', 'a'],
+                      ['buy_order_id', $buy_order]])
                ->orderBy('id', 'asc')
-               ->find($buy_deal);
+               ->first();
 
         return response()->json($buy_deal, 200);
     }
@@ -152,8 +153,10 @@ class BuyDealController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, BuyDeal $buy_deal)
+    public function update(Request $request, $buy_deal)
     {
+        $buy_deal = BuyDeal::find($buy_deal);
+
         if (!$request) {
             return response()->json([
                 'error' => 'Bad Request'
@@ -181,8 +184,10 @@ class BuyDealController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(BuyDeal $buy_deal)
+    public function destroy($buy_deal)
     {
+        $buy_deal = BuyDeal::find($buy_deal);
+        
         if (!$buy_deal) {
             return response()->json([
                 'error' => 'Not found'

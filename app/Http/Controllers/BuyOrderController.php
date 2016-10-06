@@ -119,8 +119,9 @@ class BuyOrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(BuyOrder $buy_order)
+    public function show($buy_order)
     {
+        $buy_order = BuyOrder::find($buy_order);
 
         if($buy_order->status == 'a') {
             return response()->json([
@@ -139,8 +140,10 @@ class BuyOrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, BuyOrder $buy_order)
+    public function update(Request $request, $buy_order)
     {
+        $buy_order = BuyOrder::find($buy_order);
+     
         if (!$request) {
             return response()->json([
                 'message' => 'Bad Request'
@@ -224,8 +227,10 @@ class BuyOrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(BuyOrder $buy_order)
+    public function destroy($buy_order)
     {
+        $buy_order = BuyOrder::find($buy_order);
+
         if (!$buy_order) {
             return response()->json([
                 'message' => 'Not found'

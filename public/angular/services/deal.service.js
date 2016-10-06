@@ -2,10 +2,11 @@
 
 angular.module('deal').factory('SellDeal', ['$resource',
 	function ($resource) {
-		return $resource('api/sell-deal/:action/:id/:sellerId/:dealId', {
+		return $resource('api/sell-deal/:action/:id/:sellerId/:orderId/:dealId', {
     		action: undefined,
 			id: undefined,
 			sellerId: undefined,
+			orderId: undefined,
 			dealId: undefined,
 		}, {
 			update: {
@@ -17,10 +18,11 @@ angular.module('deal').factory('SellDeal', ['$resource',
 
 angular.module('deal').factory('BuyDeal', ['$resource',
 	function ($resource) {
-		return $resource('api/buy-deal/:action/:id/:buyerId/:dealId', {
+		return $resource('api/buy-deal/:action/:id/:buyerId/:orderId/:dealId', {
 			action: undefined,
 			id: undefined,
 			buyerId:undefined,
+			orderId: undefined,
 			dealId: undefined,
 		}, {
 			update: {

@@ -43,6 +43,7 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
     };
 
     $scope.findAllBuyers = function(){
+      console.log('asasdasd');
       $scope.buyers = Buyer.query();
     };
     
@@ -308,22 +309,36 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
 			});
     };
 
-    $scope.findOneBuyDeal = function(buyDealId) {
-      $scope.buyDeal = BuyDeal.get({ id: buyDealId , action: 'getOneByDeal' , dealId: $scope.deal.id });
-    };
+    $scope.buyDeal = {};
+    $scope.sellDeal = {};
 
-    $scope.findOneSellDeal = function(sellDealId) {
-      $scope.sellDeal = SellDeal.get({ id: sellDealId , action: 'getOneByDeal' , dealId: $scope.deal.id });
+    $scope.findOneOrderDeal = function(type, $orderId) {
+      if (type == 'buy') {
+        $scope.buyDeal = BuyDeal.get({ action: 'getOneByDealAndOrder' , orderId: $orderId , dealId: $scope.deal.id });
+      } else if (type == 'sell') {
+        $scope.sellDeal = SellDeal.get({ action: 'getOneByDealAndOrder' , orderId: $orderId , dealId: $scope.deal.id });
+      }
     };
     
-    $scope.openChatModal = function () {
+    $scope.openBuyDealChatModal = function () {
       var modalInstance = $uibModal.open({
         windowClass: 'xl-modal',
-        templateUrl: 'chatModal.html',
-        controller: 'ChatModalController',
+        templateUrl: './angular/views/deal/modal-component/chat.view.html',
+        controller: 'BuyDealChatModalController',
         scope: $scope,
         resolve: {
-          buyDeal : $scope.buyDeal,
+          buyDeal : $scope.buyDeal
+        }
+      });
+    };
+
+    $scope.openSellDealChatModal = function () {
+      var modalInstance = $uibModal.open({
+        windowClass: 'xl-modal',
+        templateUrl: './angular/views/deal/modal-component/chat.view.html',
+        controller: 'SellDealChatModalController',
+        scope: $scope,
+        resolve: {
           sellDeal : $scope.sellDeal
         }
       });
@@ -337,23 +352,15 @@ angular.module('deal').controller('AlertModalController', function ($scope, $uib
   };
 });
 
-angular.module('deal').controller('ChatModalController', function ($scope, $uibModalInstance, Pusher, User, Chat, buyDeal, sellDeal) {
+angular.module('deal').controller('BuyDealChatModalController', function ($scope, $uibModalInstance, Pusher, User, BuyDealChat, buyDeal) {
+  $scope.buy_deal = {};
   $scope.buy_deal = buyDeal;
-  $scope.sell_deal = sellDeal;
+  var id = $scope.buy_deal.id;
 
-  Pusher.subscribe('private-buy-deal-channel.'.$scope.buy_deal.id, 'new-message', function (chat) {
-    for (var i = 0; i < $scope.buy_deal.chat.length; i++) {
-      if ($scope.buy_deal.chat[i].id === chat.id) {
-        $scope.buy_deal.chat[i] = chat;
-        break;
-      }
-    }
-  });
-
-  Pusher.subscribe('private-sell-deal-channel.'.$scope.sell_deal.id, 'new-message', function (chat) {
-    for (var i = 0; i < $scope.sell_deal.chat.length; i++) {
-      if ($scope.sell_deal.chat[i].id === chat.id) {
-        $scope.sell_deal.chat[i] = chat;
+  Pusher.subscribe('private-buy-deal-channel.'. id , 'new-message', function (chat) {
+    for (var i = 0; i < $scope.chats.length; i++) {
+      if ($scope.chats[i].id === chat.id) {
+        $scope.chats[i] = chat;
         break;
       }
     }
@@ -367,9 +374,36 @@ angular.module('deal').controller('ChatModalController', function ($scope, $uibM
     });
 
     $buy_deal_chat.$save(function(res) {
-      $scope.buy_deal.chat.push(res);
+      $scope.chats.push(res);
     });
   };
+
+  $scope.findBuyDealChatByDeal = function() {
+    $scope.chats = BuyDealChat.query({ id: $scope.buy_deal.id });
+  };
+
+  $scope.findCurrentUser = function() {
+    $scope.user = User.get({ action: current });
+  };
+  
+  $scope.close = function () {
+    $uibModalInstance.dismiss('cancel');
+  };
+});
+
+angular.module('deal').controller('SellDealChatModalController', function ($scope, $uibModalInstance, Pusher, User, SellDealChat, sellDeal) {
+  $scope.sell_deal = {};
+  $scope.sell_deal = sellDeal;
+  var id = $scope.sell_deal.id;
+
+  Pusher.subscribe('private-sell-deal-channel.'. id, 'new-message', function (chat) {
+    for (var i = 0; i < $scope.chats.length; i++) {
+      if ($scope.chats[i].id === chat.id) {
+        $scope.chats[i] = chat;
+        break;
+      }
+    }
+  });
 
   $scope.sendSellDealMessage = function() {
     $sell_deal_chat = new SellDealChat({
@@ -379,16 +413,12 @@ angular.module('deal').controller('ChatModalController', function ($scope, $uibM
     });
 
     $sell_deal_chat.$save(function(res) {
-      $scope.sell_deal.chat.push(res);
+      $scope.chats.push(res);
     });
   };
 
-  $scope.findBuyDealChatByDeal = function() {
-    $scope.buy_deal.chat = BuyDealChat.query({ id: $scope.buy_deal.id });
-  };
-
   $scope.findSellDealChatByDeal = function() {
-    $scope.sell_deal.chat = SellDealChat.query({ id: $scope.sell_deal.id });
+    $scope.chats = SellDealChat.query({ id: $scope.sell_deal.id });
   };
 
   $scope.findCurrentUser = function() {
@@ -397,7 +427,7 @@ angular.module('deal').controller('ChatModalController', function ($scope, $uibM
   
   $scope.close = function () {
     $uibModalInstance.dismiss('cancel');
-x  };
+  };
 });
 
 angular.module('deal').controller('CreateSellModalController', function ($scope, $filter, $uibModalInstance, Deal, Order, Authentication) {

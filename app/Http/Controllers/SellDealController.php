@@ -79,7 +79,7 @@ class SellDealController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(SellDeal $sell_deal)
+    public function show($sell_deal)
     {
         $sell_deal = SellDeal::with(
                             'SellOrder', 'SellOrder.SellOrderPricing', 'SellOrder.Seller',
@@ -107,8 +107,10 @@ class SellDealController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, SellDeal $sell_deal)
+    public function update(Request $request, $sell_deal)
     {
+        $sell_deal = SellDeal::find($sell_deal);
+
         if (!$request) {
             return response()->json([
                 'message' => 'Bad Request'
@@ -136,8 +138,10 @@ class SellDealController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(SellDeal $sell_deal)
+    public function destroy($sell_deal)
     {
+        $sell_deal = SellDeal::find($sell_deal);
+
         if (!$sell_deal) {
             return response()->json([
                 'message' => 'Not found'
@@ -186,14 +190,15 @@ class SellDealController extends Controller
       return response()->json($sell_deal, 200);
     }
 
-    // Get One Sell Deal by Deal ID
-    public function getOneByDeal($sell_deal, $dealId) {
-        $sell_deal = SellDeal::with('SellOrder', 'SellOrder.SellOrderPricing', 'SellOrder.Seller',
+    // Get One Sell Deal by Deal ID and Sell Order ID
+    public function getOneByDealAndOrder($sell_order, $dealId) {
+        $sell_deal = SellDeal::with('SellOrder', 'SellOrder', 'SellOrder.SellOrderPricing', 'SellOrder.Seller',
                              'SellOrder.Seller.User', 'User', 'Deal', 'SellDealChat')
                     ->where([['deal_id', $dealId], 
-                      ['status', 'a']])
+                      ['status', 'a'],
+                      ['sell_order_id', $sell_order]])
                ->orderBy('id', 'asc')
-               ->find($sell_deal);
+               ->first();
 
         return response()->json($sell_deal, 200);
     }

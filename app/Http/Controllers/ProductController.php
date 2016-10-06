@@ -125,8 +125,10 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $product)
+    public function show($product)
     {
+        $product = Product::find($product);
+
         if($product->status == 'a') {
             return response()->json($product, 200);
         } else {
@@ -141,8 +143,10 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, $product)
     {
+        $product = Product::find($product);
+
         if (!$request) {
             return response()->json([
                 'message' => 'Bad Request'
@@ -217,8 +221,10 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy($product)
     {
+        $product = Product::find($product);
+     
         if (!$product) {
             return response()->json([
                 'message' => 'Not found'

@@ -85,8 +85,10 @@ class VendorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Vendor $vendor)
+    public function show($vendor)
     {
+        $vendor = Vendor::find($vendor);
+
         if($vendor->status == 'a') {
             return response()->json($vendor, 200);
         } else {
@@ -101,8 +103,10 @@ class VendorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Vendor $vendor)
+    public function update(Request $request, $vendor)
     {
+        $vendor = Vendor::find($vendor);
+
         if (!$request) {
             return response()->json([
                 'message' => 'Bad Request'
@@ -139,8 +143,10 @@ class VendorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Vendor $vendor)
+    public function destroy($vendor)
     {
+        $vendor = Vendor::find($vendor);
+
         if (!$vendor) {
             return response()->json([
                 'message' => 'Not found'
