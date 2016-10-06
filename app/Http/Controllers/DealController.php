@@ -20,7 +20,7 @@ use App\Http\Requests;
 class DealController extends Controller
 {
     public function __construct() {
-        // $this->middleware('jwt.auth');
+        $this->middleware('jwt.auth');
     }
     
     /**
@@ -30,43 +30,7 @@ class DealController extends Controller
      */
     public function index($status = 'a')
     {
-        // $deal = DB::table('deals')
-        //   ->select(
-        //     DB::raw('
-        //       deals.*,
-        //       users.name as trader_name,
-        //       concat(buyers.company_name, ",") as buyer_name,
-        //       concat(sellers.company_name, ",") as seller_name,
-        //       sum(buy_order.volume) as volume,
-        //       sum(buy_order.volume*buy_order.max_price) as total_sales,
-        //       sum(sell_order.volume*sell_order.max_price) as total_cogs
-        //     ')
-        //   )
-        //   ->leftJoin('buy_deal', 'deals.id', '=', 'buy_deal.deal_id')
-        //   ->leftJoin('buy_order', 'buy_order.id', '=', 'buy_deal.buy_order_id')
-        //   ->leftJoin('buyers', 'buy_order.buyer_id', '=', 'buyers.id')
-        //   //->leftJoin('buy_deal_approval', 'buy_deal.id', '=', 'buy_deal_approval.buy_deal_id')
-        //   //->leftJoin('buy_order_pricing', 'buy_order.id', '=', 'buy_order_pricing.buy_order_id')
-        //   ->leftJoin('sell_deal', 'deals.id', '=', 'sell_deal.deal_id')
-        //   ->leftJoin('sell_order', 'sell_order.id', '=', 'sell_deal.sell_order_id')
-        //   ->leftJoin('sellers', 'sell_order.seller_id', '=', 'sellers.id')
-        //   //->leftJoin('sell_deal_approval', 'sell_deal.id', '=', 'sell_deal_approval.sell_deal_id')
-        //   //->leftJoin('sell_order_pricing', 'sell_order.id', '=', 'sell_order_pricing.sell_order_id')
-        //   ->leftJoin('users', 'users.id', '=', 'deals.user_id')
-        //   ->where([['deals.status', $status],['buy_deal.status', '!=', 'x'], ['sell_deal.status', '!=', 'x']])
-        //   ->groupBy(
-        //     'deals.id', 
-        //     'users.name', 
-        //     'deals.user_id', 
-        //     'deals.status', 
-        //     'deals.created_at', 
-        //     'deals.updated_at',
-        //     'sellers.company_name',
-        //     'buyers.company_name'
-        //   )
-        //   ->get();
-
-        $deal = Deal::with('BuyDeal', 'BuyDeal.BuyOrder', 'BuyOrder.Buyer', 'BuyDeal.BuyDealApproval', 'BuyOrder.BuyOrderPricing', 'SellDeal', 'SellDeal.SellOrder', 'SellOrder.Seller', 'SellDeal.SellDealApproval', 'SellOrder.SellOrderPricing', 'User')
+        $deal = DB::table('deals')
           ->select(
             DB::raw('
               deals.*,
@@ -78,6 +42,17 @@ class DealController extends Controller
               sum(sell_order.volume*sell_order.max_price) as total_cogs
             ')
           )
+          ->leftJoin('buy_deal', 'deals.id', '=', 'buy_deal.deal_id')
+          ->leftJoin('buy_order', 'buy_order.id', '=', 'buy_deal.buy_order_id')
+          ->leftJoin('buyers', 'buy_order.buyer_id', '=', 'buyers.id')
+          //->leftJoin('buy_deal_approval', 'buy_deal.id', '=', 'buy_deal_approval.buy_deal_id')
+          //->leftJoin('buy_order_pricing', 'buy_order.id', '=', 'buy_order_pricing.buy_order_id')
+          ->leftJoin('sell_deal', 'deals.id', '=', 'sell_deal.deal_id')
+          ->leftJoin('sell_order', 'sell_order.id', '=', 'sell_deal.sell_order_id')
+          ->leftJoin('sellers', 'sell_order.seller_id', '=', 'sellers.id')
+          //->leftJoin('sell_deal_approval', 'sell_deal.id', '=', 'sell_deal_approval.sell_deal_id')
+          //->leftJoin('sell_order_pricing', 'sell_order.id', '=', 'sell_order_pricing.sell_order_id')
+          ->leftJoin('users', 'users.id', '=', 'deals.user_id')
           ->where([['deals.status', $status],['buy_deal.status', '!=', 'x'], ['sell_deal.status', '!=', 'x']])
           ->groupBy(
             'deals.id', 
@@ -88,7 +63,8 @@ class DealController extends Controller
             'deals.updated_at',
             'sellers.company_name',
             'buyers.company_name'
-          )->toSql();
+          )
+          ->get();
         
         return response()->json($deal, 200);
     }

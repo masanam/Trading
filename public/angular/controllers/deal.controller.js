@@ -5,19 +5,15 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
     $scope.deals = [];
 
     $scope.findDeals = function(){
-      console.log("1");
       $scope.deals = Deal.query({action:'table', status: 'a'});
-      console.log($scope.deals);
     };
     
     $scope.findFinished = function(){
       $scope.deals = Deal.query({action:'table', status: 'f'});
-      console.log($scope.deals);
     };
     
     $scope.findCancelled = function(){
       $scope.deals = Deal.query({action:'table', status: 'x'});
-      console.log($scope.deals);
     };
     
     $scope.findOne = function(){
