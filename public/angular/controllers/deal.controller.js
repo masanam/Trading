@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Deal', 'Order', 'Order', 'Buyer', 'Seller', 'SellDeal', 'BuyDeal', 'Authentication', '$location', '$stateParams', '$pusher', 'Chat',
+angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Deal', 'Order', 'Buyer', 'Seller', 'SellDeal', 'BuyDeal', 'Authentication', '$location', '$stateParams', '$pusher', 'Chat',
 	function($scope, $uibModal, Deal, Order, Buyer, Seller, SellDeal, BuyDeal, Authentication, $location, $stateParams, $pusher, Chat) {
     $scope.findDeals = function(){
       $scope.deals = Deal.query({action:'table', status: 'a'});
@@ -429,7 +429,7 @@ angular.module('deal').controller('CreateSellModalController', function ($scope,
     };
   };
   
-  $scope.createOrder = function(){
+  $scope.createBuyOrder = function(){
     
     $scope.success = $scope.error = null;
       
@@ -528,7 +528,7 @@ angular.module('deal').controller('CreateBuyModalController', function ($scope, 
     };
   };
   
-  $scope.createOrder = function(){
+  $scope.createSellOrder = function(){
     
     $scope.success = $scope.error = null;
       

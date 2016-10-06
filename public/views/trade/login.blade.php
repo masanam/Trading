@@ -34,7 +34,7 @@
   <div ng-include="'./angular/views/layout/header_lte.view.html'" ng-controller="AuthController"></div>
   <div ng-include="'./angular/views/layout/sidebar.view.html'" ng-controller="AuthController" ng-show="Authentication.user"></div>
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
+  <div class="content-wrapper" style="overflow: auto;">
     @yield('container')
   </div>
   </div>
