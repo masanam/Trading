@@ -100,7 +100,7 @@ Route::group(['middleware' => ['cors']], function() {
     Route::get('deal/table/{status}', 'DealController@index');
     Route::get('deal/status/{deal}/{status}', 'DealController@changeStatus');
     Route::resource('deal', 'DealController', ['except' => [
-        'create', 'edit', 'destroy'
+        'index', 'create', 'edit', 'destroy'
     ]]);
 
     Route::post('buy-deal/chat/send', 'BuyDealChatController@sendChat');

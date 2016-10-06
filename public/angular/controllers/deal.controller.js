@@ -2,16 +2,22 @@
 
 angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Deal', 'Order', 'Buyer', 'Seller', 'SellDeal', 'BuyDeal', 'Authentication', '$location', '$stateParams', 'Pusher', 'BuyDealChat', 'SellDealChat',
 	function($scope, $uibModal, Deal, Order, Buyer, Seller, SellDeal, BuyDeal, Authentication, $location, $stateParams, Pusher, BuyDealChat, SellDealChat) {
+    $scope.deals = [];
+
     $scope.findDeals = function(){
+      console.log("1");
       $scope.deals = Deal.query({action:'table', status: 'a'});
+      console.log($scope.deals);
     };
     
     $scope.findFinished = function(){
       $scope.deals = Deal.query({action:'table', status: 'f'});
+      console.log($scope.deals);
     };
     
     $scope.findCancelled = function(){
       $scope.deals = Deal.query({action:'table', status: 'x'});
+      console.log($scope.deals);
     };
     
     $scope.findOne = function(){
@@ -146,6 +152,7 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
         var deal = new Deal($scope.deal);
         
         deal.$save(function (response) {
+          console.log("asjdkasjbd");
           var dealId = response.id;
           var userId = Authentication.user.id;
           for(var i = 0; i < $scope.sellOrders.length; i++){

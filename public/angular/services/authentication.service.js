@@ -14,7 +14,8 @@ angular.module('user').factory('Authentication', ['$http', '$auth',
 
           return callback(auth.user);
         }).error(function(err){
-          return callback();
+          if(callback)
+            return callback();
         });
       } else callback();
     };
