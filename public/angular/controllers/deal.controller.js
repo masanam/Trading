@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Deal', 'Order', 'Order', 'Buyer', 'Seller', 'SellDeal', 'BuyDeal', 'Authentication', '$location', '$stateParams', 'Pusher', 'BuyDealChat', 'SellDealChat',
+angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Deal', 'Order', 'Buyer', 'Seller', 'SellDeal', 'BuyDeal', 'Authentication', '$location', '$stateParams', 'Pusher', 'BuyDealChat', 'SellDealChat',
 	function($scope, $uibModal, Deal, Order, Buyer, Seller, SellDeal, BuyDeal, Authentication, $location, $stateParams, Pusher, BuyDealChat, SellDealChat) {
     $scope.findDeals = function(){
       $scope.deals = Deal.query({action:'table', status: 'a'});
@@ -39,13 +39,13 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
         }
       });
     };
+
+    $scope.findAllBuyers = function(){
+      $scope.buyers = Buyer.query();
+    };
     
     $scope.findAllSellers = function(){
       $scope.sellers = Seller.query();
-    };
-    
-    $scope.findAllBuyers = function(){
-      $scope.buyers = Buyer.query();
     };
     
 		//$scope.deal = Deal.get;
@@ -305,12 +305,12 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
 			});
     };
 
-    $scope.findOneBuyDeal = function() {
-      $scope.buyDeal = BuyDeal.get({ id: $scope.buyDeal , action: 'getOneByDeal' , dealId: $scope.deal });
+    $scope.findOneBuyDeal = function(buyDealId) {
+      $scope.buyDeal = BuyDeal.get({ id: buyDealId , action: 'getOneByDeal' , dealId: $scope.deal.id });
     };
 
-    $scope.findOneSellDeal = function() {
-      $scope.sellDeal = SellDeal.get({ id: $scope.sellDeal , action: 'getOneByDeal' , dealId: $scope.deal });
+    $scope.findOneSellDeal = function(sellDealId) {
+      $scope.sellDeal = SellDeal.get({ id: sellDealId , action: 'getOneByDeal' , dealId: $scope.deal.id });
     };
     
     $scope.openChatModal = function () {
@@ -459,7 +459,7 @@ angular.module('deal').controller('CreateSellModalController', function ($scope,
     };
   };
   
-  $scope.createOrder = function(){
+  $scope.createSellOrder = function(){
     
     $scope.success = $scope.error = null;
       
@@ -558,7 +558,7 @@ angular.module('deal').controller('CreateBuyModalController', function ($scope, 
     };
   };
   
-  $scope.createOrder = function(){
+  $scope.createBuyOrder = function(){
     
     $scope.success = $scope.error = null;
       

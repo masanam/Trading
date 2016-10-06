@@ -23,4 +23,8 @@ class SellOrder extends Model
     public function SellOrderPricing() {
     	return $this->hasMany('App\Model\SellOrderPricing');
     }
+
+    public function User() {
+        return $this->belongsTo('App\Model\User');
+    }
 }
