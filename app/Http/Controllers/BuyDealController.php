@@ -6,7 +6,7 @@ use App\Model\BuyDeal;
 use App\Model\BuyOrder;
 use App\Model\BuyOrderPricing;
 use App\Model\BuyDealApproval;
-use App\Model\Chat;
+use App\Model\BuyDealChat;
 
 use Illuminate\Http\Request;
 use Auth;
@@ -29,7 +29,7 @@ class BuyDealController extends Controller
         $buy_deal = BuyDeal::where('status', 'a')
                         ->with(
                             'BuyOrder', 'BuyOrder.BuyOrderPricing', 'BuyOrder.Buyer',
-                             'BuyOrder.Buyer.User', 'User', 'Deal', 'Chat'
+                             'BuyOrder.Buyer.User', 'User', 'Deal', 'BuyDealChat'
                         )->get();
 
         return response()->json($buy_deal, 200);
@@ -51,10 +51,6 @@ class BuyDealController extends Controller
 
         $buy_order = BuyOrder::find($request->buy_order_id);
 
-        $chat = New Chat();
-        $chat->trader_id = $request->user_id;
-        $chat->save();
-
         $buy_deal = new BuyDeal();
         $buy_deal->buy_order_id = $request->buy_order_id;
         $buy_deal->chat_id = $chat->id;
@@ -74,12 +70,7 @@ class BuyDealController extends Controller
           $buy_deal_approval->status = "p";
           $buy_deal_approval->save();
         }
-
-        $chat->approver_id = $buy_deal_approval->approver;
-        $chat->order_deal_id = $buy_deal->id;
-        $chat->type = 'buy';
-        $chat->save();
-
+        
         event(new \App\Events\BuyDealNotification($buy_deal));
         event(new \App\Events\BuyDealApprovalNotification($buy_deal_approval));
 
@@ -96,7 +87,7 @@ class BuyDealController extends Controller
     {
         $buy_deal = BuyDeal::with(
                             'BuyOrder', 'BuyOrder.BuyOrderPricing', 'BuyOrder.Buyer',
-                             'BuyOrder.Buyer.User', 'User', 'Deal', 'Chat'
+                             'BuyOrder.Buyer.User', 'User', 'Deal', 'BuyDealChat'
                              )->find($id);
 
         if($buy_deal) {
@@ -135,7 +126,7 @@ class BuyDealController extends Controller
     // Get All Buy Deal by Deal ID
     public function getByDeal($dealId) {
         $buy_deal = BuyDeal::with('BuyOrder', 'BuyOrder.BuyOrderPricing', 'BuyOrder.Buyer',
-                             'BuyOrder.Buyer.User', 'User', 'Deal', 'Chat')->where([['deal_id', $dealId], ['status', 'a']])
+                             'BuyOrder.Buyer.User', 'User', 'Deal', 'BuyDealChat')->where([['deal_id', $dealId], ['status', 'a']])
                ->orderBy('id', 'asc')
                ->get();
 
@@ -146,7 +137,7 @@ class BuyDealController extends Controller
     // Get One Buy Deal by Deal ID
     public function getOneByDeal($buy_deal, $dealId) {
         $buy_deal = BuyDeal::with('BuyOrder', 'BuyOrder.BuyOrderPricing', 'BuyOrder.Buyer',
-                             'BuyOrder.Buyer.User', 'User', 'Deal', 'Chat')
+                             'BuyOrder.Buyer.User', 'User', 'Deal', 'BuyDealChat')
                     ->where([['deal_id', $dealId], 
                       ['status', 'a']])
                ->orderBy('id', 'asc')

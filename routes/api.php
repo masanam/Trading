@@ -80,6 +80,7 @@ Route::group(['middleware' => ['cors']], function() {
     Route::delete('buy-deal/{dealId}', 'BuyDealController@destroyByDeal');
     Route::get('buy-deal/getByDeal/{dealId}', 'BuyDealController@getByDeal');
     Route::get('buy-deal/{buy_deal}/getOneByDeal/{dealId}', 'BuyDealController@getOneByDeal');
+    Route::get('buy-deal/{buy_deal}/{approval}', 'BuyDealController@approval');
     Route::resource('buy-deal', 'BuyDealController', ['except' => [
         'create', 'edit'
     ]]);
@@ -87,6 +88,7 @@ Route::group(['middleware' => ['cors']], function() {
     Route::delete('sell-deal/{dealId}', 'SellDealController@destroyByDeal');
     Route::get('sell-deal/getByDeal/{dealId}', 'SellDealController@getByDeal');
     Route::get('sell-deal/{sell_deal}/getOneByDeal/{dealId}', 'SellDealController@getOneByDeal');
+    Route::get('sell-deal/{sell_deal}/{approval}', 'SellDealController@approval');
     Route::resource('sell-deal', 'SellDealController', ['except' => [
         'create', 'edit'
     ]]);

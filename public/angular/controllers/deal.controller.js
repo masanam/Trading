@@ -469,7 +469,7 @@ angular.module('deal').controller('CreateSellModalController', function ($scope,
 
     var sellOrder = new Order($scope.order);
     
-    sellOrder.$save({ type: sell }, function (response) {
+    sellOrder.$save({ type: 'sell' }, function (response) {
       $scope.order = response;
       $scope.order.deadline = new Date($scope.order.deadline);
       $scope.order.order_date = new Date($scope.order.order_date);

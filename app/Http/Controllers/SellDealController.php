@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\Chat;
+use App\Model\SellDealChat;
 use App\Model\SellDeal;
 use App\Model\SellOrder;
 use App\Model\SellOrderPricing;
@@ -28,7 +28,7 @@ class SellDealController extends Controller
     {
         $sell_deal = SellDeal::where('status', 'a')->with(
                             'SellOrder', 'SellOrder.SellOrderPricing', 'SellOrder.Seller',
-                             'SellOrder.Seller.User', 'User', 'Deal', 'Chat'
+                             'SellOrder.Seller.User', 'User', 'Deal', 'SellDealChat'
                         )->get();
 
         return response()->json($sell_deal, 200);
@@ -47,11 +47,6 @@ class SellDealController extends Controller
                 'message' => 'Bad Request'
             ], 400);
         }
-
-        $chat = New Chat();
-        $chat->trader_id = $request->user_id;
-        $chat->approver_id = 1;
-        $chat->save();
 
         $sell_deal = new SellDeal();
         $sell_deal->sell_order_id = $request->sell_order_id;
@@ -73,11 +68,6 @@ class SellDealController extends Controller
           $sell_deal_approval->save();
         }
 
-        $chat->approver_id = $sell_deal_approval->approver;
-        $chat->order_deal_id = $sell_deal->id;
-        $chat->type = 'sell';
-        $chat->save();
-
         event(new \App\Events\SellDealNotification($sell_deal));
         event(new \App\Events\SellDealApprovalNotification($sell_deal_approval));
 
@@ -94,7 +84,7 @@ class SellDealController extends Controller
     {
         $sell_deal = SellDeal::with(
                             'SellOrder', 'SellOrder.SellOrderPricing', 'SellOrder.Seller',
-                             'SellOrder.Seller.User', 'User', 'Deal', 'Chat'
+                             'SellOrder.Seller.User', 'User', 'Deal', 'SellDealChat'
                              )->find($id);
 
         if($sell_deal) {
@@ -189,7 +179,7 @@ class SellDealController extends Controller
       }
       
       $sell_deal = SellDeal::with('SellOrder', 'SellOrder.SellOrderPricing', 'SellOrder.Seller',
-                             'SellOrder.Seller.User', 'User', 'Deal', 'Chat')->where([['deal_id', $dealId], ['status', 'a']])
+                             'SellOrder.Seller.User', 'User', 'Deal', 'SellDealChat')->where([['deal_id', $dealId], ['status', 'a']])
              ->orderBy('id', 'asc')
              ->get();
 
@@ -200,7 +190,7 @@ class SellDealController extends Controller
     // Get One Sell Deal by Deal ID
     public function getOneByDeal($sell_deal, $dealId) {
         $sell_deal = SellDeal::with('SellOrder', 'SellOrder.SellOrderPricing', 'SellOrder.Seller',
-                             'SellOrder.Seller.User', 'User', 'Deal', 'Chat')
+                             'SellOrder.Seller.User', 'User', 'Deal', 'SellDealChat')
                     ->where([['deal_id', $dealId], 
                       ['status', 'a']])
                ->orderBy('id', 'asc')
