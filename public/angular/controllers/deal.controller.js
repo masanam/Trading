@@ -432,7 +432,7 @@ angular.module('deal').controller('CreateSellModalController', function ($scope,
     };
   };
   
-  $scope.createOrder = function(){
+  $scope.createBuyOrder = function(){
     
     $scope.success = $scope.error = null;
       
@@ -531,7 +531,7 @@ angular.module('deal').controller('CreateBuyModalController', function ($scope, 
     };
   };
   
-  $scope.createOrder = function(){
+  $scope.createSellOrder = function(){
     
     $scope.success = $scope.error = null;
       
