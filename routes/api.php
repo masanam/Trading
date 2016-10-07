@@ -87,6 +87,8 @@ Route::group(['middleware' => ['cors']], function() {
         'create', 'edit'
     ]]);
     
+    Route::get('sell-deal/chat/{sell_deal}', 'SellDealChatController@showAllSellDealChatsByOrderDeal');
+    Route::post('sell-deal/chat/send', 'SellDealChatController@sendChat');
     Route::delete('sell-deal/{dealId}', 'SellDealController@destroyByDeal');
     Route::get('sell-deal/getByDeal/{dealId}', 'SellDealController@getByDeal');
     Route::get('sell-deal/getOneByDealAndOrder/{sellOrder}/{dealId}', 'SellDealController@getOneByDealAndOrder');
@@ -104,8 +106,4 @@ Route::group(['middleware' => ['cors']], function() {
     Route::resource('deal', 'DealController', ['except' => [
         'index', 'create', 'edit', 'destroy'
     ]]);
-
-    Route::post('sell-deal/chat/send', 'SellDealChatController@sendChat');
-    Route::get('sell-deal/chat/{user}', 'SellDealChatController@showAllSellDealChatsByUser');
-    Route::get('sell-deal/chat/{sell_deal}', 'SellDealChatController@showAllSellDealChatsByOrderDeal');
 });

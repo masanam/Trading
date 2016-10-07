@@ -124,10 +124,7 @@ class BuyOrderController extends Controller
         $buy_order = BuyOrder::find($buy_order);
 
         if($buy_order->status == 'a') {
-            return response()->json([
-                'success' => TRUE,
-                $buy_order
-                ], 200);
+            return response()->json($buy_order, 200);
         } else {
             return response()->json(['message' => 'deactivated record'], 404);
         }

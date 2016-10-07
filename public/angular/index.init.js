@@ -54,6 +54,7 @@ angular.module(ApplicationConfiguration.applicationModuleName).config(['PusherSe
     PusherServiceProvider
     .setToken('6d2905ad0e57d83c218e')
     .setOptions({
+      host: 'api-ap1.pusher.com',
       cluster: 'ap1'
     });
   }

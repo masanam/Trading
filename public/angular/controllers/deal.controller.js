@@ -358,16 +358,6 @@ angular.module('deal').controller('BuyDealChatModalController', function ($scope
   var id = $scope.buy_deal.id;
   $scope.buy_deal_chat = {};
 
-  Pusher.subscribe('private-buy-deal-channel.'.id , 'new-message', function (chat) {
-    console.log(chat);
-    for (var i = 0; i < $scope.chats.length; i++) {
-      if ($scope.chats[i].id === chat.id) {
-        $scope.chats[i] = chat;
-        break;
-      }
-    }
-  });
-
   $scope.sendBuyDealMessage = function() {
     $scope.buy_deal_chat = new BuyDealChat({
       'buy_deal_id': $scope.buy_deal.id,
@@ -382,6 +372,17 @@ angular.module('deal').controller('BuyDealChatModalController', function ($scope
 
   $scope.findBuyDealChatByDeal = function() {
     $scope.chats = BuyDealChat.query({ id: $scope.buy_deal.id });
+
+    
+    Pusher.subscribe('private-buy-deal-channel.'.id , 'new-message', function (chat) {
+      console.log(chat);
+      for (var i = 0; i < $scope.chats.length; i++) {
+        if ($scope.chats[i].id === chat.id) {
+          $scope.chats[i] = chat;
+          break;
+        }
+      }
+    });
   };
 
   $scope.findCurrentUser = function() {

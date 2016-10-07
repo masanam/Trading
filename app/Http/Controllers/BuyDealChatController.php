@@ -12,14 +12,14 @@ use App\Model\BuyDeal;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
 
+use Vinkla\Pusher\Facades\Pusher;
+
 class BuyDealChatController extends Controller
 {
-    var $pusher;
     var $user;
 
     public function __construct () {
         // $this->middleware('jwt.auth');
-        $this->pusher = App::make('pusher');
         $this->user = Session::get('user');
     }
 
@@ -46,7 +46,7 @@ class BuyDealChatController extends Controller
         ]);
 
 
-        $this->pusher->trigger('private-buy-deal-channel.'.$chat->buy_deal_id, 'new-message', $chat);
+        Pusher::trigger('private-buy-deal-channel.'.$chat->buy_deal_id, 'new-message', $chat);
         return response()->json($chat, 200);
     }
 }
