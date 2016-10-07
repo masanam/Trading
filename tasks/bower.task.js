@@ -70,13 +70,13 @@ Elixir.extend('bower', function(jsOutputFile, jsOutputFolder, ttfOutputFolder, c
     'bower_components/ng-sortable/dist/ng-sortable.js',
     'bower_components/jquery-validation/dist/jquery.validate.min.js',
     'bower_components/jpkleemans-angular-validate/dist/angular-validate.min.js',,
-    'bower_components/AdminLTE/dist/js/app.min.js',
-    'bower_components/AdminLTE/plugins/jQueryUI/jquery-ui.min.js',
-    'bower_components/AdminLTE/dist/css/AdminLTE.min.css',
-    'bower_components/AdminLTE/dist/css/skins/skin-blue.min.css',
-    'bower_components/AdminLTE/plugins/iCheck/square/blue.css',
-    'bower_components/AdminLTE/plugins/iCheck/icheck.min.js',
-    'bower_components/AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js'
+    'bower_components/admin-lte/dist/js/app.min.js',
+    'bower_components/admin-lte/plugins/jQueryUI/jquery-ui.min.js',
+    'bower_components/admin-lte/dist/css/AdminLTE.min.css',
+    'bower_components/admin-lte/dist/css/skins/skin-blue.min.css',
+    'bower_components/admin-lte/plugins/iCheck/square/blue.css',
+    'bower_components/admin-lte/plugins/iCheck/icheck.min.js',
+    'bower_components/admin-lte/plugins/slimScroll/jquery.slimscroll.min.js'
 
 
   ];
