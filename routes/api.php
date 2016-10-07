@@ -76,7 +76,9 @@ Route::group(['middleware' => ['cors']], function() {
     Route::resource('vendor', 'VendorController', ['except' => [
         'create', 'edit'
     ]]);
-    
+
+    Route::get('buy-deal/chat/{buy_deal}', 'BuyDealChatController@showAllBuyDealChatsByOrderDeal');
+    Route::post('buy-deal/chat/send', 'BuyDealChatController@sendChat');
     Route::delete('buy-deal/{dealId}', 'BuyDealController@destroyByDeal');
     Route::get('buy-deal/getByDeal/{dealId}', 'BuyDealController@getByDeal');
     Route::get('buy-deal/getOneByDealAndOrder/{buyOrder}/{dealId}', 'BuyDealController@getOneByDealAndOrder');
@@ -102,10 +104,6 @@ Route::group(['middleware' => ['cors']], function() {
     Route::resource('deal', 'DealController', ['except' => [
         'index', 'create', 'edit', 'destroy'
     ]]);
-
-    Route::post('buy-deal/chat/send', 'BuyDealChatController@sendChat');
-    Route::get('buy-deal/chat/{user}', 'BuyDealChatController@showAllBuyDealChatsByUser');
-    Route::get('buy-deal/chat/{buy_deal}', 'BuyDealChatController@showAllBuyDealChatsByOrderDeal');
 
     Route::post('sell-deal/chat/send', 'SellDealChatController@sendChat');
     Route::get('sell-deal/chat/{user}', 'SellDealChatController@showAllSellDealChatsByUser');

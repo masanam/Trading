@@ -356,6 +356,7 @@ angular.module('deal').controller('BuyDealChatModalController', function ($scope
   $scope.buy_deal = {};
   $scope.buy_deal = buyDeal;
   var id = $scope.buy_deal.id;
+  $scope.buy_deal_chat = {};
 
   Pusher.subscribe('private-buy-deal-channel.'. id , 'new-message', function (chat) {
     for (var i = 0; i < $scope.chats.length; i++) {
@@ -367,13 +368,13 @@ angular.module('deal').controller('BuyDealChatModalController', function ($scope
   });
 
   $scope.sendBuyDealMessage = function() {
-    $buy_deal_chat = new BuyDealChat({
+    $scope.buy_deal_chat = new BuyDealChat({
       'buy_deal_id': $scope.buy_deal.id,
       'user_id': $scope.buy_deal.user_id,
-      'message': $scope.chat.message.message
+      'message': $scope.chat.message
     });
 
-    $buy_deal_chat.$save(function(res) {
+    $scope.buy_deal_chat.$save({ action: 'send' }, function(res) {
       $scope.chats.push(res);
     });
   };
@@ -395,6 +396,7 @@ angular.module('deal').controller('SellDealChatModalController', function ($scop
   $scope.sell_deal = {};
   $scope.sell_deal = sellDeal;
   var id = $scope.sell_deal.id;
+  $sell_deal_chat = {};
 
   Pusher.subscribe('private-sell-deal-channel.'. id, 'new-message', function (chat) {
     for (var i = 0; i < $scope.chats.length; i++) {
@@ -412,7 +414,7 @@ angular.module('deal').controller('SellDealChatModalController', function ($scop
       'message': $scope.chat.message.message
     });
 
-    $sell_deal_chat.$save(function(res) {
+    $sell_deal_chat.$save({ action: 'send' }, function(res) {
       $scope.chats.push(res);
     });
   };

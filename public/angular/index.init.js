@@ -52,8 +52,10 @@ angular.module(ApplicationConfiguration.applicationModuleName).config(['$urlRout
 angular.module(ApplicationConfiguration.applicationModuleName).config(['PusherServiceProvider',
   function(PusherServiceProvider) {
     PusherServiceProvider
-    .setToken('base64:e8DFx9VH+ILynmv54ScfP9JyRQdLjcDzvkCcuNYtSFI=')
-    .setOptions({});
+    .setToken('6d2905ad0e57d83c218e')
+    .setOptions({
+      cluster: 'ap1'
+    });
   }
 ]);
 

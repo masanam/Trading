@@ -61,11 +61,16 @@ class BuyDealController extends Controller
         
         $config_approver = config('approver');
         
+        /*
+        *   every approver in the config file, 
+        *   will get the notification, 
+        *   and can approve any deal
+        */
         foreach($config_approver as $approver){
           $buy_deal_approval = new BuyDealApproval();
           $buy_deal_approval->buy_deal_id = $buy_deal->id;
           $buy_deal_approval->user_id = $buy_deal->user_id;
-          $buy_deal_approval->approver = $approver;
+          $buy_deal_approval->approver_id = $approver;
           $buy_deal_approval->status = "p";
           $buy_deal_approval->save();
         }
@@ -207,12 +212,14 @@ class BuyDealController extends Controller
             ] ,404);
         }
 
-        $buy_deal = BuyDeal::find('id');
+        $buy_deal = BuyDeal::find('$buy_deal');
+        console.log($buy_deal);
 
         $buy_deal_approval = new BuyDealApproval();
         $buy_deal_approval->buy_deal_id = $buy_deal->id;
         $buy_deal_approval->user_id = $buy_deal->user_id;
-        $buy_deal_approval->approver = $request->approver_id;
+        $buy_deal_approval->approver_id = $request->approver_id;
+        $buy_deal->approver_id = $request->approver_id;
         $buy_deal_approval->status = $approval;
 
         $buy_deal_approval->save();
