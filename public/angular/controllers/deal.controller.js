@@ -358,6 +358,28 @@ angular.module('deal').controller('BuyDealChatModalController', function ($scope
   var id = $scope.buy_deal.id;
   $scope.buy_deal_chat = {};
 
+  var channel = 'buy-deal-channel.'+ id;
+
+  console.log(channel);
+
+  Pusher.subscribe(channel , 'message-sent', function (chat) {
+    for (var i = 0; i < $scope.chats.length; i++) {
+      if ($scope.chats[i].id === chat.id) {
+        $scope.chats[i] = chat;
+        break;
+      }
+    }
+    $scope.chats.push(chat);
+  });
+
+  // var pusher = new Pusher('6d2905ad0e57d83c218e');
+  // var channel = pusher.subscribe('private-buy-deal-channel'.id);
+  // channel.bind('message-sent',
+  //   function(chat) {
+  //     $scope.chats.push(chat);
+  //   }
+  // );
+
   $scope.sendBuyDealMessage = function() {
     $scope.buy_deal_chat = new BuyDealChat({
       'buy_deal_id': $scope.buy_deal.id,
@@ -366,23 +388,12 @@ angular.module('deal').controller('BuyDealChatModalController', function ($scope
     });
 
     $scope.buy_deal_chat.$save({ action: 'send' }, function(res) {
-      $scope.chats.push(res);
+      // $scope.chats.push(res);
     });
   };
 
   $scope.findBuyDealChatByDeal = function() {
     $scope.chats = BuyDealChat.query({ id: $scope.buy_deal.id });
-
-    
-    Pusher.subscribe('private-buy-deal-channel.'.id , 'new-message', function (chat) {
-      console.log(chat);
-      for (var i = 0; i < $scope.chats.length; i++) {
-        if ($scope.chats[i].id === chat.id) {
-          $scope.chats[i] = chat;
-          break;
-        }
-      }
-    });
   };
 
   $scope.findCurrentUser = function() {
@@ -400,12 +411,13 @@ angular.module('deal').controller('SellDealChatModalController', function ($scop
   var id = $scope.sell_deal.id;
   $sell_deal_chat = {};
 
-  Pusher.subscribe('private-sell-deal-channel.'. id, 'new-message', function (chat) {
+  Pusher.subscribe('sell-deal-channel.'. id, 'message-sent', function (chat) {
     for (var i = 0; i < $scope.chats.length; i++) {
       if ($scope.chats[i].id === chat.id) {
         $scope.chats[i] = chat;
         break;
       }
+      $scope.chats.push(chat);
     }
   });
 

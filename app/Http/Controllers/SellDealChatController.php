@@ -46,7 +46,7 @@ class SellDealChatController extends Controller
         ]);
 
 
-        $this->pusher->trigger('private-sell-deal-channel.'.$chat->sell_deal_id, 'new-message', $chat);
+        $this->pusher->trigger('sell-deal-channel.'.$chat->sell_deal_id, 'message-sent', $chat);
         return response()->json($chat, 200);
     }
 }

@@ -46,7 +46,7 @@ class BuyDealChatController extends Controller
         ]);
 
 
-        Pusher::trigger('private-buy-deal-channel.'.$chat->buy_deal_id, 'new-message', $chat);
+        Pusher::trigger('buy-deal-channel.'.$chat->buy_deal_id, 'message-sent', $chat);
         return response()->json($chat, 200);
     }
 }
