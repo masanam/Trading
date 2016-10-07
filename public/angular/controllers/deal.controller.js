@@ -358,7 +358,8 @@ angular.module('deal').controller('BuyDealChatModalController', function ($scope
   var id = $scope.buy_deal.id;
   $scope.buy_deal_chat = {};
 
-  Pusher.subscribe('private-buy-deal-channel.'. id , 'new-message', function (chat) {
+  Pusher.subscribe('private-buy-deal-channel.'.id , 'new-message', function (chat) {
+    console.log(chat);
     for (var i = 0; i < $scope.chats.length; i++) {
       if ($scope.chats[i].id === chat.id) {
         $scope.chats[i] = chat;
