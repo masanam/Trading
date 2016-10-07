@@ -40,21 +40,124 @@
 <div ng-show="state == 1">
   <div class="form-group">
     <p>
-      <input type="radio" name="cp" class="flat-red" ng-model="choose" uib-btn-radio="'available'"> From Available Product
+      <input type="radio" name="cp" class="flat-red" ng-click="setChoose('available')"> From Available Product
     </p>
     <p>
-      <input type="radio" name="cp" class="flat-red" ng-model="choose" uib-btn-radio="'manual'"> Manually
+      <input type="radio" name="cp" class="flat-red" ng-click="setChoose('manual')"> Manually
     </p>
   </div>
   <div class="form-group" ng-show="choose == 'manual'">
     <label for="product_name">Product Name :</label>
-    <input type="text" class="form-control" ng-model="product_name">
+    <input type="text" class="form-control" ng-model="order.product_name">
   </div>
   <div class="form-group" ng-show="choose == 'available'">
-    <ul class="list-group">
-      <li class="list-group-item" ng-model="radioModel" uib-btn-radio="'1'">New </li>
-      <li class="list-group-item" ng-model="radioModel" uib-btn-radio="'2'">Deleted </li> 
-      <li class="list-group-item" ng-model="radioModel" uib-btn-radio="'3'">Warnings </li> 
-    </ul>
+    <table st-table="displayedCollection" st-safe-src="products" class="table table-striped" ng-init="findAllProducts()">
+      <thead>
+        <tr>
+          <th colspan="1"><input st-search="" class="form-control" placeholder="search ..." type="text"/></th>
+        </tr>
+        <tr>
+            <th st-sort="product_name">Product Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr st-select-row="product" ng-repeat="product in displayedCollection">
+          <td ng-click="setSelected(product)">{{ product.product_name }}</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="1" class="text-center">
+            <div st-pagination="" st-items-by-page="7" st-displayed-pages="5"></div>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>
+<div ng-show="state == 2">
+  <div class="form-group">
+    <label>Coal Volume</label>
+    <div class="input-group">
+      <span class="input-group-addon" id="basic-addon1">Volume</span>
+      <input type="text" class="form-control" placeholder="tones" ng-model="order.volume">
+    </div>
+  </div>
+  <div>
+    <label>Price</label>
+    <div class="input-group">
+      <span class="input-group-addon" id="basic-addon1">USD</span>
+      <input type="text" class="form-control col-md-6" placeholder="USD" ng-model="order.max_price">
+    </div>
+  </div>
+  <hr/>
+  <div class="form-group">
+    <label>Coal Quality</label>
+    <div class="input-group" style="margin-bottom: 5px;">
+      <span class="input-group-addon" style="width: 200px;">Gross Caloric ARB</span>
+      <input type="text" class="form-control" placeholder="kcal" ng-model="order.gcv_arb_min">
+      <span class="input-group-addon">to</span>
+      <input type="text" class="form-control" placeholder="kcal" ng-model="order.gcv_arb_max">
+    </div>
+    <div class="input-group" style="margin-bottom: 5px;">
+      <span class="input-group-addon" style="width: 200px;">Gross Caloric ADB</span>
+      <input type="text" class="form-control" placeholder="kcal" ng-model="order.gcv_adb_min">
+      <span class="input-group-addon">to</span>
+      <input type="text" class="form-control" placeholder="kcal" ng-model="order.gcv_adb_max">
+    </div>
+    <div class="input-group" style="margin-bottom: 5px;">
+      <span class="input-group-addon" style="width: 200px;">Nett Caloric</span>
+      <input type="text" class="form-control" placeholder="kcal" ng-model="order.ncv_min">
+      <span class="input-group-addon">to</span>
+      <input type="text" class="form-control" placeholder="kcal" ng-model="order.ncv_max">
+    </div>
+    <div class="input-group" style="margin-bottom: 5px;">
+      <span class="input-group-addon" style="width: 200px;">Ash</span>
+      <input type="text" class="form-control" placeholder="%" ng-model="order.ash_min">
+      <span class="input-group-addon">to</span>
+      <input type="text" class="form-control" placeholder="%" ng-model="order.ash_max">
+    </div>
+    <div class="input-group" style="margin-bottom: 5px;">
+      <span class="input-group-addon" style="width: 200px;">Total Sulphur</span>
+      <input type="text" class="form-control" placeholder="%" ng-model="order.ts_min">
+      <span class="input-group-addon">to</span>
+      <input type="text" class="form-control" placeholder="%" ng-model="order.ts_max">
+    </div>
+    <div class="input-group" style="margin-bottom: 5px;">
+      <span class="input-group-addon" style="width: 200px;">Total Moisture</span>
+      <input type="text" class="form-control" placeholder="%" ng-model="order.tm_min">
+      <span class="input-group-addon">to</span>
+      <input type="text" class="form-control" placeholder="%" ng-model="order.tm_max">
+    </div>
+    <div class="input-group" style="margin-bottom: 5px;">
+      <span class="input-group-addon" style="width: 200px;">Inherent Moisture</span>
+      <input type="text" class="form-control" placeholder="%" ng-model="order.im_min">
+      <span class="input-group-addon">to</span>
+      <input type="text" class="form-control" placeholder="%" ng-model="order.im_max">
+    </div>
+    <div class="input-group" style="margin-bottom: 5px;">
+      <span class="input-group-addon" style="width: 200px;">Fixed Carbon</span>
+      <input type="text" class="form-control" placeholder="%" ng-model="order.fc_min">
+      <span class="input-group-addon">to</span>
+      <input type="text" class="form-control" placeholder="%" ng-model="order.fc_max">
+    </div>
+    <div class="input-group" style="margin-bottom: 5px;">
+      <span class="input-group-addon" style="width: 200px;">Volatile Matter</span>
+      <input type="text" class="form-control" placeholder="%" ng-model="order.vm_min">
+      <span class="input-group-addon">to</span>
+      <input type="text" class="form-control" placeholder="%" ng-model="order.vm_max">
+    </div>
+    <div class="input-group" style="margin-bottom: 5px;">
+      <span class="input-group-addon" style="width: 200px;">Hardness</span>
+      <input type="text" class="form-control" placeholder="%" ng-model="order.hgi_min">
+      <span class="input-group-addon">to</span>
+      <input type="text" class="form-control" placeholder="%" ng-model="order.hgi_max">
+    </div>
+    <div class="input-group" style="margin-bottom: 5px;">
+      <span class="input-group-addon" style="width: 200px;">Size</span>
+      <input type="text" class="form-control" placeholder="mm" ng-model="order.size_min">
+      <span class="input-group-addon">to</span>
+      <input type="text" class="form-control" placeholder="mm" ng-model="order.size_max">
+    </div>
   </div>
 </div>

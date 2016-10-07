@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Model\BuyOrder;
-
+use Auth;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -45,7 +45,7 @@ class BuyOrderController extends Controller
 
         $buy_order = new BuyOrder();
 
-        $buy_order->user_id = $request->user_id;
+        $buy_order->user_id = Auth::User()->id;
         $buy_order->buyer_id = $request->buyer_id;
 
         $buy_order->order_date = $request->order_date;
@@ -102,6 +102,8 @@ class BuyOrderController extends Controller
         $buy_order->size_bonus = $request->size_bonus;
 
         $buy_order->volume = $request->volume;
+        $buy_order->product_name = $request->product_name;
+        $buy_order->product_id = $request->product_id;
         $buy_order->max_price = $request->max_price;
 
         $buy_order->order_status = 'a';
@@ -119,14 +121,12 @@ class BuyOrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(BuyOrder $buy_order)
+    public function show($buy_order)
     {
-        var_dump($buy_order->id);
+        $buy_order = BuyOrder::with('buyer')->find($buy_order);
+
         if($buy_order->order_status == 'a') {
-            return response()->json([
-                'success' => TRUE,
-                $buy_order
-                ], 200);
+            return response()->json($buy_order, 200);
         } else {
             return response()->json(['message' => 'deactivated record'], 404);
         }

@@ -10,7 +10,7 @@
     	<table  ng-init="findSellOrder()" st-table="displayedCollection" st-safe-src="sell_orders" class="table table-striped">
     		<thead>
           <tr>
-            <th colspan="7"><input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
+            <th colspan="9"><input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
           </tr>
     			<tr>
     				<th>#</th>
@@ -36,14 +36,14 @@
             <td>{{ sell_order.ncv_min }} - {{ sell_order.ncv_max }}</td>
             <td>{{ sell_order.max_price/sell_order.volume | currency : $ : 2}}</td>
             <td>
-              <a ui-sref="lead.view-seller({ id: seller.id })"><i class="glyphicon glyphicon-info-sign"></i></a>
+              <a ui-sref="sell-order.view({ id: sell_order.id })"><i class="glyphicon glyphicon-info-sign"></i></a>
             </td>
     			</tr>
     		</tbody>
 
         <tfoot>
           <tr>
-            <td colspan="7" class="text-center">
+            <td colspan="9" class="text-center">
               <div st-pagination="" st-items-by-page="10" st-displayed-pages="5"></div>
             </td>
           </tr>

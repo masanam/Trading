@@ -1,11 +1,11 @@
-<div class="content" ng-controller="BuyOrderController" ng-init="findOne()">
+<div class="content" ng-controller="SellOrderController" ng-init="findOne()">
   <!-- HEADER -->
   <div class="row-fluid" style="margin-bottom: 10px">
-    <button type="button" class="btn btn-primary" ui-sref="buy-order.index">
+    <button type="button" class="btn btn-primary" ui-sref="sell-order.index">
       <i class="glyphicon glyphicon-arrow-left"></i> Back
     </button>
     <div class="pull-right">
-      <button type="button" class="btn btn-primary" ui-sref="buy-order.index">
+      <button type="button" class="btn btn-primary" ui-sref="sell-order.index">
         <i class="glyphicon glyphicon-arrow-right"></i> Start Deal
       </button>
     </div>
@@ -13,19 +13,19 @@
   
   <div class="box box-primary box-solid">
     <div class="box-header ">
-      <h3 class="box-title">Buy Order</h3>
+      <h3 class="box-title">Sell Order</h3>
     </div>
     <div class="box-body">
       <div class="form-group">
-        <h1>{{ buy_order.buyer.company_name }}</h1>
+        <h1>{{ sell_order.seller.company_name }}</h1>
         <label>Product Name : </label>
-        <p>{{ buy_order.product_name }}</p>
+        <p>{{ sell_order.product_name }}</p>
         <label>Address : </label>
-        <p>{{ buy_order.address }}</p>
+        <p>{{ sell_order.address }}</p>
         <label>Order Date : </label>
-        <p>{{ buy_order.order_date }}</p>
+        <p>{{ sell_order.order_date }}</p>
         <label>Deadline : </label>
-        <p>{{ buy_order.deadline }}</p>
+        <p>{{ sell_order.deadline }}</p>
       </div>
     </div>
   </div>
@@ -41,23 +41,23 @@
             <tbody>
               <tr>
                 <td><b>Gross Caloric ARB <div class="pull-right">:</div></b></td>
-                <td>{{buy_order.gcv_arb_min}} - {{buy_order.gcv_arb_max}} kcal</td>
+                <td>{{sell_order.gcv_arb_min}} - {{sell_order.gcv_arb_max}} kcal</td>
               </tr>
               <tr>
                 <td><b>Gross Caloric ADB <div class="pull-right">:</div></b></td>
-                <td>{{buy_order.gcv_adb_min}} - {{buy_order.gcv_adb_max}} kcal</td>
+                <td>{{sell_order.gcv_adb_min}} - {{sell_order.gcv_adb_max}} kcal</td>
               </tr>
               <tr>
                 <td><b>Nett Caloric <div class="pull-right">:</div></b></td>
-                <td>{{buy_order.ncv_min}} - {{buy_order.ncv_max}} kcal</td>
+                <td>{{sell_order.ncv_min}} - {{sell_order.ncv_max}} kcal</td>
               </tr>
               <tr>
                 <td><b>Ash <div class="pull-right">:</div></b></td>
-                <td>{{buy_order.ash_min}} - {{buy_order.ash_max}} kcal</td>
+                <td>{{sell_order.ash_min}} - {{sell_order.ash_max}} kcal</td>
               </tr>
               <tr>
                 <td><b>Total Sulphur <div class="pull-right">:</div></b></td>
-                <td>{{buy_order.ts_min}} - {{buy_order.ts_max}} %</td>
+                <td>{{sell_order.ts_min}} - {{sell_order.ts_max}} %</td>
               </tr>
             </tbody>
           </table>
@@ -67,23 +67,23 @@
             <tbody>
               <tr>
                 <td><b>Total Moisture <div class="pull-right">:</div></b></td>
-                <td>{{buy_order.tm_min}} - {{buy_order.tm_max}} %</td>
+                <td>{{sell_order.tm_min}} - {{sell_order.tm_max}} %</td>
               </tr>
               <tr>
                 <td><b>Inherent Moisture <div class="pull-right">:</div></b></td>
-                <td>{{buy_order.im_min}} - {{buy_order.im_max}} %</td>
+                <td>{{sell_order.im_min}} - {{sell_order.im_max}} %</td>
               </tr>
               <tr>
                 <td><b>Fixed Carbon <div class="pull-right">:</div></b></td>
-                <td>{{buy_order.fc_min}} - {{buy_order.fc_max}} %</td>
+                <td>{{sell_order.fc_min}} - {{sell_order.fc_max}} %</td>
               </tr>
               <tr>
                 <td><b>Volatile Matter <div class="pull-right">:</div></b></td>
-                <td>{{buy_order.vm_min}} - {{buy_order.vm_max}} %</td>
+                <td>{{sell_order.vm_min}} - {{sell_order.vm_max}} %</td>
               </tr>
               <tr>
                 <td><b>Hardness <div class="pull-right">:</div></b></td>
-                <td>{{buy_order.hgi_min}} - {{buy_order.hgi_max}} %</td>
+                <td>{{sell_order.hgi_min}} - {{sell_order.hgi_max}} %</td>
               </tr>
             </tbody>
           </table>
@@ -91,6 +91,6 @@
       </div>
     </div>
   </div>
-
+  
 </div>
   

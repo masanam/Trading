@@ -51,6 +51,7 @@ Elixir.extend('bower', function(jsOutputFile, jsOutputFolder, ttfOutputFolder, c
     'bower_components/angular-chart.js/dist/angular-chart.css',
     'bower_components/datatables.net/js/jquery.dataTables.js',
     'bower_components/pusher-angular/lib/pusher-angular.min.js',
+    'bower_components/angular-smart-table/dist/smart-table.css',
     'bower_components/angular-smart-table/dist/smart-table.js',
     'bower_components/angular-smart-table/smartCss.css',
     'bower_components/angular-datatables/dist/angular-datatables.js',

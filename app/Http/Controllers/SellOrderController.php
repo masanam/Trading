@@ -113,9 +113,11 @@ class SellOrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(SellOrder $sell_order)
+    public function show($sell_order)
     {
-        if($sell_order->status == 'a') {
+        $sell_order = SellOrder::with('seller')->find($sell_order);
+        
+        if($sell_order->order_status == 'a') {
             return response()->json($sell_order, 200);
         } else {
             return response()->json(['message' => 'deactivated record'], 404);
