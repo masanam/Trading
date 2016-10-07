@@ -31,6 +31,7 @@
     "angular-smart-table": "^2.1.8",
     "datatables.net-autofill": "^2.1.2",
     "datatables.net": "^1.10.12",
-    "admin-lte": "^2.3.6"
+    "admin-lte": "^2.3.6",
+    "jpkleemans-angular-validate": "^1.1.1"
   }
 }
