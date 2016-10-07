@@ -12,7 +12,7 @@ angular.module('order-history').config(['$stateProvider', '$urlRouterProvider',
       })
       .state('order.index', {
         url: '',
-        templateUrl: '/angular/views/order/order.view.html'
+        templateUrl: '/angular/views/order/index.view.html'
       })
       .state('order.history', {
         url: '/history',
