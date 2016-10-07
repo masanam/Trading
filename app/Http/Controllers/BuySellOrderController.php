@@ -25,7 +25,7 @@ class BuySellOrderController extends Controller
 
         $buy_order = BuyOrder::where('status', 'a')
                             ->with(
-                                'Buyer.company_name', 'BuyOrderPricing', 'User'
+                                'Buyer', 'BuyOrderPricing', 'User'
                             )->get();
 
         foreach($buy_order as $bo) {
@@ -35,7 +35,7 @@ class BuySellOrderController extends Controller
 
         $sell_order = SellOrder::where('status', 'a')
                             ->with(
-                                'Seller.company_name', 'SellOrderPricing', 'User'
+                                'Seller', 'SellOrderPricing', 'User'
                             )->get();
 
         foreach($sell_order as $so) {
@@ -45,7 +45,7 @@ class BuySellOrderController extends Controller
 
         $buy_sell_order = $buy_sell_order->sortBy('order_date');
 
-        return response()->json(['success' => TRUE, $buy_sell_order], 200);
+        return response()->json($buy_sell_order, 200);
     }
 
     public function lastOrderByUser($type, $id) {
@@ -61,6 +61,6 @@ class BuySellOrderController extends Controller
                             )->first();
         }
 
-        return response()->json(['success' => TRUE, $buy_sell_order], 200);
+        return response()->json($buy_sell_order, 200);
     }
 }

@@ -266,5 +266,72 @@ class BuyOrderTableSeeder extends Seeder
             'max_price' => 1500,
             'status' => 'c'
       ]);
+
+      $address = array([
+            'address' => 'Midplaza II 3rd Floor, JL. Jendral Sudirman Kavling 10-11, Jakarta, 10220' ,
+            'latitude' => '-6.208779' ,
+            'longitude' => '106.8178313' 
+      ],
+      [
+            'address' => 'Jl. Jendral Sudirman Kav 10-11 Karet Tengsin Tanah Abang Jakarta Pusat DKI Jakarta, Karet Tengsin, Tanah Abang, Kota Jakarta Pusat, Daerah Khusus Ibukota Jakarta 10220' ,
+            'latitude' => '-6.2087789' ,
+            'longitude' => '106.8112652' 
+      ],
+      [
+            'address' => 'The Plaza, Jl. M.H. Thamrin No.28-30, RT.9/RW.5, Gondangdia, Menteng, Kota Jakarta Pusat, Daerah Khusus Ibukota Jakarta 10350' ,
+            'latitude' => '-6.1928712' ,
+            'longitude' => '106.8199982' 
+      ],
+      [
+            'address' => 'Jl. HR Rasuna Said Kav 1-2 Blok X-1 Kuningan Timur Setiabudi Jakarta Selatan DKI Jakarta, Kuningan Tim., Setia Budi, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta' ,
+            'latitude' => '-6.19287' ,
+            'longitude' => '106.7871672' 
+      ],
+      [
+            'address' => 'Bakrie Tower Lantai 15 Komplek Rasuna Epicentrum, Jl. HR Rasuna Said, Karet Kuningan, Kecamatan Setiabudi, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12940' ,
+            'latitude' => '-6.2190898' ,
+            'longitude' => '106.8322925' 
+      ]);
+      
+      foreach ($address as $address) {
+          BuyOrder::create(array_merge($address, [
+            'user_id' => $faker->numberBetween($min = 1, $max = 3) ,
+            'buyer_id' => $faker->numberBetween($min = 1, $max = 3) ,
+
+
+            'order_date' => $faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
+            'deadline' => $faker->dateTimeBetween($startDate = "5 days", $endDate = "10 days")->format('Y-m-d'),
+
+            'tm_min' => $faker->numberBetween($min = 1, $max = 5) ,
+            'tm_max' => $faker->numberBetween($min = 6, $max = 10),
+            'im_min' => $faker->numberBetween($min = 1, $max = 5) ,
+            'im_max' => $faker->numberBetween($min = 6, $max = 10),
+            'ash_min' => $faker->randomFloat($nbMaxDecimals = 2, $min = 10, $max = 15),
+            'ash_max' => $faker->randomFloat($nbMaxDecimals = 2, $min = 15, $max = 25),
+            'fc_min' => $faker->numberBetween($min = 0, $max = 22),
+            'fc_max' => $faker->numberBetween($min = 23, $max = 44),
+            'vm_min' => $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 15),
+            'vm_max' => $faker->randomFloat($nbMaxDecimals = 2, $min = 20, $max = 45),
+            'ts_min' => $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 1),
+            'ts_max' => $faker->randomFloat($nbMaxDecimals = 2, $min = 1.1, $max = 2),
+            'ncv_min' => $faker->numberBetween($min = 0, $max = 3),
+            'ncv_max' => $faker->numberBetween($min = 4, $max = 6),
+            'gcv_arb_min' => $faker->numberBetween($min = 0, $max = 50),
+            'gcv_arb_max' => $faker->numberBetween($min = 100, $max = 250),
+            'gcv_adb_min' => $faker->numberBetween($min = 0, $max = 50),
+            'gcv_adb_max' => $faker->numberBetween($min = 110, $max = 250),
+            'hgi_min' => $faker->numberBetween($min = 0, $max = 50),
+            'hgi_max' => $faker->numberBetween($min = 60, $max = 100),
+            'size_min' => $faker->numberBetween($min = 0, $max = 75),
+            'size_max' => $faker->numberBetween($min = 150, $max = 220),
+            'max_price' => $faker->numberBetween($min = 1, $max = 500),
+
+            'penalty_desc' => 'penalty',
+
+            'volume' => $faker->numberBetween($min = 1000, $max = 2000),
+            'max_price' => $faker->numberBetween($min = 100, $max = 5000),
+            'status' => $faker->randomElement($array = array ('a','f'))
+          ]));
+      }
     }
 }

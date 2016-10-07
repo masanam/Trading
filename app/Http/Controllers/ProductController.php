@@ -22,7 +22,7 @@ class ProductController extends Controller
     {
         $product = Product::where('status', 'a')->get();
 
-        return response()->json(['success' => TRUE, $product], 200);
+        return response()->json($product, 200);
     }
 
     /**
@@ -38,7 +38,7 @@ class ProductController extends Controller
             $product = Product::where('status', 'a')->where('product_name', 'LIKE', '%'.$search.'%')->get();
         }
 
-        return response()->json(['success' => TRUE, $product], 200);
+        return response()->json($product, 200);
     }
 
 
@@ -116,7 +116,7 @@ class ProductController extends Controller
 
         $product->save();
 
-        return response()->json(['success' => TRUE, $product], 200);
+        return response()->json($product, 200);
     }
 
     /**
@@ -125,10 +125,12 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $product)
+    public function show($product)
     {
+        $product = Product::find($product);
+
         if($product->status == 'a') {
-            return response()->json(['success' => TRUE, $product], 200);
+            return response()->json($product, 200);
         } else {
             return response()->json(['message' => 'deactivated record'], 404);
         }
@@ -141,8 +143,10 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, $product)
     {
+        $product = Product::find($product);
+
         if (!$request) {
             return response()->json([
                 'message' => 'Bad Request'
@@ -208,7 +212,7 @@ class ProductController extends Controller
 
         $product->save();
 
-        return response()->json(['success' => TRUE, $product], 200);
+        return response()->json($product, 200);
     }
 
     /**
@@ -217,8 +221,10 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy($product)
     {
+        $product = Product::find($product);
+     
         if (!$product) {
             return response()->json([
                 'message' => 'Not found'
@@ -228,12 +234,12 @@ class ProductController extends Controller
         $product->status = 'x';
         $product->save();
 
-        return response()->json(['success' => TRUE, $product], 200);
+        return response()->json($product, 200);
     }
 
     public function getTotalProduct() {
         $total = Product::count();
         $status = array('count' => $total);        
-        return response()->json(['success' => TRUE, $status], 200);
+        return response()->json($status, 200);
     }
 }

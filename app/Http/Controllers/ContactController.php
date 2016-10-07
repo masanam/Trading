@@ -26,7 +26,7 @@ class ContactController extends Controller
         } else {
             $contact = Contact::where('status', 'a')->where('name', 'LIKE', '%'.$search.'%')->get();
         }
-        return response()->json(['success' => TRUE, $contact], 200);
+        return response()->json($contact, 200);
     }
     
     /**
@@ -41,7 +41,7 @@ class ContactController extends Controller
         } else {
             $contact = Contact::where('status', 'a')->where('name', 'LIKE', '%'.$search.'%')->get();
         }
-        return response()->json(['success' => TRUE, $contact], 200);
+        return response()->json($contact, 200);
     }
 
     /**
@@ -70,7 +70,7 @@ class ContactController extends Controller
         $contact->status = 'a';
         $contact->save();
 
-        return response()->json(['success' => TRUE, $contact], 200);
+        return response()->json($contact, 200);
     }
 
     /**
@@ -79,11 +79,12 @@ class ContactController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Contact $contact)
+    public function show($contact)
     {
+        $contact = Contact::find($contact);
 
         if($contact->status == 'a') {
-            return response()->json(['success' => TRUE, $contact], 200);
+            return response()->json($contact, 200);
         } else {
             return response()->json(['message' => 'deactivated record'], 404);
         }
@@ -96,8 +97,10 @@ class ContactController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Contact $contact)
+    public function update(Request $request, $contact)
     {
+        $contact = Contact::find($contact);
+
         if (!$request) {
             return response()->json([
                 'message' => 'Bad Request'
@@ -119,7 +122,7 @@ class ContactController extends Controller
         $contact->email = $request->email;
         $contact->save();
 
-        return response()->json(['success' => TRUE, $contact], 200);
+        return response()->json($contact, 200);
     }
 
     /**
@@ -130,7 +133,8 @@ class ContactController extends Controller
      */
     public function destroy($id)
     {
-      
+        $contact = Contact::find($id);
+        
         if (!$id) {
             return response()->json([
                 'message' => 'Not found'
@@ -139,18 +143,18 @@ class ContactController extends Controller
 
         $contact = DB::table('contacts')->where('id', $id)->update(['status' => 'x']);
 
-        return response()->json(['success' => TRUE, $contact], 200);
+        return response()->json($contact, 200);
     }
 
     public function getContactByName($name) {
         $contact = Contact::where('company_name', 'like', '%'.$name.'%')->get();
 
-        return response()->json(['success' => TRUE, $contact], 200);
+        return response()->json($contact, 200);
     }
 
     public function getTotalContact() {
         $total = Contact::count();
         $status = array('count' => $total);        
-        return response()->json(['success' => TRUE, $status], 200);
+        return response()->json($status, 200);
     }
 }

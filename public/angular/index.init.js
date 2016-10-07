@@ -5,7 +5,7 @@ var ApplicationConfiguration = (function () {
   // Init module configuration options
   var applicationModuleName = 'coaltrade';
   var applicationModuleVendorDependencies = [
-    'ngResource', 'ui.router', 'satellizer', 'ngMap', 'chart.js', 'ui.bootstrap', 'datatables', 'as.sortable', 'smart-table', 'pusher-angular',
+    'ngResource', 'ui.router', 'satellizer', 'ngMap', 'chart.js', 'ui.bootstrap', 'smart-table', 'doowb.angular-pusher', 'ngValidate',
   ];
 
   // Add a new vertical module
@@ -48,6 +48,15 @@ angular.module(ApplicationConfiguration.applicationModuleName).config(['$urlRout
     // $urlRouterProvider.otherwise('/auth/signin');
   }
 ]);
+
+angular.module(ApplicationConfiguration.applicationModuleName).config(['PusherServiceProvider',
+  function(PusherServiceProvider) {
+    PusherServiceProvider
+    .setToken('base64:e8DFx9VH+ILynmv54ScfP9JyRQdLjcDzvkCcuNYtSFI=')
+    .setOptions({});
+  }
+]);
+
 
 //initialize application authentication & authorization before starting
 angular.module(ApplicationConfiguration.applicationModuleName).run(function ($rootScope, $state, $http, $uibModalStack, Authentication) {

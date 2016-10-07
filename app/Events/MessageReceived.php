@@ -4,8 +4,6 @@ namespace App\Events;
 
 use App\Model\Message;
 
-use App\Events\Event;
-
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -13,7 +11,7 @@ use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class MessageReceived extends Event implements ShouldBroadcast
+class MessageReceived implements ShouldBroadcast
 {
     use InteractsWithSockets, SerializesModels;
 
@@ -27,6 +25,8 @@ class MessageReceived extends Event implements ShouldBroadcast
     public function __construct(Message $message)
     {
         $this->message = $message;
+
+        $this->dontBroadcastToCurrentUser();
     }
 
     /**
@@ -36,6 +36,6 @@ class MessageReceived extends Event implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('private-channel.'.$this->message->chat_id);
+        return new PrivateChannel('channel.'.$this->message->chat_id);
     }
 }

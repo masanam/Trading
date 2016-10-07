@@ -23,7 +23,7 @@ class UserController extends Controller
     {
         $user = User::where('status', 'a')->get();
 
-        return response()->json(['success' => TRUE, $user], 200);
+        return response()->json($user, 200);
     }
 
     /**
@@ -54,7 +54,7 @@ class UserController extends Controller
 
         $user->save();
 
-        return response()->json(['success' => TRUE, $user], 200);
+        return response()->json($user, 200);
     }
 
     /**
@@ -63,10 +63,12 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show($user)
     {
+        $user = User::find($user);
+
         if($user->status == 'a') {
-            return response()->json(['success' => TRUE, $user], 200);
+            return response()->json($user, 200);
         } else {
             return response()->json(['message' => 'deactivated record'], 404);
         }    
@@ -83,8 +85,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, $user)
     {
+        $user = User::find($user);
+
         if (!$request) {
             return response()->json([
                 'message' => 'Bad Request'
@@ -110,7 +114,7 @@ class UserController extends Controller
 
         $user->save();
 
-        return response()->json(['success' => TRUE, $user], 200);
+        return response()->json($user, 200);
     }
 
     /**
@@ -119,8 +123,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy($user)
     {
+        $user = User::find($user);
+        
         if (!$user) {
             return response()->json([
                 'message' => 'Not found'
@@ -130,6 +136,6 @@ class UserController extends Controller
         $user->status = 'x';
         $user->save();
 
-        return response()->json(['success' => TRUE, $user], 200);
+        return response()->json($user, 200);
     }
 }

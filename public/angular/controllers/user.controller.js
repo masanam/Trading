@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('user', ['datatables']).controller('UserController', ['$scope', '$http', '$stateParams', '$state', 'User', 'Authentication',
+angular.module('user').controller('UserController', ['$scope', '$http', '$stateParams', '$state', 'User', 'Authentication',
 	function($scope, $http, $stateParams, $state, User, Authentication) {
 		$scope.user = {};
 

@@ -24,8 +24,7 @@ Elixir.extend('bower', function(jsOutputFile, jsOutputFolder, ttfOutputFolder, c
   var cssFile = cssOutputFile || 'vendor.css';
   var jsFile = jsOutputFile || 'vendor.js';
   
-  var mainJSFiles = [ 
-    'bower_components/jquery/dist/jquery.js',
+  var mainJSFiles = [
     'bower_components/angular/angular.js',
     'bower_components/angular-ui-router/release/angular-ui-router.js',
     'bower_components/ngstorage/ngStorage.js',
@@ -49,24 +48,13 @@ Elixir.extend('bower', function(jsOutputFile, jsOutputFolder, ttfOutputFolder, c
     'bower_components/restangular/dist/restangular.js',
     'bower_components/angular-chart.js/dist/angular-chart.js',
     'bower_components/angular-chart.js/dist/angular-chart.css',
-    'bower_components/datatables.net/js/jquery.dataTables.js',
     'bower_components/pusher-angular/lib/pusher-angular.min.js',
     'bower_components/angular-smart-table/dist/smart-table.js',
-    'bower_components/angular-datatables/dist/angular-datatables.js',
-    'bower_components/angular-datatables/dist/css/angular-datatables.css',
-    'bower_components/angular-datatables/dist/plugins/bootstrap/angular-datatables.bootstrap.js',
-    'bower_components/angular-datatables/dist/plugins/colreorder/angular-datatables.colreorder.js',
-    'bower_components/angular-datatables/dist/plugins/columnfilter/angular-datatables.columnfilter.js',
-    'bower_components/angular-datatables/dist/plugins/light-columnfilter/angular-datatables.light-columnfilter.js',
-    'bower_components/angular-datatables/dist/plugins/colvis/angular-datatables.colvis.js',
-    'bower_components/angular-datatables/dist/plugins/fixedcolumns/angular-datatables.fixedcolumns.js',
-    'bower_components/angular-datatables/dist/plugins/fixedheader/angular-datatables.fixedheader.js',
-    'bower_components/angular-datatables/dist/plugins/scroller/angular-datatables.scroller.js',
-    'bower_components/angular-datatables/dist/plugins/tabletools/angular-datatables.tabletools.js',
-    'bower_components/angular-datatables/dist/plugins/buttons/angular-datatables.buttons.js',
-    'bower_components/angular-datatables/dist/plugins/select/angular-datatables.select.js',
-    'bower_components/ng-sortable/dist/ng-sortable.css',
-    'bower_components/ng-sortable/dist/ng-sortable.js'
+    'bower_components/angular-smart-table/smartCss.css',
+    'bower_components/ng-validate/src/ng-validate.js',
+    'bower_components/angular-smart-table/dist/smart-table.min.js',
+    'bower_components/angular-smart-table/dist/smart-table.css',
+    'bower_components/angular-pusher/angular-pusher.min.js'
   ];
   
   var mainCSSFiles = [];

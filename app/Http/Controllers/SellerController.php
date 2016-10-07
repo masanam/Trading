@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
+use Auth;
+
 class SellerController extends Controller
 {
     public function __construct() {
@@ -61,28 +63,21 @@ class SellerController extends Controller
         }
 
         $seller = new Seller();
-        $seller->user_id = $request->user_id;
-            
+        $seller->user_id = Auth::User()->id;
         $seller->company_name = $request->company_name;
-
         $seller->phone = $request->phone;
         $seller->email = $request->email;
         $seller->web = $request->web;
-
         $seller->industry = $request->industry;
-
         $seller->city = $request->city;
         $seller->address = $request->address;
-
         $seller->latitude = $request->latitude;
         $seller->longitude = $request->longitude;
-
         $seller->description = $request->description;
-
-        $seller->status = $request->status;
+        $seller->status = 'a';
         $seller->save();
 
-        return response()->json(['success' => TRUE, $seller], 200);
+        return response()->json($seller, 200);
     }
 
     /**
@@ -99,7 +94,7 @@ class SellerController extends Controller
 
         if($seller) {
             if($seller->status == 'a') {
-                return response()->json(['success' => TRUE, $seller], 200);
+                return response()->json($seller, 200);
             } else {
                 return response()->json(['message' => 'deactivated record'], 404);
             }
@@ -116,8 +111,10 @@ class SellerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Seller $seller)
+    public function update(Request $request, $seller)
     {
+        $seller = Seller::find($seller);
+
         if (!$request) {
             return response()->json([
                 'message' => 'Bad Request'
@@ -151,7 +148,7 @@ class SellerController extends Controller
         $seller->status = $request->status;
         $seller->save();
 
-        return response()->json(['success' => TRUE, $seller], 200);
+        return response()->json($seller, 200);
     }
 
     /**
@@ -160,8 +157,10 @@ class SellerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Seller $seller)
+    public function destroy($seller)
     {
+        $seller = Seller::find($seller);
+        
         if (!$seller) {
             return response()->json([
                 'message' => 'Not found'
@@ -171,18 +170,18 @@ class SellerController extends Controller
         $seller->status = 'x';
         $seller->save();
 
-        return response()->json(['success' => TRUE, $seller], 200);
+        return response()->json($seller, 200);
     }
 
     public function getSellerByName($name) {
         $seller = Seller::wherewhere('company_name', 'like', '%'.$name.'%')->get();
 
-        return response()->json(['success' => TRUE, $seller], 200);
+        return response()->json($seller, 200);
     }
 
     public function getTotalSeller() {
         $total = Seller::count();
         $status = array('count' => $total);        
-        return response()->json(['success' => TRUE, $status], 200);
+        return response()->json($status, 200);
     }
 }

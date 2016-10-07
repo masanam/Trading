@@ -6,7 +6,7 @@ use App\Model\BuyDeal;
 use App\Model\BuyOrder;
 use App\Model\BuyOrderPricing;
 use App\Model\BuyDealApproval;
-use App\Model\Chat;
+use App\Model\BuyDealChat;
 
 use Illuminate\Http\Request;
 use Auth;
@@ -29,13 +29,10 @@ class BuyDealController extends Controller
         $buy_deal = BuyDeal::where('status', 'a')
                         ->with(
                             'BuyOrder', 'BuyOrder.BuyOrderPricing', 'BuyOrder.Buyer',
-                             'BuyOrder.Buyer.User', 'User', 'Deal'
+                             'BuyOrder.Buyer.User', 'User', 'Deal', 'BuyDealChat'
                         )->get();
 
-        return response()->json([
-            'success' => TRUE,
-            $buy_deal
-            ], 200);
+        return response()->json($buy_deal, 200);
     }
 
     /**
@@ -54,39 +51,29 @@ class BuyDealController extends Controller
 
         $buy_order = BuyOrder::find($request->buy_order_id);
 
-        $chat = New Chat();
-        $chat->trader_id = $request->user_id;
-        $chat->approver_id = 1;
-        $chat->save();
-
         $buy_deal = new BuyDeal();
         $buy_deal->buy_order_id = $request->buy_order_id;
-        $buy_deal->chat_id = $chat->id;
         $buy_deal->user_id = $request->user_id;
         $buy_deal->deal_id = $request->deal_id  ? $request->deal_id : NULL;
+        $buy_deal->type = "buy";
         $buy_deal->status = "a";
         $buy_deal->save();
         
         $config_approver = config('approver');
         
         foreach($config_approver as $approver){
-
           $buy_deal_approval = new BuyDealApproval();
           $buy_deal_approval->buy_deal_id = $buy_deal->id;
           $buy_deal_approval->user_id = $buy_deal->user_id;
           $buy_deal_approval->approver = $approver;
           $buy_deal_approval->status = "p";
           $buy_deal_approval->save();
-
-          event(new \App\Events\BuyDealNotification($buy_deal));
-          event(new \App\Events\BuyDealApprovalNotification($buy_deal_approval));
-        
         }
+        
+        event(new \App\Events\BuyDealNotification($buy_deal));
+        event(new \App\Events\BuyDealApprovalNotification($buy_deal_approval));
 
-        return response()->json([
-            'success' => TRUE,
-            $buy_deal
-            ], 200);
+        return response()->json($buy_deal, 200);
     }
 
     /**
@@ -99,7 +86,7 @@ class BuyDealController extends Controller
     {
         $buy_deal = BuyDeal::with(
                             'BuyOrder', 'BuyOrder.BuyOrderPricing', 'BuyOrder.Buyer',
-                             'BuyOrder.Buyer.User', 'User', 'Deal'
+                             'BuyOrder.Buyer.User', 'User', 'Deal', 'BuyDealChat'
                              )->find($id);
 
         if($buy_deal) {
@@ -132,23 +119,31 @@ class BuyDealController extends Controller
 
         $buy_deal = DB::table('buy_deal')->where('deal_id', $dealId)->update(['status' => 'x']);
 
-        return response()->json([
-            'success' => TRUE,
-            $buy_deal
-            ], 200);
+        return response()->json($buy_deal, 200);
     }
     
-    // Get Buy Deal by Deal ID
+    // Get All Buy Deal by Deal ID
     public function getByDeal($dealId) {
-        $buy_deal = BuyDeal::with('BuyOrder', 'BuyOrder.Buyer')->where([['deal_id', $dealId], ['status', 'a']])
+        $buy_deal = BuyDeal::with('BuyOrder', 'BuyOrder.BuyOrderPricing', 'BuyOrder.Buyer',
+                             'BuyOrder.Buyer.User', 'User', 'Deal', 'BuyDealChat')->where([['deal_id', $dealId], ['status', 'a']])
                ->orderBy('id', 'asc')
                ->get();
 
 
-        return response()->json([
-            'success' => TRUE,
-            $buy_deal
-            ], 200);
+        return response()->json($buy_deal, 200);
+    }
+
+    // Get One Buy Deal by Deal ID and Buy Order ID
+    public function getOneByDealAndOrder($buy_order, $dealId) {
+        $buy_deal = BuyDeal::with('BuyOrder', 'BuyOrder.BuyOrderPricing', 'BuyOrder.Buyer',
+                             'BuyOrder.Buyer.User', 'User', 'Deal', 'BuyDealChat')
+                    ->where([['deal_id', $dealId], 
+                      ['status', 'a'],
+                      ['buy_order_id', $buy_order]])
+               ->orderBy('id', 'asc')
+               ->first();
+
+        return response()->json($buy_deal, 200);
     }
 
     /**
@@ -158,8 +153,10 @@ class BuyDealController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, BuyDeal $buy_deal)
+    public function update(Request $request, $buy_deal)
     {
+        $buy_deal = BuyDeal::find($buy_deal);
+
         if (!$request) {
             return response()->json([
                 'error' => 'Bad Request'
@@ -178,10 +175,7 @@ class BuyDealController extends Controller
         $buy_deal->status = "a";
         $buy_deal->save();
 
-        return response()->json([
-            'success' => TRUE,
-            $buy_deal
-            ], 200);
+        return response()->json($buy_deal, 200);
     }
 
     /**
@@ -190,8 +184,10 @@ class BuyDealController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(BuyDeal $buy_deal)
+    public function destroy($buy_deal)
     {
+        $buy_deal = BuyDeal::find($buy_deal);
+        
         if (!$buy_deal) {
             return response()->json([
                 'error' => 'Not found'
@@ -201,10 +197,7 @@ class BuyDealController extends Controller
         $buy_deal->status = 'x';
         $buy_deal->save();
 
-        return response()->json([
-            'success' => TRUE,
-            $buy_deal
-            ], 200);
+        return response()->json($buy_deal, 200);
     }
 
     public function approval(Request $request, $buy_deal, $approval) {
@@ -219,16 +212,13 @@ class BuyDealController extends Controller
         $buy_deal_approval = new BuyDealApproval();
         $buy_deal_approval->buy_deal_id = $buy_deal->id;
         $buy_deal_approval->user_id = $buy_deal->user_id;
-        $buy_deal_approval->approver = Auth::user()->id;
+        $buy_deal_approval->approver = $request->approver_id;
         $buy_deal_approval->status = $approval;
 
         $buy_deal_approval->save();
 
         event(new \App\Events\BuyDealApprovalNotification($buy_deal_approval));
 
-        return response()->json([
-            'success' => TRUE,
-            $buy_deal_approval
-            ], 200);
+        return response()->json($buy_deal_approval, 200);
     }
 }

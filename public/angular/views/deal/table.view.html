@@ -1,24 +1,27 @@
-<table datatable="ng" dt-options="options" class="row-bdeal hover">
+ <table st-table="dealCollections" st-safe-src="deals" class="table table-striped">
   <div class="pull-right">
     <a href="#" class="alert alert-primary"><i class="glyphicon glyphicon-save-file"></i> Export CSV</a>
     <a href="#" class="alert alert-primary"><i class="glyphicon glyphicon-print"></i> Print Report</a>
   </div>
   <thead>
       <tr>
-        <th>Trader</th>
-        <th>Buyer(s)</th>
-        <th>Seller(s)</th>
+        <th colspan="9"><input st-search="" class="form-control" placeholder="Search" type="text"/></th>
+      </tr>
+      <tr>
+        <th st-sort="trader">Trader</th>
+        <th st-sort="buyer">Buyer(s)</th>
+        <th st-sort="seller">Seller(s)</th>
         <!--th>Vendor(s)</th-->
-        <th width="75px">Created</th>
-        <th>Volume (tonnes)</th>
-        <th width="120px">Total Sales (USD)</th>
-        <th width="120px">Total CoGS (USD)</th>
-        <th width="100px">Margin (USD)</th>
-        <th>Status</th>
+        <th st-sort="created" width="75px">Created</th>
+        <th st-sort="volume" >Volume (tonnes)</th>
+        <th st-sort="total_sales" width="120px">Total Sales (USD)</th>
+        <th st-sort="total_cogs" width="120px">Total CoGS (USD)</th>
+        <th st-sort="margin" width="100px">Margin (USD)</th>
+        <th st-sort="status">Status</th>
       </tr>
   </thead>
   <tbody>
-    <tr ng-repeat="deal in deals" ui-sref="deal.view({id: deal.id})">
+    <tr ng-repeat="deal in dealCollections" ui-sref="deal.view({id: deal.id})">
       <td>{{deal.trader_name}}</td>
       <td>{{deal.buyer_name}}</td>
       <td>{{deal.seller_name}}</td>
@@ -42,6 +45,13 @@
       </td>
     </tr>
   </tbody>
+  <tfoot>
+      <tr>
+          <td colspan="9" class="text-center">
+             <div st-pagination="" st-items-by-page="10" st-displayed-pages="7"></div>
+          </td>
+      </tr>
+  </tfoot>
 </table>
 
 <div class="panel panel-primary">

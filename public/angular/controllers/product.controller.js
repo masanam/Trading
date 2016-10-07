@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('product').controller('ProductController', ['$scope', '$state', '$http', '$stateParams', '$q', '$uibModal', 'DTOptionsBuilder', 'Product', 'Production', 'Mine',
-  function($scope, $state, $http, $stateParams, $q, $uibModal, DTOptionsBuilder, Product, Production, Mine) {
+angular.module('product').controller('ProductController', ['$scope', '$state', '$http', '$stateParams', '$q', '$uibModal', 'Product', 'Production', 'Mine',
+  function($scope, $state, $http, $stateParams, $q, $uibModal, Product, Production, Mine) {
     $scope.formOpen = false;
 
     $scope.find = function() {
@@ -13,7 +13,7 @@ angular.module('product').controller('ProductController', ['$scope', '$state', '
       $scope.product = Product.get({ id: $stateParams.id });
     };
 
-    $scope.options = DTOptionsBuilder.newOptions().withPaginationType('full_numbers').withDisplayLength();
+    // $scope.options = DTOptionsBuilder.newOptions().withPaginationType('full_numbers').withDisplayLength();
 
     $scope.initializeEmptyForm = function () {
       $scope.product = {};

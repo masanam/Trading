@@ -55,4 +55,20 @@ class User extends Authenticatable
     public function Deal() {
         return $this->hasMany('Deal');
     }
+
+    public function BuyDeal() {
+        return $this->hasMany('BuyDeal');
+    }
+
+    public function SellDeal() {
+        return $this->hasMany('SellDeal');
+    }
+
+    public function BuyOrder() {
+        return $this->hasMany('BuyOrder');
+    }
+
+    public function SellOrder() {
+        return $this->hasMany('SellOrder');
+    }
 }

@@ -26,10 +26,7 @@ class BuyOrderController extends Controller
     {
 
         $buy_order = BuyOrder::where('status', 'a')->get();
-        return response()->json([
-            'success' => TRUE,
-            $buy_order
-            ], 200);
+        return response()->json($buy_order, 200);
     }
 
     /**
@@ -113,10 +110,7 @@ class BuyOrderController extends Controller
 
         // $activity = $this->storeActivity($buy_order->buyer_id, 'create', 'BuyOrder', $buy_order->id);
 
-        return response()->json([
-            'success' => TRUE,
-            $buy_order
-            ], 200);
+        return response()->json($buy_order, 200);
     }
 
     /**
@@ -125,8 +119,9 @@ class BuyOrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(BuyOrder $buy_order)
+    public function show($buy_order)
     {
+        $buy_order = BuyOrder::find($buy_order);
 
         if($buy_order->status == 'a') {
             return response()->json([
@@ -145,8 +140,10 @@ class BuyOrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, BuyOrder $buy_order)
+    public function update(Request $request, $buy_order)
     {
+        $buy_order = BuyOrder::find($buy_order);
+     
         if (!$request) {
             return response()->json([
                 'message' => 'Bad Request'
@@ -221,10 +218,7 @@ class BuyOrderController extends Controller
 
         $buy_order->save();
 
-        return response()->json([
-            'success' => TRUE,
-            $buy_order
-            ], 200);
+        return response()->json($buy_order, 200);
     }
 
     /**
@@ -233,8 +227,10 @@ class BuyOrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(BuyOrder $buy_order)
+    public function destroy($buy_order)
     {
+        $buy_order = BuyOrder::find($buy_order);
+
         if (!$buy_order) {
             return response()->json([
                 'message' => 'Not found'
@@ -244,10 +240,7 @@ class BuyOrderController extends Controller
         $buy_order->status = 'x';
         $buy_order->save();
 
-        return response()->json([
-            'success' => TRUE,
-            $buy_order
-            ], 200);
+        return response()->json($buy_order, 200);
     }
 
     // public function indexDetailed () {

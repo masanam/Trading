@@ -26,7 +26,7 @@ class VendorController extends Controller
             $vendor = Vendor::where('status', 'a')->where('company_name', 'LIKE', '%'.$search.'%')->get();
         }
 
-        return response()->json(['success' => TRUE, $vendor], 200);
+        return response()->json($vendor, 200);
     }
     
     /**
@@ -42,7 +42,7 @@ class VendorController extends Controller
             $vendor = Vendor::where('status', 'a')->where('company_name', 'LIKE', '%'.$search.'%')->get();
         }
 
-        return response()->json(['success' => TRUE, $vendor], 200);
+        return response()->json($vendor, 200);
     }
 
     /**
@@ -76,7 +76,7 @@ class VendorController extends Controller
         $vendor->status = 'a';
         $vendor->save();
 
-        return response()->json(['success' => TRUE, $vendor], 200);
+        return response()->json($vendor, 200);
     }
 
     /**
@@ -85,10 +85,12 @@ class VendorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Vendor $vendor)
+    public function show($vendor)
     {
+        $vendor = Vendor::find($vendor);
+
         if($vendor->status == 'a') {
-            return response()->json(['success' => TRUE, $vendor], 200);
+            return response()->json($vendor, 200);
         } else {
             return response()->json(['message' => 'deactivated record'], 404);
         }
@@ -101,8 +103,10 @@ class VendorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Vendor $vendor)
+    public function update(Request $request, $vendor)
     {
+        $vendor = Vendor::find($vendor);
+
         if (!$request) {
             return response()->json([
                 'message' => 'Bad Request'
@@ -130,7 +134,7 @@ class VendorController extends Controller
 
         $vendor->save();
 
-        return response()->json(['success' => TRUE, $vendor], 200);
+        return response()->json($vendor, 200);
     }
 
     /**
@@ -139,8 +143,10 @@ class VendorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Vendor $vendor)
+    public function destroy($vendor)
     {
+        $vendor = Vendor::find($vendor);
+
         if (!$vendor) {
             return response()->json([
                 'message' => 'Not found'
@@ -150,18 +156,18 @@ class VendorController extends Controller
         $vendor->status = 'x';
         $vendor->save();
 
-        return response()->json(['success' => TRUE, $vendor], 200);
+        return response()->json($vendor, 200);
     }
 
     public function getVendorByName($name) {
         $vendor = Buyer::wherewhere('company_name', 'like', '%'.$name.'%')->get();
 
-        return response()->json(['success' => TRUE, $vendor], 200);
+        return response()->json($vendor, 200);
     }
 
     public function getTotalVendor() {
         $total = Vendor::count();
         $status = array('count' => $total);        
-        return response()->json(['success' => TRUE, $status], 200);
+        return response()->json($status, 200);
     }
 }

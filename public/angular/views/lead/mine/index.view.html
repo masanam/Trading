@@ -5,18 +5,22 @@
 <div class="col-lg-10" ng-controller="MineController">
   <section ng-include="'./angular/views/lead/search-bar.view.html'"></section><br>
 
-	<table datatable="ng" dt-options="options" class="row-border hover" class="table table-striped" ng-init="find()">
+	<table ng-init="find()" st-table="displayedCollection" st-safe-src="mines" class="table table-striped">
 		<thead>
 			<tr>
-				<th>#</th>
-				<th>Name</th>
-				<th>Latitude</th>
-				<th>Longitude</th>
-				<th>Port Name</th>
+		        <th colspan="5"><input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
+		    </tr>
+			<tr>
+				<th st-sort="">#</th>
+				<th st-sort="name">Name</th>
+				<th st-sort="latitude">Latitude</th>
+				<th st-sort="longitude">Longitude</th>
+				<th st-sort="portname">Port Name</th>
 			</tr>
-			</thead>
-			<tbody>
-				<tr ng-repeat="mine in mines">
+		</thead>
+
+		<tbody>
+			<tr ng-repeat="mine in displayedCollection">
 				<td>{{ mine.id }}</td>
 				<td>{{ mine.mine_name }}</td>
 				<td>{{ mine.latitude }}</td>
@@ -24,6 +28,15 @@
 				<td>{{ mine.port_name }}</td>
 			</tr>
 		</tbody>
+
+		<tfoot>
+			<tr>
+			    <td colspan="5" class="text-center">
+			       <div st-pagination="" st-items-by-page="10" st-displayed-pages="7"></div>
+			    </td>
+			</tr>
+	    </tfoot>
+
 	</table>
 </div>
 </section>

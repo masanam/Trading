@@ -42,8 +42,8 @@ class Chat extends Command
         $chat = \App\Model\Chat::first();
         $user = \App\Model\User::first();
         $message = \App\Model\Message::create([
-            'chat_id' => $chat->id,
-            'user_id' => $user->id,
+            'chat_id' => 1,
+            'user_id' => 1,
             'message' => $this->argument('message')
         ]);
 

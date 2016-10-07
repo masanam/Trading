@@ -7,6 +7,7 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
 		$scope.productButton = false;
 		$scope.supply = {};
 
+
 		$scope.today = function() {
 			$scope.dt = new Date();
 		};
@@ -20,6 +21,18 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
 		$scope.open = function() {
 			$scope.popup.opened = true;
 		};
+
+   
+
+    $scope.openSellerModal = function (order) {
+      
+      var modalInstance = $uibModal.open({
+        windowClass: 'xl-modal',
+        templateUrl: './angular/views/lead/seller/create.seller.modal.html',
+        scope: $scope,
+        controller: 'CreateSellerModalController'
+      });
+    };
 
 		$scope.popup = {
 			opened: false
@@ -276,7 +289,113 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
         $scope.error = response.data.message;
       });
     };
+
+
+
+
 }]);
+
+angular.module('seller').controller('CreateSellerModalController', function ($scope, $filter, $uibModalInstance, Seller) {
+  
+  $scope.initializeOrder = function(){
+    $scope.order = {
+      id: undefined,
+      company_name: undefined,
+      email: undefined,
+      phone: undefined,
+      industry: undefined,
+      web: undefined,
+      city: undefined,
+      address: undefined,
+      latitude: undefined, 
+      longitude: undefined,
+      description: undefined,
+      
+    };
+  };
+
+    $scope.validationOptions = {
+        rules: {
+            email: {
+                required: true,
+                email: true
+            },
+            company_name: {
+                required: true
+            },
+            phone: {
+                required: true
+            },
+            industry: {
+                required: true
+            },
+            web: {
+                required: true
+            },
+            city: {
+                required: true
+            },
+             address: {
+                required: true
+            },
+            latitude: {
+                required: true
+            },
+            longitude: {
+                required: true
+            },
+            description: {
+                required: true
+            }
+        },
+        messages: {
+            email: {
+                required: "We need your email address to contact you",
+                email: "Your email address must be in the format of name@domain.com"
+            },
+
+            company_name: "field not be empty",
+            phone: "field not be empty",
+            industry: "field not be empty",
+            web: "field not be empty",
+            city: "field not be empty",
+            address: "field not be empty",
+            latitude: "field not be empty",
+            longitude: "field not be empty",
+            description: "field not be empty",
+
+        }
+    }
+
+
+  $scope.createSeller = function (creteSeller) {
+    if(creteSeller.validate()){
+      var seller = new Seller({
+        company_name: $scope.seller.company_name,
+        phone: $scope.seller.phone,
+        email: $scope.seller.email,
+        web: $scope.seller.web,
+        industry: $scope.seller.industry,
+        city: $scope.seller.city,
+        address: $scope.seller.address,
+        latitude: $scope.seller.latitude,
+        longitude: $scope.seller.longitude,
+        description: $scope.seller.description
+      });
+
+      seller.$save(function(response) {
+        $scope.sellers.push(response);
+        $uibModalInstance.close('success');
+        $scope.loading=false;
+      });
+    }   
+ };
+  
+  $scope.close = function () {
+    $uibModalInstance.dismiss('cancel');
+  };
+});
+
 
 angular.module('seller').controller('CreateContactModalController', function ($scope, $filter, $uibModalInstance, Contact, Authentication) {
   
@@ -386,9 +505,7 @@ angular.module('buyer').controller('CreateProductModalController', function ($sc
       //mine_id: $scope.product.mine_id,
       seller_id: $scope.seller.id,
       commercial_term: $scope.product.commercial_term,
-
       volume: $scope.product.volume,
-
       tm_min: $scope.product.tm_min,
       tm_max: $scope.product.tm_max,
       tm_reject: $scope.product.tm_reject,

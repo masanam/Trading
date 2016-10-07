@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Model\Buyer;
 use App\Model\Contact;
+use Auth;
 
 use Illuminate\Http\Request;
 
@@ -12,14 +13,30 @@ use App\Http\Requests;
 class BuyerController extends Controller
 {
     public function __construct() {
-        // $this->middleware('jwt.auth');
+        $this->middleware('jwt.auth');
     }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($q = false)
+    public function index($search = false)
+    {
+        if (!$search) {
+            $buyer = Buyer::where('status', 'a')->get();
+        } else {
+            // $buyer = Buyer::search($search)->where('status', 'a')->get();
+            $buyer = Buyer::where('status', 'a')->where('company_name', 'LIKE', '%'.$search.'%')->get();
+        }
+        return response()->json($buyer, 200);
+    }
+    
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search($q = false)
     {
         $buyer = Buyer::where('status', 'a');
         if ($q) $buyer->where('company_name', 'LIKE', '%'.$q.'%');
@@ -42,7 +59,7 @@ class BuyerController extends Controller
         }
 
         $buyer = new Buyer();
-        $buyer->user_id = $request->user_id;
+        $buyer->user_id = Auth::User()->id;
 
         $buyer->company_name = $request->company_name;
         
@@ -60,10 +77,10 @@ class BuyerController extends Controller
 
         $buyer->description = $request->description;
 
-        $buyer->status = $request->status;
+        $buyer->status = 'a';
         $buyer->save();
 
-        return response()->json(['success' => TRUE, $buyer], 200);
+        return response()->json($buyer, 200);
     }
 
     /**
@@ -78,7 +95,7 @@ class BuyerController extends Controller
         $buyer = Buyer::with('Contact', 'Product')->find($id);
         
         if($buyer->status == 'a') {
-            return response()->json(['success' => TRUE, $buyer], 200);
+            return response()->json($buyer, 200);
         } else {
             return response()->json(['message' => 'deactivated record'], 404);
         }
@@ -91,8 +108,10 @@ class BuyerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Buyer $buyer)
+    public function update(Request $request, $buyer)
     {
+        $buyer = Buyer::find($buyer);
+     
         if (!$request) {
             return response()->json([
                 'message' => 'Bad Request'
@@ -126,7 +145,7 @@ class BuyerController extends Controller
         $buyer->status = $request->status;
         $buyer->save();
 
-        return response()->json(['success' => TRUE, $buyer], 200);
+        return response()->json($buyer, 200);
     }
 
     /**
@@ -135,8 +154,10 @@ class BuyerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Buyer $buyer)
+    public function destroy($buyer)
     {
+        $buyer = Buyer::find($buyer);
+     
         if (!$buyer) {
             return response()->json([
                 'message' => 'Not found'
@@ -146,18 +167,18 @@ class BuyerController extends Controller
         $buyer->status = 'x';
         $buyer->save();
 
-        return response()->json(['success' => TRUE, $buyer], 200);
+        return response()->json($buyer, 200);
     }
 
     public function getBuyerByName($name) {
         $buyer = Buyer::where('company_name', 'like', '%'.$name.'%')->get();
 
-        return response()->json(['success' => TRUE, $buyer], 200);
+        return response()->json($buyer, 200);
     }
 
     public function getTotalBuyer() {
         $total = Buyer::count();
         $status = array('count' => $total);        
-        return response()->json(['success' => TRUE, $status],200);
+        return response()->json($status,200);
     }
 }

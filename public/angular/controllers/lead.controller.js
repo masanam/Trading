@@ -43,4 +43,9 @@ angular.module('lead').controller('LeadController', ['$scope', '$state', '$http'
 			$scope.totalMine = Mine.get({action : 'total'});
 			$scope.totalProduct = Product.get({action : 'total'});
 		};
+
+
+		
+    
+    
 }]);
