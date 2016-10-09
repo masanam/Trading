@@ -77,7 +77,8 @@ class CreateSellOrderTable extends Migration
 
             $table->longText('penalty_desc');
             
-            $table->char('status', 1); // open(o), progress(p), finish(f), cancel(c) 
+            $table->char('order_status', 1); // open(o), progress(p), finish(f), cancel(c) 
+            $table->char('progress_status', 1)->nullable();
             $table->timestamps();
         });
 

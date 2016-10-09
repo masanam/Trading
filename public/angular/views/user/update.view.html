@@ -1,8 +1,39 @@
-<section ng-controller="UserController" ng-init="findOne()" >
-	<h1>Update Profile</h1>
+ </br>
+ <section ng-controller="UserController" ng-init="findOne()" >	
+	<div class="col-md-4">
+	</div>
 
-	<form role="form" ng-submit="update()">
-		<div ng-include="'./angular/views/user/form.view.html'"></div>
-		<button type="submit" class="btn btn-default">Submit</button>
-	</form>
-</section>
+		<div class="col-md-4" ng-controller="AuthController">
+          <!-- Widget: user widget style 1 -->
+          <div class="box box-widget widget-user">
+            <!-- Add the bg color to the header using any of the bg-* classes -->
+            <div class="widget-user-header bg-aqua-active">
+              <h3 class="widget-user-username">{{ Authentication.user.name }}</h3>
+            </div>
+            <div class="widget-user-image">
+              <img class="img-circle" src="{{ Authentication.user.image }}" alt="User Avatar">
+            </div>
+            <div class="box-footer">
+              <div class="row">
+                
+               <div class="col-md-12">
+	
+					<h1>Update Profile</h1>
+
+					<form role="form" ng-submit="update()">
+						<div ng-include="'./angular/views/user/form.view.html'"></div>
+						<button type="submit" class="btn btn-default">Submit</button>
+					</form>
+
+				</div>
+
+              </div>
+              <!-- /.row -->
+            </div>
+          </div>
+          <!-- /.widget-user -->
+        </div>
+
+	<div class="col-md-4">
+	</div>        
+</section>	

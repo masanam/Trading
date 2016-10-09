@@ -27,6 +27,9 @@ class CreateBuyOrderTable extends Migration
             $table->decimal('latitude', 10, 8);
             $table->decimal('longitude', 11, 8);
 
+            $table->string('product_name')->nullable();
+            $table->integer('product_id')->nullable();
+
             $table->integer('gcv_arb_min')->nullable(); //gross calorific value, as received basis
             $table->integer('gcv_arb_max')->nullable();
             $table->integer('gcv_arb_reject')->nullable();
@@ -77,7 +80,8 @@ class CreateBuyOrderTable extends Migration
 
             $table->longText('penalty_desc');
             
-            $table->char('status', 1); // open(o), progress(p), finish(f), cancel(c) 
+            $table->char('order_status', 1); // open(o), progress(p), finish(f), cancel(c) 
+            $table->char('progress_status', 1)->nullable();
             $table->timestamps();
         });
 

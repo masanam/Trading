@@ -11,8 +11,9 @@ angular.module('auth').controller('AuthController', ['$scope', '$state', '$urlRo
         password: $scope.auth.password
       }
 
-      Authentication.login(credentials, function(){
-        $state.go('home', {});
+      Authentication.login(credentials, function(err, res){
+        if(err) $scope.err = err;
+        else $state.go('lead.index', {});
       });
     };
 
@@ -40,5 +41,6 @@ angular.module('auth').controller('AuthController', ['$scope', '$state', '$urlRo
 
     $scope.logout = function () {
       Authentication.logout();
+      $state.go('home', {});
     };
 }]);

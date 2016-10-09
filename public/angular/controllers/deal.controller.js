@@ -18,7 +18,9 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
     
     $scope.findOne = function(){
       $scope.deal = Deal.get({ id: $stateParams.id });
-      
+    
+
+
       // Get the buy deals
       BuyDeal.query({action:'getByDeal', dealId: $stateParams.id}, function(buyDeals){
         for(var i = 0; i < buyDeals.length; i++){
@@ -608,7 +610,6 @@ angular.module('deal').controller('CreateBuyModalController', function ($scope, 
   };
   
   $scope.createBuyOrder = function(){
-    
     $scope.success = $scope.error = null;
       
     //$scope.order.deadline = new Date($scope.order.deadline);

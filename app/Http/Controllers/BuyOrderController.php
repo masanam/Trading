@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Model\BuyOrder;
-
+use Auth;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -25,7 +25,7 @@ class BuyOrderController extends Controller
     public function index()
     {
 
-        $buy_order = BuyOrder::where('status', 'a')->get();
+        $buy_order = BuyOrder::with('buyer')->where('order_status', 'a')->get();
         return response()->json($buy_order, 200);
     }
 
@@ -45,7 +45,7 @@ class BuyOrderController extends Controller
 
         $buy_order = new BuyOrder();
 
-        $buy_order->user_id = $request->user_id;
+        $buy_order->user_id = Auth::User()->id;
         $buy_order->buyer_id = $request->buyer_id;
 
         $buy_order->order_date = $request->order_date;
@@ -102,9 +102,11 @@ class BuyOrderController extends Controller
         $buy_order->size_bonus = $request->size_bonus;
 
         $buy_order->volume = $request->volume;
+        $buy_order->product_name = $request->product_name;
+        $buy_order->product_id = $request->product_id;
         $buy_order->max_price = $request->max_price;
 
-        $buy_order->status = 'a';
+        $buy_order->order_status = 'a';
 
         $buy_order->save();
 
@@ -121,7 +123,7 @@ class BuyOrderController extends Controller
      */
     public function show($buy_order)
     {
-        $buy_order = BuyOrder::find($buy_order);
+        $buy_order = BuyOrder::with('buyer')->find($buy_order);
 
         if($buy_order->status == 'a') {
             return response()->json($buy_order, 200);
@@ -211,7 +213,7 @@ class BuyOrderController extends Controller
 
         $buy_order->volume = $request->volume;
         
-        $buy_order->status = 'a';
+        $buy_order->order_status = 'a';
 
         $buy_order->save();
 
@@ -234,7 +236,7 @@ class BuyOrderController extends Controller
             ] ,404);
         }
 
-        $buy_order->status = 'x';
+        $buy_order->order_status = 'x';
         $buy_order->save();
 
         return response()->json($buy_order, 200);

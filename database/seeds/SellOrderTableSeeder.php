@@ -53,7 +53,7 @@ class SellOrderTableSeeder extends Seeder
             'penalty_desc' => 'penalty',
 
             'volume' => 5000,
-            'status' => 'o'
+            'order_status' => 'o'
       ]);
 
       SellOrder::create([
@@ -94,7 +94,7 @@ class SellOrderTableSeeder extends Seeder
             'penalty_desc' => 'penalty',
 
             'volume' => 3000,
-            'status' => 'p'
+            'order_status' => 'p'
       ]);
 
       SellOrder::create([
@@ -135,7 +135,7 @@ class SellOrderTableSeeder extends Seeder
             'penalty_desc' => 'penalty',
 
             'volume' => 2000,
-            'status' => 'f'
+            'order_status' => 'f'
       ]);
 
       SellOrder::create([
@@ -176,7 +176,7 @@ class SellOrderTableSeeder extends Seeder
             'penalty_desc' => 'penalty',
 
             'volume' => 4500,
-            'status' => 'p'
+            'order_status' => 'p'
       ]);
 
       SellOrder::create([
@@ -217,7 +217,7 @@ class SellOrderTableSeeder extends Seeder
             'penalty_desc' => 'penalty',
 
             'volume' => 6000,
-            'status' => 'f'
+            'order_status' => 'f'
       ]);
 
       SellOrder::create([
@@ -258,7 +258,7 @@ class SellOrderTableSeeder extends Seeder
             'penalty_desc' => 'penalty',
 
             'volume' => 1500,
-            'status' => 'c'
+            'order_status' => 'c'
       ]);
 
       $address = array([
@@ -324,7 +324,7 @@ class SellOrderTableSeeder extends Seeder
 
             'volume' => $faker->numberBetween($min = 1000, $max = 2000),
             'max_price' => $faker->numberBetween($min = 100, $max = 5000),
-            'status' => $faker->randomElement($array = array ('a','f'))
+            'order_status' => $faker->randomElement($array = array ('a','f'))
           ]));
       }
 

@@ -12,7 +12,7 @@ angular.module('order-history').config(['$stateProvider', '$urlRouterProvider',
       })
       .state('order.index', {
         url: '',
-        templateUrl: '/angular/views/order/order.view.html'
+        templateUrl: '/angular/views/order/index.view.html'
       })
       .state('order.history', {
         url: '/history',
@@ -41,6 +41,36 @@ angular.module('order-history').config(['$stateProvider', '$urlRouterProvider',
       .state('order.view', {
         url: '/:id',
         templateUrl: '/angular/views/order/view-order-buyer.view.html'
+      });
+
+    $stateProvider
+      .state('buy-order', {
+        url: '/buy-order',
+        abstract: true,
+        template: '<ui-view>'
+      })
+      .state('buy-order.index', {
+        url: '',
+        templateUrl: '/angular/views/order/buy-order/index.view.html'
+      })
+      .state('buy-order.view', {
+        url: '/:id',
+        templateUrl: '/angular/views/order/buy-order/view.view.html'
+      });
+
+    $stateProvider
+      .state('sell-order', {
+        url: '/sell-order',
+        abstract: true,
+        template: '<ui-view>'
+      })
+      .state('sell-order.index', {
+        url: '',
+        templateUrl: '/angular/views/order/sell-order/index.view.html'
+      })
+      .state('sell-order.view', {
+        url: '/:id',
+        templateUrl: '/angular/views/order/sell-order/view.view.html'
       });
   }
 ]);

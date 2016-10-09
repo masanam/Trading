@@ -24,7 +24,7 @@ Elixir.extend('bower', function(jsOutputFile, jsOutputFolder, ttfOutputFolder, c
   var cssFile = cssOutputFile || 'vendor.css';
   var jsFile = jsOutputFile || 'vendor.js';
   
-  var mainJSFiles = [
+  var mainJSFiles = [ 
     'bower_components/angular/angular.js',
     'bower_components/angular-ui-router/release/angular-ui-router.js',
     'bower_components/ngstorage/ngStorage.js',
@@ -49,8 +49,12 @@ Elixir.extend('bower', function(jsOutputFile, jsOutputFolder, ttfOutputFolder, c
     'bower_components/angular-chart.js/dist/angular-chart.js',
     'bower_components/angular-chart.js/dist/angular-chart.css',
     'bower_components/pusher-angular/lib/pusher-angular.min.js',
+    'bower_components/angular-smart-table/dist/smart-table.css',
     'bower_components/angular-smart-table/dist/smart-table.js',
     'bower_components/angular-smart-table/smartCss.css',
+    'bower_components/admin-lte/dist/css/AdminLTE.min.css',
+    'bower_components/admin-lte/dist/css/skins/skin-blue.min.css',
+    'bower_components/admin-lte/plugins/iCheck/square/blue.css',
     'bower_components/ng-validate/src/ng-validate.js',
     'bower_components/angular-smart-table/dist/smart-table.min.js',
     'bower_components/angular-smart-table/dist/smart-table.css',
@@ -83,7 +87,6 @@ Elixir.extend('bower', function(jsOutputFile, jsOutputFolder, ttfOutputFolder, c
       .pipe(filter('**/*.js'))
       .pipe(concat(jsFile, {sourcesContent: true}))
       .pipe(gulpIf(Elixir.config.production, uglify()))
-      // .pipe(gulp.dest(jsOutputFolder || Elixir.config.js.outputFolder))
       .pipe(gulp.dest('public/js'))
       .pipe(notify({
         title: 'Bower JS',
@@ -112,7 +115,6 @@ Elixir.extend('bower', function(jsOutputFile, jsOutputFolder, ttfOutputFolder, c
       .pipe(filter('**/*.css'))
       .pipe(concat(cssFile))
       .pipe(gulpIf(Elixir.config.production, cssnano({safe: true})))
-      //.pipe(gulp.dest(cssOutputFolder || Elixir.config.css.outputFolder))
       .pipe(gulp.dest('public/css'))
       .pipe(notify({
         title: 'Bower CSS',

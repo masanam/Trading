@@ -1,4 +1,4 @@
-<div ng-controller="ProductController" ng-init="findOne()">
+<div class="content" ng-controller="ProductController" ng-init="findOne()">
   <!-- HEADER -->
   <div class="row submenu-header">
     <div class="submenu-header-item">
@@ -10,63 +10,65 @@
       <h4>{{ $stateParams.type }} Profile</h4>
     </div>
   </div>
-  <div class="row with-divider">
-    <div class="col-lg-4">
-      <h2>{{ product.commercial_term }}</h2>
-      <p>{{ product.mine.mine_name }}</p>
-      <p>{{ product.mine.seller.company_name }}</p>
-    </div>
-  </div>
 
-  <div class="row">
-    <div class="col-lg-4">
-      <h4>Quality Matrix</h4>
-      <ul class="list-group">
-        <li class="list-group-item list-group-item-danger">
-          GCV arb :
-          <span class="pull-right">{{ product.gcv_arb_min }} ~ {{ product.gcv_arb_max }} kcal</span>
-        </li>
-        <li class="list-group-item list-group-item-danger">
-          GCV adb :
-          <span class="pull-right">{{ product.gcv_adb_min }} ~ {{ product.gcv_adb_max }} kcal</span>
-        </li>
-        <li class="list-group-item list-group-item-danger">
-          NCV :
-          <span class="pull-right">{{ product.ncv_min }} - {{ product.ncv_max }} kcal</span>
-        </li>
-        <li class="list-group-item list-group-item-warning">
-          Ash :
-          <span class="pull-right">{{ product.ash_min }} - {{ product.ash_max }} %</span>
-        </li>
-        <li class="list-group-item list-group-item-warning">
-          TS :
-          <span class="pull-right">{{ product.ts_min }} - {{ product.ts_max }} %</span>
-        </li>
-        <li class="list-group-item list-group-item-info">
-           TM :
-          <span class="pull-right">{{ product.tm_min | number }} ~ {{ product.tm_max | number }} %</span>
-        </li>
-        <li class="list-group-item list-group-item-info">
-           IM :
-          <span class="pull-right">{{ product.im_min | number }} ~ {{ product.im_max | number }} %</span>
-        </li>
-        <li class="list-group-item list-group-item-success">
-           FC :
-          <span class="pull-right">{{ product.fc_min | number }} ~ {{ product.fc_max | number }} %</span>
-        </li>
-        <li class="list-group-item list-group-item-success">
-           VM :
-          <span class="pull-right">{{ product.vm_min | number }} ~ {{ product.vm_max | number }} %</span>
-        </li>
-        <li class="list-group-item list-group-item-success">
-          HGI :
-          <span class="pull-right">{{ product.hgi_min }} - {{ product.hgi_max }}</span>
-        </li>
-        <li class="list-group-item list-group-item-success">
-          Size :
-          <span class="pull-right">{{ product.size_min }} - {{ product.size_max }} mm</span>
-        </li>
-      </ul>
+  <div class="col-lg-4">
+    <div class="box">
+      <div class="box-header with-border">
+        <h3 class="box-title" style="font-size: 35px">{{ product.commercial_term }}</h3>
+        <p>{{ product.mine.mine_name }}</p>
+        <p>{{ product.mine.seller.company_name }}</p>
+      </div>
+      <div class="box-body">
+        <div class="row-fluid">
+          <h4>Quality Matrix</h4>
+          <ul class="list-group">
+            <li class="list-group-item list-group-item-danger">
+              GCV arb :
+              <span class="pull-right">{{ product.gcv_arb_min }} ~ {{ product.gcv_arb_max }} kcal</span>
+            </li>
+            <li class="list-group-item list-group-item-danger">
+              GCV adb :
+              <span class="pull-right">{{ product.gcv_adb_min }} ~ {{ product.gcv_adb_max }} kcal</span>
+            </li>
+            <li class="list-group-item list-group-item-danger">
+              NCV :
+              <span class="pull-right">{{ product.ncv_min }} - {{ product.ncv_max }} kcal</span>
+            </li>
+            <li class="list-group-item list-group-item-warning">
+              Ash :
+              <span class="pull-right">{{ product.ash_min }} - {{ product.ash_max }} %</span>
+            </li>
+            <li class="list-group-item list-group-item-warning">
+              TS :
+              <span class="pull-right">{{ product.ts_min }} - {{ product.ts_max }} %</span>
+            </li>
+            <li class="list-group-item list-group-item-info">
+               TM :
+              <span class="pull-right">{{ product.tm_min | number }} ~ {{ product.tm_max | number }} %</span>
+            </li>
+            <li class="list-group-item list-group-item-info">
+               IM :
+              <span class="pull-right">{{ product.im_min | number }} ~ {{ product.im_max | number }} %</span>
+            </li>
+            <li class="list-group-item list-group-item-success">
+               FC :
+              <span class="pull-right">{{ product.fc_min | number }} ~ {{ product.fc_max | number }} %</span>
+            </li>
+            <li class="list-group-item list-group-item-success">
+               VM :
+              <span class="pull-right">{{ product.vm_min | number }} ~ {{ product.vm_max | number }} %</span>
+            </li>
+            <li class="list-group-item list-group-item-success">
+              HGI :
+              <span class="pull-right">{{ product.hgi_min }} - {{ product.hgi_max }}</span>
+            </li>
+            <li class="list-group-item list-group-item-success">
+              Size :
+              <span class="pull-right">{{ product.size_min }} - {{ product.size_max }} mm</span>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 </div>

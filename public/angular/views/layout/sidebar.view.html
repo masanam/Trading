@@ -1,0 +1,58 @@
+<!-- Left side column. contains the logo and sidebar -->
+<aside class="main-sidebar fixed sidebar-collapse" ng-controller="AuthController">
+  <!-- sidebar: style can be found in sidebar.less -->
+  <section class="sidebar">
+    <!-- Sidebar user panel -->
+    <div class="user-panel" ui-sref="user.edit">
+      <div class="pull-left image">
+        <img src="{{ Authentication.user.image }}" class="img-circle" alt="User Image">
+      </div>
+      <div class="pull-left info">
+        <p>{{ Authentication.user.name }}</p>
+        <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+      </div>
+    </div>
+    <!-- sidebar menu: : style can be found in sidebar.less -->
+    <ul class="sidebar-menu">
+      <li class="treeview">
+        <a ui-sref="home">
+          <i class="ion ion-home"></i>
+          <span>Dashboard</span>
+        </a>
+      </li>
+      <li class="treeview">
+        <a ui-sref="lead.index">
+          <i class="ion ion-earth"></i>
+          <span>Leads</span>
+        </a>
+        <ul class="treeview-menu">
+          <li><a ui-sref="lead.buyer"><i class="fa fa-circle-o"></i> Buyer</a></li>
+          <li class="active"><a ui-sref="lead.seller"><i class="fa fa-circle-o"></i> Seller</a></li>
+        </ul>
+      </li>
+      <li class="treeview">
+        <a ui-sref="order.index">
+          <i class="ion ion-archive"></i>
+          <span>Orders</span>
+        </a>
+        <ul class="treeview-menu">
+          <li><a ui-sref="buy-order.index"><i class="fa fa-circle-o"></i> Buy Order</a></li>
+          <li class="active"><a ui-sref="sell-order.index"><i class="fa fa-circle-o"></i> Sell Order</a></li>
+        </ul>
+      </li>
+      <li class="treeview">
+        <a ui-sref="deal.index">
+          <i class="ion ion-cash"></i>
+          <span>Deals</span>
+        </a>
+      </li>
+      <li class="treeview">
+        <a ui-sref="deal.index">
+          <i class="ion ion-ios-refresh"></i>
+          <span>History</span>
+        </a>
+      </li>
+    </ul>
+  </section>
+  <!-- /.sidebar -->
+</aside>
