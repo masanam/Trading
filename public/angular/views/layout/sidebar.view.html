@@ -1,9 +1,9 @@
 <!-- Left side column. contains the logo and sidebar -->
-<aside class="main-sidebar fixed" ng-controller="AuthController">
+<aside class="main-sidebar fixed sidebar-collapse" ng-controller="AuthController">
   <!-- sidebar: style can be found in sidebar.less -->
   <section class="sidebar">
     <!-- Sidebar user panel -->
-    <div class="user-panel">
+    <div class="user-panel" ui-sref="user.edit">
       <div class="pull-left image">
         <img src="{{ Authentication.user.image }}" class="img-circle" alt="User Image">
       </div>
