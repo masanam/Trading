@@ -1,9 +1,9 @@
 <section ng-controller="ContactController">
   <div class="col-lg-2">
-    <section ng-include="'./angular/views/lead/side-menu.view.html'"></section>
+    <section ng-include="'./angular/lead/views/side-menu.view.html'"></section>
   </div>
   <div class="col-lg-10">
-    <section ng-include="'./angular/views/lead/search-bar.view.html'"></section>
+    <section ng-include="'./angular/lead/views/search-bar.view.html'"></section>
     <table datatable="ng" class="row-border hover" ng-init="find()">
       <thead>
           <tr>

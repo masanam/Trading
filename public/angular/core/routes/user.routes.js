@@ -12,11 +12,11 @@ angular.module('user').config(['$stateProvider', '$urlRouterProvider',
 	    })
       .state('user.edit', {
 		    url: '/edit',
-		    templateUrl: '/angular/views/user/update.view.html'
+		    templateUrl: '/angular/core/views/user/update.view.html'
 	    })
       .state('user.password', {
 		    url: '/password',
-		    templateUrl: '/angular/views/user/reset-password.view.html'
+		    templateUrl: '/angular/core/views/user/reset-password.view.html'
 	    });
   }
 ]);

@@ -1,5 +1,5 @@
 angular.module('deal').directive('dealStatus', function() {
   return {
-    templateUrl: './angular/directives/deal-status.html',
+    templateUrl: './angular/deal/directives/deal-status.html',
   };
 });

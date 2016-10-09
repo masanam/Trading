@@ -62,7 +62,7 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
     $scope.openModal = function () {
       var modalInstance = $uibModal.open({
         windowClass: 'xl-modal',
-        templateUrl: './angular/views/deal/modal.view.html',
+        templateUrl: './angular/deal/views/modal.view.html',
         controller: 'DealModalController',
         scope: $scope,
       });
@@ -76,7 +76,7 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
       
       var modalInstance = $uibModal.open({
         windowClass: 'xl-modal',
-        templateUrl: './angular/views/deal/buy-order-modal.view.html',
+        templateUrl: './angular/deal/views/buy-order-modal.view.html',
         controller: 'BuyModalController',
         scope: $scope,
       });
@@ -90,7 +90,7 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
       
       var modalInstance = $uibModal.open({
         windowClass: 'xl-modal',
-        templateUrl: './angular/views/deal/sell-order-modal.view.html',
+        templateUrl: './angular/deal/views/sell-order-modal.view.html',
         controller: 'SellModalController',
         scope: $scope,
       });
@@ -107,7 +107,7 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
     $scope.openCreateBuyModal = function () {
       var modalInstance = $uibModal.open({
         windowClass: 'xl-modal',
-        templateUrl: './angular/views/deal/create-buy-order-modal.view.html',
+        templateUrl: './angular/deal/views/create-buy-order-modal.view.html',
         controller: 'CreateBuyModalController',
         scope: $scope,
       });
@@ -116,7 +116,7 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
     $scope.openCreateSellModal = function () {
       var modalInstance = $uibModal.open({
         windowClass: 'xl-modal',
-        templateUrl: './angular/views/deal/create-sell-order-modal.view.html',
+        templateUrl: './angular/deal/views/create-sell-order-modal.view.html',
         controller: 'CreateSellModalController',
         scope: $scope,
       });
@@ -325,7 +325,7 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
     $scope.openBuyDealChatModal = function () {
       $scope.modalInstance = $uibModal.open({
         windowClass: 'xl-modal',
-        templateUrl: './angular/views/deal/modal-component/chat.view.html',
+        templateUrl: './angular/deal/views/modal-component/chat.view.html',
         controller: 'BuyDealChatModalController',
         scope: $scope,
         resolve: {
@@ -337,7 +337,7 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
     $scope.openSellDealChatModal = function () {
       $scope.modalInstance = $uibModal.open({
         windowClass: 'xl-modal',
-        templateUrl: './angular/views/deal/modal-component/chat.view.html',
+        templateUrl: './angular/deal/views/modal-component/chat.view.html',
         controller: 'SellDealChatModalController',
         scope: $scope,
         resolve: {

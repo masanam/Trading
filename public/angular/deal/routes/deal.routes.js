@@ -12,23 +12,23 @@ angular.module('deal').config(['$stateProvider', '$urlRouterProvider',
       })
       .state('deal.index', {
         url: '',
-        templateUrl: '/angular/views/deal/deal.view.html'
+        templateUrl: '/angular/deal/views/deal.view.html'
   	  })
       .state('deal.history', {
         url: '/history',
-        templateUrl: '/angular/views/deal/history.view.html'
+        templateUrl: '/angular/deal/views/history.view.html'
   	  })
   	  .state('deal.create', {
         url: '/create',
-        templateUrl: '/angular/views/deal/create.view.html'
+        templateUrl: '/angular/deal/views/create.view.html'
       })
   	  .state('deal.view', {
         url: '/{id}',
-        templateUrl: '/angular/views/deal/view.view.html'
+        templateUrl: '/angular/deal/views/view.view.html'
       })
       .state('deal.update', {
         url: '/{id}/update',
-        templateUrl: '/angular/views/deal/update.view.html'
+        templateUrl: '/angular/deal/views/update.view.html'
       });
   }
 ]);

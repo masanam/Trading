@@ -255,7 +255,7 @@ angular.module('order').controller('OrderController', ['$location', '$scope', '$
     $scope.openModal = function (id) {
       var modalInstance = $uibModal.open({
         size: 'lg',
-        templateUrl: './angular/views/order/modal.view.html',
+        templateUrl: './angular/order/views//modal.view.html',
         controller: 'OrderModalController',
         resolve: {
           order: function () {
@@ -296,7 +296,7 @@ angular.module('order').controller('BuyOrderController', ['$location', '$scope',
 
     $scope.openModal = function () {
       var modalInstance = $uibModal.open({
-        templateUrl: './angular/views/order/buy-order/create.modal.view.html',
+        templateUrl: './angular/order/views//buy-order/create.modal.view.html',
         controller: 'BuyOrderModalController',
         scope: $scope,
         size: 'lg'
@@ -496,7 +496,7 @@ angular.module('order').controller('SellOrderController', ['$location', '$scope'
 
     $scope.openModal = function () {
       var modalInstance = $uibModal.open({
-        templateUrl: './angular/views/order/buy-order/create.modal.view.html',
+        templateUrl: './angular/order/views//buy-order/create.modal.view.html',
         controller: 'BuyOrderModalController',
         scope: $scope,
         size: 'lg'
@@ -614,7 +614,7 @@ angular.module('order').controller('CreateOrderController', ['$location', '$scop
     $scope.openCreateBuyOrderModal = function () {
       var modalInstance = $uibModal.open({
         windowClass: 'xl-modal',
-        templateUrl: './angular/views/order/create-buy-order-modal.view.html',
+        templateUrl: './angular/order/views//create-buy-order-modal.view.html',
         controller: 'BuyOrderModalController',
         scope: $scope
       });

@@ -36,7 +36,7 @@ angular.module('product').controller('ProductController', ['$scope', '$state', '
       
       var modalInstance = $uibModal.open({
         windowClass: 'xl-modal',
-        templateUrl: './angular/views/lead/product/create.product.modal.html',
+        templateUrl: './angular/lead/views/product/create.product.modal.html',
         scope: $scope,
         controller: 'CrtProductModalController'
       });

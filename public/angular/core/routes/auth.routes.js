@@ -12,15 +12,15 @@ angular.module('auth').config(['$stateProvider', '$urlRouterProvider',
 	    })
       .state('auth.signin', {
 		    url: '/signin',
-		    templateUrl: '/angular/views/auth/signin.view.html'
+		    templateUrl: '/angular/core/views/auth/signin.view.html'
 	    })
       .state('auth.signup', {
 		    url: '/signup',
-		    templateUrl: '/angular/views/auth/signup.view.html'
+		    templateUrl: '/angular/core/views/auth/signup.view.html'
 	    })
       .state('auth.forgot', {
 		    url: '/forgot',
-		    templateUrl: '/angular/views/auth/signup.view.html'
+		    templateUrl: '/angular/core/views/auth/signup.view.html'
 	    });
   }
 ]);

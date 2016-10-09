@@ -15,29 +15,29 @@ angular.module('index').config(['$stateProvider', '$urlRouterProvider',
     $stateProvider
       .state('home', {
         url: '/',
-        templateUrl: '/angular/views/index/home.view.html'
+        templateUrl: '/angular/core/views/index/home.view.html'
       })
       .state('analytics', {
         url: '/analytics',
-        templateUrl: '/angular/views/index/analytics.view.html'
+        templateUrl: '/angular/core/views/index/analytics.view.html'
       })
       .state('not-found', {
         url: '/not-found',
-        templateUrl: '/angular/views/index/404.view.html',
+        templateUrl: '/angular/core/views/index/404.view.html',
         data: {
           ignoreState: true
         }
       })
       .state('bad-request', {
         url: '/bad-request',
-        templateUrl: '/angular/views/index/400.view.html',
+        templateUrl: '/angular/core/views/index/400.view.html',
         data: {
           ignoreState: true
         }
       })
       .state('forbidden', {
         url: '/forbidden',
-        templateUrl: '/angular/views/index/403.view.html',
+        templateUrl: '/angular/core/views/index/403.view.html',
         data: {
           ignoreState: true
         }

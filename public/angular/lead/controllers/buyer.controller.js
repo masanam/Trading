@@ -64,7 +64,7 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
     $scope.openCreateBuyerModal = function () {
       var modalInstance = $uibModal.open({
         windowClass: 'xl-modal',
-        templateUrl: './angular/views/lead/buyer/create.modal.view.html',
+        templateUrl: './angular/lead/views/buyer/create.modal.view.html',
         controller: 'BuyerModalController',
         scope: $scope,
       });
@@ -310,7 +310,7 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
     $scope.addContact = function () {
       var modalInstance = $uibModal.open({
         windowClass: 'xl-modal',
-        templateUrl: './angular/views/lead/contact/create-from-buyer.view.html',
+        templateUrl: './angular/lead/views/contact/create-from-buyer.view.html',
         controller: 'CreateContactModalController',
         scope: $scope,
       });
@@ -332,7 +332,7 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
       
       var modalInstance = $uibModal.open({
         windowClass: 'xl-modal',
-        templateUrl: './angular/views/lead/product/create-from-buyer.view.html',
+        templateUrl: './angular/lead/views/product/create-from-buyer.view.html',
         controller: 'CreateProductModalController',
         scope: $scope,
       });

@@ -28,7 +28,7 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
       
       var modalInstance = $uibModal.open({
         windowClass: 'xl-modal',
-        templateUrl: './angular/views/lead/seller/create.seller.modal.html',
+        templateUrl: './angular/lead/views/seller/create.seller.modal.html',
         scope: $scope,
         controller: 'CreateSellerModalController'
       });
@@ -216,7 +216,7 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
       
       var modalInstance = $uibModal.open({
         windowClass: 'xl-modal',
-        templateUrl: './angular/views/lead/mine/create-from-seller.view.html',
+        templateUrl: './angular/lead/views/mine/create-from-seller.view.html',
         controller: 'CreateMineModalController',
         scope: $scope,
       });
@@ -250,7 +250,7 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
       
       var modalInstance = $uibModal.open({
         windowClass: 'xl-modal',
-        templateUrl: './angular/views/lead/contact/create-from-seller.view.html',
+        templateUrl: './angular/lead/views/contact/create-from-seller.view.html',
         controller: 'CreateContactModalController',
         scope: $scope,
       });
@@ -272,7 +272,7 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
       
       var modalInstance = $uibModal.open({
         windowClass: 'xl-modal',
-        templateUrl: './angular/views/lead/product/create-from-seller.view.html',
+        templateUrl: './angular/lead/views/product/create-from-seller.view.html',
         controller: 'CreateProductModalController',
         scope: $scope,
       });
