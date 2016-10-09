@@ -14,10 +14,16 @@
     </div>
     <!-- sidebar menu: : style can be found in sidebar.less -->
     <ul class="sidebar-menu">
-      <li class="active treeview">
+      <li class="treeview">
+        <a ui-sref="home">
+          <i class="ion ion-home"></i>
+          <span>Dashboard</span>
+        </a>
+      </li>
+      <li class="treeview">
         <a ui-sref="lead.index">
-          <i class="fa fa-files-o"></i>
-          <span>Lead</span>
+          <i class="ion ion-earth"></i>
+          <span>Leads</span>
         </a>
         <ul class="treeview-menu">
           <li><a ui-sref="lead.buyer"><i class="fa fa-circle-o"></i> Buyer</a></li>
@@ -25,20 +31,26 @@
         </ul>
       </li>
       <li class="treeview">
-        <a ui-sref="deal.index">
-          <i class="fa fa-files-o"></i>
-          <span>Deal</span>
-        </a>
-      </li>
-      <li class="treeview">
         <a ui-sref="order.index">
-          <i class="fa fa-files-o"></i>
-          <span>Order</span>
+          <i class="ion ion-archive"></i>
+          <span>Orders</span>
         </a>
         <ul class="treeview-menu">
           <li><a ui-sref="buy-order.index"><i class="fa fa-circle-o"></i> Buy Order</a></li>
           <li class="active"><a ui-sref="sell-order.index"><i class="fa fa-circle-o"></i> Sell Order</a></li>
         </ul>
+      </li>
+      <li class="treeview">
+        <a ui-sref="deal.index">
+          <i class="ion ion-cash"></i>
+          <span>Deals</span>
+        </a>
+      </li>
+      <li class="treeview">
+        <a ui-sref="deal.index">
+          <i class="ion ion-ios-refresh"></i>
+          <span>History</span>
+        </a>
       </li>
     </ul>
   </section>
