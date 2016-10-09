@@ -1,16 +1,16 @@
-<form name="createBuyer" role="form" ng-submit="create(createBuyer)" ng-init="state = 0" ng-validate="validationOptions">
+<form name="createBuyOrder" role="form" ng-submit="create()" ng-init="init()" ng-validate="validationOptions">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="close()">
       <span aria-hidden="true">&times;</span></button>
     <h4 class="modal-title">Create Buy Order</h4>
   </div>
   <div class="modal-body">
-      <div ng-include="'/angular/views/order/buy-order/form.view.html'"></div>
+    <div ng-include="'/angular/views/order/buy-order/form.view.html'"></div>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-primary" ng-show="state > 0" ng-click="state = state-1">Back</button>
-    <button type="button" class="btn btn-primary" ng-hide="state == 4" ng-click="state = state+1">Next</button>
-    <button type="submit" class="btn btn-primary" ng-show="state == 4">Save changes</button>
-    <button type="reset" class="btn btn-default">Reset</button>
+    <button type="button" class="btn btn-primary" ng-hide="state == 2" ng-click="next()">Next</button>
+    <button type="submit" class="btn btn-primary" ng-show="state == 2">Save changes</button>
+    <button type="button" class="btn btn-default" ng-click="reset()">Reset</button>
   </div>
 </form>

@@ -305,10 +305,171 @@ angular.module('order').controller('BuyOrderController', ['$location', '$scope',
 
 }]);
 
-angular.module('order').controller('BuyOrderModalController', function ($scope, $uibModalInstance, Buyer) {
+angular.module('order').controller('BuyOrderModalController', function ($scope, $uibModalInstance, $filter, Buyer, Product, Order) {
+  $scope.init = function(){
+    $scope.state = 0;
+    $scope.choose = undefined;
+    $scope.order = {
+      buyer_id: undefined,
+      order_date: undefined,
+      deadline: undefined,
+      penalty: undefined,
+      address: undefined,
+      latitude: undefined,
+      longitude: undefined,
+      product_name: undefined,
+      product_id: undefined,
+      volume: undefined,
+      gcv_arb_min: undefined,
+      gcv_arb_max: undefined,
+      gcv_adb_min: undefined,
+      gcv_adb_max: undefined,
+      ncv_min: undefined,
+      ncv_max: undefined,
+      ash_min: undefined,
+      ash_max: undefined,
+      ts_min: undefined,
+      ts_max: undefined,
+      tm_min: undefined,
+      tm_max: undefined,
+      im_min: undefined,
+      im_max: undefined,
+      fc_min: undefined,
+      fc_max: undefined,
+      vm_min: undefined,
+      vm_max: undefined,
+      hgi_min: undefined,
+      hgi_max: undefined,
+      size_min: undefined,
+      size_max: undefined
+    };
+
+  }
+
   $scope.findAllBuyers = function() {
-      $scope.buyers = Buyer.query();
+    $scope.buyers = Buyer.query();
+  }
+
+  $scope.findAllProducts = function() {
+    $scope.products = Product.query();
+  }
+
+  $scope.reset = function() {
+    $scope.state = 0;
+    $scope.choose = undefined;
+    $scope.order = {
+      buyer_id: undefined,
+      order_date: undefined,
+      deadline: undefined,
+      penalty: undefined,
+      address: undefined,
+      latitude: undefined,
+      longitude: undefined,
+      product_name: undefined,
+      product_id: undefined,
+      volume: undefined,
+      max_price: undefined,
+      gcv_arb_min: undefined,
+      gcv_arb_max: undefined,
+      gcv_adb_min: undefined,
+      gcv_adb_max: undefined,
+      ncv_min: undefined,
+      ncv_max: undefined,
+      ash_min: undefined,
+      ash_max: undefined,
+      ts_min: undefined,
+      ts_max: undefined,
+      tm_min: undefined,
+      tm_max: undefined,
+      im_min: undefined,
+      im_max: undefined,
+      fc_min: undefined,
+      fc_max: undefined,
+      vm_min: undefined,
+      vm_max: undefined,
+      hgi_min: undefined,
+      hgi_max: undefined,
+      size_min: undefined,
+      size_max: undefined
+    };
+  }
+
+  $scope.create = function() {
+    var apa = new Order({
+        buyer_id: $scope.order.buyer_id, 
+        order_date: $filter('date')($scope.order.order_date, "yyyy-MM-dd"),
+        deadline: $filter('date')($scope.order.deadline, "yyyy-MM-dd"),
+        address: $scope.order.address,
+        latitude: $scope.order.latitude,
+        longitude: $scope.order.longitude,
+        penalty_desc: $scope.order.penalty,
+        product_name: $scope.order.product_name,
+        product_id: $scope.order.product_id,
+
+        tm_min: $scope.order.tm_min,
+        tm_max: $scope.order.tm_max,
+        im_min: $scope.order.im_min,
+        im_max: $scope.order.im_max,
+        ash_min: $scope.order.ash_min,
+        ash_max: $scope.order.ash_max,
+        fc_min: $scope.order.fc_min,
+        fc_max: $scope.order.fc_max,
+        vm_min: $scope.order.vm_min,
+        vm_max: $scope.order.vm_max,
+        ts_min: $scope.order.ts_min,
+        ts_max: $scope.order.ts_max,
+        ncv_min: $scope.order.ncv_min,
+        ncv_max: $scope.order.ncv_max,
+        gcv_arb_min: $scope.order.gcv_arb_min,
+        gcv_arb_max: $scope.order.gcv_arb_max,
+        gcv_adb_min: $scope.order.gcv_adb_min,
+        gcv_adb_max: $scope.order.gcv_adb_max,
+        hgi_min: $scope.order.hgi_min,
+        hgi_max: $scope.order.hgi_max,
+        size_min: $scope.order.size_min,
+        size_max: $scope.order.size_max,
+
+        volume: $scope.order.volume,
+        max_price: $scope.order.max_price
+      });
+
+      apa.$save({ type: 'buy' }, function(response) {
+        $scope.buy_orders.push(response);
+        $scope.buyer.company_name.push($scope.company_name);
+        $uibModalInstance.close('success');
+      });
+  }
+
+  $scope.setChoose = function(choose) {
+    $scope.choose = choose;
+  }
+
+  $scope.setSelected = function(product) {
+    $scope.order.product_name = product.product_name;
+    $scope.order.product_id = product.id;
+  }
+
+  $scope.next = function () {
+
+    if (($scope.state==0)&&
+      ($scope.order.buyer_id)&&
+      ($scope.order.order_date)&&
+      ($scope.order.deadline)&&
+      ($scope.order.penalty)&&
+      ($scope.order.address)&&
+      ($scope.order.latitude)&&
+      ($scope.order.longitude)) 
+    {
+      $scope.company_name = Buyer.get($scope.order.buyer_id);
+      $scope.state = $scope.state+1;
     }
+
+    else if (($scope.state==1)&&(($scope.choose==='available')||($scope.choose==='manual'))&&($scope.order.product_name!==undefined)) 
+    {
+      $scope.state = $scope.state+1;
+    }
+
+  };
 
   $scope.close = function () {
     $uibModalInstance.dismiss('cancel');
@@ -320,6 +481,26 @@ angular.module('order').controller('SellOrderController', ['$location', '$scope'
     
     $scope.findSellOrder = function() {
       $scope.sell_orders = Order.query({ type: 'sell' });
+    };
+
+    $scope.findOne = function(id) {
+
+      if(id !== undefined){
+        $scope.sell_orderId = id;
+      } else {
+        $scope.sell_orderId = $stateParams.id;
+      }
+
+      $scope.sell_order = Order.get({ type: 'sell', id: $scope.sell_orderId });
+    };
+
+    $scope.openModal = function () {
+      var modalInstance = $uibModal.open({
+        templateUrl: './angular/views/order/buy-order/create.modal.view.html',
+        controller: 'BuyOrderModalController',
+        scope: $scope,
+        size: 'lg'
+      });
     };
 
 }]);
