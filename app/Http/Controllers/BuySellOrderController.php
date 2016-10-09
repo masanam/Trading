@@ -25,7 +25,7 @@ class BuySellOrderController extends Controller
 
         $buy_order = BuyOrder::where('status', 'a')
                             ->with(
-                                'Buyer.company_name', 'BuyOrderPricing', 'User'
+                                'Buyer', 'BuyOrderPricing', 'User'
                             )->get();
 
         foreach($buy_order as $bo) {
@@ -35,7 +35,7 @@ class BuySellOrderController extends Controller
 
         $sell_order = SellOrder::where('status', 'a')
                             ->with(
-                                'Seller.company_name', 'SellOrderPricing', 'User'
+                                'Seller', 'SellOrderPricing', 'User'
                             )->get();
 
         foreach($sell_order as $so) {

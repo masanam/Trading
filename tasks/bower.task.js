@@ -25,7 +25,6 @@ Elixir.extend('bower', function(jsOutputFile, jsOutputFolder, ttfOutputFolder, c
   var jsFile = jsOutputFile || 'vendor.js';
   
   var mainJSFiles = [ 
-    // 'bower_components/jquery/dist/jquery.js',
     'bower_components/angular/angular.js',
     'bower_components/angular-ui-router/release/angular-ui-router.js',
     'bower_components/ngstorage/ngStorage.js',
@@ -49,35 +48,17 @@ Elixir.extend('bower', function(jsOutputFile, jsOutputFolder, ttfOutputFolder, c
     'bower_components/restangular/dist/restangular.js',
     'bower_components/angular-chart.js/dist/angular-chart.js',
     'bower_components/angular-chart.js/dist/angular-chart.css',
-    // 'bower_components/datatables.net/js/jquery.dataTables.js',
     'bower_components/pusher-angular/lib/pusher-angular.min.js',
     'bower_components/angular-smart-table/dist/smart-table.css',
     'bower_components/angular-smart-table/dist/smart-table.js',
     'bower_components/angular-smart-table/smartCss.css',
-    // 'bower_components/angular-datatables/dist/angular-datatables.js',
-    // 'bower_components/angular-datatables/dist/css/angular-datatables.css',
-    // 'bower_components/angular-datatables/dist/plugins/bootstrap/angular-datatables.bootstrap.js',
-    // 'bower_components/angular-datatables/dist/plugins/colreorder/angular-datatables.colreorder.js',
-    // 'bower_components/angular-datatables/dist/plugins/columnfilter/angular-datatables.columnfilter.js',
-    // 'bower_components/angular-datatables/dist/plugins/light-columnfilter/angular-datatables.light-columnfilter.js',
-    // 'bower_components/angular-datatables/dist/plugins/colvis/angular-datatables.colvis.js',
-    // 'bower_components/angular-datatables/dist/plugins/fixedcolumns/angular-datatables.fixedcolumns.js',
-    // 'bower_components/angular-datatables/dist/plugins/fixedheader/angular-datatables.fixedheader.js',
-    // 'bower_components/angular-datatables/dist/plugins/scroller/angular-datatables.scroller.js',
-    // 'bower_components/angular-datatables/dist/plugins/tabletools/angular-datatables.tabletools.js',
-    // 'bower_components/angular-datatables/dist/plugins/buttons/angular-datatables.buttons.js',
-    // 'bower_components/angular-datatables/dist/plugins/select/angular-datatables.select.js',
-    // 'bower_components/ng-sortable/dist/ng-sortable.css',
-    // 'bower_components/ng-sortable/dist/ng-sortable.js',
-    // 'bower_components/jquery-validation/dist/jquery.validate.min.js',
-    // 'bower_components/jpkleemans-angular-validate/dist/angular-validate.min.js',
-    // 'bower_components/admin-lte/dist/js/app.min.js',
-    // 'bower_components/admin-lte/plugins/jQueryUI/jquery-ui.min.js',
     'bower_components/admin-lte/dist/css/AdminLTE.min.css',
     'bower_components/admin-lte/dist/css/skins/skin-blue.min.css',
     'bower_components/admin-lte/plugins/iCheck/square/blue.css',
-    // 'bower_components/admin-lte/plugins/iCheck/icheck.min.js',
-    // 'bower_components/admin-lte/plugins/slimScroll/jquery.slimscroll.min.js'
+    'bower_components/ng-validate/src/ng-validate.js',
+    'bower_components/angular-smart-table/dist/smart-table.min.js',
+    'bower_components/angular-smart-table/dist/smart-table.css',
+    'bower_components/angular-pusher/angular-pusher.min.js'
   ];
   
   var mainCSSFiles = [];
@@ -106,7 +87,6 @@ Elixir.extend('bower', function(jsOutputFile, jsOutputFolder, ttfOutputFolder, c
       .pipe(filter('**/*.js'))
       .pipe(concat(jsFile, {sourcesContent: true}))
       .pipe(gulpIf(Elixir.config.production, uglify()))
-      // .pipe(gulp.dest(jsOutputFolder || Elixir.config.js.outputFolder))
       .pipe(gulp.dest('public/js'))
       .pipe(notify({
         title: 'Bower JS',
@@ -135,7 +115,6 @@ Elixir.extend('bower', function(jsOutputFile, jsOutputFolder, ttfOutputFolder, c
       .pipe(filter('**/*.css'))
       .pipe(concat(cssFile))
       .pipe(gulpIf(Elixir.config.production, cssnano({safe: true})))
-      //.pipe(gulp.dest(cssOutputFolder || Elixir.config.css.outputFolder))
       .pipe(gulp.dest('public/css'))
       .pipe(notify({
         title: 'Bower CSS',

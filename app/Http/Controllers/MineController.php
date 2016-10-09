@@ -84,8 +84,10 @@ class MineController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Mine $mine)
+    public function show($mine)
     {
+        $mine = Mine::find($mine);
+
         if($mine->status == 'a') {
             return response()->json($mine, 200);
         } else {
@@ -100,8 +102,10 @@ class MineController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Mine $mine)
+    public function update(Request $request, $mine)
     {
+        $mine = Mine::find($mine);
+
         if (!$request) {
             return response()->json([
                 'message' => 'Bad Request'
@@ -140,6 +144,7 @@ class MineController extends Controller
      */
     public function destroy($id)
     {
+        $mine = Mine::find($id);
       
         if (!$id) {
             return response()->json([

@@ -79,8 +79,9 @@ class ContactController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Contact $contact)
+    public function show($contact)
     {
+        $contact = Contact::find($contact);
 
         if($contact->status == 'a') {
             return response()->json($contact, 200);
@@ -96,8 +97,10 @@ class ContactController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Contact $contact)
+    public function update(Request $request, $contact)
     {
+        $contact = Contact::find($contact);
+
         if (!$request) {
             return response()->json([
                 'message' => 'Bad Request'
@@ -130,7 +133,8 @@ class ContactController extends Controller
      */
     public function destroy($id)
     {
-      
+        $contact = Contact::find($id);
+        
         if (!$id) {
             return response()->json([
                 'message' => 'Not found'

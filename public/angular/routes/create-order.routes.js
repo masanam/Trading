@@ -1,7 +1,7 @@
 'use strict';
 
 // Setting up route
-angular.module('order-history').config(['$stateProvider', '$urlRouterProvider',
+angular.module('order').config(['$stateProvider', '$urlRouterProvider',
   function ($stateProvider, $urlRouterProvider) {
     // Home state routing
     $stateProvider

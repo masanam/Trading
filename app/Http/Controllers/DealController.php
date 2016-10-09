@@ -20,7 +20,7 @@ use App\Http\Requests;
 class DealController extends Controller
 {
     public function __construct() {
-        // $this->middleware('jwt.auth');
+        $this->middleware('jwt.auth');
     }
     
     /**
@@ -99,16 +99,8 @@ class DealController extends Controller
      */
     public function show($id)
     {
-        $deal = DB::table('deals')
-          ->select(
-            DB::raw('
-              deals.*,
-              users.name as trader_name,
-              concat(buyers.company_name, ",") as buyer_name,
-              concat(sellers.company_name, ",") as seller_name,
-              sum(buy_order.volume) as volume,
-              sum(buy_order.volume*buy_order.max_price) as total_sales,
-              sum(sell_order.volume*sell_order.max_price) as total_cogs
+        $deal = DB::table('deals')->select(DB::raw('
+              deals.*, users.name as trader_name, concat(buyers.company_name, ",") as buyer_name, concat(sellers.company_name, ",") as seller_name, sum(buy_order.volume) as volume, sum(buy_order.volume*buy_order.max_price) as total_sales, sum(sell_order.volume*sell_order.max_price) as total_cogs
             ')
           )
           ->leftJoin('buy_deal', 'deals.id', '=', 'buy_deal.deal_id')
@@ -122,7 +114,7 @@ class DealController extends Controller
           //->leftJoin('sell_deal_approval', 'sell_deal.id', '=', 'sell_deal_approval.sell_deal_id')
           //->leftJoin('sell_order_pricing', 'sell_order.id', '=', 'sell_order_pricing.sell_order_id')
           ->leftJoin('users', 'users.id', '=', 'deals.user_id')
-          ->where([['deals.id', $id, ],['buy_deal.status', '!=', 'x'], ['sell_deal.status', '!=', 'x']])
+          ->where([['deals.id', $id],['buy_deal.status', '!=', 'x'], ['sell_deal.status', '!=', 'x']])
           ->groupBy(
             'deals.id', 
             'users.name', 
@@ -149,8 +141,10 @@ class DealController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Deal $deal)
+    public function update(Request $request, $deal)
     {
+        $deal = Deal::find($deal);
+     
         if (!$request) {
             return response()->json([
                 'message' => 'Bad Request'
@@ -200,8 +194,10 @@ class DealController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function changeStatus(Deal $deal , $status)
+    public function changeStatus($deal , $status)
     {
+        $deal = Deal::find($deal);
+
         if (!$deal) {
             return response()->json([
                 'message' => 'Not found'

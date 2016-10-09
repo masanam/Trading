@@ -2,8 +2,6 @@
 
 namespace App\Events;
 
-use App\Model\BuyDeal;
-
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -11,20 +9,20 @@ use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class BuyDealNotification implements ShouldBroadcast 
+class TestEvent
 {
     use InteractsWithSockets, SerializesModels;
 
-    public $buy_deal;
+    public $text;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(BuyDeal $buy_deal)
+    public function __construct($text)
     {
-        $this->buy_deal = $buy_deal;
+        $this->text = $text;
     }
 
     /**
@@ -34,6 +32,6 @@ class BuyDealNotification implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('buy_deal'.$this->buy_deal->id);
+        return new PrivateChannel('test-channel');
     }
 }

@@ -2,8 +2,6 @@
 
 namespace App\Events;
 
-use App\Events\Event;
-
 use App\Model\SellDeal;
 
 use Illuminate\Broadcasting\Channel;
@@ -13,7 +11,7 @@ use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class SellDealNotification extends Event implements ShouldBroadcast 
+class SellDealNotification implements ShouldBroadcast 
 {
     use InteractsWithSockets, SerializesModels;
 

@@ -111,8 +111,10 @@ class SellerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Seller $seller)
+    public function update(Request $request, $seller)
     {
+        $seller = Seller::find($seller);
+
         if (!$request) {
             return response()->json([
                 'message' => 'Bad Request'
@@ -155,8 +157,10 @@ class SellerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Seller $seller)
+    public function destroy($seller)
     {
+        $seller = Seller::find($seller);
+        
         if (!$seller) {
             return response()->json([
                 'message' => 'Not found'

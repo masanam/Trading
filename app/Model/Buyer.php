@@ -8,8 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Buyer extends Model
 {
-    use Searchable;
-
     protected $table = 'buyers';
 
     public function User() {
@@ -30,16 +28,5 @@ class Buyer extends Model
 
     public function Product() {
     	return $this->hasMany('App\Model\Product');
-    }
-
-    public function searchableAs()
-    {
-        return 'buyers_index';
-    }
-
-    public function toSearchableArray() {
-        return array_only($this->toArray(), [
-            'company_name', 'phone', 'email', 'web' , 'industry', 'city', 'address', 'description'
-        ]);
     }
 }

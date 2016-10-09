@@ -13,8 +13,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Seller extends Model
 {
-    use Searchable;
-
     protected $table = 'sellers';
 
     public function User() {

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\Chat;
+use App\Model\SellDealChat;
 use App\Model\SellDeal;
 use App\Model\SellOrder;
 use App\Model\SellOrderPricing;
@@ -28,7 +28,7 @@ class SellDealController extends Controller
     {
         $sell_deal = SellDeal::where('status', 'a')->with(
                             'SellOrder', 'SellOrder.SellOrderPricing', 'SellOrder.Seller',
-                             'SellOrder.Seller.User', 'User', 'Deal', 'Chat'
+                             'SellOrder.Seller.User', 'User', 'Deal', 'SellDealChat'
                         )->get();
 
         return response()->json($sell_deal, 200);
@@ -48,34 +48,29 @@ class SellDealController extends Controller
             ], 400);
         }
 
-        $chat = New Chat();
-        $chat->trader_id = $request->user_id;
-        $chat->approver_id = 1;
-        $chat->save();
-
         $sell_deal = new SellDeal();
         $sell_deal->sell_order_id = $request->sell_order_id;
-        $sell_deal->chat_id = $chat->id;
         $sell_deal->user_id = $request->user_id;
         $sell_deal->deal_id = $request->deal_id  ? $request->deal_id : NULL;
+        $sell_deal->type = "sell";
         $sell_deal->status = "a";
         $sell_deal->save();
         
         $config_approver = config('approver');
         
+        /*
+        *   every approver in the config file, 
+        *   will get the notification, 
+        *   and can approve any deal
+        */
         foreach($config_approver as $approver){
           $sell_deal_approval = new SellDealApproval();
           $sell_deal_approval->sell_deal_id = $sell_deal->id;
           $sell_deal_approval->user_id = $sell_deal->user_id;
-          $sell_deal_approval->approver = '';
+          $sell_deal_approval->approver_id = '';
           $sell_deal_approval->status = "p";
           $sell_deal_approval->save();
         }
-
-        $chat->approver_id = $sell_deal_approval->approver;
-        $chat->order_deal_id = $sell_deal->id;
-        $chat->type = 'sell';
-        $chat->save();
 
         event(new \App\Events\SellDealNotification($sell_deal));
         event(new \App\Events\SellDealApprovalNotification($sell_deal_approval));
@@ -89,11 +84,11 @@ class SellDealController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(SellDeal $sell_deal)
+    public function show($sell_deal)
     {
         $sell_deal = SellDeal::with(
                             'SellOrder', 'SellOrder.SellOrderPricing', 'SellOrder.Seller',
-                             'SellOrder.Seller.User', 'User', 'Deal', 'Chat'
+                             'SellOrder.Seller.User', 'User', 'Deal', 'SellDealChat'
                              )->find($id);
 
         if($sell_deal) {
@@ -117,8 +112,10 @@ class SellDealController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, SellDeal $sell_deal)
+    public function update(Request $request, $sell_deal)
     {
+        $sell_deal = SellDeal::find($sell_deal);
+
         if (!$request) {
             return response()->json([
                 'message' => 'Bad Request'
@@ -146,8 +143,10 @@ class SellDealController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(SellDeal $sell_deal)
+    public function destroy($sell_deal)
     {
+        $sell_deal = SellDeal::find($sell_deal);
+
         if (!$sell_deal) {
             return response()->json([
                 'message' => 'Not found'
@@ -188,7 +187,7 @@ class SellDealController extends Controller
       }
       
       $sell_deal = SellDeal::with('SellOrder', 'SellOrder.SellOrderPricing', 'SellOrder.Seller',
-                             'SellOrder.Seller.User', 'User', 'Deal', 'Chat')->where([['deal_id', $dealId], ['status', 'a']])
+                             'SellOrder.Seller.User', 'User', 'Deal', 'SellDealChat')->where([['deal_id', $dealId], ['status', 'a']])
              ->orderBy('id', 'asc')
              ->get();
 
@@ -196,14 +195,15 @@ class SellDealController extends Controller
       return response()->json($sell_deal, 200);
     }
 
-    // Get One Sell Deal by Deal ID
-    public function getOneByDeal($sell_deal, $dealId) {
-        $sell_deal = SellDeal::with('SellOrder', 'SellOrder.SellOrderPricing', 'SellOrder.Seller',
-                             'SellOrder.Seller.User', 'User', 'Deal', 'Chat')
+    // Get One Sell Deal by Deal ID and Sell Order ID
+    public function getOneByDealAndOrder($sell_order, $dealId) {
+        $sell_deal = SellDeal::with('SellOrder', 'SellOrder', 'SellOrder.SellOrderPricing', 'SellOrder.Seller',
+                             'SellOrder.Seller.User', 'User', 'Deal', 'SellDealChat')
                     ->where([['deal_id', $dealId], 
-                      ['status', 'a']])
+                      ['status', 'a'],
+                      ['sell_order_id', $sell_order]])
                ->orderBy('id', 'asc')
-               ->find($sell_deal);
+               ->first();
 
         return response()->json($sell_deal, 200);
     }
@@ -220,7 +220,7 @@ class SellDealController extends Controller
         $sell_deal_approval = new SellDealApproval();
         $sell_deal_approval->sell_deal_id = $sell_deal->id;
         $sell_deal_approval->user_id = $sell_deal->user_id;
-        $buy_deal_approval->approver = $request->approver_id;
+        $sell_deal_approval->approver_id = $request->approver_id;
         $sell_deal_approval->status = $approval;
 
         $sell_deal_approval->save();

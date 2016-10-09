@@ -14,7 +14,7 @@ angular.module('user').factory('Authentication', ['$http', '$auth',
 
           return callback(undefined, auth.user);
         }).error(function(err){
-          return callback(err, undefined);
+          if(callback) return callback(err, undefined);
         });
       } else callback({ message: "No user logged in!" }, undefined);
     };

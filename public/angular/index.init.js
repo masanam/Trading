@@ -49,6 +49,17 @@ angular.module(ApplicationConfiguration.applicationModuleName).config(['$urlRout
   }
 ]);
 
+angular.module(ApplicationConfiguration.applicationModuleName).config(['PusherServiceProvider',
+  function(PusherServiceProvider) {
+    PusherServiceProvider
+    .setToken('6d2905ad0e57d83c218e')
+    .setOptions({
+      cluster: 'ap1'
+    });
+  }
+]);
+
+
 //initialize application authentication & authorization before starting
 angular.module(ApplicationConfiguration.applicationModuleName).run(function ($rootScope, $state, $http, $uibModalStack, Authentication) {
   //Load authorization event listener once all authentication done 
