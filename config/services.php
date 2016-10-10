@@ -35,4 +35,12 @@ return [
         'secret' => env('STRIPE_SECRET'),
     ],
 
+    'firebase' => [
+        'api_key' => 'AIzaSyACILHAOiy4G9TtCgs0szgZBZokr4cduuo',
+        'auth_domain' => 'coal-trade.firebaseapp.com',
+        'database_url' => 'https://coal-trade.firebaseio.com',
+        'secret' => 'HDhmUXlH4E85A3PdxbfQGw0yCiqy0Bjvugbuqs8t',
+        'storage_bucket' => 'coal-trade.appspot.com',
+    ]
+
 ];
