@@ -31,12 +31,12 @@
 </head>
 <body class="hold-transition skin-blue login-page fixed sidebar-mini" ng-app="coaltrade"
     ng-class="collapse ? 'sidebar-collapse' : ''" ng-controller="LayoutController" ng-init="collapse = true">
-  <div class="wrapper">
+  <div class="wrapper" style="min-height: 100vh;">
     <div ng-include="'./angular/core/views/layout/header.view.html'" ng-controller="AuthController"></div>
     <div ng-include="'./angular/core/views/layout/sidebar.view.html'" ng-controller="AuthController" ng-show="Authentication.user"></div>
 
     <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper" style="overflow: auto;">
+    <div class="content-wrapper" style="overflow: auto; min-height: 100vh;">
       @yield('container')
     </div>
   </div>
