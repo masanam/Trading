@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Model\SellOrder;
+use App\Model\Seller;
+use Auth;
 
 use Illuminate\Http\Request;
 
@@ -20,7 +22,7 @@ class SellOrderController extends Controller
      */
     public function index()
     {
-        $sell_order = SellOrder::with('seller')->where('order_status', 'a')->get();
+        $sell_order = SellOrder::with('Seller')->where('order_status', 'a')->get();
 
         return response()->json($sell_order, 200);
     }
@@ -41,7 +43,7 @@ class SellOrderController extends Controller
 
         $sell_order = new SellOrder();
 
-        $sell_order->user_id = $request->user_id;
+        $sell_order->user_id = Auth::User()->id;
         $sell_order->seller_id = $request->seller_id;
 
         $sell_order->order_date = $request->order_date;
@@ -100,7 +102,7 @@ class SellOrderController extends Controller
         $sell_order->volume = $request->volume;
         $sell_order->max_price = $request->max_price;
         
-        $sell_order->status = 'a';
+        $sell_order->order_status = 'a';
         
         $sell_order->save();
 
@@ -115,9 +117,9 @@ class SellOrderController extends Controller
      */
     public function show($sell_order)
     {
-        $sell_order = SellOrder::find($sell_order);
+        $sell_order = SellOrder::with('Seller')->find($sell_order);
 
-        if($sell_order->status == 'a') {
+        if($sell_order->order_status == 'a') {
             return response()->json($sell_order, 200);
         } else {
             return response()->json(['message' => 'deactivated record'], 404);

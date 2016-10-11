@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Model\BuyOrder;
+use App\Model\Buyer;
 use Auth;
 use Illuminate\Http\Request;
 
@@ -25,7 +26,7 @@ class BuyOrderController extends Controller
     public function index()
     {
 
-        $buy_order = BuyOrder::with('buyer')->where('order_status', 'a')->get();
+        $buy_order = BuyOrder::with('Buyer')->where('order_status', 'a')->get();
         return response()->json($buy_order, 200);
     }
 
@@ -110,6 +111,9 @@ class BuyOrderController extends Controller
 
         $buy_order->save();
 
+        $buyer = Buyer::find($request->buyer_id);
+        $buy_order->buyer = $buyer;
+
         // $activity = $this->storeActivity($buy_order->buyer_id, 'create', 'BuyOrder', $buy_order->id);
 
         return response()->json($buy_order, 200);
@@ -125,7 +129,7 @@ class BuyOrderController extends Controller
     {
         $buy_order = BuyOrder::with('buyer')->find($buy_order);
 
-        if($buy_order->status == 'a') {
+        if($buy_order->order_status == 'a') {
             return response()->json($buy_order, 200);
         } else {
             return response()->json(['message' => 'deactivated record'], 404);
@@ -245,4 +249,33 @@ class BuyOrderController extends Controller
     // public function indexDetailed () {
     //     $buy_order = BuyOrder::with()
     // }
+
+    public function status($order_status, $progress_status = false)
+    {
+        if (!$progress_status) {
+            $buy_order = BuyOrder::with('buyer')->where('order_status', $order_status)->get();
+        } else {
+            $buy_order = BuyOrder::with('buyer')->where('order_status', $order_status)->where('progress_status', 'LIKE', '%'.$progress_status.'%')->get();
+        }
+
+        return response()->json($buy_order, 200);
+    }
+
+    public function changeOrderStatus($id , $order_status)
+    {
+        $buy_order = BuyOrder::find($id);
+
+        if (!$buy_order) {
+            return response()->json([
+                'message' => 'Not found'
+            ] ,404);
+        }
+
+        if ($order_status) {
+          $buy_order->order_status = $order_status;
+          $buy_order->save();
+        }
+
+        return response()->json($buy_order, 200);
+    }
 }

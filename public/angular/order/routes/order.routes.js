@@ -72,5 +72,16 @@ angular.module('order-history').config(['$stateProvider', '$urlRouterProvider',
         url: '/:id',
         templateUrl: '/angular/order/views//sell-order/view.view.html'
       });
+
+    $stateProvider
+      .state('buy-order-management', {
+        url: '/buy-order-management',
+        abstract: true,
+        template: '<ui-view>'
+      })
+      .state('buy-order-management.index', {
+        url: '',
+        templateUrl: '/angular/order/views//buy-order/management.view.html'
+      });
   }
 ]);

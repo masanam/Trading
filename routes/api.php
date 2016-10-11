@@ -47,6 +47,17 @@ Route::group(['middleware' => ['cors']], function() {
         'create', 'edit'
     ]]);
 
+    
+
+    Route::get('order/buy/status/{order_status}/{progress_status?}', 'BuyOrderController@status', ['except' => [
+        'create', 'edit'
+    ]]);
+
+    Route::get('order/buy/{id}/changeOrderStatus/{order_status}', 'BuyOrderController@changeOrderStatus', ['except' => [
+        'create', 'edit'
+    ]]);
+
+
     Route::resource('order/sell', 'SellOrderController', ['except' => [
         'create', 'edit'
     ]]);
