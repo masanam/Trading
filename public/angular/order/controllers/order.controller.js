@@ -539,7 +539,6 @@ angular.module('order').controller('BuyOrderModalController', function ($scope, 
       ($scope.order.buyer_id)&&
       ($scope.order.order_date)&&
       ($scope.order.deadline)&&
-      ($scope.order.penalty)&&
       ($scope.order.address)&&
       ($scope.order.latitude)&&
       ($scope.order.longitude)) 
@@ -746,7 +745,6 @@ angular.module('order').controller('SellOrderModalController', function ($scope,
       ($scope.order.seller_id)&&
       ($scope.order.order_date)&&
       ($scope.order.deadline)&&
-      ($scope.order.penalty)&&
       ($scope.order.address)&&
       ($scope.order.latitude)&&
       ($scope.order.longitude)) 

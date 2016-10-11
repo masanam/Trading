@@ -26,6 +26,8 @@
         <p>{{ sell_order.order_date }}</p>
         <label>Deadline : </label>
         <p>{{ sell_order.deadline }}</p>
+        <label>Penalty : </label>
+        <p>{{ sell_order.penalty_desc }}</p>
       </div>
     </div>
   </div>
@@ -36,35 +38,72 @@
     </div>
     <div class="box-body">
       <div class="row-fluid" style="margin:10px">
-        <div class="col-md-6 col-lg-6">
-          <table class="table table-bordered">
+        <div class="col-md-12 col-lg-12">
+          <!-- <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 nopadding">
+              <h4><b>Gross Caloric ARB </b></h4>
+            </div>
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+              <h4>:</h4>
+            </div>
+            <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 nopadding">
+              <h4>{{sell_order.gcv_arb_min}} - {{sell_order.gcv_arb_max}} kcal</h4>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4 nopadding">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+              <h4><b>Gross Caloric ADB </b></h4>
+            </div>
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+              <h4>:</h4>
+            </div>
+            <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 nopadding">
+              <h4>{{sell_order.gcv_adb_min}} - {{sell_order.gcv_adb_max}} kcal</h4>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4 nopadding">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+              <h4><b>Total Sulphur </b></h4>
+            </div>
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+              <h4>:</h4>
+            </div>
+            <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 nopadding">
+              <h4>{{sell_order.ncv_min}} - {{sell_order.ncv_max}} kcal</h4>
+            </div>
+          </div> -->
+          <table class="table">
             <tbody>
               <tr>
-                <td><b>Gross Caloric ARB <div class="pull-right">:</div></b></td>
-                <td>{{sell_order.gcv_arb_min}} - {{sell_order.gcv_arb_max}} kcal</td>
+                <td><h4><b>Gross Caloric ARB <div class="pull-right">:</div></b></h4></td>
+                <td><h4>{{sell_order.gcv_arb_min}} - {{sell_order.gcv_arb_max}} kcal</h4></td>
+                <td class="hidden-xs hidden-sm"><h4><b>Gross Caloric ADB <div class="pull-right">:</div></b></h4></td>
+                <td class="hidden-xs hidden-sm"><h4>{{sell_order.gcv_adb_min}} - {{sell_order.gcv_adb_max}} kcal</h4></td>
+                <td class="hidden-xs hidden-sm"><h4><b>Total Sulphur <div class="pull-right">:</div></b></h4></td>
+                <td class="hidden-xs hidden-sm"><h4>{{sell_order.ncv_min}} - {{sell_order.ncv_max}} kcal</h4></td>
               </tr>
-              <tr>
-                <td><b>Gross Caloric ADB <div class="pull-right">:</div></b></td>
-                <td>{{sell_order.gcv_adb_min}} - {{sell_order.gcv_adb_max}} kcal</td>
+              <tr class="hidden-md hidden-lg">
+                <td><h4><b>Gross Caloric ADB <div class="pull-right">:</div></b></h4></td>
+                <td><h4>{{sell_order.gcv_adb_min}} - {{sell_order.gcv_adb_max}} kcal</h4></td>
               </tr>
-              <tr>
-                <td><b>Nett Caloric <div class="pull-right">:</div></b></td>
-                <td>{{sell_order.ncv_min}} - {{sell_order.ncv_max}} kcal</td>
-              </tr>
-              <tr>
-                <td><b>Ash <div class="pull-right">:</div></b></td>
-                <td>{{sell_order.ash_min}} - {{sell_order.ash_max}} kcal</td>
-              </tr>
-              <tr>
-                <td><b>Total Sulphur <div class="pull-right">:</div></b></td>
-                <td>{{sell_order.ts_min}} - {{sell_order.ts_max}} %</td>
+              <tr class="hidden-md hidden-lg">
+                <td><h4><b>Total Sulphur <div class="pull-right">:</div></b></h4></td>
+                <td><h4>{{sell_order.ncv_min}} - {{sell_order.ncv_max}} kcal</h4></td>
               </tr>
             </tbody>
           </table>
         </div>
         <div class="col-md-6 col-lg-6">
-          <table class="table table-bordered">
+          <table class="table">
             <tbody>
+              <tr>
+                <td><b>Ash <div class="pull-right">:</div></b></td>
+                <td>{{sell_order.ash_min}} - {{sell_order.ash_max}} %</td>
+              </tr>
+              <tr>
+                <td><b>Total Sulphur <div class="pull-right">:</div></b></td>
+                <td>{{sell_order.ts_min}} - {{sell_order.ts_max}} %</td>
+              </tr>
               <tr>
                 <td><b>Total Moisture <div class="pull-right">:</div></b></td>
                 <td>{{sell_order.tm_min}} - {{sell_order.tm_max}} %</td>
@@ -73,6 +112,12 @@
                 <td><b>Inherent Moisture <div class="pull-right">:</div></b></td>
                 <td>{{sell_order.im_min}} - {{sell_order.im_max}} %</td>
               </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-md-6 col-lg-6">
+          <table class="table">
+            <tbody>
               <tr>
                 <td><b>Fixed Carbon <div class="pull-right">:</div></b></td>
                 <td>{{sell_order.fc_min}} - {{sell_order.fc_max}} %</td>
@@ -84,6 +129,10 @@
               <tr>
                 <td><b>Hardness <div class="pull-right">:</div></b></td>
                 <td>{{sell_order.hgi_min}} - {{sell_order.hgi_max}} %</td>
+              </tr>
+              <tr>
+                <td><b>Size <div class="pull-right">:</div></b></td>
+                <td>{{sell_order.size_min}} - {{sell_order.size_max}} mm</td>
               </tr>
             </tbody>
           </table>
