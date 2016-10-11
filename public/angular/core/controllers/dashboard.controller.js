@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('index').controller('DashboardController', ['$scope', '$state', '$http', 'NgMap', 'Mine', 'Buyer', 'Order', 'News', 'Authentication', 'Activities', 'Deal',
-  function($scope, $state, $http, NgMap, Mine, Buyer, Order, News, Authentication, Activities, Deal) {
+angular.module('index').controller('DashboardController', ['$scope', '$state', '$http', 'NgMap', 'Mine', 'Buyer', 'Order', 'News', 'Authentication', 'Deal',
+  function($scope, $state, $http, NgMap, Mine, Buyer, Order, News, Authentication, Deal) {
     var heatmap;
     $state.go('lead.index');
     $scope.Authentication = Authentication;
@@ -34,10 +34,6 @@ angular.module('index').controller('DashboardController', ['$scope', '$state', '
       $scope.news = News.query();
     };
     
-    $scope.loadActivities = function(){
-      $scope.activities = Activities.query();
-    };
-
     $scope.loadICI = function(){
       $http({
         method: 'GET',
