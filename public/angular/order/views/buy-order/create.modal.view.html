@@ -5,10 +5,10 @@
     <h4 class="modal-title">Create Buy Order</h4>
   </div>
   <div class="modal-body">
-    <div ng-include="'/angular/order/views//buy-order/form.view.html'"></div>
+    <div ng-include="'/angular/order/views/buy-order/form.view.html'"></div>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-primary" ng-show="state > 0" ng-click="state = state-1">Back</button>
+    <button type="button" class="btn btn-primary" ng-show="state > 0" ng-click="back()">Back</button>
     <button type="button" class="btn btn-primary" ng-hide="state == 2" ng-click="next()">Next</button>
     <button type="submit" class="btn btn-primary" ng-show="state == 2">Save changes</button>
     <button type="button" class="btn btn-default" ng-click="reset()">Reset</button>
