@@ -1,0 +1,44 @@
+<table ng-init="findSellOrder()" st-table="displayedCollection" st-safe-src="sell_orders" class="table table-striped">
+  <thead>
+    <tr>
+        <th colspan="9"><input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
+    </tr>
+    <tr>
+      <th>#</th>
+      <th st-sort="seller">Seller</th>
+      <th st-sort="volume">Volume</th>
+      <th st-sort="product">Product Name</th>
+      <th st-sort="gcv_arb">GCV (arb)</th>
+      <th st-sort="gcv_adb">GCV (adb)</th>
+      <th st-sort="ncv">NCV</th>
+      <th st-sort="price">Price / Tones</th>
+      <th st-sort=""></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr ng-repeat="sell_order in displayedCollection">
+      <td>{{ sell_order.id }}</td>
+      <td>{{ sell_order.seller.company_name }}</td>
+      <td>{{ sell_order.volume }}</td>
+      <td>{{ sell_order.product_name }}</td>
+      <td>{{ sell_order.gcv_arb_min }} - {{ sell_order.gcv_arb_max }}</td>
+      <td>{{ sell_order.gcv_adb_min }} - {{ sell_order.gcv_adb_max }}</td>
+      <td>{{ sell_order.ncv_min }} - {{ sell_order.ncv_max }}</td>
+      <td>{{ sell_order.max_price/sell_order.volume | currency : $ : 2}}</td>
+      <td>
+        <a ng-click="changeOrderStatusA(sell_order)" style="cursor: pointer"><i class="glyphicon glyphicon-font"></i></a>
+        <a ng-click="changeOrderStatusF(sell_order)" style="cursor: pointer"><i class="glyphicon glyphicon-ok"></i></a>
+        <a ng-click="changeOrderStatusC(sell_order)" style="cursor: pointer"><i class="glyphicon glyphicon-remove"></i></a>
+      </td>
+    </tr>
+  </tbody>
+
+  <tfoot>
+    <tr>
+      <td colspan="9" class="text-center">
+        <div st-pagination="" st-items-by-page="10" st-displayed-pages="5"></div>
+      </td>
+    </tr>
+  </tfoot>
+</table>

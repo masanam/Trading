@@ -1,8 +1,8 @@
 <table ng-init="findBuyOrder()" st-table="displayedCollection" st-safe-src="buy_orders" class="table table-striped">
 	<thead>
-        <tr>
-            <th colspan="9"><input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
-        </tr>
+    <tr>
+        <th colspan="9"><input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
+    </tr>
 		<tr>
 			<th>#</th>
 			<th st-sort="buyer">Buyer</th>
@@ -10,35 +10,35 @@
 			<th st-sort="product">Product Name</th>
 			<th st-sort="gcv_arb">GCV (arb)</th>
 			<th st-sort="gcv_adb">GCV (adb)</th>
-            <th st-sort="ncv">NCV</th>
-            <th st-sort="price">Price / Tones</th>
+      <th st-sort="ncv">NCV</th>
+      <th st-sort="price">Price / Tones</th>
 			<th st-sort=""></th>
 		</tr>
 	</thead>
 
 	<tbody>
-			<tr ng-repeat="buy_order in displayedCollection">
+		<tr ng-repeat="buy_order in displayedCollection">
 			<td>{{ buy_order.id }}</td>
 			<td>{{ buy_order.buyer.company_name }}</td>
             <td>{{ buy_order.volume }}</td>
 			<td>{{ buy_order.product_name }}</td>
 			<td>{{ buy_order.gcv_arb_min }} - {{ buy_order.gcv_arb_max }}</td>
 			<td>{{ buy_order.gcv_adb_min }} - {{ buy_order.gcv_adb_max }}</td>
-            <td>{{ buy_order.ncv_min }} - {{ buy_order.ncv_max }}</td>
-            <td>{{ buy_order.max_price/buy_order.volume | currency : $ : 2}}</td>
-            <td>
-              <a ng-click="changeOrderStatusA(buy_order)" style="cursor: pointer"><i class="glyphicon glyphicon-font"></i></a>
-              <a ng-click="changeOrderStatusF(buy_order)" style="cursor: pointer"><i class="glyphicon glyphicon-ok"></i></a>
-              <a ng-click="changeOrderStatusC(buy_order)" style="cursor: pointer"><i class="glyphicon glyphicon-remove"></i></a>
-            </td>
+      <td>{{ buy_order.ncv_min }} - {{ buy_order.ncv_max }}</td>
+      <td>{{ buy_order.max_price/buy_order.volume | currency : $ : 2}}</td>
+      <td>
+        <a ng-click="changeOrderStatusA(buy_order)" style="cursor: pointer"><i class="glyphicon glyphicon-font"></i></a>
+        <a ng-click="changeOrderStatusF(buy_order)" style="cursor: pointer"><i class="glyphicon glyphicon-ok"></i></a>
+        <a ng-click="changeOrderStatusC(buy_order)" style="cursor: pointer"><i class="glyphicon glyphicon-remove"></i></a>
+      </td>
 		</tr>
 	</tbody>
 
-    <tfoot>
-      <tr>
-        <td colspan="9" class="text-center">
-          <div st-pagination="" st-items-by-page="10" st-displayed-pages="5"></div>
-        </td>
-      </tr>
-    </tfoot>
+  <tfoot>
+    <tr>
+      <td colspan="9" class="text-center">
+        <div st-pagination="" st-items-by-page="10" st-displayed-pages="5"></div>
+      </td>
+    </tr>
+  </tfoot>
 </table>

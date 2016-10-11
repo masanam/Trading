@@ -125,9 +125,9 @@ class BuyOrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($buy_order)
+    public function show($id)
     {
-        $buy_order = BuyOrder::with('buyer')->find($buy_order);
+        $buy_order = BuyOrder::with('Buyer')->find($id);
 
         if($buy_order->order_status == 'a') {
             return response()->json($buy_order, 200);
@@ -143,9 +143,9 @@ class BuyOrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $buy_order)
+    public function update(Request $request, $id)
     {
-        $buy_order = BuyOrder::find($buy_order);
+        $buy_order = BuyOrder::find($id);
      
         if (!$request) {
             return response()->json([
@@ -216,7 +216,8 @@ class BuyOrderController extends Controller
         $buy_order->size_bonus = $request->size_bonus;
 
         $buy_order->volume = $request->volume;
-        
+        $buy_order->product_name = $request->product_name;
+        $buy_order->product_id = $request->product_id;
         $buy_order->order_status = 'a';
 
         $buy_order->save();
@@ -230,9 +231,9 @@ class BuyOrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($buy_order)
+    public function destroy($id)
     {
-        $buy_order = BuyOrder::find($buy_order);
+        $buy_order = BuyOrder::find($id);
 
         if (!$buy_order) {
             return response()->json([
@@ -253,15 +254,15 @@ class BuyOrderController extends Controller
     public function status($order_status, $progress_status = false)
     {
         if (!$progress_status) {
-            $buy_order = BuyOrder::with('buyer')->where('order_status', $order_status)->get();
+            $buy_order = BuyOrder::with('Buyer')->where('order_status', $order_status)->get();
         } else {
-            $buy_order = BuyOrder::with('buyer')->where('order_status', $order_status)->where('progress_status', 'LIKE', '%'.$progress_status.'%')->get();
+            $buy_order = BuyOrder::with('Buyer')->where('order_status', $order_status)->where('progress_status', 'LIKE', '%'.$progress_status.'%')->get();
         }
 
         return response()->json($buy_order, 200);
     }
 
-    public function changeOrderStatus($id , $order_status)
+    public function changeOrderStatus($id, $order_status)
     {
         $buy_order = BuyOrder::find($id);
 
