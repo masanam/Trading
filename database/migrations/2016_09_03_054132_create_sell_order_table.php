@@ -26,6 +26,9 @@ class CreateSellOrderTable extends Migration
             $table->string('address');
             $table->decimal('latitude', 10, 8);
             $table->decimal('longitude', 11, 8);
+            
+            $table->string('product_name')->nullable();
+            $table->integer('product_id')->nullable();
 
             $table->integer('gcv_arb_min')->nullable(); //gross calorific value, as received basis
             $table->integer('gcv_arb_max')->nullable();

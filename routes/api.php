@@ -47,8 +47,6 @@ Route::group(['middleware' => ['cors']], function() {
         'create', 'edit'
     ]]);
 
-    
-
     Route::get('order/buy/status/{order_status}/{progress_status?}', 'BuyOrderController@status', ['except' => [
         'create', 'edit'
     ]]);
@@ -62,6 +60,13 @@ Route::group(['middleware' => ['cors']], function() {
         'create', 'edit'
     ]]);
 
+    Route::get('order/sell/status/{order_status}/{progress_status?}', 'SellOrderController@status', ['except' => [
+        'create', 'edit'
+    ]]);
+
+    Route::get('order/sell/{id}/changeOrderStatus/{order_status}', 'SellOrderController@changeOrderStatus', ['except' => [
+        'create', 'edit'
+    ]]);
 
     Route::get('order/lastOrder/{type}/{id}', 'BuySellOrderController@lastOrderByUser');
     
