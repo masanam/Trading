@@ -43,6 +43,9 @@
           <deal-status status=deal.status></deal-status>
       </td>
     </tr>
+    <tr ng-if="dealCollections.length == 0">
+        <td colspan="9" class="text-center">No data available</td>
+    </tr>
   </tbody>
   <tfoot>
       <tr>

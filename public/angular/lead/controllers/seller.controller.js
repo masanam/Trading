@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('seller').controller('SellerController', ['$scope', '$http', '$stateParams', '$state', '$timeout', '$location', 'Seller', 'Production', 'Product', 'Mine', '$uibModal',
-	function($scope, $http, $stateParams, $state, $timeout, $location, Seller, Production, Product, Mine, $uibModal) {
+angular.module('seller').controller('SellerController', ['$scope', '$http', '$stateParams', '$state', '$timeout', '$location', 'Seller', 'Product', 'Mine', '$uibModal',
+	function($scope, $http, $stateParams, $state, $timeout, $location, Seller, Product, Mine, $uibModal) {
 		$scope.sellers = [];
 		$scope.seller = {};
 		$scope.productButton = false;

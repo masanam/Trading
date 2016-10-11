@@ -44,6 +44,10 @@
                 <a ui-sref="lead.view-product({ id: product.id })"><i class="glyphicon glyphicon-eye-open"></i></a>
               </td>
             </tr>
+            <tr ng-if="displayedCollection.length == 0">
+              <td colspan="6" class="text-center">No data available</td>
+            </tr>
+
           </tbody>
 
           <tfoot>
