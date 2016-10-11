@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('product').controller('ProductController', ['$scope', '$state', '$http', '$stateParams', '$q', '$uibModal', 'Product', 'Production', 'Mine','Seller','Buyer',
-  function($scope, $state, $http, $stateParams, $q, $uibModal, Product, Production, Mine,Seller,Buyer) {
+angular.module('product').controller('ProductController', ['$scope', '$state', '$http', '$stateParams', '$q', '$uibModal', 'Product', 'Mine','Seller','Buyer',
+  function($scope, $state, $http, $stateParams, $q, $uibModal, Product, Mine,Seller,Buyer) {
     $scope.formOpen = false;
 
     $scope.find = function() {
