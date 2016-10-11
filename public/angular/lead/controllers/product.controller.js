@@ -275,19 +275,16 @@ angular.module('product').controller('CrtProductModalController', function ($sco
     
         }
     }
-
-
+    
   $scope.crtProduct = function (formCreateProduct) {
-
-    if(formCreateProduct.validate()){
       var product = new Product({
           buyer_id: $scope.product.buyer_id,
           seller_id: $scope.product.seller_id,
           commercial_term: $scope.product.commercial_term,
           product_name: $scope.product.product_name,
           volume: $scope.product.volume,
-          ready_date: $scope.product.ready_date,
-          expired_date: $scope.product.expired_date,
+          ready_date: $filter('date')($scope.product.ready_date, "yyyy-MM-dd"),
+          expired_date: $filter('date')($scope.product.expired_date, "yyyy-MM-dd"),
           tm_min: $scope.product.tm_min,
           tm_max: $scope.product.tm_max,
           tm_reject: $scope.product.tm_reject,
@@ -339,7 +336,6 @@ angular.module('product').controller('CrtProductModalController', function ($sco
         $uibModalInstance.close('success');
         $scope.loading=false;
       });
-    }   
  };
   
   $scope.close = function () {

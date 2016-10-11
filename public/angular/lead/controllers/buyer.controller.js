@@ -355,7 +355,6 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
 angular.module('deal').controller('BuyerModalController', function ($scope, $uibModalInstance, Buyer) {
   
   $scope.create = function(createBuyer) {
-    if(createBuyer.validate()) {
       $scope.loading = true;
 
       var buyer = new Buyer({
@@ -376,9 +375,6 @@ angular.module('deal').controller('BuyerModalController', function ($scope, $uib
         $uibModalInstance.close('success');
         $scope.loading = false;
       });
-    }else{
-      console.log('error');
-    }
   };
 
   $scope.close = function () {

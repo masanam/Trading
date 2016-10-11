@@ -369,7 +369,7 @@ angular.module('seller').controller('CreateSellerModalController', function ($sc
 
 
   $scope.createSeller = function (creteSeller) {
-    if(creteSeller.validate()){
+  
       var seller = new Seller({
         company_name: $scope.seller.company_name,
         phone: $scope.seller.phone,
@@ -388,7 +388,7 @@ angular.module('seller').controller('CreateSellerModalController', function ($sc
         $uibModalInstance.close('success');
         $scope.loading=false;
       });
-    }   
+      
  };
   
   $scope.close = function () {
