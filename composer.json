@@ -15,7 +15,8 @@
         "jeylabs/laravel-scout-elastic": "^1.0",
         "vinkla/pusher": "^2.4",
         "pusher/pusher-php-server": "^2.6",
-        "mpociot/laravel-firebase-sync": "^1.0"
+        "mpociot/laravel-firebase-sync": "^1.0",
+        "league/flysystem-aws-s3-v3": "^1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

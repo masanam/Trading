@@ -32,8 +32,6 @@ Elixir.extend('bower', function(jsOutputFile, jsOutputFolder, ttfOutputFolder, c
     'bower_components/angular-aria/angular-aria.js',
     'bower_components/angular-messages/angular-messages.js',
     'bower_components/lodash/lodash.js',
-    'bower_components/angular-loading-bar/build/loading-bar.js',
-    'bower_components/angular-loading-bar/build/loading-bar.css',
     'bower_components/satellizer/satellizer.js',
     'bower_components/angular-resource/angular-resource.js',
     'bower_components/ngmap/build/scripts/ng-map.js',
@@ -58,7 +56,9 @@ Elixir.extend('bower', function(jsOutputFile, jsOutputFolder, ttfOutputFolder, c
     'bower_components/ng-validate/src/ng-validate.js',
     'bower_components/angular-smart-table/dist/smart-table.min.js',
     'bower_components/angular-smart-table/dist/smart-table.css',
-    'bower_components/angular-pusher/angular-pusher.min.js'
+    'bower_components/angular-pusher/angular-pusher.min.js',
+    'bower_components/ng-file-upload/ng-file-upload-all.js',
+
   ];
   
   var mainCSSFiles = [];

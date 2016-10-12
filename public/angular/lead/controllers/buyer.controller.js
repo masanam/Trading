@@ -35,30 +35,28 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
 		$scope.format = 'dd.MM.yyyy';
 
 		$scope.create = function() {
-      if(form.validate()) {
-  			$scope.loading = true;
+			$scope.loading = true;
 
-  			var buyer = new Buyer({
-  				company_name: $scope.buyer.company_name,
-  				email: $scope.buyer.email,
-  				phone: $scope.buyer.phone,
-  				web: $scope.buyer.web,
-  				industry: $scope.buyer.industry,
-          description: $scope.buyer.description,
-  				city: $scope.buyer.city,
-  				address: $scope.buyer.address,
-  				latitude: $scope.buyer.latitude,
-  				longitude: $scope.buyer.longitude
-  			});
+			var buyer = new Buyer({
+				company_name: $scope.buyer.company_name,
+				email: $scope.buyer.email,
+				phone: $scope.buyer.phone,
+				web: $scope.buyer.web,
+				industry: $scope.buyer.industry,
+        description: $scope.buyer.description,
+				city: $scope.buyer.city,
+				address: $scope.buyer.address,
+				latitude: $scope.buyer.latitude,
+				longitude: $scope.buyer.longitude
+			});
 
-  			buyer.$save(function(response) {
-  				//$state.go('buyer.index');
-  		        $('#createBuyerModal').modal('hide');
-  		        $('.modal-backdrop').hide();
-  		        $scope.find()
-  				$scope.loading = false;
-  			});
-      }
+			buyer.$save(function(response) {
+				//$state.go('buyer.index');
+		        $('#createBuyerModal').modal('hide');
+		        $('.modal-backdrop').hide();
+		        $scope.find()
+				$scope.loading = false;
+			});
 		};
 
     $scope.openCreateBuyerModal = function () {
@@ -355,30 +353,26 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
 angular.module('deal').controller('BuyerModalController', function ($scope, $uibModalInstance, Buyer) {
   
   $scope.create = function(createBuyer) {
-    if(createBuyer.validate()) {
-      $scope.loading = true;
+    $scope.loading = true;
 
-      var buyer = new Buyer({
-        company_name: $scope.buyer.company_name,
-        email: $scope.buyer.email,
-        phone: $scope.buyer.phone,
-        web: $scope.buyer.web,
-        industry: $scope.buyer.industry,
-        description: $scope.buyer.description,
-        city: $scope.buyer.city,
-        address: $scope.buyer.address,
-        latitude: $scope.buyer.latitude,
-        longitude: $scope.buyer.longitude
-      });
+    var buyer = new Buyer({
+      company_name: $scope.buyer.company_name,
+      email: $scope.buyer.email,
+      phone: $scope.buyer.phone,
+      web: $scope.buyer.web,
+      industry: $scope.buyer.industry,
+      description: $scope.buyer.description,
+      city: $scope.buyer.city,
+      address: $scope.buyer.address,
+      latitude: $scope.buyer.latitude,
+      longitude: $scope.buyer.longitude
+    });
 
-      buyer.$save(function(response) {
-        $scope.buyers.push(response);
-        $uibModalInstance.close('success');
-        $scope.loading = false;
-      });
-    }else{
-      console.log('error');
-    }
+    buyer.$save(function(response) {
+      $scope.buyers.push(response);
+      $uibModalInstance.close('success');
+      $scope.loading = false;
+    });
   };
 
   $scope.close = function () {

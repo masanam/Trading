@@ -42,9 +42,9 @@ Elixir.extend('angular', function(src, output, outputFilename) {
   new Task('app-js', function() {
     // Admin file has to be included first.
     return gulp.src([
-        baseDir + 'core/config/app.config.js',
-        baseDir + 'core/config/init.config.js',
-        baseDir + '*/**/*.js'
+        baseDir + 'core/config/app.js',
+        baseDir + 'core/config/init.js',
+        baseDir + '*/**/*.*.js'
       ])
       .pipe(eslint())
       .pipe(eslint.format())

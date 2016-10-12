@@ -19,6 +19,8 @@ Route::group(['middleware' => ['cors']], function() {
     Route::post('authenticate/signup', 'AuthenticateController@signup');
     Route::get('authenticate/user', 'AuthenticateController@getAuthenticatedUser');
 
+    Route::post('signing', 'AuthenticateController@upload');
+
     Route::get('user/current', 'UserController@currentUser');
     Route::resource('user', 'UserController', ['except' => [
         'create', 'edit'

@@ -369,26 +369,13 @@ angular.module('seller').controller('CreateSellerModalController', function ($sc
 
 
   $scope.createSeller = function (creteSeller) {
-    if(creteSeller.validate()){
-      var seller = new Seller({
-        company_name: $scope.seller.company_name,
-        phone: $scope.seller.phone,
-        email: $scope.seller.email,
-        web: $scope.seller.web,
-        industry: $scope.seller.industry,
-        city: $scope.seller.city,
-        address: $scope.seller.address,
-        latitude: $scope.seller.latitude,
-        longitude: $scope.seller.longitude,
-        description: $scope.seller.description
-      });
+    var seller = new Seller($scope.seller);
 
-      seller.$save(function(response) {
-        $scope.sellers.push(response);
-        $uibModalInstance.close('success');
-        $scope.loading=false;
-      });
-    }   
+    seller.$save(function(response) {
+      $scope.sellers.push(response);
+      $uibModalInstance.close('success');
+      $scope.loading=false;
+    });
  };
   
   $scope.close = function () {

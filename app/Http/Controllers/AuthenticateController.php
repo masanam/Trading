@@ -90,4 +90,21 @@ class AuthenticateController extends Controller
         // the token is valid and we have found the user via the sub claim
         return response()->json(compact('user'), 200);
     }
+
+    public function signing(Request $request)
+    {
+        $disk = Storage::disk('s3');
+        $bucket = Config::get('filesystems.disks.s3.bucket');
+        $key = $request->file->filename;
+
+        if ($disk->exists($key)) {
+            $command = $disk->getDriver()->getAdapter()->getClient()->getCommand('GetObject', [
+                'Bucket'                     => $bucket,
+                'Key'                        => $key,
+                'ResponseContentDisposition' => 'attachment;'
+            ]);
+            $request = $disk->getDriver()->getAdapter()->getClient()->createPresignedRequest($command, '+5 minutes');
+            return response()->json([ 'url' => (string) $request->getUri() ]);
+        }
+    }
 }
