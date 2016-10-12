@@ -43,4 +43,5 @@ angular.module('auth').controller('AuthController', ['$scope', '$state', '$urlRo
       Authentication.logout();
       $state.go('home', {});
     };
-}]);
+  }
+]);

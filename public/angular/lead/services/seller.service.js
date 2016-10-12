@@ -3,7 +3,7 @@
 angular.module('seller').factory('Seller', ['$resource',
   function ($resource) {
     return $resource('api/seller/:id/:action/:status/:search', {
-          id: undefined,
+      id: undefined,
       action: undefined,
       status: undefined,
       search: undefined

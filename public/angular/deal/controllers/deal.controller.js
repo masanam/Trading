@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Deal', 'Order', 'Buyer', 'Seller', 'SellDeal', 'BuyDeal', 'Authentication', '$location', '$stateParams', 'Pusher', 'BuyDealChat', 'SellDealChat',
-	function($scope, $uibModal, Deal, Order, Buyer, Seller, SellDeal, BuyDeal, Authentication, $location, $stateParams, Pusher, BuyDealChat, SellDealChat) {
+  function($scope, $uibModal, Deal, Order, Buyer, Seller, SellDeal, BuyDeal, Authentication, $location, $stateParams, Pusher, BuyDealChat, SellDealChat) {
     $scope.deals = [];
 
     $scope.findDeals = function(){
@@ -53,7 +53,7 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
       $scope.sellers = Seller.query();
     };
     
-		//$scope.deal = Deal.get;
+    //$scope.deal = Deal.get;
     
     $scope.buyOrders = [];
     
@@ -287,10 +287,10 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
       var deal = $scope.deal;
       
       Deal.get({ action: 'status', id: deal.id, status: 'f' }, function(response) {
-				$location.url('/deal');
-			}, function(err) {
-				console.log(err);
-			});
+        $location.url('/deal');
+      }, function(err) {
+        console.log(err);
+      });
 
       
       /*deal.$remove(function (response) {
@@ -304,10 +304,10 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
       var deal = $scope.deal;
       
       Deal.get({ action: 'status', id: deal.id, status: 'x' }, function(response) {
-				$location.url('/deal');
-			}, function(err) {
-				console.log(err);
-			});
+        $location.url('/deal');
+      }, function(err) {
+        console.log(err);
+      });
     };
 
     $scope.buyDeal = {};
@@ -722,34 +722,34 @@ angular.module('deal').controller('SellModalController', function ($scope, $uibM
 });
 
 angular.module('deal').controller('DealModalController', function ($scope, $uibModalInstance, Deal, Order, Product) {
-	$scope.tab = 'call';
-	$scope.states = ['call', 'match', 'deal'];
+  $scope.tab = 'call';
+  $scope.states = ['call', 'match', 'deal'];
 
-	$scope.next = function (){
-		if($scope.tab === 'call') $scope.tab = 'match';
-		if($scope.tab === 'match') $scope.tab = 'deal';
-	};
+  $scope.next = function (){
+    if($scope.tab === 'call') $scope.tab = 'match';
+    if($scope.tab === 'match') $scope.tab = 'deal';
+  };
 
-	$scope.prev = function (){
-		if($scope.tab === 'match') $scope.tab = 'call';
-		if($scope.tab === 'deal') $scope.tab = 'match';
-	};
+  $scope.prev = function (){
+    if($scope.tab === 'match') $scope.tab = 'call';
+    if($scope.tab === 'deal') $scope.tab = 'match';
+  };
 
-	$scope.buyer = {
-		company_name: 'PT Wilmar Nabati Indonesia',
-		phone: '(031) 3979414',
-		email: 'info@wilmar-international.com',
-		price: 5600000000,
-		volume: 5000,
+  $scope.buyer = {
+    company_name: 'PT Wilmar Nabati Indonesia',
+    phone: '(031) 3979414',
+    email: 'info@wilmar-international.com',
+    price: 5600000000,
+    volume: 5000,
 
-		contact: [
-			{ name: 'Toni', email: 'toni@wilmar-international.com', phone: '(031) 3979414 ext 12' },
-			{ name: 'Dewi', email: 'dewi@wilmar-international.com', phone: '(031) 3979414 ext 8' },
-		]
-	};
+    contact: [
+      { name: 'Toni', email: 'toni@wilmar-international.com', phone: '(031) 3979414 ext 12' },
+      { name: 'Dewi', email: 'dewi@wilmar-international.com', phone: '(031) 3979414 ext 8' },
+    ]
+  };
 
-	$scope.order = {
-		'tm_min': 12,
+  $scope.order = {
+    'tm_min': 12,
         'tm_max': 18,
         'im_min': 8,
         'im_max': 11,
@@ -771,21 +771,21 @@ angular.module('deal').controller('DealModalController', function ($scope, $uibM
         'hgi_max': 40,
         'size_min': 45,
         'size_max': 50,
-	};
+  };
 
-	$scope.matchedSupply = function(id) {
-		$scope.loading = true;
+  $scope.matchedSupply = function(id) {
+    $scope.loading = true;
 
-		$scope.matchSupply = Order.query({ action: 'matching', id: id });
-		$scope.loading = false;
-	};
+    $scope.matchSupply = Order.query({ action: 'matching', id: id });
+    $scope.loading = false;
+  };
 
-	$scope.matchedDemand = function(id) {
-		$scope.loading = true;
+  $scope.matchedDemand = function(id) {
+    $scope.loading = true;
 
-		$scope.matchDemand = Product.query({ action: 'matching', id: id });
-		$scope.loading = false;
-	};
+    $scope.matchDemand = Product.query({ action: 'matching', id: id });
+    $scope.loading = false;
+  };
 
   $scope.close = function () {
     $uibModalInstance.dismiss('cancel');

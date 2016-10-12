@@ -3,7 +3,7 @@
 // Authentication service for user variables
 angular.module('user').factory('Authentication', ['$http', '$auth',
   function ($http, $auth) {
-  	var auth = {};
+    var auth = {};
 
     $auth.loginUrl = '/api/authenticate';
 
@@ -16,7 +16,7 @@ angular.module('user').factory('Authentication', ['$http', '$auth',
         }).error(function(err){
           if(callback) return callback(err, undefined);
         });
-      } else callback({ message: "No user logged in!" }, undefined);
+      } else callback({ message: 'No user logged in!' }, undefined);
     };
 
     auth.login = function (credentials, callback){
@@ -25,7 +25,7 @@ angular.module('user').factory('Authentication', ['$http', '$auth',
         // If login is successful, redirect to the users state
         auth.authenticate(callback);
       }).catch(function(err){
-        return callback({ message: "Wrong username/password combination!" }, undefined);
+        return callback({ message: 'Wrong username/password combination!' }, undefined);
       });
     };
 

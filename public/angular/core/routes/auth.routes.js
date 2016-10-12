@@ -6,21 +6,21 @@ angular.module('auth').config(['$stateProvider', '$urlRouterProvider',
     // Home state routing
     $stateProvider
       .state('auth', {
-		    url: '/auth',
-		    abstract: true,
-		    template: '<ui-view>'
-	    })
+        url: '/auth',
+        abstract: true,
+        template: '<ui-view>'
+      })
       .state('auth.signin', {
-		    url: '/signin',
-		    templateUrl: '/angular/core/views/auth/signin.view.html'
-	    })
+        url: '/signin',
+        templateUrl: '/angular/core/views/auth/signin.view.html'
+      })
       .state('auth.signup', {
-		    url: '/signup',
-		    templateUrl: '/angular/core/views/auth/signup.view.html'
-	    })
+        url: '/signup',
+        templateUrl: '/angular/core/views/auth/signup.view.html'
+      })
       .state('auth.forgot', {
-		    url: '/forgot',
-		    templateUrl: '/angular/core/views/auth/signup.view.html'
-	    });
+        url: '/forgot',
+        templateUrl: '/angular/core/views/auth/signup.view.html'
+      });
   }
 ]);

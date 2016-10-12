@@ -46,8 +46,8 @@ angular.module('product').controller('ProductController', ['$scope', '$state', '
       $scope.findOne($stateParams.id);
       
       $scope.mines = Mine.query({ option: 'dropdown' }, function (){
-        for( var x=0; x < $scope.mines.length; x++ ){
-          if( $scope.product.mine_id === $scope.mines[x].id ){
+        for(var x=0; x<$scope.mines.length; x++){
+          if($scope.product.mine_id === $scope.mines[x].id){
             $scope.product.mine = $scope.mines[x];
           }
         }
@@ -162,8 +162,8 @@ angular.module('product').controller('CrtProductModalController', function ($sco
       }  
     },
     messages: {
-      product_name: "field not be empty",
-      commercial_term: "field not be empty"
+      product_name: 'field not be empty',
+      commercial_term: 'field not be empty'
     }
   }
 

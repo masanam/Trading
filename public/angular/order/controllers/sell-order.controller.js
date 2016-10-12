@@ -26,4 +26,5 @@ angular.module('order').controller('SellOrderController', ['$scope', '$uibModal'
         size: 'lg'
       });
     };
-}]);
+  }
+]);

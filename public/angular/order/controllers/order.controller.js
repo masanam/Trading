@@ -213,21 +213,21 @@ angular.module('order').controller('OrderController', ['$location', '$scope', '$
     };
     
     $scope.getTotalPrice = function(){
-        var total = 0;
-        for(var i = 0; i < $scope.orders.length; i++){
-            var product = $scope.orders[i];
-            total += (product.max_price * product.volume);
-        }
-        return total;
+      var total = 0;
+      for(var i = 0; i < $scope.orders.length; i++){
+        var product = $scope.orders[i];
+        total += (product.max_price * product.volume);
+      }
+      return total;
     };
     
     $scope.getTotalVolume = function(){
-        var total = 0;
-        for(var i = 0; i < $scope.orders.length; i++){
-            var product = $scope.orders[i];
-            total += product.volume;
-        }
-        return total;
+      var total = 0;
+      for(var i = 0; i < $scope.orders.length; i++){
+        var product = $scope.orders[i];
+        total += product.volume;
+      }
+      return total;
     };
 
     $scope.find = function() {
@@ -271,10 +271,9 @@ angular.module('order').controller('OrderController', ['$location', '$scope', '$
           $scope.orders[key].status = data.status;
         } 
       }
-    });
-
-    
-}]);
+    });  
+  }
+]);
 
 
 angular.module('order').controller('OrderModalController', function ($scope, $uibModalInstance, $timeout, order, Order, OrderFulfillment) {
@@ -323,7 +322,7 @@ angular.module('order').controller('OrderModalController', function ($scope, $ui
   
   $scope.createOrderFulfillment = function(order, match) {
     $scope.loading =true;
-    $scope.errorMessage = "";
+    $scope.errorMessage = '';
     
     var orderFulfillment = new OrderFulfillment({
       order_id: order.id,
@@ -335,7 +334,7 @@ angular.module('order').controller('OrderModalController', function ($scope, $ui
       $scope.order = response;
       $scope.order.status = 'm';
       $scope.loading = false;
-      $scope.errorMessage = "You have chosen the sourcing from "+match.mine_name+" : ("+match.volume+") tonnes";
+      $scope.errorMessage = 'You have chosen the sourcing from '+match.mine_name+' : ('+match.volume+') tonnes';
     });
   };
 
@@ -391,7 +390,8 @@ angular.module('order').controller('CreateOrderController', ['$location', '$scop
         scope: $scope
       });
     };
-}]);
+  }
+]);
 
 
 

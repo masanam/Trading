@@ -1,4 +1,5 @@
 {
+  "node": true,
   "browser": true, // Standard browser globals e.g. `window`, `document`.
   "esnext": true, // Allow ES.next specific features such as `const` and `let`.
   "bitwise": false, // Prohibit bitwise operators (&, |, ^, etc.).
