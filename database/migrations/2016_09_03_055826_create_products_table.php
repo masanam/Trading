@@ -18,6 +18,7 @@ class CreateProductsTable extends Migration
 
             $table->integer('seller_id')->nullable();
             $table->integer('buyer_id')->nullable();
+            $table->integer('concession_id')->nullable();
             $table->string('commercial_term');
 			$table->string('product_name');
             $table->date('ready_date');

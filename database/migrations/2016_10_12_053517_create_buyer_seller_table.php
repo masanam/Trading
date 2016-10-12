@@ -18,8 +18,8 @@ class CreateBuyerSellerTable extends Migration
             $table->integer('seller_id')->nullable();
             $table->integer('buyer_id')->nullable();
             $table->string('notes');
-            $table->string('is_facilitated');
-            $table->string('status');
+            $table->boolean('is_facilitated');
+            $table->char('status', 1); // A = Active , X = Deleted
             $table->date('updated_at');
             $table->date('created_at');
         });
