@@ -26,7 +26,7 @@ angular.module('product').controller('ProductController', ['$scope', '$state', '
         controller: 'ProductModalController',
         resolve: {
           product: function () {
-            return Product.get({ id: id });;
+            return Product.get({ id: id });
           }
         }
       });
@@ -94,39 +94,6 @@ angular.module('product').controller('ProductController', ['$scope', '$state', '
       });
     };
 
-    $scope.add = function (){
-      $scope.loading = true;
-
-      var production = new Production({
-        tonnage: $scope.production.tonnage,
-        product_id: $scope.product.id,
-        description: $scope.production.description
-      });
-
-      production.$save(function(response) {
-        $state.go('product.index');
-        $scope.loading = false;
-      });
-    };
-
-    $scope.opname = function  (){
-      $scope.loading = true;
-      var date = new Date();
-
-      var production = new Production({
-        tonnage: $scope.correction.tonnage - $scope.product.tonnage,
-        product_id: $scope.product.id,
-        description: 'Stock Opname - ' + date
-      });
-
-      $scope.product.tonnage = $scope.correction.tonnage;
-
-      production.$save(function(response) {
-        $state.go('product.index');
-        $scope.loading = false;
-      });
-    };
-
     $scope.delete = function (product){
       $scope.loading = true;
 
@@ -136,7 +103,8 @@ angular.module('product').controller('ProductController', ['$scope', '$state', '
         console.log(err);
       });
     };
-}]);
+  }
+]);
 
 
 angular.module('product').controller('ProductModalController', function ($scope, $uibModalInstance, Product, product) {
@@ -148,25 +116,8 @@ angular.module('product').controller('ProductModalController', function ($scope,
 });
 
 
-angular.module('product').controller('CrtProductModalController', function ($scope, $filter, $uibModalInstance, Product ) {
-
+angular.module('product').controller('CrtProductModalController', function ($scope, $filter, $uibModalInstance, Product) {
   $scope.product = new Product();
-
-  $scope.validationOptions = {
-    rules: {
-      product_name: {
-        required: true
-      },
-      commercial_term: {
-        required: true
-      }  
-    },
-    messages: {
-      product_name: 'field not be empty',
-      commercial_term: 'field not be empty'
-    }
-  }
-
 
   $scope.crtProduct = function (formCreateProduct) {
     var product = new Product($scope.product);
@@ -176,7 +127,7 @@ angular.module('product').controller('CrtProductModalController', function ($sco
       $uibModalInstance.close('success');
       $scope.loading=false;
     });
- };
+  };
   
   $scope.close = function () {
     $uibModalInstance.dismiss('cancel');

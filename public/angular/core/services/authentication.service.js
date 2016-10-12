@@ -33,7 +33,7 @@ angular.module('user').factory('Authentication', ['$http', '$auth',
       $auth.signup(registration).then(function(data) {
         // If signup is successful, redirect to the users state
         auth.authenticate();
-        callback()
+        callback();
       });
     };
 

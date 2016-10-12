@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('seller').controller('SellerController', ['$scope', '$http', '$stateParams', '$state', '$timeout', '$location', 'Seller', 'Product', 'Mine', '$uibModal',
-  function($scope, $http, $stateParams, $state, $timeout, $location, Seller, Product, Mine, $uibModal) {
+angular.module('seller').controller('SellerController', ['$scope', '$http', '$stateParams', '$state', '$timeout', '$location', 'Seller', 'Product', 'Mine', 'Contact', '$uibModal',
+  function($scope, $http, $stateParams, $state, $timeout, $location, Seller, Product, Mine, Contact, $uibModal) {
     $scope.sellers = [];
     $scope.seller = {};
     $scope.productButton = false;
@@ -64,9 +64,9 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
       });
 
       seller.$save(function(response) {
-        $('#createSellerModal').modal('hide');
-        $('.modal-backdrop').hide();
-        $scope.find()
+        // $('#createSellerModal').modal('hide');
+        // $('.modal-backdrop').hide();
+        $scope.find();
         $scope.loading = false;
       });
     };
@@ -90,12 +90,12 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
         $scope.error = undefined;
         if($scope.sellers !== undefined){
           for(var key in $scope.sellers){
-            if($scope.sellers[key].id == $scope.seller.id){
+            if($scope.sellers[key].id === $scope.seller.id){
               $scope.sellers[key] = $scope.seller;
               break;
             }
           }
-          $('#updateSellerModal').modal('hide');
+          // $('#updateSellerModal').modal('hide');
         }else{
           $state.go('seller.index');
         }
@@ -119,10 +119,6 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
     $scope.find = function() {
       $scope.sellers = Seller.query({ action: 'search', search: $stateParams.keyword });
     };
-    
-    $scope.findProduction = function(id) {
-      $scope.productions = Production.query({ action: 'seller', sellerId: id });
-    };
 
     $scope.findOne = function(id) {
       if(id !== undefined) {
@@ -142,22 +138,22 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
 
     $scope.findMineBySeller = function(id) {
       $scope.mines = Mine.query({ action: 'seller', sellerId: id });
-    }
+    };
     
     $scope.goToUpdatePopup = function(id){
       $scope.findOne(id);
-      $('#sellerModal').modal('hide');
-      $('#updateSellerModal').modal('show');
+      // $('#sellerModal').modal('hide');
+      // $('#updateSellerModal').modal('show');
     };
     
     $scope.goToProductions = function(id){
       //$state.go('product');
-      $('#sellerModal').modal('hide');
+      // $('#sellerModal').modal('hide');
     };
     
     $scope.goToFulfillment = function(id){
       $state.go('order-fulfillment.historySeller', { sellerId: id });
-      $('#sellerModal').modal('hide');
+      // $('#sellerModal').modal('hide');
     };
     
     $scope.addMine = function () {

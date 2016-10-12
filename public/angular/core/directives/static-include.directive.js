@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('index').directive('ngStaticInclude', [ '$http', '$templateCache', '$compile',
   function($http, $templateCache, $compile) {
     return {

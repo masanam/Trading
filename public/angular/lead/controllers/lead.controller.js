@@ -12,11 +12,11 @@ angular.module('lead').controller('LeadController', ['$scope', '$state', '$http'
       $scope.keyword = $scope.$stateParams.keyword;
       switch($state.current.name){
         case 'lead.seller' : $scope.searchType = 'seller'; break;
-        case 'lead.vendor' : $scope.searchType = 'vendor';  break;
+        case 'lead.vendor' : $scope.searchType = 'vendor'; break;
         case 'lead.contact' : $scope.searchType = 'contact'; break;
         default : $scope.searchType = 'buyer';
       }
-    }
+    };
 
     $scope.search = function() {
       switch($scope.searchType){
@@ -28,24 +28,20 @@ angular.module('lead').controller('LeadController', ['$scope', '$state', '$http'
     };
 
     $scope.findOne = function () {
-      if ($stateParams.type == 'Buyer') $scope.lead = Buyer.get({ id: $stateParams.id });
-      else if ($stateParams.type == 'Seller') $scope.lead = Seller.get({ id: $stateParams.id });
-      else if ($stateParams.type == 'Vendor') $scope.lead = Vendor.get({ id: $stateParams.id });
-      else if ($stateParams.type == 'Contact') $scope.lead = Contact.get({ id: $stateParams.id });
+      if ($stateParams.type === 'Buyer') $scope.lead = Buyer.get({ id: $stateParams.id });
+      else if ($stateParams.type === 'Seller') $scope.lead = Seller.get({ id: $stateParams.id });
+      else if ($stateParams.type === 'Vendor') $scope.lead = Vendor.get({ id: $stateParams.id });
+      else if ($stateParams.type === 'Contact') $scope.lead = Contact.get({ id: $stateParams.id });
     
     };
     
     $scope.total = function () {
-      $scope.totalBuyer = Buyer.get({action : 'total'});                  
-      $scope.totalSeller = Seller.get({action : 'total'});
-      $scope.totalVendor = Vendor.get({action : 'total'});
-      $scope.totalContact = Contact.get({action : 'total'});
-      $scope.totalMine = Mine.get({action : 'total'});
-      $scope.totalProduct = Product.get({action : 'total'});
+      $scope.totalBuyer = Buyer.get({ action : 'total' });
+      $scope.totalSeller = Seller.get({ action : 'total' });
+      $scope.totalVendor = Vendor.get({ action : 'total' });
+      $scope.totalContact = Contact.get({ action : 'total' });
+      $scope.totalMine = Mine.get({ action : 'total' });
+      $scope.totalProduct = Product.get({ action : 'total' });
     };
-
-
-    
-    
-    
-}]);
+  }
+]);

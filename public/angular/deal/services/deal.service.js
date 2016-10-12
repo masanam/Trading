@@ -3,7 +3,7 @@
 angular.module('deal').factory('SellDeal', ['$resource',
   function ($resource) {
     return $resource('api/sell-deal/:action/:id/:sellerId/:orderId/:dealId', {
-        action: undefined,
+      action: undefined,
       id: undefined,
       sellerId: undefined,
       orderId: undefined,

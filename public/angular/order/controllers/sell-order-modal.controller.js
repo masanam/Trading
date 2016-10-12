@@ -82,26 +82,26 @@ angular.module('order').controller('SellOrderModalController', function ($scope,
   };
 
   $scope.next = function () {
-    if (($scope.state==0)&&
+    if (($scope.state===0)&&
       ($scope.order.seller_id)&&
       ($scope.order.order_date)&&
       ($scope.order.deadline)&&
       ($scope.order.address)&&
       ($scope.order.latitude)&&
       ($scope.order.longitude)) 
-      // if ($scope.state==0)
+      // if ($scope.state===0)
     {
       $scope.company_name = Seller.get({ id: $scope.order.seller_id });
       $scope.state = $scope.state+1;
     }
 
-    else if (($scope.state==1)&&(($scope.choose==='available')||($scope.choose==='manual'))) 
+    else if (($scope.state===1)&&(($scope.choose==='available')||($scope.choose==='manual'))) 
     {
       if ($scope.order.product_name!==undefined) {
         $scope.state = $scope.state+1;
         $scope.error = undefined;
       }
-      else if ($scope.order.product_name==undefined) {
+      else if ($scope.order.product_name===undefined) {
         $scope.error = 'Harap pilih product / isi product name';
       }
     }
@@ -176,7 +176,7 @@ angular.module('order').controller('SellOrderModalController', function ($scope,
       $scope.sell_orders.push(res);
       $uibModalInstance.close('success');
     });
-  }
+  };
 
   $scope.close = function () {
     $uibModalInstance.dismiss('cancel');

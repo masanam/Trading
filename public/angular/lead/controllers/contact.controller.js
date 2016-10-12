@@ -11,5 +11,6 @@ angular.module('contact').controller('ContactController', ['$scope', 'Contact',
 
     $scope.findOne = function(id) {
       $scope.contact = Contact.get({ id: id });
-    }
-}]);
+    };
+  }
+]);

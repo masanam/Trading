@@ -15,7 +15,7 @@ angular.module('user').controller('UserController', ['$scope', '$http', '$stateP
 
           //kalo sukses, ubah database nama file nya
           var fileUrl = config.url + '/' + folder + '/' + $scope.authentication.user.username + '/' + filename;
-          var profile = new Users(Authentication.user);
+          var profile = new User(Authentication.user);
           profile.image = fileUrl;
           
           profile.$update(function () {
@@ -52,6 +52,6 @@ angular.module('user').controller('UserController', ['$scope', '$http', '$stateP
     $scope.findOne = function() {
       $scope.userId = Authentication.user.id;
       $scope.user = User.get({ id: $scope.userId });
-    }
+    };
   }
 ]);

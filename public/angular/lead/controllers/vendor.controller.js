@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('vendor').controller('VendorController', ['$scope', '$http', '$stateParams', '$state', 'Vendor', 'Order', '$uibModal', 
-  function($scope, $http, $stateParams, $state, Vendor, Order, $uibModal) {
+angular.module('vendor').controller('VendorController', ['$scope', '$http', '$stateParams', '$state', 'Vendor', 'User', 'Order', '$uibModal', 
+  function($scope, $http, $stateParams, $state, Vendor, User, Order, $uibModal) {
     $scope.vendors = [];
     $scope.vendor = {};
 
@@ -22,9 +22,9 @@ angular.module('vendor').controller('VendorController', ['$scope', '$http', '$st
 
       vendor.$save(function(response) {
         //$state.go('vendor.index');
-        $('#createVendorModal').modal('hide');
-        $('.modal-backdrop').hide();
-        $scope.find()
+        // $('#createVendorModal').modal('hide');
+        // $('.modal-backdrop').hide();
+        $scope.find();
         $scope.loading = false;
       });
     };
@@ -35,12 +35,12 @@ angular.module('vendor').controller('VendorController', ['$scope', '$http', '$st
         $scope.error = undefined;
         if($scope.vendors !== undefined){
           for(var key in $scope.vendors){
-            if($scope.vendors[key].id == $scope.vendor.id){
+            if($scope.vendors[key].id === $scope.vendor.id){
               $scope.vendors[key] = $scope.vendor;
               break;
             }
           }
-          $('#updateVendorModal').modal('hide');
+          // $('#updateVendorModal').modal('hide');
         }else{
           $state.go('vendor.index');
         }
@@ -73,7 +73,7 @@ angular.module('vendor').controller('VendorController', ['$scope', '$http', '$st
 
     $scope.findTraders = function() {
       $scope.traders = User.query({ roles: 'trader' });
-    }
+    };
 
     $scope.find = function() {
       $scope.vendors = Vendor.query({ action: 'search', search: $stateParams.keyword });
@@ -92,19 +92,19 @@ angular.module('vendor').controller('VendorController', ['$scope', '$http', '$st
     
     $scope.goToUpdatePopup = function(id){
       $scope.findOne(id);
-      $('#vendorModal').modal('hide');
-      $('#updateVendorModal').modal('show');
+      // $('#vendorModal').modal('hide');
+      // $('#updateVendorModal').modal('show');
     };
     
     $scope.goToLastOrders = function(id){
-      $('#vendorModal').modal('hide');
-      $('.modal-backdrop').hide();
+      // $('#vendorModal').modal('hide');
+      // $('.modal-backdrop').hide();
       $state.go('order-history.viewVendor', { vendorId: id });
     };
     
     $scope.goToPendingOrders = function(id){
-      $('#vendorModal').modal('hide');
-      $('.modal-backdrop').hide();
+      // $('#vendorModal').modal('hide');
+      // $('.modal-backdrop').hide();
       $state.go('order-vendor.viewVendor', { vendorId: id });
     };
     

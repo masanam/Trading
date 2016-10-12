@@ -93,7 +93,7 @@ angular.module('order').controller('OrderController', ['$location', '$scope', '$
       }
 
       return '';
-    };
+    }
     
     $scope.orders = [];
     $scope.order = {};
@@ -240,7 +240,7 @@ angular.module('order').controller('OrderController', ['$location', '$scope', '$
 
     $scope.findAllBuyers = function() {
       $scope.buyers = Buyer.query();
-    }
+    };
     
     $scope.findBuyer = function() {
       $scope.buyerId = $stateParams.buyerId;
@@ -267,7 +267,7 @@ angular.module('order').controller('OrderController', ['$location', '$scope', '$
 
     $rootScope.$on('changeStatus', function(event, data) { 
       for(var key in $scope.orders){
-        if($scope.orders[key].id == data.id){
+        if($scope.orders[key].id === data.id){
           $scope.orders[key].status = data.status;
         } 
       }
