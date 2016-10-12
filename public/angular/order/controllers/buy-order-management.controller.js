@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('order').controller('BuyOrderManagementController', ['$location', '$scope', '$http', '$uibModal', '$stateParams', '$state', 'Order', 'Seller', '$rootScope',
-  function($location, $scope, $http, $uibModal, $stateParams, $state, Order, Seller, $rootScope) {
+angular.module('order').controller('BuyOrderManagementController', ['$scope', 'Order',
+  function($scope, Order) {
     
     $scope.findAvailable = function() {
       $scope.buy_orders = Order.query({ type: 'buy', action: 'status', order_status: 'a' });
