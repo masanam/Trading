@@ -45,7 +45,7 @@
               <a ng-if="seller.last_productions" href="#" data-toggle="modal" data-target="#lastProductionModal" ng-click="goToProductions(seller.id)">{{ seller.last_productions }}</a>
               <span ng-if="!seller.last_productions">N/A</span>
             </td> -->
-               {{ seller.last_fulfillments }}
+               {{ seller.last_fulfillments }}-->
               <span ng-if="!seller.last_fulfillments">N/A</span>
             </td>
     				<!--td>
@@ -58,6 +58,11 @@
               <a ng-click="delete(seller)"><i class="glyphicon glyphicon-trash"></i></a>
             </td>
     			</tr>
+
+          <tr ng-if="displayedCollection.length == 0">
+              <td colspan="7" class="text-center">No data available</td>
+          </tr>
+
     		</tbody>
 
         <tfoot>

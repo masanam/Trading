@@ -100,11 +100,16 @@ class SellOrderController extends Controller
         $sell_order->size_bonus = $request->size_bonus;
 
         $sell_order->volume = $request->volume;
+        $sell_order->product_name = $request->product_name;
+        $sell_order->product_id = $request->product_id;
         $sell_order->max_price = $request->max_price;
         
         $sell_order->order_status = 'a';
         
         $sell_order->save();
+
+        $seller = Seller::find($request->seller_id);
+        $sell_order->seller = $seller;
 
         return response()->json($sell_order, 200);
     }
@@ -115,9 +120,9 @@ class SellOrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($sell_order)
+    public function show($id)
     {
-        $sell_order = SellOrder::with('Seller')->find($sell_order);
+        $sell_order = SellOrder::with('Seller')->find($id);
 
         if($sell_order->order_status == 'a') {
             return response()->json($sell_order, 200);
@@ -133,9 +138,9 @@ class SellOrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $sell_order)
+    public function update(Request $request, $id)
     {
-        $sell_order = SellOrder::find($sell_order);
+        $sell_order = SellOrder::find($id);
 
         if (!$request) {
             return response()->json([
@@ -206,6 +211,8 @@ class SellOrderController extends Controller
         $sell_order->size_bonus = $request->size_bonus;
 
         $sell_order->volume = $request->volume;
+        $sell_order->product_name = $request->product_name;
+        $sell_order->product_id = $request->product_id;
         $sell_order->max_price = $request->max_price;
         
         $sell_order->status = 'a';
@@ -221,9 +228,9 @@ class SellOrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($sell_order)
+    public function destroy($id)
     {
-        $sell_order = SellOrder::find($sell_order);
+        $sell_order = SellOrder::find($id);
         
         if (!$sell_order) {
             return response()->json([
@@ -233,6 +240,35 @@ class SellOrderController extends Controller
 
         $sell_order->status = 'x';
         $sell_order->save();
+
+        return response()->json($sell_order, 200);
+    }
+
+    public function status($order_status, $progress_status = false)
+    {
+        if (!$progress_status) {
+            $sell_order = SellOrder::with('Seller')->where('order_status', $order_status)->get();
+        } else {
+            $sell_order = SellOrder::with('Seller')->where('order_status', $order_status)->where('progress_status', 'LIKE', '%'.$progress_status.'%')->get();
+        }
+
+        return response()->json($sell_order, 200);
+    }
+
+    public function changeOrderStatus($id, $order_status)
+    {
+        $sell_order = SellOrder::find($id);
+        
+        if (!$sell_order) {
+            return response()->json([
+                'message' => 'Not found'
+            ] ,404);
+        }
+
+        if ($order_status) {
+          $sell_order->order_status = $order_status;
+          $sell_order->save();
+        }
 
         return response()->json($sell_order, 200);
     }

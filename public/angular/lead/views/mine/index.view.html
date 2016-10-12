@@ -33,6 +33,11 @@
 						<td>{{ mine.longitude }}</td>
 						<td>{{ mine.port_name }}</td>
 					</tr>
+
+					<tr ng-if="displayedCollection.length == 0">
+            			<td colspan="5" class="text-center">No data available</td>
+          			</tr>
+
 				</tbody>
 
 				<tfoot>

@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('seller').controller('SellerController', ['$scope', '$http', '$stateParams', '$state', '$timeout', '$location', 'Seller', 'Production', 'Product', 'Mine', '$uibModal',
-	function($scope, $http, $stateParams, $state, $timeout, $location, Seller, Production, Product, Mine, $uibModal) {
+angular.module('seller').controller('SellerController', ['$scope', '$http', '$stateParams', '$state', '$timeout', '$location', 'Seller', 'Product', 'Mine', '$uibModal',
+	function($scope, $http, $stateParams, $state, $timeout, $location, Seller, Product, Mine, $uibModal) {
 		$scope.sellers = [];
 		$scope.seller = {};
 		$scope.productButton = false;
@@ -76,59 +76,7 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
 
 			console.log($scope.supply);
 
-			var supply = new Product({
-				mine_id: $scope.supply.mine_id, 
-				commercial_term: $scope.supply.commercial_term,
-				ready_date: $scope.supply.ready_date,
-				expired_date: $scope.supply.expired_date,
-
-				tm_min: $scope.supply.tm_min,
-				tm_max: $scope.supply.tm_max,
-				tm_reject: $scope.supply.tm_reject,
-				tm_bonus: $scope.supply.tm_bonus,
-				im_min: $scope.supply.im_min,
-				im_max: $scope.supply.im_max,
-				im_reject: $scope.supply.im_reject,
-				im_bonus: $scope.supply.im_bonus,
-				ash_min: $scope.supply.ash_min,
-				ash_max: $scope.supply.ash_max,
-				ash_reject: $scope.supply.ash_reject,
-				ash_bonus: $scope.supply.ash_bonus,
-				fc_min: $scope.supply.fc_min,
-				fc_max: $scope.supply.fc_max,
-				fc_reject: $scope.supply.fc_reject,
-				fc_bonus: $scope.supply.fc_bonus,
-				vm_min: $scope.supply.vm_min,
-				vm_max: $scope.supply.vm_max,
-				vm_reject: $scope.supply.vm_reject,
-				vm_bonus: $scope.supply.vm_bonus,
-				ts_min: $scope.supply.ts_min,
-				ts_max: $scope.supply.ts_max,
-				ts_reject: $scope.supply.ts_reject,
-				ts_bonus: $scope.supply.ts_bonus,
-				ncv_min: $scope.supply.ncv_min,
-				ncv_max: $scope.supply.ncv_max,
-				ncv_reject: $scope.supply.ncv_reject,
-				ncv_bonus: $scope.supply.ncv_bonus,
-				gcv_arb_min: $scope.supply.gcv_arb_min,
-				gcv_arb_max: $scope.supply.gcv_arb_max,
-				gcv_arb_reject: $scope.supply.gcv_arb_reject,
-				gcv_arb_bonus: $scope.supply.gcv_arb_bonus,
-				gcv_adb_min: $scope.supply.gcv_adb_min,
-				gcv_adb_max: $scope.supply.gcv_adb_max,
-				gcv_adb_reject: $scope.supply.gcv_adb_reject,
-				gcv_adb_bonus: $scope.supply.gcv_adb_bonus,
-				hgi_min: $scope.supply.hgi_min,
-				hgi_max: $scope.supply.hgi_max,
-				hgi_reject: $scope.supply.hgi_reject,
-				hgi_bonus: $scope.supply.hgi_bonus,
-				size_min: $scope.supply.size_min,
-				size_max: $scope.supply.size_max,
-				size_reject: $scope.supply.size_reject,
-				size_bonus: $scope.supply.size_bonus,
-
-				volume: $scope.supply.volume
-			});
+			var supply = new Product($scope.supply);
 
 			supply.$save(function(response) {
 				$location.path('/trade/product');

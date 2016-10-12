@@ -26,6 +26,8 @@
         <p>{{ buy_order.order_date }}</p>
         <label>Deadline : </label>
         <p>{{ buy_order.deadline }}</p>
+        <label>Penalty : </label>
+        <p>{{ buy_order.penalty_desc }}</p>
       </div>
     </div>
   </div>
@@ -53,11 +55,15 @@
               </tr>
               <tr>
                 <td><b>Ash <div class="pull-right">:</div></b></td>
-                <td>{{buy_order.ash_min}} - {{buy_order.ash_max}} kcal</td>
+                <td>{{buy_order.ash_min}} - {{buy_order.ash_max}} %</td>
               </tr>
               <tr>
                 <td><b>Total Sulphur <div class="pull-right">:</div></b></td>
                 <td>{{buy_order.ts_min}} - {{buy_order.ts_max}} %</td>
+              </tr>
+              <tr>
+                <td><b>Size <div class="pull-right">:</div></b></td>
+                <td>{{buy_order.size_min}} - {{buy_order.size_max}} mm</td>
               </tr>
             </tbody>
           </table>

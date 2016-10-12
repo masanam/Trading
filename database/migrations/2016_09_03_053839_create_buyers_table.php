@@ -24,7 +24,7 @@ class CreateBuyersTable extends Migration
             $table->string('email');
             $table->string('web');
 
-            $table->string('industry');
+            $table->string('industry'); //cement, powerplant, pulp paper, general
 
             $table->string('city');
             $table->string('address');

@@ -142,60 +142,8 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
 
 			console.log($scope.demand);
 
-			var demand = new Order({
-				buyer_id: $scope.buyer.id, 
-				order_date: $scope.demand.order_date,
-				deadline: $scope.demand.deadline,
-				address: $scope.demand.address,
-				latitude: $scope.demand.latitude,
-				longitude: $scope.demand.longitude,
-				tm_min: $scope.demand.tm_min,
-				tm_max: $scope.demand.tm_max,
-				tm_reject: $scope.demand.tm_reject,
-				tm_bonus: $scope.demand.tm_bonus,
-				im_min: $scope.demand.im_min,
-				im_max: $scope.demand.im_max,
-				im_reject: $scope.demand.im_reject,
-				im_bonus: $scope.demand.im_bonus,
-				ash_min: $scope.demand.ash_min,
-				ash_max: $scope.demand.ash_max,
-				ash_reject: $scope.demand.ash_reject,
-				ash_bonus: $scope.demand.ash_bonus,
-				fc_min: $scope.demand.fc_min,
-				fc_max: $scope.demand.fc_max,
-				fc_reject: $scope.demand.fc_reject,
-				fc_bonus: $scope.demand.fc_bonus,
-				vm_min: $scope.demand.vm_min,
-				vm_max: $scope.demand.vm_max,
-				vm_reject: $scope.demand.vm_reject,
-				vm_bonus: $scope.demand.vm_bonus,
-				ts_min: $scope.demand.ts_min,
-				ts_max: $scope.demand.ts_max,
-				ts_reject: $scope.demand.ts_reject,
-				ts_bonus: $scope.demand.ts_bonus,
-				ncv_min: $scope.demand.ncv_min,
-				ncv_max: $scope.demand.ncv_max,
-				ncv_reject: $scope.demand.ncv_reject,
-				ncv_bonus: $scope.demand.ncv_bonus,
-				gcv_arb_min: $scope.demand.gcv_arb_min,
-				gcv_arb_max: $scope.demand.gcv_arb_max,
-				gcv_arb_reject: $scope.demand.gcv_arb_reject,
-				gcv_arb_bonus: $scope.demand.gcv_arb_bonus,
-				gcv_adb_min: $scope.demand.gcv_adb_min,
-				gcv_adb_max: $scope.demand.gcv_adb_max,
-				gcv_adb_reject: $scope.demand.gcv_adb_reject,
-				gcv_adb_bonus: $scope.demand.gcv_adb_bonus,
-				hgi_min: $scope.demand.hgi_min,
-				hgi_max: $scope.demand.hgi_max,
-				hgi_reject: $scope.demand.hgi_reject,
-				hgi_bonus: $scope.demand.hgi_bonus,
-				size_min: $scope.demand.size_min,
-				size_max: $scope.demand.size_max,
-				size_reject: $scope.demand.size_reject,
-				size_bonus: $scope.demand.size_bonus,
-
-				volume: $scope.demand.volume
-			});
+			var demand = new Order($scope.demand);
+      demand.buyer_id = $scope.buyer.id;
 
 			demand.$save(function(response) {
 				$location.path('/trade/order/history');
@@ -355,18 +303,7 @@ angular.module('deal').controller('BuyerModalController', function ($scope, $uib
   $scope.create = function(createBuyer) {
     $scope.loading = true;
 
-    var buyer = new Buyer({
-      company_name: $scope.buyer.company_name,
-      email: $scope.buyer.email,
-      phone: $scope.buyer.phone,
-      web: $scope.buyer.web,
-      industry: $scope.buyer.industry,
-      description: $scope.buyer.description,
-      city: $scope.buyer.city,
-      address: $scope.buyer.address,
-      latitude: $scope.buyer.latitude,
-      longitude: $scope.buyer.longitude
-    });
+    var buyer = new Buyer($scope.buyer);
 
     buyer.$save(function(response) {
       $scope.buyers.push(response);
