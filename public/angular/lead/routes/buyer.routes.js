@@ -13,12 +13,12 @@ angular.module('buyer').config(['$stateProvider', '$urlRouterProvider',
       .state('buyer.index', {
         url: '',
         templateUrl: '/angular/views/buyer/buyer.view.html'
-  	  })
-  	  .state('buyer.create', {
+      })
+      .state('buyer.create', {
         url: '/create',
         templateUrl: '/angular/views/buyer/create.view.html'
       })
-  	  .state('buyer.view', {
+      .state('buyer.view', {
         url: '/{id}',
         templateUrl: '/angular/views/buyer/buyer.view.html'
       })

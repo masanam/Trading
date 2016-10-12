@@ -13,12 +13,12 @@ angular.module('mine').config(['$stateProvider', '$urlRouterProvider',
       .state('mine.index', {
         url: '',
         templateUrl: '/angular/views/mine/mine.view.html'
-  	  })
-  	  .state('mine.create', {
+      })
+      .state('mine.create', {
         url: '/create',
         templateUrl: '/angular/views/mine/create.view.html'
       })
-  	  .state('mine.view', {
+      .state('mine.view', {
         url: '/{id}',
         templateUrl: '/angular/views/mine/view.view.html'
       })

@@ -13,6 +13,6 @@ angular.module('contact').config(['$stateProvider', '$urlRouterProvider',
       .state('contact.index', {
         url: '',
         templateUrl: '/angular/lead/views/contact/index.view.html'
-  	  });
+      });
   }
 ]);
