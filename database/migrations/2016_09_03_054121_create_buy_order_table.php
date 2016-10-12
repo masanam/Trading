@@ -25,11 +25,11 @@ class CreateBuyOrderTable extends Migration
             $table->date('ready_date');
             $table->date('expired_date');
 
-            $table->decimal('latitude', 10, 8)->nullable();
-            $table->decimal('longitude', 11, 8)->nullable();
             $table->string('address');
             $table->string('city');
             $table->string('country');
+            $table->decimal('latitude', 10, 8)->nullable();
+            $table->decimal('longitude', 11, 8)->nullable();
             $table->integer('port_distance')->nullable();
             $table->integer('port_id')->nullable();
             $table->string('port_name')->nullable();
