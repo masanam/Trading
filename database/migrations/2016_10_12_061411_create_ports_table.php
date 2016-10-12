@@ -17,16 +17,17 @@ class CreatePortsTable extends Migration
             $table->increments('port_id');
             $table->string('port_name');
             $table->string('owner');
-            $table->string('location');
             $table->boolean('is_private');
+            $table->string('location');
             $table->integer('size')->unsigned();
+            $table->integer('river_capacity')->nullable();
             $table->decimal('latitude', 10, 8);
             $table->decimal('longitude', 11, 8);
+            $table->integer('anchorage_distance')->unsigned();
             $table->boolean('has_conveyor');
             $table->boolean('has_crusher');
             $table->boolean('has_blending');
-            $table->integer('draft')->unsigned();
-            $table->integer('anchorage_distance')->unsigned();
+            $table->integer('draft_height')->unsigned();
             
             $table->timestamps();
         });
