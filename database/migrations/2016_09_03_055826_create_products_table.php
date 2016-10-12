@@ -15,14 +15,11 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->increments('id');
-
             $table->integer('seller_id')->nullable();
             $table->integer('buyer_id')->nullable();
             $table->integer('concession_id')->nullable();
-            $table->string('commercial_term');
 			$table->string('product_name');
-            $table->date('ready_date');
-            $table->date('expired_date');
+            
             $table->integer('gcv_arb_min')->nullable(); //gross calorific value, as received basis
             $table->integer('gcv_arb_max')->nullable();
             $table->integer('gcv_arb_reject')->nullable();
@@ -67,8 +64,6 @@ class CreateProductsTable extends Migration
             $table->integer('size_max')->nullable();
             $table->integer('size_reject')->nullable();
             $table->integer('size_bonus')->nullable();
-
-            $table->decimal('volume', 20, 2);
 
             $table->char('status', 1); // A = Active , X = Deleted
 
