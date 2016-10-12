@@ -6,9 +6,9 @@ use App\Model\Seller;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Mine extends Model
+class Concession extends Model
 {
-    protected $table = 'mines';
+    protected $table = 'concession';
 
     public function Seller() {
     	return $this->belongsTo('Seller');

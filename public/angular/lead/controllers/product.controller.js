@@ -177,17 +177,16 @@ angular.module('product').controller('ProductController', ['$scope', '$state', '
       });
     };
 
-    $scope.delete = function (id){
+    $scope.delete = function (product){
       $scope.loading = true;
 
-      Product.delete({ id: $scope.product.id }, function(response) {
-        $state.go('product.index');
+      Product.delete({ id: product.id }, function(response) {
+        $scope.products.splice($scope.products.indexOf(product), 1);
       }, function(err) {
         console.log(err);
       });
     };
 }]);
-
 
 
 angular.module('product').controller('ProductModalController', function ($scope, $uibModalInstance, Product, product) {
