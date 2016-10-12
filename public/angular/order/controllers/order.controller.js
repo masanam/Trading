@@ -458,6 +458,7 @@ angular.module('order').controller('BuyOrderModalController', function ($scope, 
   $scope.init = function(){
     $scope.state = 0;
     $scope.choose = undefined;
+    $scope.error = undefined;
     $scope.order = {
       buyer_id: undefined,
       order_date: undefined,
@@ -542,15 +543,20 @@ angular.module('order').controller('BuyOrderModalController', function ($scope, 
       ($scope.order.address)&&
       ($scope.order.latitude)&&
       ($scope.order.longitude)) 
-      // if ($scope.state==0)
     {
-      $scope.company_name = Buyer.get({ id: $scope.order.buyer_id });
+      // $scope.company_name = Buyer.get({ id: $scope.order.buyer_id });
       $scope.state = $scope.state+1;
     }
 
-    else if (($scope.state==1)&&(($scope.choose==='available')||($scope.choose==='manual'))&&($scope.order.product_name!==undefined)) 
+    else if (($scope.state==1)&&(($scope.choose==='available')||($scope.choose==='manual'))) 
     {
-      $scope.state = $scope.state+1;
+      if ($scope.order.product_name!==undefined) {
+        $scope.state = $scope.state+1;
+        $scope.error = undefined;
+      }
+      else if ($scope.order.product_name==undefined) {
+        $scope.error = "Harap pilih product / isi product name";
+      }
     }
 
   };
@@ -562,6 +568,7 @@ angular.module('order').controller('BuyOrderModalController', function ($scope, 
   $scope.setChoose = function(choose) {
     $scope.choose = choose;
     $scope.order.product_id = undefined;
+    $scope.order.product_name = undefined;
   };
 
   $scope.setSelected = function(product) {
@@ -627,37 +634,6 @@ angular.module('order').controller('BuyOrderModalController', function ($scope, 
     $uibModalInstance.dismiss('cancel');
   };
 });
-
-angular.module('order').controller('BuyOrderManagementController', ['$location', '$scope', '$http', '$uibModal', '$stateParams', '$state', 'Order', 'Seller', '$rootScope',
-  function($location, $scope, $http, $uibModal, $stateParams, $state, Order, Seller, $rootScope) {
-    
-    $scope.findAvailable = function() {
-      $scope.buy_orders = Order.query({ type: 'buy', action: 'status', order_status: 'a' });
-    };
-
-    $scope.findFinished = function() {
-      $scope.buy_orders = Order.query({ type: 'buy', action: 'status', order_status: 'f' });
-    };
-
-    $scope.findCancelled = function() {
-      $scope.buy_orders = Order.query({ type: 'buy', action: 'status', order_status: 'x' });
-    };
-
-    $scope.changeOrderStatusA = function(buy_order) {
-      $scope.buy_orders.splice($scope.buy_orders.indexOf(buy_order), 1);
-      $scope.buy_order = Order.get({ type: 'buy', id: buy_order.id, action: 'changeOrderStatus', order_status: 'a' });
-    };
-
-    $scope.changeOrderStatusF = function(buy_order) {
-      $scope.buy_orders.splice($scope.buy_orders.indexOf(buy_order), 1);
-      $scope.buy_order = Order.get({ type: 'buy', id: buy_order.id, action: 'changeOrderStatus', order_status: 'f' });
-    };
-
-    $scope.changeOrderStatusC = function(buy_order) {
-      $scope.buy_orders.splice($scope.buy_orders.indexOf(buy_order), 1);
-      $scope.buy_order = Order.get({ type: 'buy', id: buy_order.id, action: 'changeOrderStatus', order_status: 'x' });
-    };
-}]);
 
 angular.module('order').controller('SellOrderModalController', function ($scope, $uibModalInstance, $filter, Seller, Order, Product) {
   
@@ -754,9 +730,15 @@ angular.module('order').controller('SellOrderModalController', function ($scope,
       $scope.state = $scope.state+1;
     }
 
-    else if (($scope.state==1)&&(($scope.choose==='available')||($scope.choose==='manual'))&&($scope.order.product_name!==undefined)) 
+    else if (($scope.state==1)&&(($scope.choose==='available')||($scope.choose==='manual'))) 
     {
-      $scope.state = $scope.state+1;
+      if ($scope.order.product_name!==undefined) {
+        $scope.state = $scope.state+1;
+        $scope.error = undefined;
+      }
+      else if ($scope.order.product_name==undefined) {
+        $scope.error = "Harap pilih product / isi product name";
+      }
     }
 
   };
@@ -768,6 +750,7 @@ angular.module('order').controller('SellOrderModalController', function ($scope,
   $scope.setChoose = function(choose) {
     $scope.choose = choose;
     $scope.order.product_id = undefined;
+    $scope.order.product_name = undefined;
   };
 
   $scope.setSelected = function(product) {
@@ -836,33 +819,3 @@ angular.module('order').controller('SellOrderModalController', function ($scope,
   };
 });
 
-angular.module('order').controller('SellOrderManagementController', ['$location', '$scope', '$http', '$uibModal', '$stateParams', '$state', 'Order', 'Seller', '$rootScope',
-  function($location, $scope, $http, $uibModal, $stateParams, $state, Order, Seller, $rootScope) {
-    
-    $scope.findAvailable = function() {
-      $scope.sell_orders = Order.query({ type: 'sell', action: 'status', order_status: 'a' });
-    };
-
-    $scope.findFinished = function() {
-      $scope.sell_orders = Order.query({ type: 'sell', action: 'status', order_status: 'f' });
-    };
-
-    $scope.findCancelled = function() {
-      $scope.sell_orders = Order.query({ type: 'sell', action: 'status', order_status: 'x' });
-    };
-
-    $scope.changeOrderStatusA = function(sell_order) {
-      $scope.sell_orders.splice($scope.sell_orders.indexOf(sell_order), 1);
-      $scope.sell_order = Order.get({ type: 'sell', id: sell_order.id, action: 'changeOrderStatus', order_status: 'a' });
-    };
-
-    $scope.changeOrderStatusF = function(sell_order) {
-      $scope.sell_orders.splice($scope.sell_orders.indexOf(sell_order), 1);
-      $scope.sell_order = Order.get({ type: 'sell', id: sell_order.id, action: 'changeOrderStatus', order_status: 'f' });
-    };
-
-    $scope.changeOrderStatusC = function(sell_order) {
-      $scope.sell_orders.splice($scope.sell_orders.indexOf(sell_order), 1);
-      $scope.sell_order = Order.get({ type: 'sell', id: sell_order.id, action: 'changeOrderStatus', order_status: 'x' });
-    };
-}]);
