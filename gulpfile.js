@@ -5,7 +5,7 @@ var gulp = require('gulp'),
   config = require('./tasks/config');
 
 require('./tasks/serve.task.js');
-//require('./tasks/lint.task.js');
+require('./tasks/lint.task.js');
 require('./tasks/angular.task.js');
 require('./tasks/bower.task.js');
 
