@@ -23,15 +23,14 @@ class CreateSellersTable extends Migration
             $table->string('email');
             $table->string('web');
             $table->string('address');
-            $table->string('hauling_road');
             $table->string('city');
             $table->string('country');
             $table->decimal('latitude', 10, 8);
             $table->decimal('longitude', 11, 8);
             $table->string('industry');
             $table->string('license_type');
-            $table->date('license_expiration_date');
-            $table->integer('total_annual_production');
+            $table->date('license_expiry_date');
+            $table->integer('total_annual_sales');
             $table->string('preferred_trading_term');
             $table->string('preferred_payment_term');
             $table->string('purchasing_countries');
