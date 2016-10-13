@@ -17,4 +17,5 @@ angular.module('order').controller('BuyOrderController', ['$scope', '$uibModal',
 
       $scope.buy_order = Order.get({ type: 'buy', id: $scope.buy_orderId });
     };
-}]);
+  }
+]);
