@@ -17,14 +17,5 @@ angular.module('order').controller('BuyOrderController', ['$scope', '$uibModal',
 
       $scope.buy_order = Order.get({ type: 'buy', id: $scope.buy_orderId });
     };
-
-    $scope.openModal = function () {
-      var modalInstance = $uibModal.open({
-        templateUrl: './angular/order/views/buy-order/create.modal.view.html',
-        controller: 'BuyOrderModalController',
-        scope: $scope,
-        size: 'lg'
-      });
-    };
   }
 ]);
