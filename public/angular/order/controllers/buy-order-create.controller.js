@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('order').controller('BuyOrderCreateController', ['$scope', '$filter', '$location', 'Buyer', 'Order', 'Product', 'NgMap',
-  function ($scope, $filter, $location, Buyer, Order, Product, NgMap, google) {
+  function ($scope, $filter, $location, Buyer, Order, Product, NgMap) {
   
     $scope.init = function(){
       $scope.state = 0;

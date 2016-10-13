@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('index').controller('DashboardController', ['$scope', '$state', '$http', 'NgMap', 'Mine', 'Buyer', 'Order', 'News', 'Authentication', 'Deal',
-  function($scope, $state, $http, NgMap, Mine, Buyer, Order, News, Authentication, Deal) {
+angular.module('index').controller('DashboardController', ['$scope', '$state', '$http', 'NgMap', 'Concession', 'Buyer', 'Order', 'News', 'Authentication', 'Deal',
+  function($scope, $state, $http, NgMap, Concession, Buyer, Order, News, Authentication, Deal) {
     var heatmap;
     $state.go('lead.index');
     $scope.Authentication = Authentication;
@@ -13,8 +13,8 @@ angular.module('index').controller('DashboardController', ['$scope', '$state', '
       $scope.map = map;
     });
 
-    $scope.loadMines = function(){
-      $scope.mines = Mine.query({ option: 'detail' });
+    $scope.loadConcessions = function(){
+      $scope.mines = Concession.query({ option: 'detail' });
     };
 
     $scope.loadBuyers = function(){
@@ -71,7 +71,7 @@ angular.module('index').controller('DashboardController', ['$scope', '$state', '
     };
 
     $scope.loadSupply = function() {
-      $scope.supplies = Mine.query({ option: 'detail' });
+      $scope.supplies = Concession.query({ option: 'detail' });
     };
 
     $scope.loadDemand = function() {

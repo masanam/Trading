@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('seller').controller('SellerController', ['$scope', '$http', '$stateParams', '$state', '$timeout', '$location', 'Seller', 'Product', 'Mine', 'Contact', '$uibModal',
-  function($scope, $http, $stateParams, $state, $timeout, $location, Seller, Product, Mine, Contact, $uibModal) {
+angular.module('seller').controller('SellerController', ['$scope', '$http', '$stateParams', '$state', '$timeout', '$location', 'Seller', 'Product', 'Concession', 'Contact', '$uibModal',
+  function($scope, $http, $stateParams, $state, $timeout, $location, Seller, Product, Concession, Contact, $uibModal) {
     $scope.sellers = [];
     $scope.seller = {};
     $scope.productButton = false;
@@ -137,7 +137,7 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
     };
 
     $scope.findMineBySeller = function(id) {
-      $scope.mines = Mine.query({ action: 'seller', sellerId: id });
+      $scope.mines = Concession.query({ action: 'seller', sellerId: id });
     };
     
     $scope.goToUpdatePopup = function(id){
@@ -167,7 +167,7 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
     };
     
     $scope.deleteMine = function(mine){
-      Mine.delete({ id: mine.id }, function (response) {
+      Concession.delete({ id: mine.id }, function (response) {
         $scope.mine = response;
         
         $scope.seller.mine.splice($scope.seller.mine.indexOf(mine), 1);
