@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stateParams', '$state', '$timeout', 'Buyer', 'Order', 'Product', '$uibModal', 'Contact', 'User',
-  function($scope, $http, $stateParams, $state, $timeout, Buyer, Order, Product, $uibModal, Contact, User) {
+angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stateParams', '$state', '$timeout', 'Buyer', 'Order', 'Product', '$uibModal', 'Contact', 'User','$location',
+  function($scope, $http, $stateParams, $state, $timeout, Buyer, Order, Product, $uibModal, Contact, User, $location) {
     $scope.buyers = [];
     $scope.buyer = {};
     $scope.demand = {};
