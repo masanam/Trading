@@ -1,127 +1,70 @@
-/*Elixir Task for bower
-* Upgraded from https://github.com/ansata-biz/laravel-elixir-bower
-*/
-var gulp = require('gulp');
-var mainBowerFiles = require('main-bower-files');
-var filter = require('gulp-filter');
-var notify = require('gulp-notify');
-var cssnano = require('gulp-cssnano');
-var uglify = require('gulp-uglify');
-var concat_sm = require('gulp-concat-sourcemap');
-var concat = require('gulp-concat');
-var gulpIf = require('gulp-if');
-var gulpFilter = require('gulp-filter');
-var less = require('gulp-less');
-var merge = require('merge-stream');
+var gulp = require('gulp'),
+  filter = require('gulp-filter'),
+  notify = require('gulp-notify'),
+  cssnano = require('gulp-cssnano'),
+  uglify = require('gulp-uglify'),
+  concat_sm = require('gulp-concat-sourcemap'),
+  concat = require('gulp-concat'),
+  gulpIf = require('gulp-if'),
+  gulpFilter = require('gulp-filter'),
+  less = require('gulp-less'),
+  merge = require('merge-stream'),
+  runSequence = require('run-sequence'),
+  Elixir = require('laravel-elixir'),
+  Task = Elixir.Task,
+  config = require('./config');
 
+var cssFile = 'vendor.css',
+  jsFile = 'vendor.js';
 
-var Elixir = require('laravel-elixir');
+if (!Elixir.config.production){
+  concat = concat_sm;
+}
 
-var Task = Elixir.Task;
+// JS bower tasks
+gulp.task('bower-js', function () {
+  return gulp.src(config.vendorJSFiles)
+    .on('error', config.onError)
+    .pipe(concat(jsFile, {sourcesContent: true}))
+    .pipe(gulpIf(Elixir.config.production, uglify()))
+    .pipe(gulp.dest('public/js'))
+    .pipe(notify({
+      title: 'Bower JS',
+      subtitle: 'Javascript Bower Files Imported!',
+      icon: __dirname + '/../node_modules/laravel-elixir/icons/laravel.png',
+      message: ' '
+    }));
+});
 
-Elixir.extend('bower', function(jsOutputFile, jsOutputFolder, ttfOutputFolder, cssOutputFile, cssOutputFolder) {
+// CSS bower tasks
+gulp.task('bower-css', function () {
+  return gulp.src(config.vendorCSSFiles)
+    .on('error', config.onError)
+    .pipe(concat(cssFile))
+    .pipe(gulpIf(Elixir.config.production, cssnano({safe: true})))
+    .pipe(gulp.dest('public/css'))
+    .pipe(notify({
+      title: 'Bower CSS',
+      subtitle: 'CSS Bower Files Imported!',
+      icon: __dirname + '/../node_modules/laravel-elixir/icons/laravel.png',
+      message: ' '
+    }));
+});
 
-  var cssFile = cssOutputFile || 'vendor.css';
-  var jsFile = jsOutputFile || 'vendor.js';
-  
-  var mainJSFiles = [ 
-    'bower_components/angular/angular.js',
-    'bower_components/angular-ui-router/release/angular-ui-router.js',
-    'bower_components/ngstorage/ngStorage.js',
-    'bower_components/angular-animate/angular-animate.js',
-    'bower_components/angular-aria/angular-aria.js',
-    'bower_components/angular-messages/angular-messages.js',
-    'bower_components/lodash/lodash.js',
-    'bower_components/satellizer/satellizer.js',
-    'bower_components/angular-resource/angular-resource.js',
-    'bower_components/ngmap/build/scripts/ng-map.js',
-    'bower_components/Chart.js/Chart.js',
-    'bower_components/tv4/tv4.js',
-    'bower_components/angular-sanitize/angular-sanitize.js',
-    'bower_components/objectpath/lib/ObjectPath.js',
-    'bower_components/bootstrap/dist/css/bootstrap-theme.css',
-    'bower_components/bootstrap/dist/css/bootstrap.css',
-    'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
-    'bower_components/angular-bootstrap/ui-bootstrap-csp.css',
-    'bower_components/restangular/dist/restangular.js',
-    'bower_components/angular-chart.js/dist/angular-chart.js',
-    'bower_components/angular-chart.js/dist/angular-chart.css',
-    'bower_components/pusher-angular/lib/pusher-angular.min.js',
-    'bower_components/angular-smart-table/dist/smart-table.css',
-    'bower_components/angular-smart-table/dist/smart-table.js',
-    'bower_components/angular-smart-table/smartCss.css',
-    'bower_components/admin-lte/dist/css/AdminLTE.min.css',
-    'bower_components/admin-lte/dist/css/skins/skin-blue.min.css',
-    'bower_components/admin-lte/plugins/iCheck/square/blue.css',
-    'bower_components/ng-validate/src/ng-validate.js',
-    'bower_components/angular-smart-table/dist/smart-table.min.js',
-    'bower_components/angular-smart-table/dist/smart-table.css',
-    'bower_components/angular-pusher/angular-pusher.min.js',
-    'bower_components/ng-file-upload/ng-file-upload-all.js',
+// JS bower tasks
+gulp.task('bower-fonts', function () {
+  return gulp.src(config.vendorFontFiles)
+   .on('error', config.onError)
+   .pipe(gulp.dest('public/fonts'))
+   .pipe(notify({
+     title: 'Laravel Elixir',
+     subtitle: 'Font Bower Files Imported!',
+     icon: __dirname + '/../node_modules/laravel-elixir/icons/laravel.png',
+     message: ' '
+   }));
+});
 
-  ];
-  
-  var mainCSSFiles = [];
-  
-  //mainJSFiles = mainBowerFiles();
-  
-  mainCSSFiles = mainBowerFiles();
-
-  if (!Elixir.config.production){
-    concat = concat_sm;
-  }
-
-  var onError = function (err) {
-    notify.onError({
-      title: "Laravel Elixir",
-      subtitle: "Bower Files Compilation Failed!",
-      message: "Error: <%= error.message %>",
-      icon: __dirname + '/../node_modules/laravel-elixir/icons/fail.png'
-    })(err);
-    this.emit('end');
-  };
-
-  new Task('bower-js', function() {
-    return gulp.src(mainJSFiles)
-      .on('error', onError)
-      .pipe(filter('**/*.js'))
-      .pipe(concat(jsFile, {sourcesContent: true}))
-      .pipe(gulpIf(Elixir.config.production, uglify()))
-      .pipe(gulp.dest('public/js'))
-      .pipe(notify({
-        title: 'Bower JS',
-        subtitle: 'Javascript Bower Files Imported!',
-        icon: __dirname + '/../node_modules/laravel-elixir/icons/laravel.png',
-        message: ' '
-      }));
-  }).watch('bower.json');
-
-  // new Task('bower-fonts', function() {
-  //  return gulp.src('bower_components/bootstrap/fonts/glyphicons-halflings-regular.ttf')
-  //    .on('error', onError)
-  //    .pipe(filter('**/*.ttf'))
-  //    .pipe(gulp.dest(ttfOutputFolder || Elixir.config.fonts.outputFolder))
-  //    .pipe(notify({
-  //      title: 'Laravel Elixir',
-  //      subtitle: 'Font Bower Files Imported!',
-  //      icon: __dirname + '/../node_modules/laravel-elixir/icons/laravel.png',
-  //      message: ' '
-  //    }));
-  // }).watch('bower.json');
-
-  new Task('bower-css', function(){
-    return gulp.src(mainJSFiles)
-      .on('error', onError)
-      .pipe(filter('**/*.css'))
-      .pipe(concat(cssFile))
-      .pipe(gulpIf(Elixir.config.production, cssnano({safe: true})))
-      .pipe(gulp.dest('public/css'))
-      .pipe(notify({
-        title: 'Bower CSS',
-        subtitle: 'CSS Bower Files Imported!',
-        icon: __dirname + '/../node_modules/laravel-elixir/icons/laravel.png',
-        message: ' '
-      }));
-  }).watch('bower.json');
-
+// Lint CSS and JavaScript files.
+gulp.task('bower', function (done) {
+  runSequence(['bower-js', 'bower-css', 'bower-fonts'], done);
 });

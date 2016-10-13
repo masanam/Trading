@@ -23,6 +23,7 @@ class CreateConsessionTable extends Migration
             $table->string('country');
             $table->decimal('latitude', 10, 8);
             $table->decimal('longitude', 11, 8);
+            $table->longText('polygon');
             $table->integer('size');
             $table->decimal('stripping_ratio', 4, 2);
             $table->integer('resource');

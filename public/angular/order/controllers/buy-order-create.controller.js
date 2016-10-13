@@ -11,8 +11,12 @@ angular.module('order').controller('BuyOrderCreateController', ['$scope', '$filt
   };
 
   $scope.next = function () {
+<<<<<<< HEAD:public/angular/order/controllers/buy-order-create.controller.js
       $scope.state = $scope.state+1;
     if (($scope.state==0)&&
+=======
+    if (($scope.state===0)&&
+>>>>>>> a6baae2ccc3512c3a2d653a44d42c14a941b1a57:public/angular/order/controllers/buy-order-modal.controller.js
       ($scope.order.buyer_id)&&
       ($scope.order.order_date)&&
       ($scope.order.order_deadline)&&
@@ -25,13 +29,17 @@ angular.module('order').controller('BuyOrderCreateController', ['$scope', '$filt
       $scope.state = $scope.state+1;
     }
 
-    else if (($scope.state==1)&&(($scope.choose==='available')||($scope.choose==='manual'))) 
+    else if (($scope.state===1)&&(($scope.choose==='available')||($scope.choose==='manual'))) 
     {
       if ($scope.order.product_name!==undefined) {
         $scope.state = $scope.state+1;
         $scope.error = undefined;
       }
+<<<<<<< HEAD:public/angular/order/controllers/buy-order-create.controller.js
       else if ($scope.order.product_name==undefined) {
+=======
+      else if ($scope.order.product_name===undefined) {
+>>>>>>> a6baae2ccc3512c3a2d653a44d42c14a941b1a57:public/angular/order/controllers/buy-order-modal.controller.js
         $scope.error = 'Harap pilih product / isi product name';
       }
     }
@@ -93,6 +101,7 @@ angular.module('order').controller('BuyOrderCreateController', ['$scope', '$filt
   // };
 
   $scope.create = function() {
+<<<<<<< HEAD:public/angular/order/controllers/buy-order-create.controller.js
     
     console.log($scope.order);
     var buy_order = new Order({
@@ -141,6 +150,17 @@ angular.module('order').controller('BuyOrderCreateController', ['$scope', '$filt
         $uibModalInstance.close('success');
       });
   }
+=======
+    var buy_order = new Order($scope.order);
+    buy_order.order_date = $filter('date')($scope.order.order_date, 'yyyy-MM-dd');
+    buy_order.deadline = $filter('date')($scope.order.deadline, 'yyyy-MM-dd');
+
+    buy_order.$save({ type: 'buy' }, function(res) {
+      $scope.buy_orders.push(res);
+      $uibModalInstance.close('success');
+    });
+  };
+>>>>>>> a6baae2ccc3512c3a2d653a44d42c14a941b1a57:public/angular/order/controllers/buy-order-modal.controller.js
 
 
 }]);

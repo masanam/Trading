@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('index').filter('directive', function() {
   return {
     restrict: 'E',

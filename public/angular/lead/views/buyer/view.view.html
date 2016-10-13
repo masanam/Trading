@@ -12,40 +12,63 @@
   </div>
 
   <!-- PRIMARY DETAIL -->
-  <div class="box">
-    <div class="box-body">
-      <div style="height:200px; padding:10px;">
-        <div class="col-xs-2" style="background-image:url('/images/default.jpg'); background-size: cover; height:180px"></div>
-        <div class="col-xs-10">
-          <h1>{{ buyer.company_name }}</h1>
-          <h3>{{ buyer.industry }}</h3>
-          <p>{{ buyer.address }}</p>
+  
+    <div class="box box-widget widget-user">
+            <!-- Add the bg color to the header using any of the bg-* classes -->
+      <div class="widget-user-header bg-aqua-active">
+        <h3 class="widget-user-username">{{ buyer.company_name }}</h3>
+        <h5 class="widget-user-desc">{{ buyer.industry }}</h5>
+      </div>
+      <div class="box-tools pull-right">
+        <i class='fa fa-share-alt'></i> is_affiliated 
+        <i class='fa fa-tags'></i> is_trader
+      </div>
+      <div class="widget-user-image">
+        <img class="img-circle" src="/images/default.jpg" alt="User Avatar">
+      </div>
+
+      <div class="box-footer">
+        <div class="row">
+          <div class="col-sm-12 border-right">
+            <div class="description-block">
+              <h5 class="description-text">{{ buyer.address }}</h5>
+                  
+            </div>
+          </div> 
         </div>
       </div>
     </div>
-  </div>
+  
 
   <div style="margin-top:10px;">
     <div class="col-lg-4" style="padding-left:0px;">
-      <div class="box">
+      <div class="box box-info">
         <div class="box-header with-border">
           <h3 class="box-title" style="font-size: 25px">About</h3>
           <div class="box-tools pull-right">
-            <button type="button" ui-sref="lead.update-buyer({ id: buyer.id })" class="btn btn-primary"><i class="glyphicon glyphicon-pencil"></i> Update</button>
+            <button type="button" ui-sref="lead.update-buyer({ id: buyer.id })" class="btn btn-info"><i class="glyphicon glyphicon-pencil"></i> Update</button>
           </div>
         </div>
         <div class="box-body">
           <div class="row-fluid" style="margin: 10px;">
 
             <table class="table table-striped">
+              <tr><td>Country:</td><td>{{ buyer.country }}</td></tr>
               <tr><td>Address:</td><td>{{ buyer.address }}</td></tr>
               <tr><td>City:</td><td>{{ buyer.city }}</td></tr>
+              <tr><td>Latitude:</td><td>{{ buyer.latitude }}</td></tr>
+              <tr><td>Longitude:</td><td>{{ buyer.longitude }}</td></tr>
+              <tr><td>Industry:</td><td>{{ buyer.industry }}</td></tr>
+              <tr><td>Annual Demand:</td><td>{{ buyer.annual_demand }}</td></tr>
+              <tr><td>Preferred Trading Term:</td><td>{{ buyer.preferred_trading_term }}</td></tr>
+              <tr><td>Preferred Payment Term:</td><td>{{ buyer.preferred_payment_term }}</td></tr>
               <tr><td>Phone:</td><td>{{ buyer.phone }}</td></tr>
               <tr><td>Email:</td><td>{{ buyer.email }}</td></tr>
               <tr><td>Web:</td><td>{{ buyer.web }}</td></tr>
               <tr><td>Desc:</td><td>{{ buyer.description }}</td></tr>
               <tr ng-if="buyer.status == 'a'"><td>Status:</td> <td>Active</td></tr>
               <tr ng-if="buyer.status == 'x'"><td>Status:</td> <td>Deactivated</td></tr>
+
             </table>
 
             <ng-map center="{{buyer.longitude}}, {{buyer.latitude}}">
@@ -57,7 +80,7 @@
     </div>
 
     <div class="col-lg-8">
-      <div class="box">
+      <div class="box box-info">
         <div class="box-header with-border">
           <h3 class="box-title" style="font-size: 25px">Contacts</h3>
           <div class="box-tools pull-right">
@@ -80,7 +103,7 @@
           </div>
         </div>
       </div>
-      <div class="box">
+      <div class="box box-info">
         <div class="box-header with-border">
           <h3 class="box-title" style="font-size: 25px">Products</h3>
           <div class="box-tools pull-right">
@@ -112,7 +135,7 @@
           </div>
         </div>
       </div>
-      <div class="box">
+      <div class="box box-info">
         <div class="box-header with-border">
           <h3 class="box-title" style="font-size: 25px">Insights</h3>
           <div class="box-tools pull-right">
@@ -124,11 +147,11 @@
           </div>
         </div>
       </div>
-      <div class="box">
+      <div class="box box-info">
         <div class="box-header with-border">
           <h3 class="box-title" style="font-size: 25px">Order History</h3>
           <div class="box-tools pull-right">
-            <button type="button" class="btn btn-success" ng-click="goToPendingOrders(buyer.id)"><i class="glyphicon glyphicon-plus"></i> Add New Order</button>
+            <button type="button" class="btn btn-info" ng-click="goToPendingOrders(buyer.id)"><i class="glyphicon glyphicon-plus"></i> Add New Order</button>
           </div>
         </div>
         <div class="box-body">
@@ -165,7 +188,7 @@
           </div>
         </div>
       </div>
-      <div class="box">
+      <div class="box box-info">
         <div class="box-header with-border">
           <h3 class="box-title" style="font-size: 25px">Notes</h3>
           <div class="box-tools pull-right">

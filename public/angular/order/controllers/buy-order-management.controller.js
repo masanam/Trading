@@ -29,4 +29,5 @@ angular.module('order').controller('BuyOrderManagementController', ['$scope', 'O
       $scope.buy_orders.splice($scope.buy_orders.indexOf(buy_order), 1);
       $scope.buy_order = Order.get({ type: 'buy', id: buy_order.id, action: 'changeOrderStatus', order_status: 'x' });
     };
-}]);
+  }
+]);

@@ -111,18 +111,18 @@
   </div>
 
   <table class="table table-striped">
-  	<thead><tr>
-  		<th>Date</th>
+    <thead><tr>
+      <th>Date</th>
       <th>Tonnage</th>
-  		<th>Desc</th>
-  	</tr></thead>
-  	<tbody>
-  		<tr ng-repeat="production in product.production">
-  			<td>{{ production.created_at | date }}</td>		
+      <th>Desc</th>
+    </tr></thead>
+    <tbody>
+      <tr ng-repeat="production in product.production">
+        <td>{{ production.created_at | date }}</td>    
         <td>{{ production.tonnage | number }}</td>    
-  			<td>{{ production.description }}</td>		
-  		</tr>
-  	</tbody>
+        <td>{{ production.description }}</td>    
+      </tr>
+    </tbody>
   </table>
 
 </section-->

@@ -14,10 +14,10 @@ angular.module('lead').config(['$stateProvider', '$urlRouterProvider',
         url: '',
         templateUrl: '/angular/lead/views/index.view.html',
         roles: ['user', 'trader']
-  	  })
+      })
 
       //browse page
-  	  .state('lead.buyer', {
+      .state('lead.buyer', {
         url: '/buyer?keyword',
         templateUrl: '/angular/lead/views/buyer/index.view.html',
         roles: ['user', 'trader']
@@ -83,7 +83,7 @@ angular.module('lead').config(['$stateProvider', '$urlRouterProvider',
       })
 
       //VIEW PAGES
-  	  /*.state('lead.view', {
+      /*.state('lead.view', {
         url: '/{type}/{id}',
         templateUrl: '/angular/lead/views/view-lead.view.html',
         roles: ['user', 'trader']

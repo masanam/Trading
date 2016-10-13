@@ -31,7 +31,7 @@ class Seller extends Model
     	return $this->hasMany('App\Model\Product');
     }
 
-    public function Mine() {
-    	return $this->hasMany('App\Model\Mine');
+    public function Concession() {
+    	return $this->hasMany('App\Model\Concession');
     }
 }

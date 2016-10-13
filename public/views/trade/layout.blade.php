@@ -23,7 +23,6 @@
     };
     firebase.initializeApp(config);
   </script>
-  <script src="https://maps.google.com/maps/api/js?key=AIzaSyBotBtywh49N5AsYXvltPig3T6YCgBwfzQ&libraries=placeses,visualization,drawing,geometry,places"></script>
 
   <!-- CSS -->
   @foreach (Config::get('assets.css') as $css)
@@ -53,5 +52,23 @@
       @yield('container')
     </div>
   </div>
+  
+  <!-- JS -->
+  @foreach (Config::get('assets.jstrade') as $js)
+      <script src="{{ $js }}"></script>
+  @endforeach
+  <script src="https://www.gstatic.com/firebasejs/3.4.1/firebase.js"></script>
+  <script src="http://maps.google.com/maps/api/js?key=AIzaSyDYe6YgQqs0HRnu0mkLu5qcBJZ9zwtxUDA"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyACILHAOiy4G9TtCgs0szgZBZokr4cduuo",
+      authDomain: "coal-trade.firebaseapp.com",
+      databaseURL: "https://coal-trade.firebaseio.com",
+      storageBucket: "coal-trade.appspot.com",
+      messagingSenderId: "407921708335"
+    };
+    firebase.initializeApp(config);
+  </script>
 </body>
 </html>

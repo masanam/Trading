@@ -9,16 +9,16 @@ angular.module('index').controller('DashboardController', ['$scope', '$state', '
     $scope.msg1 = true;
     $scope.msg2 = true;
 
-		NgMap.getMap().then(function(map) {
-			$scope.map = map;
+    NgMap.getMap().then(function(map) {
+      $scope.map = map;
     });
 
     $scope.loadMines = function(){
-    	$scope.mines = Mine.query({ option: 'detail' });
+      $scope.mines = Mine.query({ option: 'detail' });
     };
 
     $scope.loadBuyers = function(){
-    	$scope.buyers = Buyer.query();
+      $scope.buyers = Buyer.query();
     };
 
     $scope.loadTodayOrder = function(){
@@ -49,10 +49,10 @@ angular.module('index').controller('DashboardController', ['$scope', '$state', '
         }
 
         $scope.labels = labels;
-          $scope.data = [ data ];
+        $scope.data = [ data ];
 
-          $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }];
-          $scope.options = {
+        $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }];
+        $scope.options = {
           scales: {
             yAxes: [
               {
