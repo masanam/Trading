@@ -84,8 +84,8 @@
                 <label class="btn btn-sm btn-default" ng-model="searchType" uib-btn-radio="'product'">
                   Products
                 </label>
-                <label class="btn btn-sm btn-default" ng-model="searchType" uib-btn-radio="'mine'">
-                  Mines
+                <label class="btn btn-sm btn-default" ng-model="searchType" uib-btn-radio="'concession'">
+                  Concessions
                 </label>
                 <label class="btn btn-sm btn-default" ng-model="searchType" uib-btn-radio="'contact'">
                   Contacts
@@ -112,14 +112,14 @@
 
         <div class="small-box bg-green">
           <div class="inner"> 
-            <h4>{{ totalMine.count }} Records</h4>
+            <h4>{{ totalConcession.count }} Records</h4>
 
-            <p>MINES</p>
+            <p>CONCESSION</p>
           </div>
           <div class="icon">
             <i class="fa fa-gears"></i>
           </div>
-           <a ui-sref="lead.mine" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+           <a ui-sref="lead.concession" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
         </div>
 
         <div class="small-box bg-aqua">

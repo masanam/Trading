@@ -37,9 +37,9 @@ angular.module('lead').config(['$stateProvider', '$urlRouterProvider',
         templateUrl: '/angular/lead/views/product/index.view.html',
         roles: ['user', 'trader']
       })
-      .state('lead.mine', {
-        url: '/mine?keyword',
-        templateUrl: '/angular/lead/views/mine/index.view.html',
+      .state('lead.concession', {
+        url: '/concession?keyword',
+        templateUrl: '/angular/lead/views/concession/index.view.html',
         roles: ['user', 'trader']
       })
       .state('lead.contact', {
@@ -108,9 +108,9 @@ angular.module('lead').config(['$stateProvider', '$urlRouterProvider',
         templateUrl: '/angular/lead/views/product/view.view.html',
         roles: ['user', 'trader']
       })
-      .state('lead.view-mine', {
-        url: '/mine/{id}',
-        templateUrl: '/angular/lead/views/mine/view.view.html',
+      .state('lead.view-concession', {
+        url: '/concession/{id}',
+        templateUrl: '/angular/lead/views/concession/view.view.html',
         roles: ['user', 'trader']
       })
       .state('lead.view-contact', {

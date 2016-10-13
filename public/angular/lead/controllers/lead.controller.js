@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('lead').controller('LeadController', ['$scope', '$state', '$http', '$stateParams', 'Buyer', 'Seller', 'Vendor', 'Contact', 'Mine', 'Product', 'Lead',  
-  function($scope, $state, $http, $stateParams, Buyer, Seller, Vendor, Contact, Mine, Product, Lead) {
+angular.module('lead').controller('LeadController', ['$scope', '$state', '$http', '$stateParams', 'Buyer', 'Seller', 'Vendor', 'Contact', 'Concession', 'Product', 'Lead',  
+  function($scope, $state, $http, $stateParams, Buyer, Seller, Vendor, Contact, Concession, Product, Lead) {
     $scope.searchType = 'buyer';
     $scope.leads = [];
     $scope.lead = {};   
@@ -40,7 +40,7 @@ angular.module('lead').controller('LeadController', ['$scope', '$state', '$http'
       $scope.totalSeller = Seller.get({ action : 'total' });
       $scope.totalVendor = Vendor.get({ action : 'total' });
       $scope.totalContact = Contact.get({ action : 'total' });
-      $scope.totalMine = Mine.get({ action : 'total' });
+      $scope.totalConcession = Concession.get({ action : 'total' });
       $scope.totalProduct = Product.get({ action : 'total' });
     };
   }

@@ -2,16 +2,16 @@
 <div class="col-lg-2">
     <section ng-include="'./angular/lead/views/side-menu.view.html'"></section>
 </div>
-<div class="col-lg-10" ng-controller="MineController">
+<div class="col-lg-10" ng-controller="ConcessionController">
     <section ng-include="'./angular/lead/views/search-bar.view.html'"></section><br>
     <div class="box">
     <div class="box-header with-border">
-      <h1 class="box-title" style="font-size: 25px">Mines</h1>
+      <h1 class="box-title" style="font-size: 25px">Concession</h1>
       <div class="box-tools pull-right">
       </div>
     </div>
       <div class="box-body">
-      <table ng-init="find()" st-table="displayedCollection" st-safe-src="mines" class="table table-striped">
+      <table ng-init="find()" st-table="displayedCollection" st-safe-src="Concessions" class="table table-striped">
         <thead>
           <tr>
                 <th colspan="5"><input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
@@ -26,12 +26,12 @@
         </thead>
 
         <tbody>
-          <tr ng-repeat="mine in displayedCollection">
-            <td>{{ mine.id }}</td>
-            <td>{{ mine.mine_name }}</td>
-            <td>{{ mine.latitude }}</td>
-            <td>{{ mine.longitude }}</td>
-            <td>{{ mine.port_name }}</td>
+          <tr ng-repeat="Concession in displayedCollection">
+            <td>{{ concession.id }}</td>
+            <td>{{ concession.mine_name }}</td>
+            <td>{{ concession.latitude }}</td>
+            <td>{{ concession.longitude }}</td>
+            <td>{{ concession.port_name }}</td>
           </tr>
 
           <tr ng-if="displayedCollection.length == 0">

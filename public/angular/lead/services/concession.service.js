@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module('mine').factory('Mine', ['$resource',
+angular.module('concession').factory('Concession', ['$resource',
   function ($resource) {
-    return $resource('api/mine/:action/:id/:option', {
+    return $resource('api/concession/:action/:id/:option', {
       action: undefined,
       sellerId: undefined,
       id: undefined,
