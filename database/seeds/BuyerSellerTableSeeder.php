@@ -19,7 +19,7 @@ class BuyerSellerTableSeeder extends Seeder
             'seller_id' => '1' ,
             'buyer_id' => '2' ,
             'notes' => '' ,
-            'is_facilitated' => 'true' ,
+            'is_facilitated' => true ,
             'status' => 'a' 
         ]);
 
@@ -28,7 +28,7 @@ class BuyerSellerTableSeeder extends Seeder
             'seller_id' => '1' ,
             'buyer_id' => '1' ,
             'notes' => '' ,
-            'is_facilitated' => 'true' ,
+            'is_facilitated' => true ,
             'status' => 'a' 
         ]);
     }

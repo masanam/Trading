@@ -107,7 +107,7 @@ class BuyOrderTableSeeder extends Seeder
             'payment_terms'=>'',
             'commercial_term'=>'',
              'ready_date'=>$faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
-            'expired_date'=>$faker->dateTimeBetween($startDate = "5 days", $endDate = "now")->format('Y-m-d'),
+            'expired_date'=>$faker->dateTimeBetween($startDate = "5 days", $endDate = "10 days")->format('Y-m-d'),
             'penalty_desc' => 'penalty',
 
             'volume' => 3000,
@@ -163,7 +163,7 @@ class BuyOrderTableSeeder extends Seeder
             'payment_terms'=>'',
             'commercial_term'=>'',
              'ready_date'=>$faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
-            'expired_date'=>$faker->dateTimeBetween($startDate = "5 days", $endDate = "now")->format('Y-m-d'),
+            'expired_date'=>$faker->dateTimeBetween($startDate = "5 days", $endDate = "10 days")->format('Y-m-d'),
             'penalty_desc' => 'penalty',
 
             'volume' => 2000,
@@ -228,7 +228,7 @@ class BuyOrderTableSeeder extends Seeder
             'payment_terms'=>'',
             'commercial_term'=>'',
             'ready_date'=>$faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
-            'expired_date'=>$faker->dateTimeBetween($startDate = "5 days", $endDate = "now")->format('Y-m-d'),
+            'expired_date'=>$faker->dateTimeBetween($startDate = "5 days", $endDate = "10 days")->format('Y-m-d'),
 
             'penalty_desc' => 'penalty',
 
@@ -284,7 +284,7 @@ class BuyOrderTableSeeder extends Seeder
             'payment_terms'=>'',
             'commercial_term'=>'',
             'ready_date'=>$faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
-            'expired_date'=>$faker->dateTimeBetween($startDate = "5 days", $endDate = "now")->format('Y-m-d'),
+            'expired_date'=>$faker->dateTimeBetween($startDate = "5 days", $endDate = "10 days")->format('Y-m-d'),
 
             'penalty_desc' => 'penalty',
 
@@ -330,7 +330,7 @@ class BuyOrderTableSeeder extends Seeder
             'payment_terms'=>'',
             'commercial_term'=>'',
             'ready_date'=>$faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
-            'expired_date'=>$faker->dateTimeBetween($startDate = "5 days", $endDate = "now")->format('Y-m-d'),
+            'expired_date'=>$faker->dateTimeBetween($startDate = "5 days", $endDate = "10 days")->format('Y-m-d'),
 
             'penalty_desc' => 'penalty',
 
@@ -423,7 +423,7 @@ class BuyOrderTableSeeder extends Seeder
 
             'penalty_desc' => 'penalty',
             'ready_date'=>$faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
-            'expired_date'=>$faker->dateTimeBetween($startDate = "5 days", $endDate = "now")->format('Y-m-d'),
+            'expired_date'=>$faker->dateTimeBetween($startDate = "5 days", $endDate = "10 days")->format('Y-m-d'),
 
             'volume' => $faker->numberBetween($min = 1000, $max = 2000),
             'max_price' => $faker->numberBetween($min = 100, $max = 5000),

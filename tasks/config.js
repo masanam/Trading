@@ -37,7 +37,9 @@ module.exports = {
     'bower_components/angular-smart-table/dist/smart-table.css',
   ],
   vendorFontFiles: [
-    'bower_components/bootstrap/fonts/glyphicons-halflings-regular.ttf'
+    'bower_components/bootstrap/fonts/glyphicons-halflings-regular.ttf',
+    'bower_components/bootstrap/fonts/glyphicons-halflings-regular.woff',
+    'bower_components/bootstrap/fonts/glyphicons-halflings-regular.woff2'
   ],
   appJSFiles: [
     'public/angular/core/config/app.js',

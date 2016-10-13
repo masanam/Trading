@@ -19,12 +19,16 @@ class SellOrderTableSeeder extends Seeder
             'user_id' => 1 ,
             'seller_id' => 1 ,
 
+            'city' => 'JKT',
+            'country' => 'ID',
+            'commercial_term' => '',
+
             'address' => 'Jl. Kapten Darmo Sugondo No.56, Sidorukun, Kec. Gresik, Kabupaten Gresik, Jawa Timur',
             'latitude' => '-7.1844498' ,
             'longitude' => '112.6528737' ,
 
             'order_date' => $faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
-            'deadline' => $faker->dateTimeBetween($startDate = "5 days", $endDate = "10 days")->format('Y-m-d'),
+            'order_deadline' => $faker->dateTimeBetween($startDate = "5 days", $endDate = "10 days")->format('Y-m-d'),
 
             'tm_min' => 12,
             'tm_max' => 18,
@@ -48,9 +52,12 @@ class SellOrderTableSeeder extends Seeder
             'hgi_max' => 40,
             'size_min' => 0,
             'size_max' => 50,
-            'max_price' => 5000,
+            'min_price' => 5000,
 
             'penalty_desc' => 'penalty',
+            'ready_date'=>$faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
+            'expired_date'=>$faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
+            
 
             'volume' => 5000,
             'order_status' => 'o'
@@ -60,12 +67,16 @@ class SellOrderTableSeeder extends Seeder
             'user_id' => 3 ,
             'seller_id' => 1 ,
 
+            'city' => 'JKT',
+            'country' => 'ID',
+            'commercial_term' => '',
+
             'address' => 'Jl. Kapten Darmo Sugondo No.56, Sidorukun, Kec. Gresik, Kabupaten Gresik, Jawa Timur',
             'latitude' => '-7.1844498' ,
             'longitude' => '112.6528737' ,
 
             'order_date' => $faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
-            'deadline' => $faker->dateTimeBetween($startDate = "5 days", $endDate = "10 days")->format('Y-m-d'),
+            'order_deadline' => $faker->dateTimeBetween($startDate = "5 days", $endDate = "10 days")->format('Y-m-d'),
 
             'tm_min' => 6,
             'tm_max' => 11,
@@ -89,9 +100,12 @@ class SellOrderTableSeeder extends Seeder
             'hgi_max' => 50,
             'size_min' => 0,
             'size_max' => 200,
-            'max_price' => 5000,
+            'min_price' => 5000,
 
             'penalty_desc' => 'penalty',
+            'ready_date'=>$faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
+            'expired_date'=>$faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
+            
 
             'volume' => 3000,
             'order_status' => 'p'
@@ -101,12 +115,16 @@ class SellOrderTableSeeder extends Seeder
             'user_id' => 2 ,
             'seller_id' => 1 ,
 
+            'city' => 'JKT',
+            'country' => 'ID',
+            'commercial_term' => '',
+
             'address' => 'Jl. Kapten Darmo Sugondo No.56, Sidorukun, Kec. Gresik, Kabupaten Gresik, Jawa Timur',
             'latitude' => '-7.1844498' ,
             'longitude' => '112.6528737' ,
 
             'order_date' => $faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
-            'deadline' => $faker->dateTimeBetween($startDate = "5 days", $endDate = "10 days")->format('Y-m-d'),
+            'order_deadline' => $faker->dateTimeBetween($startDate = "5 days", $endDate = "10 days")->format('Y-m-d'),
 
             'tm_min' => 5,
             'tm_max' => 8,
@@ -130,9 +148,12 @@ class SellOrderTableSeeder extends Seeder
             'hgi_max' => 50,
             'size_min' => 0,
             'size_max' => 150,
-            'max_price' => 5000,
+            'min_price' => 5000,
 
             'penalty_desc' => 'penalty',
+            'ready_date'=>$faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
+            'expired_date'=>$faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
+            
 
             'volume' => 2000,
             'order_status' => 'f'
@@ -142,12 +163,16 @@ class SellOrderTableSeeder extends Seeder
             'user_id' => 2 ,
             'seller_id' => 2 ,
 
+            'city' => 'JKT',
+            'country' => 'ID',
+            'commercial_term' => '',
+
             'address' => 'Jalan Raya Anyer KM 11. Ciwandan Cilegon 42446. Banten' ,
             'latitude' => '-6.02428' ,
             'longitude' => '105.965' ,
 
             'order_date' => $faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
-            'deadline' => $faker->dateTimeBetween($startDate = "5 days", $endDate = "10 days")->format('Y-m-d'),
+            'order_deadline' => $faker->dateTimeBetween($startDate = "5 days", $endDate = "10 days")->format('Y-m-d'),
 
             'tm_min' => 6,
             'tm_max' => 10,
@@ -171,9 +196,12 @@ class SellOrderTableSeeder extends Seeder
             'hgi_max' => 60,
             'size_min' => 0,
             'size_max' => 50,
-            'max_price' => 5000,
+            'min_price' => 5000,
 
             'penalty_desc' => 'penalty',
+            'ready_date'=>$faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
+            'expired_date'=>$faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
+            
 
             'volume' => 4500,
             'order_status' => 'p'
@@ -183,12 +211,16 @@ class SellOrderTableSeeder extends Seeder
             'user_id' => 1 ,
             'seller_id' => 3 ,
 
+            'city' => 'JKT',
+            'country' => 'ID',
+            'commercial_term' => '',
+
             'address' => 'Jl. MH Thamrin No. 51, Jakarta 10350' ,
             'latitude' => '-6.2012618' ,
             'longitude' => '106.7861946' ,
 
             'order_date' => $faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
-            'deadline' => $faker->dateTimeBetween($startDate = "5 days", $endDate = "10 days")->format('Y-m-d'),
+            'order_deadline' => $faker->dateTimeBetween($startDate = "5 days", $endDate = "10 days")->format('Y-m-d'),
 
             'tm_min' => 7,
             'tm_max' => 11,
@@ -212,9 +244,12 @@ class SellOrderTableSeeder extends Seeder
             'hgi_max' => 50,
             'size_min' => 0,
             'size_max' => 100,
-            'max_price' => 5000,
+            'min_price' => 5000,
 
             'penalty_desc' => 'penalty',
+            'ready_date'=>$faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
+            'expired_date'=>$faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
+            
 
             'volume' => 6000,
             'order_status' => 'f'
@@ -224,12 +259,16 @@ class SellOrderTableSeeder extends Seeder
             'user_id' => 3 ,
             'seller_id' => 3 ,
 
+            'city' => 'JKT',
+            'country' => 'ID',
+            'commercial_term' => '',
+
             'address' => 'Jl. MH Thamrin No. 51, Jakarta 10350' ,
             'latitude' => '-6.2012618' ,
             'longitude' => '106.7861946' ,
 
             'order_date' => $faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
-            'deadline' => $faker->dateTimeBetween($startDate = "5 days", $endDate = "10 days")->format('Y-m-d'),
+            'order_deadline' => $faker->dateTimeBetween($startDate = "5 days", $endDate = "10 days")->format('Y-m-d'),
 
             'tm_min' => 5,
             'tm_max' => 10,
@@ -253,9 +292,12 @@ class SellOrderTableSeeder extends Seeder
             'hgi_max' => 60,
             'size_min' => 0,
             'size_max' => 150,
-            'max_price' => 5000,
+            'min_price' => 5000,
 
             'penalty_desc' => 'penalty',
+            'ready_date'=>$faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
+            'expired_date'=>$faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
+            
 
             'volume' => 1500,
             'order_status' => 'c'
@@ -292,9 +334,13 @@ class SellOrderTableSeeder extends Seeder
             'user_id' => $faker->numberBetween($min = 1, $max = 3) ,
             'seller_id' => $faker->numberBetween($min = 1, $max = 3) ,
 
+            'city' => 'JKT',
+            'country' => 'ID',
+            'commercial_term' => '',
+
 
             'order_date' => $faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
-            'deadline' => $faker->dateTimeBetween($startDate = "5 days", $endDate = "10 days")->format('Y-m-d'),
+            'order_deadline' => $faker->dateTimeBetween($startDate = "5 days", $endDate = "10 days")->format('Y-m-d'),
 
             'tm_min' => $faker->numberBetween($min = 1, $max = 5) ,
             'tm_max' => $faker->numberBetween($min = 6, $max = 10),
@@ -318,12 +364,15 @@ class SellOrderTableSeeder extends Seeder
             'hgi_max' => $faker->numberBetween($min = 60, $max = 100),
             'size_min' => $faker->numberBetween($min = 0, $max = 75),
             'size_max' => $faker->numberBetween($min = 150, $max = 220),
-            'max_price' => $faker->numberBetween($min = 1, $max = 500),
+            'min_price' => $faker->numberBetween($min = 1, $max = 500),
 
             'penalty_desc' => 'penalty',
+            'ready_date'=>$faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
+            'expired_date'=>$faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
+            
 
             'volume' => $faker->numberBetween($min = 1000, $max = 2000),
-            'max_price' => $faker->numberBetween($min = 100, $max = 5000),
+            'min_price' => $faker->numberBetween($min = 100, $max = 5000),
             'order_status' => $faker->randomElement($array = array ('a','f'))
           ]));
       }
