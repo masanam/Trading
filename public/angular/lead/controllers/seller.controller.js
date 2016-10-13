@@ -313,7 +313,7 @@ angular.module('seller').controller('CreateContactModalController', function ($s
 });
 
 
-angular.module('seller').controller('CreateMineModalController', function ($scope, $filter, $uibModalInstance, Mine, Authentication) {
+angular.module('seller').controller('CreateMineModalController', function ($scope, $filter, $uibModalInstance, Concession, Authentication) {
   
   $scope.initializeMine = function(){
     $scope.mine = {
@@ -339,7 +339,7 @@ angular.module('seller').controller('CreateMineModalController', function ($scop
     $scope.mine.license_expired_date = $filter('date')($scope.mine.license_expired_date, 'yyyy-MM-dd');
     $scope.mine.seller_id = $scope.seller.id;
 
-    var mine = new Mine($scope.mine);
+    var mine = new Concession($scope.mine);
     
     mine.$save(function (response) {
       $scope.mine = response;
