@@ -41,45 +41,6 @@ angular.module('order').controller('SellOrderModalController', function ($scope,
     };
   };
 
-  $scope.reset = function() {
-    $scope.state = 0;
-    $scope.choose = undefined;
-    $scope.order = {
-      seller_id: undefined,
-      order_date: undefined,
-      deadline: undefined,
-      penalty: undefined,
-      address: undefined,
-      latitude: undefined,
-      longitude: undefined,
-      product_name: undefined,
-      product_id: undefined,
-      volume: undefined,
-      max_price: undefined,
-      gcv_arb_min: undefined,
-      gcv_arb_max: undefined,
-      gcv_adb_min: undefined,
-      gcv_adb_max: undefined,
-      ncv_min: undefined,
-      ncv_max: undefined,
-      ash_min: undefined,
-      ash_max: undefined,
-      ts_min: undefined,
-      ts_max: undefined,
-      tm_min: undefined,
-      tm_max: undefined,
-      im_min: undefined,
-      im_max: undefined,
-      fc_min: undefined,
-      fc_max: undefined,
-      vm_min: undefined,
-      vm_max: undefined,
-      hgi_min: undefined,
-      hgi_max: undefined,
-      size_min: undefined,
-      size_max: undefined
-    };
-  };
 
   $scope.next = function () {
     if (($scope.state==0)&&

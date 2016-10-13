@@ -23,6 +23,7 @@
     };
     firebase.initializeApp(config);
   </script>
+  <script src="https://maps.google.com/maps/api/js?key=AIzaSyBotBtywh49N5AsYXvltPig3T6YCgBwfzQ&libraries=placeses,visualization,drawing,geometry,places"></script>
 
   <!-- CSS -->
   @foreach (Config::get('assets.css') as $css)

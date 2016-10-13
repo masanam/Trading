@@ -1,97 +1,27 @@
 'use strict';
 
-angular.module('order').controller('BuyOrderModalController', function ($scope, $uibModalInstance, $filter, Buyer, Order, Product) {
+angular.module('order').controller('BuyOrderCreateController', ['$scope', '$filter',  'Buyer', 'Order', 'Product',
+  function ($scope, $filter, Buyer, Order, Product) {
   
   $scope.init = function(){
     $scope.state = 0;
     $scope.choose = undefined;
     $scope.error = undefined;
-    $scope.order = {
-      buyer_id: undefined,
-      order_date: undefined,
-      deadline: undefined,
-      penalty: undefined,
-      address: undefined,
-      latitude: undefined,
-      longitude: undefined,
-      product_name: undefined,
-      product_id: undefined,
-      volume: undefined,
-      gcv_arb_min: undefined,
-      gcv_arb_max: undefined,
-      gcv_adb_min: undefined,
-      gcv_adb_max: undefined,
-      ncv_min: undefined,
-      ncv_max: undefined,
-      ash_min: undefined,
-      ash_max: undefined,
-      ts_min: undefined,
-      ts_max: undefined,
-      tm_min: undefined,
-      tm_max: undefined,
-      im_min: undefined,
-      im_max: undefined,
-      fc_min: undefined,
-      fc_max: undefined,
-      vm_min: undefined,
-      vm_max: undefined,
-      hgi_min: undefined,
-      hgi_max: undefined,
-      size_min: undefined,
-      size_max: undefined
-    };
-  };
-
-  $scope.reset = function() {
-    $scope.state = 0;
-    $scope.choose = undefined;
-    $scope.order = {
-      buyer_id: undefined,
-      order_date: undefined,
-      deadline: undefined,
-      penalty: undefined,
-      address: undefined,
-      latitude: undefined,
-      longitude: undefined,
-      product_name: undefined,
-      product_id: undefined,
-      volume: undefined,
-      max_price: undefined,
-      gcv_arb_min: undefined,
-      gcv_arb_max: undefined,
-      gcv_adb_min: undefined,
-      gcv_adb_max: undefined,
-      ncv_min: undefined,
-      ncv_max: undefined,
-      ash_min: undefined,
-      ash_max: undefined,
-      ts_min: undefined,
-      ts_max: undefined,
-      tm_min: undefined,
-      tm_max: undefined,
-      im_min: undefined,
-      im_max: undefined,
-      fc_min: undefined,
-      fc_max: undefined,
-      vm_min: undefined,
-      vm_max: undefined,
-      hgi_min: undefined,
-      hgi_max: undefined,
-      size_min: undefined,
-      size_max: undefined
-    };
+    $scope.order = new Order();
   };
 
   $scope.next = function () {
+      $scope.state = $scope.state+1;
     if (($scope.state==0)&&
       ($scope.order.buyer_id)&&
       ($scope.order.order_date)&&
-      ($scope.order.deadline)&&
+      ($scope.order.order_deadline)&&
       ($scope.order.address)&&
       ($scope.order.latitude)&&
       ($scope.order.longitude)) 
     {
-      // $scope.company_name = Buyer.get({ id: $scope.order.buyer_id });
+      $scope.order.order_date = $filter('date')($scope.order.order_date, 'yyyy-MM-dd');
+      $scope.order.order_date = $filter('date')($scope.order.order_deadline, 'yyyy-MM-dd');
       $scope.state = $scope.state+1;
     }
 
@@ -102,8 +32,13 @@ angular.module('order').controller('BuyOrderModalController', function ($scope, 
         $scope.error = undefined;
       }
       else if ($scope.order.product_name==undefined) {
-        $scope.error = "Harap pilih product / isi product name";
+        $scope.error = 'Harap pilih product / isi product name';
       }
+    }
+
+    else if (($scope.state==2)&&($scope.order.volume)&&($scope.order.max_price)) 
+    {
+      $scope.state = $scope.state+1;
     }
 
   };
@@ -121,6 +56,28 @@ angular.module('order').controller('BuyOrderModalController', function ($scope, 
   $scope.setSelected = function(product) {
     $scope.order.product_name = product.product_name;
     $scope.order.product_id = product.id;
+    $scope.order.gcv_arb_min = product.gcv_arb_min;
+    $scope.order.gcv_arb_max = product.gcv_arb_max;
+    $scope.order.gcv_adb_min = product.gcv_adb_min;
+    $scope.order.gcv_adb_max = product.gcv_adb_max;
+    $scope.order.ncv_min = product.ncv_min;
+    $scope.order.ncv_max = product.ncv_max;
+    $scope.order.ash_min = parseFloat(product.ash_min, 10);
+    $scope.order.ash_max = parseFloat(product.ash_max, 10);
+    $scope.order.ts_min = parseFloat(product.ts_min, 10);
+    $scope.order.ts_max = parseFloat(product.ts_max, 10);
+    $scope.order.tm_min = parseFloat(product.tm_min, 10);
+    $scope.order.tm_max = parseFloat(product.tm_max, 10);
+    $scope.order.im_min = parseFloat(product.im_min, 10);
+    $scope.order.im_max = parseFloat(product.im_max, 10);
+    $scope.order.fc_min = parseFloat(product.fc_min, 10);
+    $scope.order.fc_max = parseFloat(product.fc_max, 10);
+    $scope.order.vm_min = parseFloat(product.vm_min, 10);
+    $scope.order.vm_max = parseFloat(product.vm_max, 10);
+    $scope.order.hgi_min = product.hgi_min;
+    $scope.order.hgi_max = product.hgi_max;
+    $scope.order.size_min = product.size_min;
+    $scope.order.size_max = product.size_max;
   };
 
   $scope.findAllBuyers = function() {
@@ -131,12 +88,17 @@ angular.module('order').controller('BuyOrderModalController', function ($scope, 
     $scope.products = Product.query();
   };
 
+  // $scope.findAllPorts = function() {
+  //   $scope.ports = Port.query();
+  // };
 
   $scope.create = function() {
+    
+    console.log($scope.order);
     var buy_order = new Order({
         buyer_id: $scope.order.buyer_id, 
-        order_date: $filter('date')($scope.order.order_date, "yyyy-MM-dd"),
-        deadline: $filter('date')($scope.order.deadline, "yyyy-MM-dd"),
+        order_date: $filter('date')($scope.order.order_date, 'yyyy-MM-dd'),
+        order_deadline: $filter('date')($scope.order.order_deadline, 'yyyy-MM-dd'),
         address: $scope.order.address,
         latitude: $scope.order.latitude,
         longitude: $scope.order.longitude,
@@ -168,16 +130,17 @@ angular.module('order').controller('BuyOrderModalController', function ($scope, 
         size_max: $scope.order.size_max,
 
         volume: $scope.order.volume,
-        max_price: $scope.order.max_price
+        max_price: $scope.order.max_price,
+
+        port_id: $scope.order.port_id
       });
 
-      buy_order.$save({ type: 'buy' }, function(res) {
+      $scope.order.$save({ type: 'buy' }, function(res) {
+        console.log(res);
         $scope.buy_orders.push(res);
         $uibModalInstance.close('success');
       });
   }
 
-  $scope.close = function () {
-    $uibModalInstance.dismiss('cancel');
-  };
-});
+
+}]);
