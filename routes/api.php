@@ -83,9 +83,9 @@ Route::group(['middleware' => ['cors']], function() {
         'create', 'edit'
     ]]);
 
-    Route::get('mine/total', 'MineController@getTotalMine');
-    Route::get('mine/search/{search?}', 'MineController@search');
-    Route::resource('mine', 'MineController', ['except' => [
+    Route::get('concession/total', 'ConcessionController@getTotalConcession');
+    Route::get('concession/search/{search?}', 'ConcessionController@search');
+    Route::resource('concession', 'ConcessionController', ['except' => [
         'create', 'edit'
     ]]);
 
