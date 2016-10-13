@@ -47,12 +47,26 @@ class SellOrderController extends Controller
         $sell_order->seller_id = $request->seller_id;
 
         $sell_order->order_date = $request->order_date;
-        $sell_order->penalty_desc = $request->penalty_desc;
-        $sell_order->deadline = $request->deadline;
+        $sell_order->order_deadline = $request->order_deadline;
+        $sell_order->ready_date = $request->ready_date;
+        $sell_order->expired_date = $request->expired_date;
 
         $sell_order->address = $request->address;
+        $sell_order->city = $request->city;
+        $sell_order->country = $request->country;
         $sell_order->latitude = $request->latitude;
         $sell_order->longitude = $request->longitude;
+        $sell_order->port_distance = $request->port_distance;
+        $sell_order->port_id = $request->port_id;
+        $sell_order->port_name = $request->port_name;
+        $sell_order->port_status = $request->port_status;
+        $sell_order->port_daily_rate = $request->port_daily_rate;
+        $sell_order->port_draft_height = $request->port_draft_height;
+        $sell_order->port_latitude = $request->port_latitude;
+        $sell_order->port_longitude = $request->port_longitude;
+
+        $sell_order->product_name = $request->product_name;
+        $sell_order->product_id = $request->product_id;
 
         $sell_order->gcv_arb_min = $request->gcv_arb_min;
         $sell_order->gcv_arb_max = $request->gcv_arb_max;
@@ -100,11 +114,14 @@ class SellOrderController extends Controller
         $sell_order->size_bonus = $request->size_bonus;
 
         $sell_order->volume = $request->volume;
-        $sell_order->product_name = $request->product_name;
-        $sell_order->product_id = $request->product_id;
-        $sell_order->max_price = $request->max_price;
+        $sell_order->max_price = $request->min_price;
+        $sell_order->trading_term = $request->trading_term;
+        $sell_order->payment_terms = $request->payment_terms;
+        $sell_order->commercial_term = $request->commercial_term;
+        $sell_order->penalty_desc = $request->penalty_desc;
         
         $sell_order->order_status = 'a';
+        $sell_order->progress_status = $request->progress_status;
         
         $sell_order->save();
 

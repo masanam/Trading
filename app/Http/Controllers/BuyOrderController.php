@@ -68,7 +68,6 @@ class BuyOrderController extends Controller
         $buy_order->port_latitude = $request->port_latitude;
         $buy_order->port_longitude = $request->port_longitude;
 
-        
         $buy_order->product_name = $request->product_name;
         $buy_order->product_id = $request->product_id;
 

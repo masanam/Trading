@@ -42,7 +42,7 @@
       <script src="{{ $js }}"></script>
   @endforeach
   <script src="https://www.gstatic.com/firebasejs/3.4.1/firebase.js"></script>
-  <script src="http://maps.google.com/maps/api/js?key=AIzaSyDYe6YgQqs0HRnu0mkLu5qcBJZ9zwtxUDA"></script>
+  <script src="http://maps.google.com/maps/api/js?key=AIzaSyDYe6YgQqs0HRnu0mkLu5qcBJZ9zwtxUDA&libraries=placeses,visualization,drawing,geometry,places"></script>
   <script>
     // Initialize Firebase
     var config = {

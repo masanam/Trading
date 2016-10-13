@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('order').controller('BuyOrderCreateController', ['$scope', '$filter', '$location', 'Buyer', 'Order', 'Product', 'NgMap',
-  function ($scope, $filter, $location, Buyer, Order, Product, NgMap, google) {
+angular.module('order').controller('SellOrderCreateController', ['$scope', '$filter', '$location', 'Buyer', 'Order', 'Product', 'NgMap',
+  function ($scope, $filter, $location, Seller, Order, Product, NgMap) {
   
     $scope.init = function(){
       $scope.state = 0;
@@ -12,9 +12,9 @@ angular.module('order').controller('BuyOrderCreateController', ['$scope', '$filt
 
     $scope.next = function () {
       if (($scope.state===0)&&
-        ($scope.order.buyer_id)&&
+        ($scope.order.seller_id)&&
         ($scope.order.order_date)&&
-        ($scope.order.order_deadline)&&
+        ($scope.order.deadline)&&
         ($scope.order.address)&&
         ($scope.order.latitude)&&
         ($scope.order.longitude)) 
@@ -32,7 +32,6 @@ angular.module('order').controller('BuyOrderCreateController', ['$scope', '$filt
           $scope.error = 'Harap pilih product / isi product name';
         }
       }
-
     };
 
     $scope.back = function () {
@@ -72,37 +71,27 @@ angular.module('order').controller('BuyOrderCreateController', ['$scope', '$filt
       $scope.order.size_max = product.size_max;
     };
 
-    $scope.findAllBuyers = function() {
-      $scope.buyers = Buyer.query();
+    $scope.findAllSellers = function() {
+      $scope.sellers = Seller.query();
     };
 
     $scope.findAllProducts = function() {
       $scope.products = Product.query();
     };
 
-    // $scope.findAllPorts = function() {
-    //   $scope.ports = Port.query();
-    // };
 
     $scope.create = function() {
       $scope.order.order_date = $filter('date')($scope.order.order_date, 'yyyy-MM-dd');
       $scope.order.order_deadline = $filter('date')($scope.order.order_deadline, 'yyyy-MM-dd');
       $scope.order.ready_date = $filter('date')($scope.order.ready_date, 'yyyy-MM-dd');
       $scope.order.expired_date = $filter('date')($scope.order.expired_date, 'yyyy-MM-dd');
-      $scope.order.$save({ type: 'buy' }, function(res) {
-        $location.path('buy-order'); 
+      $scope.order.$save({ type: 'sell' }, function(res) {
+        $location.path('sell-order'); 
       });
     };
 
     NgMap.getMap().then(function(map) {
       $scope.map = map;
     });
-
-    $scope.placeMarker = function(e) {
-      if(!$scope.marker){
-        $scope.marker = new google.maps.Marker({ position: e.latLng, map: $scope.map, draggable: true });
-        $scope.map.panTo(e.latLng);
-      }
-    };
   }
 ]);
