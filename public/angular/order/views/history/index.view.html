@@ -1,0 +1,55 @@
+<!-- Main content -->
+<section class="content" ng-controller="OrderHistoryController" >
+  <div class="row" ng-init="findAvailableBuy()">
+    <div class="col-md-3">
+      <div class="box box-solid">
+        <div class="box-header with-border">
+          <h3 class="box-title">Folders</h3>
+        </div>
+        <div class="box-body no-padding">
+          <ul class="nav nav-pills nav-stacked">
+            <li class="active">
+              <a ng-click="findAvailableBuy()">
+                <i class="fa fa-inbox"></i> Active Buy Orders
+                <span class="label label-primary pull-right"></span>
+              </a>
+            </li>
+            <li>
+              <a ng-click="findFinishedBuy()">
+                <i class="fa fa-filter"></i> Finished Buy Orders
+                <span class="label label-primary pull-right"></span>
+              </a>
+            </li>
+            <li>
+              <a ng-click="findAvailableSell()">
+                <i class="fa fa-inbox"></i> Active Sell Orders
+                <span class="label label-primary pull-right"></span>
+              </a>
+            </li>
+            <li>
+              <a ng-click="findFinishedSell()">
+                <i class="fa fa-filter"></i> Finished Sell Orders
+                <span class="label label-primary pull-right"></span>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <!-- /.box-body -->
+      </div>
+      <!-- /. box -->
+    </div>
+    <div class="col-md-9">
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">Orders</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body no-padding">
+          <section ng-include="'/angular/order/views/history/table.view.html'"></section>
+        </div>
+        <!-- /.box-body -->
+      </div>
+      <!-- /. box -->
+    </div>
+  </div>
+</section>

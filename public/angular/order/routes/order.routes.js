@@ -102,5 +102,16 @@ angular.module('order-history').config(['$stateProvider', '$urlRouterProvider',
         url: '',
         templateUrl: '/angular/order/views/sell-order/management.view.html'
       });
+
+    $stateProvider
+      .state('history-order', {
+        url: '/history-order',
+        abstract: true,
+        template: '<ui-view>'
+      })
+      .state('history-order.index', {
+        url: '',
+        templateUrl: '/angular/order/views/history/index.view.html'
+      });
   }
 ]);

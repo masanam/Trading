@@ -119,6 +119,24 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
         scope: $scope,
       });
     };
+
+    $scope.openExistingBuyModal = function () {
+      var modalInstance = $uibModal.open({
+        windowClass: 'xl-modal',
+        templateUrl: './angular/deal/views/existing-buy-order-modal.view.html',
+        controller: 'ExistingBuyModalController',
+        scope: $scope,
+      });
+    };
+    
+    $scope.openExistingSellModal = function () {
+      var modalInstance = $uibModal.open({
+        windowClass: 'xl-modal',
+        templateUrl: './angular/deal/views/existing-sell-order-modal.view.html',
+        controller: 'ExistingSellModalController',
+        scope: $scope,
+      });
+    };
     
     $scope.getTotalPrice = function(){
       var total = 0;
@@ -657,6 +675,195 @@ angular.module('deal').controller('DealModalController', function ($scope, $uibM
     $scope.loading = false;
   };
 
+  $scope.close = function () {
+    $uibModalInstance.dismiss('cancel');
+  };
+});
+
+angular.module('deal').controller('ExistingBuyModalController', function ($scope, $filter, $uibModalInstance, Deal, Order, Authentication) {
+  
+  $scope.initializeOrder = function(){
+    $scope.order = {
+      id: undefined,
+      buyer_id: undefined,
+      company_name: undefined,
+      order_date: new Date(),
+      deadline: new Date(),
+      address: undefined,
+      latitude: undefined,
+      longitude: undefined,
+      penalty: undefined,
+      volume: undefined,
+      status: undefined,
+      ash_min: undefined,
+      ash_max: undefined,
+      ash_reject: undefined,
+      ash_bonus: undefined,
+      gcv_arb_min: undefined,
+      gcv_arb_max: undefined,
+      gcv_arb_reject: undefined,
+      gcv_arb_bonus: undefined,
+      gcv_adb_min: undefined,
+      gcv_adb_max: undefined,
+      gcv_adb_reject: undefined,
+      gcv_adb_bonus: undefined,
+      fc_min: undefined,
+      fc_max: undefined,
+      fc_reject: undefined,
+      fc_bonus: undefined,
+      hgi_min: undefined,
+      hgi_max: undefined,
+      hgi_reject: undefined,
+      hgi_bonus: undefined,
+      im_min: undefined,
+      im_max: undefined,
+      im_reject: undefined,
+      im_bonus: undefined,
+      ncv_min: undefined,
+      ncv_max: undefined,
+      ncv_reject: undefined,
+      ncv_bonus: undefined,
+      size_min: undefined,
+      size_max: undefined,
+      size_reject: undefined,
+      size_bonus: undefined,
+      tm_min: undefined,
+      tm_max: undefined,
+      tm_reject: undefined,
+      tm_bonus: undefined,
+      ts_min: undefined,
+      ts_max: undefined,
+      ts_reject: undefined,
+      ts_bonus: undefined,
+      vm_min: undefined,
+      vm_max: undefined,
+      vm_reject: undefined,
+      vm_bonus: undefined,
+    };
+  };
+
+
+  $scope.selectedOrder = {};
+  $scope.isSelected = false;
+  
+  $scope.findAllBuyOrders = function() {
+    $scope.orders = Order.query({ type: 'buy' });
+  };
+
+  $scope.chooseBuyOrder = function(){
+    $scope.success = $scope.error = null;
+      
+    console.log($scope.selectedOrder);
+    //$scope.order.deadline = new Date($scope.order.deadline);
+    $scope.selectedOrder.deadline = $filter('date')($scope.selectedOrder.deadline, 'yyyy-MM-dd');
+    $scope.selectedOrder.order_date = $filter('date')($scope.selectedOrder.order_date, 'yyyy-MM-dd');
+    $scope.selectedOrder.user_id = Authentication.user.id;
+    
+    // $scope.selectedOrder = Order.query({ type: 'buy' , id: buyOrder });
+    $scope.selectedOrder.deadline = new Date($scope.selectedOrder.deadline);
+    $scope.selectedOrder.order_date = new Date($scope.selectedOrder.order_date);
+    $scope.success = true;    
+  };
+
+  $scope.submit = function() {
+    $scope.buyOrders.push($scope.selectedOrder);
+    $scope.close();
+  };
+  
+  $scope.close = function () {
+    $uibModalInstance.dismiss('cancel');
+  };
+});
+
+angular.module('deal').controller('ExistingSellModalController', function ($scope, $filter, $uibModalInstance, Deal, Order, Authentication) {
+  
+  $scope.initializeOrder = function(){
+    $scope.order = {
+      id: undefined,
+      seller_id: undefined,
+      company_name: undefined,
+      order_date: new Date(),
+      deadline: new Date(),
+      address: undefined,
+      latitude: undefined,
+      longitude: undefined,
+      penalty: undefined,
+      volume: undefined,
+      status: undefined,
+      ash_min: undefined,
+      ash_max: undefined,
+      ash_reject: undefined,
+      ash_bonus: undefined,
+      gcv_arb_min: undefined,
+      gcv_arb_max: undefined,
+      gcv_arb_reject: undefined,
+      gcv_arb_bonus: undefined,
+      gcv_adb_min: undefined,
+      gcv_adb_max: undefined,
+      gcv_adb_reject: undefined,
+      gcv_adb_bonus: undefined,
+      fc_min: undefined,
+      fc_max: undefined,
+      fc_reject: undefined,
+      fc_bonus: undefined,
+      hgi_min: undefined,
+      hgi_max: undefined,
+      hgi_reject: undefined,
+      hgi_bonus: undefined,
+      im_min: undefined,
+      im_max: undefined,
+      im_reject: undefined,
+      im_bonus: undefined,
+      ncv_min: undefined,
+      ncv_max: undefined,
+      ncv_reject: undefined,
+      ncv_bonus: undefined,
+      size_min: undefined,
+      size_max: undefined,
+      size_reject: undefined,
+      size_bonus: undefined,
+      tm_min: undefined,
+      tm_max: undefined,
+      tm_reject: undefined,
+      tm_bonus: undefined,
+      ts_min: undefined,
+      ts_max: undefined,
+      ts_reject: undefined,
+      ts_bonus: undefined,
+      vm_min: undefined,
+      vm_max: undefined,
+      vm_reject: undefined,
+      vm_bonus: undefined,
+    };
+  };
+  
+  $scope.selectedOrder = {};
+  $scope.isSelected = false;
+  
+  $scope.findAllSellOrders = function() {
+    $scope.orders = Order.query({ type: 'sell' });
+  };
+
+  $scope.chooseSellOrder = function(){
+    $scope.success = $scope.error = null;
+      
+    console.log($scope.selectedOrder);
+    //$scope.order.deadline = new Date($scope.order.deadline);
+    $scope.selectedOrder.deadline = $filter('date')($scope.selectedOrder.deadline, 'yyyy-MM-dd');
+    $scope.selectedOrder.order_date = $filter('date')($scope.selectedOrder.order_date, 'yyyy-MM-dd');
+    $scope.selectedOrder.user_id = Authentication.user.id;
+    
+    // $scope.selectedOrder = Order.query({ type: 'sell' , id: buyOrder });
+    $scope.selectedOrder.deadline = new Date($scope.selectedOrder.deadline);
+    $scope.selectedOrder.order_date = new Date($scope.selectedOrder.order_date);
+    $scope.success = true;    
+  };
+
+  $scope.submit = function() {
+    $scope.sellOrders.push($scope.selectedOrder);
+    $scope.close();
+  };
+  
   $scope.close = function () {
     $uibModalInstance.dismiss('cancel');
   };
