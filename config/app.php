@@ -180,7 +180,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Barryvdh\Cors\ServiceProvider::class,
         Laravel\Passport\PassportServiceProvider::class,
-        Vinkla\Pusher\PusherServiceProvider::class,
+        // Vinkla\Pusher\PusherServiceProvider::class,
 
         Laravel\Scout\ScoutServiceProvider::class,
     ],

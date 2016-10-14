@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "7165d7cd2dbb639f7ad44b9348a96f52",
-    "content-hash": "b39fd9d00f9473a25e0352a6e5032fb8",
+    "hash": "1f1d2f970c6c1679e0f1f4fc3914aae2",
+    "content-hash": "c9de45d70971c96701f344a77b581f91",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -60,16 +60,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.19.13",
+            "version": "3.19.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "57b0efed8fcf5d8c854bc1c26cf4a685af9108d9"
+                "reference": "83e9522a0a1abce0b1a0c2971428a5bd975a212d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/57b0efed8fcf5d8c854bc1c26cf4a685af9108d9",
-                "reference": "57b0efed8fcf5d8c854bc1c26cf4a685af9108d9",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/83e9522a0a1abce0b1a0c2971428a5bd975a212d",
+                "reference": "83e9522a0a1abce0b1a0c2971428a5bd975a212d",
                 "shasum": ""
             },
             "require": {
@@ -136,7 +136,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2016-10-06 21:17:44"
+            "time": "2016-10-13 18:56:16"
         },
         {
             "name": "barryvdh/laravel-cors",
@@ -441,65 +441,6 @@
             "description": "A simple library to encode and decode JSON Web Tokens (JWT) in PHP. Should conform to the current spec.",
             "homepage": "https://github.com/firebase/php-jwt",
             "time": "2016-07-18 04:51:16"
-        },
-        {
-            "name": "graham-campbell/manager",
-            "version": "v2.4.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/GrahamCampbell/Laravel-Manager.git",
-                "reference": "fd9052082e2c69c9a67d3e8d7dfa94cb33f8ab0b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/GrahamCampbell/Laravel-Manager/zipball/fd9052082e2c69c9a67d3e8d7dfa94cb33f8ab0b",
-                "reference": "fd9052082e2c69c9a67d3e8d7dfa94cb33f8ab0b",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/contracts": "5.1.*|5.2.*|5.3.*",
-                "illuminate/support": "5.1.*|5.2.*|5.3.*",
-                "php": ">=5.5.9"
-            },
-            "require-dev": {
-                "graham-campbell/testbench-core": "^1.1",
-                "mockery/mockery": "^0.9.4",
-                "phpunit/phpunit": "^4.8|^5.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.4-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "GrahamCampbell\\Manager\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Graham Campbell",
-                    "email": "graham@alt-three.com"
-                }
-            ],
-            "description": "Manager Provides Some Manager Functionality For Laravel 5",
-            "keywords": [
-                "Graham Campbell",
-                "GrahamCampbell",
-                "Laravel Manager",
-                "Laravel-Manager",
-                "connector",
-                "framework",
-                "interface",
-                "laravel",
-                "manager"
-            ],
-            "time": "2016-04-26 14:27:59"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -1497,16 +1438,16 @@
         },
         {
             "name": "league/oauth2-server",
-            "version": "5.1.2",
+            "version": "5.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/oauth2-server.git",
-                "reference": "e091d4812789cdce69dee43d300fd3707548a4aa"
+                "reference": "f78dc2eca0774ec3958bbcf9b2a23d5ae61fb5aa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/oauth2-server/zipball/e091d4812789cdce69dee43d300fd3707548a4aa",
-                "reference": "e091d4812789cdce69dee43d300fd3707548a4aa",
+                "url": "https://api.github.com/repos/thephpleague/oauth2-server/zipball/f78dc2eca0774ec3958bbcf9b2a23d5ae61fb5aa",
+                "reference": "f78dc2eca0774ec3958bbcf9b2a23d5ae61fb5aa",
                 "shasum": ""
             },
             "require": {
@@ -1569,7 +1510,7 @@
                 "secure",
                 "server"
             ],
-            "time": "2016-09-19 09:23:42"
+            "time": "2016-10-12 14:08:15"
         },
         {
             "name": "monolog/monolog",
@@ -2259,50 +2200,6 @@
                 "shell"
             ],
             "time": "2016-03-09 05:03:14"
-        },
-        {
-            "name": "pusher/pusher-php-server",
-            "version": "v2.6.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/pusher/pusher-http-php.git",
-                "reference": "cdc11530c6f97eab76850d8ead6c513eeeccc37a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/pusher/pusher-http-php/zipball/cdc11530c6f97eab76850d8ead6c513eeeccc37a",
-                "reference": "cdc11530c6f97eab76850d8ead6c513eeeccc37a",
-                "shasum": ""
-            },
-            "require": {
-                "ext-curl": "*",
-                "php": ">=5.2"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~4"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "lib/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "Library for interacting with the Pusher REST API",
-            "homepage": "https://github.com/pusher/pusher-php-server",
-            "keywords": [
-                "events",
-                "php-pusher-server",
-                "publish",
-                "pusher",
-                "realtime",
-                "rest",
-                "trigger"
-            ],
-            "time": "2016-08-23 09:07:29"
         },
         {
             "name": "ramsey/uuid",
@@ -3377,68 +3274,6 @@
                 "tymon"
             ],
             "time": "2016-02-18 09:22:36"
-        },
-        {
-            "name": "vinkla/pusher",
-            "version": "2.4.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/vinkla/laravel-pusher.git",
-                "reference": "5e7777095f9eac33bcc2a0abcafede37ea9232f5"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/vinkla/laravel-pusher/zipball/5e7777095f9eac33bcc2a0abcafede37ea9232f5",
-                "reference": "5e7777095f9eac33bcc2a0abcafede37ea9232f5",
-                "shasum": ""
-            },
-            "require": {
-                "graham-campbell/manager": "^2.4",
-                "illuminate/contracts": "5.1.* || 5.2.* || 5.3.*",
-                "illuminate/support": "5.1.* || 5.2.* || 5.3.*",
-                "php": "^5.6.4 || ^7.0",
-                "pusher/pusher-php-server": "^2.2.1"
-            },
-            "require-dev": {
-                "graham-campbell/testbench": "^3.2",
-                "mockery/mockery": "^0.9.5",
-                "phpunit/phpunit": "^5.4"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.4-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Vinkla\\Pusher\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Vincent Klaiber",
-                    "email": "hello@vinkla.com"
-                }
-            ],
-            "description": "A Pusher bridge for Laravel",
-            "keywords": [
-                "api",
-                "events",
-                "http",
-                "laravel",
-                "php-pusher-server",
-                "publish",
-                "pusher",
-                "realtime",
-                "rest",
-                "trigger"
-            ],
-            "time": "2016-07-11 19:13:22"
         },
         {
             "name": "vlucas/phpdotenv",
