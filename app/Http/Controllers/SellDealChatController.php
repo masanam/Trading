@@ -18,8 +18,8 @@ class SellDealChatController extends Controller
     var $user;
 
     public function __construct () {
-        // $this->middleware('jwt.auth');
-        $this->pusher = App::make('pusher');
+        $this->middleware('jwt.auth');
+        // $this->pusher = App::make('pusher');
         $this->user = Session::get('user');
     }
 
@@ -46,7 +46,7 @@ class SellDealChatController extends Controller
         ]);
 
 
-        $this->pusher->trigger('sell-deal-channel.'.$chat->sell_deal_id, 'message-sent', $chat);
+        // $this->pusher->trigger('sell-deal-channel.'.$chat->sell_deal_id, 'message-sent', $chat);
         return response()->json($chat, 200);
     }
 }
