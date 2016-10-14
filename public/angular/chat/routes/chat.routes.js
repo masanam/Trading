@@ -13,6 +13,6 @@ angular.module('chat').config(['$stateProvider', '$urlRouterProvider',
       .state('chat.index', {
         url: '',
         templateUrl: '/angular/chat/views/chat.view.html'
-  	  });
+      });
   }
 ]);
