@@ -14,7 +14,7 @@ class CreatePortsTable extends Migration
     public function up()
     {
         Schema::create('ports', function (Blueprint $table) {
-            $table->increments('port_id');
+            $table->increments('id');
             $table->string('port_name');
             $table->string('owner');
             $table->boolean('is_private');

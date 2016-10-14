@@ -17,4 +17,5 @@ ApplicationConfiguration.registerModule('order-history');
 ApplicationConfiguration.registerModule('contact');
 ApplicationConfiguration.registerModule('deal');
 ApplicationConfiguration.registerModule('lead');
+ApplicationConfiguration.registerModule('dashboard');
 ApplicationConfiguration.registerModule('chat');
