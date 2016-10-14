@@ -14,7 +14,7 @@ class CreateBuyerPortTable extends Migration
     public function up()
     {
         Schema::create('buyer_port', function (Blueprint $table) {
-            $table->increments('port_id');
+            $table->integer('port_id')->unsigned();
             $table->integer('buyer_id')->unsigned();
             $table->integer('distance');
             
@@ -22,7 +22,7 @@ class CreateBuyerPortTable extends Migration
         });
 
         Schema::table('buyer_port', function (Blueprint $table) {
-            $table->foreign('port_id')->references('port_id')->on('ports')->onDelete('cascade');
+            $table->foreign('port_id')->references('id')->on('ports')->onDelete('cascade');
             $table->foreign('buyer_id')->references('id')->on('buyers')->onDelete('cascade');
         });
     }
