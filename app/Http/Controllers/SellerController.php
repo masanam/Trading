@@ -65,14 +65,23 @@ class SellerController extends Controller
         $seller = new Seller();
         $seller->user_id = Auth::User()->id;
         $seller->company_name = $request->company_name;
+        $seller->is_trader = $request->is_trader;
+        $seller->is_affiliated = $request->
         $seller->phone = $request->phone;
         $seller->email = $request->email;
         $seller->web = $request->web;
-        $seller->industry = $request->industry;
-        $seller->city = $request->city;
         $seller->address = $request->address;
+        $seller->city = $request->city;
+        $seller->country = $request->country;
         $seller->latitude = $request->latitude;
         $seller->longitude = $request->longitude;
+        $seller->industry = $request->industry;
+        $seller->license_type = $request->license_type;
+        $seller->license_expiry_date = $request->license_expiry_date;
+        $seller->total_annual_sales = $request->total_annual_sales;
+        $seller->preferred_trading_term = $request->preferred_trading_term;
+        $seller->preferred_payment_term = $request->preferred_payment_term; 
+        $seller->purchasing_countries = $request->purchasing_countries;
         $seller->description = $request->description;
         $seller->status = 'a';
         $seller->save();
@@ -128,21 +137,24 @@ class SellerController extends Controller
         }
 
         $seller->user_id = $request->user_id;
-            
         $seller->company_name = $request->company_name;
-
+        $seller->is_trader = $request->is_trader;
+        $seller->is_affiliated = $request->
         $seller->phone = $request->phone;
         $seller->email = $request->email;
         $seller->web = $request->web;
-
-        $seller->industry = $request->industry;
-
-        $seller->city = $request->city;
         $seller->address = $request->address;
-
+        $seller->city = $request->city;
+        $seller->country = $request->country;
         $seller->latitude = $request->latitude;
         $seller->longitude = $request->longitude;
-
+        $seller->industry = $request->industry;
+        $seller->license_type = $request->license_type;
+        $seller->license_expiry_date = $request->license_expiry_date;
+        $seller->total_annual_sales = $request->total_annual_sales;
+        $seller->preferred_trading_term = $request->preferred_trading_term;
+        $seller->preferred_payment_term = $request->preferred_payment_term; 
+        $seller->purchasing_countries = $request->purchasing_countries;
         $seller->description = $request->description;
 
         $seller->status = $request->status;

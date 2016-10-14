@@ -1,53 +1,101 @@
+<div class="form-group">
+  <label for="seller_name">Company Name:</label>
+  <input name="company_name" type="text" class="form-control" id="company_name" ng-model="seller.company_name">
+</div>
 
 <div class="form-group">
-  <label for="company_name">Company Name:</label>
-  <input type="text" name="company_name" class="form-control" id="company_name" ng-model="seller.company_name" />
+  <label for="contact"></label>
+  <button type="button" class="btn btn-primary" ng-model="seller.is_trader" uib-btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0">
+        Trader
+  </button>
+  <button type="button" class="btn btn-danger" ng-model="seller.is_affiliated" uib-btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0">
+        Affiliated
+  </button>
 </div>
 
 <div class="form-group">
   <label for="phone">Phone Number:</label>
-  <input type="text" name="phone" class="form-control" id="phone" ng-model="seller.phone">
+  <input name="phone" type="text" class="form-control" id="phone" ng-model="seller.phone">
 </div>
 
 <div class="form-group">
   <label for="contact">Email:</label>
-  <input type="email" name="email" class="form-control" id="email" ng-model="seller.email">
+  <input name="email" type="text" class="form-control" id="email" ng-model="seller.email">
 </div>
 
 <div class="form-group">
   <label for="web">Web:</label>
-  <input type="text" name="web" class="form-control" id="Web" ng-model="seller.web">
-</div>
-
-
-<div class="form-group">
-  <label for="headquarter_location">Industry:</label>
-  <input type="text" name="industry" class="form-control" id="industry" ng-model="seller.industry">
-</div>
-
-<div class="form-group">
-  <label for="headquarter_location">City:</label>
-  <input type="text" name="city" class="form-control" id="city" ng-model="seller.city">
+  <input name="web" type="text" class="form-control" id="web" ng-model="seller.web">
 </div>
 
 <div class="form-group">
   <label for="headquarter_location">Address:</label>
-  <input type="text" name="address" class="form-control" id="address" ng-model="seller.address">
+  <input name="address" type="text" class="form-control" id="address" ng-model="seller.address">
+</div>
+
+<div class="form-group">
+  <label for="headquarter_location">City:</label>
+  <input name="city" type="text" class="form-control" id="city" ng-model="seller.city">
+</div>
+
+<div class="form-group">
+  <label for="headquarter_location">Country:</label>
+  <input name="country" type="text" class="form-control" id="country" ng-model="seller.country">
 </div>
 
 <div class="form-group">
   <label for="latitude">Latitude:</label>
-  <input type="text" name="latitude" class="form-control" id="latitude" ng-model="seller.latitude">
+  <input name="latitude" type="text" class="form-control" id="latitude" ng-model="seller.latitude">
 </div>
 
 <div class="form-group">
   <label for="longitude">Longitude:</label>
-  <input type="text" name="longitude" class="form-control" id="longitude" ng-model="seller.longitude">
+  <input name="longitude" type="text" class="form-control" id="longitude" ng-model="seller.longitude">
+</div>
+
+<div class="form-group">
+  <label for="headquarter_location">Industry:</label>
+  <input name="industry" type="text" class="form-control" id="industry" ng-model="seller.industry">
+</div>
+
+<div class="form-group">
+  <label for="headquarter_location">License Type:</label>
+  <input name="license_type" type="text" class="form-control" id="license_type" ng-model="seller.license_type">
+</div>
+
+<div class="form-group">
+  <label for="headquarter_location">License Type:</label>
+  <input name="license_type" type="text" class="form-control" id="license_type" ng-model="seller.license_type">
+</div>
+
+<div class="form-group">
+  <label for="headquarter_location">License Expiry Date:</label>
+  <input name="license_expiry_date" type="date" class="form-control" id="license_expiry_date" ng-model="seller.license_expiry_date">
+</div>
+
+<div class="form-group">
+  <label for="headquarter_location">Total Annual Sales:</label>
+  <input name="total_annual_sales" type="text" class="form-control" id="total_annual_sales" ng-model="seller.total_annual_sales">
+</div>
+
+<div class="form-group">
+  <label for="headquarter_location">Preferred Trading Term:</label>
+  <input name="preferred_trading_term" type="text" class="form-control" id="preferred_trading_term" ng-model="seller.preferred_trading_term">
+</div>
+
+<div class="form-group">
+  <label for="headquarter_location">Preferred Payment Term:</label>
+  <input name="preferred_payment_term" type="text" class="form-control" id="preferred_payment_term" ng-model="seller.preferred_payment_term">
+</div>
+
+<div class="form-group">
+  <label for="headquarter_location">Purchasing Countries:</label>
+  <input name="purchasing_countries" type="text" class="form-control" id="purchasing_countries" ng-model="seller.purchasing_countries">
 </div>
 
 <div class="form-group">
   <label for="description">Description:</label>
-  <textarea class="form-control" name="description" id="description" ng-model="seller.description"></textarea>
+  <textarea name="description" class="form-control" id="description" ng-model="seller.description"></textarea>
 </div>
 
 <div class="form-group">
@@ -55,4 +103,3 @@
 </div>
 
 <button type="submit" class="btn btn-default">Submit</button>
-
