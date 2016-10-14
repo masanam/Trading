@@ -60,23 +60,22 @@ class BuyerController extends Controller
 
         $buyer = new Buyer();
         $buyer->user_id = Auth::User()->id;
-
         $buyer->company_name = $request->company_name;
-        
+        $buyer->is_trader = $request->is_trader;
+        $buyer->is_affiliated = $request->is_affiliated;
         $buyer->phone = $request->phone;
         $buyer->email = $request->email;
         $buyer->web = $request->web;
-
-        $buyer->industry = $request->industry;
-
-        $buyer->city = $request->city;
         $buyer->address = $request->address;
-
+        $buyer->city = $request->city;
+        $buyer->country = $request->country;
         $buyer->latitude = $request->latitude;
         $buyer->longitude = $request->longitude;
-
+        $buyer->industry = $request->industry;
+        $buyer->annual_demand = $request->annual_demand;
+        $buyer->preferred_trading_term = $request->preferred_trading_term;
+        $buyer->preferred_payment_term = $request->preferred_payment_term; 
         $buyer->description = $request->description;
-
         $buyer->status = 'a';
         $buyer->save();
 
@@ -125,23 +124,22 @@ class BuyerController extends Controller
         }
 
         $buyer->user_id = $request->user_id;
-
         $buyer->company_name = $request->company_name;
-        
+        $buyer->is_trader = $request->is_trader;
+        $buyer->is_affiliated = $request->is_affiliated;
         $buyer->phone = $request->phone;
         $buyer->email = $request->email;
         $buyer->web = $request->web;
-
-        $buyer->industry = $request->industry;
-
-        $buyer->city = $request->city;
         $buyer->address = $request->address;
-
+        $buyer->city = $request->city;
+        $buyer->country = $request->country;
         $buyer->latitude = $request->latitude;
         $buyer->longitude = $request->longitude;
-
+        $buyer->industry = $request->industry;
+        $buyer->annual_demand = $request->annual_demand;
+        $buyer->preferred_trading_term = $request->preferred_trading_term;
+        $buyer->preferred_payment_term = $request->preferred_payment_term; 
         $buyer->description = $request->description;
-
         $buyer->status = $request->status;
         $buyer->save();
 

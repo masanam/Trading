@@ -310,6 +310,9 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
         console.log(err);
       });
     };
+<<<<<<< HEAD
+}]);
+=======
 
     $scope.buyDeal = {};
     $scope.sellDeal = {};
@@ -348,6 +351,7 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
     };
   }
 ]);
+>>>>>>> b626d9b60fb61fe36d7cd81ec660dca19b05ef2f
 
 angular.module('deal').controller('AlertModalController', function ($scope, $uibModalInstance) {
   $scope.close = function () {
@@ -355,6 +359,8 @@ angular.module('deal').controller('AlertModalController', function ($scope, $uib
   };
 });
 
+<<<<<<< HEAD
+=======
 angular.module('deal').controller('BuyDealChatModalController', function ($scope, $uibModalInstance, Pusher, User, BuyDealChat, buyDeal, Authentication) {
   $scope.buy_deal = {};
   $scope.buy_deal = buyDeal;
@@ -449,6 +455,7 @@ angular.module('deal').controller('SellDealChatModalController', function ($scop
   };
 });
 
+>>>>>>> b626d9b60fb61fe36d7cd81ec660dca19b05ef2f
 angular.module('deal').controller('CreateSellModalController', function ($scope, $filter, $uibModalInstance, Deal, Order, Authentication) {
   
   $scope.initializeOrder = function(){

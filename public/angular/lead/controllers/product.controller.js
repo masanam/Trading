@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('product').controller('ProductController', ['$scope', '$state', '$http', '$stateParams', '$q', '$uibModal', 'Product', 'Mine','Seller','Buyer',
-  function($scope, $state, $http, $stateParams, $q, $uibModal, Product, Mine,Seller,Buyer) {
+angular.module('product').controller('ProductController', ['$scope', '$state', '$http', '$stateParams', '$q', '$uibModal', 'Product', 'Concession','Seller','Buyer',
+  function($scope, $state, $http, $stateParams, $q, $uibModal, Product, Concession,Seller,Buyer) {
     $scope.formOpen = false;
 
     $scope.find = function() {
@@ -16,7 +16,7 @@ angular.module('product').controller('ProductController', ['$scope', '$state', '
 
     $scope.initializeEmptyForm = function () {
       $scope.product = {};
-      $scope.mines = Mine.query({ option: 'dropdown' });
+      $scope.mines = Concession.query({ option: 'dropdown' });
     };
 
     $scope.openModal = function (id) {
@@ -45,7 +45,7 @@ angular.module('product').controller('ProductController', ['$scope', '$state', '
     $scope.initializeUpdateForm = function () {
       $scope.findOne($stateParams.id);
       
-      $scope.mines = Mine.query({ option: 'dropdown' }, function (){
+      $scope.mines = Concession.query({ option: 'dropdown' }, function (){
         for(var x=0; x<$scope.mines.length; x++){
           if($scope.product.mine_id === $scope.mines[x].id){
             $scope.product.mine = $scope.mines[x];

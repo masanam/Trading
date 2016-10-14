@@ -1,4 +1,4 @@
-<div class="col-lg-3" ng-init="loadNews(); loadICI(); loadMines(); loadBuyers(); loadSupply(); loadDemand(); loadActivities();">
+<div class="col-lg-3" ng-init="loadNews(); loadICI(); loadConcessions(); loadBuyers(); loadSupply(); loadDemand(); loadActivities();">
 
   <h3>Activities</h3>
   <a ng-repeat="feed in activities | orderBy:'-published' | limitTo: showNews" class="thumbnail btn-default" ng-href="{{feed.url}}" target="_blank"

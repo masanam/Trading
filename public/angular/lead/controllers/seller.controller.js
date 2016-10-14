@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('seller').controller('SellerController', ['$scope', '$http', '$stateParams', '$state', '$timeout', '$location', 'Seller', 'Product', 'Mine', 'Contact', '$uibModal',
-  function($scope, $http, $stateParams, $state, $timeout, $location, Seller, Product, Mine, Contact, $uibModal) {
+angular.module('seller').controller('SellerController', ['$scope', '$http', '$stateParams', '$state', '$timeout', '$location', 'Seller', 'Product', 'Concession', 'Contact', '$uibModal',
+  function($scope, $http, $stateParams, $state, $timeout, $location, Seller, Product, Concession, Contact, $uibModal) {
     $scope.sellers = [];
     $scope.seller = {};
     $scope.productButton = false;
@@ -50,20 +50,30 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
 
     $scope.create = function() {
       $scope.loading = true;
-
       var seller = new Seller({
         company_name: $scope.seller.company_name,
-        email: $scope.seller.email,
+        is_trader: $scope.seller.is_trader,
+        is_affiliated: $scope.seller.is_affiliated,
         phone: $scope.seller.phone,
+        email: $scope.seller.email,
         web: $scope.seller.web,
-        industry: $scope.seller.industry,
-        city: $scope.seller.city,
         address: $scope.seller.address,
+        city: $scope.seller.city,
+        country: $scope.seller.country,
         latitude: $scope.seller.latitude,
-        longitude: $scope.seller.longitude
+        longitude: $scope.seller.longitude,
+        industry: $scope.seller.industry,
+        license_type: $scope.seller.license_type,
+        license_expiry_date: $scope.seller.license_expiry_date,
+        total_annual_sales: $scope.seller.total_annual_sales,
+        preferred_trading_term: $scope.seller.preferred_trading_term,
+        preferred_payment_term: $scope.seller.preferred_payment_term,
+        purchasing_countries: $scope.seller.purchasing_countries,
+        description: $scope.buyer.description 
       });
 
       seller.$save(function(response) {
+        $state.go('lead.seller');
         // $('#createSellerModal').modal('hide');
         // $('.modal-backdrop').hide();
         $scope.find();
@@ -95,12 +105,13 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
               break;
             }
           }
-          // $('#updateSellerModal').modal('hide');
+          $state.go('lead.seller');
         }else{
-          $state.go('seller.index');
+          $state.go('lead.seller');
         }
         $scope.loading = false;
       }, function(response){
+        $state.go('lead.seller');
         $scope.error = response.message;
         $scope.loading = false;
       });
@@ -136,8 +147,8 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
       }, 1000);
     };
 
-    $scope.findMineBySeller = function(id) {
-      $scope.mines = Mine.query({ action: 'seller', sellerId: id });
+    $scope.findConcessionBySeller = function(id) {
+      $scope.concessions = Concession.query({ action: 'seller', sellerId: id });
     };
     
     $scope.goToUpdatePopup = function(id){
@@ -156,21 +167,21 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
       // $('#sellerModal').modal('hide');
     };
     
-    $scope.addMine = function () {
+    $scope.addConcession = function () {
       
       var modalInstance = $uibModal.open({
         windowClass: 'xl-modal',
-        templateUrl: './angular/lead/views/mine/create-from-seller.view.html',
-        controller: 'CreateMineModalController',
+        templateUrl: './angular/lead/views/Concession/create-from-seller.view.html',
+        controller: 'CreateConcessionModalController',
         scope: $scope,
       });
     };
     
-    $scope.deleteMine = function(mine){
-      Mine.delete({ id: mine.id }, function (response) {
-        $scope.mine = response;
+    $scope.deleteConcession = function(concession){
+      Concession.delete({ id: concession.id }, function (response) {
+        $scope.concession = response;
         
-        $scope.seller.mine.splice($scope.seller.mine.indexOf(mine), 1);
+        $scope.seller.concession.splice($scope.seller.concession.indexOf(concession), 1);
         $scope.close();
         $scope.success = true;
       }, function (response) {
@@ -313,17 +324,17 @@ angular.module('seller').controller('CreateContactModalController', function ($s
 });
 
 
-angular.module('seller').controller('CreateMineModalController', function ($scope, $filter, $uibModalInstance, Mine, Authentication) {
+angular.module('seller').controller('CreateConcessionModalController', function ($scope, $filter, $uibModalInstance, Concession, Authentication) {
   
-  $scope.initializeMine = function(){
+  $scope.initializeConcession = function(){
     $scope.mine = {
       id: undefined,
       seller_id: undefined,
-      mine_name: undefined,
+      concession_name: undefined,
       port_name: undefined,
       longitude: undefined,
       latitude: undefined,
-      mineable_reserve: undefined,
+      concession_reserve: undefined,
       stripping_ratio: undefined,
       port_distance: undefined,
       road_capacity: undefined,
@@ -333,18 +344,18 @@ angular.module('seller').controller('CreateMineModalController', function ($scop
     };
   };
   
-  $scope.createMine = function(){
+  $scope.createConcession= function(){
     
     $scope.success = $scope.error = null;
-    $scope.mine.license_expired_date = $filter('date')($scope.mine.license_expired_date, 'yyyy-MM-dd');
-    $scope.mine.seller_id = $scope.seller.id;
+    $scope.concession.license_expired_date = $filter('date')($scope.concession.license_expired_date, 'yyyy-MM-dd');
+    $scope.concession.seller_id = $scope.seller.id;
 
-    var mine = new Mine($scope.mine);
+    var concession = new Concession($scope.concession);
     
-    mine.$save(function (response) {
-      $scope.mine = response;
+    concession.$save(function (response) {
+      $scope.concession = response;
       
-      $scope.seller.mine.push($scope.mine);
+      $scope.seller.concession.push($scope.concession);
       $scope.close();
       $scope.success = true;
     }, function (response) {
