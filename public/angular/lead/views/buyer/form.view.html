@@ -1,6 +1,21 @@
 <div class="form-group">
-  <label for="buyer_name">Buyer Name:</label>
+  <label for="buyer_name">Company Name:</label>
   <input name="company_name" type="text" class="form-control" id="company_name" ng-model="buyer.company_name">
+</div>
+
+<div class="form-group">
+  <label for="contact"></label>
+  <button type="button" class="btn btn-primary" ng-model="buyer.is_trader" uib-btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0">
+        Trader
+  </button>
+  <button type="button" class="btn btn-danger" ng-model="buyer.is_affiliated" uib-btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0">
+        Affiliated
+  </button>
+</div>
+
+<div class="form-group">
+  <label for="phone">Phone Number:</label>
+  <input name="phone" type="text" class="form-control" id="phone" ng-model="buyer.phone">
 </div>
 
 <div class="form-group">
@@ -14,13 +29,8 @@
 </div>
 
 <div class="form-group">
-  <label for="phone">Phone Number:</label>
-  <input name="phone" type="text" class="form-control" id="phone" ng-model="buyer.phone">
-</div>
-
-<div class="form-group">
-  <label for="headquarter_location">Industry:</label>
-  <input name="industry" type="text" class="form-control" id="industry" ng-model="buyer.industry">
+  <label for="headquarter_location">Address:</label>
+  <input name="address" type="text" class="form-control" id="address" ng-model="buyer.address">
 </div>
 
 <div class="form-group">
@@ -29,8 +39,8 @@
 </div>
 
 <div class="form-group">
-  <label for="headquarter_location">Address:</label>
-  <input name="address" type="text" class="form-control" id="address" ng-model="buyer.address">
+  <label for="headquarter_location">Country:</label>
+  <input name="country" type="text" class="form-control" id="country" ng-model="buyer.country">
 </div>
 
 <div class="form-group">
@@ -41,6 +51,26 @@
 <div class="form-group">
   <label for="longitude">Longitude:</label>
   <input name="longitude" type="text" class="form-control" id="longitude" ng-model="buyer.longitude">
+</div>
+
+<div class="form-group">
+  <label for="headquarter_location">Industry:</label>
+  <input name="industry" type="text" class="form-control" id="industry" ng-model="buyer.industry">
+</div>
+
+<div class="form-group">
+  <label for="headquarter_location">Annual demand:</label>
+  <input name="annual_demand" type="text" class="form-control" id="annual_demand" ng-model="buyer.annual_demand">
+</div>
+
+<div class="form-group">
+  <label for="headquarter_location">Preferred Trading Term:</label>
+  <input name="preferred_trading_term" type="text" class="form-control" id="preferred_trading_term" ng-model="buyer.preferred_trading_term">
+</div>
+
+<div class="form-group">
+  <label for="headquarter_location">Preferred Payment Term:</label>
+  <input name="preferred_payment_term" type="text" class="form-control" id="preferred_payment_term" ng-model="buyer.preferred_payment_term">
 </div>
 
 <div class="form-group">
