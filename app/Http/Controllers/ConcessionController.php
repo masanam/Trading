@@ -26,6 +26,33 @@ class ConcessionController extends Controller
 
         return response()->json($concession, 200);
     }
+    
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function filter()
+    {
+        if (!$_GET) {
+            $concession = Concession::where('status', 'a')->get();
+        } else {
+            $concession = DB::table('concession')
+                          ->join('products', 'products.concession_id', '=', 'concession.id')
+                          ->where('concession.status', 'a')
+                          ->where('products.status', 'a');
+                          
+            var_dump($_GET);
+            
+            foreach($_GET['gt'] as $input_gt){
+              //$concession->where('products.');
+            }
+            
+            $concession = $concession->get();
+        }
+
+        return response()->json($concession, 200);
+    }
 
 
     /**
