@@ -53,8 +53,7 @@ Route::group(['middleware' => ['cors']], function() {
 
 
     Route::get('order/lastOrder/{type}/{id}', 'BuySellOrderController@lastOrderByUser');
-    
-    //Route::get('buy_sell_order/lastOrder/{buyerId?}', 'BuySellOrderController@search');
+    Route::get('order/{user_id}', 'BuySellOrderController@orderDealByUser');
     Route::resource('order', 'BuySellOrderController', ['only' => [
         'index'
     ]]);
@@ -97,9 +96,8 @@ Route::group(['middleware' => ['cors']], function() {
         'create', 'edit'
     ]]);
 
-    Route::resource('order-deal', 'BuySellDealController', ['only' => [
-        'index'
-    ]]);
+    Route::resource('order-deal', 'BuySellDealController@index');
+    Route::resource('order-deal/user/{user_id}', 'BuySellDealController@orderDealByUser');
     
     Route::get('deal/table/{status}', 'DealController@index');
     Route::get('deal/status/{deal}/{status}', 'DealController@changeStatus');

@@ -34,11 +34,13 @@ angular.module('deal').factory('BuyDeal', ['$resource',
 
 angular.module('deal').factory('OrderDeal', ['$resource',
 	function ($resource) {
-		return $resource('api/order-deal/:action/:id/:buyerId/:dealId', {
+		return $resource('api/order-deal/:action/:entity/:id/:buyerId/:dealId/:userId', {
 			action: undefined,
+			entity: undefined,
 			id: undefined,
 			buyerId:undefined,
 			dealId: undefined,
+			userId: undefined,
 		}, {
 			update: {
 				method: 'PUT'

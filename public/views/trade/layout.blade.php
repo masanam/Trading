@@ -21,7 +21,7 @@
       storageBucket: "coal-trade.appspot.com",
       messagingSenderId: "407921708335"
     };
-    firebase.initializeApp(config);
+    var mainApp = firebase.initializeApp(config, 'webApps');
   </script>
 
   <!-- CSS -->
