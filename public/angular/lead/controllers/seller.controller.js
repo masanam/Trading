@@ -1,26 +1,26 @@
 'use strict';
 
-angular.module('seller').controller('SellerController', ['$scope', '$http', '$stateParams', '$state', '$timeout', '$location', 'Seller', 'Production', 'Product', 'Mine', '$uibModal',
-	function($scope, $http, $stateParams, $state, $timeout, $location, Seller, Production, Product, Mine, $uibModal) {
-		$scope.sellers = [];
-		$scope.seller = {};
-		$scope.productButton = false;
-		$scope.supply = {};
+angular.module('seller').controller('SellerController', ['$scope', '$http', '$stateParams', '$state', '$timeout', '$location', 'Seller', 'Product', 'Concession', 'Contact', '$uibModal',
+  function($scope, $http, $stateParams, $state, $timeout, $location, Seller, Product, Concession, Contact, $uibModal) {
+    $scope.sellers = [];
+    $scope.seller = {};
+    $scope.productButton = false;
+    $scope.supply = {};
 
 
-		$scope.today = function() {
-			$scope.dt = new Date();
-		};
-		$scope.today();
+    $scope.today = function() {
+      $scope.dt = new Date();
+    };
+    $scope.today();
 
-		$scope.dateOptions = {
-			formatYear: 'yyyy',
-			startingDay: 1
-		};
+    $scope.dateOptions = {
+      formatYear: 'yyyy',
+      startingDay: 1
+    };
 
-		$scope.open = function() {
-			$scope.popup.opened = true;
-		};
+    $scope.open = function() {
+      $scope.popup.opened = true;
+    };
 
    
 
@@ -34,182 +34,126 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
       });
     };
 
-		$scope.popup = {
-			opened: false
-		};
+    $scope.popup = {
+      opened: false
+    };
 
-		$scope.open2 = function() {
-			$scope.popup2.opened = true;
-		};
+    $scope.open2 = function() {
+      $scope.popup2.opened = true;
+    };
 
-		$scope.popup2 = {
-			opened: false
-		};
+    $scope.popup2 = {
+      opened: false
+    };
 
-		$scope.format = 'dd.MM.yyyy';
+    $scope.format = 'dd.MM.yyyy';
 
-		$scope.create = function() {
-			$scope.loading = true;
+    $scope.create = function() {
+      $scope.loading = true;
 
-			var seller = new Seller({
-				company_name: $scope.seller.company_name,
-				email: $scope.seller.email,
-				phone: $scope.seller.phone,
-				web: $scope.seller.web,
-				industry: $scope.seller.industry,
-				city: $scope.seller.city,
-				address: $scope.seller.address,
-				latitude: $scope.seller.latitude,
-				longitude: $scope.seller.longitude
-			});
+      var seller = new Seller({
+        company_name: $scope.seller.company_name,
+        email: $scope.seller.email,
+        phone: $scope.seller.phone,
+        web: $scope.seller.web,
+        industry: $scope.seller.industry,
+        city: $scope.seller.city,
+        address: $scope.seller.address,
+        latitude: $scope.seller.latitude,
+        longitude: $scope.seller.longitude
+      });
 
-			seller.$save(function(response) {
-        $('#createSellerModal').modal('hide');
-        $('.modal-backdrop').hide();
-        $scope.find()
-				$scope.loading = false;
-			});
-		};
+      seller.$save(function(response) {
+        // $('#createSellerModal').modal('hide');
+        // $('.modal-backdrop').hide();
+        $scope.find();
+        $scope.loading = false;
+      });
+    };
 
-		$scope.createSupply = function() {
-			$scope.loading = true;
+    $scope.createSupply = function() {
+      $scope.loading = true;
 
-			console.log($scope.supply);
+      console.log($scope.supply);
 
-			var supply = new Product({
-				mine_id: $scope.supply.mine_id, 
-				commercial_term: $scope.supply.commercial_term,
-				ready_date: $scope.supply.ready_date,
-				expired_date: $scope.supply.expired_date,
+      var supply = new Product($scope.supply);
 
-				tm_min: $scope.supply.tm_min,
-				tm_max: $scope.supply.tm_max,
-				tm_reject: $scope.supply.tm_reject,
-				tm_bonus: $scope.supply.tm_bonus,
-				im_min: $scope.supply.im_min,
-				im_max: $scope.supply.im_max,
-				im_reject: $scope.supply.im_reject,
-				im_bonus: $scope.supply.im_bonus,
-				ash_min: $scope.supply.ash_min,
-				ash_max: $scope.supply.ash_max,
-				ash_reject: $scope.supply.ash_reject,
-				ash_bonus: $scope.supply.ash_bonus,
-				fc_min: $scope.supply.fc_min,
-				fc_max: $scope.supply.fc_max,
-				fc_reject: $scope.supply.fc_reject,
-				fc_bonus: $scope.supply.fc_bonus,
-				vm_min: $scope.supply.vm_min,
-				vm_max: $scope.supply.vm_max,
-				vm_reject: $scope.supply.vm_reject,
-				vm_bonus: $scope.supply.vm_bonus,
-				ts_min: $scope.supply.ts_min,
-				ts_max: $scope.supply.ts_max,
-				ts_reject: $scope.supply.ts_reject,
-				ts_bonus: $scope.supply.ts_bonus,
-				ncv_min: $scope.supply.ncv_min,
-				ncv_max: $scope.supply.ncv_max,
-				ncv_reject: $scope.supply.ncv_reject,
-				ncv_bonus: $scope.supply.ncv_bonus,
-				gcv_arb_min: $scope.supply.gcv_arb_min,
-				gcv_arb_max: $scope.supply.gcv_arb_max,
-				gcv_arb_reject: $scope.supply.gcv_arb_reject,
-				gcv_arb_bonus: $scope.supply.gcv_arb_bonus,
-				gcv_adb_min: $scope.supply.gcv_adb_min,
-				gcv_adb_max: $scope.supply.gcv_adb_max,
-				gcv_adb_reject: $scope.supply.gcv_adb_reject,
-				gcv_adb_bonus: $scope.supply.gcv_adb_bonus,
-				hgi_min: $scope.supply.hgi_min,
-				hgi_max: $scope.supply.hgi_max,
-				hgi_reject: $scope.supply.hgi_reject,
-				hgi_bonus: $scope.supply.hgi_bonus,
-				size_min: $scope.supply.size_min,
-				size_max: $scope.supply.size_max,
-				size_reject: $scope.supply.size_reject,
-				size_bonus: $scope.supply.size_bonus,
-
-				volume: $scope.supply.volume
-			});
-
-			supply.$save(function(response) {
-				$location.path('/trade/product');
-				$scope.loading = false;
-			});
-		};
+      supply.$save(function(response) {
+        $location.path('/trade/product');
+        $scope.loading = false;
+      });
+    };
     
     $scope.update = function() {
-			$scope.loading = true;
-			$scope.seller.$update({ id: $scope.seller.id }, function(response) {
+      $scope.loading = true;
+      $scope.seller.$update({ id: $scope.seller.id }, function(response) {
         $scope.error = undefined;
         if($scope.sellers !== undefined){
           for(var key in $scope.sellers){
-            if($scope.sellers[key].id == $scope.seller.id){
+            if($scope.sellers[key].id === $scope.seller.id){
               $scope.sellers[key] = $scope.seller;
               break;
             }
           }
-          $('#updateSellerModal').modal('hide');
+          // $('#updateSellerModal').modal('hide');
         }else{
           $state.go('seller.index');
         }
-				$scope.loading = false;
+        $scope.loading = false;
       }, function(response){
         $scope.error = response.message;
         $scope.loading = false;
       });
-		};
+    };
 
-		$scope.delete = function(seller) {
-			$scope.loading = true;
+    $scope.delete = function(seller) {
+      $scope.loading = true;
 
-			Seller.delete({ id: seller.id }, function(response) {
-				$scope.sellers.splice($scope.sellers.indexOf(seller), 1);
-			}, function(err) {
-				console.log(err);
-			});
-		};
+      Seller.delete({ id: seller.id }, function(response) {
+        $scope.sellers.splice($scope.sellers.indexOf(seller), 1);
+      }, function(err) {
+        console.log(err);
+      });
+    };
 
-		$scope.find = function() {
-			$scope.sellers = Seller.query({ action: 'search', search: $stateParams.keyword });
-		};
-    
-    $scope.findProduction = function(id) {
-			$scope.productions = Production.query({ action: 'seller', sellerId: id });
-		};
+    $scope.find = function() {
+      $scope.sellers = Seller.query({ action: 'search', search: $stateParams.keyword });
+    };
 
-	$scope.findOne = function(id) {
-		if(id !== undefined) {
-			$scope.sellerId = id;
-		} else {
-			$scope.sellerId = $stateParams.id;
-		}
+    $scope.findOne = function(id) {
+      if(id !== undefined) {
+        $scope.sellerId = id;
+      } else {
+        $scope.sellerId = $stateParams.id;
+      }
 
-		$scope.seller = Seller.get({ id: $scope.sellerId });
+      $scope.seller = Seller.get({ id: $scope.sellerId });
 
-		//$scope.products = Product.query({ option: 'seller' , sellerId: id });
+      //$scope.products = Product.query({ option: 'seller' , sellerId: id });
 
-		$timeout(function() {
-			$scope.render = true;
-		}, 1000);
-	};
+      $timeout(function() {
+        $scope.render = true;
+      }, 1000);
+    };
 
-	$scope.findMineBySeller = function(id) {
-		$scope.mines = Mine.query({ action: 'seller', sellerId: id });
-	}
+    $scope.findMineBySeller = function(id) {
+      $scope.mines = Concession.query({ action: 'seller', sellerId: id });
+    };
     
     $scope.goToUpdatePopup = function(id){
       $scope.findOne(id);
-      $('#sellerModal').modal('hide');
-      $('#updateSellerModal').modal('show');
+      // $('#sellerModal').modal('hide');
+      // $('#updateSellerModal').modal('show');
     };
     
     $scope.goToProductions = function(id){
       //$state.go('product');
-      $('#sellerModal').modal('hide');
+      // $('#sellerModal').modal('hide');
     };
     
     $scope.goToFulfillment = function(id){
       $state.go('order-fulfillment.historySeller', { sellerId: id });
-      $('#sellerModal').modal('hide');
+      // $('#sellerModal').modal('hide');
     };
     
     $scope.addMine = function () {
@@ -223,7 +167,7 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
     };
     
     $scope.deleteMine = function(mine){
-      Mine.delete({ id: mine.id }, function (response) {
+      Concession.delete({ id: mine.id }, function (response) {
         $scope.mine = response;
         
         $scope.seller.mine.splice($scope.seller.mine.indexOf(mine), 1);
@@ -289,11 +233,8 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
         $scope.error = response.data.message;
       });
     };
-
-
-
-
-}]);
+  }
+]);
 
 angular.module('seller').controller('CreateSellerModalController', function ($scope, $filter, $uibModalInstance, Seller) {
   
@@ -314,82 +255,15 @@ angular.module('seller').controller('CreateSellerModalController', function ($sc
     };
   };
 
-    $scope.validationOptions = {
-        rules: {
-            email: {
-                required: true,
-                email: true
-            },
-            company_name: {
-                required: true
-            },
-            phone: {
-                required: true
-            },
-            industry: {
-                required: true
-            },
-            web: {
-                required: true
-            },
-            city: {
-                required: true
-            },
-             address: {
-                required: true
-            },
-            latitude: {
-                required: true
-            },
-            longitude: {
-                required: true
-            },
-            description: {
-                required: true
-            }
-        },
-        messages: {
-            email: {
-                required: "We need your email address to contact you",
-                email: "Your email address must be in the format of name@domain.com"
-            },
-
-            company_name: "field not be empty",
-            phone: "field not be empty",
-            industry: "field not be empty",
-            web: "field not be empty",
-            city: "field not be empty",
-            address: "field not be empty",
-            latitude: "field not be empty",
-            longitude: "field not be empty",
-            description: "field not be empty",
-
-        }
-    }
-
-
   $scope.createSeller = function (creteSeller) {
-    if(creteSeller.validate()){
-      var seller = new Seller({
-        company_name: $scope.seller.company_name,
-        phone: $scope.seller.phone,
-        email: $scope.seller.email,
-        web: $scope.seller.web,
-        industry: $scope.seller.industry,
-        city: $scope.seller.city,
-        address: $scope.seller.address,
-        latitude: $scope.seller.latitude,
-        longitude: $scope.seller.longitude,
-        description: $scope.seller.description
-      });
+    var seller = new Seller($scope.seller);
 
-      seller.$save(function(response) {
-        $scope.sellers.push(response);
-        $uibModalInstance.close('success');
-        $scope.loading=false;
-      });
-    }   
- };
+    seller.$save(function(response) {
+      $scope.sellers.push(response);
+      $uibModalInstance.close('success');
+      $scope.loading=false;
+    });
+  };
   
   $scope.close = function () {
     $uibModalInstance.dismiss('cancel');
@@ -439,7 +313,7 @@ angular.module('seller').controller('CreateContactModalController', function ($s
 });
 
 
-angular.module('seller').controller('CreateMineModalController', function ($scope, $filter, $uibModalInstance, Mine, Authentication) {
+angular.module('seller').controller('CreateMineModalController', function ($scope, $filter, $uibModalInstance, Concession, Authentication) {
   
   $scope.initializeMine = function(){
     $scope.mine = {
@@ -462,10 +336,10 @@ angular.module('seller').controller('CreateMineModalController', function ($scop
   $scope.createMine = function(){
     
     $scope.success = $scope.error = null;
-    $scope.mine.license_expired_date = $filter('date')($scope.mine.license_expired_date, "yyyy-MM-dd");
+    $scope.mine.license_expired_date = $filter('date')($scope.mine.license_expired_date, 'yyyy-MM-dd');
     $scope.mine.seller_id = $scope.seller.id;
 
-    var mine = new Mine($scope.mine);
+    var mine = new Concession($scope.mine);
     
     mine.$save(function (response) {
       $scope.mine = response;

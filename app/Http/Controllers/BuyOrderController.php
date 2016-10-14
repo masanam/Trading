@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Model\BuyOrder;
+use App\Model\Buyer;
 use Auth;
 use Illuminate\Http\Request;
 
@@ -25,7 +26,7 @@ class BuyOrderController extends Controller
     public function index()
     {
 
-        $buy_order = BuyOrder::with('buyer')->where('order_status', 'a')->get();
+        $buy_order = BuyOrder::with('Buyer')->where('order_status', 'a')->get();
         return response()->json($buy_order, 200);
     }
 
@@ -49,12 +50,26 @@ class BuyOrderController extends Controller
         $buy_order->buyer_id = $request->buyer_id;
 
         $buy_order->order_date = $request->order_date;
-        $buy_order->penalty_desc = $request->penalty_desc;
-        $buy_order->deadline = $request->deadline;
+        $buy_order->order_deadline = $request->order_deadline;
+        $buy_order->ready_date = $request->ready_date;
+        $buy_order->expired_date = $request->expired_date;
 
         $buy_order->address = $request->address;
+        $buy_order->city = $request->city;
+        $buy_order->country = $request->country;
         $buy_order->latitude = $request->latitude;
         $buy_order->longitude = $request->longitude;
+        $buy_order->port_distance = $request->port_distance;
+        $buy_order->port_id = $request->port_id;
+        $buy_order->port_name = $request->port_name;
+        $buy_order->port_status = $request->port_status;
+        $buy_order->port_daily_rate = $request->port_daily_rate;
+        $buy_order->port_draft_height = $request->port_draft_height;
+        $buy_order->port_latitude = $request->port_latitude;
+        $buy_order->port_longitude = $request->port_longitude;
+
+        $buy_order->product_name = $request->product_name;
+        $buy_order->product_id = $request->product_id;
 
         $buy_order->gcv_arb_min = $request->gcv_arb_min;
         $buy_order->gcv_arb_max = $request->gcv_arb_max;
@@ -102,13 +117,19 @@ class BuyOrderController extends Controller
         $buy_order->size_bonus = $request->size_bonus;
 
         $buy_order->volume = $request->volume;
-        $buy_order->product_name = $request->product_name;
-        $buy_order->product_id = $request->product_id;
         $buy_order->max_price = $request->max_price;
+        $buy_order->trading_term = $request->trading_term;
+        $buy_order->payment_terms = $request->payment_terms;
+        $buy_order->commercial_term = $request->commercial_term;
+        $buy_order->penalty_desc = $request->penalty_desc;
 
         $buy_order->order_status = 'a';
+        $buy_order->progress_status = $request->progress_status;
 
         $buy_order->save();
+
+        $buyer = Buyer::find($request->buyer_id);
+        $buy_order->buyer = $buyer;
 
         // $activity = $this->storeActivity($buy_order->buyer_id, 'create', 'BuyOrder', $buy_order->id);
 
@@ -121,11 +142,11 @@ class BuyOrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($buy_order)
+    public function show($id)
     {
-        $buy_order = BuyOrder::with('buyer')->find($buy_order);
+        $buy_order = BuyOrder::with('Buyer')->find($id);
 
-        if($buy_order->status == 'a') {
+        if($buy_order->order_status == 'a') {
             return response()->json($buy_order, 200);
         } else {
             return response()->json(['message' => 'deactivated record'], 404);
@@ -139,9 +160,9 @@ class BuyOrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $buy_order)
+    public function update(Request $request, $id)
     {
-        $buy_order = BuyOrder::find($buy_order);
+        $buy_order = BuyOrder::find($id);
      
         if (!$request) {
             return response()->json([
@@ -212,7 +233,8 @@ class BuyOrderController extends Controller
         $buy_order->size_bonus = $request->size_bonus;
 
         $buy_order->volume = $request->volume;
-        
+        $buy_order->product_name = $request->product_name;
+        $buy_order->product_id = $request->product_id;
         $buy_order->order_status = 'a';
 
         $buy_order->save();
@@ -226,9 +248,9 @@ class BuyOrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($buy_order)
+    public function destroy($id)
     {
-        $buy_order = BuyOrder::find($buy_order);
+        $buy_order = BuyOrder::find($id);
 
         if (!$buy_order) {
             return response()->json([
@@ -245,4 +267,33 @@ class BuyOrderController extends Controller
     // public function indexDetailed () {
     //     $buy_order = BuyOrder::with()
     // }
+
+    public function status($order_status, $progress_status = false)
+    {
+        if (!$progress_status) {
+            $buy_order = BuyOrder::with('Buyer')->where('order_status', $order_status)->get();
+        } else {
+            $buy_order = BuyOrder::with('Buyer')->where('order_status', $order_status)->where('progress_status', 'LIKE', '%'.$progress_status.'%')->get();
+        }
+
+        return response()->json($buy_order, 200);
+    }
+
+    public function changeOrderStatus($id, $order_status)
+    {
+        $buy_order = BuyOrder::find($id);
+
+        if (!$buy_order) {
+            return response()->json([
+                'message' => 'Not found'
+            ] ,404);
+        }
+
+        if ($order_status) {
+          $buy_order->order_status = $order_status;
+          $buy_order->save();
+        }
+
+        return response()->json($buy_order, 200);
+    }
 }

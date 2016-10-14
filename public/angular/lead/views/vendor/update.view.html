@@ -1,12 +1,12 @@
 <section class="content" ng-controller="VendorController" ng-init="findOne(vendorId)" >
-	<div class="box">
+  <div class="box">
         <div class="box-header with-border">
           <h1 class="box-title" style="font-size: 35px">Update Vendor {{ vendor.company_name }}</h1>
         </div>
         <div class="box-body">
-			<form role="form" ng-submit="update()">
-				<div ng-include="'/angular/lead/views/vendor/form.view.html'"></div>
-			</form>
-		</div>
-	</div>
+      <form role="form" ng-submit="update()">
+        <div ng-include="'/angular/lead/views/vendor/form.view.html'"></div>
+      </form>
+    </div>
+  </div>
 </section>

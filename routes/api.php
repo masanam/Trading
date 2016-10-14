@@ -19,6 +19,8 @@ Route::group(['middleware' => ['cors']], function() {
     Route::post('authenticate/signup', 'AuthenticateController@signup');
     Route::get('authenticate/user', 'AuthenticateController@getAuthenticatedUser');
 
+    Route::post('signing', 'AuthenticateController@upload');
+
     Route::get('user/current', 'UserController@currentUser');
     Route::resource('user', 'UserController', ['except' => [
         'create', 'edit'
@@ -47,10 +49,26 @@ Route::group(['middleware' => ['cors']], function() {
         'create', 'edit'
     ]]);
 
+    Route::get('order/buy/status/{order_status}/{progress_status?}', 'BuyOrderController@status', ['except' => [
+        'create', 'edit'
+    ]]);
+
+    Route::get('order/buy/{id}/changeOrderStatus/{order_status}', 'BuyOrderController@changeOrderStatus', ['except' => [
+        'create', 'edit'
+    ]]);
+
+
     Route::resource('order/sell', 'SellOrderController', ['except' => [
         'create', 'edit'
     ]]);
 
+    Route::get('order/sell/status/{order_status}/{progress_status?}', 'SellOrderController@status', ['except' => [
+        'create', 'edit'
+    ]]);
+
+    Route::get('order/sell/{id}/changeOrderStatus/{order_status}', 'SellOrderController@changeOrderStatus', ['except' => [
+        'create', 'edit'
+    ]]);
 
     Route::get('order/lastOrder/{type}/{id}', 'BuySellOrderController@lastOrderByUser');
     Route::get('order/{user_id}', 'BuySellOrderController@orderDealByUser');
@@ -64,9 +82,9 @@ Route::group(['middleware' => ['cors']], function() {
         'create', 'edit'
     ]]);
 
-    Route::get('mine/total', 'MineController@getTotalMine');
-    Route::get('mine/search/{search?}', 'MineController@search');
-    Route::resource('mine', 'MineController', ['except' => [
+    Route::get('concession/total', 'ConcessionController@getTotalConcession');
+    Route::get('concession/search/{search?}', 'ConcessionController@search');
+    Route::resource('concession', 'ConcessionController', ['except' => [
         'create', 'edit'
     ]]);
 

@@ -1,5 +1,5 @@
 <!-- Left side column. contains the logo and sidebar -->
-<aside class="main-sidebar fixed sidebar-collapse" ng-controller="AuthController">
+<aside class="main-sidebar fixed sidebar-collapse">
   <!-- sidebar: style can be found in sidebar.less -->
   <section class="sidebar">
     <!-- Sidebar user panel -->
@@ -51,6 +51,16 @@
           <i class="ion ion-ios-refresh" style="font-size: 25px; margin-left: -3px;"></i>
           <span>History</span>
         </a>
+      </li>
+      <li class="treeview">
+        <a>
+          <i class="ion ion-cash"></i>
+          <span>Management</span>
+        </a>
+        <ul class="treeview-menu">
+          <li><a ui-sref="buy-order-management.index"><i class="fa fa-circle-o"></i> Buy Order</a></li>
+          <li><a ui-sref="sell-order-management.index"><i class="fa fa-circle-o"></i> Sell Order</a></li>
+        </ul>
       </li>
       <li class="treeview">
         <a ui-sref="deal.index">

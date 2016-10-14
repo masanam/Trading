@@ -51,11 +51,15 @@ angular.module('order-history').config(['$stateProvider', '$urlRouterProvider',
       })
       .state('buy-order.index', {
         url: '',
-        templateUrl: '/angular/order/views//buy-order/index.view.html'
+        templateUrl: '/angular/order/views/buy-order/index.view.html'
+      })
+      .state('buy-order.create', {
+        url: '/create',
+        templateUrl: '/angular/order/views/buy-order/form.view.html'
       })
       .state('buy-order.view', {
         url: '/:id',
-        templateUrl: '/angular/order/views//buy-order/view.view.html'
+        templateUrl: '/angular/order/views/buy-order/view.view.html'
       });
 
     $stateProvider
@@ -66,11 +70,37 @@ angular.module('order-history').config(['$stateProvider', '$urlRouterProvider',
       })
       .state('sell-order.index', {
         url: '',
-        templateUrl: '/angular/order/views//sell-order/index.view.html'
+        templateUrl: '/angular/order/views/sell-order/index.view.html'
+      })
+      .state('sell-order.create', {
+        url: '/create',
+        templateUrl: '/angular/order/views/sell-order/form.view.html'
       })
       .state('sell-order.view', {
         url: '/:id',
-        templateUrl: '/angular/order/views//sell-order/view.view.html'
+        templateUrl: '/angular/order/views/sell-order/view.view.html'
+      });
+
+    $stateProvider
+      .state('buy-order-management', {
+        url: '/buy-order-management',
+        abstract: true,
+        template: '<ui-view>'
+      })
+      .state('buy-order-management.index', {
+        url: '',
+        templateUrl: '/angular/order/views/buy-order/management.view.html'
+      });
+
+    $stateProvider
+      .state('sell-order-management', {
+        url: '/sell-order-management',
+        abstract: true,
+        template: '<ui-view>'
+      })
+      .state('sell-order-management.index', {
+        url: '',
+        templateUrl: '/angular/order/views/sell-order/management.view.html'
       });
   }
 ]);

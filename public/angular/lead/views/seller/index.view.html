@@ -12,32 +12,32 @@
       </div>
     </div>
     <div class="box-body">
-    	<table  ng-init="find()" st-table="displayedCollection" st-safe-src="sellers" class="table table-striped">
-    		<thead>
+      <table  ng-init="find()" st-table="displayedCollection" st-safe-src="sellers" class="table table-striped">
+        <thead>
           <tr>
             <th colspan="7"><input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
           </tr>
 
-    			<tr>
-    				<th>#</th>
-    				<th st-sort="company">Company</th>
-    				<th st-sort="email">Email</th>
-    				<th st-sort="phone">Phone</th>
-    				<th st-sort="web">Web</th>
-    				<th st-sort="last sell order date">Last Sell Order Date</th>
-    				<th st-sort=""></th>
-    			</tr>
+          <tr>
+            <th>#</th>
+            <th st-sort="company">Company</th>
+            <th st-sort="email">Email</th>
+            <th st-sort="phone">Phone</th>
+            <th st-sort="web">Web</th>
+            <th st-sort="last sell order date">Last Sell Order Date</th>
+            <th st-sort=""></th>
+          </tr>
 
         
-    			</thead>
-    			<tbody>
-    				<tr ng-repeat="seller in displayedCollection">
-    				<td>{{ seller.id }}</td>
-    				<td>{{ seller.company_name }}</td>
-    				<td>{{ seller.email }}</td>
-    				<td>{{ seller.phone }}</td>
-    				<td><a href="{{seller.web}}">{{ seller.web }}</a></td>
-    				<td>
+          </thead>
+          <tbody>
+            <tr ng-repeat="seller in displayedCollection">
+            <td>{{ seller.id }}</td>
+            <td>{{ seller.company_name }}</td>
+            <td>{{ seller.email }}</td>
+            <td>{{ seller.phone }}</td>
+            <td><a href="{{seller.web}}">{{ seller.web }}</a></td>
+            <td>
            <!--    <a ng-if="seller.last_fulfillments" href="#" data-toggle="modal" data-target="#lastFulfillmentModal" ng-click="goToFulfillment(seller.id)">{{ seller.last_fulfillments }}</a>
               <span ng-if="!seller.last_fulfillments">N/A</span>
             </td>
@@ -45,20 +45,25 @@
               <a ng-if="seller.last_productions" href="#" data-toggle="modal" data-target="#lastProductionModal" ng-click="goToProductions(seller.id)">{{ seller.last_productions }}</a>
               <span ng-if="!seller.last_productions">N/A</span>
             </td> -->
-               {{ seller.last_fulfillments }}
+               {{ seller.last_fulfillments }}-->
               <span ng-if="!seller.last_fulfillments">N/A</span>
             </td>
-    				<!--td>
-    					<a ui-sref="seller.update({ id: seller.id })"><i class="glyphicon glyphicon-pencil"></i></a>
-    					<a ng-click="delete(seller)"><i class="glyphicon glyphicon-trash"></i></a>
-    				</td-->
+            <!--td>
+              <a ui-sref="seller.update({ id: seller.id })"><i class="glyphicon glyphicon-pencil"></i></a>
+              <a ng-click="delete(seller)"><i class="glyphicon glyphicon-trash"></i></a>
+            </td-->
             <td>
               <a ui-sref="lead.view-seller({ id: seller.id })"><i class="glyphicon glyphicon-info-sign"></i></a>
               <a ui-sref="lead.update-seller({ id: seller.id })"><i class="glyphicon glyphicon-pencil"></i></a>
               <a ng-click="delete(seller)"><i class="glyphicon glyphicon-trash"></i></a>
             </td>
-    			</tr>
-    		</tbody>
+          </tr>
+
+          <tr ng-if="displayedCollection.length == 0">
+              <td colspan="7" class="text-center">No data available</td>
+          </tr>
+
+        </tbody>
 
         <tfoot>
           <tr>
@@ -67,7 +72,7 @@
             </td>
           </tr>
         </tfoot>
-    	</table>
+      </table>
   
       <!-- Modal -->
       <div id="createSellerModal" class="modal fade" role="dialog">

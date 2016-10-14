@@ -9,7 +9,7 @@ angular.module('auth').controller('AuthController', ['$scope', '$state', '$urlRo
       var credentials = {
         email: $scope.auth.email,
         password: $scope.auth.password
-      }
+      };
 
       Authentication.login(credentials, function(err, res){
         if(err) $scope.err = err;
@@ -24,11 +24,11 @@ angular.module('auth').controller('AuthController', ['$scope', '$state', '$urlRo
           email: $scope.registration.email,
           phone: $scope.registration.phone,
           password: $scope.registration.password
-        }
+        };
         var credentials = {
           email: registration.email,
           password: registration.password
-        }
+        };
         
         // Use Satellizer's $auth service to login
         Authentication.signup(registration, function(){
@@ -43,4 +43,5 @@ angular.module('auth').controller('AuthController', ['$scope', '$state', '$urlRo
       Authentication.logout();
       $state.go('home', {});
     };
-}]);
+  }
+]);

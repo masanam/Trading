@@ -24,7 +24,7 @@ class BuyOrderTableSeeder extends Seeder
             'longitude' => '112.6528737' ,
 
             'order_date' => $faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
-            'deadline' => $faker->dateTimeBetween($startDate = "5 days", $endDate = "10 days")->format('Y-m-d'),
+            'order_deadline' => $faker->dateTimeBetween($startDate = "5 days", $endDate = "10 days")->format('Y-m-d'),
 
             'tm_min' => 12,
             'tm_max' => 18,
@@ -49,11 +49,25 @@ class BuyOrderTableSeeder extends Seeder
             'size_min' => 0,
             'size_max' => 50,
             'max_price' => 5000,
-
+            'ready_date'=>$faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
+            'expired_date'=>$faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
             'penalty_desc' => 'penalty',
 
             'volume' => 5000,
             'max_price' => 5000,
+            'city'=> 'Jawa Timur',
+            'country'=>'INA',
+            'port_id'=>'1',
+            'port_name'=>'',
+            'port_status'=>'',
+            'port_daily_rate'=>'11111',
+            'port_draft_height'=>'222222',
+            'port_latitude'=>'-7.1844498',
+            'port_longitude'=>'112.6528737',
+            'product_name'=>'',
+            'trading_term'=>'',
+            'payment_terms'=>'',
+            'commercial_term'=>'',
             'order_status' => 'o'
       ]);
 
@@ -66,7 +80,7 @@ class BuyOrderTableSeeder extends Seeder
             'longitude' => '112.6528737' ,
 
             'order_date' => $faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
-            'deadline' => $faker->dateTimeBetween($startDate = "5 days", $endDate = "10 days")->format('Y-m-d'),
+            'order_deadline' => $faker->dateTimeBetween($startDate = "5 days", $endDate = "10 days")->format('Y-m-d'),
 
             'tm_min' => 6,
             'tm_max' => 11,
@@ -91,11 +105,27 @@ class BuyOrderTableSeeder extends Seeder
             'size_min' => 0,
             'size_max' => 200,
             'max_price' => 5000,
-
+            'trading_term'=>'',
+            'payment_terms'=>'',
+            'commercial_term'=>'',
+             'ready_date'=>$faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
+            'expired_date'=>$faker->dateTimeBetween($startDate = "5 days", $endDate = "10 days")->format('Y-m-d'),
             'penalty_desc' => 'penalty',
+            'commercial_term' => 'commercial_term',
 
             'volume' => 3000,
+
             'max_price' => 3000,
+            'city'=> 'Jawa Timur',
+            'country'=>'INA',
+            'port_id'=>'1',
+            'port_name'=>'',
+            'port_status'=>'',
+            'port_daily_rate'=>'1222222',
+            'port_draft_height'=>'212133',
+            'port_latitude'=>'-7.1844498',
+            'port_longitude'=>'112.6528737',
+            'product_name'=>'',
             'order_status' => 'p'
       ]);
 
@@ -108,7 +138,7 @@ class BuyOrderTableSeeder extends Seeder
             'longitude' => '112.6528737' ,
 
             'order_date' => $faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
-            'deadline' => $faker->dateTimeBetween($startDate = "5 days", $endDate = "10 days")->format('Y-m-d'),
+            'order_deadline' => $faker->dateTimeBetween($startDate = "5 days", $endDate = "10 days")->format('Y-m-d'),
 
             'tm_min' => 5,
             'tm_max' => 8,
@@ -133,11 +163,27 @@ class BuyOrderTableSeeder extends Seeder
             'size_min' => 0,
             'size_max' => 150,
             'max_price' => 5000,
-
+            'trading_term'=>'',
+            'payment_terms'=>'',
+            'commercial_term'=>'',
+            'ready_date'=>$faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
+            'expired_date'=>$faker->dateTimeBetween($startDate = "5 days", $endDate = "10 days")->format('Y-m-d'),
             'penalty_desc' => 'penalty',
+            'commercial_term' => 'commercial_term',
 
             'volume' => 2000,
+
             'max_price' => 2000,
+            'city'=> 'Jawa Timur',
+            'country'=>'INA',
+            'port_id'=>'1',
+            'port_name'=>'',
+            'port_status'=>'',
+            'port_daily_rate'=>'1222222',
+            'port_draft_height'=>'212133',
+            'port_latitude'=>'-7.1844498',
+            'port_longitude'=>'112.6528737',
+            'product_name'=>'',
             'order_status' => 'f'
       ]);
 
@@ -150,7 +196,7 @@ class BuyOrderTableSeeder extends Seeder
             'longitude' => '105.965' ,
 
             'order_date' => $faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
-            'deadline' => $faker->dateTimeBetween($startDate = "5 days", $endDate = "10 days")->format('Y-m-d'),
+            'order_deadline' => $faker->dateTimeBetween($startDate = "5 days", $endDate = "10 days")->format('Y-m-d'),
 
             'tm_min' => 6,
             'tm_max' => 10,
@@ -175,12 +221,29 @@ class BuyOrderTableSeeder extends Seeder
             'size_min' => 0,
             'size_max' => 50,
             'max_price' => 5000,
+            'city'=> 'Jawa Timur',
+            'country'=>'INA',
+            'port_id'=>'1',
+            'port_name'=>'',
+            'port_status'=>'',
+            'port_daily_rate'=>'1222222',
+            'port_draft_height'=>'212133',
+            'port_latitude'=>'-7.1844498',
+            'port_longitude'=>'112.6528737',
+            'product_name'=>'',
+            'trading_term'=>'',
+            'payment_terms'=>'',
+            'commercial_term'=>'',
+            'ready_date'=>$faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
+            'expired_date'=>$faker->dateTimeBetween($startDate = "5 days", $endDate = "10 days")->format('Y-m-d'),
 
             'penalty_desc' => 'penalty',
+            'commercial_term' => 'commercial_term',
 
             'volume' => 4500,
-            'max_price' => 4500,
-            'order_status' => 'p'
+            'order_status' => 'p',
+
+            'port_id' => $faker->numberBetween($min = 1, $max = 3)
       ]);
 
       BuyOrder::create([
@@ -192,7 +255,7 @@ class BuyOrderTableSeeder extends Seeder
             'longitude' => '106.7861946' ,
 
             'order_date' => $faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
-            'deadline' => $faker->dateTimeBetween($startDate = "5 days", $endDate = "10 days")->format('Y-m-d'),
+            'order_deadline' => $faker->dateTimeBetween($startDate = "5 days", $endDate = "10 days")->format('Y-m-d'),
 
             'tm_min' => 7,
             'tm_max' => 11,
@@ -217,12 +280,29 @@ class BuyOrderTableSeeder extends Seeder
             'size_min' => 0,
             'size_max' => 100,
             'max_price' => 5000,
+            'city'=> 'Jawa Timur',
+            'country'=>'INA',
+            'port_id'=>'1',
+            'port_name'=>'',
+            'port_status'=>'',
+            'port_daily_rate'=>'1222222',
+            'port_draft_height'=>'212133',
+            'port_latitude'=>'-7.1844498',
+            'port_longitude'=>'112.6528737',
+            'product_name'=>'',
+            'trading_term'=>'',
+            'payment_terms'=>'',
+            'commercial_term'=>'',
+            'ready_date'=>$faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
+            'expired_date'=>$faker->dateTimeBetween($startDate = "5 days", $endDate = "10 days")->format('Y-m-d'),
 
             'penalty_desc' => 'penalty',
+            'commercial_term' => 'commercial_term',
 
             'volume' => 6000,
-            'max_price' => 6000,
-            'order_status' => 'f'
+            'order_status' => 'f',
+
+            'port_id' => $faker->numberBetween($min = 1, $max = 3)
       ]);
 
       BuyOrder::create([
@@ -234,7 +314,7 @@ class BuyOrderTableSeeder extends Seeder
             'longitude' => '106.7861946' ,
 
             'order_date' => $faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
-            'deadline' => $faker->dateTimeBetween($startDate = "5 days", $endDate = "10 days")->format('Y-m-d'),
+            'order_deadline' => $faker->dateTimeBetween($startDate = "5 days", $endDate = "10 days")->format('Y-m-d'),
 
             'tm_min' => 5,
             'tm_max' => 10,
@@ -259,11 +339,28 @@ class BuyOrderTableSeeder extends Seeder
             'size_min' => 0,
             'size_max' => 150,
             'max_price' => 5000,
+            'trading_term'=>'',
+            'payment_terms'=>'',
+            'commercial_term'=>'',
+            'ready_date'=>$faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
+            'expired_date'=>$faker->dateTimeBetween($startDate = "5 days", $endDate = "10 days")->format('Y-m-d'),
 
             'penalty_desc' => 'penalty',
+            'commercial_term' => 'commercial_term',
 
             'volume' => 1500,
+
             'max_price' => 1500,
+            'city'=> 'Jawa Timur',
+            'country'=>'INA',
+            'port_id'=>'1',
+            'port_name'=>'',
+            'port_status'=>'',
+            'port_daily_rate'=>'1222222',
+            'port_draft_height'=>'212133',
+            'port_latitude'=>'-7.1844498',
+            'port_longitude'=>'112.6528737',
+            'product_name'=>'',
             'order_status' => 'c'
       ]);
 
@@ -300,7 +397,7 @@ class BuyOrderTableSeeder extends Seeder
 
 
             'order_date' => $faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
-            'deadline' => $faker->dateTimeBetween($startDate = "5 days", $endDate = "10 days")->format('Y-m-d'),
+            'order_deadline' => $faker->dateTimeBetween($startDate = "5 days", $endDate = "10 days")->format('Y-m-d'),
 
             'tm_min' => $faker->numberBetween($min = 1, $max = 5) ,
             'tm_max' => $faker->numberBetween($min = 6, $max = 10),
@@ -325,12 +422,29 @@ class BuyOrderTableSeeder extends Seeder
             'size_min' => $faker->numberBetween($min = 0, $max = 75),
             'size_max' => $faker->numberBetween($min = 150, $max = 220),
             'max_price' => $faker->numberBetween($min = 1, $max = 500),
+            'city'=> 'Jawa Timur',
+            'country'=>'INA',
+            'port_id'=>'1',
+            'port_name'=>'',
+            'port_status'=>'',
+            'port_daily_rate'=>'1222222',
+            'port_draft_height'=>'212133',
+            'port_latitude'=>'-7.1844498',
+            'port_longitude'=>'112.6528737',
+            'product_name'=>'',
+            'trading_term'=>'',
+            'payment_terms'=>'',
+            'commercial_term'=>'',
 
             'penalty_desc' => 'penalty',
 
+            'ready_date'=>$faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
+            'expired_date'=>$faker->dateTimeBetween($startDate = "5 days", $endDate = "10 days")->format('Y-m-d'),
+
             'volume' => $faker->numberBetween($min = 1000, $max = 2000),
-            'max_price' => $faker->numberBetween($min = 100, $max = 5000),
-            'order_status' => $faker->randomElement($array = array ('a','f'))
+            'order_status' => $faker->randomElement($array = array ('a','f')),
+            
+            'port_id' => $faker->numberBetween($min = 1, $max = 3)
           ]));
       }
     }

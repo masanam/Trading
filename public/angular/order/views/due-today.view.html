@@ -1,7 +1,7 @@
 <div ng-controller="OrderController">
   <h1>Due Today Order<span ng-show="buyer !== undefined">for: {{buyer.company_name}}</span></h1>
 
-	<a class="btn btn-primary" ng-click="createButton = true" >Create New</a>
+  <a class="btn btn-primary" ng-click="createButton = true" >Create New</a>
     <a class="btn btn-danger" ng-show="createButton == true" ng-click="createButton = false" >Cancel</a>
 
     <section ng-show="createButton == true">

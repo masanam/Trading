@@ -1,66 +1,66 @@
 <section ng-controller="LeadController" ng-init="total()">
-	<div class="small-box bg-aqua">
-	    <div class="inner">
-	        <h4>{{ totalBuyer.count }} Records</h4>
-	      	<p>BUYERS</p>
-	    </div>
-	    <div class="icon">
-	      	<i class="ion ion-person-add"></i>
-	    </div>
-	    <a ui-sref="lead.buyer" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
-	</div>
+  <div class="small-box bg-aqua">
+      <div class="inner">
+          <h4>{{ totalBuyer.count }} Records</h4>
+          <p>BUYERS</p>
+      </div>
+      <div class="icon">
+          <i class="ion ion-person-add"></i>
+      </div>
+      <a ui-sref="lead.buyer" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+  </div>
 
-	<div class="small-box bg-green">
+  <div class="small-box bg-green">
         <div class="inner">
             <h4>{{ totalSeller.count }} Records </h4>
-          	<p>SELLERS</p>
+            <p>SELLERS</p>
         </div>
         <div class="icon">
-          	<i class="ion ion-person-add"></i>
+            <i class="ion ion-person-add"></i>
         </div>
         <a ui-sref="lead.seller" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
     </div>
 
-	<div class="small-box bg-yellow">
+  <div class="small-box bg-yellow">
         <div class="inner">
             <h4>{{ totalVendor.count }} Records</h4>
-          	<p>VENDORS</p>
+            <p>VENDORS</p>
         </div>
         <div class="icon">
-          	<i class="ion ion-person-add"></i>
+            <i class="ion ion-person-add"></i>
         </div>
         <a ui-sref="lead.vendor" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
     </div>
 
-	<div class="small-box bg-red">
+  <div class="small-box bg-red">
         <div class="inner">
             <h4>{{ totalProduct.count }} Records</h4>
             <p>PRODUCTS</p>
         </div>
         <div class="icon">
-          	<i class="ion ion-bag"></i>
+            <i class="ion ion-bag"></i>
         </div>
         <a ui-sref="lead.product" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
     </div>
 
-	<div class="small-box bg-maroon">
+  <div class="small-box bg-maroon">
         <div class="inner">
-          	<h4>{{ totalMine.count }} Records</h4>
-			<p>MINES</p>
+            <h4>{{ totalConcession.count }} Records</h4>
+      <p>CONCESSION</p>
         </div>
         <div class="icon">
-          	<i class="ion ion-pie-graph"></i>
+            <i class="ion ion-pie-graph"></i>
         </div>
         <a ui-sref="lead.mine" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
     </div>
 
-	<div class="small-box bg-teal">
+  <div class="small-box bg-teal">
         <div class="inner">
-          	<h4>{{ totalContact.count }} Records</h4>
-          	<p>CONTACTS</p>
+            <h4>{{ totalContact.count }} Records</h4>
+            <p>CONTACTS</p>
         </div>
         <div class="icon">
-          	<i class="ion ion-person-add"></i>
+            <i class="ion ion-person-add"></i>
         </div>
         <a ui-sref="lead.contact" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
     </div>

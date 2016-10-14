@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('index').controller('DashboardController', ['$scope', '$state', '$http', 'NgMap', 'Mine', 'Buyer', 'Order', 'News', 'Authentication', 'Activities', 'Deal',
-  function($scope, $state, $http, NgMap, Mine, Buyer, Order, News, Authentication, Activities, Deal) {
+angular.module('index').controller('DashboardController', ['$scope', '$state', '$http', 'NgMap', 'Concession', 'Buyer', 'Order', 'News', 'Authentication', 'Deal',
+  function($scope, $state, $http, NgMap, Concession, Buyer, Order, News, Authentication, Deal) {
     var heatmap;
     $state.go('lead.index');
     $scope.Authentication = Authentication;
@@ -9,16 +9,16 @@ angular.module('index').controller('DashboardController', ['$scope', '$state', '
     $scope.msg1 = true;
     $scope.msg2 = true;
 
-		NgMap.getMap().then(function(map) {
-			$scope.map = map;
+    NgMap.getMap().then(function(map) {
+      $scope.map = map;
     });
 
-    $scope.loadMines = function(){
-    	$scope.mines = Mine.query({ option: 'detail' });
+    $scope.loadConcessions = function(){
+      $scope.mines = Concession.query({ option: 'detail' });
     };
 
     $scope.loadBuyers = function(){
-    	$scope.buyers = Buyer.query();
+      $scope.buyers = Buyer.query();
     };
 
     $scope.loadTodayOrder = function(){
@@ -34,10 +34,6 @@ angular.module('index').controller('DashboardController', ['$scope', '$state', '
       $scope.news = News.query();
     };
     
-    $scope.loadActivities = function(){
-      $scope.activities = Activities.query();
-    };
-
     $scope.loadICI = function(){
       $http({
         method: 'GET',
@@ -53,10 +49,10 @@ angular.module('index').controller('DashboardController', ['$scope', '$state', '
         }
 
         $scope.labels = labels;
-          $scope.data = [ data ];
+        $scope.data = [ data ];
 
-          $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }];
-          $scope.options = {
+        $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }];
+        $scope.options = {
           scales: {
             yAxes: [
               {
@@ -75,7 +71,7 @@ angular.module('index').controller('DashboardController', ['$scope', '$state', '
     };
 
     $scope.loadSupply = function() {
-      $scope.supplies = Mine.query({ option: 'detail' });
+      $scope.supplies = Concession.query({ option: 'detail' });
     };
 
     $scope.loadDemand = function() {

@@ -1,8 +1,8 @@
 <section ng-controller="ProductController" ng-init="initializeUpdateForm()" >
-	<h1>Update Product {{ product.commercial_term }}</h1>
+  <h1>Update Product {{ product.commercial_term }}</h1>
   <p>{{ product.mine.mine_name }}, {{ product.mine.seller.company_name }}</p>
 
-	<form role="form" ng-submit="update()">
-		<div ng-include="'/angular/views/product/form.view.html'"></div>
-	</form>
+  <form role="form" ng-submit="update()">
+    <div ng-include="'/angular/views/product/form.view.html'"></div>
+  </form>
 </section>

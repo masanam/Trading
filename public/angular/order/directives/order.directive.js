@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('order').directive('orderFulfillmentStatus', function() {
   return {
     templateUrl: './angular/order/directives/order-fulfillment-status.html',

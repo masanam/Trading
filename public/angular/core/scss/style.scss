@@ -270,6 +270,11 @@ ul.nav-wizard.nav-wizard-backnav .active ~ li a:focus {
     margin-right: 5px;
 }
 
+.nopadding {
+   padding: 0 !important;
+   margin: 0 !important;
+}
+
 /*.panel-body
 {
     overflow-y: scroll;

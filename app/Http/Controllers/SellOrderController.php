@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Model\SellOrder;
+use App\Model\Seller;
+use Auth;
 
 use Illuminate\Http\Request;
 
@@ -20,7 +22,7 @@ class SellOrderController extends Controller
      */
     public function index()
     {
-        $sell_order = SellOrder::with('seller')->where('order_status', 'a')->get();
+        $sell_order = SellOrder::with('Seller')->where('order_status', 'a')->get();
 
         return response()->json($sell_order, 200);
     }
@@ -41,16 +43,30 @@ class SellOrderController extends Controller
 
         $sell_order = new SellOrder();
 
-        $sell_order->user_id = $request->user_id;
+        $sell_order->user_id = Auth::User()->id;
         $sell_order->seller_id = $request->seller_id;
 
         $sell_order->order_date = $request->order_date;
-        $sell_order->penalty_desc = $request->penalty_desc;
-        $sell_order->deadline = $request->deadline;
+        $sell_order->order_deadline = $request->order_deadline;
+        $sell_order->ready_date = $request->ready_date;
+        $sell_order->expired_date = $request->expired_date;
 
         $sell_order->address = $request->address;
+        $sell_order->city = $request->city;
+        $sell_order->country = $request->country;
         $sell_order->latitude = $request->latitude;
         $sell_order->longitude = $request->longitude;
+        $sell_order->port_distance = $request->port_distance;
+        $sell_order->port_id = $request->port_id;
+        $sell_order->port_name = $request->port_name;
+        $sell_order->port_status = $request->port_status;
+        $sell_order->port_daily_rate = $request->port_daily_rate;
+        $sell_order->port_draft_height = $request->port_draft_height;
+        $sell_order->port_latitude = $request->port_latitude;
+        $sell_order->port_longitude = $request->port_longitude;
+
+        $sell_order->product_name = $request->product_name;
+        $sell_order->product_id = $request->product_id;
 
         $sell_order->gcv_arb_min = $request->gcv_arb_min;
         $sell_order->gcv_arb_max = $request->gcv_arb_max;
@@ -98,11 +114,19 @@ class SellOrderController extends Controller
         $sell_order->size_bonus = $request->size_bonus;
 
         $sell_order->volume = $request->volume;
-        $sell_order->max_price = $request->max_price;
+        $sell_order->max_price = $request->min_price;
+        $sell_order->trading_term = $request->trading_term;
+        $sell_order->payment_terms = $request->payment_terms;
+        $sell_order->commercial_term = $request->commercial_term;
+        $sell_order->penalty_desc = $request->penalty_desc;
         
-        $sell_order->status = 'a';
+        $sell_order->order_status = 'a';
+        $sell_order->progress_status = $request->progress_status;
         
         $sell_order->save();
+
+        $seller = Seller::find($request->seller_id);
+        $sell_order->seller = $seller;
 
         return response()->json($sell_order, 200);
     }
@@ -113,11 +137,11 @@ class SellOrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($sell_order)
+    public function show($id)
     {
-        $sell_order = SellOrder::find($sell_order);
+        $sell_order = SellOrder::with('Seller')->find($id);
 
-        if($sell_order->status == 'a') {
+        if($sell_order->order_status == 'a') {
             return response()->json($sell_order, 200);
         } else {
             return response()->json(['message' => 'deactivated record'], 404);
@@ -131,9 +155,9 @@ class SellOrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $sell_order)
+    public function update(Request $request, $id)
     {
-        $sell_order = SellOrder::find($sell_order);
+        $sell_order = SellOrder::find($id);
 
         if (!$request) {
             return response()->json([
@@ -204,6 +228,8 @@ class SellOrderController extends Controller
         $sell_order->size_bonus = $request->size_bonus;
 
         $sell_order->volume = $request->volume;
+        $sell_order->product_name = $request->product_name;
+        $sell_order->product_id = $request->product_id;
         $sell_order->max_price = $request->max_price;
         
         $sell_order->status = 'a';
@@ -219,9 +245,9 @@ class SellOrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($sell_order)
+    public function destroy($id)
     {
-        $sell_order = SellOrder::find($sell_order);
+        $sell_order = SellOrder::find($id);
         
         if (!$sell_order) {
             return response()->json([
@@ -231,6 +257,35 @@ class SellOrderController extends Controller
 
         $sell_order->status = 'x';
         $sell_order->save();
+
+        return response()->json($sell_order, 200);
+    }
+
+    public function status($order_status, $progress_status = false)
+    {
+        if (!$progress_status) {
+            $sell_order = SellOrder::with('Seller')->where('order_status', $order_status)->get();
+        } else {
+            $sell_order = SellOrder::with('Seller')->where('order_status', $order_status)->where('progress_status', 'LIKE', '%'.$progress_status.'%')->get();
+        }
+
+        return response()->json($sell_order, 200);
+    }
+
+    public function changeOrderStatus($id, $order_status)
+    {
+        $sell_order = SellOrder::find($id);
+        
+        if (!$sell_order) {
+            return response()->json([
+                'message' => 'Not found'
+            ] ,404);
+        }
+
+        if ($order_status) {
+          $sell_order->order_status = $order_status;
+          $sell_order->save();
+        }
 
         return response()->json($sell_order, 200);
     }

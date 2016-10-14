@@ -21,11 +21,27 @@ class CreateSellOrderTable extends Migration
             $table->integer('seller_id')->unsigned();
 
             $table->date('order_date');
-            $table->date('deadline');
+            $table->date('order_deadline');
+            $table->date('ready_date');
+            $table->date('expired_date');
 
+            $table->integer('concession_id')->nullable(); //weak relation tempat dikirim
             $table->string('address');
-            $table->decimal('latitude', 10, 8);
-            $table->decimal('longitude', 11, 8);
+            $table->string('city');
+            $table->string('country');
+            $table->decimal('latitude', 10, 8)->nullable();
+            $table->decimal('longitude', 11, 8)->nullable();
+            $table->integer('port_distance')->nullable();
+            $table->integer('port_id')->nullable();
+            $table->string('port_name')->nullable();
+            $table->string('port_status')->nullable();
+            $table->integer('port_daily_rate')->nullable();
+            $table->integer('port_draft_height')->nullable();
+            $table->decimal('port_latitude', 10, 8)->nullable();
+            $table->decimal('port_longitude', 11, 8)->nullable();
+            
+            $table->string('product_name')->nullable();
+            $table->integer('product_id')->nullable();
 
             $table->integer('gcv_arb_min')->nullable(); //gross calorific value, as received basis
             $table->integer('gcv_arb_max')->nullable();
@@ -73,12 +89,14 @@ class CreateSellOrderTable extends Migration
             $table->integer('size_bonus')->nullable();
 
             $table->integer('volume');
-            $table->integer('max_price');
-
+            $table->integer('min_price');
+            $table->string('trading_term')->nullable();
+            $table->string('payment_terms')->nullable();
+            $table->longText('commercial_term');
             $table->longText('penalty_desc');
-            
             $table->char('order_status', 1); // open(o), progress(p), finish(f), cancel(c) 
             $table->char('progress_status', 1)->nullable();
+            
             $table->timestamps();
         });
 

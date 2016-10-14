@@ -12,7 +12,7 @@
       </div>
     </div>
     <div class="box-body">
-    	<table ng-init="find()" st-table="displayedCollection" st-safe-src="vendors" class="table table-striped">
+      <table ng-init="find()" st-table="displayedCollection" st-safe-src="vendors" class="table table-striped">
         <thead>
             <tr>
               <th colspan="7"><input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
@@ -47,7 +47,12 @@
                   <a ng-click="delete(vendor)"><i class="glyphicon glyphicon-trash"></i></a>
                 </td>
             </tr>
+
+            <tr ng-if="displayedCollection.length == 0">
+              <td colspan="6" class="text-center">No data available</td>
+            </tr>
         </tbody>
+
         <tfoot>
           <tr>
             <td colspan="7" class="text-center">
@@ -55,7 +60,7 @@
             </td>
           </tr>
         </tfoot>
-    	</table>
+      </table>
   
       <div id="createVendorModal" class="modal fade" role="dialog">
         <!--div class="modal-dialog"-->

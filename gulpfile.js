@@ -1,33 +1,25 @@
-var elixir = require('laravel-elixir');
-var gulp = require('gulp');
+'use strict';
+
+var gulp = require('gulp'),
+  runSequence = require('run-sequence'),
+  config = require('./tasks/config');
 
 require('./tasks/serve.task.js');
+require('./tasks/lint.task.js');
 require('./tasks/angular.task.js');
 require('./tasks/bower.task.js');
 
-/*
- |--------------------------------------------------------------------------
- | Elixir Asset Management
- |--------------------------------------------------------------------------
- |
- | Elixir provides a clean, fluent API for defining some basic Gulp tasks
- | for your Laravel application. By default, we are compiling the Sass
- | file for our application, as well as publishing vendor resources.
- |
- */
-
-elixir(function(mix) {
-  var assets = [
-    'public/js/vendor.js',
-    'public/js/app.js',
-    'public/css/vendor.css',
-    'public/css/app.css'
-  ];
-
-  mix
-    .bower()
-    .angular('./public/angular/')
-    // .version(assets)
-    .serve();
+// Watch Files For Changes
+gulp.task('watch', function () {
+  gulp.watch(config.vendorJSFiles, ['bower-js']);
+  gulp.watch(config.vendorCSSFiles, ['bower-css']);
+  gulp.watch(config.vendorFontFiles, ['bower-fonts']);
+  gulp.watch(config.appJSFiles, ['jshint', 'app-js']);
+  gulp.watch(config.appSCSSFiles, ['csslint', 'app-sass']);
 });
 
+
+// Run the project in development mode
+gulp.task('default', function (done) {
+  runSequence('lint', ['bower', 'angular'], ['serve', 'watch'], done);
+});

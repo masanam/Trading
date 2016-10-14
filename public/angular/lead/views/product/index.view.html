@@ -41,9 +41,16 @@
               <td>{{ product.gcv_adb_min | number }}~{{ product.gcv_adb_max | number }}</td>
               <td>{{ product.ncv_min | number }}~{{ product.ncv_max | number }}</td>
               <td width="70px">
-                <a ui-sref="lead.view-product({ id: product.id })"><i class="glyphicon glyphicon-eye-open"></i></a>
+                <a ui-sref="lead.view-product({ id: product.id })"><i class="glyphicon glyphicon-eye-open"></i>
+                </a>
+                <a ui-sref="lead.update-product({ id: product.id })"><i class="glyphicon glyphicon-pencil"></i></a>
+                <a ng-click="delete(product)"><i class="glyphicon glyphicon-trash"></i></a>
               </td>
             </tr>
+            <tr ng-if="displayedCollection.length == 0">
+              <td colspan="6" class="text-center">No data available</td>
+            </tr>
+
           </tbody>
 
           <tfoot>

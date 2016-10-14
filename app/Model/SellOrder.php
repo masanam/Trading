@@ -27,4 +27,8 @@ class SellOrder extends Model
     public function User() {
         return $this->belongsTo('App\Model\User');
     }
+
+    public function Port() {
+        return $this->hasOne('App\Model\Port');
+    }
 }

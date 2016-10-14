@@ -5,7 +5,7 @@ var ApplicationConfiguration = (function () {
   // Init module configuration options
   var applicationModuleName = 'coaltrade';
   var applicationModuleVendorDependencies = [
-    'ngResource', 'ui.router', 'satellizer', 'ngMap', 'chart.js', 'ui.bootstrap', 'smart-table', 'pusher-angular', 'doowb.angular-pusher'
+    'ngResource', 'ui.router', 'satellizer', 'ngMap', 'chart.js', 'ui.bootstrap', 'smart-table', 'pusher-angular', 'doowb.angular-pusher', 'ngFileUpload'
   ];
 
   // Add a new vertical module
