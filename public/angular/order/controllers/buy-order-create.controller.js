@@ -99,10 +99,10 @@ angular.module('order').controller('BuyOrderCreateController', ['$scope', '$filt
     });
 
     $scope.placeMarker = function(e) {
-      if(!$scope.marker){
-        $scope.marker = new google.maps.Marker({ position: e.latLng, map: $scope.map, draggable: true });
-        $scope.map.panTo(e.latLng);
-      }
+      // if(!$scope.marker){
+      //   $scope.marker = new google.maps.Marker({ position: e.latLng, map: $scope.map, draggable: true });
+      //   $scope.map.panTo(e.latLng);
+      // }
     };
   }
 ]);
