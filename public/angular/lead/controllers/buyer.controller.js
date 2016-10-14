@@ -39,19 +39,25 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
 
       var buyer = new Buyer({
         company_name: $scope.buyer.company_name,
-        email: $scope.buyer.email,
+        is_trader: $scope.buyer.is_trader,
+        is_affiliated: $scope.buyer.is_affiliated,
         phone: $scope.buyer.phone,
+        email: $scope.buyer.email,
         web: $scope.buyer.web,
-        industry: $scope.buyer.industry,
-        description: $scope.buyer.description,
-        city: $scope.buyer.city,
         address: $scope.buyer.address,
+        city: $scope.buyer.city,
+        country: $scope.buyer.country,
         latitude: $scope.buyer.latitude,
-        longitude: $scope.buyer.longitude
+        longitude: $scope.buyer.longitude,
+        industry: $scope.buyer.industry,
+        annual_demand: $scope.buyer.annual_demand,
+        preferred_trading_term: $scope.buyer.preferred_trading_term,
+        preferred_payment_term: $scope.buyer.preferred_payment_term,
+        description: $scope.buyer.description 
       });
 
       buyer.$save(function(response) {
-        //$state.go('buyer.index');
+        $state.go('lead.buyer');
         // $('#createBuyerModal').modal('hide');
         // $('.modal-backdrop').hide();
         $scope.find();
@@ -79,12 +85,13 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
               break;
             }
           }
-          // $('#updateBuyerModal').modal('hide');
+          $state.go('lead.buyer');
         }else{
-          $state.go('buyer.index');
+          $state.go('lead.buyer');
         }
         $scope.loading = false;
       }, function(response){
+        $state.go('lead.buyer');
         $scope.error = response.message;
         $scope.loading = false;
       });
