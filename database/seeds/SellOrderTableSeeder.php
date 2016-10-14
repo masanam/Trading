@@ -376,9 +376,5 @@ class SellOrderTableSeeder extends Seeder
           'order_status' => $faker->randomElement($array = array ('a','f'))
         ]));
       }
-
     }
-
-    
-  }
 }
