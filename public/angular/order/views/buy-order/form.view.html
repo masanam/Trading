@@ -34,9 +34,11 @@
             <input type="date" class="form-control" id="expired_date" ng-model="order.expired_date" required>
           </div>
 
-          <div class="form-group">
+          <div class="form-group" style="position:relative">
             <label>Pickup Location</label>
+            <input ng-click="deleteMarker()" style="position:absolute;top:35px;z-index:5;" type=button class="btn btn-default btn-sm" value="Delete Markers">
             <ng-map center="[-6.1751932, 106.8268043]" on-click="placeMarker()">
+              <marker ng-repeat="pos in positions" position="{{pos.latitude}},{{pos.longitude}}" draggable="true" on-dragend="getPositions()"></marker>
             </ng-map>
             <div class="input-group" style="margin-bottom: 5px;margin-top:10px">
               <span class="input-group-addon" id="basic-addon1">Address</span>
@@ -62,7 +64,7 @@
           </div>
 
           <div class="form-group">
-            <label for="port_id">Port Id :</label>
+            <label for="port_id">Port Id (optional):</label>
             <input type="number" class="form-control" id="port_id" ng-model="order.port_id" min="0" >
           </div>
 

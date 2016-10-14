@@ -1,13 +1,14 @@
 'use strict';
 
 angular.module('order').controller('BuyOrderCreateController', ['$scope', '$filter', '$location', 'Buyer', 'Order', 'Product', 'NgMap',
-  function ($scope, $filter, $location, Buyer, Order, Product, NgMap, google) {
+  function ($scope, $filter, $location, Buyer, Order, Product, NgMap) {
   
     $scope.init = function(){
       $scope.state = 0;
       $scope.choose = undefined;
       $scope.error = undefined;
       $scope.order = new Order();
+      $scope.positions = [];
     };
 
     $scope.next = function () {
@@ -98,11 +99,28 @@ angular.module('order').controller('BuyOrderCreateController', ['$scope', '$filt
       $scope.map = map;
     });
 
-    $scope.placeMarker = function(e) {
-      if(!$scope.marker){
-        $scope.marker = new google.maps.Marker({ position: e.latLng, map: $scope.map, draggable: true });
-        $scope.map.panTo(e.latLng);
+    $scope.placeMarker = function(event) {
+      if (Object.keys($scope.positions).length === 0) {
+        $scope.positions.push({ latitude:event.latLng.lat(), longitude:event.latLng.lng() });
+        $scope.order.latitude = parseFloat($filter('number')(event.latLng.lat(), 8), 8);
+        $scope.order.longitude = parseFloat($filter('number')(event.latLng.lng(), 8), 8);
+        $scope.map.panTo(event.latLng);
       }
     };
+
+    $scope.getPositions = function(event) {
+      if(Object.keys($scope.positions).length === 1){
+        $scope.order.latitude = parseFloat($filter('number')(event.latLng.lat(), 8), 8);
+        $scope.order.longitude = parseFloat($filter('number')(event.latLng.lng(), 8), 8);
+        $scope.map.panTo(event.latLng);
+      }
+    };
+
+    $scope.deleteMarker = function() {
+      $scope.positions = [];
+      $scope.order.latitude = null;
+      $scope.order.longitude = null;
+    };
+
   }
 ]);
