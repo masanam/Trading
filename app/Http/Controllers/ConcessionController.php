@@ -37,18 +37,32 @@ class ConcessionController extends Controller
         if (!$_GET) {
             $concession = Concession::where('status', 'a')->get();
         } else {
-            $concession = DB::table('concession')
+            $query = DB::table('concession')
                           ->join('products', 'products.concession_id', '=', 'concession.id')
                           ->where('concession.status', 'a')
                           ->where('products.status', 'a');
-                          
-            var_dump($_GET);
             
-            foreach($_GET['gt'] as $input_gt){
-              //$concession->where('products.');
+            if(isset($_GET['gt'])){
+              foreach($_GET['gt'] as $input_gt){
+                $gt_params = explode(",",$input_gt);
+                $query->where('products.'.$gt_params[0].'_min', '>=', $gt_params[1]);
+              }
+            }
+            if(isset($_GET['lt'])){
+              foreach($_GET['lt'] as $input_lt){
+                $lt_params = explode(",",$input_lt);
+                $query->where('products.'.$lt_params[0].'_max', '<=', $lt_params[1]);
+              }
+            }
+            if(isset($_GET['bet'])){
+              foreach($_GET['bet'] as $input_bet){
+                $bet_params = explode(",",$input_bet);
+                $query->where('products.'.$bet_params[0].'_min', '<=', $bet_params[1]);
+                $query->where('products.'.$bet_params[0].'_max', '>=', $bet_params[1]);
+              }
             }
             
-            $concession = $concession->get();
+            $concession = $query->get();
         }
 
         return response()->json($concession, 200);

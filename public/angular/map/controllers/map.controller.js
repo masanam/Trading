@@ -3,7 +3,6 @@
 angular.module('map').controller('MapController', ['$scope', '$http', '$stateParams', '$state', 'Map', 'Concession', 'NgMap',
   function($scope, $http, $stateParams, $state, Map, Concession, NgMap) {
     $scope.filters = [];
-    //$scope.filters.gt = ['gcv_arb, 5000', 'gcv_adb, 3000'];
     $scope.concession = {};
     $scope.concessions = [];
     
@@ -12,7 +11,12 @@ angular.module('map').controller('MapController', ['$scope', '$http', '$statePar
     });
 
     $scope.find = function() {
-      $scope.concessions = Map.query($scope.filters);
+      for(var i = 0; i < $scope.filters.length; i++){
+      }
+      $scope.filters_lt = [];
+      $scope.filters_bet = [];
+      $scope.filters_gt = ['gcv_arb, 5000', 'gcv_adb, 3000'];
+      $scope.concessions = Map.query({ 'gt[]': $scope.filters_gt, 'bet[]': $scope.filters_bet, 'lt[]': $scope.filters_lt });
       //console.log("vm.positions", $scope.concessions);
     };
     
