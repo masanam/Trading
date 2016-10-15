@@ -45,27 +45,42 @@
       <div class="row">
   
         <div class="col-lg-12">
-          <ng-map zoom="4" center="Indonesia" default-style="false" style="width:100%; height:400px;">
-          <span ng-repeat="pos in concessions">
-            <marker ng-if="pos.polygon === ''" position="{{pos.latitude}}, {{pos.longitude}}" on-click="showDetail({{pos}})"></marker>
-            <shape name="polygon" ng-if="pos.polygon !== ''" on-click="showDetail({{pos}})"
-               paths="{{pos.polygon}}"
-               stroke-color="#FF0000"
-               stroke-opacity="0.8"
-               stroke-weight="2"
-               fill-color="#FF0000"
-               fill-opacity="0.35">
-            </shape>
-          </span>
-              <info-window id="info-window">
-                <div ng-non-bindable="">
-                  Name: {{concession.concession_name}}<br/>
-                  Position: {{concession.latitude}}, {{concession.longitude}}<br/>
+          <ng-map zoom="4" center="Indonesia" default-style="false" style="width:100%; height:500px;">
+            <span ng-repeat="pos in concessions">
+              <marker ng-if="pos.polygon === ''" position="{{pos.latitude}}, {{pos.longitude}}" on-click="showDetail({{pos}})"></marker>
+              <shape name="polygon" ng-if="pos.polygon !== ''" on-click="showDetail({{pos}})"
+                 paths="{{pos.polygon}}"
+                 stroke-color="#FF0000"
+                 stroke-opacity="0.8"
+                 stroke-weight="2"
+                 fill-color="#FF0000"
+                 fill-opacity="0.35">
+              </shape>
+            </span>
+            <info-window id="info-window" default-style="false">
+              <div ng-non-bindable="" style="width:600px; height: 400px;">
+                <h1>Name: {{concession.concession_name}}</h1><br/>
+                Position: {{concession.latitude}}, {{concession.longitude}}<br/>
+                <div class="row">
+                  <div class="col-lg-4">
+                    <ul class="nav nav-pills nav-stacked">
+                      <li ng-repeat="prod in concession.product"><a href="#" ng-click="showProduct(prod)">{{prod.product_name}}</a></li>
+                    </ul>
+                  </div>
+                  <div class="col-lg-8" ng-show="!product">
+                    <h3>Click the Product on the left to show product details</h3>
+                  </div>
+                  <div class="col-lg-8" ng-show="product">
+                    <h3>{{product.product_name}}</h3>
+                    <h3>GCV ARB: {{product.gcv_arb_min}} - {{product.gcv_arb_max}}</h3>
+                    <h3>GCV ADB: {{product.gcv_adb_min}} - {{product.gcv_adb_max}}</h3>
+                    <h3>NCV: {{product.ncv_min}} - {{product.ncv_max}}</h3>
+                  </div>
                 </div>
-              </info-window>
+              </div>
+            </info-window>
           </ng-map>
         </div>
-
       </div>
     </div>
     

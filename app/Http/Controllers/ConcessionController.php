@@ -38,6 +38,7 @@ class ConcessionController extends Controller
             $concession = Concession::where('status', 'a')->get();
         } else {
             $query = DB::table('concession')
+                          ->select('concession.id', 'concession.latitude', 'concession.longitude', 'concession.polygon')
                           ->join('products', 'products.concession_id', '=', 'concession.id')
                           ->where('concession.status', 'a')
                           ->where('products.status', 'a');
@@ -139,6 +140,23 @@ class ConcessionController extends Controller
     public function show($concession)
     {
         $concession = Concession::find($concession);
+
+        if($concession->status == 'a') {
+            return response()->json($concession, 200);
+        } else {
+            return response()->json(['message' => 'deactivated record'], 404);
+        }
+    }
+    
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function detail($id = "")
+    {
+        $concession = Concession::with('Product')->find($id);
 
         if($concession->status == 'a') {
             return response()->json($concession, 200);

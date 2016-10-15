@@ -5,6 +5,7 @@ angular.module('map').controller('MapController', ['$scope', '$http', '$statePar
     $scope.filters = [{ field:'gcv_arb', operand: '>=', number: 5000 }];
     $scope.concession = {};
     $scope.concessions = [];
+    $scope.product = undefined;
     
     NgMap.getMap().then(function(map) {
       $scope.map = map;
@@ -54,10 +55,15 @@ angular.module('map').controller('MapController', ['$scope', '$http', '$statePar
 
     $scope.showDetail = function(event, concession) {
       var loc = this;
-      $scope.concession = Concession.get({ id: concession.id }, function(concession) {
+      $scope.concession = Concession.get({ action:'detail', id: concession.id }, function(concession) {
         $scope.concession = concession;
         $scope.map.showInfoWindow('info-window', loc);
+        $scope.product = undefined;
       });
+    };
+    
+    $scope.showProduct = function(product) {
+      $scope.product = product;
     };
 
   }
