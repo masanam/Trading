@@ -3,33 +3,60 @@
       <div class="row">
   
         <div class="col-lg-12">
-          Filters <button class="btn btn-success" ng-click="addFilter()">+</button>
+          <h3>Filters</h3>
         </div>
-        
-        <div class="col-lg-12" ng-repeat="filter in filters">
-          <select ng-model="filter.field">
-            <option value="gcv_arb">GCV ARB</option>
-            <option value="gcv_adb">GCV ADB</option>
-            <option value="ncv">NCV</option>
-          </select>
-          <select ng-model="filter.operand">
-            <option value=">=">&ge;</option>
-            <option value="<=">&le;</option>
-            <option value="=">&asymp;</option>
-          </select>
-          <input type="text" ng-model="filter.number" />
-          <button class="btn btn-danger" ng-click="deleteFilter(filter)">x</button>
+      </div>
+      <div class="row" ng-repeat="filter in filters">
+        <div class="col-lg-12">
+          <div class="filter-container">
+            <span class="col-lg-4">
+              <select ng-model="filter.field" class="form-control">
+                <option value="gcv_arb">GCV ARB</option>
+                <option value="gcv_adb">GCV ADB</option>
+                <option value="ncv">NCV</option>
+              </select>
+            </span>
+            <span class="col-lg-2">
+              <select ng-model="filter.operand" class="form-control col-lg-2">
+                <option value=">=">&ge;</option>
+                <option value="<=">&le;</option>
+                <option value="=">&asymp;</option>
+              </select>
+            </span>
+            <span class="col-lg-4">
+              <input type="text" class="form-control col-lg-5" ng-model="filter.number" />
+            </span>
+            <span class="col-lg-2">
+              <button class="btn btn-danger" ng-click="deleteFilter(filter)">x</button>
+            </span>
+          </div>
         </div>
-        
-        <button class="btn btn-default" ng-click="find()">Apply Filter</button>
-
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="button-container">
+            <button class="btn btn-success" ng-click="addFilter()">+ Add Filter</button>
+            <button class="btn btn-danger" ng-click="resetFilter()">Reset Filter</button>
+            <button class="btn btn-default" ng-click="find()">Apply Filter</button>
+          </div>
+        </div>
       </div>
       <!-- Maps is here -->
       <div class="row">
   
         <div class="col-lg-12">
-          <ng-map zoom="4" center="Indonesia" default-style="false" style="width:100%; height:600px;">
-            <marker ng-repeat="pos in concessions" position="{{pos.latitude}},{{pos.longitude}}" on-click="showDetail({{pos}})"></marker>
+          <ng-map zoom="4" center="Indonesia" default-style="false" style="width:100%; height:400px;">
+          <span ng-repeat="pos in concessions">
+            <marker ng-if="pos.polygon === ''" position="{{pos.latitude}}, {{pos.longitude}}" on-click="showDetail({{pos}})"></marker>
+            <shape name="polygon" ng-if="pos.polygon !== ''" on-click="showDetail({{pos}})"
+               paths="{{pos.polygon}}"
+               stroke-color="#FF0000"
+               stroke-opacity="0.8"
+               stroke-weight="2"
+               fill-color="#FF0000"
+               fill-opacity="0.35">
+            </shape>
+          </span>
               <info-window id="info-window">
                 <div ng-non-bindable="">
                   Name: {{concession.concession_name}}<br/>

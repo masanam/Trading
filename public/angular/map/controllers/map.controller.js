@@ -18,20 +18,35 @@ angular.module('map').controller('MapController', ['$scope', '$http', '$statePar
       
       var temp_filter = [];
       
-      for(var i = 0; i < $scope.filters.length; i++){
-        if($scope.filters[i].operand === '>='){
-          temp_filter = $scope.filters_gt;
+      if($scope.filters.length > 0){      
+        for(var i = 0; i < $scope.filters.length; i++){
+          if($scope.filters[i].operand === '>='){
+            temp_filter = $scope.filters_gt;
+          }
+          else if($scope.filters[i].operand === '<='){
+            temp_filter = $scope.filters_lt;
+          }
+          else{
+            temp_filter = $scope.filters_bet;
+          }
+          temp_filter.push($scope.filters[i].field+','+$scope.filters[i].number);
         }
-        else if($scope.filters[i].operand === '<='){
-          temp_filter = $scope.filters_lt;
-        }
-        else{
-          temp_filter = $scope.filters_bet;
-        }
-        temp_filter.push($scope.filters[i].field+','+$scope.filters[i].number);
+        
+        $scope.concessions = Map.query({ 'gt[]': $scope.filters_gt, 'bet[]': $scope.filters_bet, 'lt[]': $scope.filters_lt });
+      }else{
+        $scope.concessions = [];
       }
-      
-      $scope.concessions = Map.query({ 'gt[]': $scope.filters_gt, 'bet[]': $scope.filters_bet, 'lt[]': $scope.filters_lt });
+    };
+    
+    $scope.getPosition = function(concession){
+      var position = '';
+      if(concession.polygon != ''){
+        position = concession.polygon;
+      }
+      else{
+        position = pos.latitude+','+pos.longitude;
+      }
+      return position;
     };
     
     $scope.addFilter = function(){
@@ -40,6 +55,12 @@ angular.module('map').controller('MapController', ['$scope', '$http', '$statePar
     
     $scope.deleteFilter = function(filter){
       $scope.filters.splice($scope.filters.indexOf(filter), 1);
+      $scope.find();
+    };
+    
+    $scope.resetFilter = function(){
+      $scope.filters = [];
+      $scope.find();
     };
 
     $scope.showDetail = function(event, concession) {
