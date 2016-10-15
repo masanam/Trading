@@ -1,7 +1,6 @@
 <section class="content" ng-controller="MapController" ng-init="find()">
       <!-- Filter box -->
       <div class="row">
-  
         <div class="col-lg-12">
           <h3>Filters</h3>
         </div>
@@ -47,8 +46,9 @@
         <div class="col-lg-12">
           <ng-map zoom="4" center="Indonesia" default-style="false" style="width:100%; height:500px;">
             <span ng-repeat="pos in concessions">
-              <marker ng-if="pos.polygon === ''" position="{{pos.latitude}}, {{pos.longitude}}" on-click="showDetail({{pos}})"></marker>
+              <marker ng-if="pos.polygon === ''" position="{{pos.latitude}}, {{pos.longitude}}" id="mark{{pos.id}}" on-click="showDetail({{pos}})"></marker>
               <shape name="polygon" ng-if="pos.polygon !== ''" on-click="showDetail({{pos}})"
+                 id="mark{{pos.id}}"
                  paths="{{pos.polygon}}"
                  stroke-color="#FF0000"
                  stroke-opacity="0.8"
@@ -146,19 +146,71 @@
                       <div id="product">
                         &nbsp;
                         <div class="row">
-                          <div class="col-lg-4">
-                            <ul class="nav nav-pills nav-stacked">
-                              <li ng-repeat="prod in concession.product"><a href="#" ng-click="showProduct(prod)">{{prod.product_name}}</a></li>
-                            </ul>
+                          <div class="col-lg-3">
+                            <uib-tabset active="activePill" vertical="true" type="pills">
+                              <uib-tab ng-repeat="(idx, prod) in concession.product" index="idx" ng-click="showProduct(prod)" heading="{{prod.product_name}}"></uib-tab>
+                            </uib-tabset>
                           </div>
-                          <div class="col-lg-8" ng-show="!product">
-                            <h3>Click the Product on the left to show product details</h3>
-                          </div>
-                          <div class="col-lg-8" ng-show="product">
-                            <h3>{{product.product_name}}</h3>
-                            <h3>GCV ARB: {{product.gcv_arb_min}} - {{product.gcv_arb_max}}</h3>
-                            <h3>GCV ADB: {{product.gcv_adb_min}} - {{product.gcv_adb_max}}</h3>
-                            <h3>NCV: {{product.ncv_min}} - {{product.ncv_max}}</h3>
+                          <div class="col-lg-9">
+                            <h3 ng-show="!product">Click the Product on the left to show product details</h3>
+                              <div ng-show="product">
+                                <div class="row">
+                                  <div class="col-lg-4">
+                                    <h4>
+                                      GCV ARB
+                                    </h4>
+                                    <h5>
+                                     {{product.gcv_arb_min}} - {{product.gcv_arb_max}} kcal
+                                    </h5>
+                                  </div>
+                                  <div class="col-lg-4">
+                                    <h4>
+                                      GCV ADB
+                                    </h4>
+                                    <h5>
+                                     {{product.gcv_adb_min}} - {{product.gcv_adb_max}} kcal
+                                    </h5>
+                                  </div>
+                                  <div class="col-lg-4">
+                                    <h4>
+                                      NCV
+                                    </h4>
+                                    <h5>
+                                     {{product.ncv_min}} - {{product.ncv_max}} kcal
+                                    </h5>
+                                  </div>
+                                </div>
+                                <div class="row">
+                                  <table class="table table-striped">
+                                    <tbody>
+                                      <tr>
+                                        <td>Ash</td>
+                                        <td>{{product.ash_min}} - {{product.ash_max}} %</td>
+                                        <td>Total Sulfur</td>
+                                        <td>{{product.ts_min}} - {{product.ts_max}} %</td>
+                                      </tr>
+                                      <tr>
+                                        <td>Total Moisture</td>
+                                        <td>{{product.tm_min}} - {{product.tm_max}} %</td>
+                                        <td>Inherent Moisture</td>
+                                        <td>{{product.im_min}} - {{product.im_max}} %</td>
+                                      </tr>
+                                      <tr>
+                                        <td>Fixed Carbon</td>
+                                        <td>{{product.fc_min}} - {{product.fc_max}} %</td>
+                                        <td>Volatile Matter</td>
+                                        <td>{{product.vm_min}} - {{product.vm_max}} %</td>
+                                      </tr>
+                                      <tr>
+                                        <td>Hardness</td>
+                                        <td>{{product.hgi_min}} - {{product.hgi_max}}</td>
+                                        <td>Size</td>
+                                        <td>{{product.size_min}} - {{product.size_max}}</td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
                           </div>
                         </div>
                       </div>
