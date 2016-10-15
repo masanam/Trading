@@ -65,6 +65,10 @@ angular.module('map').controller('MapController', ['$scope', '$http', '$statePar
     $scope.showProduct = function(product) {
       $scope.product = product;
     };
+    
+    $scope.selectPill = function(index){
+      $scope.selectedPill = index;
+    };
 
   }
 ]);
