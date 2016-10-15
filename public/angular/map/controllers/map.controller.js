@@ -38,17 +38,6 @@ angular.module('map').controller('MapController', ['$scope', '$http', '$statePar
       }
     };
     
-    $scope.getPosition = function(concession){
-      var position = '';
-      if(concession.polygon != ''){
-        position = concession.polygon;
-      }
-      else{
-        position = pos.latitude+','+pos.longitude;
-      }
-      return position;
-    };
-    
     $scope.addFilter = function(){
       $scope.filters.push({ field:'', operand: '', number: 0 });
     };
