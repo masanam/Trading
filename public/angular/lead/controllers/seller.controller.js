@@ -18,11 +18,41 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
       startingDay: 1
     };
 
+
     $scope.open = function() {
       $scope.popup.opened = true;
     };
 
-   
+    $scope.open1 = function() {
+      $scope.popup1.opened = true;
+    };
+
+    $scope.setDate = function(year, month, day) {
+      $scope.dt = new Date(year, month, day);
+    };
+
+    $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+    $scope.format = $scope.formats[1];
+    $scope.altInputFormats = ['M!/d!/yyyy'];
+
+    $scope.popup1 = {
+      opened: false
+    };
+
+    var tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    var afterTomorrow = new Date();
+    afterTomorrow.setDate(tomorrow.getDate() + 1);
+    $scope.events = [
+      {
+        date: tomorrow,
+        status: 'full'
+      },
+      {
+        date: afterTomorrow,
+        status: 'partially'
+      }
+    ];
 
     $scope.openSellerModal = function (order) {
       
@@ -46,8 +76,6 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
       opened: false
     };
 
-    $scope.format = 'dd.MM.yyyy';
-
     $scope.create = function() {
       $scope.loading = true;
       var seller = new Seller({
@@ -69,7 +97,7 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
         preferred_trading_term: $scope.seller.preferred_trading_term,
         preferred_payment_term: $scope.seller.preferred_payment_term,
         purchasing_countries: $scope.seller.purchasing_countries,
-        description: $scope.buyer.description 
+        description: $scope.seller.description 
       });
 
       seller.$save(function(response) {

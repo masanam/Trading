@@ -24,7 +24,7 @@
             <th st-sort="email">Email</th>
             <th st-sort="phone">Phone</th>
             <th st-sort="web">Web</th>
-            <th st-sort="last sell order date">Last Sell Order Date</th>
+            <th st-sort="last_sell_order">Last Sell Order Date</th>
             <th st-sort=""></th>
           </tr>
 
@@ -38,15 +38,8 @@
             <td>{{ seller.phone }}</td>
             <td><a href="{{seller.web}}">{{ seller.web }}</a></td>
             <td>
-           <!--    <a ng-if="seller.last_fulfillments" href="#" data-toggle="modal" data-target="#lastFulfillmentModal" ng-click="goToFulfillment(seller.id)">{{ seller.last_fulfillments }}</a>
-              <span ng-if="!seller.last_fulfillments">N/A</span>
-            </td>
-            <td>
-              <a ng-if="seller.last_productions" href="#" data-toggle="modal" data-target="#lastProductionModal" ng-click="goToProductions(seller.id)">{{ seller.last_productions }}</a>
-              <span ng-if="!seller.last_productions">N/A</span>
-            </td> -->
-               {{ seller.last_fulfillments }}-->
-              <span ng-if="!seller.last_fulfillments">N/A</span>
+              <span ng-if="seller.last_order">{{ seller.last_order | convertToDate | date : 'd MMMM yy' }}</span>
+              <span ng-if="!seller.last_order">N/A</span>
             </td>
             <!--td>
               <a ui-sref="seller.update({ id: seller.id })"><i class="glyphicon glyphicon-pencil"></i></a>
