@@ -29,10 +29,15 @@
       <td>{{ buy_order.max_price/buy_order.volume | currency : $ : 2}}</td>
       <td>{{ buy_order.max_price | currency : $ : 2}}</td>
       <td>
-        <a ng-click="changeOrderStatusA(buy_order)" style="cursor: pointer"><i class="glyphicon glyphicon-font"></i></a>
-        <a ng-click="changeOrderStatusF(buy_order)" style="cursor: pointer"><i class="glyphicon glyphicon-ok"></i></a>
-        <a ng-click="changeOrderStatusC(buy_order)" style="cursor: pointer"><i class="glyphicon glyphicon-remove"></i></a>
+        <a ng-click="changeOrderStatus(buy_order, 'o')" style="cursor: pointer" uib-tooltip="Set to Active"><i class="glyphicon glyphicon-font"></i></a>
+        <a ng-click="changeOrderStatus(buy_order, 's')" style="cursor: pointer" uib-tooltip="Set to Staged"   ><i class="glyphicon glyphicon-share"></i></a>
+        <a ng-click="changeOrderStatus(buy_order, 'f')" style="cursor: pointer" uib-tooltip="Set to Finished" ><i class="glyphicon glyphicon-ok"></i></a>
+        <a ng-click="changeOrderStatus(buy_order, 'c')" style="cursor: pointer" uib-tooltip="Set to Cancelled"><i class="glyphicon glyphicon-remove"></i></a>
+        <a ng-click="changeOrderStatus(buy_order, 'x')" style="cursor: pointer" uib-tooltip="Delete Order"    ><i class="glyphicon glyphicon-trash"></i></a>
       </td>
+    </tr>
+    <tr ng-if="displayedCollection.length == 0">
+      <td colspan="9" class="text-center">No data available</td>
     </tr>
   </tbody>
 

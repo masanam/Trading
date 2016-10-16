@@ -4,7 +4,11 @@ angular.module('order').controller('OrderHistoryController', ['$scope', 'Order',
   function($scope, Order) {
     
     $scope.findAvailableBuy = function() {
-      $scope.orders = Order.query({ type: 'buy', action: 'status', order_status: 'a' });
+      $scope.orders = Order.query({ type: 'buy', action: 'status', order_status: 'o' });
+    };
+    
+    $scope.findStagedBuy = function() {
+      $scope.orders = Order.query({ type: 'buy', action: 'status', order_status: 's' });
     };
 
     $scope.findFinishedBuy = function() {
@@ -16,7 +20,11 @@ angular.module('order').controller('OrderHistoryController', ['$scope', 'Order',
     };
 
     $scope.findAvailableSell = function() {
-      $scope.orders = Order.query({ type: 'sell', action: 'status', order_status: 'a' });
+      $scope.orders = Order.query({ type: 'sell', action: 'status', order_status: 'o' });
+    };
+    
+    $scope.findStagedSell = function() {
+      $scope.orders = Order.query({ type: 'sell', action: 'status', order_status: 's' });
     };
 
     $scope.findFinishedSell = function() {
