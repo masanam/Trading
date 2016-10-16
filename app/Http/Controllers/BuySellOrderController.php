@@ -69,4 +69,26 @@ class BuySellOrderController extends Controller
 
         return response()->json($buy_sell_order, 200);
     }
+    
+    public function lastOrderForDetail($type, $id) {
+        $buy_sell_order = new \Illuminate\Database\Eloquent\Collection();
+
+        if($type == 'buyer') {
+            $buy_sell_order = BuyOrder::where('order_status', '!=', 'x')->where('order_status', '!=', 'c')->where('buyer_id', $id)
+                            ->with([
+                                'Buyer' => function ($query) {
+                                    $query->select('company_name');
+                                }, 'BuyOrderPricing', 'User'
+                            ])->get();
+        } else if($type == 'seller') {
+            $buy_sell_order = SellOrder::where('order_status', '!=', 'x')->where('order_status', '!=', 'c')->where('seller_id', $id)
+                            ->with([
+                                'Seller' => function ($query) {
+                                    $query->select('company_name');
+                                }, 'SellOrderPricing', 'User'
+                            ])->get();
+        }
+
+        return response()->json($buy_sell_order, 200);
+    }
 }
