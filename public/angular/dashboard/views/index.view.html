@@ -5,6 +5,40 @@
         <h3 class="box-title">Filters</h3>
       </div>
       <div class="box-body">
+        <div class="with-border">
+          <label>Frequency</label>
+          <div class="btn-group">
+            <label class="btn btn-default" ng-model="radioModel" uib-btn-radio="'daily'" uib-tooltip="Daily">D</label>
+            <label class="btn btn-default" ng-model="radioModel" uib-btn-radio="'weekly'" uib-tooltip="Weekly">W</label>
+            <label class="btn btn-default" ng-model="radioModel" uib-btn-radio="'monthly'" uib-tooltip="Monthly">M</label>
+          </div>
+        </div>
+
+        <div class="with-border">
+          <label>Date Start</label>
+          <p class="input-group">
+            <input type="date" class="form-control" ng-model="dateStart" max="{{ dateEnd | date:'yyyy-MM-dd' }}">
+          </p>
+        </div>
+
+        <div class="with-border">
+          <label>Date End</label>
+          <p class="input-group">
+            <input type="date" class="form-control" ng-model="dateEnd" min="{{ dateStart | date:'yyyy-MM-dd' }}">
+          </p>
+        </div>
+
+        <div class="with-border">
+          <label>Indices</label>
+
+          <div ng-init="getIndices()">
+            <div class="btn-group-vertical">
+              <label class="btn btn-default" ng-model="index.choosen" ng-click="chooseIndex(index)" ng-repeat="index in indices track by $index" uib-btn-checkbox>
+                {{ index.index_provider }} - {{ index.index_name }}
+              </label>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -14,6 +48,8 @@
         <h3 class="box-title">Indices</h3>
       </div>
       <div class="box-body no-padding">
+        {{choosenIndices}}
+
         <table st-table="displayedCollection" st-safe-src="orders" class="table table-striped">
           <thead>
             <tr>
@@ -23,12 +59,14 @@
           </thead>
 
           <tbody>
-            <tr>
+            <tr ng-repeat="indexPrice in indexPrices">
               <td>Date</td>
               <td>INDEX PRICE</td>
             </tr>
           </tbody>
         </table>
+
+        <div ng-if="!indexPrices" class="box-body">Choose at least 1 index to start</div>
       </div>
     </div>
   </div>

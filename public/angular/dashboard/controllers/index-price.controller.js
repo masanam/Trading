@@ -1,9 +1,26 @@
 'use strict';
 
-angular.module('dashboard').controller('IndexPriceController', ['$scope',
-  function($scope) {
+angular.module('dashboard').controller('IndexPriceController', ['$scope', 'Index',
+  function($scope, Index) {
+    $scope.dateEnd = new Date();
+    $scope.dateStart = new Date("-7 days");
+
     $scope.getIndices = function () {
-      
+      $scope.indices = Index.query();
+    };
+
+    $scope.getIndexPrices = function (indexId) {
+      $scope.indexPrices = Index.get({ indexId: indexId });
+    };
+
+    $scope.chooseIndex = function (index) {
+      var dateStart = $scope.dateStart.slice(0,10);
+      var dateEnd = $scope.dateEnd.slice(0,10);
+
+      if(index.choosen) Index.get({ indexId: index.id, date_start: dateStart, date_end: dateEnd }, function(res){
+        $scope.indexPrices = res;
+        console.log(res);
+      });
     };
 
     $scope.labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
