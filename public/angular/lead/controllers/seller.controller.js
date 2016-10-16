@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('seller').controller('SellerController', ['$scope', '$http', '$stateParams', '$state', '$timeout', '$location', 'Seller', 'Product', 'Concession', 'Contact', '$uibModal',
-  function($scope, $http, $stateParams, $state, $timeout, $location, Seller, Product, Concession, Contact, $uibModal) {
+angular.module('seller').controller('SellerController', ['$scope', '$http', '$stateParams', '$state', '$timeout', '$location', 'Seller', 'Product', 'Concession', 'Contact', '$uibModal', 'Order',
+  function($scope, $http, $stateParams, $state, $timeout, $location, Seller, Product, Concession, Contact, $uibModal, Order) {
     $scope.sellers = [];
     $scope.seller = {};
     $scope.productButton = false;
@@ -112,8 +112,6 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
     $scope.createSupply = function() {
       $scope.loading = true;
 
-      console.log($scope.supply);
-
       var supply = new Product($scope.supply);
 
       supply.$save(function(response) {
@@ -168,6 +166,8 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
 
       $scope.seller = Seller.get({ id: $scope.sellerId });
 
+      $scope.lastOrders = Order.query({ option: 'lastOrders' , type: 'seller', id: $scope.sellerId });
+      
       //$scope.products = Product.query({ option: 'seller' , sellerId: id });
 
       $timeout(function() {
@@ -195,6 +195,11 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
       // $('#sellerModal').modal('hide');
     };
     
+    $scope.goToLastOrders = function(id){
+      $state.go('history-order.index');
+      // $('#sellerModal').modal('hide');
+    };
+    
     $scope.addConcession = function () {
       var modalInstance = $uibModal.open({
         windowClass: 'xl-modal',
@@ -205,7 +210,6 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
     };
     
     $scope.deleteConcession = function(concession){
-      console.log('deleting concession');
       Concession.delete({ id: concession.id }, function (response) {
         $scope.concession = response;
         
@@ -355,7 +359,7 @@ angular.module('seller').controller('CreateContactModalFromSellerController', fu
 angular.module('seller').controller('CreateProductModalFromSellerController', function ($scope, $filter, $uibModalInstance, Product, Authentication) {
   
   $scope.product = new Product();
-  
+    
   $scope.createProduct= function(){
     
     $scope.success = $scope.error = null;
@@ -363,7 +367,6 @@ angular.module('seller').controller('CreateProductModalFromSellerController', fu
 
     var product = $scope.product;
     product.seller_id = $scope.seller.id;
-    console.log(product);
     
     product.$save(function (response) {
       $scope.product = response;
@@ -385,7 +388,7 @@ angular.module('seller').controller('CreateProductModalFromSellerController', fu
 angular.module('seller').controller('CreateConcessionModalController', function ($scope, $filter, $uibModalInstance, Concession, Authentication) {
   
   $scope.concession = new Concession();
-  
+    
   $scope.polygon = [];
   
   $scope.resetPolygon = function(){

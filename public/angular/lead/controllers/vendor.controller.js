@@ -20,7 +20,7 @@ angular.module('vendor').controller('VendorController', ['$scope', '$http', '$st
       });
 
       vendor.$save(function(response) {
-         $state.go('lead.vendor');
+        $state.go('lead.vendor');
         // $('#createVendorModal').modal('hide');
         // $('.modal-backdrop').hide();
         $scope.find();
@@ -41,7 +41,7 @@ angular.module('vendor').controller('VendorController', ['$scope', '$http', '$st
           }
           // $('#updateVendorModal').modal('hide');
         }else{
-           $state.go('lead.vendor');
+          $state.go('lead.vendor');
         }
         $state.go('lead.vendor');
         $scope.loading = false;

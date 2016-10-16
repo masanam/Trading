@@ -119,10 +119,7 @@
                   <th><i class="glyphicon glyphicon-scale"></i> GCV ADB (kcal)</th>
                   <th><i class="glyphicon glyphicon-scale"></i> GCV ARB (kcal)</th>
                   <th><i class="glyphicon glyphicon-scale"></i> NCV (kcal)</th>
-                  <th><!--span class="pull-right">
-                    <a ui-sref="lead.view-product({ id: product.id })"><i class="glyphicon glyphicon-eye-open"></i></a>
-                    <a href="#" ng-click="deleteProduct(product)"><i class="glyphicon glyphicon-remove"></i></a>
-                  </span--></th>
+                  <th><!----></th>
                 </tr>
               </thead>
               <tbody>
@@ -143,7 +140,7 @@
           </div>
         </div>
       </div>
-      <div class="box box-info">
+      <!--div class="box box-info">
         <div class="box-header with-border">
           <h3 class="box-title" style="font-size: 25px">Insights</h3>
           <div class="box-tools pull-right">
@@ -154,7 +151,7 @@
             -- FEATURES COMING SOON --
           </div>
         </div>
-      </div>
+      </div-->
       <div class="box box-info">
         <div class="box-header with-border">
           <h3 class="box-title" style="font-size: 25px">Order History</h3>
@@ -173,7 +170,7 @@
                   </tr>
               </thead>
               <tbody>
-                  <!--tr ng-repeat="(idx, lastOrder) in lastOrders">
+                  <tr ng-repeat="(idx, lastOrder) in lastOrders">
                       <td>{{ lastOrder.id }}</td>
                       <td>
                         {{ lastOrder.created_at | date:'medium' }}
@@ -184,19 +181,19 @@
                   </tr>
                   <tr ng-hide="lastOrders.length > 0">
                     <td colspan="3">There is no previous orders.</td>
-                  </tr-->
-                  <tr>
-                    <td colspan="3">-- FEATURES COMING SOON --</td>
                   </tr>
                   <!--tr>
-                    <td colspan="3"><a class="btn btn-block btn-blue" ng-click="goToLastOrders(buyer.id)">View More</a></td>
+                    <td colspan="3">-- FEATURES COMING SOON --</td>
                   </tr-->
+                  <tr>
+                    <td colspan="3"><a class="btn btn-block btn-blue" ng-click="goToLastOrders(buyer.id)">View More</a></td>
+                  </tr>
               </tbody>
             </table>
           </div>
         </div>
       </div>
-      <div class="box box-info">
+      <!--div class="box box-info">
         <div class="box-header with-border">
           <h3 class="box-title" style="font-size: 25px">Notes</h3>
           <div class="box-tools pull-right">
@@ -207,7 +204,7 @@
             -- FEATURES COMING SOON --
           </div>
         </div>
-      </div>
+      </div-->
 
     </div>
   </div>

@@ -149,8 +149,8 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
       }
 
       $scope.buyer = Buyer.get({ id: $scope.buyerId });
-      /*$scope.lastOrders = Order.query({ action: 'lastOrder', buyerId: $scope.buyerId });
-      $scope.pendingOrders = Order.query({ action: 'lastOrder' });*/
+      $scope.lastOrders = Order.query({ option: 'lastOrders' , type: 'buyer', id: $scope.buyerId });
+      /*$scope.pendingOrders = Order.query({ action: 'lastOrder' });*/
 
       $timeout(function() {
         $scope.render = true;
@@ -168,7 +168,7 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
     $scope.goToLastOrders = function(id){
       // $('#buyerModal').modal('hide');
       // $('.modal-backdrop').hide();
-      $state.go('order.viewBuyer', { buyerId: id });
+      $state.go('history-order.index');
     };
     
     $scope.goToPendingOrders = function(id){
