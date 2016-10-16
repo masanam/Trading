@@ -195,19 +195,23 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
       // $('#sellerModal').modal('hide');
     };
     
+    $scope.openConcessionModal = function(){
+      console.log('adding concession');
+    };
+    
     $scope.addConcession = function () {
       console.log('adding concession');
-      var modalInstance = $uibModal.open({
+      /*var modalInstance = $uibModal.open({
         windowClass: 'xl-modal',
         templateUrl: './angular/lead/views/concession/create-from-seller.view.html',
         controller: 'CreateConcessionModalController',
         scope: $scope,
-      });
+      });*/
     };
     
     $scope.deleteConcession = function(concession){
       console.log('deleting concession');
-      /*Concession.delete({ id: concession.id }, function (response) {
+      Concession.delete({ id: concession.id }, function (response) {
         $scope.concession = response;
         
         $scope.seller.concession.splice($scope.seller.concession.indexOf(concession), 1);
@@ -215,7 +219,7 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
         $scope.success = true;
       }, function (response) {
         $scope.error = response.data.message;
-      });*/
+      });
     };
 
     $scope.deleteProduct = function(product){
@@ -352,6 +356,32 @@ angular.module('seller').controller('CreateContactModalController', function ($s
   };
 });
 
+angular.module('seller').controller('CreateProductModalController', function ($scope, $filter, $uibModalInstance, Product, Authentication) {
+  
+  $scope.createProduct= function(){
+    
+    $scope.success = $scope.error = null;
+    $scope.product.license_expired_date = $filter('date')($scope.product.license_expired_date, 'yyyy-MM-dd');
+    $scope.product.seller_id = $scope.seller.id;
+
+    var product = new Product($scope.product);
+    
+    product.$save(function (response) {
+      $scope.product = response;
+      
+      $scope.seller.product.push($scope.product);
+      $scope.close();
+      $scope.success = true;
+    }, function (response) {
+      $scope.error = response.data.message;
+    });
+    
+  };
+  
+  $scope.close = function () {
+    $uibModalInstance.dismiss('cancel');
+  };
+});
 
 angular.module('seller').controller('CreateConcessionModalController', function ($scope, $filter, $uibModalInstance, Concession, Authentication) {
   
