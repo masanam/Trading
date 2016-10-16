@@ -18,50 +18,38 @@ class IndexController extends Controller
    *
    * @return \Illuminate\Http\Response
    */
-  public function index()
-  {
+  public function index(){
     $indices = Index::get();
     return response()->json($indices, 200);
   }
 
-  public function price(Request $request)
-  {
-  	// $indices = $request->indexId;
-  	// $date_start = $request->date_start;
-  	// $date_end = $request->date_end;
-  	// $frequency = $request->frequency;
+  public function price(Request $request){
+  	$indices = $request->indexId;
+  	$date_start = $request->date_start;
+  	$date_end = $request->date_end;
+  	$frequency = $request->frequency;
 
-  	$query = DB::table('concession')
-      //->select('concession.id', 'concession.latitude')
-      ->select(['concession.id', 'concession.latitude', 'concession.longitude', 'concession.polygon'])
-      /*->join('products', 'products.concession_id', '=', 'concession.id')
-      ->where('concession.status', 'a')
-      ->where('products.status', 'a')*/;
-    
-    $concession = $query->get();
+  	$indices = Index::whereIn('id', $indices)->get();
 
-    return response()->json($concession, 200);
+  	$column = 'MAX(date) "date"';
 
+  	foreach($indices as $index){
+	  	$column .= ', AVG(CASE WHEN index_id = ' . $index->id . ' THEN price END) "' . $index->id . '"';
+  	}
 
+  	$query = DB::table('index_price')
+  		->select(DB::raw($column))
+  		->orderBy('date', 'DESC');
 
+    if($date_start) $query->where('date', '>=', $date_start);
+    if($date_end) $query->where('date', '<=', $date_end);
 
-  //   SELECT  DATE_FORMAT(PunchDateTime, '%W') DAY,
-		//         MAX(CASE WHEN PunchEvent = 'ClockIn' THEN DATE_FORMAT(PunchDateTime, '%r') END) ClockIn,
-		//         MAX(CASE WHEN PunchEvent = 'BreakOut' THEN DATE_FORMAT(PunchDateTime, '%r') END) BreakOut,
-		//         MAX(CASE WHEN PunchEvent = 'BreakIn' THEN DATE_FORMAT(PunchDateTime, '%r') END) BreakIn,
-		//         MAX(CASE WHEN PunchEvent = 'ClockOut' THEN DATE_FORMAT(PunchDateTime, '%r') END) ClockOut
-		// FROM    tableName
-		// WHERE   EmpID = 456
-		// GROUP   BY DATE_FORMAT(PunchDateTime, '%W')
-		// ORDER   BY PunchDateTime
+    switch($frequency){
+    	case 'daily' : $query->groupBy('day_of_year', 'year'); break;
+    	case 'weekly' : $query->groupBy('week', 'year'); break;
+    	case 'monthly' : $query->groupBy('month', 'year'); break;
+    }
 
-
-    // $indexPrices = IndexPrice::select('date', 'price')->where('index_id', $id);
-
-    // if($request->date_start) $indexPrices->where('date', '>=', $request->date_start);
-    // if($request->date_end) $indexPrices->where('date', '<=', $request->date_end);
-
-    // $indexPrices = $indexPrices->get();
-    // return response()->json($indexPrices, 200);
+    return response()->json([ 'indices' => $indices, 'prices' => $query->get() ], 200);
   }
 }

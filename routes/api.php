@@ -22,7 +22,8 @@ Route::group(['middleware' => ['cors']], function() {
     Route::post('signing', 'AuthenticateController@upload');
 
     Route::get('index', 'IndexController@index');
-    Route::get('index/price', 'IndexController@price');
+    Route::post('index/price', 'IndexController@price');
+    Route::post('index/price-comparison', 'IndexController@priceComparison');
 
     Route::get('user/current', 'UserController@currentUser');
     Route::resource('user', 'UserController', ['except' => [

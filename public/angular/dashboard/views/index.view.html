@@ -49,21 +49,19 @@
       <div class="box-header with-border">
         <h3 class="box-title">Indices</h3>
       </div>
-      <div class="box-body no-padding">
-        {{choosenIndices}}
-
-        <table st-table="displayedCollection" st-safe-src="orders" class="table table-striped">
+      <div class="box-body no-padding" style="overflow-x:scroll;">
+        <table  ng-if="indexPrices" st-table="displayedCollection" st-safe-src="orders" class="table table-striped">
           <thead>
             <tr>
-              <th>Date</th>
-              <th>INDEX</th>
+              <th style="min-width:40px;">Date</th>
+              <th ng-repeat="head in headerPrices">{{head.index_provider}}<br>{{head.index_name}}<br>{{head.quality}}</th>
             </tr>
           </thead>
 
           <tbody>
             <tr ng-repeat="indexPrice in indexPrices">
-              <td>Date</td>
-              <td>INDEX PRICE</td>
+              <td>{{ indexPrice.date }}</td>
+              <td ng-repeat="(key, value) in indexPrice" ng-if="key !== 'date'">{{ value | number:2 }}</td>
             </tr>
           </tbody>
         </table>
@@ -80,19 +78,19 @@
       <div class="box-body">
         <canvas id="line" class="chart chart-line" chart-data="data"
           chart-labels="labels" chart-series="series" chart-options="options"
-          chart-dataset-override="datasetOverride" chart-click="onClick">
+          chart-dataset-override="datasetOverride" chart-click="onClick" ng-if="showChart">
         </canvas> 
       </div>
     </div>
 
-    <div class="box box-primary">
+    <div class="box box-primary" ng-repeat="index in headerPrices">
       <div class="box-header with-border">
-        <h3 class="box-title">Yearly Review: {{ index }}</h3>
+        <h3 class="box-title">Yearly Review: {{ index.index_provider }} {{ index.index_name }}</h3>
       </div>
-      <div class="box-body">
+      <div class="box-body" ng-init="getIndexComparison(index)">
         <canvas id="line" class="chart chart-line" chart-data="data"
           chart-labels="labels" chart-series="series" chart-options="options"
-          chart-dataset-override="datasetOverride" chart-click="onClick">
+          chart-dataset-override="datasetOverride" chart-click="onClick" ng-if="showChart">
         </canvas> 
       </div>
     </div>
