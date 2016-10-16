@@ -261,7 +261,7 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
       var modalInstance = $uibModal.open({
         windowClass: 'xl-modal',
         templateUrl: './angular/lead/views/product/create-from-seller.view.html',
-        controller: 'CreateProductModalController',
+        controller: 'CreateProductModalFromSellerController',
         scope: $scope,
       });
     };
@@ -356,7 +356,7 @@ angular.module('seller').controller('CreateContactModalController', function ($s
   };
 });
 
-angular.module('seller').controller('CreateProductModalController', function ($scope, $filter, $uibModalInstance, Product, Authentication) {
+angular.module('seller').controller('CreateProductModalFromSellerController', function ($scope, $filter, $uibModalInstance, Product, Authentication) {
   
   $scope.product = new Product();
   
