@@ -23,7 +23,7 @@ Route::group(['middleware' => ['cors']], function() {
 
     Route::get('index', 'IndexController@index');
     Route::post('index/price', 'IndexController@price');
-    Route::post('index/price-comparison', 'IndexController@priceComparison');
+    Route::post('index/single-price', 'IndexController@singlePrice');
 
     Route::get('user/current', 'UserController@currentUser');
     Route::resource('user', 'UserController', ['except' => [

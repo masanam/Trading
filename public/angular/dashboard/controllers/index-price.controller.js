@@ -61,6 +61,8 @@ angular.module('dashboard').controller('IndexPriceController', ['$scope', 'Index
           $scope.series = [];
           $scope.labels = [];
           $scope.data = [];
+          $scope.singleData = [];
+          $scope.singleSeries = [];
 
           for(x=$scope.headerPrices.length-1; x>=0; x--){
             $scope.series.push($scope.headerPrices[x].index_provider + ' ' + $scope.headerPrices[x].index_name);
@@ -83,8 +85,30 @@ angular.module('dashboard').controller('IndexPriceController', ['$scope', 'Index
         });
     };
 
-    $scope.getIndexComparison = function () {
-      
+    $scope.getSingleIndex = function (index) {
+      var x, y,
+        indexSequence = 0,
+        dateStart = $scope.dateStart,
+        dateEnd = $scope.dateEnd;
+
+      Index.post({ action: 'single-price' },
+        { indexId: index.id, date_start: dateStart, date_end: dateEnd, frequency: $scope.frequency },
+        function(res){
+          res = JSON.parse(JSON.stringify(res));
+          if(!$scope.singleData[index.id]) $scope.singleData[index.id] = [];
+          if(!$scope.singleSeries[index.id]) $scope.singleSeries[index.id] = [];
+
+          $scope.singleSeries[index.id] = Object.keys(res);
+
+          for(x in res){
+            if(!$scope.singleData[index.id][indexSequence]) $scope.singleData[index.id][indexSequence] = [];
+            for(y=0; y<res[x].length; y++){
+              $scope.singleData[index.id][indexSequence].push(parseFloat(res[x][y].price));
+            }
+            indexSequence++;
+            console.log(res[x]);
+          }
+        });
     };
   }
 ]);
