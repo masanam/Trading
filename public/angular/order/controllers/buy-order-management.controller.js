@@ -4,15 +4,23 @@ angular.module('order').controller('BuyOrderManagementController', ['$scope', 'O
   function($scope, Order) {
     
     $scope.findAvailable = function() {
-      $scope.buy_orders = Order.query({ type: 'buy', action: 'status', order_status: 'a' });
+      $scope.buy_orders = Order.query({ type: 'buy', action: 'status', order_status: 'o' });
     };
 
     $scope.findFinished = function() {
       $scope.buy_orders = Order.query({ type: 'buy', action: 'status', order_status: 'f' });
     };
 
-    $scope.findCancelled = function() {
+    $scope.findDeleted = function() {
       $scope.buy_orders = Order.query({ type: 'buy', action: 'status', order_status: 'x' });
+    };
+    
+    $scope.findCancelled = function() {
+      $scope.buy_orders = Order.query({ type: 'buy', action: 'status', order_status: 'c' });
+    };
+
+    $scope.findStaged = function() {
+      $scope.buy_orders = Order.query({ type: 'buy', action: 'status', order_status: 's' });
     };
 
     $scope.changeOrderStatusA = function(buy_order) {
