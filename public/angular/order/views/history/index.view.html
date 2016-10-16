@@ -8,9 +8,15 @@
         </div>
         <div class="box-body no-padding">
           <ul class="nav nav-pills nav-stacked">
-            <li class="active">
+            <li>
               <a ng-click="findAvailableBuy()">
                 <i class="fa fa-inbox"></i> Active Buy Orders
+                <span class="label label-primary pull-right"></span>
+              </a>
+            </li>
+            <li>
+              <a ng-click="findStagedBuy()">
+                <i class="glyphicon glyphicon-share"></i> Staged Buy Orders
                 <span class="label label-primary pull-right"></span>
               </a>
             </li>
@@ -23,6 +29,12 @@
             <li>
               <a ng-click="findAvailableSell()">
                 <i class="fa fa-inbox"></i> Active Sell Orders
+                <span class="label label-primary pull-right"></span>
+              </a>
+            </li>
+            <li>
+              <a ng-click="findStagedSell()">
+                <i class="glyphicon glyphicon-share"></i> Staged Sell Orders
                 <span class="label label-primary pull-right"></span>
               </a>
             </li>
