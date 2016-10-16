@@ -16,7 +16,7 @@ angular.module('product').controller('ProductController', ['$scope', '$state', '
 
     $scope.initializeEmptyForm = function () {
       $scope.product = {};
-      $scope.mines = Concession.query({ option: 'dropdown' });
+      $scope.concessions = Concession.query({ option: 'dropdown' });
     };
 
     $scope.openModal = function (id) {
@@ -45,10 +45,10 @@ angular.module('product').controller('ProductController', ['$scope', '$state', '
     $scope.initializeUpdateForm = function () {
       $scope.findOne($stateParams.id);
       
-      $scope.mines = Concession.query({ option: 'dropdown' }, function (){
-        for(var x=0; x<$scope.mines.length; x++){
-          if($scope.product.mine_id === $scope.mines[x].id){
-            $scope.product.mine = $scope.mines[x];
+      $scope.concessions = Concession.query({ option: 'dropdown' }, function (){
+        for(var x=0; x<$scope.concessions.length; x++){
+          if($scope.product.concession_id === $scope.concessions[x].id){
+            $scope.product.concession = $scope.concessions[x];
           }
         }
       });

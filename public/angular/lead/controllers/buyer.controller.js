@@ -283,3 +283,21 @@ angular.module('buyer').controller('CreateContactModalController', function ($sc
     $uibModalInstance.dismiss('cancel');
   };
 });
+
+angular.module('buyer').controller('CreateProductModalController', function ($scope, $filter, $uibModalInstance, Product, Authentication) {
+  $scope.product = new Product();
+
+  $scope.crtProduct = function () {
+    var product = new Product($scope.product);
+
+    product.$save(function(response) {
+      $scope.products.push(response);
+      $uibModalInstance.close('success');
+      $scope.loading=false;
+    });
+  };
+  
+  $scope.close = function () {
+    $uibModalInstance.dismiss('cancel');
+  };
+});
