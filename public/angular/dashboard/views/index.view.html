@@ -1,2 +1,60 @@
-<section>
+<section ng-controller="IndexPriceController" class="content">
+  <div class="col-lg-2">
+    <div class="box box-info">
+      <div class="box-header with-border">
+        <h3 class="box-title">Filters</h3>
+      </div>
+      <div class="box-body">
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6">
+    <div class="box box-info">
+      <div class="box-header with-border">
+        <h3 class="box-title">Indices</h3>
+      </div>
+      <div class="box-body no-padding">
+        <table st-table="displayedCollection" st-safe-src="orders" class="table table-striped">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>INDEX</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td>Date</td>
+              <td>INDEX PRICE</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-4">
+    <div class="box box-primary">
+      <div class="box-header with-border">
+        <h3 class="box-title">Indices Comparison</h3>
+      </div>
+      <div class="box-body">
+        <canvas id="line" class="chart chart-line" chart-data="data"
+          chart-labels="labels" chart-series="series" chart-options="options"
+          chart-dataset-override="datasetOverride" chart-click="onClick">
+        </canvas> 
+      </div>
+    </div>
+
+    <div class="box box-primary">
+      <div class="box-header with-border">
+        <h3 class="box-title">Yearly Review: {{ index }}</h3>
+      </div>
+      <div class="box-body">
+        <canvas id="line" class="chart chart-line" chart-data="data"
+          chart-labels="labels" chart-series="series" chart-options="options"
+          chart-dataset-override="datasetOverride" chart-click="onClick">
+        </canvas> 
+      </div>
+    </div>
+  </div>
 </section>
