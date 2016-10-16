@@ -361,10 +361,10 @@ angular.module('seller').controller('CreateProductModalController', function ($s
   $scope.createProduct= function(){
     
     $scope.success = $scope.error = null;
-    $scope.product.license_expired_date = $filter('date')($scope.product.license_expired_date, 'yyyy-MM-dd');
-    $scope.product.seller_id = $scope.seller.id;
+    //$scope.product.license_expired_date = $filter('date')($scope.product.license_expired_date, 'yyyy-MM-dd');
 
     var product = new Product($scope.product);
+    product.seller_id = $scope.seller.id;
     
     product.$save(function (response) {
       $scope.product = response;

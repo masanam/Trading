@@ -1,5 +1,5 @@
 <div style="overflow:hidden">
-  <div class="col-lg-4">
+  <div class="col-lg-12">
     <!--div class="form-group">
       <label for="mine">Mine :</label>
       <select class="form-control" id="mine" ng-model="product.mine_id">
@@ -7,34 +7,34 @@
       </select>
     </div-->
 
-    <div class="form-group">
+    <!--div class="form-group">
       <label for="term">Commercial Term :</label>
       <input type="text" class="form-control" id="commercial_term" nama="commercial_term" ng-model="product.commercial_term">
-    </div>
+    </div-->
 
     <div class="form-group">
-      <label for="term">Product :</label>
+      <label for="term">Product Name :</label>
       <input type="text" class="form-control" id="product_name" nama="product_name" ng-model="product.product_name">
     </div>
 
-    <div class="form-group">
+    <!--div class="form-group">
       <label for="order_date">Ready Date :</label>
       <input type="date" class="form-control" id="ready_date" ng-model="product.ready_date">
     </div>
 
     <div class="form-group">
-      <label for="order_date">Experied Date :</label>
-      <input type="date" class="form-control" id="expired_date" ng-model="product.expired_date">
-    </div>
+      <label for="order_date">Expired Date :</label>
+      <input type="date" class="form-control" id="expired_date" ng-model="product.license_expired_date">
+    </div-->
 
-    <div class="form-group" ng-init="findAllBuyers()">
+    <div class="form-group" ng-if="!buyer && !seller" ng-init="findAllBuyers()">
       <label for="buyer">Buyer:</label>
       <select class="form-control col-md-12" id="buyer" ng-model="product.buyer_id">
         <option ng-repeat="buyer in buyers" value="{{ buyer.id }}">{{ buyer.company_name }}</option>
       </select>
     </div>
 
-    <div class="form-group" ng-init="findAllSellers()">
+    <div class="form-group" ng-if="!buyer && !seller" ng-init="findAllSellers()">
       <label for="seller">Seller:</label>
       <select class="form-control col-md-12" id="seller" ng-model="product.seller_id">
         <option value=""></option>
@@ -42,16 +42,16 @@
       </select>
     </div>
 
-    <div class="form-group">
+    <!--div class="form-group">
       <label>Coal Quantity</label>
       <div class="input-group">
         <span class="input-group-addon" id="basic-addon1">Volume</span>
         <input type="text" class="form-control" placeholder="tones" ng-model="product.volume">
       </div>
-    </div>
-  </div>
+    </div-->
+  <!--/div>
 
-  <div class="col-lg-8">
+  <div class="col-lg-8"-->
     <div class="form-group">
       <h2>Coal Quality</h2>
       <table class="table table-striped">
