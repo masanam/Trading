@@ -122,22 +122,22 @@
       </div>
       <div class="box box-info">
         <div class="box-header with-border">
-          <h3 class="box-title" style="font-size: 25px">Mines</h3>
+          <h3 class="box-title" style="font-size: 25px">Concessions</h3>
           <div class="box-tools pull-right">
-            <button type="button" class="btn btn-info"><i class="glyphicon glyphicon-plus" ng-click="addMine()"></i> Add New Mine</button>
+            <button type="button" class="btn btn-info"><i class="glyphicon glyphicon-plus" ng-click="addConcession()"></i> Add New Concessions</button>
           </div>
         </div>
         <div class="box-body">
           <div class="row" style="margin: 10px;">
 
             <ul class="list-group">
-              <li class="list-group-item" ng-repeat="mine in seller.mine">
-                {{ mine.mine_name }}
+              <li class="list-group-item" ng-repeat="concession in seller.concession">
+                {{ concession.concession_name }}
                 <i class="glyphicon glyphicon-map-marker" style="margin-left: 50px;"></i>
-                  {{ mine.longitude | number }}, {{ mine.latitude | number }} ({{ mine.port_name }})
-                <i class="glyphicon glyphicon-scale" style="margin-left: 50px;"></i> {{ mine.mineable_reserve | number }} tones
+                  {{ concession.longitude | number }}, {{ concession.latitude | number }} (Port: {{ concession.port_name || 'N/A' }})
+                <i class="glyphicon glyphicon-scale" style="margin-left: 50px;"></i> {{ concession.reserves | number }} tones
                 <span class="pull-right">
-                  <a href="#" ng-click="deleteMine(mine)"><i class="glyphicon glyphicon-remove"></i></a>
+                  <a href="#" ng-click="deleteConcession(concession)"><i class="glyphicon glyphicon-remove"></i></a>
                 </span>
               </li>
             </ul>

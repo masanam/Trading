@@ -196,17 +196,18 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
     };
     
     $scope.addConcession = function () {
-      
+      console.log('adding concession');
       var modalInstance = $uibModal.open({
         windowClass: 'xl-modal',
-        templateUrl: './angular/lead/views/Concession/create-from-seller.view.html',
+        templateUrl: './angular/lead/views/concession/create-from-seller.view.html',
         controller: 'CreateConcessionModalController',
         scope: $scope,
       });
     };
     
     $scope.deleteConcession = function(concession){
-      Concession.delete({ id: concession.id }, function (response) {
+      console.log('deleting concession');
+      /*Concession.delete({ id: concession.id }, function (response) {
         $scope.concession = response;
         
         $scope.seller.concession.splice($scope.seller.concession.indexOf(concession), 1);
@@ -214,7 +215,7 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
         $scope.success = true;
       }, function (response) {
         $scope.error = response.data.message;
-      });
+      });*/
     };
 
     $scope.deleteProduct = function(product){
