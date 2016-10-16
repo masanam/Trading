@@ -8,9 +8,9 @@
         <div class="with-border">
           <label>Frequency</label>
           <div class="btn-group">
-            <label class="btn btn-default" ng-model="radioModel" uib-btn-radio="'daily'" uib-tooltip="Daily">D</label>
-            <label class="btn btn-default" ng-model="radioModel" uib-btn-radio="'weekly'" uib-tooltip="Weekly">W</label>
-            <label class="btn btn-default" ng-model="radioModel" uib-btn-radio="'monthly'" uib-tooltip="Monthly">M</label>
+            <label class="btn btn-default" ng-model="frequency" uib-btn-radio="'daily'" uib-tooltip="Daily">D</label>
+            <label class="btn btn-default" ng-model="frequency" uib-btn-radio="'weekly'" uib-tooltip="Weekly">W</label>
+            <label class="btn btn-default" ng-model="frequency" uib-btn-radio="'monthly'" uib-tooltip="Monthly">M</label>
           </div>
         </div>
 
@@ -33,12 +33,14 @@
 
           <div ng-init="getIndices()">
             <div class="btn-group-vertical">
-              <label class="btn btn-default" ng-model="index.choosen" ng-click="chooseIndex(index)" ng-repeat="index in indices track by $index" uib-btn-checkbox>
+              <label class="btn btn-default" ng-model="index.choosen" ng-repeat="index in indices track by $index" uib-btn-checkbox>
                 {{ index.index_provider }} - {{ index.index_name }}
               </label>
             </div>
           </div>
         </div>
+
+        <button class="btn btn-primary" ng-click="getIndexPrices()">Apply Filter</button>
       </div>
     </div>
   </div>

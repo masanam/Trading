@@ -3,25 +3,37 @@
 angular.module('dashboard').controller('IndexPriceController', ['$scope', 'Index',
   function($scope, Index) {
     $scope.dateEnd = new Date();
-    $scope.dateStart = new Date("-7 days");
+    $scope.dateStart = new Date();
+    $scope.frequency = 'daily';
 
     $scope.getIndices = function () {
       $scope.indices = Index.query();
     };
 
-    $scope.getIndexPrices = function (indexId) {
-      $scope.indexPrices = Index.get({ indexId: indexId });
+    $scope.getIndexPrices = function () {
+      var x,
+        choosenIndex = [],
+        dateStart = $scope.dateStart.toString().slice(0,10),
+        dateEnd = $scope.dateEnd.toString().slice(0,10);
+
+      for(x=0; x<$scope.indices.length; x++){
+        if($scope.indices[x].choosen) choosenIndex.push($scope.indices[x].id);
+      }
+
+      $scope.indexPrices = Index.post({ action: 'price' },
+        { indexId: choosenIndex, date_start: dateStart, date_end: dateEnd, frequency: $scope.frequency },
+        function(res){
+          console.log(res);
+        });
     };
 
-    $scope.chooseIndex = function (index) {
-      var dateStart = $scope.dateStart.slice(0,10);
-      var dateEnd = $scope.dateEnd.slice(0,10);
+    // $scope.chooseIndex = function (index) {
 
-      if(index.choosen) Index.get({ indexId: index.id, date_start: dateStart, date_end: dateEnd }, function(res){
-        $scope.indexPrices = res;
-        console.log(res);
-      });
-    };
+    //   if(index.choosen) Index.query({ indexId: index.id, date_start: dateStart, date_end: dateEnd }, function(res){
+    //     $scope.indexPrices = res;
+    //     console.log(res);
+    //   });
+    // };
 
     $scope.labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
     $scope.series = ['Series A', 'Series B'];
