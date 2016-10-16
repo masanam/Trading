@@ -76,6 +76,11 @@ angular.module('lead').config(['$stateProvider', '$urlRouterProvider',
         templateUrl: '/angular/lead/views/seller/update.view.html',
         roles: ['user', 'trader']
       })
+      .state('lead.update-product', {
+        url: '/product/update/{id}',
+        templateUrl: '/angular/lead/views/product/update.view.html',
+        roles: ['user', 'trader']
+      })
       .state('lead.update-vendor', {
         url: '/vendor/update/{id}',
         templateUrl: '/angular/lead/views/vendor/update.view.html',

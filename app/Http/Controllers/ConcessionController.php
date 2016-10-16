@@ -26,6 +26,48 @@ class ConcessionController extends Controller
 
         return response()->json($concession, 200);
     }
+    
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function filter()
+    {
+        if (!$_GET) {
+            $concession = Concession::where('status', 'a')->get();
+        } else {
+            $query = DB::table('concession')
+                          ->select('concession.id', 'concession.latitude', 'concession.longitude', 'concession.polygon')
+                          ->join('products', 'products.concession_id', '=', 'concession.id')
+                          ->where('concession.status', 'a')
+                          ->where('products.status', 'a');
+            
+            if(isset($_GET['gt'])){
+              foreach($_GET['gt'] as $input_gt){
+                $gt_params = explode(",",$input_gt);
+                $query->where('products.'.$gt_params[0].'_min', '>=', $gt_params[1]);
+              }
+            }
+            if(isset($_GET['lt'])){
+              foreach($_GET['lt'] as $input_lt){
+                $lt_params = explode(",",$input_lt);
+                $query->where('products.'.$lt_params[0].'_max', '<=', $lt_params[1]);
+              }
+            }
+            if(isset($_GET['bet'])){
+              foreach($_GET['bet'] as $input_bet){
+                $bet_params = explode(",",$input_bet);
+                $query->where('products.'.$bet_params[0].'_min', '<=', $bet_params[1]);
+                $query->where('products.'.$bet_params[0].'_max', '>=', $bet_params[1]);
+              }
+            }
+            
+            $concession = $query->get();
+        }
+
+        return response()->json($concession, 200);
+    }
 
 
     /**
@@ -71,6 +113,7 @@ class ConcessionController extends Controller
         $concession->polygon = $request->polygon;
         $concession->size = $request->size;
         $concession->stripping_ratio = $request->stripping_ratio;
+        $concession->resource = $request->resource;
         $concession->reserves = $request->reserves;
         $concession->contracted_volume = $request->contracted_volume;
         $concession->remaining_volume = $request->remaining_volume;
@@ -98,6 +141,23 @@ class ConcessionController extends Controller
     public function show($concession)
     {
         $concession = Concession::find($concession);
+
+        if($concession->status == 'a') {
+            return response()->json($concession, 200);
+        } else {
+            return response()->json(['message' => 'deactivated record'], 404);
+        }
+    }
+    
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function detail($id = "")
+    {
+        $concession = Concession::with('Product')->find($id);
 
         if($concession->status == 'a') {
             return response()->json($concession, 200);
@@ -140,6 +200,7 @@ class ConcessionController extends Controller
         $concession->polygon = $request->polygon;
         $concession->size = $request->size;
         $concession->stripping_ratio = $request->stripping_ratio;
+        $concession->resource = $request->resource;
         $concession->reserves = $request->reserves;
         $concession->contracted_volume = $request->contracted_volume;
         $concession->remaining_volume = $request->remaining_volume;

@@ -19,8 +19,8 @@
         <h5 class="widget-user-desc">{{ seller.industry }}</h5>
       </div>
       <div class="box-tools pull-right">
-        <i class='fa fa-share-alt'></i> is_affiliated 
-        <i class='fa fa-tags'></i> is_trader
+        <span class="badge"><i class='fa fa-share-alt'></i> AFFILIATED</span>
+        <span class="badge"><i class='fa fa-tags'></i> TRADER</span>
       </div>
       <div class="widget-user-image">
         <img class="img-circle" src="/images/default.jpg" alt="User Avatar">
@@ -44,23 +44,33 @@
         <div class="box-header with-border">
           <h3 class="box-title" style="font-size: 25px">About</h3>
           <div class="box-tools pull-right">
-            <button type="button" class="btn btn-info" ng-click="goToUpdatePopup(seller.id)"><i class="glyphicon glyphicon-pencil"></i> Update</button>
+            <button type="button" ui-sref="lead.update-seller({ id: seller.id })" class="btn btn-info"><i class="glyphicon glyphicon-pencil"></i> Update</button>
           </div>
         </div>
         <div class="box-body">
           <div class="row" style="margin: 10px;">
 
             <table class="table table-striped">
+              <tr><td>Country:</td><td>{{ seller.country }}</td></tr>
               <tr><td>Address:</td><td>{{ seller.address }}</td></tr>
               <tr><td>City:</td><td>{{ seller.city }}</td></tr>
+              <tr><td>Latitude:</td><td>{{ seller.latitude }}</td></tr>
+              <tr><td>Longitude:</td><td>{{ seller.longitude }}</td></tr>
+              <tr><td>Industry:</td><td>{{ seller.industry }}</td></tr>
+              <tr><td>License Type:</td><td>{{ seller.license_type }}</td></tr>
+              <tr><td>License Expiry Date:</td><td>{{ seller.license_expiry_date }}</td></tr>
+              <tr><td>Total Annual Sales:</td><td>{{ seller.total_annual_sales }}</td></tr>
+              <tr><td>Preferred Trading Term:</td><td>{{ seller.preferred_trading_term }}</td></tr>
+              <tr><td>Preferred Payment Term:</td><td>{{ seller.preferred_payment_term }}</td></tr>
+              <tr><td>Purchasing Countries:</td><td>{{ seller.purchasing_countries }}</td></tr>  
               <tr><td>Phone:</td><td>{{ seller.phone }}</td></tr>
               <tr><td>Email:</td><td>{{ seller.email }}</td></tr>
               <tr><td>Web:</td><td>{{ seller.web }}</td></tr>
               <tr><td>Desc:</td><td>{{ seller.description }}</td></tr>
-              <tr ng-if="seller.status == 'a'"><td>Status:</td> <td>Active</td></tr>
-              <tr ng-if="seller.status == 'x'"><td>Status:</td> <td>Deactivated</td></tr>
-            </table>
+              <tr ng-if="buyer.status == 'a'"><td>Status:</td> <td>Active</td></tr>
+              <tr ng-if="buyer.status == 'x'"><td>Status:</td> <td>Deactivated</td></tr>
 
+            </table>
             <ng-map center="{{seller.longitude}}, {{seller.latitude}}">
               <marker center="{{seller.longitude}}, {{seller.latitude}}"></marker>
             </ng-map>
@@ -87,7 +97,7 @@
                 <i class="glyphicon glyphicon-earphone" style="margin-left: 50px;"></i> {{ contact.phone }}
 
                 <span class="pull-right">
-                  <a></a>
+                   <a href="#" ng-click="deleteContact(contact)"><i class="glyphicon glyphicon-remove"></i></a>
                 </span>
               </li>
             </ul>
@@ -103,44 +113,83 @@
         </div>
         <div class="box-body">
           <div class="row" style="margin: 10px;">
-
-            <ul class="list-group">
-              <li class="list-group-item" ng-repeat="product in seller.product">
-                {{ product.commercial_term }}
-                <i class="glyphicon glyphicon-map-marker" style="margin-left: 50px;"></i> {{ product.volume }}
-                <i class="glyphicon glyphicon-scale" style="margin-left: 50px;"></i> {{ product.gcv_adb_min }} - {{ product.gcv_adb_max }}
-                <i class="glyphicon glyphicon-scale" style="margin-left: 50px;"></i> {{ product.gcv_arb_min }} - {{ product.gcv_arb_max }}
-                <i class="glyphicon glyphicon-scale" style="margin-left: 50px;"></i> {{ product.ncv_min }} - {{ product.ncv_max }}
-                <span class="pull-right">
-                  <a ui-sref="lead.view-product({ id: product.id })"><i class="glyphicon glyphicon-eye-open"></i></a>
-                  <a href="#" ng-click="deleteProduct(product)"><i class="glyphicon glyphicon-remove"></i></a>
-                </span>
-              </li>
-            </ul>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th><i class="glyphicon glyphicon-scale"></i> GCV ADB (kcal)</th>
+                  <th><i class="glyphicon glyphicon-scale"></i> GCV ARB (kcal)</th>
+                  <th><i class="glyphicon glyphicon-scale"></i> NCV (kcal)</th>
+                  <th><!--span class="pull-right">
+                    <a ui-sref="lead.view-product({ id: product.id })"><i class="glyphicon glyphicon-eye-open"></i></a>
+                    <a href="#" ng-click="deleteProduct(product)"><i class="glyphicon glyphicon-remove"></i></a>
+                  </span--></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="product in seller.product">
+                  <td>{{ product.product_name }}</td>
+                  <td>{{ product.gcv_adb_min | number }} - {{ product.gcv_adb_max | number }}</td>
+                  <td>{{ product.gcv_arb_min | number }} - {{ product.gcv_arb_max | number }}</td>
+                  <td>{{ product.ncv_min | number }} - {{ product.ncv_max | number }}</td>
+                  <td><span class="pull-right">
+                    <a ui-sref="lead.view-product({ id: product.id })"><i class="glyphicon glyphicon-eye-open"></i></a>
+                    <a href="#" ng-click="deleteProduct(product)"><i class="glyphicon glyphicon-remove"></i></a>
+                  </span></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
       <div class="box box-info">
         <div class="box-header with-border">
-          <h3 class="box-title" style="font-size: 25px">Mines</h3>
+          <h3 class="box-title" style="font-size: 25px">Concessions</h3>
           <div class="box-tools pull-right">
-            <button type="button" class="btn btn-info"><i class="glyphicon glyphicon-plus" ng-click="addMine()"></i> Add New Mine</button>
+            <button type="button" class="btn btn-info" ng-click="addConcession()"><i class="glyphicon glyphicon-plus"></i> Add New Concessions</button>
           </div>
         </div>
         <div class="box-body">
           <div class="row" style="margin: 10px;">
+          
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th><i class="glyphicon glyphicon-map-marker"></i> Location</th>
+                  <th><i class="glyphicon glyphicon-scale"></i> Reserves (tonnes)</th>
+                  <th><!--span class="pull-right">
+                    <a ui-sref="lead.view-product({ id: product.id })"><i class="glyphicon glyphicon-eye-open"></i></a>
+                    <a href="#" ng-click="deleteProduct(product)"><i class="glyphicon glyphicon-remove"></i></a>
+                  </span--></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="concession in seller.concession">
+                  <td>{{ concession.concession_name }}</td>
+                  <td>{{ concession.longitude | number }}, {{ concession.latitude | number }} (Port: {{ concession.port_name || 'N/A' }})</td>
+                  <td>{{ concession.reserves | number }}</td>
+                  <td><span class="pull-right">
+                    <a ui-sref="lead.view-concession({ id: concession.id })"><i class="glyphicon glyphicon-eye-open"></i></a>
+                    <span class="pull-right">
+                      <a href="#" ng-click="deleteConcession(concession)"><i class="glyphicon glyphicon-remove"></i></a>
+                    </span>
+                  </span></td>
+                </tr>
+              </tbody>
+            </table>
 
-            <ul class="list-group">
-              <li class="list-group-item" ng-repeat="mine in seller.mine">
-                {{ mine.mine_name }}
+            <!--ul class="list-group">
+              <li class="list-group-item" ng-repeat="concession in seller.concession">
+                {{ concession.concession_name }}
                 <i class="glyphicon glyphicon-map-marker" style="margin-left: 50px;"></i>
-                  {{ mine.longitude | number }}, {{ mine.latitude | number }} ({{ mine.port_name }})
-                <i class="glyphicon glyphicon-scale" style="margin-left: 50px;"></i> {{ mine.mineable_reserve | number }} tones
+                  {{ concession.longitude | number }}, {{ concession.latitude | number }} (Port: {{ concession.port_name || 'N/A' }})
+                <i class="glyphicon glyphicon-scale" style="margin-left: 50px;"></i> {{ concession.reserves | number }} tones
                 <span class="pull-right">
-                  <a href="#" ng-click="deleteMine(mine)"><i class="glyphicon glyphicon-remove"></i></a>
+                  <a href="#" ng-click="deleteConcession(concession)"><i class="glyphicon glyphicon-remove"></i></a>
                 </span>
               </li>
-            </ul>
+            </ul-->
           </div>
         </div>
       </div>

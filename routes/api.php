@@ -84,6 +84,8 @@ Route::group(['middleware' => ['cors']], function() {
 
     Route::get('concession/total', 'ConcessionController@getTotalConcession');
     Route::get('concession/search/{search?}', 'ConcessionController@search');
+    Route::get('concession/filter', 'ConcessionController@filter');
+    Route::get('concession/detail/{id}', 'ConcessionController@detail');
     Route::resource('concession', 'ConcessionController', ['except' => [
         'create', 'edit'
     ]]);
