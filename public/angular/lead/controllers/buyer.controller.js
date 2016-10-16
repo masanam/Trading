@@ -283,3 +283,32 @@ angular.module('buyer').controller('CreateContactModalController', function ($sc
     $uibModalInstance.dismiss('cancel');
   };
 });
+
+angular.module('buyer').controller('CreateProductModalController', function ($scope, $filter, $uibModalInstance, Product, Authentication) {
+  
+  $scope.product = new Product();
+  
+  $scope.createProduct= function(){
+    
+    $scope.success = $scope.error = null;
+    //$scope.product.license_expired_date = $filter('date')($scope.product.license_expired_date, 'yyyy-MM-dd');
+
+    var product = $scope.product;
+    product.buyer_id = $scope.buyer.id;
+    
+    product.$save(function (response) {
+      $scope.product = response;
+      
+      $scope.buyer.product.push($scope.product);
+      $scope.close();
+      $scope.success = true;
+    }, function (response) {
+      $scope.error = response.data.message;
+    });
+    
+  };
+  
+  $scope.close = function () {
+    $uibModalInstance.dismiss('cancel');
+  };
+});
