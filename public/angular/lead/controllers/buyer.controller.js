@@ -181,7 +181,7 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
       var modalInstance = $uibModal.open({
         windowClass: 'xl-modal',
         templateUrl: './angular/lead/views/contact/create-from-buyer.view.html',
-        controller: 'CreateContactModalController',
+        controller: 'CreateContactModalFormBuyerController',
         scope: $scope,
       });
     };
@@ -203,7 +203,7 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
       var modalInstance = $uibModal.open({
         windowClass: 'xl-modal',
         templateUrl: './angular/lead/views/product/create-from-buyer.view.html',
-        controller: 'CreateProductModalController',
+        controller: 'CreateProductModalFromBuyerController',
         scope: $scope,
       });
     };
@@ -243,7 +243,7 @@ angular.module('deal').controller('BuyerModalController', function ($scope, $uib
 });
 
 
-angular.module('buyer').controller('CreateContactModalController', function ($scope, $filter, $uibModalInstance, Contact, Authentication) {
+angular.module('buyer').controller('CreateContactModalFormBuyerController', function ($scope, $filter, $uibModalInstance, Contact, Authentication) {
   
   $scope.initializeContact = function(){
     $scope.contact = {
@@ -284,7 +284,7 @@ angular.module('buyer').controller('CreateContactModalController', function ($sc
   };
 });
 
-angular.module('buyer').controller('CreateProductModalController', function ($scope, $filter, $uibModalInstance, Product, Authentication) {
+angular.module('buyer').controller('CreateProductModalFromBuyerController', function ($scope, $filter, $uibModalInstance, Product, Authentication) {
   
   $scope.product = new Product();
   
