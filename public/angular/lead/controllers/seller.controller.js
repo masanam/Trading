@@ -358,13 +358,16 @@ angular.module('seller').controller('CreateContactModalController', function ($s
 
 angular.module('seller').controller('CreateProductModalController', function ($scope, $filter, $uibModalInstance, Product, Authentication) {
   
+  $scope.product = new Product();
+  
   $scope.createProduct= function(){
     
     $scope.success = $scope.error = null;
     //$scope.product.license_expired_date = $filter('date')($scope.product.license_expired_date, 'yyyy-MM-dd');
 
-    var product = new Product($scope.product);
+    var product = $scope.product;
     product.seller_id = $scope.seller.id;
+    console.log(product);
     
     product.$save(function (response) {
       $scope.product = response;
