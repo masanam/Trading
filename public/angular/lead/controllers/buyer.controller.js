@@ -207,12 +207,22 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
         scope: $scope,
       });
     };
+
+    $scope.viewProduct = function (product) {
+      
+      var modalInstance = $uibModal.open({
+        windowClass: 'sm-modal',
+        templateUrl: './angular/lead/views/product/view-from-buyer.html',
+        controller: 'ViewProductModalFromBuyerController',
+        scope: $scope,
+      });
+    };
     
     $scope.deleteProduct = function(product){
       Product.delete({ id: product.id }, function (response) {
         $scope.product = response;
         
-        $scope.seller.product.splice($scope.seller.product.indexOf(product), 1);
+        $scope.buyer.product.splice($scope.buyer.product.indexOf(product), 1);
         $scope.close();
         $scope.success = true;
       }, function (response) {
@@ -307,6 +317,15 @@ angular.module('buyer').controller('CreateProductModalFromBuyerController', func
     });
     
   };
+  
+  $scope.close = function () {
+    $uibModalInstance.dismiss('cancel');
+  };
+});
+
+angular.module('buyer').controller('ViewProductModalFromBuyerController', function ($scope, $filter, $uibModalInstance, Product, Authentication) {
+  
+  $scope.product = new Product();
   
   $scope.close = function () {
     $uibModalInstance.dismiss('cancel');
