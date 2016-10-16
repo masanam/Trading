@@ -132,6 +132,8 @@
                   <td>{{ product.gcv_arb_min | number }} - {{ product.gcv_arb_max | number }}</td>
                   <td>{{ product.ncv_min | number }} - {{ product.ncv_max | number }}</td>
                   <td><span class="pull-right">
+                    
+                    <!--<button type="button" ng-click="viewProduct({ id: product.id })" class="btn btn-info"><i class="glyphicon glyphicon-eye-open"></i></button>-->
                     <a ui-sref="lead.view-product({ id: product.id })"><i class="glyphicon glyphicon-eye-open"></i></a>
                     <a href="#" ng-click="deleteProduct(product)"><i class="glyphicon glyphicon-remove"></i></a>
                   </span></td>

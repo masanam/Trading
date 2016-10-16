@@ -44,23 +44,33 @@
         <div class="box-header with-border">
           <h3 class="box-title" style="font-size: 25px">About</h3>
           <div class="box-tools pull-right">
-            <button type="button" class="btn btn-info" ng-click="goToUpdatePopup(seller.id)"><i class="glyphicon glyphicon-pencil"></i> Update</button>
+            <button type="button" ui-sref="lead.update-seller({ id: seller.id })" class="btn btn-info"><i class="glyphicon glyphicon-pencil"></i> Update</button>
           </div>
         </div>
         <div class="box-body">
           <div class="row" style="margin: 10px;">
 
             <table class="table table-striped">
+              <tr><td>Country:</td><td>{{ seller.country }}</td></tr>
               <tr><td>Address:</td><td>{{ seller.address }}</td></tr>
               <tr><td>City:</td><td>{{ seller.city }}</td></tr>
+              <tr><td>Latitude:</td><td>{{ seller.latitude }}</td></tr>
+              <tr><td>Longitude:</td><td>{{ seller.longitude }}</td></tr>
+              <tr><td>Industry:</td><td>{{ seller.industry }}</td></tr>
+              <tr><td>License Type:</td><td>{{ seller.license_type }}</td></tr>
+              <tr><td>License Expiry Date:</td><td>{{ seller.license_expiry_date }}</td></tr>
+              <tr><td>Total Annual Sales:</td><td>{{ seller.total_annual_sales }}</td></tr>
+              <tr><td>Preferred Trading Term:</td><td>{{ seller.preferred_trading_term }}</td></tr>
+              <tr><td>Preferred Payment Term:</td><td>{{ seller.preferred_payment_term }}</td></tr>
+              <tr><td>Purchasing Countries:</td><td>{{ seller.purchasing_countries }}</td></tr>  
               <tr><td>Phone:</td><td>{{ seller.phone }}</td></tr>
               <tr><td>Email:</td><td>{{ seller.email }}</td></tr>
               <tr><td>Web:</td><td>{{ seller.web }}</td></tr>
               <tr><td>Desc:</td><td>{{ seller.description }}</td></tr>
-              <tr ng-if="seller.status == 'a'"><td>Status:</td> <td>Active</td></tr>
-              <tr ng-if="seller.status == 'x'"><td>Status:</td> <td>Deactivated</td></tr>
-            </table>
+              <tr ng-if="buyer.status == 'a'"><td>Status:</td> <td>Active</td></tr>
+              <tr ng-if="buyer.status == 'x'"><td>Status:</td> <td>Deactivated</td></tr>
 
+            </table>
             <ng-map center="{{seller.longitude}}, {{seller.latitude}}">
               <marker center="{{seller.longitude}}, {{seller.latitude}}"></marker>
             </ng-map>
@@ -87,7 +97,7 @@
                 <i class="glyphicon glyphicon-earphone" style="margin-left: 50px;"></i> {{ contact.phone }}
 
                 <span class="pull-right">
-                  <a></a>
+                   <a href="#" ng-click="deleteContact(contact)"><i class="glyphicon glyphicon-remove"></i></a>
                 </span>
               </li>
             </ul>
