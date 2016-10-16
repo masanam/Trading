@@ -195,18 +195,13 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
       // $('#sellerModal').modal('hide');
     };
     
-    $scope.openConcessionModal = function(){
-      console.log('adding concession');
-    };
-    
     $scope.addConcession = function () {
-      console.log('adding concession');
-      /*var modalInstance = $uibModal.open({
+      var modalInstance = $uibModal.open({
         windowClass: 'xl-modal',
         templateUrl: './angular/lead/views/concession/create-from-seller.view.html',
         controller: 'CreateConcessionModalController',
         scope: $scope,
-      });*/
+      });
     };
     
     $scope.deleteConcession = function(concession){
@@ -239,7 +234,7 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
       var modalInstance = $uibModal.open({
         windowClass: 'xl-modal',
         templateUrl: './angular/lead/views/contact/create-from-seller.view.html',
-        controller: 'CreateContactModalController',
+        controller: 'CreateContactModalFromSellerController',
         scope: $scope,
       });
     };
@@ -315,7 +310,7 @@ angular.module('seller').controller('CreateSellerModalController', function ($sc
 });
 
 
-angular.module('seller').controller('CreateContactModalController', function ($scope, $filter, $uibModalInstance, Contact, Authentication) {
+angular.module('seller').controller('CreateContactModalFromSellerController', function ($scope, $filter, $uibModalInstance, Contact, Authentication) {
   
   $scope.initializeContact = function(){
     $scope.contact = {
@@ -388,31 +383,52 @@ angular.module('seller').controller('CreateProductModalFromSellerController', fu
 
 angular.module('seller').controller('CreateConcessionModalController', function ($scope, $filter, $uibModalInstance, Concession, Authentication) {
   
-  $scope.initializeConcession = function(){
-    $scope.mine = {
-      id: undefined,
-      seller_id: undefined,
-      concession_name: undefined,
-      port_name: undefined,
-      longitude: undefined,
-      latitude: undefined,
-      concession_reserve: undefined,
-      stripping_ratio: undefined,
-      port_distance: undefined,
-      road_capacity: undefined,
-      river_capacity: undefined,
-      license_expired_date: undefined,
-      license_type: undefined,
-    };
+  $scope.concession = new Concession();
+  
+  $scope.polygon = [];
+  
+  $scope.resetPolygon = function(){
+    $scope.polygon = [];
   };
   
-  $scope.createConcession= function(){
+  $scope.addMarkerAndPath = function(event) {
+    $scope.polygon.push([event.latLng.lat(), event.latLng.lng()]);
+  };
+  
+  function createStringByArray(array) {
+    var output = '[';
+    angular.forEach(array, function (object, keyObj) {
+      output += '[';
+      angular.forEach(object, function (value, key) {
+        if(key === 0){
+          output += value + ',';
+        }else{
+          output += value + '';
+        }
+      });
+      if(keyObj === (array.length-1)){
+        output += ']';
+      }
+      else{
+        output += '],';
+      }
+    });
+    output += ']';
+    return output;
+  }
+  
+  $scope.createConcession = function(){
     
     $scope.success = $scope.error = null;
-    $scope.concession.license_expired_date = $filter('date')($scope.concession.license_expired_date, 'yyyy-MM-dd');
+    $scope.concession.license_expiry_date = $filter('date')($scope.concession.license_expiry_date, 'yyyy-MM-dd');
     $scope.concession.seller_id = $scope.seller.id;
+    
+    $scope.concession.polygon = createStringByArray($scope.polygon);
+    
+    console.log($scope.polygon);
+    console.log($scope.concession.polygon);
 
-    var concession = new Concession($scope.concession);
+    var concession = $scope.concession;
     
     concession.$save(function (response) {
       $scope.concession = response;

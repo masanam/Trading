@@ -113,6 +113,7 @@ class ConcessionController extends Controller
         $concession->polygon = $request->polygon;
         $concession->size = $request->size;
         $concession->stripping_ratio = $request->stripping_ratio;
+        $concession->resource = $request->resource;
         $concession->reserves = $request->reserves;
         $concession->contracted_volume = $request->contracted_volume;
         $concession->remaining_volume = $request->remaining_volume;
@@ -199,6 +200,7 @@ class ConcessionController extends Controller
         $concession->polygon = $request->polygon;
         $concession->size = $request->size;
         $concession->stripping_ratio = $request->stripping_ratio;
+        $concession->resource = $request->resource;
         $concession->reserves = $request->reserves;
         $concession->contracted_volume = $request->contracted_volume;
         $concession->remaining_volume = $request->remaining_volume;
