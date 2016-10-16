@@ -295,6 +295,7 @@ angular.module('seller').controller('CreateSellerModalController', function ($sc
   };
 
   $scope.createSeller = function (creteSeller) {
+    $scope.seller.license_expiry_date = $filter('date')($scope.seller.license_expiry_date, 'yyyy-MM-dd');
     var seller = new Seller($scope.seller);
 
     seller.$save(function(response) {
@@ -423,10 +424,11 @@ angular.module('seller').controller('CreateConcessionModalController', function 
     $scope.concession.license_expiry_date = $filter('date')($scope.concession.license_expiry_date, 'yyyy-MM-dd');
     $scope.concession.seller_id = $scope.seller.id;
     
-    $scope.concession.polygon = createStringByArray($scope.polygon);
-    
-    console.log($scope.polygon);
-    console.log($scope.concession.polygon);
+    if($scope.polygon.length === 0){
+      $scope.concession.polygon = createStringByArray($scope.polygon);
+    }else{
+      $scope.concession.polygon = '';
+    }
 
     var concession = $scope.concession;
     

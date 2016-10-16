@@ -26,6 +26,13 @@
       <label for="order_date">Expired Date :</label>
       <input type="date" class="form-control" id="expired_date" ng-model="product.license_expired_date">
     </div-->
+    
+    <div class="form-group" ng-if="seller" ng-init="findAllConcessions()">
+      <label for="buyer">Concession:</label>
+      <select class="form-control col-md-12" id="buyer" ng-model="product.buyer_id">
+        <option ng-repeat="buyer in buyers" value="{{ buyer.id }}">{{ buyer.company_name }}</option>
+      </select>
+    </div>
 
     <div class="form-group" ng-if="!buyer && !seller" ng-init="findAllBuyers()">
       <label for="buyer">Buyer:</label>

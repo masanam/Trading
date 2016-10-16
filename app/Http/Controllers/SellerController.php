@@ -77,7 +77,7 @@ class SellerController extends Controller
         $seller->longitude = $request->longitude;
         $seller->industry = $request->industry;
         $seller->license_type = $request->license_type;
-        $seller->license_expiry_date = Date('Y-m-d', $request->license_expiry_date);
+        $seller->license_expiry_date = date("Y-m-d", strtotime($request->license_expiry_date));
         $seller->total_annual_sales = $request->total_annual_sales;
         $seller->preferred_trading_term = $request->preferred_trading_term;
         $seller->preferred_payment_term = $request->preferred_payment_term; 
@@ -150,7 +150,7 @@ class SellerController extends Controller
         $seller->longitude = $request->longitude;
         $seller->industry = $request->industry;
         $seller->license_type = $request->license_type;
-        $seller->license_expiry_date = Date('Y-m-d', $request->license_expiry_date);
+        $seller->license_expiry_date = date("Y-m-d", strtotime($request->license_expiry_date));
         $seller->total_annual_sales = $request->total_annual_sales;
         $seller->preferred_trading_term = $request->preferred_trading_term;
         $seller->preferred_payment_term = $request->preferred_payment_term; 
