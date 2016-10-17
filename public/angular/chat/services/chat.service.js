@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('chat').factory('Chat', [
-  function () {
+angular.module('chat').factory('Chat', ['firebase', 'Authentication',
+  function (firebase, Authentication) {
     var config = {
       apiKey: 'AIzaSyACILHAOiy4G9TtCgs0szgZBZokr4cduuo',
       authDomain: 'coal-trade.firebaseapp.com',
@@ -26,33 +26,33 @@ angular.module('chat').factory('Chat', [
             return data.val();
           });
         }
-      }
+      },
 
       sendChat: function(type, order_deal, message) {
         if(type === 'buy') {
-          var chat = {
+          var buy_chat = {
             'buy_deal_id': order_deal.id,
             'user_id': order_deal.user_id,
             'author': Authentication.user.name,
             'message': message
           };
 
-          mainApp.database().ref('buy_deal_chat/'+order_deal.id).push(chat, function(data){
+          mainApp.database().ref('buy_deal_chat/'+order_deal.id).push(buy_chat, function(data){
             return data.val();
           });
         } else if(type === 'sell') {
-          var chat = {
+          var sell_chat = {
             'sell_deal_id': order_deal.id,
             'user_id': order_deal.user_id,
             'author': Authentication.user.name,
             'message': message
           };
 
-          mainApp.database().ref('sell_deal_chat/'+order_deal.id).push(chat, function(data){
+          mainApp.database().ref('sell_deal_chat/'+order_deal.id).push(sell_chat, function(data){
             return data.val();
           });
         }
-      };
-    }
-  };
+      }
+    };
+  }
 ]);

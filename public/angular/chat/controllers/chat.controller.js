@@ -41,11 +41,11 @@ angular.module('chat').controller('ChatController', ['$scope', 'firebase', 'Sell
 
   $scope.sendMessage = function(type) {
     if(type === 'buy') {
-      var message = $scope.message;
-      $scope.chats.push(Chat.sendChat('buy', $scope.buy_deal, message));
+      var buy_message = $scope.message;
+      $scope.chats.push(Chat.sendChat('buy', $scope.buy_deal, buy_message));
     } else if(type === 'sell') {
-      var message = $scope.message;
-      $scope.chats.push(Chat.sendChat('sell', $scope.sell_deal, message));
+      var sell_message = $scope.message;
+      $scope.chats.push(Chat.sendChat('sell', $scope.sell_deal, sell_message));
     }
   };
 }]);
