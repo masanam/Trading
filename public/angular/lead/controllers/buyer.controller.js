@@ -149,8 +149,8 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
       }
 
       $scope.buyer = Buyer.get({ id: $scope.buyerId });
-      /*$scope.lastOrders = Order.query({ action: 'lastOrder', buyerId: $scope.buyerId });
-      $scope.pendingOrders = Order.query({ action: 'lastOrder' });*/
+      $scope.lastOrders = Order.query({ option: 'lastOrders' , type: 'buyer', id: $scope.buyerId });
+      /*$scope.pendingOrders = Order.query({ action: 'lastOrder' });*/
 
       $timeout(function() {
         $scope.render = true;
@@ -168,7 +168,7 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
     $scope.goToLastOrders = function(id){
       // $('#buyerModal').modal('hide');
       // $('.modal-backdrop').hide();
-      $state.go('order.viewBuyer', { buyerId: id });
+      $state.go('history-order.index');
     };
     
     $scope.goToPendingOrders = function(id){
@@ -181,7 +181,7 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
       var modalInstance = $uibModal.open({
         windowClass: 'xl-modal',
         templateUrl: './angular/lead/views/contact/create-from-buyer.view.html',
-        controller: 'CreateContactModalController',
+        controller: 'CreateContactModalFormBuyerController',
         scope: $scope,
       });
     };
@@ -203,7 +203,17 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
       var modalInstance = $uibModal.open({
         windowClass: 'xl-modal',
         templateUrl: './angular/lead/views/product/create-from-buyer.view.html',
-        controller: 'CreateProductModalController',
+        controller: 'CreateProductModalFromBuyerController',
+        scope: $scope,
+      });
+    };
+
+    $scope.viewProduct = function (product) {
+      
+      var modalInstance = $uibModal.open({
+        windowClass: 'sm-modal',
+        templateUrl: './angular/lead/views/product/view-from-buyer.html',
+        controller: 'ViewProductModalFromBuyerController',
         scope: $scope,
       });
     };
@@ -212,7 +222,7 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
       Product.delete({ id: product.id }, function (response) {
         $scope.product = response;
         
-        $scope.seller.product.splice($scope.seller.product.indexOf(product), 1);
+        $scope.buyer.product.splice($scope.buyer.product.indexOf(product), 1);
         $scope.close();
         $scope.success = true;
       }, function (response) {
@@ -243,7 +253,7 @@ angular.module('deal').controller('BuyerModalController', function ($scope, $uib
 });
 
 
-angular.module('buyer').controller('CreateContactModalController', function ($scope, $filter, $uibModalInstance, Contact, Authentication) {
+angular.module('buyer').controller('CreateContactModalFormBuyerController', function ($scope, $filter, $uibModalInstance, Contact, Authentication) {
   
   $scope.initializeContact = function(){
     $scope.contact = {
@@ -278,6 +288,44 @@ angular.module('buyer').controller('CreateContactModalController', function ($sc
     });
     
   };
+  
+  $scope.close = function () {
+    $uibModalInstance.dismiss('cancel');
+  };
+});
+
+angular.module('buyer').controller('CreateProductModalFromBuyerController', function ($scope, $filter, $uibModalInstance, Product, Authentication) {
+  
+  $scope.product = new Product();
+  
+  $scope.createProduct= function(){
+    
+    $scope.success = $scope.error = null;
+    //$scope.product.license_expired_date = $filter('date')($scope.product.license_expired_date, 'yyyy-MM-dd');
+
+    var product = $scope.product;
+    product.buyer_id = $scope.buyer.id;
+    
+    product.$save(function (response) {
+      $scope.product = response;
+      
+      $scope.buyer.product.push($scope.product);
+      $scope.close();
+      $scope.success = true;
+    }, function (response) {
+      $scope.error = response.data.message;
+    });
+    
+  };
+  
+  $scope.close = function () {
+    $uibModalInstance.dismiss('cancel');
+  };
+});
+
+angular.module('buyer').controller('ViewProductModalFromBuyerController', function ($scope, $filter, $uibModalInstance, Product, Authentication) {
+  
+  $scope.product = new Product();
   
   $scope.close = function () {
     $uibModalInstance.dismiss('cancel');

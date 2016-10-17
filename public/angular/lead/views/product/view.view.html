@@ -1,6 +1,6 @@
 <div class="content" ng-controller="ProductController" ng-init="findOne()">
   <!-- HEADER -->
-  <div class="row submenu-header">
+  <!--<div class="row submenu-header">
     <div class="submenu-header-item">
       <button type="button" class="btn btn-default" ui-sref="lead.product">
         <i class="glyphicon glyphicon-arrow-left"></i> Back
@@ -9,14 +9,15 @@
     <div class="submenu-header-item">
       <h4>{{ $stateParams.type }} Profile</h4>
     </div>
-  </div>
+  </div>-->
 
-  <div class="col-lg-4">
-    <div class="box">
-      <div class="box-header with-border">
-        <h3 class="box-title" style="font-size: 35px">{{ product.commercial_term }}</h3>
-        <p>{{ product.mine.mine_name }}</p>
-        <p>{{ product.mine.seller.company_name }}</p>
+  <div class="col-lg-12">
+    <div class="box col-lg-12">
+      <div class="box-header with-border col-lg-12">
+        <h3 class="box-title" style="font-size: 35px">{{ product.product_name }}</h3>
+        <p>{{ product.concession.concession_name }}</p>
+        <p>{{ product.concession.buyer.company_name }}</p>
+        <p>{{ product.concession.seller.company_name }}</p>
       </div>
       <div class="box-body">
         <div class="row-fluid">

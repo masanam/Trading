@@ -38,10 +38,5 @@ angular.module('auth').controller('AuthController', ['$scope', '$state', '$urlRo
         alert('Confirm Password did not match!');
       }
     };
-
-    $scope.logout = function () {
-      Authentication.logout();
-      $state.go('home', {});
-    };
   }
 ]);

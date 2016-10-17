@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('seller').controller('SellerController', ['$scope', '$http', '$stateParams', '$state', '$timeout', '$location', 'Seller', 'Product', 'Concession', 'Contact', '$uibModal',
-  function($scope, $http, $stateParams, $state, $timeout, $location, Seller, Product, Concession, Contact, $uibModal) {
+angular.module('seller').controller('SellerController', ['$scope', '$http', '$stateParams', '$state', '$timeout', '$location', 'Seller', 'Product', 'Concession', 'Contact', '$uibModal', 'Order',
+  function($scope, $http, $stateParams, $state, $timeout, $location, Seller, Product, Concession, Contact, $uibModal, Order) {
     $scope.sellers = [];
     $scope.seller = {};
     $scope.productButton = false;
@@ -18,11 +18,41 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
       startingDay: 1
     };
 
+
     $scope.open = function() {
       $scope.popup.opened = true;
     };
 
-   
+    $scope.open1 = function() {
+      $scope.popup1.opened = true;
+    };
+
+    $scope.setDate = function(year, month, day) {
+      $scope.dt = new Date(year, month, day);
+    };
+
+    $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+    $scope.format = $scope.formats[1];
+    $scope.altInputFormats = ['M!/d!/yyyy'];
+
+    $scope.popup1 = {
+      opened: false
+    };
+
+    var tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    var afterTomorrow = new Date();
+    afterTomorrow.setDate(tomorrow.getDate() + 1);
+    $scope.events = [
+      {
+        date: tomorrow,
+        status: 'full'
+      },
+      {
+        date: afterTomorrow,
+        status: 'partially'
+      }
+    ];
 
     $scope.openSellerModal = function (order) {
       
@@ -46,8 +76,6 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
       opened: false
     };
 
-    $scope.format = 'dd.MM.yyyy';
-
     $scope.create = function() {
       $scope.loading = true;
       var seller = new Seller({
@@ -69,7 +97,7 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
         preferred_trading_term: $scope.seller.preferred_trading_term,
         preferred_payment_term: $scope.seller.preferred_payment_term,
         purchasing_countries: $scope.seller.purchasing_countries,
-        description: $scope.buyer.description 
+        description: $scope.seller.description 
       });
 
       seller.$save(function(response) {
@@ -83,8 +111,6 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
 
     $scope.createSupply = function() {
       $scope.loading = true;
-
-      console.log($scope.supply);
 
       var supply = new Product($scope.supply);
 
@@ -140,6 +166,8 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
 
       $scope.seller = Seller.get({ id: $scope.sellerId });
 
+      $scope.lastOrders = Order.query({ option: 'lastOrders' , type: 'seller', id: $scope.sellerId });
+      
       //$scope.products = Product.query({ option: 'seller' , sellerId: id });
 
       $timeout(function() {
@@ -167,11 +195,15 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
       // $('#sellerModal').modal('hide');
     };
     
+    $scope.goToLastOrders = function(id){
+      $state.go('history-order.index');
+      // $('#sellerModal').modal('hide');
+    };
+    
     $scope.addConcession = function () {
-      
       var modalInstance = $uibModal.open({
         windowClass: 'xl-modal',
-        templateUrl: './angular/lead/views/Concession/create-from-seller.view.html',
+        templateUrl: './angular/lead/views/concession/create-from-seller.view.html',
         controller: 'CreateConcessionModalController',
         scope: $scope,
       });
@@ -206,7 +238,7 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
       var modalInstance = $uibModal.open({
         windowClass: 'xl-modal',
         templateUrl: './angular/lead/views/contact/create-from-seller.view.html',
-        controller: 'CreateContactModalController',
+        controller: 'CreateContactModalFromSellerController',
         scope: $scope,
       });
     };
@@ -228,7 +260,7 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
       var modalInstance = $uibModal.open({
         windowClass: 'xl-modal',
         templateUrl: './angular/lead/views/product/create-from-seller.view.html',
-        controller: 'CreateProductModalController',
+        controller: 'CreateProductModalFromSellerController',
         scope: $scope,
       });
     };
@@ -267,6 +299,7 @@ angular.module('seller').controller('CreateSellerModalController', function ($sc
   };
 
   $scope.createSeller = function (creteSeller) {
+    $scope.seller.license_expiry_date = $filter('date')($scope.seller.license_expiry_date, 'yyyy-MM-dd');
     var seller = new Seller($scope.seller);
 
     seller.$save(function(response) {
@@ -282,7 +315,7 @@ angular.module('seller').controller('CreateSellerModalController', function ($sc
 });
 
 
-angular.module('seller').controller('CreateContactModalController', function ($scope, $filter, $uibModalInstance, Contact, Authentication) {
+angular.module('seller').controller('CreateContactModalFromSellerController', function ($scope, $filter, $uibModalInstance, Contact, Authentication) {
   
   $scope.initializeContact = function(){
     $scope.contact = {
@@ -323,34 +356,84 @@ angular.module('seller').controller('CreateContactModalController', function ($s
   };
 });
 
+angular.module('seller').controller('CreateProductModalFromSellerController', function ($scope, $filter, $uibModalInstance, Product, Authentication) {
+  
+  $scope.product = new Product();
+    
+  $scope.createProduct= function(){
+    
+    $scope.success = $scope.error = null;
+    //$scope.product.license_expired_date = $filter('date')($scope.product.license_expired_date, 'yyyy-MM-dd');
+
+    var product = $scope.product;
+    product.seller_id = $scope.seller.id;
+    
+    product.$save(function (response) {
+      $scope.product = response;
+      
+      $scope.seller.product.push($scope.product);
+      $scope.close();
+      $scope.success = true;
+    }, function (response) {
+      $scope.error = response.data.message;
+    });
+    
+  };
+  
+  $scope.close = function () {
+    $uibModalInstance.dismiss('cancel');
+  };
+});
 
 angular.module('seller').controller('CreateConcessionModalController', function ($scope, $filter, $uibModalInstance, Concession, Authentication) {
   
-  $scope.initializeConcession = function(){
-    $scope.mine = {
-      id: undefined,
-      seller_id: undefined,
-      concession_name: undefined,
-      port_name: undefined,
-      longitude: undefined,
-      latitude: undefined,
-      concession_reserve: undefined,
-      stripping_ratio: undefined,
-      port_distance: undefined,
-      road_capacity: undefined,
-      river_capacity: undefined,
-      license_expired_date: undefined,
-      license_type: undefined,
-    };
+  $scope.concession = new Concession();
+    
+  $scope.polygon = [];
+  
+  $scope.resetPolygon = function(){
+    $scope.polygon = [];
   };
   
-  $scope.createConcession= function(){
+  $scope.addMarkerAndPath = function(event) {
+    $scope.polygon.push([event.latLng.lat(), event.latLng.lng()]);
+  };
+  
+  function createStringByArray(array) {
+    var output = '[';
+    angular.forEach(array, function (object, keyObj) {
+      output += '[';
+      angular.forEach(object, function (value, key) {
+        if(key === 0){
+          output += value + ',';
+        }else{
+          output += value + '';
+        }
+      });
+      if(keyObj === (array.length-1)){
+        output += ']';
+      }
+      else{
+        output += '],';
+      }
+    });
+    output += ']';
+    return output;
+  }
+  
+  $scope.createConcession = function(){
     
     $scope.success = $scope.error = null;
-    $scope.concession.license_expired_date = $filter('date')($scope.concession.license_expired_date, 'yyyy-MM-dd');
+    $scope.concession.license_expiry_date = $filter('date')($scope.concession.license_expiry_date, 'yyyy-MM-dd');
     $scope.concession.seller_id = $scope.seller.id;
+    
+    if($scope.polygon.length === 0){
+      $scope.concession.polygon = createStringByArray($scope.polygon);
+    }else{
+      $scope.concession.polygon = '';
+    }
 
-    var concession = new Concession($scope.concession);
+    var concession = $scope.concession;
     
     concession.$save(function (response) {
       $scope.concession = response;

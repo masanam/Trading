@@ -19,3 +19,4 @@ ApplicationConfiguration.registerModule('contact');
 ApplicationConfiguration.registerModule('deal');
 ApplicationConfiguration.registerModule('lead');
 ApplicationConfiguration.registerModule('chat');
+ApplicationConfiguration.registerModule('map');

@@ -13,10 +13,6 @@ angular.module('concession').controller('ConcessionController', ['$scope', '$htt
         seller_id: $scope.concession.seller_id,
         owner: $scope.concession.owner,
         address: $scope.concession.address
-
-        
-        
-       
       });
 
       concession.$save(function(response) {

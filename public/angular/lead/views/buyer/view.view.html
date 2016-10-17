@@ -103,7 +103,7 @@
           </div>
         </div>
       </div>
-      <div class="box box-info">
+     <div class="box box-info">
         <div class="box-header with-border">
           <h3 class="box-title" style="font-size: 25px">Products</h3>
           <div class="box-tools pull-right">
@@ -112,30 +112,35 @@
         </div>
         <div class="box-body">
           <div class="row" style="margin: 10px;">
-            <ul class="list-group">
-              <li class="list-group-item" ng-repeat="product in buyer.product">
-                Comm Terms
-                <i class="glyphicon glyphicon-map-marker" style="margin-left: 50px;"></i> Volume
-                <i class="glyphicon glyphicon-scale" style="margin-left: 50px;"></i> GCV ADB
-                <i class="glyphicon glyphicon-scale" style="margin-left: 50px;"></i> GCV ARB
-                <i class="glyphicon glyphicon-scale" style="margin-left: 50px;"></i> NCV
-              </li>
-              <li class="list-group-item" ng-repeat="product in buyer.product">
-                {{ product.commercial_term }}
-                <i class="glyphicon glyphicon-map-marker" style="margin-left: 50px;"></i> {{ product.volume }}
-                <i class="glyphicon glyphicon-scale" style="margin-left: 50px;"></i> {{ product.gcv_adb_min }} - {{ product.gcv_adb_max }}
-                <i class="glyphicon glyphicon-scale" style="margin-left: 50px;"></i> {{ product.gcv_arb_min }} - {{ product.gcv_arb_max }}
-                <i class="glyphicon glyphicon-scale" style="margin-left: 50px;"></i> {{ product.ncv_min }} - {{ product.ncv_max }}
-                <span class="pull-right">
-                  <a ui-sref="lead.view-product({ id: product.id })"><i class="glyphicon glyphicon-eye-open"></i></a>
-                  <a href="#" ng-click="deleteProduct(product)"><i class="glyphicon glyphicon-remove"></i></a>
-                </span>
-              </li>
-            </ul>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th><i class="glyphicon glyphicon-scale"></i> GCV ADB (kcal)</th>
+                  <th><i class="glyphicon glyphicon-scale"></i> GCV ARB (kcal)</th>
+                  <th><i class="glyphicon glyphicon-scale"></i> NCV (kcal)</th>
+                  <th><!----></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="product in buyer.product">
+                  <td>{{ product.product_name }}</td>
+                  <td>{{ product.gcv_adb_min | number }} - {{ product.gcv_adb_max | number }}</td>
+                  <td>{{ product.gcv_arb_min | number }} - {{ product.gcv_arb_max | number }}</td>
+                  <td>{{ product.ncv_min | number }} - {{ product.ncv_max | number }}</td>
+                  <td><span class="pull-right">
+                    
+                    <!--<button type="button" ng-click="viewProduct({ id: product.id })" class="btn btn-info"><i class="glyphicon glyphicon-eye-open"></i></button>-->
+                    <a ui-sref="lead.view-product({ id: product.id })"><i class="glyphicon glyphicon-eye-open"></i></a>
+                    <a href="#" ng-click="deleteProduct(product)"><i class="glyphicon glyphicon-remove"></i></a>
+                  </span></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
-      <div class="box box-info">
+      <!--div class="box box-info">
         <div class="box-header with-border">
           <h3 class="box-title" style="font-size: 25px">Insights</h3>
           <div class="box-tools pull-right">
@@ -146,12 +151,12 @@
             -- FEATURES COMING SOON --
           </div>
         </div>
-      </div>
+      </div-->
       <div class="box box-info">
         <div class="box-header with-border">
           <h3 class="box-title" style="font-size: 25px">Order History</h3>
           <div class="box-tools pull-right">
-            <button type="button" class="btn btn-info" ng-click="goToPendingOrders(buyer.id)"><i class="glyphicon glyphicon-plus"></i> Add New Order</button>
+            <button type="button" class="btn btn-info" ui-sref="buy-order.create"><i class="glyphicon glyphicon-plus"></i> Add New Order</button>
           </div>
         </div>
         <div class="box-body">
@@ -165,7 +170,7 @@
                   </tr>
               </thead>
               <tbody>
-                  <!--tr ng-repeat="(idx, lastOrder) in lastOrders">
+                  <tr ng-repeat="(idx, lastOrder) in lastOrders">
                       <td>{{ lastOrder.id }}</td>
                       <td>
                         {{ lastOrder.created_at | date:'medium' }}
@@ -176,19 +181,19 @@
                   </tr>
                   <tr ng-hide="lastOrders.length > 0">
                     <td colspan="3">There is no previous orders.</td>
-                  </tr-->
-                  <tr>
-                    <td colspan="3">-- FEATURES COMING SOON --</td>
                   </tr>
                   <!--tr>
-                    <td colspan="3"><a class="btn btn-block btn-blue" ng-click="goToLastOrders(buyer.id)">View More</a></td>
+                    <td colspan="3">-- FEATURES COMING SOON --</td>
                   </tr-->
+                  <tr>
+                    <td colspan="3"><a class="btn btn-block btn-blue" ng-click="goToLastOrders(buyer.id)">View More</a></td>
+                  </tr>
               </tbody>
             </table>
           </div>
         </div>
       </div>
-      <div class="box box-info">
+      <!--div class="box box-info">
         <div class="box-header with-border">
           <h3 class="box-title" style="font-size: 25px">Notes</h3>
           <div class="box-tools pull-right">
@@ -199,7 +204,7 @@
             -- FEATURES COMING SOON --
           </div>
         </div>
-      </div>
+      </div-->
 
     </div>
   </div>

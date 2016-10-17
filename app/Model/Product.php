@@ -18,4 +18,8 @@ class Product extends Model
     public function Seller() {
     	return $this->belongsTo('Seller');
     }
+    
+    public function Concession() {
+    	return $this->belongsTo('Concession');
+    }
 }

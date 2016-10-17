@@ -16,12 +16,11 @@ angular.module('vendor').controller('VendorController', ['$scope', '$http', '$st
         industry: $scope.vendor.industry,
         city: $scope.vendor.city,
         address: $scope.vendor.address,
-        latitude: $scope.vendor.latitude,
-        longitude: $scope.vendor.longitude
+        description: $scope.vendor.description
       });
 
       vendor.$save(function(response) {
-        //$state.go('vendor.index');
+        $state.go('lead.vendor');
         // $('#createVendorModal').modal('hide');
         // $('.modal-backdrop').hide();
         $scope.find();
@@ -42,10 +41,12 @@ angular.module('vendor').controller('VendorController', ['$scope', '$http', '$st
           }
           // $('#updateVendorModal').modal('hide');
         }else{
-          $state.go('vendor.index');
+          $state.go('lead.vendor');
         }
+        $state.go('lead.vendor');
         $scope.loading = false;
       }, function(response){
+        $state.go('lead.vendor');
         $scope.error = response.message;
         $scope.loading = false;
       });

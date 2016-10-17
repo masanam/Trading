@@ -14,26 +14,20 @@
     "angular": "~1.5.8",
     "angular-ui-router": "^0.3.1",
     "ngstorage": "~0.3.3",
-    "angular-material": "~1.1",
     "restangular": "~1.5.2",
     "angular-loading-bar": "~0.8.0",
     "satellizer": "^0.14.0",
     "angular-resource": "^1.5.8",
     "ngmap": "^1.17.3",
-    "angular-chart.js": "^0.10.2",
-    "angular-schema-form": "^0.8.13",
-    "angular-datatables": "^0.5.4",
-    "jquery": "^2",
     "angular-bootstrap": "^2.1.3",
     "bootstrap": "^3.3.7",
     "ng-sortable": "^1.3.6",
-    "pusher-angular": "^0.1.9",
     "angular-smart-table": "^2.1.8",
-    "datatables.net-autofill": "^2.1.2",
-    "datatables.net": "^1.10.12",
     "admin-lte": "^2.3.6",
-    "jpkleemans-angular-validate": "^1.1.1",
-    "angular-pusher": "^0.0.14",
-    "ng-file-upload": "^12.2.12"
+    "ng-file-upload": "^12.2.12",
+    "angular-chart.js": "^1.0.3"
+  },
+  "resolutions": {
+    "angular": "~1.5.8"
   }
 }
