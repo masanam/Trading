@@ -10,7 +10,7 @@ angular.module('chat').factory('Chat', [
       messagingSenderId: '407921708335'
     };
     var mainApp = firebase.initializeApp(config, 'webApps');
-    
+
     return {
       findChatByDeal: function(type, order_deal) {
         if(type === 'buy') {
@@ -37,7 +37,9 @@ angular.module('chat').factory('Chat', [
             'message': message
           };
 
-          mainApp.database().ref('buy_deal_chat/'+order_deal.id).push(chat);
+          mainApp.database().ref('buy_deal_chat/'+order_deal.id).push(chat, function(data){
+            return data.val();
+          });
         } else if(type === 'sell') {
           var chat = {
             'sell_deal_id': order_deal.id,
@@ -46,7 +48,9 @@ angular.module('chat').factory('Chat', [
             'message': message
           };
 
-          mainApp.database().ref('sell_deal_chat/'+order_deal.id).push(chat);
+          mainApp.database().ref('sell_deal_chat/'+order_deal.id).push(chat, function(data){
+            return data.val();
+          });
         }
       };
     }
