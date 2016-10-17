@@ -10,7 +10,7 @@ module.exports = {
     'bower_components/satellizer/satellizer.js',
     'bower_components/angular-resource/angular-resource.js',
     'bower_components/ngmap/build/scripts/ng-map.js',
-    'bower_components/Chart.js/dist/Chart.js',
+    'bower_components/chart.js/dist/Chart.js',
     'bower_components/tv4/tv4.js',
     'bower_components/angular-sanitize/angular-sanitize.js',
     'bower_components/objectpath/lib/ObjectPath.js',
@@ -23,6 +23,8 @@ module.exports = {
     'bower_components/angular-smart-table/dist/smart-table.min.js',
     'bower_components/angular-pusher/angular-pusher.min.js',
     'bower_components/ng-file-upload/ng-file-upload-all.js',
+    'bower_components/firebase/firebase.js',
+    'bower_components/angularfire/dist/angularfire.js'
   ],
   vendorCSSFiles: [
     'bower_components/bootstrap/dist/css/bootstrap-theme.css',
