@@ -296,4 +296,10 @@ class BuyOrderController extends Controller
 
         return response()->json($buy_order, 200);
     }
+
+    public function myBuyOrders($id)
+    {
+        $buy_order = BuyOrder::with('Buyer')->where('order_status', 'a')->get();
+        return response()->json($buy_order, 200);
+    }
 }
