@@ -10,8 +10,13 @@ angular.module('chat').controller('ChatController', ['$scope', 'SellDeal', 'BuyD
   // TESTING
   $scope.deal = {};
   $scope.chat = {};
+  $scope.message = '';
 
   $scope.chats = [];
+
+  $scope.initialize = function() {
+    $scope.message = '';
+  }
 
   $scope.findOneOrderDeal = function(type, $orderId) {
     if (type === 'buy') {
@@ -47,5 +52,6 @@ angular.module('chat').controller('ChatController', ['$scope', 'SellDeal', 'BuyD
       var sell_message = $scope.message;
       $scope.chat.key = Chat.sendChat('sell', $scope.sell_deal, sell_message);
     }
+    $scope.initialize();
   };
 }]);
