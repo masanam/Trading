@@ -36,25 +36,21 @@ angular.module('chat').factory('Chat', ['firebase', 'Authentication',
         if(type === 'buy') {
           var buy_chat = {
             'buy_deal_id': order_deal.id,
-            'user_id': order_deal.user_id,
+            'user_id': Authentication.user.id,
             'author': Authentication.user.name,
             'message': message
           };
 
-          mainApp.database().ref('buy_deal_chat/'+order_deal.id).push(buy_chat, function(data){
-            return data.val();
-          });
+          var buy_key = mainApp.database().ref('buy_deal_chat/'+order_deal.id).push(buy_chat).key();
         } else if(type === 'sell') {
           var sell_chat = {
             'sell_deal_id': order_deal.id,
-            'user_id': order_deal.user_id,
+            'user_id': Authentication.user.id,
             'author': Authentication.user.name,
             'message': message
           };
 
-          mainApp.database().ref('sell_deal_chat/'+order_deal.id).push(sell_chat, function(data){
-            return data.val();
-          });
+          var sell_key = mainApp.database().ref('sell_deal_chat/'+order_deal.id).push(sell_chat).key();
         }
       }
     };

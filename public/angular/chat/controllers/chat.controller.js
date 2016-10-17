@@ -3,14 +3,13 @@
 angular.module('chat').controller('ChatController', ['$scope', 'SellDeal', 'BuyDeal', 'OrderDeal', 'Authentication', '$location', '$stateParams', 'Chat',
 	function($scope, SellDeal, BuyDeal, OrderDeal, Authentication, $location, $stateParams, Chat) {
   $scope.buy_deal = {
-    id: 1
+    id: 1,
   };
   $scope.sell_deal = {};
 
   // TESTING
-  $scope.deal = {
-    id: 1
-  };
+  $scope.deal = {};
+  $scope.chat = {};
 
   $scope.chats = [];
 
@@ -43,10 +42,10 @@ angular.module('chat').controller('ChatController', ['$scope', 'SellDeal', 'BuyD
   $scope.sendMessage = function(type) {
     if(type === 'buy') {
       var buy_message = $scope.message;
-      $scope.chats.push(Chat.sendChat('buy', $scope.buy_deal, buy_message));
+      $scope.chat.key = Chat.sendChat('buy', $scope.buy_deal, buy_message);
     } else if(type === 'sell') {
       var sell_message = $scope.message;
-      $scope.chats.push(Chat.sendChat('sell', $scope.sell_deal, sell_message));
+      $scope.chat.key = Chat.sendChat('sell', $scope.sell_deal, sell_message);
     }
   };
 }]);
