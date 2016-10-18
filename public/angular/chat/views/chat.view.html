@@ -28,12 +28,12 @@
       </div><!--/.direct-chat-messages-->
     </div><!-- /.box-body -->
     <div class="box-footer">
-      <div class="input-group">
+      <form class="input-group" ng-submit="sendMessage('buy')">
         <input type="text" name="message" placeholder="Type Message ..." class="form-control" ng-model="message">
         <span class="input-group-btn">
-          <button type="button" class="btn btn-danger btn-flat" ng-click="sendMessage('buy')">Send</button>
+          <button type="submit" class="btn btn-danger btn-flat">Send</button>
         </span>
-      </div>
+      </form>
     </div><!-- /.box-footer-->
   </div><!--/.direct-chat -->
 </section>

@@ -16,7 +16,7 @@ angular.module('chat').controller('ChatController', ['$scope', 'SellDeal', 'BuyD
 
   $scope.initialize = function() {
     $scope.message = '';
-  }
+  };
 
   $scope.findOneOrderDeal = function(type, $orderId) {
     if (type === 'buy') {
