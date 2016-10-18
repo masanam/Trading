@@ -373,7 +373,7 @@ class SellOrderTableSeeder extends Seeder
 
           'volume' => $faker->numberBetween($min = 1000, $max = 2000),
           'min_price' => $faker->numberBetween($min = 100, $max = 5000),
-          'order_status' => $faker->randomElement($array = array ('a','f'))
+          'order_status' => $faker->randomElement($array = array ('o','f'))
         ]));
       }
     }

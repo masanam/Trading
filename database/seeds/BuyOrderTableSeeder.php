@@ -442,7 +442,7 @@ class BuyOrderTableSeeder extends Seeder
             'expired_date'=>$faker->dateTimeBetween($startDate = "5 days", $endDate = "10 days")->format('Y-m-d'),
 
             'volume' => $faker->numberBetween($min = 1000, $max = 2000),
-            'order_status' => $faker->randomElement($array = array ('a','f')),
+            'order_status' => $faker->randomElement($array = array ('o','f')),
             
             'port_id' => $faker->numberBetween($min = 1, $max = 3)
           ]));

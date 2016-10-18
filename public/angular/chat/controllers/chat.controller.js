@@ -1,27 +1,20 @@
 'use strict';
 
-angular.module('chat').controller('ChatController', ['$scope', 'firebase', 'SellDeal', 'BuyDeal', 'OrderDeal', 'Authentication', '$location', '$stateParams', 'BuyDealChat', 'SellDealChat',
-	function($scope, firebase, SellDeal, BuyDeal, OrderDeal, Authentication, $location, $stateParams, BuyDealChat, SellDealChat) {
+angular.module('chat').controller('ChatController', ['$scope', 'SellDeal', 'BuyDeal', 'OrderDeal', 'Authentication', '$location', '$stateParams', 'Chat',
+	function($scope, SellDeal, BuyDeal, OrderDeal, Authentication, $location, $stateParams, Chat) {
   $scope.buy_deal = {
-    id: 1
+    id: 1,
   };
   $scope.sell_deal = {};
 
   // TESTING
-  $scope.deal = {
-    id: 1
-  };
+  $scope.deal = {};
+  $scope.chat = {};
+  $scope.message = '';
 
-  $scope.chats = [];
-
-  var config = {
-    apiKey: 'AIzaSyACILHAOiy4G9TtCgs0szgZBZokr4cduuo',
-    authDomain: 'coal-trade.firebaseapp.com',
-    databaseURL: 'https://coal-trade.firebaseio.com',
-    storageBucket: 'coal-trade.appspot.com',
-    messagingSenderId: '407921708335'
+  $scope.initialize = function() {
+    $scope.message = '';
   };
-  var mainApp = firebase.initializeApp(config, 'webApps');
 
   $scope.findOneOrderDeal = function(type, $orderId) {
     if (type === 'buy') {
@@ -37,19 +30,13 @@ angular.module('chat').controller('ChatController', ['$scope', 'firebase', 'Sell
 
   $scope.findChatByDeal = function(type) {
     if(type === 'buy') {
-      var path_chat_buy = 'buy_deal_chat/' + $scope.buy_deal.id;
-      var chats_tracker_buy = mainApp.database().ref(path_chat_buy);
-      chats_tracker_buy.on('child_added', function(data) {
-        console.log(data.key, data.val().message, data.val().author);
-        $scope.chats.push(data.val());
-        console.log($scope.chats);
+      Chat.findChatByDeal('buy', $scope.buy_deal, function(res){
+        $scope.chats = res;
       });
+      console.log($scope.chats);
     } else if(type === 'sell') {
-      var path_chat_sell = 'sell_deal_chat/' + $scope.sell_deal.id;
-      var chats_tracker_sell = mainApp.database().ref(path_chat_sell);
-      chats_tracker_sell.on('child_added', function(data) {
-        console.log(data.key, data.val().message, data.val().author);
-        $scope.chats.push(data.val());
+      Chat.findChatByDeal('sell', $scope.sell_deal, function(res){
+        $scope.chats = res;
       });
     }
   };
@@ -61,21 +48,12 @@ angular.module('chat').controller('ChatController', ['$scope', 'firebase', 'Sell
 
   $scope.sendMessage = function(type) {
     if(type === 'buy') {
-      $scope.chat = new BuyDealChat({
-        'buy_deal_id': $scope.buy_deal.id,
-        'user_id': $scope.buy_deal.user_id,
-        'message': $scope.chat.message
-      });
+      var buy_message = $scope.message;
+      $scope.chat.key = Chat.sendChat('buy', $scope.buy_deal, buy_message);
     } else if(type === 'sell') {
-      $scope.chat = new SellDealChat({
-        'sell_deal_id': $scope.sell_deal.id,
-        'user_id': $scope.buy_deal.user_id,
-        'message': $scope.chat.message
-      });
+      var sell_message = $scope.message;
+      $scope.chat.key = Chat.sendChat('sell', $scope.sell_deal, sell_message);
     }
-
-    $scope.chat.$save({ action: 'send' }, function(res) {
-      // $scope.chats.push(res);
-    });
+    $scope.initialize();
   };
 }]);

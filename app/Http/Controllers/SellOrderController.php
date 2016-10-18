@@ -22,7 +22,7 @@ class SellOrderController extends Controller
      */
     public function index()
     {
-        $sell_order = SellOrder::with('Seller')->where('order_status', 'a')->get();
+        $sell_order = SellOrder::with('Seller')->where('order_status', 'o')->get();
 
         return response()->json($sell_order, 200);
     }
@@ -120,7 +120,7 @@ class SellOrderController extends Controller
         $sell_order->commercial_term = $request->commercial_term;
         $sell_order->penalty_desc = $request->penalty_desc;
         
-        $sell_order->order_status = 'a';
+        $sell_order->order_status = 'o';
         $sell_order->progress_status = $request->progress_status;
         
         $sell_order->save();
@@ -141,7 +141,7 @@ class SellOrderController extends Controller
     {
         $sell_order = SellOrder::with('Seller')->find($id);
 
-        if($sell_order->order_status == 'a') {
+        if($sell_order->order_status == 'o') {
             return response()->json($sell_order, 200);
         } else {
             return response()->json(['message' => 'deactivated record'], 404);
@@ -232,7 +232,7 @@ class SellOrderController extends Controller
         $sell_order->product_id = $request->product_id;
         $sell_order->max_price = $request->max_price;
         
-        $sell_order->status = 'a';
+        $sell_order->status = 'o';
 
         $sell_order->save();
 
