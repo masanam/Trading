@@ -9,7 +9,7 @@ angular.module('dashboard').controller('IndexPriceController', ['$scope', 'Index
     $scope.labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
     $scope.reviewLabels = [];
     
-    $scope.month = new Array();
+    $scope.month = [];
     $scope.month[0] = "January";
     $scope.month[1] = "February";
     $scope.month[2] = "March";
