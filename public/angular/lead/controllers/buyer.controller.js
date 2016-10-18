@@ -354,10 +354,9 @@ angular.module('buyer').controller('CreateProductCollectionModalFromBuyerControl
     var product = $scope.product;
     product.buyer_id = $scope.buyer.id;
     
-      $scope.buyer.product.push($scope.product);
-      $scope.close();
-      $scope.success = true;
-    
+    $scope.buyer.product.push($scope.product);
+    $scope.close();
+    $scope.success = true;
     
   };
   
