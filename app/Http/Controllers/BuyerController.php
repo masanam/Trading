@@ -179,4 +179,5 @@ class BuyerController extends Controller
         $status = array('count' => $total);        
         return response()->json($status,200);
     }
+
 }

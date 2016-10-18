@@ -14,6 +14,7 @@ class CreateBuyerPortTable extends Migration
     public function up()
     {
         Schema::create('buyer_port', function (Blueprint $table) {
+            $table->increments('id');
             $table->integer('port_id')->unsigned();
             $table->integer('buyer_id')->unsigned();
             $table->integer('distance');
