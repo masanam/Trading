@@ -24,7 +24,9 @@ module.exports = {
     'bower_components/angular-pusher/angular-pusher.min.js',
     'bower_components/ng-file-upload/ng-file-upload-all.js',
     'bower_components/firebase/firebase.js',
-    'bower_components/angularfire/dist/angularfire.js'
+    'bower_components/angularfire/dist/angularfire.js',
+    'bower_components/angularfire/dist/angularfire.js',
+    'bower_components/angular-scroll-glue/src/scrollglue.js'
   ],
   vendorCSSFiles: [
     'bower_components/bootstrap/dist/css/bootstrap-theme.css',

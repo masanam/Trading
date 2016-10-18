@@ -12,8 +12,6 @@ angular.module('chat').controller('ChatController', ['$scope', 'SellDeal', 'BuyD
   $scope.chat = {};
   $scope.message = '';
 
-  $scope.chats = [];
-
   $scope.initialize = function() {
     $scope.message = '';
   };
@@ -32,10 +30,14 @@ angular.module('chat').controller('ChatController', ['$scope', 'SellDeal', 'BuyD
 
   $scope.findChatByDeal = function(type) {
     if(type === 'buy') {
-      $scope.chats = Chat.findChatByDeal('buy', $scope.buy_deal);
+      Chat.findChatByDeal('buy', $scope.buy_deal, function(res){
+        $scope.chats = res;
+      });
       console.log($scope.chats);
     } else if(type === 'sell') {
-      $scope.chats = Chat.findChatByDeal('sell', $scope.sell_deal);
+      Chat.findChatByDeal('sell', $scope.sell_deal, function(res){
+        $scope.chats = res;
+      });
     }
   };
 
