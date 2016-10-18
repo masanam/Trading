@@ -28,8 +28,6 @@ class CreateSellersTable extends Migration
             $table->decimal('latitude', 10, 8);
             $table->decimal('longitude', 11, 8);
             $table->string('industry');
-            $table->string('license_type');
-            $table->date('license_expiry_date');
             $table->integer('total_annual_sales');
             $table->string('preferred_trading_term');
             $table->string('preferred_payment_term');
