@@ -16,13 +16,13 @@ angular.module('chat').factory('Chat', ['firebase', '$firebaseArray', 'Authentic
       findChatByDeal: function(type, order_deal, callback) {
         if(type === 'buy') {
           var path_chat_buy = 'buy_deal_chat/' + order_deal.id;
-          var ref = mainApp.database().ref(path_chat_buy);
-          var buy_chats = $firebaseArray(ref);
+          var ref_buy = mainApp.database().ref(path_chat_buy);
+          var buy_chats = $firebaseArray(ref_buy);
           return callback(buy_chats);
         } else if(type === 'sell') {
           var path_chat_sell = 'sell_deal_chat/' + order_deal.id;
-          var ref = mainApp.database().ref(path_chat_sell);
-          var sell_chats = $firebaseArray(ref);
+          var ref_sell = mainApp.database().ref(path_chat_sell);
+          var sell_chats = $firebaseArray(ref_sell);
           return callback(sell_chats);
         }
       },

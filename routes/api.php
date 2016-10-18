@@ -43,6 +43,11 @@ Route::group(['middleware' => ['cors']], function() {
         'create', 'edit'
     ]]);
 
+    Route::post('port/buyer-port', 'PortController@buyerPort');
+    Route::resource('port', 'PortController', ['except' => [
+        'create', 'edit'
+    ]]);
+
     Route::get('seller/total', 'SellerController@getTotalSeller');
     Route::get('seller/search/{search?}', 'SellerController@search');
     Route::resource('seller', 'SellerController', ['except' => [

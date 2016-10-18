@@ -8,7 +8,7 @@
         </div>
         <div class="box-body no-padding">
           <ul class="nav nav-pills nav-stacked">
-            <li>
+            <li class="{{aktifAB}}">
               <a ng-click="findAvailableBuy()">
                 <i class="fa fa-inbox"></i> Active Buy Orders
                 <span class="label label-primary pull-right"></span>
@@ -20,13 +20,13 @@
                 <span class="label label-primary pull-right"></span>
               </a>
             </li>
-            <li>
+            <li class="{{aktifFB}}">
               <a ng-click="findFinishedBuy()">
                 <i class="fa fa-filter"></i> Finished Buy Orders
                 <span class="label label-primary pull-right"></span>
               </a>
             </li>
-            <li>
+            <li class="{{aktifAS}}">
               <a ng-click="findAvailableSell()">
                 <i class="fa fa-inbox"></i> Active Sell Orders
                 <span class="label label-primary pull-right"></span>
@@ -38,9 +38,21 @@
                 <span class="label label-primary pull-right"></span>
               </a>
             </li>
-            <li>
+            <li class="{{aktifFS}}">
               <a ng-click="findFinishedSell()">
                 <i class="fa fa-filter"></i> Finished Sell Orders
+                <span class="label label-primary pull-right"></span>
+              </a>
+            </li>
+            <li class="{{aktifMBO}}">
+              <a ng-click="findFinishedSell()">
+                <i class="fa fa-filter"></i> My Buy Orders
+                <span class="label label-primary pull-right"></span>
+              </a>
+            </li>
+            <li class="{{aktifMSO}}">
+              <a ng-click="findFinishedSell()">
+                <i class="fa fa-filter"></i> My Sell Orders
                 <span class="label label-primary pull-right"></span>
               </a>
             </li>

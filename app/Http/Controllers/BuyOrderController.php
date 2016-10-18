@@ -26,7 +26,7 @@ class BuyOrderController extends Controller
     public function index()
     {
 
-        $buy_order = BuyOrder::with('Buyer')->where('order_status', 'a')->get();
+        $buy_order = BuyOrder::with('Buyer')->where('order_status', 'o')->get();
         return response()->json($buy_order, 200);
     }
 
@@ -49,10 +49,10 @@ class BuyOrderController extends Controller
         $buy_order->user_id = Auth::User()->id;
         $buy_order->buyer_id = $request->buyer_id;
 
-        $buy_order->order_date = $request->order_date;
-        $buy_order->order_deadline = $request->order_deadline;
-        $buy_order->ready_date = $request->ready_date;
-        $buy_order->expired_date = $request->expired_date;
+        $buy_order->order_date = date('Y-m-d',strtotime($request->order_date));
+        $buy_order->order_deadline = date('Y-m-d',strtotime($request->order_deadline));
+        $buy_order->ready_date = date('Y-m-d',strtotime($request->ready_date);
+        $buy_order->expired_date = date('Y-m-d',strtotime($request->expired_date);
 
         $buy_order->address = $request->address;
         $buy_order->city = $request->city;
@@ -123,7 +123,7 @@ class BuyOrderController extends Controller
         $buy_order->commercial_term = $request->commercial_term;
         $buy_order->penalty_desc = $request->penalty_desc;
 
-        $buy_order->order_status = 'a';
+        $buy_order->order_status = 'o';
         $buy_order->progress_status = $request->progress_status;
 
         $buy_order->save();
@@ -146,7 +146,7 @@ class BuyOrderController extends Controller
     {
         $buy_order = BuyOrder::with('Buyer')->find($id);
 
-        if($buy_order->order_status == 'a') {
+        if($buy_order->order_status == 'o') {
             return response()->json($buy_order, 200);
         } else {
             return response()->json(['message' => 'deactivated record'], 404);
@@ -179,10 +179,10 @@ class BuyOrderController extends Controller
         $buy_order->user_id = Auth::User()->id;
         $buy_order->buyer_id = $request->buyer_id;
 
-        $buy_order->order_date = $request->order_date;
-        $buy_order->order_deadline = $request->order_deadline;
-        $buy_order->ready_date = $request->ready_date;
-        $buy_order->expired_date = $request->expired_date;
+        $buy_order->order_date = date('Y-m-d',strtotime($request->order_date));
+        $buy_order->order_deadline = date('Y-m-d',strtotime($request->order_deadline));
+        $buy_order->ready_date = date('Y-m-d',strtotime($request->ready_date);
+        $buy_order->expired_date = date('Y-m-d',strtotime($request->expired_date);
 
         $buy_order->address = $request->address;
         $buy_order->city = $request->city;
@@ -253,7 +253,7 @@ class BuyOrderController extends Controller
         $buy_order->commercial_term = $request->commercial_term;
         $buy_order->penalty_desc = $request->penalty_desc;
 
-        $buy_order->order_status = 'a';
+        $buy_order->order_status = 'o';
         $buy_order->progress_status = $request->progress_status;
 
         $buy_order->save();
@@ -313,6 +313,12 @@ class BuyOrderController extends Controller
           $buy_order->save();
         }
 
+        return response()->json($buy_order, 200);
+    }
+
+    public function myBuyOrders($id)
+    {
+        $buy_order = BuyOrder::with('Buyer')->where('order_status', 'o')->get();
         return response()->json($buy_order, 200);
     }
 }

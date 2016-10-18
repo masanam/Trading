@@ -22,7 +22,7 @@ class SellOrderController extends Controller
      */
     public function index()
     {
-        $sell_order = SellOrder::with('Seller')->where('order_status', 'a')->get();
+        $sell_order = SellOrder::with('Seller')->where('order_status', 'o')->get();
 
         return response()->json($sell_order, 200);
     }
@@ -46,10 +46,10 @@ class SellOrderController extends Controller
         $sell_order->user_id = Auth::User()->id;
         $sell_order->seller_id = $request->seller_id;
 
-        $sell_order->order_date = $request->order_date;
-        $sell_order->order_deadline = $request->order_deadline;
-        $sell_order->ready_date = $request->ready_date;
-        $sell_order->expired_date = $request->expired_date;
+        $sell_order->order_date = date('Y-m-d',strtotime($request->order_date));
+        $sell_order->order_deadline = date('Y-m-d',strtotime($request->order_deadline));
+        $sell_order->ready_date = date('Y-m-d',strtotime($request->ready_date));
+        $sell_order->expired_date = date('Y-m-d',strtotime($request->expired_date));
 
         $sell_order->address = $request->address;
         $sell_order->city = $request->city;
@@ -120,7 +120,7 @@ class SellOrderController extends Controller
         $sell_order->commercial_term = $request->commercial_term;
         $sell_order->penalty_desc = $request->penalty_desc;
         
-        $sell_order->order_status = 'a';
+        $sell_order->order_status = 'o';
         $sell_order->progress_status = $request->progress_status;
         
         $sell_order->save();
@@ -141,7 +141,7 @@ class SellOrderController extends Controller
     {
         $sell_order = SellOrder::with('Seller')->find($id);
 
-        if($sell_order->order_status == 'a') {
+        if($sell_order->order_status == 'o') {
             return response()->json($sell_order, 200);
         } else {
             return response()->json(['message' => 'deactivated record'], 404);
@@ -174,7 +174,10 @@ class SellOrderController extends Controller
         $sell_order->user_id = $request->user_id;
         $sell_order->seller_id = $request->seller_id;
 
-        $sell_order->order_date = $request->order_date;
+        $sell_order->order_date = date('Y-m-d',strtotime($request->order_date));
+        $sell_order->order_deadline = date('Y-m-d',strtotime($request->order_deadline));
+        $sell_order->ready_date = date('Y-m-d',strtotime($request->ready_date));
+        $sell_order->expired_date = date('Y-m-d',strtotime($request->expired_date));
         $sell_order->penalty_desc = $request->penalty_desc;
         $sell_order->deadline = $request->deadline;
 
@@ -232,7 +235,7 @@ class SellOrderController extends Controller
         $sell_order->product_id = $request->product_id;
         $sell_order->min_price = $request->min_price;
         
-        $sell_order->status = 'a';
+        $sell_order->status = 'o';
 
         $sell_order->save();
 

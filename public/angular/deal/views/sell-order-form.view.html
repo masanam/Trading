@@ -11,11 +11,21 @@
 <div class="form-group">
   <div>
     <label for="order_date">Order Date :</label>
-    <input type="datetime" class="form-control col-md-6" id="order_date" ng-model="order.order_date">
+    <p class="input-group">
+      <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="order.order_date" is-open="popup.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+      <span class="input-group-btn">
+        <button type="button" class="btn btn-default" ng-click="open()"><i class="glyphicon glyphicon-calendar"></i></button>
+      </span>
+    </p>
   </div>
   <div>
     <label for="deadline">Deadline :</label>
-    <input type="datetime" class="form-control col-md-6" id="deadline" ng-model="order.deadline">
+    <p class="input-group">
+      <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="order.deadline" is-open="popup.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+      <span class="input-group-btn">
+        <button type="button" class="btn btn-default" ng-click="open()"><i class="glyphicon glyphicon-calendar"></i></button>
+      </span>
+    </p>
   </div>
 </div>
 
