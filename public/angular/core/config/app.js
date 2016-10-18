@@ -5,7 +5,7 @@ var ApplicationConfiguration = (function () {
   // Init module configuration options
   var applicationModuleName = 'coaltrade';
   var applicationModuleVendorDependencies = [
-    'ngResource', 'ui.router', 'satellizer', 'ngMap', 'chart.js', 'ui.bootstrap', 'smart-table', 'pusher-angular', 'doowb.angular-pusher', 'ngFileUpload'
+    'ngResource', 'ui.router', 'satellizer', 'ngMap', 'chart.js', 'ui.bootstrap', 'smart-table', 'ngFileUpload', 'firebase'
   ];
 
   // Add a new vertical module
@@ -46,17 +46,6 @@ angular.module(ApplicationConfiguration.applicationModuleName).config(['$urlRout
     // Redirect to the auth state if any other states
     // are requested other than users 
     // $urlRouterProvider.otherwise('/auth/signin');
-  }
-]);
-
-angular.module(ApplicationConfiguration.applicationModuleName).config(['PusherServiceProvider',
-  function(PusherServiceProvider) {
-    PusherServiceProvider
-    .setToken('6d2905ad0e57d83c218e')
-    .setOptions({
-      host: 'api-ap1.pusher.com',
-      cluster: 'ap1'
-    });
   }
 ]);
 

@@ -1,18 +1,22 @@
 'use strict';
 
-angular.module('chat').controller('ChatController', ['$scope', 'firebase', 'SellDeal', 'BuyDeal', 'OrderDeal', 'Authentication', '$location', '$stateParams', 'Chat',
-	function($scope, firebase, SellDeal, BuyDeal, OrderDeal, Authentication, $location, $stateParams, Chat) {
+angular.module('chat').controller('ChatController', ['$scope', 'SellDeal', 'BuyDeal', 'OrderDeal', 'Authentication', '$location', '$stateParams', 'Chat',
+	function($scope, SellDeal, BuyDeal, OrderDeal, Authentication, $location, $stateParams, Chat) {
   $scope.buy_deal = {
-    id: 1
+    id: 1,
   };
   $scope.sell_deal = {};
 
   // TESTING
-  $scope.deal = {
-    id: 1
-  };
+  $scope.deal = {};
+  $scope.chat = {};
+  $scope.message = '';
 
   $scope.chats = [];
+
+  $scope.initialize = function() {
+    $scope.message = '';
+  };
 
   $scope.findOneOrderDeal = function(type, $orderId) {
     if (type === 'buy') {
@@ -28,9 +32,10 @@ angular.module('chat').controller('ChatController', ['$scope', 'firebase', 'Sell
 
   $scope.findChatByDeal = function(type) {
     if(type === 'buy') {
-      $scope.chats.push(Chat.findChatByDeal('buy', $scope.buy_deal));
+      $scope.chats = Chat.findChatByDeal('buy', $scope.buy_deal);
+      console.log($scope.chats);
     } else if(type === 'sell') {
-      $scope.chats.push(Chat.findChatByDeal('sell', $scope.sell_deal));
+      $scope.chats = Chat.findChatByDeal('sell', $scope.sell_deal);
     }
   };
 
@@ -41,11 +46,12 @@ angular.module('chat').controller('ChatController', ['$scope', 'firebase', 'Sell
 
   $scope.sendMessage = function(type) {
     if(type === 'buy') {
-      var message = $scope.message;
-      $scope.chats.push(Chat.sendChat('buy', $scope.buy_deal, message));
+      var buy_message = $scope.message;
+      $scope.chat.key = Chat.sendChat('buy', $scope.buy_deal, buy_message);
     } else if(type === 'sell') {
-      var message = $scope.message;
-      $scope.chats.push(Chat.sendChat('sell', $scope.sell_deal, message));
+      var sell_message = $scope.message;
+      $scope.chat.key = Chat.sendChat('sell', $scope.sell_deal, sell_message);
     }
+    $scope.initialize();
   };
 }]);

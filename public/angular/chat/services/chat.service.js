@@ -1,7 +1,9 @@
 'use strict';
 
-angular.module('chat').factory('Chat', [
-  function () {
+angular.module('chat').factory('Chat', ['firebase', 'Authentication',
+  function (firebase, Authentication) {
+    var buy_chats = [];
+    var sell_chats = [];
     var config = {
       apiKey: 'AIzaSyACILHAOiy4G9TtCgs0szgZBZokr4cduuo',
       authDomain: 'coal-trade.firebaseapp.com',
@@ -17,42 +19,40 @@ angular.module('chat').factory('Chat', [
           var path_chat_buy = 'buy_deal_chat/' + order_deal.id;
           var chats_tracker_buy = mainApp.database().ref(path_chat_buy);
           chats_tracker_buy.on('child_added', function(data) {
-            return data.val();
+            buy_chats.push(data.val());
           });
+          return buy_chats;
         } else if(type === 'sell') {
           var path_chat_sell = 'sell_deal_chat/' + order_deal.id;
           var chats_tracker_sell = mainApp.database().ref(path_chat_sell);
           chats_tracker_sell.on('child_added', function(data) {
-            return data.val();
+            sell_chats.push(data.val());
           });
+          return sell_chats;
         }
-      }
+      },
 
       sendChat: function(type, order_deal, message) {
         if(type === 'buy') {
-          var chat = {
+          var buy_chat = {
             'buy_deal_id': order_deal.id,
-            'user_id': order_deal.user_id,
+            'user_id': Authentication.user.id,
             'author': Authentication.user.name,
             'message': message
           };
 
-          mainApp.database().ref('buy_deal_chat/'+order_deal.id).push(chat, function(data){
-            return data.val();
-          });
+          var buy_key = mainApp.database().ref('buy_deal_chat/'+order_deal.id).push(buy_chat).key;
         } else if(type === 'sell') {
-          var chat = {
+          var sell_chat = {
             'sell_deal_id': order_deal.id,
-            'user_id': order_deal.user_id,
+            'user_id': Authentication.user.id,
             'author': Authentication.user.name,
             'message': message
           };
 
-          mainApp.database().ref('sell_deal_chat/'+order_deal.id).push(chat, function(data){
-            return data.val();
-          });
+          var sell_key = mainApp.database().ref('sell_deal_chat/'+order_deal.id).push(sell_chat).key;
         }
-      };
-    }
-  };
+      }
+    };
+  }
 ]);
