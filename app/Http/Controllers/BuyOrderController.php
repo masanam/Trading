@@ -176,16 +176,30 @@ class BuyOrderController extends Controller
             ] ,404);
         }
 
-        $buy_order->user_id = $request->user_id;
+        $buy_order->user_id = Auth::User()->id;
         $buy_order->buyer_id = $request->buyer_id;
 
         $buy_order->order_date = $request->order_date;
-        $buy_order->penalty_desc = $request->penalty_desc;
-        $buy_order->deadline = $request->deadline;
+        $buy_order->order_deadline = $request->order_deadline;
+        $buy_order->ready_date = $request->ready_date;
+        $buy_order->expired_date = $request->expired_date;
 
         $buy_order->address = $request->address;
+        $buy_order->city = $request->city;
+        $buy_order->country = $request->country;
         $buy_order->latitude = $request->latitude;
         $buy_order->longitude = $request->longitude;
+        $buy_order->port_distance = $request->port_distance;
+        $buy_order->port_id = $request->port_id;
+        $buy_order->port_name = $request->port_name;
+        $buy_order->port_status = $request->port_status;
+        $buy_order->port_daily_rate = $request->port_daily_rate;
+        $buy_order->port_draft_height = $request->port_draft_height;
+        $buy_order->port_latitude = $request->port_latitude;
+        $buy_order->port_longitude = $request->port_longitude;
+
+        $buy_order->product_name = $request->product_name;
+        $buy_order->product_id = $request->product_id;
 
         $buy_order->gcv_arb_min = $request->gcv_arb_min;
         $buy_order->gcv_arb_max = $request->gcv_arb_max;
@@ -233,9 +247,14 @@ class BuyOrderController extends Controller
         $buy_order->size_bonus = $request->size_bonus;
 
         $buy_order->volume = $request->volume;
-        $buy_order->product_name = $request->product_name;
-        $buy_order->product_id = $request->product_id;
+        $buy_order->max_price = $request->max_price;
+        $buy_order->trading_term = $request->trading_term;
+        $buy_order->payment_terms = $request->payment_terms;
+        $buy_order->commercial_term = $request->commercial_term;
+        $buy_order->penalty_desc = $request->penalty_desc;
+
         $buy_order->order_status = 'a';
+        $buy_order->progress_status = $request->progress_status;
 
         $buy_order->save();
 

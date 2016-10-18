@@ -121,8 +121,8 @@ Route::group(['middleware' => ['cors']], function() {
         'create', 'edit'
     ]]);
 
+    Route::get('order-deal/user/{user_id}', 'BuySellDealController@orderDealByUser');
     Route::resource('order-deal', 'BuySellDealController@index');
-    Route::resource('order-deal/user/{user_id}', 'BuySellDealController@orderDealByUser');
     
     Route::get('deal/table/{status}', 'DealController@index');
     Route::get('deal/status/{deal}/{status}', 'DealController@changeStatus');

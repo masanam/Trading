@@ -114,7 +114,7 @@ class SellOrderController extends Controller
         $sell_order->size_bonus = $request->size_bonus;
 
         $sell_order->volume = $request->volume;
-        $sell_order->max_price = $request->min_price;
+        $sell_order->min_price = $request->min_price;
         $sell_order->trading_term = $request->trading_term;
         $sell_order->payment_terms = $request->payment_terms;
         $sell_order->commercial_term = $request->commercial_term;
@@ -230,7 +230,7 @@ class SellOrderController extends Controller
         $sell_order->volume = $request->volume;
         $sell_order->product_name = $request->product_name;
         $sell_order->product_id = $request->product_id;
-        $sell_order->max_price = $request->max_price;
+        $sell_order->min_price = $request->min_price;
         
         $sell_order->status = 'a';
 

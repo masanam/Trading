@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Deal', 'Order', 'Buyer', 'Seller', 'SellDeal', 'BuyDeal', 'Authentication', '$location', '$stateParams', 'Pusher', 'BuyDealChat', 'SellDealChat',
-  function($scope, $uibModal, Deal, Order, Buyer, Seller, SellDeal, BuyDeal, Authentication, $location, $stateParams, Pusher, BuyDealChat, SellDealChat) {
+angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Deal', 'Order', 'Buyer', 'Seller', 'SellDeal', 'BuyDeal', 'Authentication', '$location', '$stateParams', 'BuyDealChat', 'SellDealChat',
+  function($scope, $uibModal, Deal, Order, Buyer, Seller, SellDeal, BuyDeal, Authentication, $location, $stateParams, BuyDealChat, SellDealChat) {
     $scope.deals = [];
 
     $scope.findDeals = function(){
@@ -94,11 +94,11 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
       });
     };
     
-    $scope.deleteOrder = function (order) {
+    $scope.deleteSellOrder = function (order) {
       $scope.sellOrders.splice($scope.sellOrders.indexOf(order), 1);
     };
     
-    $scope.deleteOrder = function (order) {
+    $scope.deleteBuyOrder = function (order) {
       $scope.buyOrders.splice($scope.buyOrders.indexOf(order), 1);
     };
     
@@ -410,8 +410,6 @@ angular.module('deal').controller('CreateSellModalController', function ($scope,
     
     sellOrder.$save({ type: 'sell' }, function (response) {
       $scope.order = response;
-      $scope.order.deadline = new Date($scope.order.deadline);
-      $scope.order.order_date = new Date($scope.order.order_date);
       
       for(var i = 0; i < $scope.sellers.length; i++){
         var seller = $scope.sellers[i];
@@ -752,8 +750,6 @@ angular.module('deal').controller('ExistingBuyModalController', function ($scope
 
   $scope.chooseBuyOrder = function(){
     $scope.success = $scope.error = null;
-      
-    console.log($scope.selectedOrder);
     //$scope.order.deadline = new Date($scope.order.deadline);
     $scope.selectedOrder.deadline = $filter('date')($scope.selectedOrder.deadline, 'yyyy-MM-dd');
     $scope.selectedOrder.order_date = $filter('date')($scope.selectedOrder.order_date, 'yyyy-MM-dd');
@@ -837,7 +833,9 @@ angular.module('deal').controller('ExistingSellModalController', function ($scop
     };
   };
   
-  $scope.selectedOrder = {};
+  $scope.selectedOrder = {
+    company_name: '';
+  };
   $scope.isSelected = false;
   
   $scope.findAllSellOrders = function() {
@@ -846,20 +844,23 @@ angular.module('deal').controller('ExistingSellModalController', function ($scop
 
   $scope.chooseSellOrder = function(){
     $scope.success = $scope.error = null;
-      
-    console.log($scope.selectedOrder);
     //$scope.order.deadline = new Date($scope.order.deadline);
     $scope.selectedOrder.deadline = $filter('date')($scope.selectedOrder.deadline, 'yyyy-MM-dd');
     $scope.selectedOrder.order_date = $filter('date')($scope.selectedOrder.order_date, 'yyyy-MM-dd');
     $scope.selectedOrder.user_id = Authentication.user.id;
     
     // $scope.selectedOrder = Order.query({ type: 'sell' , id: buyOrder });
+    for(var i = 0; i < $scope.selectedOrder.seller.length; i++){
+      var seller = $scope.selectedOrder.seller[i];
+      $scope.selectedOrder.company_name = seller.company_name;
+    }
     $scope.selectedOrder.deadline = new Date($scope.selectedOrder.deadline);
     $scope.selectedOrder.order_date = new Date($scope.selectedOrder.order_date);
-    $scope.success = true;    
+    $scope.success = true;
   };
 
   $scope.submit = function() {
+    console.log($scope.selectedOrder);
     $scope.sellOrders.push($scope.selectedOrder);
     $scope.close();
   };
