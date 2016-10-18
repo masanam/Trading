@@ -27,7 +27,12 @@
     "ng-file-upload": "^12.2.12",
     "angular-chart.js": "^1.0.3",
     "firebase": "^3.5.0",
-    "angularfire": "^2.0.2"
+    "angularfire": "^2.0.2",
+<<<<<<< HEAD
+    "chart.js": "^2.3.0"
+=======
+    "angular-scroll-glue": "^2.0.7"
+>>>>>>> 769918aec0de2420ca4fc18a16f26e4ce3bb85a6
   },
   "resolutions": {
     "angular": "~1.5.8"

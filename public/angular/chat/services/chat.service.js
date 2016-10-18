@@ -14,21 +14,19 @@ angular.module('chat').factory('Chat', ['firebase', 'Authentication',
     var mainApp = firebase.initializeApp(config, 'webApps');
 
     return {
-      findChatByDeal: function(type, order_deal) {
+      findChatByDeal: function(type, order_deal, callback) {
         if(type === 'buy') {
           var path_chat_buy = 'buy_deal_chat/' + order_deal.id;
           var chats_tracker_buy = mainApp.database().ref(path_chat_buy);
           chats_tracker_buy.on('child_added', function(data) {
-            buy_chats.push(data.val());
+            return callback(data.val());
           });
-          return buy_chats;
         } else if(type === 'sell') {
           var path_chat_sell = 'sell_deal_chat/' + order_deal.id;
           var chats_tracker_sell = mainApp.database().ref(path_chat_sell);
           chats_tracker_sell.on('child_added', function(data) {
-            sell_chats.push(data.val());
+            return callback(data.val());
           });
-          return sell_chats;
         }
       },
 
