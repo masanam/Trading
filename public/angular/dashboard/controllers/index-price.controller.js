@@ -10,18 +10,18 @@ angular.module('dashboard').controller('IndexPriceController', ['$scope', 'Index
     $scope.reviewLabels = [];
     
     $scope.month = [];
-    $scope.month[0] = 'January';
-    $scope.month[1] = 'February';
-    $scope.month[2] = 'March';
-    $scope.month[3] = 'April';
-    $scope.month[4] = 'May';
-    $scope.month[5] = 'June';
-    $scope.month[6] = 'July';
-    $scope.month[7] = 'August';
-    $scope.month[8] = 'September';
-    $scope.month[9] = 'October';
-    $scope.month[10] = 'November';
-    $scope.month[11] = 'December';
+    $scope.month[0] = "January";
+    $scope.month[1] = "February";
+    $scope.month[2] = "March";
+    $scope.month[3] = "April";
+    $scope.month[4] = "May";
+    $scope.month[5] = "June";
+    $scope.month[6] = "July";
+    $scope.month[7] = "August";
+    $scope.month[8] = "September";
+    $scope.month[9] = "October";
+    $scope.month[10] = "November";
+    $scope.month[11] = "December";
 
     $scope.series = ['Series A', 'Series B'];
     $scope.data = [
