@@ -401,34 +401,53 @@ angular.module('seller').controller('CreateConcessionModalController', function 
   
   $scope.concession = new Concession();
   
-  NgMap.getMap().then(function(map) {
-    $scope.map = map;
-  });
-    
-  $scope.polygon = [];
-  
-  $scope.resetPolygon = function(){
-    $scope.polygon = [];
-    
-    $scope.map.shapes.foo.setMap(null);
-
+  $scope.initMap = function(){
+    NgMap.getMap().then(function(map) {
+      $scope.map = map;
+    });
   };
+  
+  $scope.resetMap = function(){
+    console.log($scope.map);
+    $scope.map.shapes.foo.setMap(null);
+  };
+  
+  $scope.resetPolygon = function(e){
+    $scope.initMap();
+    $scope.polygon = {
+      polygonString: '',
+      array: [],
+    };
+  };
+  
+  $scope.resetPolygon();
   
   /*$scope.addMarkerAndPath = function(event) {
     $scope.polygon.push([event.latLng.lat(), event.latLng.lng()]);
   };*/
-    
+  
+  $scope.updatePolygonString = function(polygonString){
+    $scope.polygon.polygonString = polygonString;
+    if($scope.polygon.polygonString !== ''){
+      $scope.polygon.array = JSON.parse($scope.polygon.polygonString);
+    }else{
+      $scope.polygon.array = [];
+    }
+  };
+  
   $scope.onMapOverlayCompleted = function(e){
-    var coordinates = e.overlay.latLngs.b[0].b;
-    $scope.polygon = [];
     
-    //console.log(coordinates[0]);
+    e.overlay.setMap(null);
+    
+    var coordinates = e.overlay.getPath().getArray();
+    
+    $scope.polygon.array = [];
     
     for(var idx=0; idx < coordinates.length; idx++){
-      $scope.polygon.push([coordinates[idx].lat(), coordinates[idx].lng()]);
+      $scope.polygon.array.push([coordinates[idx].lat(), coordinates[idx].lng()]);
     }
     
-    $scope.polygon = createStringByArray($scope.polygon);
+    $scope.polygon.polygonString = createStringByArray($scope.polygon.array);
     
     //$scope.polygon = e;
   };
@@ -461,8 +480,8 @@ angular.module('seller').controller('CreateConcessionModalController', function 
     $scope.concession.license_expiry_date = $filter('date')($scope.concession.license_expiry_date, 'yyyy-MM-dd');
     $scope.concession.seller_id = $scope.seller.id;
     
-    if($scope.polygon.length === 0){
-      $scope.concession.polygon = createStringByArray($scope.polygon);
+    if($scope.polygon.array.length === 0){
+      $scope.concession.polygon = createStringByArray($scope.polygon.array);
     }else{
       $scope.concession.polygon = '';
     }
