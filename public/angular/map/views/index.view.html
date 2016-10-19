@@ -297,7 +297,7 @@
                           <div class="col-lg-12"  ng-repeat="connectedConcession in connectedConcessions">
                             &nbsp;
                             <div>
-                              <button class="btn btn-primary col-lg-12">
+                              <button class="btn btn-primary col-lg-12" ng-click="showDetail(connectedConcession)">
                                 <div class="row">
                                   <span class="col-lg-6">Concession Name:</span> 
                                   <span class="col-lg-6">{{connectedConcession.concession_name || 'N/A'}}</span><br/>

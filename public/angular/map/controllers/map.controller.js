@@ -56,6 +56,7 @@ angular.module('map').controller('MapController', ['$scope', '$http', '$statePar
     };
 
     $scope.showDetail = function(event, concession) {
+      console.log(concession);
       $scope.concession = Concession.get({ action:'detail', id: concession.id }, function(concession) {
         $scope.concession = concession;
         $scope.map.showInfoWindow('info-window', event.latLng);
@@ -72,7 +73,6 @@ angular.module('map').controller('MapController', ['$scope', '$http', '$statePar
         
         $scope.product = undefined;
       });
-      console.log($scope.connectedConcessions);
     };
     
     $scope.showProduct = function(product) {

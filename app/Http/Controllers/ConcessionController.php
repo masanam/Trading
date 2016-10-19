@@ -62,10 +62,6 @@ class ConcessionController extends Controller
                                             $q->where('sellers.status', 'a');
                                           }])
                                           ->with('Port')
-                                          ->whereHas('Product', function($q) use ($gt_params) {
-                                            $q->where('products.status', 'a')
-                                              ->where('products.'.$gt_params[0].'_min', '>=', $gt_params[1]);
-                                          })
                                           ->whereHas('Seller', function($q) {
                                             $q->where('sellers.status', 'a');
                                           })
@@ -93,10 +89,6 @@ class ConcessionController extends Controller
                                           ->with(['Seller' => function($q) {
                                             $q->where('sellers.status', 'a');
                                           }])
-                                          ->whereHas('Product' , function($q) use ($lt_params) {
-                                            $q->where('products.status', 'a')
-                                              ->where('products.'.$lt_params[0].'_max', '<=', $lt_params[1]);
-                                          })
                                           ->whereHas('Seller' , function($q) {
                                             $q->where('sellers.status', 'a');
                                           })
@@ -128,11 +120,6 @@ class ConcessionController extends Controller
                                             $q->where('sellers.status', 'a');
                                           }])
                                           ->with('Port')
-                                          ->whereHas('Product' , function($q) use ($bet_params) {
-                                            $q->where('products.status', 'a')
-                                              ->where('products.'.$bet_params[0].'_min', '<=', $bet_params[1])
-                                              ->where('products.'.$bet_params[0].'_max', '>=', $bet_params[1]);
-                                          })
                                           ->whereHas('Seller' , function($q) {
                                             $q->where('sellers.status', 'a');
                                           })
@@ -235,9 +222,7 @@ class ConcessionController extends Controller
     {
         $concession = Concession::with(['Product' => function($q){
             $q->where('status', 'a');
-        }])->with('Port')->whereHas('Product', function($q){
-            $q->where('status', 'a');
-        })->find($id);
+        }])->with('Port')->find($id);
         
         if(!$concession){
           $concession = Concession::with('Product', 'Port')->find($id);
