@@ -46,7 +46,12 @@ class ProductTableSeeder extends Seeder
             'hgi_max' => $faker->numberBetween($min = 55, $max = 70),
             'size_min' => $faker->numberBetween($min = 40, $max = 45),
             'size_max' => $faker->numberBetween($min = 45, $max = 50),
-              
+            'fe203_min'=> $faker->numberBetween($min = 45, $max = 50),
+            'fe203_max'=> $faker->numberBetween($min = 45, $max = 50),  
+            'cvnar_min'=> $faker->numberBetween($min = 45, $max = 50), 
+            'cvnar_max'=> $faker->numberBetween($min = 45, $max = 50),
+            'aft_min'=> $faker->numberBetween($min = 45, $max = 50), 
+            'aft_max'=> $faker->numberBetween($min = 45, $max = 50),
             'status' => 'a'
           ]);
         }

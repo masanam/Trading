@@ -19,7 +19,6 @@ class CreateProductsTable extends Migration
             $table->integer('buyer_id')->nullable();
             $table->integer('concession_id')->nullable();
 			$table->string('product_name');
-            
             $table->integer('gcv_arb_min')->nullable(); //gross calorific value, as received basis
             $table->integer('gcv_arb_max')->nullable();
             $table->integer('gcv_adb_min')->nullable(); //gross calorific value, air dried basis
@@ -42,6 +41,12 @@ class CreateProductsTable extends Migration
             $table->integer('hgi_max')->nullable();
             $table->integer('size_min')->nullable(); //size/piece
             $table->integer('size_max')->nullable();
+            $table->integer('fe203_min')->nullable(); //size/piece
+            $table->integer('fe203_max')->nullable();
+            $table->integer('cvnar_min')->nullable(); //size/piece
+            $table->integer('cvnar_max')->nullable();
+            $table->integer('aft_min')->nullable(); //size/piece
+            $table->integer('aft_max')->nullable();
 
             $table->char('status', 1); // A = Active , X = Deleted
 

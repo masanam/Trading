@@ -56,12 +56,10 @@
                  fill-color="#FF0000"
                  fill-opacity="0.35">
               </shape>
-            </span>
-            <span ng-repeat="port in ports">
-              <marker ng-if="port.polygon === ''" position="{{port.latitude}}, {{port.longitude}}" id="mark{{port.id}}" on-click="showDetail({{port}})"></marker>
-              <shape name="polygon" ng-if="port.polygon !== ''" on-click="showDetail({{port}})"
-                 id="mark{{port.id}}"
-                 paths="{{port.polygon}}
+              <marker ng-if="pos.polygon === ''" position="{{pos.port.latitude}}, {{pos.port.longitude}}" id="mark{{pos.id}}" on-click="showDetail({{pos}})"></marker>
+              <shape name="polygon" ng-if="pos.polygon !== ''" on-click="showDetail({{pos.port}})"
+                 id="mark{{pos.port.id}}"
+                 paths="{{pos.polygon}}"
                  stroke-color="#00FFFF"
                  stroke-opacity="0.8"
                  stroke-weight="2"

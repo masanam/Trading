@@ -1,17 +1,18 @@
 <div class="form-group">
-  <label for="seller_name">Company Name:</label>
+  <label for="seller_name">Owner of Concession:</label>
   <input name="company_name" type="text" class="form-control" id="company_name" ng-model="seller.company_name">
 </div>
 
 <div class="form-group">
   <label for="contact"></label>
-  <button type="button" class="btn btn-primary" ng-model="seller.is_trader" uib-btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0">
-        Trader
-  </button>
-  <button type="button" class="btn btn-danger" ng-model="seller.is_affiliated" uib-btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0">
-        Affiliated
-  </button>
-
+  <div class="btn-group">
+    <label class="btn btn-default" ng-model="seller.is_trader" uib-btn-radio="0">Miner</label>
+    <label class="btn btn-default" ng-model="seller.is_trader" uib-btn-radio="1">Trader</label>
+  </div>
+  <div class="btn-group">
+    <label class="btn btn-default" ng-model="seller.is_affiliated" uib-btn-radio="0">Non- Affiliated</label>
+    <label class="btn btn-default" ng-model="seller.is_affiliated" uib-btn-radio="1">Affiliated</label>
+  </div>
 </div>
 
 <div class="form-group">
@@ -60,33 +61,24 @@
 </div>
 
 <div class="form-group">
-  <label for="headquarter_location">License Type:</label>
-  <input name="license_type" type="text" class="form-control" id="license_type" ng-model="seller.license_type">
-</div>
-
-
-<div class="form-group">
-  <label for="headquarter_location">License Expiry Date:</label>
-
-  <p class="input-group">
-    <input type="text" class="form-control" uib-datepicker-popup ng-model="seller.license_expiry_date" is-open="popup1.opened" datepicker-options="dateOptions" close-text="Close" />
-      <span class="input-group-btn">
-        <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
-      </span>
-  </p>
-
-</div>
-
- 
-
-<div class="form-group">
   <label for="headquarter_location">Total Annual Sales:</label>
   <input name="total_annual_sales" type="text" class="form-control" id="total_annual_sales" ng-model="seller.total_annual_sales">
 </div>
 
 <div class="form-group">
-  <label for="headquarter_location">Preferred Trading Term:</label>
-  <input name="preferred_trading_term" type="text" class="form-control" id="preferred_trading_term" ng-model="seller.preferred_trading_term">
+  <label for="headquarter_location">Selling Terms:</label>
+  <div class="form-group">
+    <div class="btn-group">
+      <label class="btn btn-default" ng-model="seller.preferred_trading_term" uib-btn-radio="'CNF'">CNF</label>
+      <label class="btn btn-default" ng-model="seller.preferred_trading_term" uib-btn-radio="'CIF'">CIF</label>
+      <label class="btn btn-default" ng-model="seller.preferred_trading_term" uib-btn-radio="'FAS'">FAS</label>
+      <label class="btn btn-default" ng-model="seller.preferred_trading_term" uib-btn-radio="'FOB'">FOB</label>
+      <label class="btn btn-default" ng-model="seller.preferred_trading_term" uib-btn-radio="'Franco'">Franco</label>
+      <div class="input-group" style="margin-bottom: 5px;">
+        <input name="preferred_trading_term" type="text" class="form-control" id="total_annual_sales" ng-model="seller.preferred_trading_term" placeholder="Input Other Term">
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="form-group">

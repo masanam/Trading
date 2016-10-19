@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('product').controller('ProductController', ['$scope', '$state', '$http', '$stateParams', '$q', '$uibModal', 'Product', 'Concession','Seller','Buyer',
-  function($scope, $state, $http, $stateParams, $q, $uibModal, Product, Concession,Seller,Buyer) {
+angular.module('product').controller('ProductController', ['$scope', '$state', '$http', '$stateParams', '$q', '$uibModal', 'Product', 'Concession','Seller','Buyer', '$window',
+  function($scope, $state, $http, $stateParams, $q, $uibModal, Product, Concession,Seller,Buyer, $window) {
     $scope.formOpen = false;
 
     $scope.find = function() {
@@ -102,6 +102,10 @@ angular.module('product').controller('ProductController', ['$scope', '$state', '
       }, function(err) {
         console.log(err);
       });
+    };
+    
+    $scope.goBack = function(){
+      $window.history.back();
     };
   }
 ]);

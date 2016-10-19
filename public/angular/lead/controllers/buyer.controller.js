@@ -208,15 +208,6 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
       });
     };
 
-    $scope.addProductCollection = function () {
-      
-      var modalInstance = $uibModal.open({
-        windowClass: 'xl-modal',
-        templateUrl: './angular/lead/views/product/create-from-buyer.view.html',
-        controller: 'CreateProductCollectionModalFromBuyerController',
-        scope: $scope,
-      });
-    };
 
     $scope.viewProduct = function (product) {
       
@@ -342,25 +333,3 @@ angular.module('buyer').controller('ViewProductModalFromBuyerController', functi
   };
 });
 
-angular.module('buyer').controller('CreateProductCollectionModalFromBuyerController', function ($scope, $filter, $uibModalInstance, Product, Authentication) {
-  
-  $scope.product = new Product();
-  
-  $scope.createProduct= function(){
-    
-    $scope.success = $scope.error = null;
-    //$scope.product.license_expired_date = $filter('date')($scope.product.license_expired_date, 'yyyy-MM-dd');
-
-    var product = $scope.product;
-    product.buyer_id = $scope.buyer.id;
-    
-    $scope.buyer.product.push($scope.product);
-    $scope.close();
-    $scope.success = true;
-    
-  };
-  
-  $scope.close = function () {
-    $uibModalInstance.dismiss('cancel');
-  };
-});

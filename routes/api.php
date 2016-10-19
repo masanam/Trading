@@ -43,7 +43,10 @@ Route::group(['middleware' => ['cors']], function() {
         'create', 'edit'
     ]]);
 
-    Route::post('port/buyer-port', 'PortController@buyerPort');
+    Route::post('port/buyer/store', 'PortController@storeBuyerPort');
+    Route::post('port/seller/store', 'PortController@storeSellerPort');
+    Route::get('port/buyer/my/{buyer_id}', 'PortController@buyerMyPort');
+    Route::get('port/seller/my/{buyer_id}', 'PortController@sellerMyPort');
     Route::resource('port', 'PortController', ['except' => [
         'create', 'edit'
     ]]);

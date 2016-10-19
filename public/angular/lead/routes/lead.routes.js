@@ -93,6 +93,16 @@ angular.module('lead').config(['$stateProvider', '$urlRouterProvider',
         templateUrl: '/angular/lead/views/vendor/update.view.html',
         roles: ['user', 'trader']
       })
+      .state('lead.port-buyer', {
+        url: '/port/buyer/{id}',
+        templateUrl: '/angular/lead/views/port/create-buyer-port.view.html',
+        roles: ['user', 'trader']
+      })
+      .state('lead.port-seller', {
+        url: '/port/seller/{id}',
+        templateUrl: '/angular/lead/views/port/create-seller-port.view.html',
+        roles: ['user', 'trader']
+      })
 
       //VIEW PAGES
       /*.state('lead.view', {
