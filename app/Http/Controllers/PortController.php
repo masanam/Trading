@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Model\Port;
 use App\Model\BuyerPort;
+use App\Model\SellerPort;
 use Auth;
 
 use Illuminate\Http\Request;
@@ -12,6 +13,9 @@ use App\Http\Requests;
 
 class PortController extends Controller
 {
+    public function __construct() {
+        $this->middleware('jwt.auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -19,7 +23,20 @@ class PortController extends Controller
      */
     public function index()
     {
-        //
+        $port = Port::get();
+        return response()->json($port, 200);
+    }
+
+    public function buyerMyPort($buyer_id)
+    {
+        $port = BuyerPort::with('Port')->where('buyer_id', '=', $buyer_id)->get();
+        return response()->json($port, 200);
+    }
+
+    public function sellerMyPort($seller_id)
+    {
+        $port = SellerPort::with('Port')->where('seller_id', '=', $buyer_id)->get();
+        return response()->json($port, 200);
     }
 
     /**
@@ -52,7 +69,10 @@ class PortController extends Controller
         $port->draft_height = $request->draft_height;
         $port->save();
 
-        return response()->json($port, 200);
+        $buyer_port = BuyerPort::where('buyer_id', '=', $buyer_id)->get();
+        $buyer_port->port = $port;
+
+        return response()->json($buyer_port, 200);
     }
 
     /**
@@ -89,7 +109,7 @@ class PortController extends Controller
         //
     }
 
-    public function buyerPort(Request $request)
+    public function storeBuyerPort(Request $request)
     {
         if(!$request) {
             return response()->json([
@@ -104,5 +124,22 @@ class PortController extends Controller
         $buyer_port->save();
 
         return response()->json($buyer_port, 200);
+    }
+
+    public function storeSellerPort(Request $request)
+    {
+        if(!$request) {
+            return response()->json([
+                'message' => 'Bad Request'
+            ], 400);
+        }
+
+        $seller_port = new SellerPort();
+        $seller_port->seller_id = $request->seller_id;
+        $seller_port->port_id = $request->port_id;
+        $seller_port->distance = $request->distance;
+        $seller_port->save();
+
+        return response()->json($seller_port, 200);
     }
 }
