@@ -56,7 +56,7 @@
                  fill-color="#FF0000"
                  fill-opacity="0.35">
               </shape>
-              <marker style="fill-color: #ADFF2F;" ng-if="pos.polygon === ''" position="{{pos.port.latitude}}, {{pos.port.longitude}}" id="mark{{pos.id}}" on-click="showPortDetail({{pos.port}})"></marker>
+              <marker fill-color="#ADD000" ng-if="pos.polygon !== ''" position="{{pos.port.latitude}}, {{pos.port.longitude}}" id="markpos{{pos.port.id}}" on-click="showPortDetail({{pos.port.id}})"></marker>
             </span>
             <info-window id="info-window" default-style="false" maxWidth="800px">
               <div ng-non-bindable="" style="width:500px" class="no-gutter">
