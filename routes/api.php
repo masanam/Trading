@@ -91,6 +91,7 @@ Route::group(['middleware' => ['cors']], function() {
 
     Route::get('product/total', 'ProductController@getTotalProduct');
     Route::get('product/search/{search?}', 'ProductController@search');
+    Route::delete('product/{id}', 'ProductController@destroyByID');
     Route::resource('product', 'ProductController', ['except' => [
         'create', 'edit'
     ]]);
