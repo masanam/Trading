@@ -76,6 +76,10 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
       opened: false
     };
 
+    $scope.findAllSellers = function() {
+      $scope.sellers = Seller.query();
+    };
+
     $scope.create = function() {
       $scope.loading = true;
       var seller = new Seller({
@@ -91,8 +95,6 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
         latitude: $scope.seller.latitude,
         longitude: $scope.seller.longitude,
         industry: $scope.seller.industry,
-        license_type: $scope.seller.license_type,
-        license_expiry_date: $scope.seller.license_expiry_date,
         total_annual_sales: $scope.seller.total_annual_sales,
         preferred_trading_term: $scope.seller.preferred_trading_term,
         preferred_payment_term: $scope.seller.preferred_payment_term,
@@ -106,6 +108,16 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
         // $('.modal-backdrop').hide();
         $scope.find();
         $scope.loading = false;
+      });
+    };
+
+    $scope.openModalNewSeller = function () {
+      
+      var modalInstance = $uibModal.open({
+        windowClass: 'xl-modal',
+        templateUrl: './angular/lead/views/seller/create.view.seller.html',
+        scope: $scope,
+        controller: 'CreateSellerModalController'
       });
     };
 
