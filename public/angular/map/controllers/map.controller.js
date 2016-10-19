@@ -1,11 +1,12 @@
 'use strict';
 
-angular.module('map').controller('MapController', ['$scope', '$http', '$stateParams', '$state', 'Map', 'Concession', 'NgMap',
-  function($scope, $http, $stateParams, $state, Map, Concession, NgMap) {
+angular.module('map').controller('MapController', ['$scope', '$http', '$stateParams', '$state', 'Map', 'Concession', 'Port', 'NgMap',
+  function($scope, $http, $stateParams, $state, Map, Concession, Port, NgMap) {
     //$scope.filters = [{ field:'gcv_arb', operand: '>=', number: 5000 }];
     $scope.filters = [];
     $scope.concession = {};
     $scope.concessions = [];
+    $scope.ports = [];
     $scope.product = undefined;
     
     NgMap.getMap().then(function(map) {
@@ -61,6 +62,17 @@ angular.module('map').controller('MapController', ['$scope', '$http', '$statePar
         
         $scope.product = undefined;
       });
+    };
+
+    $scope.showPortDetail = function(event, port) {
+      $scope.connectedConcessions = Port.query({ id: port.id , concession: 'concession' });
+      $scope.port = Port.get({ id: port.id }, function(port) {
+        $scope.port = port;
+        $scope.map.showInfoWindow('port-info-window', event.latLng);
+        
+        $scope.product = undefined;
+      });
+      console.log($scope.connectedConcessions);
     };
     
     $scope.showProduct = function(product) {

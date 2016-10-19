@@ -39,7 +39,7 @@ class DealController extends Controller
               concat(sellers.company_name, ",") as seller_name,
               sum(buy_order.volume) as volume,
               sum(buy_order.volume*buy_order.max_price) as total_sales,
-              sum(sell_order.volume*sell_order.max_price) as total_cogs
+              sum(sell_order.volume*sell_order.min_price) as total_cogs
             ')
           )
           ->leftJoin('buy_deal', 'deals.id', '=', 'buy_deal.deal_id')
@@ -100,7 +100,7 @@ class DealController extends Controller
     public function show($id)
     {
         $deal = DB::table('deals')->select(DB::raw('
-              deals.*, users.name as trader_name, concat(buyers.company_name, ",") as buyer_name, concat(sellers.company_name, ",") as seller_name, sum(buy_order.volume) as volume, sum(buy_order.volume*buy_order.max_price) as total_sales, sum(sell_order.volume*sell_order.max_price) as total_cogs
+              deals.*, users.name as trader_name, concat(buyers.company_name, ",") as buyer_name, concat(sellers.company_name, ",") as seller_name, sum(buy_order.volume) as volume, sum(buy_order.volume*buy_order.max_price) as total_sales, sum(sell_order.volume*sell_order.min_price) as total_cogs
             ')
           )
           ->leftJoin('buy_deal', 'deals.id', '=', 'buy_deal.deal_id')
