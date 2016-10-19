@@ -157,7 +157,9 @@ class ConcessionController extends Controller
      */
     public function detail($id = "")
     {
-        $concession = Concession::with('Product')->find($id);
+        $concession = Concession::with('Product')->whereHas('Product', function($q){
+            $q->where('status', 'a');
+        })->find($id);
 
         if($concession->status == 'a') {
             return response()->json($concession, 200);

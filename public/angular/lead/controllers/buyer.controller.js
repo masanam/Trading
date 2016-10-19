@@ -57,7 +57,7 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
       });
 
       buyer.$save(function(response) {
-        $state.go('lead.buyer');
+        $location.path('lead/buyer/'+response.id+'/setup-produk');
         // $('#createBuyerModal').modal('hide');
         // $('.modal-backdrop').hide();
         $scope.find();
@@ -208,6 +208,7 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
       });
     };
 
+
     $scope.viewProduct = function (product) {
       
       var modalInstance = $uibModal.open({
@@ -331,3 +332,4 @@ angular.module('buyer').controller('ViewProductModalFromBuyerController', functi
     $uibModalInstance.dismiss('cancel');
   };
 });
+

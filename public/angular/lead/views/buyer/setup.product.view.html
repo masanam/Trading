@@ -1,0 +1,47 @@
+<section class="content">
+<div class="col-md-3 col-lg-2">
+  <section ng-include="'./angular/lead/views/side-menu.view.html'"></section>
+</div>
+<div class="col-md-9 col-lg-10" ng-controller="BuyerController" ng-init="findOne()">
+  <section ng-include="'./angular/lead/views/search-bar.view.html'"></section>
+   <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title" style="font-size: 25px">Products Collections {{ buyer.company_name }}</h3>
+          <div class="box-tools pull-right">
+            <button type="button" ng-click="addProduct()" class="btn btn-info"><i class="glyphicon glyphicon-plus"></i> Add New Product</button>
+            <button type="button" class="btn btn-success">NEXT <i class="glyphicon glyphicon-arrow-right"></i> </button>
+          </div>
+        </div>
+        <div class="box-body">
+          <div class="row" style="margin: 10px;">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th><i class="glyphicon glyphicon-scale"></i> GCV ADB (kcal)</th>
+                  <th><i class="glyphicon glyphicon-scale"></i> GCV ARB (kcal)</th>
+                  <th><i class="glyphicon glyphicon-scale"></i> NCV (kcal)</th>
+                  <th><!----></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="product in buyer.product">
+                  <td>{{ product.product_name }}</td>
+                  <td>{{ product.gcv_adb_min | number }} - {{ product.gcv_adb_max | number }}</td>
+                  <td>{{ product.gcv_arb_min | number }} - {{ product.gcv_arb_max | number }}</td>
+                  <td>{{ product.ncv_min | number }} - {{ product.ncv_max | number }}</td>
+                  <td><span class="pull-right">
+                    
+                    <!--<button type="button" ng-click="viewProduct({ id: product.id })" class="btn btn-info"><i class="glyphicon glyphicon-eye-open"></i></button>-->
+                    <a href="#" ng-click="deleteProduct(product)"><i class="glyphicon glyphicon-remove"></i></a>
+                  </span></td>
+                </tr>
+                <tr ng-if="displayedCollection.length == 0">
+                  <td colspan="7" class="text-center">No data available</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+</section>

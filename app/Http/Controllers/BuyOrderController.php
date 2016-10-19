@@ -26,7 +26,7 @@ class BuyOrderController extends Controller
     public function index()
     {
 
-        $buy_order = BuyOrder::with('Buyer')->where('order_status', 'a')->get();
+        $buy_order = BuyOrder::with('Buyer')->where('order_status', 'o')->get();
         return response()->json($buy_order, 200);
     }
 
@@ -123,7 +123,7 @@ class BuyOrderController extends Controller
         $buy_order->commercial_term = $request->commercial_term;
         $buy_order->penalty_desc = $request->penalty_desc;
 
-        $buy_order->order_status = 'a';
+        $buy_order->order_status = 'o';
         $buy_order->progress_status = $request->progress_status;
 
         $buy_order->save();
@@ -146,7 +146,7 @@ class BuyOrderController extends Controller
     {
         $buy_order = BuyOrder::with('Buyer')->find($id);
 
-        if($buy_order->order_status == 'a') {
+        if($buy_order->order_status == 'o') {
             return response()->json($buy_order, 200);
         } else {
             return response()->json(['message' => 'deactivated record'], 404);
@@ -235,7 +235,7 @@ class BuyOrderController extends Controller
         $buy_order->volume = $request->volume;
         $buy_order->product_name = $request->product_name;
         $buy_order->product_id = $request->product_id;
-        $buy_order->order_status = 'a';
+        $buy_order->order_status = 'o';
 
         $buy_order->save();
 
@@ -294,6 +294,12 @@ class BuyOrderController extends Controller
           $buy_order->save();
         }
 
+        return response()->json($buy_order, 200);
+    }
+
+    public function myBuyOrders($id)
+    {
+        $buy_order = BuyOrder::with('Buyer')->where('order_status', 'o')->get();
         return response()->json($buy_order, 200);
     }
 }

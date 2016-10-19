@@ -37,6 +37,6 @@ class CreateIndexPriceTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('index_price');
     }
 }

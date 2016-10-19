@@ -19,3 +19,5 @@ ApplicationConfiguration.registerModule('deal');
 ApplicationConfiguration.registerModule('lead');
 ApplicationConfiguration.registerModule('dashboard');
 ApplicationConfiguration.registerModule('chat');
+ApplicationConfiguration.registerModule('map');
+ApplicationConfiguration.registerModule('port');

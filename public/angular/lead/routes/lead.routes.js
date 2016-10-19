@@ -65,6 +65,13 @@ angular.module('lead').config(['$stateProvider', '$urlRouterProvider',
         roles: ['user', 'trader']
       })
 
+      //SETUP PAGES
+      .state('lead.setup-produk', {
+        url: '/buyer/{id}/setup-produk',
+        templateUrl: '/angular/lead/views/buyer/setup.product.view.html',
+        roles: ['user', 'trader']
+      })
+
       //UPDATE PAGES
       .state('lead.update-buyer', {
         url: '/buyer/update/{id}',
@@ -84,6 +91,16 @@ angular.module('lead').config(['$stateProvider', '$urlRouterProvider',
       .state('lead.update-vendor', {
         url: '/vendor/update/{id}',
         templateUrl: '/angular/lead/views/vendor/update.view.html',
+        roles: ['user', 'trader']
+      })
+      .state('lead.port-buyer', {
+        url: '/port/buyer/{id}',
+        templateUrl: '/angular/lead/views/port/create-buyer-port.view.html',
+        roles: ['user', 'trader']
+      })
+      .state('lead.port-seller', {
+        url: '/port/seller/{id}',
+        templateUrl: '/angular/lead/views/port/create-seller-port.view.html',
         roles: ['user', 'trader']
       })
 

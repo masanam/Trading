@@ -1,7 +1,9 @@
-<section ng-controller="SellerController">
-  <h1>Create Seller</h1>
-
-  <form role="form" ng-submit="create()">
-    <div ng-include="'/angular/lead/views/seller/form.view.seller.html'"></div>
+<div class="modal-header" ng-controller="SellerController">
+  <button type="button" class="close" ng-click="close()">&times;</button>
+  <h4 class="modal-title">Create Port</h4>
+</div>
+<div class="modal-body" ng-init="init()">
+  <form role="form" ng-submit="savePortBuyer()">
+    <div ng-include="'/angular/lead/views/seller/form.view.html'"></div>
   </form>
-</section>
+</div>

@@ -7,6 +7,22 @@ angular.module('dashboard').controller('IndexPriceController', ['$scope', 'Index
     $scope.frequency = 'monthly';
 
     $scope.labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+    $scope.reviewLabels = [];
+    
+    $scope.month = [];
+    $scope.month[0] = "January";
+    $scope.month[1] = "February";
+    $scope.month[2] = "March";
+    $scope.month[3] = "April";
+    $scope.month[4] = "May";
+    $scope.month[5] = "June";
+    $scope.month[6] = "July";
+    $scope.month[7] = "August";
+    $scope.month[8] = "September";
+    $scope.month[9] = "October";
+    $scope.month[10] = "November";
+    $scope.month[11] = "December";
+
     $scope.series = ['Series A', 'Series B'];
     $scope.data = [
       [65, 59, 80, 81, 56, 55, 40],
@@ -49,6 +65,7 @@ angular.module('dashboard').controller('IndexPriceController', ['$scope', 'Index
       Index.post({ action: 'price' },
         { indexId: choosenIndex, date_start: dateStart, date_end: dateEnd, frequency: $scope.frequency },
         function(res){
+          //console.log(res.indices);
           $scope.headerPrices = res.indices;
           $scope.indexPrices = res.prices;
           $scope.series = [];
@@ -62,8 +79,9 @@ angular.module('dashboard').controller('IndexPriceController', ['$scope', 'Index
           }
 
           //transpose series
-          for(x=0; x<$scope.indexPrices.length; x++){
-            $scope.labels[x] = $scope.indexPrices[x].date;
+          for(x=$scope.indexPrices.length-1; x>=0; x--){
+            var formattedDate = $scope.month[new Date().getMonth()];
+            $scope.labels.push($scope.indexPrices[x].date);
 
             for(y in $scope.indexPrices[x]){
               if(y !== 'date'){

@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('concession').controller('ConcessionController', ['$scope', '$http', '$stateParams', '$state', 'Concession',
-  function($scope, $http, $stateParams, $state, Concession) {
+angular.module('concession').controller('ConcessionController', ['$scope', '$http', '$stateParams', '$state', 'Concession', '$uibModal', '$window',
+  function($scope, $http, $stateParams, $state, Concession, $uibModal, $window) {
     $scope.concessions = [];
     $scope.concession = {};
 
@@ -46,7 +46,12 @@ angular.module('concession').controller('ConcessionController', ['$scope', '$htt
 
     $scope.findOne = function() {
       $scope.concessionId = $stateParams.id;
-      $scope.concession = Concession.get({ id: $scope.concessionId });
+      $scope.concession = Concession.get({ action: 'detail', id: $scope.concessionId });
     };
+    
+    $scope.goBack = function(){
+      $window.history.back();
+    };
+    
   }
 ]);

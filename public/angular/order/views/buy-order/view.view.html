@@ -38,21 +38,31 @@
     </div>
     <div class="box-body">
       <div class="row-fluid" style="margin:10px">
+        <div class="col-md-12 col-lg-12">
+          <table class="table">
+            <tbody>
+              <tr>
+                <td><h4><b>Gross Caloric ARB <div class="pull-right">:</div></b></h4></td>
+                <td><h4>{{buy_order.gcv_arb_min}} - {{buy_order.gcv_arb_max}} kcal</h4></td>
+                <td class="hidden-xs hidden-sm"><h4><b>Gross Caloric ADB <div class="pull-right">:</div></b></h4></td>
+                <td class="hidden-xs hidden-sm"><h4>{{buy_order.gcv_adb_min}} - {{buy_order.gcv_adb_max}} kcal</h4></td>
+                <td class="hidden-xs hidden-sm"><h4><b>Total Sulphur <div class="pull-right">:</div></b></h4></td>
+                <td class="hidden-xs hidden-sm"><h4>{{buy_order.ncv_min}} - {{buy_order.ncv_max}} kcal</h4></td>
+              </tr>
+              <tr class="hidden-md hidden-lg">
+                <td><h4><b>Gross Caloric ADB <div class="pull-right">:</div></b></h4></td>
+                <td><h4>{{buy_order.gcv_adb_min}} - {{buy_order.gcv_adb_max}} kcal</h4></td>
+              </tr>
+              <tr class="hidden-md hidden-lg">
+                <td><h4><b>Total Sulphur <div class="pull-right">:</div></b></h4></td>
+                <td><h4>{{buy_order.ncv_min}} - {{buy_order.ncv_max}} kcal</h4></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
         <div class="col-md-6 col-lg-6">
           <table class="table table-bordered">
             <tbody>
-              <tr>
-                <td><b>Gross Caloric ARB <div class="pull-right">:</div></b></td>
-                <td>{{buy_order.gcv_arb_min}} - {{buy_order.gcv_arb_max}} kcal</td>
-              </tr>
-              <tr>
-                <td><b>Gross Caloric ADB <div class="pull-right">:</div></b></td>
-                <td>{{buy_order.gcv_adb_min}} - {{buy_order.gcv_adb_max}} kcal</td>
-              </tr>
-              <tr>
-                <td><b>Nett Caloric <div class="pull-right">:</div></b></td>
-                <td>{{buy_order.ncv_min}} - {{buy_order.ncv_max}} kcal</td>
-              </tr>
               <tr>
                 <td><b>Ash <div class="pull-right">:</div></b></td>
                 <td>{{buy_order.ash_min}} - {{buy_order.ash_max}} %</td>
@@ -62,16 +72,6 @@
                 <td>{{buy_order.ts_min}} - {{buy_order.ts_max}} %</td>
               </tr>
               <tr>
-                <td><b>Size <div class="pull-right">:</div></b></td>
-                <td>{{buy_order.size_min}} - {{buy_order.size_max}} mm</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="col-md-6 col-lg-6">
-          <table class="table table-bordered">
-            <tbody>
-              <tr>
                 <td><b>Total Moisture <div class="pull-right">:</div></b></td>
                 <td>{{buy_order.tm_min}} - {{buy_order.tm_max}} %</td>
               </tr>
@@ -79,6 +79,12 @@
                 <td><b>Inherent Moisture <div class="pull-right">:</div></b></td>
                 <td>{{buy_order.im_min}} - {{buy_order.im_max}} %</td>
               </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-md-6 col-lg-6">
+          <table class="table table-bordered">
+            <tbody>
               <tr>
                 <td><b>Fixed Carbon <div class="pull-right">:</div></b></td>
                 <td>{{buy_order.fc_min}} - {{buy_order.fc_max}} %</td>
@@ -90,6 +96,10 @@
               <tr>
                 <td><b>Hardness <div class="pull-right">:</div></b></td>
                 <td>{{buy_order.hgi_min}} - {{buy_order.hgi_max}} %</td>
+              </tr>
+              <tr>
+                <td><b>Size <div class="pull-right">:</div></b></td>
+                <td>{{buy_order.size_min}} - {{buy_order.size_max}} mm</td>
               </tr>
             </tbody>
           </table>

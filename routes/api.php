@@ -43,6 +43,14 @@ Route::group(['middleware' => ['cors']], function() {
         'create', 'edit'
     ]]);
 
+    Route::post('port/buyer/store', 'PortController@storeBuyerPort');
+    Route::post('port/seller/store', 'PortController@storeSellerPort');
+    Route::get('port/buyer/my/{buyer_id}', 'PortController@buyerMyPort');
+    Route::get('port/seller/my/{buyer_id}', 'PortController@sellerMyPort');
+    Route::resource('port', 'PortController', ['except' => [
+        'create', 'edit'
+    ]]);
+
     Route::get('seller/total', 'SellerController@getTotalSeller');
     Route::get('seller/search/{search?}', 'SellerController@search');
     Route::resource('seller', 'SellerController', ['except' => [
@@ -101,8 +109,8 @@ Route::group(['middleware' => ['cors']], function() {
         'create', 'edit'
     ]]);
 
-    Route::get('buy-deal/chat/{buy_deal}', 'BuyDealChatController@showAllBuyDealChatsByOrderDeal');
-    Route::post('buy-deal/chat/send', 'BuyDealChatController@sendChat');
+    // Route::get('buy-deal/chat/{buy_deal}', 'BuyDealChatController@showAllBuyDealChatsByOrderDeal');
+    // Route::post('buy-deal/chat/send', 'BuyDealChatController@sendChat');
     Route::delete('buy-deal/{dealId}', 'BuyDealController@destroyByDeal');
     Route::get('buy-deal/getByDeal/{dealId}', 'BuyDealController@getByDeal');
     Route::get('buy-deal/getOneByDealAndOrder/{buyOrder}/{dealId}', 'BuyDealController@getOneByDealAndOrder');
@@ -111,8 +119,8 @@ Route::group(['middleware' => ['cors']], function() {
         'create', 'edit'
     ]]);
     
-    Route::get('sell-deal/chat/{sell_deal}', 'SellDealChatController@showAllSellDealChatsByOrderDeal');
-    Route::post('sell-deal/chat/send', 'SellDealChatController@sendChat');
+    // Route::get('sell-deal/chat/{sell_deal}', 'SellDealChatController@showAllSellDealChatsByOrderDeal');
+    // Route::post('sell-deal/chat/send', 'SellDealChatController@sendChat');
     Route::delete('sell-deal/{dealId}', 'SellDealController@destroyByDeal');
     Route::get('sell-deal/getByDeal/{dealId}', 'SellDealController@getByDeal');
     Route::get('sell-deal/getOneByDealAndOrder/{sellOrder}/{dealId}', 'SellDealController@getOneByDealAndOrder');
