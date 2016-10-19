@@ -69,10 +69,7 @@ class PortController extends Controller
         $port->draft_height = $request->draft_height;
         $port->save();
 
-        $buyer_port = BuyerPort::where('buyer_id', '=', $buyer_id)->get();
-        $buyer_port->port = $port;
-
-        return response()->json($buyer_port, 200);
+        return response()->json($port, 200);
     }
 
     /**
