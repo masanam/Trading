@@ -57,6 +57,18 @@
                  fill-opacity="0.35">
               </shape>
             </span>
+            <span ng-repeat="port in ports">
+              <marker ng-if="port.polygon === ''" position="{{port.latitude}}, {{port.longitude}}" id="mark{{port.id}}" on-click="showDetail({{port}})"></marker>
+              <shape name="polygon" ng-if="port.polygon !== ''" on-click="showDetail({{port}})"
+                 id="mark{{port.id}}"
+                 paths="{{port.polygon}}
+                 stroke-color="#00FFFF"
+                 stroke-opacity="0.8"
+                 stroke-weight="2"
+                 fill-color="#00FFFF"
+                 fill-opacity="0.35">
+              </shape>
+            </span>
             <info-window id="info-window" default-style="false" maxWidth="800px">
               <div ng-non-bindable="" style="width:500px" class="no-gutter">
                 <h3>Name: {{concession.concession_name}}</h3>

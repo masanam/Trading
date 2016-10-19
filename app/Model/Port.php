@@ -11,4 +11,8 @@ class Port extends Model
 {
     protected $table = 'ports';
 
+    public function Concession() {
+    	return $this->hasMany('App\Model\Concession');
+    }
+
 }

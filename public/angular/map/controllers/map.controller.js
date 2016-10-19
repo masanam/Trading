@@ -6,6 +6,7 @@ angular.module('map').controller('MapController', ['$scope', '$http', '$statePar
     $scope.filters = [];
     $scope.concession = {};
     $scope.concessions = [];
+    $scope.ports = [];
     $scope.product = undefined;
     
     NgMap.getMap().then(function(map) {
@@ -38,6 +39,15 @@ angular.module('map').controller('MapController', ['$scope', '$http', '$statePar
       }else{
         $scope.concessions = [];
       }
+      
+      var c_length = $scope.concessions.length;
+
+      while(c_length--){
+        console.log('bangsat');
+      }
+
+      // $scope.ports = $scope.concessions.port;
+      console.log($scope.ports);
     };
     
     $scope.addFilter = function(){
