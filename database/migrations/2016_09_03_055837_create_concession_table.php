@@ -24,21 +24,21 @@ class CreateConcessionTable extends Migration
             $table->decimal('latitude', 10, 8);
             $table->decimal('longitude', 11, 8);
             $table->longText('polygon');
-            $table->integer('size');
-            $table->decimal('stripping_ratio', 4, 2);
-            $table->integer('resource');
-            $table->integer('reserves');
-            $table->integer('contracted_volume');
-            $table->integer('remaining_volume');
+            $table->integer('size')->nullable();
+            $table->decimal('stripping_ratio', 4, 2)->nullable();
+            $table->integer('resource')->nullable();
+            $table->integer('reserves')->nullable();
+            $table->integer('contracted_volume')->nullable();
+            $table->integer('remaining_volume')->nullable();
             $table->integer('annual_production');
             $table->string('hauling_road_name')->nullable(); //nama jalanannya
-            $table->string('road_accessibility'); //mine, province
-            $table->integer('road_capacity');
+            $table->integer('stockpile_capacity'); //kapasitas 
+            $table->integer('stockpile_coverage');
             $table->integer('stockpile_distance');
             $table->integer('port_id')->nullable();
             $table->decimal('port_distance', 6, 2);
             $table->string('license_type');
-            $table->date('license_expiry_date');
+            $table->date('license_expiry_date')->nullable();
             $table->char('status', 1); // A = Active , X = Deleted
             $table->timestamps();
         });

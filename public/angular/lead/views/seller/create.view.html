@@ -8,13 +8,10 @@
       <div class="box-header with-border">
         <h1 class="box-title" style="font-size: 25px">Create Sellers</h1>
         <div class="box-tools pull-right">
-          <button type="button" class="btn btn-danger" ui-sref="lead.seller">
-          <i class="glyphicon glyphicon-arrow-left"></i> Back
-        	</button>
           <button type="button" class="btn btn-primary" ng-click="openModalNewSeller()">
             <b>+</b> Add New
           </button>
-          <button type="button" class="btn btn-success" ui-sref="lead.setup-concession-seller">
+          <button type="button" class="btn btn-primary" ui-sref="lead.setup-concession-seller({ id: seller.id })">
             <i class="glyphicon glyphicon-arrow-right"></i> Next
           </button>
         </div>

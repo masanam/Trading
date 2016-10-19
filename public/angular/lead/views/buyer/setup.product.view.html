@@ -15,33 +15,18 @@
         </div>
         <div class="box-body">
           <div class="row" style="margin: 10px;">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th><i class="glyphicon glyphicon-scale"></i> GCV ADB (kcal)</th>
-                  <th><i class="glyphicon glyphicon-scale"></i> GCV ARB (kcal)</th>
-                  <th><i class="glyphicon glyphicon-scale"></i> NCV (kcal)</th>
-                  <th><!----></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr ng-repeat="product in buyer.product">
-                  <td>{{ product.product_name }}</td>
-                  <td>{{ product.gcv_adb_min | number }} - {{ product.gcv_adb_max | number }}</td>
-                  <td>{{ product.gcv_arb_min | number }} - {{ product.gcv_arb_max | number }}</td>
-                  <td>{{ product.ncv_min | number }} - {{ product.ncv_max | number }}</td>
-                  <td><span class="pull-right">
-                    
-                    <!--<button type="button" ng-click="viewProduct({ id: product.id })" class="btn btn-info"><i class="glyphicon glyphicon-eye-open"></i></button>-->
-                    <a href="#" ng-click="deleteProduct(product)"><i class="glyphicon glyphicon-remove"></i></a>
-                  </span></td>
-                </tr>
-                <tr ng-if="displayedCollection.length == 0">
-                  <td colspan="7" class="text-center">No data available</td>
-                </tr>
-              </tbody>
-            </table>
+          <div class="select-box" ng-init="findAllProducts()">
+              <label for="id">Product:</label>
+              <ui-select ng-model="product.selected" style="min-width: 300px;" title="Choose a person" append-to-body="true">
+                <ui-select-match placeholder="Product">{{ product.selected.product_name }}</ui-select-match>
+                <ui-select-choices repeat="product in products | propsFilter: {product_name: $select.search}">
+                  <div ng-bind-html="product_name | highlight: $select.search"></div>
+                  <small>
+                    {{product.product_name}}
+                  </small>
+                </ui-select-choices>
+              </ui-select>
+          </div>
           </div>
         </div>
       </div>

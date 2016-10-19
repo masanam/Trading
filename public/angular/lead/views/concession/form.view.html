@@ -1,74 +1,102 @@
 <div class="form-group">
-  <label for="concession_name">Name:</label>
-  <input type="text" class="form-control" id="concession_name" ng-model="concession.concession_name">
+  <label for="concession_name">Name*:</label>
+  <input type="text" class="form-control" id="concession_name" ng-model="concession.concession_name" required>
 </div>
 
 <div class="form-group">
-  <label for="reserves">Owner:</label>
-  <input type="text" class="form-control" id="owner" ng-model="concession.owner">
+  <label for="reserves">Owner*:</label>
+  <input type="text" class="form-control" id="owner" ng-model="concession.owner" required>
 </div>
 
 <div class="form-group">
-  <label for="reserves">Address:</label>
-  <input type="text" class="form-control" id="address" ng-model="concession.address">
+  <label for="reserves">Address*:</label>
+  <input type="text" class="form-control" id="address" ng-model="concession.address" required>
 </div>
 
 <div class="form-group">
   <div class="input-group col-md-12" style="margin-bottom: 5px;">
-    <span class="input-group-addon" style="width: 200px;">City</span>
-    <input type="text" class="form-control" placeholder="City" ng-model="concession.city">
-    <span class="input-group-addon">Country</span>
-    <input type="text" class="form-control" placeholder="Country" ng-model="concession.country">
+    <span class="input-group-addon" style="width: 200px;">City*</span>
+    <input type="text" class="form-control" placeholder="City" ng-model="concession.city" required>
+    <span class="input-group-addon">Country of coal purchase*</span>
+    <input type="text" class="form-control" placeholder="Country" ng-model="concession.country" required>
   </div>
 </div>
 
 <div class="form-group">
   <div class="input-group col-md-12" style="margin-bottom: 5px;">
     <div class="col-md-6">
-      <label for="reserves">Resources:</label>
-      <input type="text" class="form-control" id="resource" ng-model="concession.resource">
+      <label for="reserves">Total Coal Resources (MMT):</label>
+      <input type="number" min="0" class="form-control" id="resource" ng-model="concession.resource">
     </div>
     <div class="col-md-6">
-      <label for="reserves">Mineable Reserves:</label>
-      <input type="text" class="form-control" id="reserves" ng-model="concession.reserves">
+      <label for="reserves">Total Coal Reserves (MMT):</label>
+      <input type="number" min="0" class="form-control" id="reserves" ng-model="concession.reserves">
     </div>
   </div>
 </div>
 
 <div class="form-group">
   <label for="stripping_ratio">Stripping Ratio:</label>
-  <input type="text" class="form-control" id="stripping_ratio" ng-model="concession.stripping_ratio">
+  <input type="number" min="0" max="99" step="any" class="form-control" id="stripping_ratio" ng-model="concession.stripping_ratio">
 </div>
 
 <div class="form-group">
-  <label for="size">Size:</label>
-  <input type="text" class="form-control" id="size" ng-model="concession.size">
+  <label for="size">Size of Concession (Ha):</label>
+  <input type="number" min="0" class="form-control" id="size" ng-model="concession.size">
 </div>
 
 <div class="form-group">
     <label>Volumes</label>
     <div class="input-group col-md-12" style="margin-bottom: 5px;">
-        <span class="input-group-addon" style="width: 200px;">Contracted</span>
-        <input type="text" class="form-control" placeholder="Contracted Volume" ng-model="concession.contracted_volume">
-        <span class="input-group-addon">Remaining</span>
-        <input type="text" class="form-control" placeholder="Remaining Volume" ng-model="concession.remaining_volume">
+      <span class="input-group-addon" style="width: 250px;">Annual Production Capacity (MMT)*</span>
+      <input type="number" min="0" class="form-control" placeholder="Annual Production" ng-model="concession.annual_production" required>
+      <span class="input-group-addon" style="width: 200px;">Stockpile Distance*</span>
+      <input type="number" min="0" class="form-control" placeholder="Stockpile Distance" ng-model="concession.stockpile_distance" required>
+    </div>
+    <div class="input-group col-md-12" style="margin-bottom: 5px;">
+      <span class="input-group-addon" style="width: 250px;">Stockpile Capacity</span>
+      <input type="number" min="0" class="form-control" placeholder="Stockpile Capacity" ng-model="concession.stockpile_capacity" required>
+      <span class="input-group-addon" style="width: 200px;">Stockpile Coverage</span>
+      <input type="number" min="0" class="form-control" placeholder="Stockpile Coverage" ng-model="concession.stockpile_coverage" required>
+    </div>
+    <div class="input-group col-md-12" style="margin-bottom: 5px;">
+      <span class="input-group-addon" style="width: 250px;">Contracted volume (MMT)</span>
+      <input type="number" min="0" class="form-control" placeholder="Contracted Volume" ng-model="concession.contracted_volume">
+      <span class="input-group-addon" style="width: 200px;">Remaining</span>
+      <input type="number" min="0" class="form-control" placeholder="Remaining Volume" ng-model="concession.remaining_volume">
+    </div>
+</div>
+
+<div class="form-group">
+  <label>Hauling Road</label>
+  <div class="input-group col-md-12" style="margin-bottom: 5px;">
+    <!--span class="input-group-addon" style="width: 200px;">Hauling Road Name</span-->
+    <div class="btn-group">
+      <label class="btn btn-default" ng-model="concession.hauling_road_name" uib-btn-radio="'Province Road'" required>Province Road</label>
+      <label class="btn btn-default" ng-model="concession.hauling_road_name" uib-btn-radio="'Mine Road'" required>Mine Road</label>
     </div>
 </div>
 
 <div class="form-group">
     <label>Port Location</label>
     <div class="input-group col-md-12" style="margin-bottom: 5px;">
-        <span class="input-group-addon" style="width: 200px;">Latitude</span>
-        <input type="text" class="form-control" placeholder="Latitude" ng-model="concession.latitude">
-        <span class="input-group-addon">Longitude</span>
-        <input type="text" class="form-control" placeholder="Longitude" ng-model="concession.longitude">
+      <span class="input-group-addon" style="width: 200px;">Name</span>
+      <input type="text" class="form-control" id="port_name" ng-model="concession.port_name" required>
+      <span class="input-group-addon" style="width: 200px;">Distance</span>
+      <input type="number" min="0" step="any" class="form-control" id="port_distance" ng-model="concession.port_distance" required>
+    </div>
+    <div class="input-group col-md-12" style="margin-bottom: 5px;">
+      <span class="input-group-addon" style="width: 200px;">Latitude</span>
+      <input type="number" min="-90" max="90" step="any" class="form-control" placeholder="Latitude" ng-model="concession.latitude" required>
+      <span class="input-group-addon" style="width: 200px;">Longitude</span>
+      <input type="number" min="-180" max="180" step="any" class="form-control" placeholder="Longitude" ng-model="concession.longitude" required>
     </div>
 </div>
 
 <div class="form-group">
-  <label for="polygon">Polygon: </label>
+  <label for="polygon">Polygon*: </label>
   Format : [[6,110], [8,110], ...]
-  <input type="text" class="form-control" ng-model="polygon.polygonString" />
+  <input type="text" class="form-control" ng-model="polygon.polygonString" required/>
   <button type="button" class="btn btn-default" ng-click="updatePolygonString(polygon.polygonString)">Update Map</button>
   <button type="button" class="btn btn-danger" ng-click="resetPolygon();resetMap();">Clear Text</button>
   <!--ng-map zoom="4" center="Indonesia" on-click="addMarkerAndPath()"-->
@@ -94,53 +122,19 @@
 </div>
 
 <div class="form-group">
-  <label>Ports</label>
+  <label>License Type*</label>
   <div class="input-group col-md-12" style="margin-bottom: 5px;">
-      <span class="input-group-addon" style="width: 200px;">Name</span>
-      <input type="text" class="form-control" id="port_name" ng-model="concession.port_name">
-      <span class="input-group-addon">Distance</span>
-      <input type="text" class="form-control" id="port_distance" ng-model="concession.port_distance">
+    <div class="btn-group">
+      <label class="btn btn-default" ng-model="concession.license_type" uib-btn-radio="'IUP Explorasi'" required>IUP Explorasi</label>
+      <label class="btn btn-default" ng-model="concession.license_type" uib-btn-radio="'IUP Produksi'" required>IUP Produksi</label>
+      <label class="btn btn-default" ng-model="concession.license_type" uib-btn-radio="'PKP2B'" required>PKP2B</label>
+    </div>
   </div>
 </div>
-
 <div class="form-group">
-  <label>Roads</label>
+  <label>Expiry Date</label>
   <div class="input-group col-md-12" style="margin-bottom: 5px;">
-    <!--span class="input-group-addon" style="width: 200px;">Hauling Road Name</span-->
-    <input type="text" class="form-control" placeholder="Hauling Road Name" ng-model="concession.hauling_road_name">
-  </div>
-</div>
-
-<div class="form-group">
-  <div class="input-group col-md-12" style="margin-bottom: 5px;">
-    <span class="input-group-addon" style="width: 200px;">Annual Production</span>
-    <input type="text" class="form-control" placeholder="Annual Production" ng-model="concession.annual_production">
-    <span class="input-group-addon">Stockpile Distance</span>
-    <input type="text" class="form-control" placeholder="Stockpile Distance" ng-model="concession.stockpile_distance">
-  </div>
-</div>
-
-<div class="form-group">
-  <div class="input-group col-md-12" style="margin-bottom: 5px;">
-      <span class="input-group-addon" style="width: 200px;">Accessibility</span>
-      <input type="text" class="form-control" placeholder="Accessibility" ng-model="concession.road_accessibility">
-      <span class="input-group-addon">Capacity</span>
-      <input type="text" class="form-control" placeholder="Capacity" ng-model="concession.road_capacity">
-  </div>
-</div>
-
-<div class="form-group">
-  <label for="river_capacity">River Capacity:</label>
-  <input type="text" class="form-control" id="river_capacity" ng-model="concession.river_capacity">
-</div>
-
-<div class="form-group">
-  <label>License</label>
-  <div class="input-group col-md-12" style="margin-bottom: 5px;">
-      <span class="input-group-addon" style="width: 200px;">Type</span>
-      <input type="text" class="form-control" placeholder="Type" ng-model="concession.license_type">
-      <span class="input-group-addon">Expiry Date</span>
-      <input type="date" class="form-control" placeholder="Expiry Date" ng-model="concession.license_expiry_date">
+    <input type="date" class="form-control" placeholder="Expiry Date" ng-model="concession.license_expiry_date" required>
   </div>
 </div>
 
