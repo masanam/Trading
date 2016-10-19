@@ -1,0 +1,25 @@
+<table st-table="displayedCollection" st-safe-src="ports" class="table select-table" ng-init="findMyPortsSeller()">
+  <thead>
+    <tr>
+      <th colspan="1"><input st-search="port_name" class="form-control" placeholder="search ..." type="text"/></th>
+      <th colspan="1"><input st-search="distance" class="form-control" placeholder="search ..." type="text"/></th>
+    </tr>
+    <tr>
+      <th st-sort="port_name">Port Name</th>
+      <th st-sort="distance">Distance (KM)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="port in displayedCollection">
+      <td>{{ port.port[0].port_name }}</td>
+      <td>{{ port.distance }}</td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="2" class="text-center">
+        <div st-pagination="" st-items-by-page="10" st-displayed-pages="5"></div>
+      </td>
+    </tr>
+  </tfoot>
+</table>
