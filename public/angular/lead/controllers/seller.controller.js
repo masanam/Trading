@@ -408,7 +408,6 @@ angular.module('seller').controller('CreateConcessionModalController', function 
   };
   
   $scope.resetMap = function(){
-    console.log($scope.map);
     $scope.map.shapes.foo.setMap(null);
   };
   
@@ -446,6 +445,8 @@ angular.module('seller').controller('CreateConcessionModalController', function 
     for(var idx=0; idx < coordinates.length; idx++){
       $scope.polygon.array.push([coordinates[idx].lat(), coordinates[idx].lng()]);
     }
+    
+    $scope.map.shapes.foo.setMap($scope.polygon.array);
     
     $scope.polygon.polygonString = createStringByArray($scope.polygon.array);
     
