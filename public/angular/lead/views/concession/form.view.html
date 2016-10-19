@@ -67,17 +67,20 @@
 
 <div class="form-group">
   <label for="polygon">Polygon: </label>
-  <textarea class="form-control" ng-model="polygon"></textarea>
-  <button type="button" class="btn btn-default" ng-click="updatePolygon()">Update Polygon</button>
-  <button type="button" class="btn btn-danger" ng-click="resetPolygon()">Clear Polygon</button>
+  Format : [[6,110], [8,110], ...]
+  <input type="text" class="form-control" ng-model="polygon.polygonString" />
+  <button type="button" class="btn btn-default" ng-click="updatePolygonString(polygon.polygonString)">Update Map</button>
+  <button type="button" class="btn btn-danger" ng-click="resetPolygon();resetMap();">Clear Text</button>
   <!--ng-map zoom="4" center="Indonesia" on-click="addMarkerAndPath()"-->
   <ng-map zoom="4" center="Indonesia">
-    <!--shape name="polygon" id="foo"
-      path="{{polygon}}"
+    <shape name="polygon" id="foo"
+      ng-show="polygon.array.length > 0"
+      path="{{polygon.array}}"
       stroke-color="#FF0000"
       stroke-opacity="1.0"
       stroke-weight="3">
-    </shape-->
+    </shape>
+    <!--shape name="polygon" path="{{polygon}}" ></shape-->
     <drawing-manager
       on-overlaycomplete="onMapOverlayCompleted()"
       drawing-control-options="{position: 'TOP_CENTER',drawingModes:['polygon']}"
