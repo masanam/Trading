@@ -119,8 +119,8 @@ class ConcessionController extends Controller
         $concession->remaining_volume = $request->remaining_volume;
         $concession->annual_production = $request->annual_production;
         $concession->hauling_road_name = $request->hauling_road_name;
-        $concession->road_accessibility = $request->road_accessibility;
-        $concession->road_capacity = $request->road_capacity;
+        $concession->stockpile_capacity = $request->stockpile_capacity;
+        $concession->stockpile_coverage = $request->stockpile_coverage;
         $concession->stockpile_distance = $request->stockpile_distance;
         $concession->port_id = $request->port_id;
         $concession->port_distance = $request->port_distance;
@@ -246,5 +246,12 @@ class ConcessionController extends Controller
         $total = Concession::count();
         $status = array('count' => $total);        
         return response()->json($status, 200);
+    }
+
+    public function findMyConcession($id)
+    {
+        $concession = Concession::where('status', 'a')->where('seller_id', $id)->get();
+
+        return response()->json($concession, 200);
     }
 }

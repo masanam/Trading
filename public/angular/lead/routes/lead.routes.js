@@ -71,6 +71,11 @@ angular.module('lead').config(['$stateProvider', '$urlRouterProvider',
         templateUrl: '/angular/lead/views/buyer/setup.product.view.html',
         roles: ['user', 'trader']
       })
+      .state('lead.setup-concession-seller', {
+        url: '/seller/setup-concession-seller/{id}',
+        templateUrl: '/angular/lead/views/concession/index.view.html',
+        roles: ['user', 'trader']
+      })
 
       //UPDATE PAGES
       .state('lead.update-buyer', {
