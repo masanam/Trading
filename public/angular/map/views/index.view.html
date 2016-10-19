@@ -56,16 +56,7 @@
                  fill-color="#FF0000"
                  fill-opacity="0.35">
               </shape>
-              <marker ng-if="pos.polygon === ''" position="{{pos.port.latitude}}, {{pos.port.longitude}}" id="mark{{pos.id}}" on-click="showDetail({{pos}})"></marker>
-              <shape name="polygon" ng-if="pos.polygon !== ''" on-click="showDetail({{pos.port}})"
-                 id="mark{{pos.port.id}}"
-                 paths="{{pos.polygon}}"
-                 stroke-color="#00FFFF"
-                 stroke-opacity="0.8"
-                 stroke-weight="2"
-                 fill-color="#00FFFF"
-                 fill-opacity="0.35">
-              </shape>
+              <marker style="fill-color: #ADFF2F;" ng-if="pos.polygon === ''" position="{{pos.port.latitude}}, {{pos.port.longitude}}" id="mark{{pos.id}}" on-click="showPortDetail({{pos.port}})"></marker>
             </span>
             <info-window id="info-window" default-style="false" maxWidth="800px">
               <div ng-non-bindable="" style="width:500px" class="no-gutter">
@@ -225,6 +216,110 @@
                         </div>
                       </div>
                       &nbsp;
+                    </uib-tab>
+                  </uib-tabset>
+                </div>
+              </div>
+            </info-window>
+            <info-window id="port-info-window" default-style="false" maxWidth="800px">
+              <div ng-non-bindable="" style="width:500px" class="no-gutter">
+                <h3>Port Name: {{port.port_name}}</h3>
+                <hr/>
+                <div class="nav-tabs-custom">
+                  <uib-tabset active="active">
+                    <uib-tab index="0" heading="Port">
+                      <div id="port">
+                        <div class="row">
+                          <!--div class="col-lg-4">
+                            <uib-tabset active="activePill" vertical="true" type="pills">
+                              <uib-tab index="0" ng-click="selectPill(0)" heading="Location"></uib-tab>
+                              <uib-tab index="1" ng-click="selectPill(1)" heading="Resources"></uib-tab>
+                              <uib-tab index="2" ng-click="selectPill(2)" heading="Licenses"></uib-tab>
+                            </uib-tabset>
+                          </div-->
+                          <div class="col-lg-12">
+                            &nbsp;
+                            <div>
+                              <section class="col-lg-6">
+                                <div class="row">
+                                  <span class="col-lg-6">Location:</span> 
+                                  <span class="col-lg-6">{{port.location || 'N/A'}}</span><br/>
+                                </div>
+                                <div class="row">
+                                  <span class="col-lg-6">Owner:</span> 
+                                  <span class="col-lg-6">{{port.owner || 'N/A'}}</span><br/>
+                                </div>
+                                <div class="row">
+                                  <span class="col-lg-6">Position:</span> 
+                                  <span class="col-lg-6">{{port.latitude || 'N/A'}}, {{port.longitude || 'N/A'}}</span><br/>
+                                </div>
+                                <div class="row">
+                                  <span class="col-lg-6">River Capacity:</span> 
+                                  <span class="col-lg-6">{{port.river_capacity || 'N/A'}}</span><br/>
+                                </div>
+                                <div class="row">
+                                  <span class="col-lg-6">Anchorage Distance:</span> 
+                                  <span class="col-lg-6">{{port.anchorage_distance | number : 3 || 'N/A'}}</span><br/>
+                                </div>
+                                <div class="row">
+                                  <span class="col-lg-6">Has Conveyor:</span> 
+                                  <span class="col-lg-6">{{port.has_conveyor || 'N/A'}}</span><br/>
+                                </div>
+                                <div class="row">
+                                  <span class="col-lg-6">Has Crusher:</span> 
+                                  <span class="col-lg-6">{{port.has_crusher || 'N/A'}}</span><br/>
+                                </div>
+                                <div class="row">
+                                  <span class="col-lg-6">Has Blending:</span> 
+                                  <span class="col-lg-6">{{port.has_blending || 'N/A'}}</span><br/>
+                                </div>
+                                <div class="row">
+                                  <span class="col-lg-6">Draft Height:</span> 
+                                  <span class="col-lg-6">{{port.draft_height || 'N/A'}}</span><br/>
+                                </div>
+                              </section>
+                            </div>
+                          </div>
+                          &nbsp;
+                        </div>
+                      </div>
+                    </uib-tab>
+                    <uib-tab index="1" heading="Connected Concessions">
+                      <div id="port">
+                        <div class="row">
+                          <!--div class="col-lg-4">
+                            <uib-tabset active="activePill" vertical="true" type="pills">
+                              <uib-tab index="0" ng-click="selectPill(0)" heading="Location"></uib-tab>
+                              <uib-tab index="1" ng-click="selectPill(1)" heading="Resources"></uib-tab>
+                              <uib-tab index="2" ng-click="selectPill(2)" heading="Licenses"></uib-tab>
+                            </uib-tabset>
+                          </div-->
+                          <div class="col-lg-12"  ng-repeat="connectedConcession in connectedConcessions">
+                            &nbsp;
+                            <div>
+                              <button class="btn btn-primary col-lg-12">
+                                <div class="row">
+                                  <span class="col-lg-6">Concession Name:</span> 
+                                  <span class="col-lg-6">{{connectedConcession.concession_name || 'N/A'}}</span><br/>
+                                </div>
+                                <div class="row">
+                                  <span class="col-lg-6">Owner:</span> 
+                                  <span class="col-lg-6">{{connectedConcession.owner || 'N/A'}}</span><br/>
+                                </div>
+                                <div class="row">
+                                  <span class="col-lg-6">Position:</span> 
+                                  <span class="col-lg-6">lat : {{connectedConcession.latitude || 'N/A'}}, long : {{connectedConcession.longitude || 'N/A'}}</span><br/>
+                                </div>
+                                <div class="row">
+                                  <span class="col-lg-6">Port Distance:</span> 
+                                  <span class="col-lg-6">{{connectedConcession.port_distance || 'N/A'}} km</span><br/>
+                                </div>
+                              </button>
+                            </div>
+                          </div>
+                          &nbsp;
+                        </div>
+                      </div>
                     </uib-tab>
                   </uib-tabset>
                 </div>

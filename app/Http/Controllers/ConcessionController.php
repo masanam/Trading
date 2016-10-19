@@ -38,7 +38,7 @@ class ConcessionController extends Controller
     public function filter()
     {
         if (!$_GET) {
-          var_dump('asdasd');
+          //var_dump('asdasd');
           $concession = Concession::with('Product', 'Seller', 'Port')->where('status', 'a')->get();
         } else {
             if(isset($_GET['gt'])){
@@ -62,6 +62,13 @@ class ConcessionController extends Controller
                                             $q->where('sellers.status', 'a');
                                           }])
                                           ->with('Port')
+                                          ->whereHas('Product', function($q) use ($gt_params) {
+                                            $q->where('products.status', 'a')
+                                              ->where('products.'.$gt_params[0].'_min', '>=', $gt_params[1]);
+                                          })
+                                          ->whereHas('Seller', function($q) {
+                                            $q->where('sellers.status', 'a');
+                                          })
                                           ->where('concession.status', 'a')
                                           ->get();
               }
@@ -86,6 +93,13 @@ class ConcessionController extends Controller
                                           ->with(['Seller' => function($q) {
                                             $q->where('sellers.status', 'a');
                                           }])
+                                          ->whereHas('Product' , function($q) use ($lt_params) {
+                                            $q->where('products.status', 'a')
+                                              ->where('products.'.$lt_params[0].'_max', '<=', $lt_params[1]);
+                                          })
+                                          ->whereHas('Seller' , function($q) {
+                                            $q->where('sellers.status', 'a');
+                                          })
                                           ->with('Port')
                                           ->where('concession.status', 'a')
                                           ->get();
@@ -114,6 +128,14 @@ class ConcessionController extends Controller
                                             $q->where('sellers.status', 'a');
                                           }])
                                           ->with('Port')
+                                          ->whereHas('Product' , function($q) use ($bet_params) {
+                                            $q->where('products.status', 'a')
+                                              ->where('products.'.$bet_params[0].'_min', '<=', $bet_params[1])
+                                              ->where('products.'.$bet_params[0].'_max', '>=', $bet_params[1]);
+                                          })
+                                          ->whereHas('Seller' , function($q) {
+                                            $q->where('sellers.status', 'a');
+                                          })
                                           ->where('concession.status', 'a')
                                           ->get();
               }
@@ -211,10 +233,22 @@ class ConcessionController extends Controller
      */
     public function detail($id = "")
     {
-        $concession = Concession::with(array('Product' => function($query)
+
+        $concession = Concession::with(['Product' => function($query)
         {
-             $query->where('status', 'a');
-        }))->find($id);
+            $query->where('status', 'a');
+        }, 'Port'])->find($id);
+
+        /*$concession = Concession::with(['Product' => function($q){
+            $q->where('status', 'a');
+        }])->with('Port')->whereHas('Product', function($q){
+            $q->where('status', 'a');
+        })->find($id);*/
+        
+        /*if(!$concession){
+          $concession = Concession::with('Product', 'Port')->find($id);
+        }*/
+//>>>>>>> 5c69c345e3f017d587eb61befa151fc621f2819a
         
         if($concession->status == 'a') {
             return response()->json($concession, 200);
