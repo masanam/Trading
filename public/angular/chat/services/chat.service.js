@@ -1,8 +1,7 @@
 'use strict';
 
-angular.module('chat').factory('Chat', ['firebase', 'Authentication',
-  function (firebase, Authentication) {
-    var buy_chats = [];
+angular.module('chat').factory('Chat', ['firebase', '$firebaseArray', 'Authentication',
+  function (firebase, $firebaseArray, Authentication) {
     var sell_chats = [];
     var config = {
       apiKey: 'AIzaSyACILHAOiy4G9TtCgs0szgZBZokr4cduuo',
@@ -17,16 +16,14 @@ angular.module('chat').factory('Chat', ['firebase', 'Authentication',
       findChatByDeal: function(type, order_deal, callback) {
         if(type === 'buy') {
           var path_chat_buy = 'buy_deal_chat/' + order_deal.id;
-          var chats_tracker_buy = mainApp.database().ref(path_chat_buy);
-          chats_tracker_buy.on('child_added', function(data) {
-            return callback(data.val());
-          });
+          var ref_buy = mainApp.database().ref(path_chat_buy);
+          var buy_chats = $firebaseArray(ref_buy);
+          return callback(buy_chats);
         } else if(type === 'sell') {
           var path_chat_sell = 'sell_deal_chat/' + order_deal.id;
-          var chats_tracker_sell = mainApp.database().ref(path_chat_sell);
-          chats_tracker_sell.on('child_added', function(data) {
-            return callback(data.val());
-          });
+          var ref_sell = mainApp.database().ref(path_chat_sell);
+          var sell_chats = $firebaseArray(ref_sell);
+          return callback(sell_chats);
         }
       },
 

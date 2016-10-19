@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Model\Port;
 use App\Model\BuyerPort;
 use App\Model\SellerPort;
+use App\Model\Concession;
 use Auth;
 
 use Illuminate\Http\Request;
@@ -80,7 +81,15 @@ class PortController extends Controller
      */
     public function show($id)
     {
-        //
+        $port = Port::find($id);
+
+        return response()->json($port, 200);
+    }
+
+    public function connectedConcessions($id) {
+        $connectedConcessions = Concession::where('port_id', $id)->get();
+
+        return response()->json($connectedConcessions, 200);
     }
 
     /**

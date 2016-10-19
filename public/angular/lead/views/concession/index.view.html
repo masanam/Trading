@@ -20,7 +20,7 @@
         </div>
       </div>
       <div class="box-body">
-        <table ng-init="findMyConcessions()" st-table="displayedCollection" st-safe-src="concessions" class="table table-striped">
+        <!-- <table ng-init="findMyConcessions()" st-table="displayedCollection" st-safe-src="concessions" class="table table-striped">
           <thead>
             <tr>
               <th colspan="5"><input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
@@ -56,7 +56,19 @@
               </td>
             </tr>
           </tfoot>
-        </table>
+        </table> -->
+        <div class="select-box" ng-init="find()">
+          <label for="id">Name of Concession :</label>
+          <ui-select ng-model="concession.selected" style="min-width: 300px;" title="Choose a concession" append-to-body="true">
+            <ui-select-match placeholder="Name Of Concession">{{ concession.selected.concession_name }}</ui-select-match>
+            <ui-select-choices repeat="concession in concessions | propsFilter: {concession_name: $select.search}">
+              <div ng-bind-html="concession_name | highlight: $select.search"></div>
+              <small>
+                {{concession.concession_name}}
+              </small>
+            </ui-select-choices>
+          </ui-select>
+        </div>
       </div>
     </div>
   </div>

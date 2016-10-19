@@ -47,6 +47,7 @@ Route::group(['middleware' => ['cors']], function() {
     Route::post('port/seller/store', 'PortController@storeSellerPort');
     Route::get('port/buyer/my/{buyer_id}', 'PortController@buyerMyPort');
     Route::get('port/seller/my/{buyer_id}', 'PortController@sellerMyPort');
+    Route::get('port/{id}/concession', 'PortController@connectedConcessions');
     Route::resource('port', 'PortController', ['except' => [
         'create', 'edit'
     ]]);
@@ -130,8 +131,8 @@ Route::group(['middleware' => ['cors']], function() {
         'create', 'edit'
     ]]);
 
+    Route::get('order-deal/user/{user_id}', 'BuySellDealController@orderDealByUser');
     Route::resource('order-deal', 'BuySellDealController@index');
-    Route::resource('order-deal/user/{user_id}', 'BuySellDealController@orderDealByUser');
     
     Route::get('deal/table/{status}', 'DealController@index');
     Route::get('deal/status/{deal}/{status}', 'DealController@changeStatus');
