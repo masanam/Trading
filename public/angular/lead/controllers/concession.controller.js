@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('concession').controller('ConcessionController', ['$scope', '$http', '$stateParams', '$state', 'Concession', '$uibModal', '$window',
-  function($scope, $http, $stateParams, $state, Concession, $uibModal, $window) {
+angular.module('concession').controller('ConcessionController', ['$scope', '$http', '$stateParams', '$state', 'Concession', '$uibModal', '$window', 'Product',
+  function($scope, $http, $stateParams, $state, Concession, $uibModal, $window, Product) {
     $scope.concessions = [];
     $scope.concession = {};
 
@@ -53,5 +53,61 @@ angular.module('concession').controller('ConcessionController', ['$scope', '$htt
       $window.history.back();
     };
     
+    $scope.addProduct = function () {
+      
+      var modalInstance = $uibModal.open({
+        windowClass: 'xl-modal',
+        templateUrl: './angular/lead/views/product/create-from-concession.view.html',
+        controller: 'CreateProductFromConcessionController',
+        scope: $scope,
+      });
+    };
+    
+    $scope.deleteProduct = function(product){
+      Product.delete({ id: product.id }, function (response) {
+        $scope.product = response;
+        
+        $scope.seller.product.splice($scope.seller.product.indexOf(product), 1);
+        $scope.close();
+        $scope.success = true;
+      }, function (response) {
+        $scope.error = response.data.message;
+      });
+    };
+    
   }
 ]);
+
+angular.module('concession').controller('CreateProductFromConcessionController', function ($scope, $filter, $uibModalInstance, Product, Authentication) {
+  
+  $scope.product = new Product();
+  
+  var concessionId = $scope.concession.id;
+    
+  $scope.createProduct= function(){
+    
+    $scope.success = $scope.error = null;
+    //$scope.product.license_expired_date = $filter('date')($scope.product.license_expired_date, 'yyyy-MM-dd');
+
+    var product = $scope.product;
+    console.log($scope.concession);
+    product.concession_id = concessionId;
+    
+    console.log(product);
+    
+    product.$save(function (response) {
+      $scope.product = response;
+      
+      $scope.concession.product.push($scope.product);
+      $scope.close();
+      $scope.success = true;
+    }, function (response) {
+      $scope.error = response.data.message;
+    });
+    
+  };
+  
+  $scope.close = function () {
+    $uibModalInstance.dismiss('cancel');
+  };
+});

@@ -59,6 +59,7 @@ class ProductController extends Controller
         $product = new Product();
         $product->seller_id = $request->seller_id ? $request->seller_id : NULL;
         $product->buyer_id = $request->buyer_id ? $request->buyer_id : NULL;
+        $product->concession_id = $request->buyer_id ? $request->concession_id : NULL;
         //$product->commercial_term = $request->commercial_term;
         $product->product_name = $request->product_name;
         /*$product->ready_date = $request->ready_date;
@@ -163,6 +164,7 @@ class ProductController extends Controller
 
         $product->seller_id = $request->seller_id ? $request->seller_id : NULL;
         $product->buyer_id = $request->buyer_id ? $request->buyer_id : NULL;
+        $product->concession_id = $request->buyer_id ? $request->concession_id : NULL;
         //$product->commercial_term = $request->commercial_term;
         $product->product_name = $request->product_name;
         /*$product->ready_date = $request->ready_date;
