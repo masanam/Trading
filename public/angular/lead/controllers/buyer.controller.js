@@ -73,6 +73,10 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
       $scope.buyers = Buyer.query();
     };
 
+    $scope.findAllProducts = function() {
+      $scope.products = Product.query();
+    };
+
     $scope.openCreateBuyerModal = function () {
       var modalInstance = $uibModal.open({
         windowClass: 'xl-modal',
