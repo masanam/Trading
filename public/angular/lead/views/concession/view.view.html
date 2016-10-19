@@ -2,7 +2,7 @@
   <!-- HEADER -->
   <div class="row submenu-header">
     <div class="submenu-header-item">
-      <button type="button" class="btn btn-default" ui-sref="lead.index">
+      <button type="button" class="btn btn-default" ui-sref="concession.index">
         <i class="glyphicon glyphicon-arrow-left"></i> Back
       </button>
     </div>
@@ -15,9 +15,8 @@
   <div style="height:200px; padding:10px; background:#eee;">
     <div class="col-xs-2" style="background-image:url('/images/default.jpg'); background-size: cover; height:180px"></div>
     <div class="col-xs-10">
-      <h1>{{ lead.company_name }}</h1>
-      <h3>{{ lead.industry }}</h3>
-      <p>{{ lead.address }}</p>
+      <h1>{{ concession.concession_name }}</h1>
+      <h3>{{ concession.address }}</h3>
     </div>
   </div>
 
@@ -26,57 +25,92 @@
       <div class="row" style="background:#eee; padding: 10px;">
         <h3>About</h3>
 
-        <button type="button" class="btn btn-primary" ng-click="goToUpdatePopup(lead.id)">
+        <button type="button" class="btn btn-primary" ng-click="goToUpdatePopup(concession.id)">
           <i class="glyphicon glyphicon-pencil"></i> Update
         </button><br><br>
 
         <table class="table table-striped">
-          <tr><td>Address:</td><td>{{ lead.address }}</td></tr>
-          <tr><td>City:</td><td>{{ lead.city }}</td></tr>
-          <tr><td>Phone:</td><td>{{ lead.phone }}</td></tr>
-          <tr><td>Email:</td><td>{{ lead.email }}</td></tr>
-          <tr><td>Web:</td><td>{{ lead.web }}</td></tr>
-          <tr><td>Desc:</td><td>{{ lead.descritrtion }}</td></tr>
-          <tr ng-if="lead.status == 'a'"><td>Status:</td> <td>Active</td></tr>
-          <tr ng-if="lead.status == 'x'"><td>Status:</td> <td>Deactivated</td></tr>
+          <tr><td>Address:</td><td>{{ concession.address }}</td></tr>
+          <tr><td>City:</td><td>{{ concession.city }}</td></tr>
+          <tr><td>Country:</td><td>{{ concession.country }}</td></tr>
+          <tr><td>Latitude:</td><td>{{ concession.latitude }}</td></tr>
+          <tr><td>Longitude:</td><td>{{ concession.longitude }}</td></tr>
+          <tr><td>Size:</td><td>{{ concession.size | number }}</td></tr>
+          <tr><td>Stripping Ratio:</td><td>{{ concession.stripping_ratio | number }}</td></tr>
+          <tr><td>Resources:</td><td>{{ concession.resources | number }}</td></tr>
+          <tr><td>Reserves:</td><td>{{ concession.reserves | number }}</td></tr>
+          <tr><td>Contracted Volume:</td><td>{{ concession.contracted_volume | number }}</td></tr>
+          <tr><td>Remaining Volume:</td><td>{{ concession.remaining_volume | number }}</td></tr>
+          <tr><td>Distance to Port:</td><td>{{ concession.port_distance | number }}</td></tr>
+          <tr><td>Annual Production:</td><td>{{ concession.annual_production | number }}</td></tr>
+          <tr ng-if="concession.status == 'a'"><td>Status:</td> <td>Active</td></tr>
+          <tr ng-if="concession.status == 'x'"><td>Status:</td> <td>Deactivated</td></tr>
         </table>
-
-        <ng-map center="{{lead.longitude}}, {{lead.latitude}}">
-          <marker center="{{lead.longitude}}, {{lead.latitude}}"></marker>
-        </ng-map>
       </div>
     </div>
 
     <div class="col-lg-8">
       <div class="row" style="background:#eee; padding: 10px; margin-left:10px;">
-        <h3>Contacts</h3>
-
-        <button type="button" class="btn btn-info" ng-click="addNew()">
-          <i class="glyphicon glyphicon-plus"></i> Add New Contact
-        </button><br><br>
-
-        <ul class="list-group">
-          <li class="list-group-item" ng-repeat="contact in lead.contact">
-            {{ contact.name }}
-            <i class="glyphicon glyphicon-envelope" style="margin-left: 50px;"></i> {{ contact.email }}
-            <i class="glyphicon glyphicon-earphone" style="margin-left: 50px;"></i> {{ contact.phone }}
-
-            <span class="pull-right">
-              <a></a>
-            </span>
-          </li>
-        </ul>
+        <ng-map zoom="4" center="Indonesia" default-style="false" style="width:100%; height:500px;">
+          <marker ng-if="concession.polygon === ''" position="{{concession.latitude}}, {{concession.longitude}}" id="mark{{concession.id}}" on-click="showDetail({{pos}})"></marker>
+          <shape name="polygon" ng-if="concession.polygon !== ''"
+             id="mark{{concession.id}}"
+             paths="{{concession.polygon}}"
+             stroke-color="#FF0000"
+             stroke-opacity="0.8"
+             stroke-weight="2"
+             fill-color="#FF0000"
+             fill-opacity="0.35">
+          </shape>
+        </ng-map>
+      </div>
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title" style="font-size: 25px">Products</h3>
+          <div class="box-tools pull-right">
+            <button type="button" ng-click="addProduct()" class="btn btn-info"><i class="glyphicon glyphicon-plus"></i> Add New Product</button>
+          </div>
+        </div>
+        <div class="box-body">
+          <div class="row" style="margin: 10px;">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th><i class="glyphicon glyphicon-scale"></i> GCV ADB (kcal)</th>
+                  <th><i class="glyphicon glyphicon-scale"></i> GCV ARB (kcal)</th>
+                  <th><i class="glyphicon glyphicon-scale"></i> NCV (kcal)</th>
+                  <th><!--span class="pull-right">
+                    <a ui-sref="lead.view-product({ id: product.id })"><i class="glyphicon glyphicon-eye-open"></i></a>
+                    <a href="#" ng-click="deleteProduct(product)"><i class="glyphicon glyphicon-remove"></i></a>
+                  </span--></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="product in concession.product">
+                  <td>{{ product.product_name }}</td>
+                  <td>{{ product.gcv_adb_min | number }} - {{ product.gcv_adb_max | number }}</td>
+                  <td>{{ product.gcv_arb_min | number }} - {{ product.gcv_arb_max | number }}</td>
+                  <td>{{ product.ncv_min | number }} - {{ product.ncv_max | number }}</td>
+                  <td><span class="pull-right">
+                    <a ui-sref="lead.view-product({ id: product.id })"><i class="glyphicon glyphicon-eye-open"></i></a>
+                    <a href="#" ng-click="deleteProduct(product)"><i class="glyphicon glyphicon-remove"></i></a>
+                  </span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
 
-
-      <div class="row" style="background:#eee; padding: 10px; margin-left:10px; margin-top:10px;">
+      <!--div class="row" style="background:#eee; padding: 10px; margin-left:10px; margin-top:10px;">
         <h3>Insights</h3>
         -- FEATURES COMING SOON --
       </div>
 
       <div class="row" style="background:#eee; padding: 10px; margin-left:10px; margin-top:10px;">
         <h3>Order History</h3>
-        <button type="button" class="btn btn-success" ng-click="goToPendingOrders(lead.id)">
+        <button type="button" class="btn btn-success" ng-click="goToPendingOrders(concession.id)">
           <i class="glyphicon glyphicon-plus"></i> Add New Order
         </button><br><br>
 
@@ -101,9 +135,6 @@
               <tr ng-hide="lastOrders.length > 0">
                 <td colspan="3">There is no previous orders.</td>
               </tr>
-              <!--tr>
-                <td colspan="3"><a class="btn btn-block btn-blue" ng-click="goToLastOrders(lead.id)">View More</a></td>
-              </tr-->
           </tbody>
         </table>
       </div>
@@ -111,7 +142,7 @@
       <div class="row" style="background:#eee; padding: 10px; margin-left:10px; margin-top:10px;">
         <h3>Notes</h3>
         -- FEATURES COMING SOON --
-      </div>
+      </div-->
 
     </div>
   </div>
