@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('concession').controller('ConcessionController', ['$scope', '$http', '$stateParams', '$state', 'Concession',
-  function($scope, $http, $stateParams, $state, Concession) {
+angular.module('concession').controller('ConcessionController', ['$scope', '$http', '$stateParams', '$state', 'Concession', '$uibModal',
+  function($scope, $http, $stateParams, $state, Concession, $uibModal) {
     $scope.concessions = [];
     $scope.concession = {};
 
@@ -48,5 +48,6 @@ angular.module('concession').controller('ConcessionController', ['$scope', '$htt
       $scope.concessionId = $stateParams.id;
       $scope.concession = Concession.get({ action: 'detail', id: $scope.concessionId });
     };
+    
   }
 ]);
