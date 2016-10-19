@@ -3,10 +3,16 @@
   <h4 class="modal-title">Create Buy Order</h4>
 </div>
 <div class="modal-body" ng-init="findAllBuyOrders();">
-	<div>
-		<select class="col-lg-6" ng-options="order as order.buyer.company_name for order in orders track by order.id" ng-model="selectedOrder" ng-change="chooseBuyOrder(); isSelected = true;"></select>
-		<button style="margin-left= 10px; margin-right=10px;" ng-click="submit()" class="col-lg-1 btn btn-success">+ Submit</button>
-    <button style="margin-left= 10px; margin-right=10px;" ng-click="close()" class="col-lg-1 btn btn-danger">Cancel</button>
+	<div class="row">
+		<div class="col-lg-8">
+			<select class="col-lg-12" ng-options="order as order.buyer.company_name for order in orders track by order.id" ng-model="selectedOrder" ng-change="chooseBuyOrder(); isSelected = true;"></select>
+		</div>
+		<div class="col-lg-2">
+			<button ng-click="submit()" class="col-lg-12 btn btn-success">+ Submit</button>
+		</div>
+		<div class="col-lg-2">
+		    <button ng-click="close()" class="col-lg-12 btn btn-danger">Cancel</button>
+		</div>
 	</div>
 	<br/>
 	<br/>
@@ -20,6 +26,8 @@
 	        <h1>{{ selectedOrder.buyer.company_name }}</h1>
 	        <label>Product Name : </label>
 	        <p>{{ selectedOrder.product_name }}</p>
+	        <label>Volume : </label>
+	        <p>{{ selectedOrder.volume }}</p>
 	        <label>Address : </label>
 	        <p>{{ selectedOrder.address }}</p>
 	        <label>Order Date : </label>

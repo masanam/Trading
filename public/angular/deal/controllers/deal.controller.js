@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Deal', 'Order', 'Buyer', 'Seller', 'SellDeal', 'BuyDeal', 'Authentication', '$location', '$stateParams', 'Pusher', 'BuyDealChat', 'SellDealChat',
-  function($scope, $uibModal, Deal, Order, Buyer, Seller, SellDeal, BuyDeal, Authentication, $location, $stateParams, Pusher, BuyDealChat, SellDealChat) {
+angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Deal', 'Order', 'Buyer', 'Seller', 'SellDeal', 'BuyDeal', 'Authentication', '$location', '$stateParams', 'BuyDealChat', 'SellDealChat',
+  function($scope, $uibModal, Deal, Order, Buyer, Seller, SellDeal, BuyDeal, Authentication, $location, $stateParams, BuyDealChat, SellDealChat) {
     $scope.deals = [];
 
     $scope.findDeals = function(){
@@ -94,11 +94,11 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
       });
     };
     
-    $scope.deleteOrder = function (order) {
+    $scope.deleteSellOrder = function (order) {
       $scope.sellOrders.splice($scope.sellOrders.indexOf(order), 1);
     };
     
-    $scope.deleteOrder = function (order) {
+    $scope.deleteBuyOrder = function (order) {
       $scope.buyOrders.splice($scope.buyOrders.indexOf(order), 1);
     };
     
@@ -337,7 +337,47 @@ angular.module('deal').controller('AlertModalController', function ($scope, $uib
 });
 
 angular.module('deal').controller('CreateSellModalController', function ($scope, $filter, $uibModalInstance, Deal, Order, Authentication) {
-  
+  $scope.today = function() {
+    $scope.dt = new Date();
+  };
+  $scope.today();
+
+  $scope.dateOptions = {
+    formatYear: 'yyyy',
+    startingDay: 1
+  };
+
+  $scope.open1 = function() {
+    $scope.popup1.opened = true;
+  };
+
+  $scope.setDate = function(year, month, day) {
+    $scope.dt = new Date(year, month, day);
+  };
+
+  $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+  $scope.format = $scope.formats[1];
+  $scope.altInputFormats = ['M!/d!/yyyy'];
+
+  $scope.popup1 = {
+    opened: false
+  };
+
+  var tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  var afterTomorrow = new Date();
+  afterTomorrow.setDate(tomorrow.getDate() + 1);
+  $scope.events = [
+    {
+      date: tomorrow,
+      status: 'full'
+    },
+    {
+      date: afterTomorrow,
+      status: 'partially'
+    }
+  ];
+
   $scope.initializeOrder = function(){
     $scope.order = {
       id: undefined,
@@ -407,6 +447,9 @@ angular.module('deal').controller('CreateSellModalController', function ($scope,
     $scope.order.user_id = Authentication.user.id;
 
     var sellOrder = new Order($scope.order);
+
+    console.log($scope.order.deadline);
+    console.log($scope.order.order_date);
     
     sellOrder.$save({ type: 'sell' }, function (response) {
       $scope.order = response;
@@ -436,6 +479,46 @@ angular.module('deal').controller('CreateSellModalController', function ($scope,
 });
 
 angular.module('deal').controller('CreateBuyModalController', function ($scope, $filter, $uibModalInstance, Deal, Order, Authentication) {
+  $scope.today = function() {
+    $scope.dt = new Date();
+  };
+  $scope.today();
+
+  $scope.dateOptions = {
+    formatYear: 'yyyy',
+    startingDay: 1
+  };
+
+  $scope.open1 = function() {
+    $scope.popup1.opened = true;
+  };
+
+  $scope.setDate = function(year, month, day) {
+    $scope.dt = new Date(year, month, day);
+  };
+
+  $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+  $scope.format = $scope.formats[1];
+  $scope.altInputFormats = ['M!/d!/yyyy'];
+
+  $scope.popup1 = {
+    opened: false
+  };
+
+  var tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  var afterTomorrow = new Date();
+  afterTomorrow.setDate(tomorrow.getDate() + 1);
+  $scope.events = [
+    {
+      date: tomorrow,
+      status: 'full'
+    },
+    {
+      date: afterTomorrow,
+      status: 'partially'
+    }
+  ];
   
   $scope.initializeOrder = function(){
     $scope.order = {
@@ -752,8 +835,6 @@ angular.module('deal').controller('ExistingBuyModalController', function ($scope
 
   $scope.chooseBuyOrder = function(){
     $scope.success = $scope.error = null;
-      
-    console.log($scope.selectedOrder);
     //$scope.order.deadline = new Date($scope.order.deadline);
     $scope.selectedOrder.deadline = $filter('date')($scope.selectedOrder.deadline, 'yyyy-MM-dd');
     $scope.selectedOrder.order_date = $filter('date')($scope.selectedOrder.order_date, 'yyyy-MM-dd');
@@ -837,7 +918,9 @@ angular.module('deal').controller('ExistingSellModalController', function ($scop
     };
   };
   
-  $scope.selectedOrder = {};
+  $scope.selectedOrder = {
+    company_name: ''
+  };
   $scope.isSelected = false;
   
   $scope.findAllSellOrders = function() {
@@ -846,20 +929,23 @@ angular.module('deal').controller('ExistingSellModalController', function ($scop
 
   $scope.chooseSellOrder = function(){
     $scope.success = $scope.error = null;
-      
-    console.log($scope.selectedOrder);
     //$scope.order.deadline = new Date($scope.order.deadline);
     $scope.selectedOrder.deadline = $filter('date')($scope.selectedOrder.deadline, 'yyyy-MM-dd');
     $scope.selectedOrder.order_date = $filter('date')($scope.selectedOrder.order_date, 'yyyy-MM-dd');
     $scope.selectedOrder.user_id = Authentication.user.id;
     
     // $scope.selectedOrder = Order.query({ type: 'sell' , id: buyOrder });
+    for(var i = 0; i < $scope.selectedOrder.seller.length; i++){
+      var seller = $scope.selectedOrder.seller[i];
+      $scope.selectedOrder.company_name = seller.company_name;
+    }
     $scope.selectedOrder.deadline = new Date($scope.selectedOrder.deadline);
     $scope.selectedOrder.order_date = new Date($scope.selectedOrder.order_date);
-    $scope.success = true;    
+    $scope.success = true;
   };
 
   $scope.submit = function() {
+    console.log($scope.selectedOrder);
     $scope.sellOrders.push($scope.selectedOrder);
     $scope.close();
   };

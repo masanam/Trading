@@ -6,6 +6,7 @@ angular.module('map').controller('MapController', ['$scope', '$http', '$statePar
     $scope.filters = [];
     $scope.concession = {};
     $scope.concessions = [];
+    $scope.ports = [];
     $scope.product = undefined;
     
     NgMap.getMap().then(function(map) {
