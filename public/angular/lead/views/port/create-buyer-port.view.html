@@ -8,12 +8,9 @@
       <div class="box-header with-border">
         <h1 class="box-title" style="font-size: 25px">Create Port</h1>
         <div class="box-tools pull-right">
-          <button type="button" class="btn btn-primary" ui-sref="lead.buyer">
+          <button type="button" class="btn btn-primary" ng-click="backToProduct()">
             <i class="glyphicon glyphicon-arrow-left"></i> Back
         	</button>
-          <button type="button" class="btn btn-primary" ng-click="openModalAvailableBuyer()">
-            <b>+</b> Add From Available
-          </button>
           <button type="button" class="btn btn-primary" ng-click="openModalNewBuyer()">
             <b>+</b> Add New
           </button>
@@ -23,7 +20,21 @@
         </div>
       </div>
       <div class="box-body">
-  	    <div ng-include="'/angular/lead/views/port/table-buyer.view.html'"></div>
+        <div class="row" style="margin: 10px;">
+          <div class="select-box" ng-init="findAllPorts()">
+            <label for="id">Port:</label>
+            <ui-select ng-model="port.selected" style="min-width: 300px;" title="Choose a port" append-to-body="true">
+              <ui-select-match placeholder="Product">{{ port.selected.port_name }}</ui-select-match>
+              <ui-select-choices repeat="port in ports | propsFilter: {port_name: $select.search}">
+                <div ng-bind-html="port_name | highlight: $select.search"></div>
+                <small>
+                  {{port.port_name}}
+                </small>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+        </div>
+  	     <!-- <div ng-include="'/angular/lead/views/port/table-buyer.view.html'"></div> -->
       </div>
     </div>
   </div>

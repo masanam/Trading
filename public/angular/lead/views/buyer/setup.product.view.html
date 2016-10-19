@@ -9,24 +9,49 @@
           <h3 class="box-title" style="font-size: 25px">Products Collections</h3>
           <div class="box-tools pull-right">
            <button type="button" ui-sref="lead.create-buyer" class="btn btn-danger"><i class="glyphicon glyphicon-arrow-left"></i> Back</button>
-            <button type="button" ng-click="addProduct()" class="btn btn-info"><i class="glyphicon glyphicon-plus"></i> Add New Product</button>
-            <button type="button" ng-click="nexToPort()" class="btn btn-success">NEXT <i class="glyphicon glyphicon-arrow-right"></i> </button>
+            
+            <button type="button" ng-click="nexToPort()" class="btn btn-success">Next <i class="glyphicon glyphicon-arrow-right"></i> </button>
           </div>
         </div>
         <div class="box-body">
+        <form role="form">
           <div class="row" style="margin: 10px;">
-          <div class="select-box" ng-init="findAllProducts()">
+<<<<<<< HEAD
+          <div class="select-box" ng-init="findAllBuyers()">
               <label for="id">Product:</label>
               <ui-select ng-model="product.selected" style="min-width: 300px;" title="Choose a person" append-to-body="true">
-                <ui-select-match placeholder="Product">{{ product.selected.product_name }}</ui-select-match>
+                <ui-select-match placeholder="Product">{{ buyer.selected.product_name }}</ui-select-match>
+                <ui-select-choices repeat="product in buyer.product | propsFilter: {product_name: $select.search}">
+=======
+            <div class="select-box" ng-init="findAllProducts()">
+              <label for="id">Product:</label>{{product}}
+              <ui-select ng-model="product" style="min-width: 300px;" title="Choose a product" append-to-body="true">
+                <ui-select-match placeholder="Product">{{ $select.selected.product_name }}</ui-select-match>
                 <ui-select-choices repeat="product in products | propsFilter: {product_name: $select.search}">
+>>>>>>> 559109c99bfabc55cf93ecb2347452fcc6befc3a
                   <div ng-bind-html="product_name | highlight: $select.search"></div>
                   <small>
                     {{product.product_name}}
                   </small>
                 </ui-select-choices>
               </ui-select>
+<<<<<<< HEAD
           </div>
+
+        </form>   
+        </br>
+          <div class="text-center col-md-4 col-md-offset-4">
+            OR
+          </div>
+              </br>
+              </br>
+            <button type="button" class="btn btn-primary btn-block" ng-click="addProduct()">
+                <b>+</b> Add New Product
+            </button>
+        </br>    
+=======
+            </div>
+>>>>>>> 559109c99bfabc55cf93ecb2347452fcc6befc3a
           </div>
         </div>
       </div>
