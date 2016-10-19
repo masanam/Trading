@@ -15,10 +15,10 @@
         </div>
         <div class="box-body">
           <div class="row" style="margin: 10px;">
-          <div class="select-box" ng-init="findAllProducts()">
-              <label for="id">Product:</label>
-              <ui-select ng-model="product.selected" style="min-width: 300px;" title="Choose a person" append-to-body="true">
-                <ui-select-match placeholder="Product">{{ product.selected.product_name }}</ui-select-match>
+            <div class="select-box" ng-init="findAllProducts()">
+              <label for="id">Product:</label>{{product}}
+              <ui-select ng-model="product" style="min-width: 300px;" title="Choose a product" append-to-body="true">
+                <ui-select-match placeholder="Product">{{ $select.selected.product_name }}</ui-select-match>
                 <ui-select-choices repeat="product in products | propsFilter: {product_name: $select.search}">
                   <div ng-bind-html="product_name | highlight: $select.search"></div>
                   <small>
@@ -26,7 +26,7 @@
                   </small>
                 </ui-select-choices>
               </ui-select>
-          </div>
+            </div>
           </div>
         </div>
       </div>

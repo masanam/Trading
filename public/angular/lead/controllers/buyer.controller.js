@@ -69,6 +69,10 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
       $location.path('lead/buyer/'+$scope.buyer.selected.id+'/setup-product');
     };
 
+    $scope.nexToPort= function(){
+      $location.path('lead/port/buyer/'+$stateParams.id);
+    };
+
     $scope.findAllBuyers = function() {
       $scope.buyers = Buyer.query();
     };
