@@ -26,7 +26,8 @@ module.exports = {
     'bower_components/firebase/firebase.js',
     'bower_components/angularfire/dist/angularfire.js',
     'bower_components/angularfire/dist/angularfire.js',
-    'bower_components/angular-scroll-glue/src/scrollglue.js'
+    'bower_components/angular-scroll-glue/src/scrollglue.js',
+    'bower_components/angular-ui-select/dist/select.js'
   ],
   vendorCSSFiles: [
     'bower_components/bootstrap/dist/css/bootstrap-theme.css',
@@ -39,6 +40,7 @@ module.exports = {
     'bower_components/admin-lte/dist/css/skins/skin-blue.min.css',
     'bower_components/admin-lte/plugins/iCheck/square/blue.css',
     'bower_components/angular-smart-table/dist/smart-table.css',
+    'bower_components/angular-ui-select/dist/select.css'
   ],
   vendorFontFiles: [
     'bower_components/bootstrap/fonts/glyphicons-halflings-regular.ttf',

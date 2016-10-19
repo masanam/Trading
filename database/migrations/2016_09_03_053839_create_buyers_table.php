@@ -21,12 +21,12 @@ class CreateBuyersTable extends Migration
             $table->boolean('is_affiliated');
             $table->string('phone');
             $table->string('email');
-            $table->string('web');
+            $table->string('web')->nullable();;
             $table->string('address');
             $table->string('city');
             $table->string('country');
-            $table->decimal('latitude', 10, 8);
-            $table->decimal('longitude', 11, 8);
+            $table->decimal('latitude', 10, 8)->nullable();;
+            $table->decimal('longitude', 11, 8)->nullable(); ;
             $table->string('industry'); //cement, powerplant, pulp paper, general
             $table->integer('annual_demand');
             $table->string('preferred_trading_term');

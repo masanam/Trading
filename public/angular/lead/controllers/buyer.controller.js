@@ -57,12 +57,20 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
       });
 
       buyer.$save(function(response) {
-        $location.path('lead/buyer/'+response.id+'/setup-produk');
+        $location.path('lead/buyer/'+response.id+'/setup-product');
         // $('#createBuyerModal').modal('hide');
         // $('.modal-backdrop').hide();
-        $scope.find();
+        $scope.findOne();
         $scope.loading = false;
       });
+    };
+
+    $scope.nextToProduct= function(){
+      $location.path('lead/buyer/'+$scope.buyer.selected.id+'/setup-product');
+    };
+
+    $scope.findAllBuyers = function() {
+      $scope.buyers = Buyer.query();
     };
 
     $scope.openCreateBuyerModal = function () {
