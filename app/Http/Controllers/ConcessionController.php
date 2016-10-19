@@ -235,12 +235,12 @@ class ConcessionController extends Controller
     {
         $concession = Concession::with(['Product' => function($q){
             $q->where('status', 'a');
-        }])->whereHas('Product', function($q){
+        }])->with('Port')->whereHas('Product', function($q){
             $q->where('status', 'a');
         })->find($id);
         
         if(!$concession){
-          $concession = Concession::with('Product')->find($id);
+          $concession = Concession::with('Product', 'Port')->find($id);
         }
         
         if($concession->status == 'a') {
