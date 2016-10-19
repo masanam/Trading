@@ -71,8 +71,8 @@ angular.module('concession').controller('ConcessionController', ['$scope', '$htt
       Product.delete({ id: product.id }, function (response) {
         $scope.product = response;
         
-        $scope.seller.product.splice($scope.seller.product.indexOf(product), 1);
-        $scope.close();
+        $scope.concession.product.splice($scope.concession.product.indexOf(product), 1);
+        //$scope.close();
         $scope.success = true;
       }, function (response) {
         $scope.error = response.data.message;
@@ -231,12 +231,10 @@ angular.module('concession').controller('CreateProductFromConcessionController',
     
     $scope.success = $scope.error = null;
     //$scope.product.license_expired_date = $filter('date')($scope.product.license_expired_date, 'yyyy-MM-dd');
+    
+    $scope.product.concession_id = concessionId;
 
     var product = $scope.product;
-    console.log($scope.concession);
-    product.concession_id = concessionId;
-    
-    console.log(product);
     
     product.$save(function (response) {
       $scope.product = response;
