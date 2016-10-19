@@ -385,18 +385,40 @@ angular.module('seller').controller('CreateProductModalFromSellerController', fu
   };
 });
 
-angular.module('seller').controller('CreateConcessionModalController', function ($scope, $filter, $uibModalInstance, Concession, Authentication) {
+angular.module('seller').controller('CreateConcessionModalController', function ($scope, $filter, $uibModalInstance, Concession, Authentication, NgMap) {
   
   $scope.concession = new Concession();
+  
+  NgMap.getMap().then(function(map) {
+    $scope.map = map;
+  });
     
   $scope.polygon = [];
   
   $scope.resetPolygon = function(){
     $scope.polygon = [];
+    
+    $scope.map.shapes.foo.setMap(null);
+
   };
   
-  $scope.addMarkerAndPath = function(event) {
+  /*$scope.addMarkerAndPath = function(event) {
     $scope.polygon.push([event.latLng.lat(), event.latLng.lng()]);
+  };*/
+    
+  $scope.onMapOverlayCompleted = function(e){
+    var coordinates = e.overlay.latLngs.b[0].b;
+    $scope.polygon = [];
+    
+    //console.log(coordinates[0]);
+    
+    for(var idx=0; idx < coordinates.length; idx++){
+      $scope.polygon.push([coordinates[idx].lat(), coordinates[idx].lng()]);
+    }
+    
+    $scope.polygon = createStringByArray($scope.polygon);
+    
+    //$scope.polygon = e;
   };
   
   function createStringByArray(array) {

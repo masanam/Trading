@@ -66,15 +66,27 @@
 </div>
 
 <div class="form-group">
-  <label for="polygon">Polygon: {{polygon}}</label>
-  <button ng-click="resetPolygon()">Clear Polygon</button>
-  <ng-map zoom="4" center="Indonesia" on-click="addMarkerAndPath()">
-    <shape name="polyline" id="foo"
+  <label for="polygon">Polygon: </label>
+  <textarea class="form-control" ng-model="polygon"></textarea>
+  <button type="button" class="btn btn-default" ng-click="updatePolygon()">Update Polygon</button>
+  <button type="button" class="btn btn-danger" ng-click="resetPolygon()">Clear Polygon</button>
+  <!--ng-map zoom="4" center="Indonesia" on-click="addMarkerAndPath()"-->
+  <ng-map zoom="4" center="Indonesia">
+    <!--shape name="polygon" id="foo"
       path="{{polygon}}"
       stroke-color="#FF0000"
       stroke-opacity="1.0"
       stroke-weight="3">
-    </shape>
+    </shape-->
+    <drawing-manager
+      on-overlaycomplete="onMapOverlayCompleted()"
+      drawing-control-options="{position: 'TOP_CENTER',drawingModes:['polygon']}"
+      drawingControl="true"
+      drawingMode="null"
+      markerOptions="{icon:'www.example.com/icon'}"
+      rectangleOptions="{fillColor:'red'}"
+      circleOptions="{fillColor: '#FFFF00',fillOpacity: 1,strokeWeight: 5,clickable: false,zIndex: 1,editable: true}" >
+    </drawing-manager>
   </ng-map>
 </div>
 
