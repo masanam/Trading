@@ -12,9 +12,9 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
     $scope.nextToConcession= function(){
       console.log($scope.seller.selected);
       if ($scope.seller.selected) {
-      $location.path('lead/seller/setup-concession-seller/'+$scope.seller.selected.id);
+        $location.path('lead/seller/setup-concession-seller/'+$scope.seller.selected.id);
       }else{
-        $scope.error = "Please Select A Owner of Concession or Create New Owner of Concession";
+        $scope.error = 'Please Select A Owner of Concession or Create New Owner of Concession';
       }
     };
     
@@ -35,7 +35,7 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
       if ($scope.product.selected) {
         $location.path('lead/port/seller/'+$stateParams.id);
       }else{
-        $scope.error = "Please Select A Product or Create New product";
+        $scope.error = 'Please Select A Product or Create New product';
       }
     };
 
