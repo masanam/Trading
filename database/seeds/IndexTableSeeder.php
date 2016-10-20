@@ -22,7 +22,7 @@ class IndexTableSeeder extends Seeder
 		Index::create(['id'=>7, 'index_provider' => 'ARGUS', 'index_name' => 'ICI-5', 'quality' => 'GAR 3400']);
 		Index::create(['id'=>8, 'index_provider' => 'HPB', 'index_name' => 'HBA', 'quality' => 'GAR 6322']);
 		Index::create(['id'=>9, 'index_provider' => 'HPB', 'index_name' => 'ECO', 'quality' => 'EcoCoal']);
-		Index::create(['id'=>10, 'index_provider' => 'GLOBALCOAL', 'index_name' => 'NEWC', 'quality' => 'NAR 55']);
+		Index::create(['id'=>10, 'index_provider' => 'GC', 'index_name' => 'NEWC', 'quality' => 'NAR 55']);
 
 		IndexPrice::create(['index_id'=>1, 'date' => '2016-01-04', 'day_of_year' => 4, 'day_of_month' => 4, 'day_of_week' => 1, 'week' => 2, 'month' => 1, 'year' => 2016, 'price' => 37.5]);
 		IndexPrice::create(['index_id'=>1, 'date' => '2016-01-05', 'day_of_year' => 5, 'day_of_month' => 5, 'day_of_week' => 2, 'week' => 2, 'month' => 1, 'year' => 2016, 'price' => 37.5]);

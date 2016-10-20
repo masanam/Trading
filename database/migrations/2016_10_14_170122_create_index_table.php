@@ -18,6 +18,7 @@ class CreateIndexTable extends Migration
             $table->string('index_provider');
             $table->string('index_name');
             $table->string('quality')->nullable();
+            $table->char('frequency', 1);
             
             $table->timestamps();
         });

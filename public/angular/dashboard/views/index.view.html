@@ -1,12 +1,11 @@
 <section ng-controller="IndexPriceController" class="content">
-  <div class="col-lg-2">
+  <div class="col-lg-12">
     <div class="box box-info">
       <div class="box-header with-border">
         <h3 class="box-title">Filters</h3>
       </div>
       <div class="box-body">
-        <button class="btn btn-primary" ng-click="getIndexPrices()">Apply Filter</button>
-        <div class="with-border">
+        <div class="col-lg-3">
           <label>Frequency</label>
           <div class="btn-group">
             <label class="btn btn-default" ng-model="frequency" uib-btn-radio="'daily'" uib-tooltip="Daily">D</label>
@@ -15,33 +14,34 @@
           </div>
         </div>
 
-        <div class="with-border">
+        <div class="col-lg-1">
           <label>Date Start</label>
-          <p class="input-group">
-            <input type="date" class="form-control" ng-model="dateStart" max="{{ dateEnd | date:'yyyy-MM-dd' }}">
-          </p>
+        </div>
+        <div class="col-lg-3">
+          <input type="date" class="form-control" ng-model="dateStart">
         </div>
 
-        <div class="with-border">
+        <div class="col-lg-1">
           <label>Date End</label>
-          <p class="input-group">
-            <input type="date" class="form-control" ng-model="dateEnd" min="{{ dateStart | date:'yyyy-MM-dd' }}">
-          </p>
+        </div>
+        <div class="col-lg-3">
+          <input type="date" class="form-control" ng-model="dateEnd" min="{{ dateStart | date:'yyyy-MM-dd' }}">
         </div>
 
-        <div class="with-border">
+        <div class="col-lg-1">
+          <button class="btn btn-primary" ng-click="getIndexPrices()">Apply Filter</button>
+        </div>
+
+        <div class="col-lg-12">
           <label>Indices</label>
 
           <div ng-init="getIndices()">
-            <div class="btn-group-vertical">
-              <label class="btn btn-default" ng-model="index.choosen" ng-repeat="index in indices track by $index" uib-btn-checkbox>
-                {{ index.index_provider }} - {{ index.index_name }}
-              </label>
-            </div>
+            <label class="btn btn-default" ng-model="index.choosen" style="margin: 0 2px 2px 0;"
+              ng-repeat="index in indices track by $index" uib-btn-checkbox>
+              {{ index.index_provider }} - {{ index.index_name }}
+            </label>
           </div>
         </div>
-
-        <button class="btn btn-primary" ng-click="getIndexPrices()">Apply Filter</button>
       </div>
     </div>
   </div>
@@ -71,7 +71,7 @@
       </div>
     </div>
   </div>
-  <div class="col-lg-4">
+  <div class="col-lg-6">
     <div class="box box-primary">
       <div class="box-header with-border">
         <h3 class="box-title">Indices Comparison</h3>
@@ -90,7 +90,8 @@
       </div>
       <div class="box-body" ng-init="getSingleIndex(index)">
         <canvas id="line" class="chart chart-line" chart-data="singleData[index.id]" style="min-height:200px;"
-          chart-labels="reviewLabels" chart-series="singleSeries[index.id]" chart-options="options"
+          chart-labels="labels  | limitTo:( frequency === 'monthly' ? 12 : frequency === 'weekly' ? 52 : 365 )"
+          chart-series="singleSeries[index.id]" chart-options="options"
           chart-dataset-override="datasetOverride" chart-click="onClick" ng-if="showChart">
         </canvas> 
       </div>

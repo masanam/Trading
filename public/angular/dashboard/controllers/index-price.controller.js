@@ -65,7 +65,7 @@ angular.module('dashboard').controller('IndexPriceController', ['$scope', 'Index
       Index.post({ action: 'price' },
         { indexId: choosenIndex, date_start: dateStart, date_end: dateEnd, frequency: $scope.frequency },
         function(res){
-          //console.log(res.indices);
+          console.log(res);
           $scope.headerPrices = res.indices;
           $scope.indexPrices = res.prices;
           $scope.series = [];
@@ -84,10 +84,10 @@ angular.module('dashboard').controller('IndexPriceController', ['$scope', 'Index
             $scope.labels.push($scope.indexPrices[x].date);
 
             for(y in $scope.indexPrices[x]){
-              if(y !== 'date'){
+              if(y !== 'date' && y !== 'real_date'){
                 if(indexSeries[y] === undefined) indexSeries[y] = indexSequence++;
                 if($scope.data[indexSeries[y]] === undefined) $scope.data[indexSeries[y]] = [];
-                $scope.data[indexSeries[y]][x] = parseFloat($scope.indexPrices[x][y]);
+                $scope.data[indexSeries[y]][$scope.indexPrices.length-x-1] = parseFloat($scope.indexPrices[x][y]);
               }
             }
           }
@@ -113,8 +113,8 @@ angular.module('dashboard').controller('IndexPriceController', ['$scope', 'Index
 
           for(x in res){
             if(!$scope.singleData[index.id][indexSequence]) $scope.singleData[index.id][indexSequence] = [];
-            for(y=res[x].length-1; y>=0; y--){
-              $scope.singleData[index.id][indexSequence][y] = parseFloat(res[x][y].price);
+            for(y=0; y<res[x].length; y++){
+              $scope.singleData[index.id][indexSequence][res[x].length-y-1] = parseFloat(res[x][y].price);
             }
             indexSequence++;
           }
