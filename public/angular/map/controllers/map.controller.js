@@ -94,8 +94,6 @@ angular.module('map').controller('MapController', ['$scope', '$http', '$statePar
     };
 
     $scope.showDetail = function(event, concession) {
-      console.log(event);
-      console.log(concession);
       $scope.concession = Concession.get({ action:'detail', id: concession.id }, function(concession) {
         $scope.concession = concession;
         $scope.map.showInfoWindow('info-window', event.latLng);
@@ -106,7 +104,6 @@ angular.module('map').controller('MapController', ['$scope', '$http', '$statePar
 
     $scope.showPortDetail = function(event, port) {
       $scope.connectedConcessions = Port.query({ id: port.id , concession: 'concession' });
-      console.log($scope.connectedConcessions);
       $scope.port = Port.get({ id: port.id }, function(port) {
         $scope.event = event;
         $scope.port = port;

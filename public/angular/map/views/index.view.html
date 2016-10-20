@@ -350,7 +350,7 @@
                             </uib-tabset>
                           </div-->
                             <uib-tabset class="col-lg-12" active="activePill" vertical="true" type="pills">
-                              <uib-tab ng-repeat="connectedConcession in connectedConcessions" ng-click="showDetail(event, connectedConcession); map.closeInfoWindow();" heading="{{connectedConcession.concession_name}}"></uib-tab>
+                              <uib-tab ng-repeat="connectedConcession in connectedConcessions" ng-click="showDetail(event, connectedConcession); map.hideInfoWindow('port-info-window');" heading="{{connectedConcession.concession_name}}"></uib-tab>
                             </uib-tabset>
                           &nbsp;
                         </div>
