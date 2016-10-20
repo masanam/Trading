@@ -32,6 +32,7 @@ class CreateBuyersTable extends Migration
             $table->string('preferred_trading_term');
             $table->string('preferred_payment_term');
             $table->text('description');
+            $table->string('contact_person')->nullable();
             $table->char('status', 1); // A = Active , X = Deleted
             $table->timestamps();
         });

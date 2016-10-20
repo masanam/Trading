@@ -346,7 +346,7 @@ angular.module('seller').controller('CreateSellerModalController', function ($sc
     var seller = new Seller($scope.seller);
 
     seller.$save(function(response) {
-      $location.path('lead/seller/setup-concession-seller/'+response.id);
+      $location.path('lead/seller/setup-concession-seller/'+response.id+'/').search({ new: 'true' });
       $uibModalInstance.close('success');
       $scope.loading=false;
     });
@@ -399,7 +399,7 @@ angular.module('seller').controller('CreateContactModalFromSellerController', fu
   };
 });
 
-angular.module('seller').controller('CreateProductModalFromSellerController', function ($scope, $filter, $uibModalInstance, Product, Authentication) {
+angular.module('seller').controller('CreateProductModalFromSellerController', function ($scope, $location, $stateParams, $filter, $uibModalInstance, Product, Authentication) {
   
   $scope.product = new Product();
     
@@ -413,9 +413,8 @@ angular.module('seller').controller('CreateProductModalFromSellerController', fu
     
     product.$save(function (response) {
       $scope.product = response;
-      
-      $scope.seller.product.push($scope.product);
-      $scope.close();
+      $location.path('lead/port/seller/'+$stateParams.id);
+      $uibModalInstance.close('success');
       $scope.success = true;
     }, function (response) {
       $scope.error = response.data.message;
