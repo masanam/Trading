@@ -4,6 +4,7 @@ angular.module('concession').controller('ConcessionController', ['$scope', '$htt
   function($scope, $http, $stateParams, $state, $location, $uibModal, Concession, $window, Product) {
     $scope.concessions = [];
     $scope.concession = {};
+    console.log($location.search().new);
 
     $scope.create = function() {
       $scope.loading = true;
@@ -110,7 +111,7 @@ angular.module('concession').controller('ConcessionController', ['$scope', '$htt
   }
 ]);
 
-angular.module('concession').controller('ConcessionModalController', function ($scope, $uibModalInstance, $stateParams, $filter, Concession, NgMap, $location) {
+angular.module('concession').controller('ConcessionModalController', function ($scope, $stateParams, $location, $uibModalInstance, $filter, Concession, NgMap) {
   
   $scope.init = function () {
     $scope.concession = new Concession();
@@ -223,13 +224,14 @@ angular.module('concession').controller('ConcessionModalController', function ($
 
     var concession = $scope.concession;
     
+    console.log($scope.concession);
     concession.$save(function (response) {
-      $scope.concession = response;
-      
-      $scope.seller.concession.push($scope.concession);
+      console.log(response);
+      $location.path('lead/seller/'+$stateParams.id+'/setup-product');
       $uibModalInstance.close('success');
       $scope.success = true;
     }, function (response) {
+      $uibModalInstance.dismiss('cancel');
       $scope.error = response.data.message;
     });
     
