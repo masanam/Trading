@@ -73,7 +73,7 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
 
     $scope.nexToPort= function(){
       console.log($scope.product.selected);
-      if ($scope.product.selected.id) {
+      if ($scope.product.selected) {
         $location.path('lead/port/buyer/'+$stateParams.id);
       }else{
         $scope.error = 'Please Select A Product or Create New product';

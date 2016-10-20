@@ -27,11 +27,7 @@
           <div class="select-box" ng-init="findAllPorts()">
             <label for="id">Port Name:</label>
             <ui-select ng-model="port.selected" style="min-width: 300px;" title="Choose a port" append-to-body="true">
-<<<<<<< HEAD
-              <ui-select-match placeholder="Port">{{ port.selected.port_name }}</ui-select-match>
-=======
               <ui-select-match placeholder="Port Name">{{ port.selected.port_name }}</ui-select-match>
->>>>>>> e1f41c175b03152d6221c96b65b1b753bbe34083
               <ui-select-choices repeat="port in ports | propsFilter: {port_name: $select.search}">
                 <div ng-bind-html="port_name | highlight: $select.search"></div>
                 <small>
