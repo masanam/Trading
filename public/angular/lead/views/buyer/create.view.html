@@ -27,7 +27,9 @@
                 <option ng-repeat="buyer in buyers" value="{{ buyer.id }}">{{ buyer.company_name }}</option>
               </select>
             </div> -->
-
+            <div class="form-group">
+              <label ng-show="error" class="alert bg-red" style="width:100%">{{error}}</label>
+            </div>
             <div class="select-box" ng-init="findAllBuyers()">
               <label for="id">Name of Company :</label>
               <ui-select ng-model="buyer.selected" style="min-width: 300px;" title="Choose a person" append-to-body="true">

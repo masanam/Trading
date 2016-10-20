@@ -66,9 +66,14 @@ angular.module('lead').config(['$stateProvider', '$urlRouterProvider',
       })
 
       //SETUP PAGES
-      .state('lead.setup-product', {
+      .state('lead.setup-product-buyer', {
         url: '/buyer/{id}/setup-product',
         templateUrl: '/angular/lead/views/buyer/setup.product.view.html',
+        roles: ['user', 'trader']
+      })
+      .state('lead.setup-product-seller', {
+        url: '/seller/{id}/setup-product',
+        templateUrl: '/angular/lead/views/seller/setup.product.view.html',
         roles: ['user', 'trader']
       })
       .state('lead.setup-concession-seller', {

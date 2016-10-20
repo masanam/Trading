@@ -14,7 +14,7 @@
           <button type="button" class="btn btn-primary" ng-click="openModalNewSeller()">
             <b>+</b> Add New
           </button>
-          <button type="button" class="btn btn-primary" ui-sref="lead.setup-concession-seller({ id: seller.id })">
+          <button type="button" class="btn btn-success" ng-click="nextToProductSeller()">
             <i class="glyphicon glyphicon-arrow-right"></i> Next
           </button>
         </div>
@@ -57,7 +57,10 @@
             </tr>
           </tfoot>
         </table> -->
-        <div class="select-box" ng-init="find()">
+        <div class="form-group">
+          <label ng-show="error" class="alert bg-red" style="width:100%">{{error}}</label>
+        </div>
+        <div class="select-box" ng-init="findMyConcessions()">
           <label for="id">Name of Concession :</label>
           <ui-select ng-model="concession.selected" style="min-width: 300px;" title="Choose a concession" append-to-body="true">
             <ui-select-match placeholder="Name Of Concession">{{ concession.selected.concession_name }}</ui-select-match>

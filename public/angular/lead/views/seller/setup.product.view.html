@@ -1,0 +1,36 @@
+<section class="content">
+<div class="col-md-3 col-lg-2">
+  <section ng-include="'./angular/lead/views/side-menu.view.html'"></section>
+</div>
+<div class="col-md-9 col-lg-10" ng-controller="SellerController" ng-init="findOne()">
+  <section ng-include="'./angular/lead/views/search-bar.view.html'"></section>
+   <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title" style="font-size: 25px">Products Collections</h3>
+          <div class="box-tools pull-right">
+           <button type="button" ng-click="backToConcession()" class="btn btn-danger"><i class="glyphicon glyphicon-arrow-left"></i> Back</button>
+            <button type="button" ng-click="addProduct()" class="btn btn-info"><i class="glyphicon glyphicon-plus"></i> Add New Product</button>
+            <button type="button" ng-click="nexToPort()" class="btn btn-success">NEXT <i class="glyphicon glyphicon-arrow-right"></i> </button>
+          </div>
+        </div>
+        <div class="box-body">
+          <div class="form-group">
+            <label ng-show="error" class="alert bg-red" style="width:100%">{{error}}</label>
+          </div>
+          <div class="row" style="margin: 10px;">
+            <div class="select-box" ng-init="findMyProductsSeller()">
+              <label for="id">Product Name:</label>
+              <ui-select ng-model="product.selected" style="min-width: 300px;" title="Choose a product" append-to-body="true">
+                <ui-select-match placeholder="Product Name">{{ product.selected.product_name }}</ui-select-match>
+                <ui-select-choices repeat="product in products | propsFilter: {product_name: $select.search}">
+                  <div ng-bind-html="product_name | highlight: $select.search"></div>
+                  <small>
+                    {{product.product_name}}
+                  </small>
+                </ui-select-choices>
+              </ui-select>
+            </div>
+          </div>
+        </div>
+      </div>
+</section>

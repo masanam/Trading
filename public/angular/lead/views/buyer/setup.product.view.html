@@ -14,13 +14,16 @@
           </div>
         </div>
         <div class="box-body">
-        <form role="form">
+          <div class="form-group">
+            <label ng-show="error" class="alert bg-red" style="width:100%">{{error}}</label>
+          </div>
           <div class="row" style="margin: 10px;">
 
-            <div class="select-box" ng-init="findAllProducts()">
-              <label for="id">Product:</label>
+            <div class="select-box" ng-init="findMyProductsBuyer()">
+              <label for="id">Product Name:</label>
               <ui-select ng-model="product.selected" style="min-width: 300px;" title="Choose a product" append-to-body="true">
-                <ui-select-match placeholder="Product">{{ product.selected.product_name }}</ui-select-match>
+                <ui-select-match placeholder="Product Name">{{ product.selected.product_name }}</ui-select-match>
+
                 <ui-select-choices repeat="product in products | propsFilter: {product_name: $select.search}">
 
                   <div ng-bind-html="product_name | highlight: $select.search"></div>

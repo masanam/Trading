@@ -61,6 +61,10 @@ angular.module('port').controller('PortController', ['$scope', '$stateParams', '
       $location.path('lead/buyer/'+$stateParams.id+'/setup-product');
     };
 
+    $scope.backToProductSeller= function(){
+      $location.path('lead/seller/'+$stateParams.id+'/setup-product');
+    };
+
     // $scope.getSelected = function(index,port){
     //   if (port.isSelected) {
     //     // $count = $count + 1;

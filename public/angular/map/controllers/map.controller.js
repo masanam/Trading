@@ -41,7 +41,7 @@ angular.module('map').controller('MapController', ['$scope', '$http', '$statePar
           temp_filter.push($scope.filters[i].field+','+$scope.filters[i].number);
         }
         
-        $scope.concessions = Map.query({ action: 'filter' ,  'gt[]': $scope.filters_gt, 'bet[]': $scope.filters_bet, 'lt[]': $scope.filters_lt });
+        $scope.concessions = Map.query({ action: 'filter' , 'gt[]': $scope.filters_gt, 'bet[]': $scope.filters_bet, 'lt[]': $scope.filters_lt });
       }else{
         $scope.concessions = Map.query({ action: 'filter' });
       }

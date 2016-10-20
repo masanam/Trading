@@ -90,6 +90,8 @@ Route::group(['middleware' => ['cors']], function() {
         'index'
     ]]);
 
+    Route::get('product/{id}/my/buyer', 'ProductController@findMyProductBuyer');
+    Route::get('product/{id}/my/seller', 'ProductController@findMyProductSeller');
     Route::get('product/total', 'ProductController@getTotalProduct');
     Route::get('product/search/{search?}', 'ProductController@search');
     Route::delete('product/{id}', 'ProductController@destroyByID');

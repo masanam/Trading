@@ -275,4 +275,18 @@ class ProductController extends Controller
         $status = array('count' => $total);        
         return response()->json($status, 200);
     }
+
+    public function findMyProductBuyer($id)
+    {
+        $product = Product::where('status', 'a')->where('buyer_id', $id)->get();
+
+        return response()->json($product, 200);
+    }
+
+    public function findMyProductSeller($id)
+    {
+        $product = Product::where('status', 'a')->where('seller_id', $id)->get();
+
+        return response()->json($product, 200);
+    }
 }

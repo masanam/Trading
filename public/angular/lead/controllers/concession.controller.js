@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('concession').controller('ConcessionController', ['$scope', '$http', '$stateParams', '$state', '$uibModal', 'Concession', '$window', 'Product',
-  function($scope, $http, $stateParams, $state, $uibModal, Concession, $window, Product) {
+angular.module('concession').controller('ConcessionController', ['$scope', '$http', '$stateParams', '$state', '$location', '$uibModal', 'Concession', '$window', 'Product',
+  function($scope, $http, $stateParams, $state, $location, $uibModal, Concession, $window, Product) {
     $scope.concessions = [];
     $scope.concession = {};
 
@@ -55,6 +55,25 @@ angular.module('concession').controller('ConcessionController', ['$scope', '$htt
 
     $scope.goBack = function(){
       $window.history.back();
+    };
+
+    $scope.nextToProduct= function(){
+      if ($scope.concession.selected) {
+        $location.path('lead/buyer/'+$scope.buyer.selected.id+'/setup-product');
+      }else{
+        $scope.error = "Please Select A Concession or Create New Concession";
+      }
+    };
+
+    $scope.nextToProductSeller= function(){
+      console.log($scope.concession.selected);
+      if ($scope.concession.selected) {
+        $location.path('lead/seller/'+$stateParams.id+'/setup-product');
+      }else{
+        $scope.error = "Please Select A Concession or Create New Concession";
+        console.log($scope.error);
+      }
+
     };
     
     $scope.addProduct = function () {
