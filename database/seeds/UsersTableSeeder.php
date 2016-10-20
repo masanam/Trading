@@ -65,7 +65,7 @@ class UsersTableSeeder extends Seeder
             'id' => 5,
             'name' => 'Buyer',         
             'title' => 'CEO Jaya Shakti Barutama',
-            'image' => './img/default.png',
+            'image' => './images/default.png',
             'email' => 'buyer@buyer.com',
             'phone' => '+62811123456',
             'password' => bcrypt('secret'),
@@ -77,11 +77,35 @@ class UsersTableSeeder extends Seeder
             'id' => 6,
             'name' => 'Seller',         
             'title' => 'CEO Kuansing Inti Makmur',
-            'image' => './img/default.png',
+            'image' => './images/default.png',
             'email' => 'seller@seller.com',
             'phone' => '+62811123456',
             'password' => bcrypt('secret'),
             'role' => 'user',
+            'status' => 'a'
+        ]);
+
+        User::create([
+            'id' => 7,
+            'name' => 'Giovanny Sientoro',             
+            'title' => 'Trader',
+            'image' => './images/default.png',
+            'email' => 'gio@gems.com',
+            'phone' => '+62811111234',
+            'password' => bcrypt('secret'),
+            'role' => 'trader',
+            'status' => 'a'
+        ]);
+
+        User::create([
+            'id' => 8,
+            'name' => 'Denny Nugroho',             
+            'title' => 'Trader',
+            'image' => './images/default.png',
+            'email' => 'denny@gems.com',
+            'phone' => '+62811111234',
+            'password' => bcrypt('secret'),
+            'role' => 'trader',
             'status' => 'a'
         ]);
     }

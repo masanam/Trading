@@ -62,36 +62,56 @@ class IndexController extends Controller
   	$date_start = $request->date_start;
   	$date_end = $request->date_end;
   	$frequency = $request->frequency;
-    
-    $year_start = date('Y', strtotime($date_start));
-    $year_end = date('Y', strtotime($date_end));
-    
-    $month_start = date('m', strtotime($date_start));
-    $month_end = date('m', strtotime($date_end));
 
-    for($x=$year_start; $x<=$year_end; $x++){
-	  	$query = DB::table('index_price')
-	  		->select(DB::raw('MAX(date) "date", AVG(price) "price"'))
-	  		->where('index_id', $index)
-	  		->orderBy('date', 'DESC');
+    $interval = date_diff(date_create($date_start), date_create($date_end));
 
-	    if($date_start) $query->where('date', '>=', $x.'-'.$month_start.'-01');
-	    if($date_end) $query->where('date', '<=', ($x+1).'-'.$month_end.'-28');
+    // if more than 1 year, bandingin per taon
+    if($interval->y > 0){
+      while ($date_start < $date_end) {
+        $date_end_series = date('Y-m-d', strtotime($date_start . ' +1year -1day'));
 
-	    switch($frequency){
-	    	case 'daily' : $query->groupBy('day_of_year', 'year'); break;
-	    	case 'weekly' : $query->groupBy('week', 'year'); break;
-	    	case 'monthly' : $query->groupBy('month', 'year'); break;
-	    }
 
-	    $result[date('Y', strtotime($date_start))] = $query->get();
-      
-      /*echo $date_start.'\n';
-      echo $date_end.'\n';
-      echo $query->toSql().'\n';
+        $query = DB::table('index_price')
+          ->select(DB::raw('MAX(date) "date", AVG(price) "price"'))
+          ->where('index_id', $index)
+          ->orderBy('date', 'DESC');
 
-	  	$date_start = date('Y-m-d', strtotime($date_start . ' +1 year'));
-	  	$date_end = date('Y-m-d', strtotime($date_end . ' +1 year'));*/
+        $query->where('date', '>=', $date_start);
+        $query->where('date', '<=', $date_end_series > $date_end ? $date_end : $date_end_series);
+
+        switch($frequency){
+          case 'daily' : $query->groupBy('day_of_year', 'year'); break;
+          case 'weekly' : $query->groupBy('week', 'year'); break;
+          case 'monthly' : $query->groupBy('month', 'year'); break;
+        }
+
+        //add dataset to the resultset
+        $result[date('Y', strtotime($date_start))] = $query->get();
+
+        //add one year for next iterations
+        $date_start = date('Y-m-d', strtotime($date_start . ' +1 year'));
+      }
+    } else {
+      //if less than 1 year, then just go with usual plotting algorithm, compare last year
+      for($x=0; $x<3; $x++){
+        $query = DB::table('index_price')
+          ->select(DB::raw('MAX(date) "date", AVG(price) "price"'))
+          ->where('index_id', $index)
+          ->orderBy('date', 'DESC');
+
+        $query->where('date', '>=', $date_start);
+        $query->where('date', '<=', $date_end);
+
+        switch($frequency){
+          case 'daily' : $query->groupBy('day_of_year', 'year'); break;
+          case 'weekly' : $query->groupBy('week', 'year'); break;
+          case 'monthly' : $query->groupBy('month', 'year'); break;
+        }
+        $result[date('Y', strtotime($date_start))] = $query->get();
+   
+        $date_start = date('Y-m-d', strtotime($date_start . ' -1 year'));
+        $date_end = date('Y-m-d', strtotime($date_end . ' -1 year'));
+      }
     }
 
     return response()->json($result , 200);
