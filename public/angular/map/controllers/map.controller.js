@@ -41,9 +41,9 @@ angular.module('map').controller('MapController', ['$scope', '$http', '$statePar
           temp_filter.push($scope.filters[i].field+','+$scope.filters[i].number);
         }
         
-        $scope.concessions = Map.query({ 'gt[]': $scope.filters_gt, 'bet[]': $scope.filters_bet, 'lt[]': $scope.filters_lt });
+        $scope.concessions = Map.query({ action: 'filter' ,  'gt[]': $scope.filters_gt, 'bet[]': $scope.filters_bet, 'lt[]': $scope.filters_lt });
       }else{
-        $scope.concessions = [];
+        $scope.concessions = Map.query({ action: 'filter' });
       }
       //console.log($scope.concessions);
     };
@@ -62,45 +62,35 @@ angular.module('map').controller('MapController', ['$scope', '$http', '$statePar
       $scope.find();
     };
 
-    $scope.search = function(){
-      var temp_length = $scope.concessions.length;
-      if($scope.search.category === 'port') {
-        angular.forEach($scope.concessions, function(concession){
-          if(concession.port.port_name.indexOf($scope.search.keyword) === -1) {
-            $scope.concessions.splice($scope.concessions.indexOf(concession), 1);
-          }
-        });
-      } else if($scope.search.category === 'product') {
-        for(var i = 0; i < temp_length; i++) {
-          if($scope.concessions[i].product.length === 0) {
-            var tempo = $scope.concessions[i];
-            $scope.concessions.splice($scope.concessions.indexOf(tempo), 1);
-            break;
-          } else {
-            for(var j = 0; j < $scope.concessions[i].product.length; j++) {
-              if($scope.concessions[i].product[j].product_name.indexOf($scope.search.keyword) > -1) continue;
-              else if($scope.concessions[i].product[j].product_name.indexOf($scope.search.keyword) === -1 && j !== $scope.concessions[i].product.length - 1) continue;
-              else if($scope.concessions[i].product[j].product_name.indexOf($scope.search.keyword) === -1 && j === $scope.concessions[i].product.length - 1) {
-                var temp = $scope.concessions[i];
-                $scope.concessions.splice($scope.concessions.indexOf(temp), 1);
-              }
-            }
-          }
+    $scope.searchByCategory = function(){
+      $scope.search_port = [];
+      $scope.search_product = [];
+      $scope.search_concession = [];
+      $scope.search_seller = [];
+
+      var temp_search = [];
+
+      if($scope.search){
+        if($scope.search.category === 'port'){
+          temp_search = $scope.search_port;
         }
-      } else if($scope.search.category === 'concession') {
-        angular.forEach($scope.concessions, function(concession){
-          if(concession.concession_name.indexOf($scope.search.keyword) === -1) {
-            $scope.concessions.splice($scope.concessions.indexOf(concession), 1);
-          }
-        });
-      } else if($scope.search.category === 'seller') {
-        angular.forEach($scope.concessions, function(concession){
-          if(concession.seller.company_name.indexOf($scope.search.keyword) === -1) {
-            $scope.concessions.splice($scope.concessions.indexOf(concession), 1);
-          }
-        });
+        else if($scope.search.category === 'product'){
+          temp_search = $scope.search_product;
+        }
+        else if($scope.search.category === 'concession'){
+          temp_search = $scope.search_concession;
+        }
+        else if($scope.search.category === 'seller'){
+          temp_search = $scope.search_seller;
+        }
+        temp_search.push($scope.search.keyword);
+
+        $scope.concessions = Map.query({ action: 'search' , 'product': $scope.search_product[0] , 'port': $scope.search_port[0] , 'seller': $scope.search_seller[0] , 'concession': $scope.search_concession[0] });
+
+        console.log($scope.concessions);
+      }else{
+        $scope.concessions = Map.query({ action: 'search' });
       }
-      console.log($scope.concessions);
     };
 
     $scope.showDetail = function(event, concession) {
