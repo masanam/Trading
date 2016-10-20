@@ -43,7 +43,7 @@ angular.module('map').controller('MapController', ['$scope', '$http', '$statePar
         
         $scope.concessions = Map.query({ action: 'filter' ,  'gt[]': $scope.filters_gt, 'bet[]': $scope.filters_bet, 'lt[]': $scope.filters_lt });
       }else{
-        $scope.concessions = [];
+        $scope.concessions = Map.query({ action: 'filter' });
       }
       //console.log($scope.concessions);
     };
@@ -89,7 +89,7 @@ angular.module('map').controller('MapController', ['$scope', '$http', '$statePar
 
         console.log($scope.concessions);
       }else{
-        $scope.concessions = [];
+        $scope.concessions = Map.query({ action: 'search' });
       }
     };
 
