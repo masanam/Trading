@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Model\Concession;
+use App\Model\Seller;
+use App\Model\Product;
+use App\Model\Port;
 
 use Illuminate\Http\Request;
 
@@ -35,35 +38,63 @@ class ConcessionController extends Controller
     public function filter()
     {
         if (!$_GET) {
-            $concession = Concession::where('status', 'a')->get();
+          $concession = Concession::with('Product', 'Seller', 'Port')->where('status', 'a')->get();
         } else {
-            $query = DB::table('concession')
-                          ->select('concession.id', 'concession.latitude', 'concession.longitude', 'concession.polygon')
-                          ->join('products', 'products.concession_id', '=', 'concession.id')
-                          ->where('concession.status', 'a')
-                          ->where('products.status', 'a');
-            
             if(isset($_GET['gt'])){
               foreach($_GET['gt'] as $input_gt){
                 $gt_params = explode(",",$input_gt);
-                $query->where('products.'.$gt_params[0].'_min', '>=', $gt_params[1]);
+                $concession = Concession::with(['Product' => function($q) use ($gt_params) {
+                                            $q->where('products.status', 'a')
+                                              ->where('products.'.$gt_params[0].'_min', '>=', $gt_params[1]);
+                                          }])
+                                          ->with(['Seller' => function($q) {
+                                            $q->where('sellers.status', 'a');
+                                          }])
+                                          ->with('Port')
+                                          ->whereHas('Seller', function($q) {
+                                            $q->where('sellers.status', 'a');
+                                          })
+                                          ->where('concession.status', 'a')
+                                          ->get();
               }
             }
             if(isset($_GET['lt'])){
               foreach($_GET['lt'] as $input_lt){
                 $lt_params = explode(",",$input_lt);
-                $query->where('products.'.$lt_params[0].'_max', '<=', $lt_params[1]);
+                $concession = Concession::with(['Product' => function($q) use ($lt_params) {
+                                            $q->where('products.status', 'a')
+                                              ->where('products.'.$lt_params[0].'_max', '<=', $lt_params[1]);
+                                          }])
+                                          ->with(['Seller' => function($q) {
+                                            $q->where('sellers.status', 'a');
+                                          }])
+                                          ->whereHas('Seller' , function($q) {
+                                            $q->where('sellers.status', 'a');
+                                          })
+                                          ->with('Port')
+                                          ->where('concession.status', 'a')
+                                          ->get();
               }
             }
             if(isset($_GET['bet'])){
               foreach($_GET['bet'] as $input_bet){
                 $bet_params = explode(",",$input_bet);
-                $query->where('products.'.$bet_params[0].'_min', '<=', $bet_params[1]);
-                $query->where('products.'.$bet_params[0].'_max', '>=', $bet_params[1]);
+                $concession = Concession::with(['Product' => function($q) use ($bet_params) {
+                                            $q->where('products.status', 'a')
+                                              ->where('products.'.$bet_params[0].'_min', '<=', $bet_params[1])
+                                              ->where('products.'.$bet_params[0].'_max', '>=', $bet_params[1]);
+                                          }])
+                                          ->with(['Seller' => function($q) {
+                                            $q->where('sellers.status', 'a');
+                                          }])
+                                          ->with('Port')
+                                          ->whereHas('Seller' , function($q) {
+                                            $q->where('sellers.status', 'a');
+                                          })
+                                          ->where('concession.status', 'a')
+                                          ->get();
               }
             }
-            
-            $concession = $query->get();
         }
 
         return response()->json($concession, 200);
@@ -77,10 +108,75 @@ class ConcessionController extends Controller
      */
     public function search($search = false)
     {
-        if (!$search) {
-            $concession = Concession::where('status', 'a')->get();
+      if (!$_GET) {
+          $concession = Concession::with('Product', 'Seller', 'Port')->where('status', 'a')->get();
         } else {
-            $concession = Concession::where('status', 'a')->where('concession_name', 'LIKE', '%'.$search.'%')->get();
+          if(isset($_GET['product'])) {
+            $product_param = $_GET['product'];
+            $concession = Concession::with(['Product' => function($q) use ($product_param) {
+                                      $q->where([['products.status', 'a'],['products.product_name', 'LIKE', '%'.$product_param.'%']]);
+                                    }])
+                                    ->with(['Seller' => function($q) {
+                                      $q->where('sellers.status', 'a');
+                                    }])
+                                    ->with('Port')
+                                    ->whereHas('Product' , function($q) use ($product_param) {
+                                      $q->where([['products.status', 'a'],['products.product_name', 'LIKE', '%'.$product_param.'%']]);
+                                    })
+                                    ->whereHas('Seller', function($q) {
+                                      $q->where('sellers.status', 'a');
+                                    })
+                                    ->where('concession.status', 'a')
+                                    ->get();
+          }
+          if(isset($_GET['concession'])) {
+            $concession_param = $_GET['concession'];
+            $concession = Concession::with(['Product' => function($q) {
+                                      $q->where('products.status', 'a');
+                                    }])
+                                    ->with(['Seller' => function($q) {
+                                      $q->where('sellers.status', 'a');
+                                    }])
+                                    ->with('Port')
+                                    ->whereHas('Seller', function($q) {
+                                      $q->where('sellers.status', 'a');
+                                    })
+                                    ->where([['concession.status', 'a'],['concession.concession_name', 'LIKE' , '%'.$concession_param.'%']])
+                                    ->get();
+          }
+          if(isset($_GET['seller'])) {
+            $seller_param = $_GET['seller'];
+            $concession = Concession::with(['Product' => function($q) {
+                                      $q->where('products.status', 'a');
+                                    }])
+                                    ->with(['Seller' => function($q) use ($seller_param) {
+                                      $q->where('sellers.status', 'a')
+                                        ->where('sellers.company_name', 'LIKE', '%'.$seller_param.'%');
+                                    }])
+                                    ->with('Port')
+                                    ->whereHas('Seller', function($q) {
+                                      $q->where('sellers.status', 'a');
+                                    })
+                                    ->where('concession.status', 'a')
+                                    ->get();
+          }
+          if(isset($_GET['port'])) {
+            $port_param = $_GET['port'];
+            $concession = Concession::with(['Product' => function($q) {
+                                      $q->where('products.status', 'a');
+                                    }])
+                                    ->with(['Seller' => function($q) {
+                                      $q->where('sellers.status', 'a');
+                                    }])
+                                    ->with(['Port' => function($q) use ($port_param) {
+                                      $q->where('ports.port_name', 'LIKE', '%'.$port_param.'%');
+                                    }])
+                                    ->whereHas('Seller', function($q) {
+                                      $q->where('sellers.status', 'a');
+                                    })
+                                    ->where('concession.status', 'a')
+                                    ->get();
+          }
         }
 
         return response()->json($concession, 200);
@@ -119,8 +215,8 @@ class ConcessionController extends Controller
         $concession->remaining_volume = $request->remaining_volume;
         $concession->annual_production = $request->annual_production;
         $concession->hauling_road_name = $request->hauling_road_name;
-        $concession->road_accessibility = $request->road_accessibility;
-        $concession->road_capacity = $request->road_capacity;
+        $concession->stockpile_capacity = $request->stockpile_capacity;
+        $concession->stockpile_coverage = $request->stockpile_coverage;
         $concession->stockpile_distance = $request->stockpile_distance;
         $concession->port_id = $request->port_id;
         $concession->port_distance = $request->port_distance;
@@ -157,10 +253,19 @@ class ConcessionController extends Controller
      */
     public function detail($id = "")
     {
-        $concession = Concession::with('Product')->whereHas('Product', function($q){
-            $q->where('status', 'a');
-        })->find($id);
 
+        $concession = Concession::with(['Product' => function($query)
+        {
+            $query->where('status', 'a');
+        }, 'Port'])->find($id);
+
+        /*$concession = Concession::with(['Product' => function($q){
+            $q->where('status', 'a');
+        }])->with('Port')->find($id);
+        }])->with('Port')->whereHas('Product', function($q){
+            $q->where('status', 'a');
+        })->find($id);*/
+        
         if($concession->status == 'a') {
             return response()->json($concession, 200);
         } else {
@@ -248,5 +353,12 @@ class ConcessionController extends Controller
         $total = Concession::count();
         $status = array('count' => $total);        
         return response()->json($status, 200);
+    }
+
+    public function findMyConcession($id)
+    {
+        $concession = Concession::where('status', 'a')->where('seller_id', $id)->get();
+
+        return response()->json($concession, 200);
     }
 }

@@ -22,6 +22,7 @@ class ProductTableSeeder extends Seeder
         	$faker = Faker\Factory::create(); 
 
           Product::create([
+            'concession_id' => $faker->numberBetween($min = 0, $max = 2),
 			'product_name' => $product_name[$index],
             'tm_min' => $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 0.5),
             'tm_max' => $faker->randomFloat($nbMaxDecimals = 2, $min = 0.5, $max = 1.5),
@@ -51,7 +52,7 @@ class ProductTableSeeder extends Seeder
             'cvnar_max'=> $faker->numberBetween($min = 45, $max = 50),
             'aft_min'=> $faker->numberBetween($min = 45, $max = 50), 
             'aft_max'=> $faker->numberBetween($min = 45, $max = 50),
-            'status' => $faker->randomElement($array = array ('a','x'))
+            'status' => 'a'
           ]);
         }
     }

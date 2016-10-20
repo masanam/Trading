@@ -8,29 +8,31 @@
       <div class="box-header with-border">
         <h1 class="box-title" style="font-size: 25px">Create Sellers</h1>
         <div class="box-tools pull-right">
-          <button type="button" class="btn btn-primary" ui-sref="lead.seller">
-          <i class="glyphicon glyphicon-arrow-left"></i> Back
-        	</button>
           <button type="button" class="btn btn-primary" ng-click="openModalNewSeller()">
             <b>+</b> Add New
           </button>
-          <button type="button" class="btn btn-primary" ui-sref="lead.setup-concession-seller">
+          <button type="button" class="btn btn-success" ng-click="nextToConcession()">
             <i class="glyphicon glyphicon-arrow-right"></i> Next
           </button>
         </div>
       </div>
       <div class="box-body">
     		<section>
-    		  <form role="form" ng-submit="create()">
-            <div class="form-group" ng-init="findAllSellers()">
-              <label for="id">Owner of Concession:</label>
-              <select class="form-control" ng-model="seller.id">
-                <option value=""></option>
-                <option ng-repeat="seller in sellers" value="{{ seller.id }}">{{ seller.company_name }}</option>
-              </select>
-            </div>
-    		    <!-- <div ng-include="'/angular/lead/views/seller/form.view.html'"></div> -->
-    		  </form>
+          <div class="form-group">
+            <label ng-show="error" class="alert bg-red" style="width:100%">{{error}}</label>
+          </div>
+    		  <div class="select-box" ng-init="findAllSellers()">
+            <label for="id">Owner of Concession :</label>
+            <ui-select ng-model="seller.selected" style="min-width: 300px;" title="Choose a Owner of Concession" append-to-body="true">
+              <ui-select-match placeholder="Owner of Concession">{{ seller.selected.company_name }}</ui-select-match>
+              <ui-select-choices repeat="seller in sellers | propsFilter: {company_name: $select.search}">
+                <div ng-bind-html="company_name | highlight: $select.search"></div>
+                <small>
+                  {{seller.company_name}}
+                </small>
+              </ui-select-choices>
+            </ui-select>
+          </div>
     		</section>
     	</div>      
     </div>

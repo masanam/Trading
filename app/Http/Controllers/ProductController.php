@@ -59,6 +59,7 @@ class ProductController extends Controller
         $product = new Product();
         $product->seller_id = $request->seller_id ? $request->seller_id : NULL;
         $product->buyer_id = $request->buyer_id ? $request->buyer_id : NULL;
+        $product->concession_id = $request->concession_id ? $request->concession_id : NULL;
         //$product->commercial_term = $request->commercial_term;
         $product->product_name = $request->product_name;
         /*$product->ready_date = $request->ready_date;
@@ -163,6 +164,7 @@ class ProductController extends Controller
 
         $product->seller_id = $request->seller_id ? $request->seller_id : NULL;
         $product->buyer_id = $request->buyer_id ? $request->buyer_id : NULL;
+        $product->concession_id = $request->concession_id ? $request->concession_id : NULL;
         //$product->commercial_term = $request->commercial_term;
         $product->product_name = $request->product_name;
         /*$product->ready_date = $request->ready_date;
@@ -245,10 +247,46 @@ class ProductController extends Controller
 
         return response()->json($product, 200);
     }
+    
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroyByID($id)
+    {
+        $product = Product::find($id);
+     
+        if (!$product) {
+            return response()->json([
+                'message' => 'Not found'
+            ] ,404);
+        }
+
+        $product->status = 'x';
+        $product->save();
+
+        return response()->json($product, 200);
+    }
 
     public function getTotalProduct() {
         $total = Product::count();
         $status = array('count' => $total);        
         return response()->json($status, 200);
+    }
+
+    public function findMyProductBuyer($id)
+    {
+        $product = Product::where('status', 'a')->where('buyer_id', $id)->get();
+
+        return response()->json($product, 200);
+    }
+
+    public function findMyProductSeller($id)
+    {
+        $product = Product::where('status', 'a')->where('seller_id', $id)->get();
+
+        return response()->json($product, 200);
     }
 }

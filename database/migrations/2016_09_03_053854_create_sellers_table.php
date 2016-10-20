@@ -25,8 +25,8 @@ class CreateSellersTable extends Migration
             $table->string('address');
             $table->string('city');
             $table->string('country');
-            $table->decimal('latitude', 10, 8);
-            $table->decimal('longitude', 11, 8);
+            $table->decimal('latitude', 10, 8)->nullable();
+            $table->decimal('longitude', 11, 8)->nullable();
             $table->string('industry');
             $table->integer('total_annual_sales');
             $table->string('preferred_trading_term');

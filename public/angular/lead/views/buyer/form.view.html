@@ -1,12 +1,12 @@
 <div class="form-group">
-  <label for="buyer_name">Company Name:</label>
-  <input name="company_name" type="text" class="form-control" id="company_name" ng-model="buyer.company_name">
+  <label for="buyer_name">Name of Company:</label>
+  <input name="company_name" type="text" class="form-control" id="company_name" ng-model="buyer.company_name" required>
 </div>
 
 <div class="form-group">
   <label for="buyer_name">Buyer Category:</label>
   <div class="btn-group">
-        <label class="btn btn-default" ng-model="buyer.is_trader" uib-btn-radio="0">End User</label>
+        <label class="btn btn-default" ng-model="buyer.is_trader" uib-btn-radio="0" >End User</label>
         <label class="btn btn-default" ng-model="buyer.is_trader" uib-btn-radio="1">Trader</label>
   </div>
 </div>
@@ -31,12 +31,12 @@
 
 <div class="form-group">
   <label for="phone">Phone Number:</label>
-  <input name="phone" type="text" class="form-control" id="phone" ng-model="buyer.phone">
+  <input name="phone" type="text" class="form-control" id="phone" ng-model="buyer.phone" required>
 </div>
 
 <div class="form-group">
   <label for="contact">Email:</label>
-  <input name="email" type="text" class="form-control" id="email" ng-model="buyer.email">
+  <input name="email" type="text" class="form-control" id="email" ng-model="buyer.email" required>
 </div>
 
 <div class="form-group">
@@ -46,20 +46,20 @@
 
 <div class="form-group">
   <label for="headquarter_location">Address:</label>
-  <input name="address" type="text" class="form-control" id="address" ng-model="buyer.address">
+  <input name="address" type="text" class="form-control" id="address" ng-model="buyer.address" required>
 </div>
 
 <div class="form-group">
   <label for="headquarter_location">City:</label>
-  <input name="city" type="text" class="form-control" id="city" ng-model="buyer.city">
+  <input name="city" type="text" class="form-control" id="city" ng-model="buyer.city" required>
 </div>
 
 <div class="form-group">
-  <label for="headquarter_location">Country:</label>
-  <input name="country" type="text" class="form-control" id="country" ng-model="buyer.country">
+  <label for="headquarter_location">Company origin (Country):</label>
+  <input name="country" type="text" class="form-control" id="country" ng-model="buyer.country" required>
 </div>
 
-<div class="form-group">
+<!--<div class="form-group">
   <label for="latitude">Latitude:</label>
   <input name="latitude" type="text" class="form-control" id="latitude" ng-model="buyer.latitude">
 </div>
@@ -67,12 +67,12 @@
 <div class="form-group">
   <label for="longitude">Longitude:</label>
   <input name="longitude" type="text" class="form-control" id="longitude" ng-model="buyer.longitude">
-</div>
+</div>-->
 
 
 <div class="form-group">
   <label for="headquarter_location">Annual demand:</label>
-  <input name="annual_demand" type="text" class="form-control" id="annual_demand" ng-model="buyer.annual_demand">
+  <input name="annual_demand" type="text" class="form-control" id="annual_demand" ng-model="buyer.annual_demand" required>
 </div>
 
 <div class="form-group">
@@ -87,13 +87,13 @@
 </div>
 
 <div class="form-group">
-  <label for="headquarter_location">Preferred Payment Term:</label>
-  <input name="preferred_payment_term" type="text" class="form-control" id="preferred_payment_term" ng-model="buyer.preferred_payment_term">
+  <label for="headquarter_location">Preferred Buying Term:</label>
+  <input name="preferred_payment_term" type="text" class="form-control" id="preferred_payment_term" ng-model="buyer.preferred_payment_term" required>
 </div>
 
 <div class="form-group">
   <label for="description">Description:</label>
-  <textarea name="description" class="form-control" id="description" ng-model="buyer.description"></textarea>
+  <textarea name="description" class="form-control" id="description" ng-model="buyer.description" required></textarea>
 </div>
 
 <div class="form-group">

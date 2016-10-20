@@ -1,54 +1,79 @@
 <section class="content">
-<div class="col-lg-2">
+  <div class="col-lg-2">
     <section ng-include="'./angular/lead/views/side-menu.view.html'"></section>
-</div>
-<div class="col-lg-10" ng-controller="ConcessionController">
+  </div>
+  <div class="col-lg-10" ng-controller="ConcessionController">
     <section ng-include="'./angular/lead/views/search-bar.view.html'"></section><br>
     <div class="box">
-    <div class="box-header with-border">
-      <h1 class="box-title" style="font-size: 25px">Concession</h1>
-      <div class="box-tools pull-right">
+      <div class="box-header with-border">
+        <h1 class="box-title" style="font-size: 25px">Setup Concession</h1>
+        <div class="box-tools pull-right">
+          <button type="button" class="btn btn-primary" ui-sref="lead.create-seller">
+            <i class="glyphicon glyphicon-arrow-left"></i> Back
+          </button>
+          <button type="button" class="btn btn-primary" ng-click="openModalNewSeller()">
+            <b>+</b> Add New
+          </button>
+          <button type="button" class="btn btn-success" ng-click="nextToProductSeller()">
+            <i class="glyphicon glyphicon-arrow-right"></i> Next
+          </button>
+        </div>
       </div>
-    </div>
       <div class="box-body">
-      <table ng-init="find()" st-table="displayedCollection" st-safe-src="concessions" class="table table-striped">
-        <thead>
-          <tr>
-                <th colspan="5"><input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
+        <!-- <table ng-init="findMyConcessions()" st-table="displayedCollection" st-safe-src="concessions" class="table table-striped">
+          <thead>
+            <tr>
+              <th colspan="5"><input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
             </tr>
-          <tr>
-            <th st-sort="">#</th>
-            <th st-sort="name">Name</th>
-            <th st-sort="latitude">Latitude</th>
-            <th st-sort="longitude">Longitude</th>
-            <th st-sort="portname">Port Name</th>
-          </tr>
-        </thead>
+            <tr>
+              <th st-sort="">#</th>
+              <th st-sort="name">Name</th>
+              <th st-sort="latitude">Latitude</th>
+              <th st-sort="longitude">Longitude</th>
+              <th st-sort="portname">Port Name</th>
+            </tr>
+          </thead>
 
-        <tbody>
-          <tr ng-repeat="(idx, concession) in displayedCollection">
-            <td>{{ concession.id }}</td>
-            <td>{{ concession.concession_name }}</td>
-            <td>{{ concession.latitude }}</td>
-            <td>{{ concession.longitude }}</td>
-            <td>{{ concession.port_name }}</td>
-          </tr>
+          <tbody>
+            <tr ng-repeat="(idx, concession) in displayedCollection">
+              <td>{{ concession.id }}</td>
+              <td>{{ concession.concession_name }}</td>
+              <td>{{ concession.latitude }}</td>
+              <td>{{ concession.longitude }}</td>
+              <td>{{ concession.port_name }}</td>
+            </tr>
 
-          <tr ng-if="displayedCollection.length == 0">
-                  <td colspan="5" class="text-center">No data available</td>
-                </tr>
+            <tr ng-if="displayedCollection.length == 0">
+              <td colspan="5" class="text-center">No data available</td>
+            </tr>
 
-        </tbody>
+          </tbody>
 
-        <tfoot>
-          <tr>
+          <tfoot>
+            <tr>
               <td colspan="5" class="text-center">
-                 <div st-pagination="" st-items-by-page="10" st-displayed-pages="7"></div>
+                <div st-pagination="" st-items-by-page="10" st-displayed-pages="7"></div>
               </td>
-          </tr>
+            </tr>
           </tfoot>
-      </table>
+        </table> -->
+        <div class="form-group">
+          <label ng-show="error" class="alert bg-red" style="width:100%">{{error}}</label>
+        </div>
+        <div class="select-box" ng-init="findMyConcessions()">
+          <label for="id">Name of Concession :</label>
+          <ui-select ng-model="concession.selected" style="min-width: 300px;" title="Choose a concession" append-to-body="true">
+            <ui-select-match placeholder="Name Of Concession">{{ concession.selected.concession_name }}</ui-select-match>
+            <ui-select-choices repeat="concession in concessions | propsFilter: {concession_name: $select.search}">
+              <div ng-bind-html="concession_name | highlight: $select.search"></div>
+              <small>
+                {{concession.concession_name}}
+              </small>
+            </ui-select-choices>
+          </ui-select>
+        </div>
       </div>
     </div>
+  </div>
 </section>
             

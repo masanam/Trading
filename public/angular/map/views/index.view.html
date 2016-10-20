@@ -1,4 +1,37 @@
 <section class="content" ng-controller="MapController" ng-init="find()">
+    <div class="col-lg-5">
+      <!-- Search box -->
+      <div class="row">
+        <div class="col-lg-12">
+          <h3>Search</h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="search-container">
+            <span class="col-lg-4">
+              <select ng-model="search.category" class="form-control">
+                <option value="port">Port</option>
+                <option value="product">Product</option>
+                <option value="concession">Concession</option>
+                <option value="seller">Seller</option>
+              </select>
+            </span>
+            <span class="col-lg-6" style="margin-left= -20px;">
+              <input type="text" class="form-control col-lg-5" ng-model="search.keyword" />
+            </span>
+            <span class="col-lg-2">
+              <button class="btn btn-info pull-right" ng-click="searchByCategory()">Search</button>
+            </span>
+          </div>
+        </div>
+        &nbsp;
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+        </div>
+      </div>
+      <br/>
       <!-- Filter box -->
       <div class="row">
         <div class="col-lg-12">
@@ -8,24 +41,24 @@
       <div class="row" ng-repeat="filter in filters">
         <div class="col-lg-12">
           <div class="filter-container">
-            <span class="col-lg-4">
+            <span class="col-lg-5">
               <select ng-model="filter.field" class="form-control">
                 <option value="gcv_arb">GCV ARB</option>
                 <option value="gcv_adb">GCV ADB</option>
                 <option value="ncv">NCV</option>
               </select>
             </span>
-            <span class="col-lg-2">
+            <span class="col-lg-3">
               <select ng-model="filter.operand" class="form-control col-lg-2">
                 <option value=">=">&ge;</option>
                 <option value="<=">&le;</option>
                 <option value="=">&asymp;</option>
               </select>
             </span>
-            <span class="col-lg-4">
+            <span class="col-lg-3">
               <input type="text" class="form-control col-lg-5" ng-model="filter.number" />
             </span>
-            <span class="col-lg-2">
+            <span class="col-lg-1">
               <button class="btn btn-danger" ng-click="deleteFilter(filter)">x</button>
             </span>
           </div>
@@ -39,14 +72,17 @@
           <button class="btn btn-info" ng-click="find()">Apply Filter</button>
         </div>
       </div>
-      <div class="row">&nbsp;</div>
+    </div>
+    <div class="col-lg-7">
       <!-- Maps is here -->
       <div class="row">
   
         <div class="col-lg-12">
           <ng-map zoom="4" center="Indonesia" default-style="false" style="width:100%; height:500px;">
             <span ng-repeat="pos in concessions">
-              <marker ng-if="pos.polygon === ''" position="{{pos.latitude}}, {{pos.longitude}}" id="mark{{pos.id}}" on-click="showDetail({{pos}})"></marker>
+              <marker icon="{
+                  url: '/images/dig.png'
+                }" ng-if="pos.polygon === ''" position="{{pos.latitude}}, {{pos.longitude}}" id="mark{{pos.id}}" on-click="showDetail({{pos}})"></marker>
               <shape name="polygon" ng-if="pos.polygon !== ''" on-click="showDetail({{pos}})"
                  id="mark{{pos.id}}"
                  paths="{{pos.polygon}}"
@@ -56,6 +92,14 @@
                  fill-color="#FF0000"
                  fill-opacity="0.35">
               </shape>
+              <marker
+                icon="{
+                  url: '/images/boat.png'
+                }"
+                position="{{pos.port.latitude}}, {{pos.port.longitude}}" 
+                id="markport{{pos.port.id}}" 
+                on-click="showPortDetail({{pos.port}})">  
+              </marker>
             </span>
             <info-window id="info-window" default-style="false" maxWidth="800px">
               <div ng-non-bindable="" style="width:500px" class="no-gutter">
@@ -220,10 +264,113 @@
                 </div>
               </div>
             </info-window>
+            <info-window id="port-info-window" default-style="false" maxWidth="800px">
+              <div ng-non-bindable="" style="width:500px" class="no-gutter">
+                <h3>Port Name: {{port.port_name}}</h3>
+                <hr/>
+                <div class="nav-tabs-custom">
+                  <uib-tabset active="active">
+                    <uib-tab index="0" heading="Port">
+                      <div id="port">
+                        <div class="row">
+                          <!--div class="col-lg-4">
+                            <uib-tabset active="activePill" vertical="true" type="pills">
+                              <uib-tab index="0" ng-click="selectPill(0)" heading="Location"></uib-tab>
+                              <uib-tab index="1" ng-click="selectPill(1)" heading="Resources"></uib-tab>
+                              <uib-tab index="2" ng-click="selectPill(2)" heading="Licenses"></uib-tab>
+                            </uib-tabset>
+                          </div-->
+                          <div class="col-lg-12">
+                            &nbsp;
+                            <div>
+                              <section class="col-lg-6">
+                                <div class="row">
+                                  <span class="col-lg-6">Location:</span> 
+                                  <span class="col-lg-6">{{port.location || 'N/A'}}</span><br/>
+                                </div>
+                                <div class="row">
+                                  <span class="col-lg-6">Owner:</span> 
+                                  <span class="col-lg-6">{{port.owner || 'N/A'}}</span><br/>
+                                </div>
+                                <div class="row">
+                                  <span class="col-lg-6">Position:</span> 
+                                  <span class="col-lg-6">{{port.latitude || 'N/A'}}, {{port.longitude || 'N/A'}}</span><br/>
+                                </div>
+                                <div class="row">
+                                  <span class="col-lg-6">River Capacity:</span> 
+                                  <span class="col-lg-6">{{port.river_capacity || 'N/A'}}</span><br/>
+                                </div>
+                                <div class="row">
+                                  <span class="col-lg-6">Anchorage Distance:</span> 
+                                  <span class="col-lg-6">{{port.anchorage_distance | number : 3 || 'N/A'}}</span><br/>
+                                </div>
+                                <div class="row">
+                                  <span class="col-lg-6">Has Conveyor:</span> 
+                                  <span class="col-lg-6">{{port.has_conveyor || 'N/A'}}</span><br/>
+                                </div>
+                                <div class="row">
+                                  <span class="col-lg-6">Has Crusher:</span> 
+                                  <span class="col-lg-6">{{port.has_crusher || 'N/A'}}</span><br/>
+                                </div>
+                                <div class="row">
+                                  <span class="col-lg-6">Has Blending:</span> 
+                                  <span class="col-lg-6">{{port.has_blending || 'N/A'}}</span><br/>
+                                </div>
+                                <div class="row">
+                                  <span class="col-lg-6">Draft Height:</span> 
+                                  <span class="col-lg-6">{{port.draft_height || 'N/A'}}</span><br/>
+                                </div>
+                              </section>
+                            </div>
+                          </div>
+                          &nbsp;
+                        </div>
+                      </div>
+                    </uib-tab>
+                    <uib-tab index="1" heading="Connected Concessions">
+                      <div id="port">
+                        <div class="row">
+                          <!--div class="col-lg-4">
+                            <uib-tabset active="activePill" vertical="true" type="pills">
+                              <uib-tab index="0" ng-click="selectPill(0)" heading="Location"></uib-tab>
+                              <uib-tab index="1" ng-click="selectPill(1)" heading="Resources"></uib-tab>
+                              <uib-tab index="2" ng-click="selectPill(2)" heading="Licenses"></uib-tab>
+                            </uib-tabset>
+                          </div-->
+                          <div class="col-lg-12"  ng-repeat="connectedConcession in connectedConcessions">
+                            &nbsp;
+                            <div>
+                              <button class="btn btn-primary col-lg-12" ng-click="showDetail(connectedConcession)">
+                                <div class="row">
+                                  <span class="col-lg-6">Concession Name:</span> 
+                                  <span class="col-lg-6">{{connectedConcession.concession_name || 'N/A'}}</span><br/>
+                                </div>
+                                <div class="row">
+                                  <span class="col-lg-6">Owner:</span> 
+                                  <span class="col-lg-6">{{connectedConcession.owner || 'N/A'}}</span><br/>
+                                </div>
+                                <div class="row">
+                                  <span class="col-lg-6">Position:</span> 
+                                  <span class="col-lg-6">lat : {{connectedConcession.latitude || 'N/A'}}, long : {{connectedConcession.longitude || 'N/A'}}</span><br/>
+                                </div>
+                                <div class="row">
+                                  <span class="col-lg-6">Port Distance:</span> 
+                                  <span class="col-lg-6">{{connectedConcession.port_distance || 'N/A'}} km</span><br/>
+                                </div>
+                              </button>
+                            </div>
+                          </div>
+                          &nbsp;
+                        </div>
+                      </div>
+                    </uib-tab>
+                  </uib-tabset>
+                </div>
+              </div>
+            </info-window>
           </ng-map>
         </div>
       </div>
     </div>
-    
-     
+      <div class="row">&nbsp;</div>
 </section>      

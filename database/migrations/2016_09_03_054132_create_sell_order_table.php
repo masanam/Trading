@@ -22,8 +22,8 @@ class CreateSellOrderTable extends Migration
 
             $table->date('order_date');
             $table->date('order_deadline');
-            $table->date('ready_date');
-            $table->date('expired_date');
+            $table->date('ready_date')->nullable();
+            $table->date('expired_date')->nullable();
 
             $table->integer('concession_id')->nullable(); //weak relation tempat dikirim
             $table->string('address');

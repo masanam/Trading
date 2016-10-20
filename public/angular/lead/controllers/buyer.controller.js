@@ -5,6 +5,7 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
     $scope.buyers = [];
     $scope.buyer = {};
     $scope.demand = {};
+    $scope.product = {};
 
     $scope.today = function() {
       $scope.dt = new Date();
@@ -57,12 +58,38 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
       });
 
       buyer.$save(function(response) {
-        $location.path('lead/buyer/'+response.id+'/setup-produk');
+        $location.path('lead/buyer/'+response.id+'/setup-product');
         // $('#createBuyerModal').modal('hide');
         // $('.modal-backdrop').hide();
-        $scope.find();
+        $scope.findOne();
         $scope.loading = false;
       });
+    };
+
+    $scope.nextToProduct= function(){
+      console.log($scope.buyer.selected);
+      $location.path('lead/buyer/'+$scope.buyer.selected.id+'/setup-product');
+    };
+
+    $scope.nexToPort= function(){
+      console.log($scope.product.selected);
+      if ($scope.product.selected.id) {
+        $location.path('lead/port/buyer/'+$stateParams.id);
+      }else{
+        $scope.error = 'Please Select A Product or Create New product';
+      }
+    };
+
+    $scope.findMyProductsBuyer = function() {
+      $scope.products = Product.query({ id:$stateParams.id, action:'my', type:'buyer' });
+    };
+
+    $scope.findAllBuyers = function() {
+      $scope.buyers = Buyer.query();
+    };
+
+    $scope.findAllProducts = function() {
+      $scope.products = Product.query();
     };
 
     $scope.openCreateBuyerModal = function () {
@@ -234,7 +261,7 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
 ]);
 
 //controller Create Buyer Modal
-angular.module('deal').controller('BuyerModalController', function ($scope, $uibModalInstance, Buyer) {
+angular.module('deal').controller('BuyerModalController', function ($scope, $uibModalInstance, Buyer, $location) {
   
   $scope.create = function(createBuyer) {
     $scope.loading = true;
@@ -242,7 +269,7 @@ angular.module('deal').controller('BuyerModalController', function ($scope, $uib
     var buyer = new Buyer($scope.buyer);
 
     buyer.$save(function(response) {
-      $scope.buyers.push(response);
+      $location.path('lead/buyer/'+response.id+'/setup-product');
       $uibModalInstance.close('success');
       $scope.loading = false;
     });
@@ -295,7 +322,7 @@ angular.module('buyer').controller('CreateContactModalFormBuyerController', func
   };
 });
 
-angular.module('buyer').controller('CreateProductModalFromBuyerController', function ($scope, $filter, $uibModalInstance, Product, Authentication) {
+angular.module('buyer').controller('CreateProductModalFromBuyerController', function ($scope, $filter, $uibModalInstance, Product, Authentication, $location) {
   
   $scope.product = new Product();
   
@@ -310,7 +337,7 @@ angular.module('buyer').controller('CreateProductModalFromBuyerController', func
     product.$save(function (response) {
       $scope.product = response;
       
-      $scope.buyer.product.push($scope.product);
+      $location.path('lead/port/buyer/'+response.id);
       $scope.close();
       $scope.success = true;
     }, function (response) {

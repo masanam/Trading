@@ -14,7 +14,7 @@
 
     <div class="form-group">
       <label for="term">Product Name :</label>
-      <input type="text" class="form-control" id="product_name" nama="product_name" ng-model="product.product_name">
+      <input type="text" class="form-control" id="product_name" nama="product_name" ng-model="product.product_name" required>
     </div>
 
     <!--div class="form-group">
@@ -34,14 +34,14 @@
       </select>
     </div-->
 
-    <div class="form-group" ng-if="!buyer && !seller" ng-init="findAllBuyers()">
+    <div class="form-group" ng-if="!buyer && !seller && !concession" ng-init="findAllBuyers()">
       <label for="buyer">Buyer:</label>
       <select class="form-control col-md-12" id="buyer" ng-model="product.buyer_id">
         <option ng-repeat="buyer in buyers" value="{{ buyer.id }}">{{ buyer.company_name }}</option>
       </select>
     </div>
 
-    <div class="form-group" ng-if="!buyer && !seller" ng-init="findAllSellers()">
+    <div class="form-group" ng-if="!buyer && !seller && !concession" ng-init="findAllSellers()">
       <label for="seller">Seller:</label>
       <select class="form-control col-md-12" id="seller" ng-model="product.seller_id">
         <option value=""></option>
@@ -207,7 +207,7 @@
         </tr>
         <tr>
           <td>
-            FE 203
+            Fe 2o3
           </td>
           <td>
             <input type="text" class="form-control" placeholder="%" ng-model="product.fe203_min">

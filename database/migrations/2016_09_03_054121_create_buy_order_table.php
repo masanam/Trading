@@ -22,8 +22,8 @@ class CreateBuyOrderTable extends Migration
 
             $table->date('order_date');
             $table->date('order_deadline');
-            $table->date('ready_date');
-            $table->date('expired_date');
+            $table->date('ready_date')->nullable();
+            $table->date('expired_date')->nullable();
 
             $table->string('address');
             $table->string('city');

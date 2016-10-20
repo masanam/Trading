@@ -1,11 +1,15 @@
 'use strict';
 
-angular.module('port').controller('PortController', ['$scope', '$stateParams', '$uibModal', 'Port',
-  function($scope, $stateParams, $uibModal, Port) {
+angular.module('port').controller('PortController', ['$scope', '$stateParams', '$uibModal', '$location', 'Port',
+  function($scope, $stateParams, $uibModal, $location, Port) {
 
     $scope.init = function(){
       $scope.buyer_ports = [];
       $scope.buyer_port = new Port();
+    };
+
+    $scope.findAllPorts = function(){
+      $scope.ports = Port.query();
     };
 
     $scope.findMyPortsBuyer = function(){
@@ -51,6 +55,14 @@ angular.module('port').controller('PortController', ['$scope', '$stateParams', '
         controller: 'PortModalController',
         scope: $scope
       });
+    };
+
+    $scope.backToProduct= function(){
+      $location.path('lead/buyer/'+$stateParams.id+'/setup-product');
+    };
+
+    $scope.backToProductSeller= function(){
+      $location.path('lead/seller/'+$stateParams.id+'/setup-product');
     };
 
     // $scope.getSelected = function(index,port){
