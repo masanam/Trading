@@ -4,7 +4,7 @@ angular.module('concession').controller('ConcessionController', ['$scope', '$htt
   function($scope, $http, $stateParams, $state, $location, $uibModal, Concession, $window, Product) {
     $scope.concessions = [];
     $scope.concession = {};
-    console.log($location.search().new);
+    $scope.new = $location.search().new;
 
     $scope.create = function() {
       $scope.loading = true;
@@ -210,7 +210,6 @@ angular.module('concession').controller('ConcessionModalController', function ($
   }
   
   $scope.createConcession = function(){
-    console.log($scope.concession);
     
     $scope.success = $scope.error = null;
     $scope.concession.license_expiry_date = $filter('date')($scope.concession.license_expiry_date, 'yyyy-MM-dd');
@@ -224,10 +223,8 @@ angular.module('concession').controller('ConcessionModalController', function ($
 
     var concession = $scope.concession;
     
-    console.log($scope.concession);
     concession.$save(function (response) {
-      console.log(response);
-      $location.path('lead/seller/'+$stateParams.id+'/setup-product');
+      $location.path('lead/seller/'+$stateParams.id+'/setup-product').search({new: $scope.new});
       $uibModalInstance.close('success');
       $scope.success = true;
     }, function (response) {

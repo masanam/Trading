@@ -6,6 +6,7 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
     $scope.buyer = {};
     $scope.demand = {};
     $scope.product = {};
+    $scope.new = $location.search().new;
 
     $scope.today = function() {
       $scope.dt = new Date();
@@ -273,7 +274,7 @@ angular.module('deal').controller('BuyerModalController', function ($scope, $uib
     var buyer = new Buyer($scope.buyer);
 
     buyer.$save(function(response) {
-      $location.path('lead/buyer/'+response.id+'/setup-product');
+      $location.path('lead/buyer/'+response.id+'/setup-product').search({new: 'true'});
       $uibModalInstance.close('success');
       $scope.loading = false;
     });
@@ -340,7 +341,7 @@ angular.module('buyer').controller('CreateProductModalFromBuyerController', func
     
     product.$save(function (response) {
       $scope.product = response;
-      $location.path('lead/port/buyer/'+$stateParams.id);
+      $location.path('lead/port/buyer/'+$stateParams.id).search({new: $scope.new});
       $scope.close();
       $scope.success = true;
     }, function (response) {

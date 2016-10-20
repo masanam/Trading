@@ -36,7 +36,7 @@ class PortController extends Controller
 
     public function sellerMyPort($seller_id)
     {
-        $port = SellerPort::with('Port')->where('seller_id', '=', $buyer_id)->get();
+        $port = SellerPort::with('Port')->where('seller_id', '=', $seller_id)->get();
         return response()->json($port, 200);
     }
 
