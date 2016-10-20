@@ -18,9 +18,9 @@
           <label ng-show="error" class="alert bg-red" style="width:100%">{{error}}</label>
         </div>
   		  <div class="select-box" ng-init="findAllSellers()">
-          <label for="id">Owner of Concession :</label>
-          <ui-select ng-model="seller.selected" style="min-width: 300px;" title="Choose a Owner of Concession" append-to-body="true">
-            <ui-select-match placeholder="Owner of Concession">{{ seller.selected.company_name }}</ui-select-match>
+          <label for="id">Seller Name :</label>
+          <ui-select ng-model="seller.selected" style="min-width: 300px;" title="Choose Seller Name" append-to-body="true">
+            <ui-select-match placeholder="Seller Name">{{ seller.selected.company_name }}</ui-select-match>
             <ui-select-choices repeat="seller in sellers | propsFilter: {company_name: $select.search}">
               <div ng-bind-html="company_name | highlight: $select.search"></div>
               <small>
@@ -106,17 +106,11 @@
               </li>
             </ul>
 
-<<<<<<< HEAD
-             
-            </div>
-            <!-- /.box-body -->
-         </div>
-=======
            
           </div>
           <!-- /.box-body -->
         </div>
->>>>>>> 8e574566a970196c035c1fe8f76dcf93452f5287
+
     	</div>      
     </div>
   </div>

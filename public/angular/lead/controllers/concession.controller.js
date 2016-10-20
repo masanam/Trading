@@ -46,7 +46,11 @@ angular.module('concession').controller('ConcessionController', ['$scope', '$htt
     };
 
     $scope.findMyConcessions = function() {
-      $scope.concessions = Concession.query({ action: 'my', id: $stateParams.id });
+      $scope.concessions = Concession.query({ action: 'my', id: $stateParams.id }, function(concessions){
+        if(concessions.length === 0){
+          $scope.openModalNewSeller();
+        }
+      });
     };
 
     $scope.findOne = function() {
