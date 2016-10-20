@@ -6,7 +6,38 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
     $scope.seller = {};
     $scope.productButton = false;
     $scope.supply = {};
+    $scope.product = {};
 
+
+    $scope.nextToConcession= function(){
+      console.log($scope.seller.selected);
+      if ($scope.seller.selected) {
+      $location.path('lead/seller/setup-concession-seller/'+$scope.seller.selected.id);
+      }else{
+        $scope.error = "Please Select A Owner of Concession or Create New Owner of Concession";
+      }
+    };
+    
+    $scope.backToConcession= function(){
+      $location.path('lead/seller/setup-concession-seller/'+$stateParams.id);
+    };
+
+    $scope.findAllProducts = function() {
+      $scope.products = Product.query();
+    };
+
+    $scope.findMyProductsSeller = function() {
+      $scope.products = Product.query({ id:$stateParams.id, action:'my', type:'seller' });
+    };
+
+    $scope.nexToPort= function(){
+      console.log($scope.product.selected);
+      if ($scope.product.selected) {
+        $location.path('lead/port/seller/'+$stateParams.id);
+      }else{
+        $scope.error = "Please Select A Product or Create New product";
+      }
+    };
 
     $scope.today = function() {
       $scope.dt = new Date();

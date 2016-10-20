@@ -5,6 +5,7 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
     $scope.buyers = [];
     $scope.buyer = {};
     $scope.demand = {};
+    $scope.product = {};
 
     $scope.today = function() {
       $scope.dt = new Date();
@@ -66,11 +67,21 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
     };
 
     $scope.nextToProduct= function(){
+      console.log($scope.buyer.selected);
       $location.path('lead/buyer/'+$scope.buyer.selected.id+'/setup-product');
     };
 
     $scope.nexToPort= function(){
-      $location.path('lead/port/buyer/'+$stateParams.id);
+      console.log($scope.product.selected);
+      if ($scope.product.selected.id) {
+        $location.path('lead/port/buyer/'+$stateParams.id);
+      }else{
+        $scope.error = "Please Select A Product or Create New product";
+      }
+    };
+
+    $scope.findMyProductsBuyer = function() {
+      $scope.products = Product.query({ id:$stateParams.id, action:'my', type:'buyer' });
     };
 
     $scope.findAllBuyers = function() {

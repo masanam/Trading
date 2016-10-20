@@ -20,11 +20,14 @@
         </div>
       </div>
       <div class="box-body">
+        <div class="form-group">
+          <label ng-show="error" class="alert bg-red" style="width:100%">{{error}}</label>
+        </div>
         <div class="row" style="margin: 10px;">
           <div class="select-box" ng-init="findAllPorts()">
-            <label for="id">Port:</label>
+            <label for="id">Port Name:</label>
             <ui-select ng-model="port.selected" style="min-width: 300px;" title="Choose a port" append-to-body="true">
-              <ui-select-match placeholder="Product">{{ port.selected.port_name }}</ui-select-match>
+              <ui-select-match placeholder="Port Name">{{ port.selected.port_name }}</ui-select-match>
               <ui-select-choices repeat="port in ports | propsFilter: {port_name: $select.search}">
                 <div ng-bind-html="port_name | highlight: $select.search"></div>
                 <small>
