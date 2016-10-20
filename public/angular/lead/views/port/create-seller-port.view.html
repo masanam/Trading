@@ -14,9 +14,7 @@
           <button type="button" class="btn btn-primary" ng-click="openModalAvailableSeller()">
             <b>+</b> Add From Available
           </button>
-          <button type="button" class="btn btn-primary" ng-click="openModalNewSeller()">
-            <b>+</b> Add New
-          </button>
+          
           <button type="button" class="btn btn-primary" ui-sref="lead.buyer">
             <i class="glyphicon glyphicon-arrow-right"></i> Next
           </button>
@@ -40,6 +38,16 @@
             </ui-select>
           </div>
         </div>
+        </br>
+          <div class="text-center col-md-4 col-md-offset-4">
+            OR
+          </div>
+              </br>
+              </br>
+            <button type="button" class="btn btn-primary btn-block" ng-click="openModalNewSeller()">
+                <b>+</b> Add New 
+            </button>
+        </br>    
   	    <!-- <div ng-include="'/angular/lead/views/port/table-seller.view.html'"></div> -->
       </div>
     </div>

@@ -322,7 +322,7 @@ angular.module('buyer').controller('CreateContactModalFormBuyerController', func
   };
 });
 
-angular.module('buyer').controller('CreateProductModalFromBuyerController', function ($scope, $filter, $uibModalInstance, Product, Authentication, $location) {
+angular.module('buyer').controller('CreateProductModalFromBuyerController', function ($scope, $filter, $uibModalInstance, Product, Authentication, $location, $stateParams) {
   
   $scope.product = new Product();
   
@@ -336,8 +336,7 @@ angular.module('buyer').controller('CreateProductModalFromBuyerController', func
     
     product.$save(function (response) {
       $scope.product = response;
-      
-      $location.path('lead/port/buyer/'+response.id);
+      $location.path('lead/port/buyer/'+$stateParams.id);
       $scope.close();
       $scope.success = true;
     }, function (response) {
