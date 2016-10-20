@@ -4,6 +4,7 @@ angular.module('concession').controller('ConcessionController', ['$scope', '$htt
   function($scope, $http, $stateParams, $state, $location, $uibModal, Concession, $window, Product) {
     $scope.concessions = [];
     $scope.concession = {};
+    $scope.new = $location.search().new;
 
     $scope.create = function() {
       $scope.loading = true;
@@ -45,7 +46,11 @@ angular.module('concession').controller('ConcessionController', ['$scope', '$htt
     };
 
     $scope.findMyConcessions = function() {
-      $scope.concessions = Concession.query({ action: 'my', id: $stateParams.id });
+      $scope.concessions = Concession.query({ action: 'my', id: $stateParams.id }, function(concessions){
+        if(concessions.length === 0){
+          $scope.openModalNewSeller();
+        }
+      });
     };
 
     $scope.findOne = function() {
@@ -110,7 +115,7 @@ angular.module('concession').controller('ConcessionController', ['$scope', '$htt
   }
 ]);
 
-angular.module('concession').controller('ConcessionModalController', function ($scope, $uibModalInstance, $stateParams, $filter, Concession, NgMap) {
+angular.module('concession').controller('ConcessionModalController', function ($scope, $stateParams, $location, $uibModalInstance, $filter, Concession, NgMap) {
   
   $scope.init = function () {
     $scope.concession = new Concession();
@@ -209,13 +214,12 @@ angular.module('concession').controller('ConcessionModalController', function ($
   }
   
   $scope.createConcession = function(){
-    console.log($scope.concession);
     
     $scope.success = $scope.error = null;
     $scope.concession.license_expiry_date = $filter('date')($scope.concession.license_expiry_date, 'yyyy-MM-dd');
     $scope.concession.seller_id = $stateParams.id;
     
-    if($scope.polygon.array.length === 0){
+    if($scope.polygon.array.length !== 0){
       $scope.concession.polygon = createStringByArray($scope.polygon.array);
     }else{
       $scope.concession.polygon = '';
@@ -224,12 +228,11 @@ angular.module('concession').controller('ConcessionModalController', function ($
     var concession = $scope.concession;
     
     concession.$save(function (response) {
-      $scope.concession = response;
-      
-      $scope.seller.concession.push($scope.concession);
+      $location.path('lead/seller/'+$stateParams.id+'/setup-product').search({new: $scope.new});
       $uibModalInstance.close('success');
       $scope.success = true;
     }, function (response) {
+      $uibModalInstance.dismiss('cancel');
       $scope.error = response.data.message;
     });
     

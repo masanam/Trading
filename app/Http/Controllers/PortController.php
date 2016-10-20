@@ -36,7 +36,7 @@ class PortController extends Controller
 
     public function sellerMyPort($seller_id)
     {
-        $port = SellerPort::with('Port')->where('seller_id', '=', $buyer_id)->get();
+        $port = SellerPort::with('Port')->where('seller_id', '=', $seller_id)->get();
         return response()->json($port, 200);
     }
 
@@ -68,6 +68,7 @@ class PortController extends Controller
         $port->has_crusher = $request->has_crusher;
         $port->has_blending = $request->has_blending;
         $port->draft_height = $request->draft_height;
+        $port->daily_discharge_rate = $request->daily_discharge_rate;
         $port->save();
 
         return response()->json($port, 200);

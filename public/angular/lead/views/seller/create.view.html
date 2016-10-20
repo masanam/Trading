@@ -8,40 +8,109 @@
       <div class="box-header with-border">
         <h1 class="box-title" style="font-size: 25px">Create Sellers</h1>
         <div class="box-tools pull-right">
-          <button type="button" class="btn btn-primary" ng-click="openModalNewSeller()">
-            <b>+</b> Add New
-          </button>
           <button type="button" class="btn btn-success" ng-click="nextToConcession()">
             <i class="glyphicon glyphicon-arrow-right"></i> Next
           </button>
         </div>
       </div>
       <div class="box-body">
-    		<section>
-          <div class="form-group">
-            <label ng-show="error" class="alert bg-red" style="width:100%">{{error}}</label>
+        <div class="form-group">
+          <label ng-show="error" class="alert bg-red" style="width:100%">{{error}}</label>
+        </div>
+  		  <div class="select-box" ng-init="findAllSellers()">
+          <label for="id">Seller Name :</label>
+          <ui-select ng-model="seller.selected" style="min-width: 300px;" title="Choose Seller Name" append-to-body="true">
+            <ui-select-match placeholder="Seller Name">{{ seller.selected.company_name }}</ui-select-match>
+            <ui-select-choices repeat="seller in sellers | propsFilter: {company_name: $select.search}">
+              <div ng-bind-html="company_name | highlight: $select.search"></div>
+              <small>
+                {{seller.company_name}}
+              </small>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+        <br>
+        <div class="text-center col-md-4 col-md-offset-4">
+          OR
+        </div>
+        </br>
+        </br>
+        <button type="button" class="btn btn-primary btn-block" ng-click="openModalNewSeller()">
+          <b>+</b> Add New
+        </button>
+        </br>
+        <div class="box box-primary" ng-show="seller.selected">
+          <div class="box-body box-profile">
+            <img class="profile-user-img img-responsive img-circle" src="/images/default.jpg"" alt="User profile picture">
+
+            <h3 class="profile-username text-center">{{seller.selected.company_name}}</h3>
+
+            <ul class="list-group list-group-unbordered" col-mg-4>
+              <li class="list-group-item">
+                <b>Supplier category </b>
+                <span class="badge" ng-show="seller.selected.is_trader===1"><i class='fa fa-share-alt'></i> TRADER</span>
+                <span class="badge" ng-show="seller.selected.is_trader===0"><i class='fa fa-share-alt'></i> MINER</span>
+              </li>
+              <li class="list-group-item">
+                <b>Supplier status </b>
+                <span class="badge" ng-show="seller.selected.is_affiliated===1"><i class='fa fa-tags'></i> AFFILIATED</span>
+                <span class="badge" ng-show="seller.selected.is_affiliated===0"><i class='fa fa-tags'></i> NON - AFFILIATED</span>
+              </li>
+              <li class="list-group-item">
+                <b>Contact Person</b> <a class="pull-right">{{seller.selected.contact_person}}</a>
+              </li>
+              <li class="list-group-item">
+                <b>Phone</b> <a class="pull-right">{{seller.selected.phone}}</a>
+              </li>
+              <li class="list-group-item">
+                <b>Email</b> <a class="pull-right">{{seller.selected.email}}</a>
+              </li>
+              <li class="list-group-item">
+                <b>Web</b> <a class="pull-right">{{seller.selected.web}}</a>
+              </li>
+              <li class="list-group-item">
+                <b>Address</b> <a class="pull-right">{{seller.selected.address}}</a>
+              </li>
+              <li class="list-group-item">
+                <b>City</b> <a class="pull-right">{{seller.selected.city}}</a>
+              </li>
+              <li class="list-group-item">
+                <b>Country</b> <a class="pull-right">{{seller.selected.country}} </a>
+              </li>
+              <li class="list-group-item">
+                <b>Industry</b> <a class="pull-right">{{seller.selected.industry}}</a>
+              </li>
+              <li class="list-group-item">
+                <b>City</b> <a class="pull-right">{{seller.selected.city}}</a>
+              </li>
+              <li class="list-group-item">
+                <b>County</b> <a class="pull-right">{{seller.selected.country}}</a>
+              </li>
+              <li class="list-group-item">
+                <b>Industry</b> <a class="pull-right">{{seller.selected.industry}}</a>
+              </li>
+              <li class="list-group-item">
+                <b>Total Annual Sales</b> <a class="pull-right">{{seller.selected.total_annual_sales}}</a>
+              </li>
+              <li class="list-group-item">
+                <b>Selling Terms</b> <a class="pull-right">{{seller.selected.preferred_trading_term}}</a>
+              </li>
+              <li class="list-group-item">
+                <b>Preferred Payment Term</b> <a class="pull-right">{{seller.selected.preferred_payment_term}}</a>
+              </li>
+              <li class="list-group-item">
+                <b>Purchasing Countries</b> <a class="pull-right">{{seller.selected.purchasing_countries}}</a>
+              </li>
+             <li class="list-group-item">
+                <b>Description</b> <a class="pull-right">{{seller.selected.description}}</a>
+              </li>
+            </ul>
+
+           
           </div>
-    		  <div class="select-box" ng-init="findAllSellers()">
-            <label for="id">Owner of Concession :</label>
-            <ui-select ng-model="seller.selected" style="min-width: 300px;" title="Choose a Owner of Concession" append-to-body="true">
-              <ui-select-match placeholder="Owner of Concession">{{ seller.selected.company_name }}</ui-select-match>
-              <ui-select-choices repeat="seller in sellers | propsFilter: {company_name: $select.search}">
-                <div ng-bind-html="company_name | highlight: $select.search"></div>
-                <small>
-                  {{seller.company_name}}
-                </small>
-              </ui-select-choices>
-            </ui-select>
-          </div>
-          <div class="text-center col-md-4 col-md-offset-4">
-            OR
-          </div>
-          </br>
-          </br>
-          <button type="button" class="btn btn-primary btn-block" ng-click="openModalNewSeller()">
-            <b>+</b> Add New
-          </button>
-    		</section>
+          <!-- /.box-body -->
+        </div>
+
     	</div>      
     </div>
   </div>

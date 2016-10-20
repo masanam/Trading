@@ -7,6 +7,7 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
     $scope.productButton = false;
     $scope.supply = {};
     $scope.product = {};
+    $scope.new = $location.search().new;
 
 
     $scope.nextToConcession= function(){
@@ -27,7 +28,11 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
     };
 
     $scope.findMyProductsSeller = function() {
-      $scope.products = Product.query({ id:$stateParams.id, action:'my', type:'seller' });
+      $scope.products = Product.query({ id:$stateParams.id, action:'my', type:'seller' }, function(products){
+        if(products.length === 0){
+          $scope.addProduct();
+        }
+      });
     };
 
     $scope.nexToPort= function(){
@@ -322,7 +327,7 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
   }
 ]);
 
-angular.module('seller').controller('CreateSellerModalController', function ($scope, $filter, $uibModalInstance, Seller) {
+angular.module('seller').controller('CreateSellerModalController', function ($scope, $filter, $location, $uibModalInstance, Seller) {
   
   $scope.initializeOrder = function(){
     $scope.seller = {
@@ -341,12 +346,12 @@ angular.module('seller').controller('CreateSellerModalController', function ($sc
     };
   };
 
-  $scope.createSeller = function (creteSeller) {
+  $scope.createSeller = function () {
     $scope.seller.license_expiry_date = $filter('date')($scope.seller.license_expiry_date, 'yyyy-MM-dd');
     var seller = new Seller($scope.seller);
 
     seller.$save(function(response) {
-      $scope.sellers.push(response);
+      $location.path('lead/seller/setup-concession-seller/'+response.id).search({new: 'true'});
       $uibModalInstance.close('success');
       $scope.loading=false;
     });
@@ -399,7 +404,7 @@ angular.module('seller').controller('CreateContactModalFromSellerController', fu
   };
 });
 
-angular.module('seller').controller('CreateProductModalFromSellerController', function ($scope, $filter, $uibModalInstance, Product, Authentication) {
+angular.module('seller').controller('CreateProductModalFromSellerController', function ($scope, $location, $stateParams, $filter, $uibModalInstance, Product, Authentication) {
   
   $scope.product = new Product();
     
@@ -413,9 +418,8 @@ angular.module('seller').controller('CreateProductModalFromSellerController', fu
     
     product.$save(function (response) {
       $scope.product = response;
-      
-      $scope.seller.product.push($scope.product);
-      $scope.close();
+      $location.path('lead/port/seller/'+$stateParams.id).search({new: $scope.new});
+      $uibModalInstance.close('success');
       $scope.success = true;
     }, function (response) {
       $scope.error = response.data.message;

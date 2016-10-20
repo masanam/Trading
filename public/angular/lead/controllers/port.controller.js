@@ -6,6 +6,9 @@ angular.module('port').controller('PortController', ['$scope', '$stateParams', '
     $scope.init = function(){
       $scope.buyer_ports = [];
       $scope.buyer_port = new Port();
+      $scope.ports=[];
+      $scope.port={};
+      $scope.new = $location.search().new;
     };
 
     $scope.findAllPorts = function(){
@@ -113,6 +116,7 @@ angular.module('port').controller('PortModalController', function ($scope, $stat
   $scope.init = function(type){
     $scope.port = new Port();
     $scope.buyer_port = new Port();
+    $scope.seller_port = new Port();
     $scope.port.has_blending = 0;
     $scope.port.has_conveyor = 0;
     $scope.port.has_crusher = 0;
@@ -166,7 +170,7 @@ angular.module('port').controller('PortModalController', function ($scope, $stat
     });
   };
 
-  $scope.savePortSupplier = function(){
+  $scope.savePortSeller = function(){
     var port = new Port({
       port_name: $scope.port.port_name,
       anchorage_distance: $scope.port.anchorage_distance,
