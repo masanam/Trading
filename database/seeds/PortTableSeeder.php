@@ -13,20 +13,19 @@ class PortTableSeeder extends Seeder
     public function run()
     {
     	Port::create([
-    		'id' => 1,
 	        'port_name' => 'Nial',
 	        'owner' => 'PT. dummy',
-	        'is_private' => true,
+	        'is_private' => 1,
 	        'location' => 'tanah bumbu',
 	        'size' => 1000,
 	        'river_capacity' => 10,
 	        'latitude' => 81.8,
 	        'longitude' => 99.6,
 	        'anchorage_distance' => 123,
-	        'has_conveyor' => true,
-	        'has_crusher' => true,
-	        'has_blending' => true,
-	        'draft_height' => 15,
+	        'has_conveyor' => 1,
+	        'has_crusher' => 1,
+	        'has_blending' => 1,
+	        'draft_height' => 15
     	]);
     }
 }
