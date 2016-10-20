@@ -66,8 +66,13 @@
               <ul class="list-group list-group-unbordered" col-mg-4>
                 <li class="list-group-item">
                   <b>Buyer Category</b>
-                   <span class="badge"><i class='fa fa-share-alt'></i> AFFILIATED</span>
-                    <span class="badge"><i class='fa fa-tags'></i> TRADER</span>
+                  <span class="badge" ng-show="buyer.selected.is_trader===1"><i class='fa fa-share-alt'></i> TRADER</span>
+                  <span class="badge" ng-show="buyer.selected.is_trader===0"><i class='fa fa-share-alt'></i> END USER</span>
+                </li>
+                <li class="list-group-item">
+                  <b>Buyer status </b>
+                  <span class="badge" ng-show="buyer.selected.is_affiliated===1"><i class='fa fa-tags'></i> AFFILIATED</span>
+                  <span class="badge" ng-show="buyer.selected.is_affiliated===0"><i class='fa fa-tags'></i> NON - AFFILIATED</span>
                 </li>
                 <li class="list-group-item">
                   <b>Phone</b> <a class="pull-right">{{buyer.selected.phone}}</a>

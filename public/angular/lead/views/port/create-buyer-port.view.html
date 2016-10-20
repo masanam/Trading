@@ -8,7 +8,7 @@
       <div class="box-header with-border">
         <h1 class="box-title" style="font-size: 25px">Create Port</h1>
         <div class="box-tools pull-right">
-          <button type="button" class="btn btn-danger" ng-click="backToProduct()">
+          <button type="button" class="btn btn-danger" ng-click="backToProduct()" ng-show="new!=='true'">
             <i class="glyphicon glyphicon-arrow-left"></i> Back
         	</button>
           
@@ -47,51 +47,48 @@
             </button>
             </br>    
             <div class="box box-primary" ng-show="port.selected">
-            <div class="box-body box-profile">
+              <div class="box-body box-profile">
 
-              <ul class="list-group list-group-unbordered" col-mg-4>
-                <li class="list-group-item">
-                  <b>Name of Port</b> <a class="pull-right">{{port.selected.port_name}}</a>
-                </li>
-                <li class="list-group-item">
-                  <b>location</b> <a class="pull-right">{{port.selected.location}}</a>
-                </li>
-                <li class="list-group-item">
-                  <b>Status of Port</b> <a class="pull-right"></a>
-                </li>
-                <li class="list-group-item">
-                  <b>Size of Port (Ha)</b> <a class="pull-right">{{port.selected.size}}</a>
-                </li>
-                <li class="list-group-item">
-                  <b>Latitude</b> <a class="pull-right">{{port.selected.latitude}}</a>
-                </li>
-                <li class="list-group-item">
-                  <b>Longtitude</b> <a class="pull-right">{{port.selected.longtitude}}</a>
-                </li>
-                <li class="list-group-item">
-                  <b>Port Pacility</b> <a class="pull-right"></a>
-                </li>
-                <li class="list-group-item">
-                  <b>Draft of Loading Port</b> <a class="pull-right">{{port.selected.draft_height}}</a>
-                </li>
-                <li class="list-group-item">
-                  <b>Distance from port to anchorage (NM or Hours )</b> <a class="pull-right">{{port.selected.anchorage_distance}}</a>
-                </li>
-                <li class="list-group-item">
-                  <b>Daily discharge rate (mtpd)</b> <a class="pull-right">{{port.selected.daily_discharge_rate}}</a>
-                </li>
-                <li class="list-group-item">
-                  <b>Distance from Discharging port to Factory (KM)</b> <a class="pull-right">{{buyer_port.selected.distance}}</a>
-                </li>
-                <li class="list-group-item">
-                  <b>Distance from Discharging port to Factory (KM)</b> <a class="pull-right">{{seller_port.selected.distance}}</a>
-                </li>
-              </ul>
+                <ul class="list-group list-group-unbordered" col-mg-4>
+                  <li class="list-group-item">
+                    <b>Name of Port</b> <a class="pull-right">{{port.selected.port_name}}</a>
+                  </li>
+                  <li class="list-group-item">
+                    <b>location</b> <a class="pull-right">{{port.selected.location}}</a>
+                  </li>
+                  <li class="list-group-item" ng-show="port.selected.is_private===1">
+                    <b>Status of Port</b> <a class="pull-right">Private</a>
+                  </li>
+                  <li class="list-group-item" ng-show="port.selected.is_private===0">
+                    <b>Status of Port</b> <a class="pull-right">Public</a>
+                  </li>
+                  <li class="list-group-item">
+                    <b>Size of Port (Ha)</b> <a class="pull-right">{{port.selected.size}}</a>
+                  </li>
+                  <li class="list-group-item">
+                    <b>Latitude</b> <a class="pull-right">{{port.selected.latitude}}</a>
+                  </li>
+                  <li class="list-group-item">
+                    <b>Longtitude</b> <a class="pull-right">{{port.selected.longitude}}</a>
+                  </li>
+                  <li class="list-group-item">
+                    <b>Port Pacility</b> <a class="pull-right">{{port.selected.longitude}}{{port.selected.longitude}}{{port.selected.longitude}}</a>
+                  </li>
+                  <li class="list-group-item">
+                    <b>Draft of Loading Port</b> <a class="pull-right">{{port.selected.draft_height}}</a>
+                  </li>
+                  <li class="list-group-item">
+                    <b>Distance from port to anchorage (NM or Hours )</b> <a class="pull-right">{{port.selected.anchorage_distance}}</a>
+                  </li>
+                  <li class="list-group-item">
+                    <b>Daily discharge rate (mtpd)</b> <a class="pull-right">{{port.selected.daily_discharge_rate}}</a>
+                  </li>
+                </ul>
 
-             
+               
+              </div>
+              <!-- /.box-body -->
             </div>
-            <!-- /.box-body -->
-          </div>
   	     <!-- <div ng-include="'/angular/lead/views/port/table-buyer.view.html'"></div> -->
       </div>
     </div>
