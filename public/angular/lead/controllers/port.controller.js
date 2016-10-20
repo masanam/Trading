@@ -6,6 +6,8 @@ angular.module('port').controller('PortController', ['$scope', '$stateParams', '
     $scope.init = function(){
       $scope.buyer_ports = [];
       $scope.buyer_port = new Port();
+      $scope.ports=[];
+      $scope.port={};
     };
 
     $scope.findAllPorts = function(){
