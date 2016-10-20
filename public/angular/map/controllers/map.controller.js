@@ -17,6 +17,7 @@ angular.module('map').controller('MapController', ['$scope', '$http', '$statePar
     
     NgMap.getMap().then(function(map) {
       $scope.map = map;
+      console.log($scope.map);
     });
 
     $scope.find = function() {
