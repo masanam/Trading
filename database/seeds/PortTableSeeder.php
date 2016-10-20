@@ -25,11 +25,8 @@ class PortTableSeeder extends Seeder
 	        'has_conveyor' => 1,
 	        'has_crusher' => 1,
 	        'has_blending' => 1,
-<<<<<<< HEAD
 	        'draft_height' => 15
-=======
-	        'draft_height' => 15,
->>>>>>> 4307ad884b353bd48d83c6ad2bd00a434adf4052
+
     	]);
     }
 }
