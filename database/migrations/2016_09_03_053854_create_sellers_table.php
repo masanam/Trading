@@ -21,7 +21,7 @@ class CreateSellersTable extends Migration
             $table->boolean('is_affiliated');
             $table->string('phone');
             $table->string('email');
-            $table->string('web');
+            $table->string('web')->nullable();
             $table->string('address');
             $table->string('city');
             $table->string('country');
@@ -32,7 +32,7 @@ class CreateSellersTable extends Migration
             $table->string('preferred_trading_term');
             $table->string('preferred_payment_term');
             $table->string('purchasing_countries');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->char('status', 1); // A = Active , X = Deleted
             $table->timestamps();
         });

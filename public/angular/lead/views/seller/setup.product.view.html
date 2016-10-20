@@ -9,8 +9,7 @@
           <h3 class="box-title" style="font-size: 25px">Products Collections</h3>
           <div class="box-tools pull-right">
            <button type="button" ng-click="backToConcession()" class="btn btn-danger"><i class="glyphicon glyphicon-arrow-left"></i> Back</button>
-            <button type="button" ng-click="addProduct()" class="btn btn-info"><i class="glyphicon glyphicon-plus"></i> Add New Product</button>
-            <button type="button" ng-click="nexToPort()" class="btn btn-success">NEXT <i class="glyphicon glyphicon-arrow-right"></i> </button>
+            <button type="button" ng-click="nexToPort()" class="btn btn-danger">Next <i class="glyphicon glyphicon-arrow-right"></i> </button>
           </div>
         </div>
         <div class="box-body">
@@ -31,6 +30,16 @@
               </ui-select>
             </div>
           </div>
+          </br>
+          <div class="text-center col-md-4 col-md-offset-4">
+            OR
+          </div>
+          </br>
+          </br>
+          <button type="button" class="btn btn-primary btn-block" ng-click="addProduct()">
+            <b>+</b> Add New Product
+          </button>
+          </br> 
         </div>
       </div>
 </section>

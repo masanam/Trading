@@ -322,7 +322,7 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
   }
 ]);
 
-angular.module('seller').controller('CreateSellerModalController', function ($scope, $filter, $uibModalInstance, Seller) {
+angular.module('seller').controller('CreateSellerModalController', function ($scope, $filter, $location, $uibModalInstance, Seller) {
   
   $scope.initializeOrder = function(){
     $scope.seller = {
@@ -341,12 +341,12 @@ angular.module('seller').controller('CreateSellerModalController', function ($sc
     };
   };
 
-  $scope.createSeller = function (creteSeller) {
+  $scope.createSeller = function () {
     $scope.seller.license_expiry_date = $filter('date')($scope.seller.license_expiry_date, 'yyyy-MM-dd');
     var seller = new Seller($scope.seller);
 
     seller.$save(function(response) {
-      $scope.sellers.push(response);
+      $location.path('lead/seller/setup-concession-seller/'+response.id);
       $uibModalInstance.close('success');
       $scope.loading=false;
     });
