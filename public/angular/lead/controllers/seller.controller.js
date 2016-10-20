@@ -27,7 +27,11 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
     };
 
     $scope.findMyProductsSeller = function() {
-      $scope.products = Product.query({ id:$stateParams.id, action:'my', type:'seller' });
+      $scope.products = Product.query({ id:$stateParams.id, action:'my', type:'seller' }, function(products){
+        if(products.length === 0){
+          $scope.addProduct();
+        }
+      });
     };
 
     $scope.nexToPort= function(){
