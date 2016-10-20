@@ -54,6 +54,9 @@ class ConcessionController extends Controller
                                           ->whereHas('Seller', function($q) {
                                             $q->where('sellers.status', 'a');
                                           })
+                                          ->whereHas('Product' , function($q) use ($gt_params) {
+                                            $q->where('products.'.$gt_params[0].'_min', '>=', $gt_params[1]);
+                                          })
                                           ->where('concession.status', 'a')
                                           ->get();
               }
@@ -70,6 +73,9 @@ class ConcessionController extends Controller
                                           }])
                                           ->whereHas('Seller' , function($q) {
                                             $q->where('sellers.status', 'a');
+                                          })
+                                          ->whereHas('Product' , function($q) use ($lt_params) {
+                                            $q->where('products.'.$lt_params[0].'_max', '<=', $lt_params[1]);
                                           })
                                           ->with('Port')
                                           ->where('concession.status', 'a')
@@ -90,6 +96,10 @@ class ConcessionController extends Controller
                                           ->with('Port')
                                           ->whereHas('Seller' , function($q) {
                                             $q->where('sellers.status', 'a');
+                                          })
+                                          ->whereHas('Product' , function($q) use ($bet_params) {
+                                            $q->where('products.'.$bet_params[0].'_min', '<=', $bet_params[1])
+                                              ->where('products.'.$bet_params[0].'_max', '>=', $bet_params[1]);
                                           })
                                           ->where('concession.status', 'a')
                                           ->get();
