@@ -70,7 +70,11 @@
             </ui-select-choices>
           </ui-select>
         </div>
+<<<<<<< HEAD
+        </br>
+=======
         <br>
+>>>>>>> 8e574566a970196c035c1fe8f76dcf93452f5287
         <div class="text-center col-md-4 col-md-offset-4">
             OR
         </div>
@@ -80,6 +84,82 @@
             <b>+</b> Add New
           </button>
 
+      </div>
+      <div class="box box-primary" ng-show="concession.selected">
+            <div class="box-body box-profile">
+              <img class="profile-user-img img-responsive img-circle" src="/images/default.jpg"" alt="User profile picture">
+
+              <h3 class="profile-username text-center">{{concession.selected.concession_name}}</h3>
+
+              <ul class="list-group list-group-unbordered" col-mg-4>
+                <li class="list-group-item">
+                  <b>Owner</b> <a class="pull-right">{{concession.selected.owner}}</a>
+                </li>
+                <li class="list-group-item">
+                  <b>Address</b> <a class="pull-right">{{concession.selected.address}}</a>
+                </li>
+                <li class="list-group-item">
+                  <b>Country of coal purchase</b> <a class="pull-right">{{concession.selected.country}}</a>
+                </li>
+
+                <li class="list-group-item">
+                  <b>City</b> <a class="pull-right">{{concession.selected.city}}</a>
+                </li>
+                <div class='col-md-6'>
+                <li class="list-group-item">
+                  <b>Total Coal Resources (MMT)</b> <a class="pull-right">{{concession.selected.resource}}</a>
+                </li>
+                <li class="list-group-item">
+                  <b>Total Coal Reserves (MMT)</b> <a class="pull-right">{{concession.selected.reserves}}</a>
+                </li>
+                <li class="list-group-item">
+                  <b>Annual Production Capacity (MMT)</b> <a class="pull-right">{{concession.selected.annual_production}}</a>
+                </li>
+                <li class="list-group-item">
+                  <b>Stockpile Capacity</b> <a class="pull-right">{{concession.selected.stockpile_capacity}}</a>
+                </li>
+                <li class="list-group-item">
+                  <b>Contracted volume (MMT)</b> <a class="pull-right">{{concession.selected.contracted_volume}}</a>
+                </li>
+
+                </div>
+                 <div class='col-md-6'>
+                <li class="list-group-item">
+                  <b>Stripping Ratio</b> <a class="pull-right">{{concession.selected.stripping_ratio}}</a>
+                </li>
+                <li class="list-group-item">
+                  <b>Size of Concession (Ha)</b> <a class="pull-right">{{concession.selected.size}}</a>
+                </li>
+                <li class="list-group-item">
+                  <b>Stockpile Distance</b> <a class="pull-right">{{concession.selected.stockpile_distance}}</a>
+                </li>
+                <li class="list-group-item">
+                  <b>Stockpile Coverage</b> <a class="pull-right">{{concession.selected.stockpile_coverage}}</a>
+                </li>
+                <li class="list-group-item">
+                  <b>Remaining</b> <a class="pull-right">{{concession.selected.remaining_volume}}</a>
+                </li>
+                </div>  
+                
+                <div class='col-md-12'>
+                  <li class="list-group-item">
+                  <b>Hauling Road</b> <a class="pull-right">{{concession.selected.hauling_road_name}}</a>
+                 </li>
+                  <li class="list-group-item">
+                  <b>License Type</b> <a class="pull-right">{{concession.selected.license_type}}</a>
+                 </li>
+                  <li class="list-group-item">
+                  <b>Expiry Date</b> <a class="pull-right">{{concession.selected.license_expiry_date}}</a>
+                 </li>
+
+
+                </div>
+                
+              </ul>
+
+             
+            </div>
+            <!-- /.box-body -->
       </div>
     </div>
   </div>

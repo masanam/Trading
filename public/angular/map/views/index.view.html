@@ -110,6 +110,13 @@
                 position="{{pos.port.latitude}}, {{pos.port.longitude}}" 
                 id="markport{{pos.port.id}}" on-click="showPortDetail({{pos.port}})">  
               </marker>
+              <directions
+                draggable="true"
+                panel="directions-panel"
+                travel-mode="DRIVING"
+                origin="{{pos.latitude}} , {{pos.latitude}}"
+                destination="{{pos.port.latitude}} , {{pos.port.longitude}}">
+              </directions>
             </span>
             <info-window id="info-window" default-style="false" maxWidth="800px">
               <div ng-non-bindable="" style="width:500px" class="no-gutter">
