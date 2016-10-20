@@ -4,17 +4,17 @@
   </div>
   <div class="col-md-9 col-lg-10" >
     <section ng-include="'./angular/lead/views/search-bar.view.html'"></section>
-    <div class="box">
+    <div class="box box-info">
       <div class="box-header with-border">
         <h1 class="box-title" style="font-size: 25px">Create Port</h1>
         <div class="box-tools pull-right">
-          <button type="button" class="btn btn-primary" ng-click="backToProduct()">
+          <button type="button" class="btn btn-danger" ng-click="backToProduct()">
             <i class="glyphicon glyphicon-arrow-left"></i> Back
         	</button>
           <button type="button" class="btn btn-primary" ng-click="openModalNewBuyer()">
             <b>+</b> Add New
           </button>
-          <button type="button" class="btn btn-primary" ui-sref="lead.buyer">
+          <button type="button" class="btn btn-success" ui-sref="lead.buyer">
             <i class="glyphicon glyphicon-arrow-right"></i> Next
           </button>
         </div>
