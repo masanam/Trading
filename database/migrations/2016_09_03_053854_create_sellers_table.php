@@ -34,6 +34,7 @@ class CreateSellersTable extends Migration
             $table->string('purchasing_countries');
             $table->text('description')->nullable();
             $table->char('status', 1); // A = Active , X = Deleted
+            $table->string('contact_person')->nullable();
             $table->timestamps();
         });
     }

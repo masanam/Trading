@@ -67,6 +67,7 @@ class SellerController extends Controller
         $seller->company_name = $request->company_name;
         $seller->is_trader = $request->is_trader;
         $seller->is_affiliated = $request->is_affiliated;
+        $seller->contact_person = $request->contact_person;
         $seller->phone = $request->phone;
         $seller->email = $request->email;
         $seller->web = $request->web;
@@ -138,6 +139,7 @@ class SellerController extends Controller
         $seller->company_name = $request->company_name;
         $seller->is_trader = $request->is_trader;
         $seller->is_affiliated = $request->is_affiliated;
+        $seller->contact_person = $request->contact_person;
         $seller->phone = $request->phone;
         $seller->email = $request->email;
         $seller->web = $request->web;
