@@ -81,7 +81,11 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
     };
 
     $scope.findMyProductsBuyer = function() {
-      $scope.products = Product.query({ id:$stateParams.id, action:'my', type:'buyer' });
+      $scope.products = Product.query({ id:$stateParams.id, action:'my', type:'buyer' }, function(products){
+        if(products.length === 0){
+          $scope.addProduct();
+        }
+      });
     };
 
     $scope.findAllBuyers = function() {
@@ -322,7 +326,7 @@ angular.module('buyer').controller('CreateContactModalFormBuyerController', func
   };
 });
 
-angular.module('buyer').controller('CreateProductModalFromBuyerController', function ($scope, $filter, $uibModalInstance, Product, Authentication, $location) {
+angular.module('buyer').controller('CreateProductModalFromBuyerController', function ($scope, $filter, $uibModalInstance, Product, Authentication, $location, $stateParams) {
   
   $scope.product = new Product();
   
@@ -336,8 +340,7 @@ angular.module('buyer').controller('CreateProductModalFromBuyerController', func
     
     product.$save(function (response) {
       $scope.product = response;
-      
-      $location.path('lead/port/buyer/'+response.id);
+      $location.path('lead/port/buyer/'+$stateParams.id);
       $scope.close();
       $scope.success = true;
     }, function (response) {

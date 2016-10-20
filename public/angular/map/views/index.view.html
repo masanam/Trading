@@ -108,8 +108,7 @@
                   url: '/images/boat.png'
                 }"
                 position="{{pos.port.latitude}}, {{pos.port.longitude}}" 
-                id="markport{{pos.port.id}}" 
-                on-click="showPortDetail({{pos.port}})">  
+                id="markport{{pos.port.id}}" on-click="showPortDetail({{pos.port}})">  
               </marker>
             </span>
             <info-window id="info-window" default-style="false" maxWidth="800px">
@@ -294,43 +293,45 @@
                           <div class="col-lg-12">
                             &nbsp;
                             <div>
-                              <section class="col-lg-6">
-                                <div class="row">
-                                  <span class="col-lg-6">Location:</span> 
-                                  <span class="col-lg-6">{{port.location || 'N/A'}}</span><br/>
-                                </div>
-                                <div class="row">
-                                  <span class="col-lg-6">Owner:</span> 
-                                  <span class="col-lg-6">{{port.owner || 'N/A'}}</span><br/>
-                                </div>
-                                <div class="row">
-                                  <span class="col-lg-6">Position:</span> 
-                                  <span class="col-lg-6">{{port.latitude || 'N/A'}}, {{port.longitude || 'N/A'}}</span><br/>
-                                </div>
-                                <div class="row">
-                                  <span class="col-lg-6">River Capacity:</span> 
-                                  <span class="col-lg-6">{{port.river_capacity || 'N/A'}}</span><br/>
-                                </div>
-                                <div class="row">
-                                  <span class="col-lg-6">Anchorage Distance:</span> 
-                                  <span class="col-lg-6">{{port.anchorage_distance | number : 3 || 'N/A'}}</span><br/>
-                                </div>
-                                <div class="row">
-                                  <span class="col-lg-6">Has Conveyor:</span> 
-                                  <span class="col-lg-6">{{port.has_conveyor || 'N/A'}}</span><br/>
-                                </div>
-                                <div class="row">
-                                  <span class="col-lg-6">Has Crusher:</span> 
-                                  <span class="col-lg-6">{{port.has_crusher || 'N/A'}}</span><br/>
-                                </div>
-                                <div class="row">
-                                  <span class="col-lg-6">Has Blending:</span> 
-                                  <span class="col-lg-6">{{port.has_blending || 'N/A'}}</span><br/>
-                                </div>
-                                <div class="row">
-                                  <span class="col-lg-6">Draft Height:</span> 
-                                  <span class="col-lg-6">{{port.draft_height || 'N/A'}}</span><br/>
-                                </div>
+                              <section class="col-lg-12">
+                                <table>
+                                  <tr>
+                                    <td>Location  </td>
+                                    <td>  : {{port.location || 'N/A'}}  </td>
+                                  </tr>
+                                  <tr>
+                                    <td>Owner </td>
+                                    <td>  : {{port.owner || 'N/A'}} </td>
+                                  </tr>
+                                  <tr>
+                                    <td>Position  </td>
+                                    <td>  : {{port.latitude || 'N/A'}}, {{port.longitude || 'N/A'}} </td>
+                                  </tr>
+                                  <tr>
+                                    <td>River Capacity  </td>
+                                    <td>  : {{port.river_capacity || 'N/A'}}  </td>
+                                  </tr>
+                                  <tr>
+                                    <td>Anchorage Distance  </td>
+                                    <td>  : {{port.anchorage_distance || 'N/A'}}  </td>
+                                  </tr>
+                                  <tr>
+                                    <td>Has Conveyor  </td>
+                                    <td>  : {{port.has_conveyor || 'N/A'}}  </td>
+                                  </tr>
+                                  <tr>
+                                    <td>Has Crusher </td>
+                                    <td>  : {{port.has_crusher || 'N/A'}} </td>
+                                  </tr>
+                                  <tr>
+                                    <td>Has Blending  </td>
+                                    <td>  : {{port.has_blending || 'N/A'}}  </td>
+                                  </tr>
+                                  <tr>
+                                    <td>Draft Height  </td>
+                                    <td>  : {{port.draft_height || 'N/A'}}  </td>
+                                  </tr>
+                                </table>
                               </section>
                             </div>
                           </div>
@@ -348,29 +349,9 @@
                               <uib-tab index="2" ng-click="selectPill(2)" heading="Licenses"></uib-tab>
                             </uib-tabset>
                           </div-->
-                          <div class="col-lg-12"  ng-repeat="connectedConcession in connectedConcessions">
-                            &nbsp;
-                            <div>
-                              <button class="btn btn-primary col-lg-12" ng-click="showDetail(connectedConcession)">
-                                <div class="row">
-                                  <span class="col-lg-6">Concession Name:</span> 
-                                  <span class="col-lg-6">{{connectedConcession.concession_name || 'N/A'}}</span><br/>
-                                </div>
-                                <div class="row">
-                                  <span class="col-lg-6">Owner:</span> 
-                                  <span class="col-lg-6">{{connectedConcession.owner || 'N/A'}}</span><br/>
-                                </div>
-                                <div class="row">
-                                  <span class="col-lg-6">Position:</span> 
-                                  <span class="col-lg-6">lat : {{connectedConcession.latitude || 'N/A'}}, long : {{connectedConcession.longitude || 'N/A'}}</span><br/>
-                                </div>
-                                <div class="row">
-                                  <span class="col-lg-6">Port Distance:</span> 
-                                  <span class="col-lg-6">{{connectedConcession.port_distance || 'N/A'}} km</span><br/>
-                                </div>
-                              </button>
-                            </div>
-                          </div>
+                            <uib-tabset class="col-lg-12" active="activePill" vertical="true" type="pills">
+                              <uib-tab ng-repeat="connectedConcession in connectedConcessions" ng-click="showDetail(event, connectedConcession); map.hideInfoWindow('port-info-window');" heading="{{connectedConcession.concession_name}}"></uib-tab>
+                            </uib-tabset>
                           &nbsp;
                         </div>
                       </div>

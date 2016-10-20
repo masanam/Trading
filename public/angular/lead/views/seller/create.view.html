@@ -42,6 +42,81 @@
             <b>+</b> Add New
           </button>
     		</section>
+        </br>
+         <div class="box box-primary" ng-show="seller.selected">
+            <div class="box-body box-profile">
+              <img class="profile-user-img img-responsive img-circle" src="/images/default.jpg"" alt="User profile picture">
+
+              <h3 class="profile-username text-center">{{seller.selected.company_name}}</h3>
+
+              <ul class="list-group list-group-unbordered" col-mg-4>
+                <li class="list-group-item">
+                  <b>Supplier category </b>
+                   <span class="badge"><i class='fa fa-share-alt'></i> Miner</span>
+                    <span class="badge"><i class='fa fa-tags'></i> Trader</span>
+                </li>
+                <li class="list-group-item">
+                  <b>Supplier status </b>
+                   <span class="badge"><i class='fa fa-share-alt'></i> AFFILIATED</span>
+                    <span class="badge"><i class='fa fa-tags'></i> TRADER</span>
+                </li>
+                <li class="list-group-item">
+                  <b>Phone</b> <a class="pull-right">{{seller.selected.phone}}</a>
+                </li>
+                <li class="list-group-item">
+                  <b>Email</b> <a class="pull-right">{{seller.selected.email}}</a>
+                </li>
+                <li class="list-group-item">
+                  <b>Web</b> <a class="pull-right">{{seller.selected.web}}</a>
+                </li>
+                <li class="list-group-item">
+                  <b>Address</b> <a class="pull-right">{{seller.selected.address}}</a>
+                </li>
+                <li class="list-group-item">
+                  <b>City</b> <a class="pull-right">{{seller.selected.city}}</a>
+                </li>
+                <li class="list-group-item">
+                  <b>Country</b> <a class="pull-right">{{seller.selected.country}} </a>
+                </li>
+                <li class="list-group-item">
+                  <b>Industry</b> <a class="pull-right">{{seller.selected.industry}}</a>
+                </li>
+                <li class="list-group-item">
+                  <b>City</b> <a class="pull-right">{{seller.selected.city}}</a>
+                </li>
+                <li class="list-group-item">
+                  <b>County</b> <a class="pull-right">{{seller.selected.country}}</a>
+                </li>
+                <li class="list-group-item">
+                  <b>Latitude</b> <a class="pull-right">{{seller.selected.latitude}}</a>
+                </li>
+                <li class="list-group-item">
+                  <b>Longtitude</b> <a class="pull-right">{{seller.selected.longtitude}}</a>
+                </li>
+                <li class="list-group-item">
+                  <b>Industry</b> <a class="pull-right">{{seller.selected.industry}}</a>
+                </li>
+                <li class="list-group-item">
+                  <b>Total Annual Sales</b> <a class="pull-right">{{seller.selected.total_annual_sales}}</a>
+                </li>
+                <li class="list-group-item">
+                  <b>Selling Terms</b> <a class="pull-right">{{seller.selected.preferred_trading_term}}</a>
+                </li>
+                <li class="list-group-item">
+                  <b>Preferred Payment Term</b> <a class="pull-right">{{seller.selected.preferred_payment_term}}</a>
+                </li>
+                <li class="list-group-item">
+                  <b>Purchasing Countries</b> <a class="pull-right">{{seller.selected.purchasing_countries}}</a>
+                </li>
+                 <li class="list-group-item">
+                  <b>Description</b> <a class="pull-left">{{seller.selected.description}}</a>
+                </li>
+              </ul>
+
+             
+            </div>
+            <!-- /.box-body -->
+          </div>
     	</div>      
     </div>
   </div>
