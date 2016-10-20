@@ -76,7 +76,7 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
       if ($scope.product.selected.id) {
         $location.path('lead/port/buyer/'+$stateParams.id);
       }else{
-        $scope.error = "Please Select A Product or Create New product";
+        $scope.error = 'Please Select A Product or Create New product';
       }
     };
 

@@ -61,7 +61,7 @@ angular.module('concession').controller('ConcessionController', ['$scope', '$htt
       if ($scope.concession.selected) {
         $location.path('lead/buyer/'+$scope.buyer.selected.id+'/setup-product');
       }else{
-        $scope.error = "Please Select A Concession or Create New Concession";
+        $scope.error = 'Please Select A Concession or Create New Concession';
       }
     };
 
@@ -70,7 +70,7 @@ angular.module('concession').controller('ConcessionController', ['$scope', '$htt
       if ($scope.concession.selected) {
         $location.path('lead/seller/'+$stateParams.id+'/setup-product');
       }else{
-        $scope.error = "Please Select A Concession or Create New Concession";
+        $scope.error = 'Please Select A Concession or Create New Concession';
         console.log($scope.error);
       }
 
