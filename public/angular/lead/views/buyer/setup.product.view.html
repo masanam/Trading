@@ -18,9 +18,9 @@
           <div class="row" style="margin: 10px;">
 
             <div class="select-box" ng-init="findAllProducts()">
-              <label for="id">Product:</label>{{product}}
-              <ui-select ng-model="product" style="min-width: 300px;" title="Choose a product" append-to-body="true">
-                <ui-select-match placeholder="Product">{{ $select.selected.product_name }}</ui-select-match>
+              <label for="id">Product:</label>
+              <ui-select ng-model="product.selected" style="min-width: 300px;" title="Choose a product" append-to-body="true">
+                <ui-select-match placeholder="Product">{{ product.selected.product_name }}</ui-select-match>
                 <ui-select-choices repeat="product in products | propsFilter: {product_name: $select.search}">
 
                   <div ng-bind-html="product_name | highlight: $select.search"></div>
@@ -44,6 +44,97 @@
             </button>
         </br>    
 
+          <div class="box box-primary" ng-show="product.selected">
+            <div class="box-body box-profile">
+              <h3 class="profile-username text-center">{{ product.selected.product_name }}</h3>
+
+               <div class="row-fluid">
+          <h4>Quality Matrix</h4>
+          <div class="col-lg-4">
+            <div class="small-box bg-red">
+              <div class="inner">
+                <h3>{{ product.selected.gcv_adb_min }} ~ {{ product.selected.gcv_adb_max }} kcal</h3>
+                <h4>GCV adb</h4>
+              </div>
+              <div class="icon">
+                <i class="fa fa-fire"></i>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="small-box bg-red">
+              <div class="inner">
+                <h3>{{ product.selected.gcv_arb_min }} ~ {{ product.selected.gcv_arb_max }} kcal</h3>
+                <h4>GCV arb</h4>
+              </div>
+              <div class="icon">
+                <i class="fa fa-fire"></i>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="small-box bg-red">
+              <div class="inner">
+                <h3>{{ product.selected.ncv_min }} ~ {{ product.selected.ncv_max }} kcal</h3>
+                <h4>NCV</h4>
+              </div>
+              <div class="icon">
+                <i class="fa fa-fire"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row-fluid">
+          <table class="table table-hover">
+            <tbody>
+              <tr>
+                <td class="bg-yellow">
+                  Ash:
+                  <span class="pull-right">{{ product.selected.ash_min }} ~ {{ product.selected.ncv_max }} kcal</span>
+                </td>
+                <td class="bg-yellow">
+                  Total Sulfur :
+                  <span class="pull-right">{{ product.selected.ncv_min }} ~ {{ product.selected.ncv_max }} kcal</span>
+                </td>
+              </tr>
+              <tr>
+                <td class="bg-aqua">
+                  Total Moisture:
+                  <span class="pull-right">{{ product.selected.tm_min }} ~ {{ product.selected.tm_max }} kcal</span>
+                </td>
+                <td class="bg-aqua">
+                  Inherent Moisture :
+                  <span class="pull-right">{{ product.selected.im_min }} ~ {{ product.selected.im_max }} kcal</span>
+                </td>
+              </tr>
+              <tr>
+                <td class="bg-green">
+                  Volatile Matter:
+                  <span class="pull-right">{{ product.selected.vm_min }} ~ {{ product.selected.vm_max }} kcal</span>
+                </td>
+                <td class="bg-green">
+                  Fixed Carbon :
+                  <span class="pull-right">{{ product.selected.fc_min }} ~ {{ product.selected.fc_max }} kcal</span>
+                </td>
+              </tr>
+              <tr>
+                <td class="bg-green">
+                  HGI:
+                  <span class="pull-right">{{ product.selected.hgi_min }} ~ {{ product.selected.hgi_max }} kcal</span>
+                </td>
+                <td class="bg-green">
+                  Size :
+                  <span class="pull-right">{{ product.selected.size_min }} ~ {{ product.selected.size_max }} kcal</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+             
+            </div>
+            <!-- /.box-body -->
+          </div>
             
 
           </div>

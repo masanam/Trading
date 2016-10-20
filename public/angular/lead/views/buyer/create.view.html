@@ -42,10 +42,6 @@
             </div>
 
 
-
-
-
-
             <!-- <div ng-include="'/angular/lead/views/seller/form.view.html'"></div> -->
           </form>
           </br>
@@ -58,9 +54,63 @@
           <button type="button" class="btn btn-primary btn-block" ng-click="openCreateBuyerModal()">
             <b>+</b> Add New Company
           </button>
+          </br>
+          <div class="box box-primary" ng-show="buyer.selected">
+            <div class="box-body box-profile">
+              <img class="profile-user-img img-responsive img-circle" src="/images/default.jpg"" alt="User profile picture">
+
+              <h3 class="profile-username text-center">{{buyer.selected.company_name}}</h3>
+
+              <ul class="list-group list-group-unbordered" col-mg-4>
+                <li class="list-group-item">
+                  <b>Buyer Category</b>
+                   <span class="badge"><i class='fa fa-share-alt'></i> AFFILIATED</span>
+                    <span class="badge"><i class='fa fa-tags'></i> TRADER</span>
+                </li>
+                <li class="list-group-item">
+                  <b>Phone</b> <a class="pull-right">{{buyer.selected.phone}}</a>
+                </li>
+                <li class="list-group-item">
+                  <b>Email</b> <a class="pull-right">{{buyer.selected.email}}</a>
+                </li>
+                <li class="list-group-item">
+                  <b>Web</b> <a class="pull-right">{{buyer.selected.web}}</a>
+                </li>
+                <li class="list-group-item">
+                  <b>Address</b> <a class="pull-right">{{buyer.selected.address}}</a>
+                </li>
+                <li class="list-group-item">
+                  <b>City</b> <a class="pull-right">{{buyer.selected.city}}</a>
+                </li>
+                <li class="list-group-item">
+                  <b>Country</b> <a class="pull-right">{{buyer.selected.country}}</a>
+                </li>
+                <li class="list-group-item">
+                  <b>Industry</b> <a class="pull-right">{{buyer.selected.industry}}</a>
+                </li>
+                <li class="list-group-item">
+                  <b>Annual Demand</b> <a class="pull-right">{{buyer.selected.annual_demand}}</a>
+                </li>
+                <li class="list-group-item">
+                  <b>Trading Term</b> <a class="pull-right">{{buyer.selected.preferred_trading_term}}</a>
+                </li>
+                <li class="list-group-item">
+                  <b>Payment Term</b> <a class="pull-right">{{buyer.selected.preferred_payment_term}}</a>
+                </li>
+                <li class="list-group-item">
+                  <b>Description</b> <a class="pull-right">{{buyer.selected.decription}}</a>
+                </li>
+              </ul>
+
+             
+            </div>
+            <!-- /.box-body -->
+          </div>
         </section>
       </div>      
     </div>
   </div>
+
+          
   
 </section>
