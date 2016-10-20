@@ -111,6 +111,11 @@ angular.module('map').controller('MapController', ['$scope', '$http', '$statePar
         $scope.product = undefined;
       });
     };
+
+    $scope.closePortDetail = function(event, concession) {
+      infoWindow.close();
+      $scope.showDetail(event, concession);
+    };
     
     $scope.showProduct = function(product) {
       $scope.product = product;

@@ -44,8 +44,7 @@ class ConcessionController extends Controller
               foreach($_GET['gt'] as $input_gt){
                 $gt_params = explode(",",$input_gt);
                 $concession = Concession::with(['Product' => function($q) use ($gt_params) {
-                                            $q->where('products.status', 'a')
-                                              ->where('products.'.$gt_params[0].'_min', '>=', $gt_params[1]);
+                                            $q->where('products.status', 'a');
                                           }])
                                           ->with(['Seller' => function($q) {
                                             $q->where('sellers.status', 'a');
@@ -65,8 +64,7 @@ class ConcessionController extends Controller
               foreach($_GET['lt'] as $input_lt){
                 $lt_params = explode(",",$input_lt);
                 $concession = Concession::with(['Product' => function($q) use ($lt_params) {
-                                            $q->where('products.status', 'a')
-                                              ->where('products.'.$lt_params[0].'_max', '<=', $lt_params[1]);
+                                            $q->where('products.status', 'a');
                                           }])
                                           ->with(['Seller' => function($q) {
                                             $q->where('sellers.status', 'a');
@@ -86,9 +84,7 @@ class ConcessionController extends Controller
               foreach($_GET['bet'] as $input_bet){
                 $bet_params = explode(",",$input_bet);
                 $concession = Concession::with(['Product' => function($q) use ($bet_params) {
-                                            $q->where('products.status', 'a')
-                                              ->where('products.'.$bet_params[0].'_min', '<=', $bet_params[1])
-                                              ->where('products.'.$bet_params[0].'_max', '>=', $bet_params[1]);
+                                            $q->where('products.status', 'a');
                                           }])
                                           ->with(['Seller' => function($q) {
                                             $q->where('sellers.status', 'a');
@@ -124,7 +120,7 @@ class ConcessionController extends Controller
           if(isset($_GET['product'])) {
             $product_param = $_GET['product'];
             $concession = Concession::with(['Product' => function($q) use ($product_param) {
-                                      $q->where([['products.status', 'a'],['products.product_name', 'LIKE', '%'.$product_param.'%']]);
+                                      $q->where([['products.status', 'a']]);
                                     }])
                                     ->with(['Seller' => function($q) {
                                       $q->where('sellers.status', 'a');
