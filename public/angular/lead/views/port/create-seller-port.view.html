@@ -71,7 +71,7 @@
                   <b>Longtitude</b> <a class="pull-right">{{port.selected.longitude}}</a>
                 </li>
                 <li class="list-group-item">
-                  <b>Port Pacility</b> <a class="pull-right">{{port.selected.longitude}}{{port.selected.longitude}}{{port.selected.longitude}}</a>
+                  <b>Port Pacility</b> <a class="pull-right"><span ng-show="port.selected.has_conveyor">Conveyer,</span><span ng-show="port.selected.has_crusher"> Crusher,</span><span ng-show="port.selected.has_blending"> Blending</span></a>
                 </li>
                 <li class="list-group-item">
                   <b>Draft of Loading Port</b> <a class="pull-right">{{port.selected.draft_height}}</a>
