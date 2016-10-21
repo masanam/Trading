@@ -1,0 +1,22 @@
+<section ng-controller="ProductController" ng-init="initializeAddForm()">
+  <h1>Add Production to : {{ product.commercial_term }}</h1>
+  <p>{{ product.mine.mine_name }}, {{ product.mine.seller.company_name }}</p>
+
+  <form role="form" ng-submit="add()">
+    <div class="form-group">
+      <label for="tonnage">Tonnage :</label>
+      <input type="text" class="form-control" id="tonnage" ng-model="production.tonnage">
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description :</label>
+      <input type="text" class="form-control" id="description" ng-model="production.description">
+    </div>
+
+    <div class="form-group pull-right">
+      <button class="btn btn-success" type="submit">Create</button>
+      <a class="btn btn-default" ui-sref="product.index">Cancel</a>
+    </div>
+  </form>
+</section>
+

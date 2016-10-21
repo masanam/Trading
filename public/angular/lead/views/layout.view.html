@@ -1,0 +1,9 @@
+<section ng-controller="LeadController">
+  <div class="col-lg-2">
+    <section ng-include="./angular/lead/views/side-menu.view.html"></section>
+  </div>
+  <div class="col-lg-10">
+    <section ng-include="./angular/lead/views/search-bar.view.html"></section>
+    <ui-view></ui-view>
+  </div>
+</section>

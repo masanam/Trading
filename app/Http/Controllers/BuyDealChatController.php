@@ -6,84 +6,44 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
+use App\Model\BuyDealChat;
+use App\Model\BuyDeal;
+
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Session;
+
 class BuyDealChatController extends Controller
 {
-    public function __construct() {
+    var $user;
+
+    public function __construct () {
         $this->middleware('jwt.auth');
-    }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        
+        $this->user = Session::get('user');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    /*
+    Show all chat based on the user
+    */
+    public function showAllBuyDealChatsByUser($user) {
+        $chat = BuyDealChat::with('BuyDeal.id')->where('trader_id', $user)->orWhere('approver_id', $user)->get();
+
+        return response()->json($chat, 200);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+    public function showAllBuyDealChatsByOrderDeal($buy_deal) {
+        $chat = BuyDealChat::with('BuyDeal')->where('buy_deal_id', $buy_deal)->get();
+
+        return response()->json($chat, 200);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+    public function sendChat(Request $request) {
+        $chat = BuyDealChat::create([
+        	'buy_deal_id' => $request->buy_deal_id,
+            'user_id' => $request->user_id,
+            'message' => $request->message,
+        ]);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        //Pusher::trigger('buy-deal-channel.'.$chat->buy_deal_id, 'message-sent', $chat);
+        return response()->json($chat, 200);
     }
 }

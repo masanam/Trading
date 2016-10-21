@@ -1,0 +1,46 @@
+<header class="main-header">
+
+  <!-- Logo -->
+  <a ui-sref="home" class="logo">
+    <!-- mini logo for sidebar mini 50x50 pixels -->
+    <span class="logo-mini"><img src="./images/sinarmas.png" style="width:30px;"></span>
+    <!-- logo for regular state and mobile devices -->
+    <span class="logo-lg"><img src="./images/sinarmas.png" style="width:30px; margin-right: 10px;"><b>COALTRADE</b></span>
+  </a>
+
+  <!-- Header Navbar: style can be found in header.less -->
+  <nav class="navbar navbar-static-top">
+    <!-- Sidebar toggle button-->
+    <a href="#" class="sidebar-toggle" ng-click="openSidebar()" role="button" ng-if="Authentication.user">
+      <span class="sr-only">Toggle navigation</span>
+    </a>
+    <!-- Navbar Right Menu -->
+    <div class="navbar-custom-menu">
+      <ul class="nav navbar-nav">
+        <li class="dropdown user user-menu" ng-if="!Authentication.user">
+          <a ui-sref="auth.signin" class="dropdown-toggle">
+            <span class="hidden-xs">Sign In</span>
+          </a>
+        </li>
+        <li class="dropdown user user-menu" ng-if="!Authentication.user">
+          <a ui-sref="auth.signup" class="dropdown-toggle">
+            <span class="hidden-xs">Sign Up</span>
+          </a>
+        </li>
+        <!-- User Account: style can be found in dropdown.less -->
+        <li class="dropdown user user-menu" ng-if="Authentication.user">
+          <a class="dropdown-toggle" ui-sref="user.edit">
+            <img ng-src="{{ Authentication.user.image }}" ng-src-fallback="/image/default.png" class="user-image" alt="User Image">
+            <span class="hidden-xs">{{ Authentication.user.name }}</span>
+          </a>
+        </li>
+        <li class="dropdown user user-menu" ng-if="Authentication.user">
+          <a style="cursor: pointer" ng-click="logout()" class="dropdown-toggle">
+            <span class="hidden-xs">Sign out</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+  </nav>
+</header>

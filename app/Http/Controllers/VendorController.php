@@ -12,14 +12,35 @@ class VendorController extends Controller
     public function __construct() {
         $this->middleware('jwt.auth');
     }
+    
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($search = false)
     {
-        $vendor = Vendor::get();
+        if (!$search) {
+            $vendor = Vendor::where('status', 'a')->get();
+        } else {
+            $vendor = Vendor::where('status', 'a')->where('company_name', 'LIKE', '%'.$search.'%')->get();
+        }
+
+        return response()->json($vendor, 200);
+    }
+    
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search($search = false)
+    {
+        if (!$search) {
+            $vendor = Vendor::where('status', 'a')->get();
+        } else {
+            $vendor = Vendor::where('status', 'a')->where('company_name', 'LIKE', '%'.$search.'%')->get();
+        }
 
         return response()->json($vendor, 200);
     }
@@ -39,11 +60,20 @@ class VendorController extends Controller
         }
 
         $vendor = new Vendor();
-        $vendor->name = $request->name;
-        $vendor->image = $request->image;
-        $vendor->title = $request->title;
-        $vendor->email = $request->email;
+        $vendor->company_name = $request->company_name;
+            
         $vendor->phone = $request->phone;
+        $vendor->email = $request->email;
+        $vendor->web = $request->web;
+
+        $vendor->industry = $request->industry;
+
+        $vendor->city = $request->city;
+        $vendor->address = $request->address;
+
+        $vendor->description = $request->description;
+
+        $vendor->status = 'a';
         $vendor->save();
 
         return response()->json($vendor, 200);
@@ -55,9 +85,15 @@ class VendorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Vendor $vendor)
+    public function show($vendor)
     {
-        return response()->json($vendor, 200);
+        $vendor = Vendor::find($vendor);
+
+        if($vendor->status == 'a') {
+            return response()->json($vendor, 200);
+        } else {
+            return response()->json(['message' => 'deactivated record'], 404);
+        }
     }
 
     /**
@@ -67,8 +103,10 @@ class VendorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Vendor $vendor)
+    public function update(Request $request, $vendor)
     {
+        $vendor = Vendor::find($vendor);
+
         if (!$request) {
             return response()->json([
                 'message' => 'Bad Request'
@@ -81,11 +119,18 @@ class VendorController extends Controller
             ] ,404);
         }
 
-        $vendor->name = $request->name;
-        $vendor->image = $request->image;
-        $vendor->title = $request->title;
-        $vendor->email = $request->email;
+        $vendor->company_name = $request->company_name;
+
         $vendor->phone = $request->phone;
+        $vendor->email = $request->email;
+        $vendor->web = $request->web;
+
+        $vendor->industry = $request->industry;
+
+        $vendor->city = $request->city;
+        $vendor->address = $request->address;
+
+        $vendor->description = $request->description;
 
         $vendor->save();
 
@@ -98,8 +143,10 @@ class VendorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Vendor $vendor)
+    public function destroy($vendor)
     {
+        $vendor = Vendor::find($vendor);
+
         if (!$vendor) {
             return response()->json([
                 'message' => 'Not found'
@@ -110,5 +157,17 @@ class VendorController extends Controller
         $vendor->save();
 
         return response()->json($vendor, 200);
+    }
+
+    public function getVendorByName($name) {
+        $vendor = Buyer::wherewhere('company_name', 'like', '%'.$name.'%')->get();
+
+        return response()->json($vendor, 200);
+    }
+
+    public function getTotalVendor() {
+        $total = Vendor::count();
+        $status = array('count' => $total);        
+        return response()->json($status, 200);
     }
 }

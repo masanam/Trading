@@ -10,9 +10,9 @@
 | to using a Closure or controller method. Build something great!
 |
 */
+Auth::routes();
 
 Route::get('/{api?}/{any?}', function () {
-    return view('trade/index');
+    return view('trade.index');
 })->where('api', '^((?!api).)*$')->where('any', '.*');
 
-Auth::routes();

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Model\Buyer;
+use App\Model\Contact;
+use Auth;
 
 use Illuminate\Http\Request;
 
@@ -18,11 +20,28 @@ class BuyerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($search = false)
     {
-        $Buyer = Buyer::where('status', 'a')->get();
-
-        return response()->json($Buyer, 200);
+        if (!$search) {
+            $buyer = Buyer::where('status', 'a')->get();
+        } else {
+            // $buyer = Buyer::search($search)->where('status', 'a')->get();
+            $buyer = Buyer::where('status', 'a')->where('company_name', 'LIKE', '%'.$search.'%')->get();
+        }
+        return response()->json($buyer, 200);
+    }
+    
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search($q = false)
+    {
+        $buyer = Buyer::where('status', 'a');
+        if ($q) $buyer->where('company_name', 'LIKE', '%'.$q.'%');
+        $buyer = $buyer->get();
+        return response()->json($buyer, 200);
     }
 
     /**
@@ -39,15 +58,28 @@ class BuyerController extends Controller
             ], 400);
         }
 
-        $Buyer = new Buyer();
-        $Buyer->name = $request->name;
-        $Buyer->image = $request->image;
-        $Buyer->title = $request->title;
-        $Buyer->email = $request->email;
-        $Buyer->phone = $request->phone;
-        $Buyer->save();
+        $buyer = new Buyer();
+        $buyer->user_id = Auth::User()->id;
+        $buyer->company_name = $request->company_name;
+        $buyer->is_trader = $request->is_trader;
+        $buyer->is_affiliated = $request->is_affiliated;
+        $buyer->phone = $request->phone;
+        $buyer->email = $request->email;
+        $buyer->web = $request->web;
+        $buyer->address = $request->address;
+        $buyer->city = $request->city;
+        $buyer->country = $request->country;
+        $buyer->latitude = $request->latitude;
+        $buyer->longitude = $request->longitude;
+        $buyer->industry = $request->industry;
+        $buyer->annual_demand = $request->annual_demand;
+        $buyer->preferred_trading_term = $request->preferred_trading_term;
+        $buyer->preferred_payment_term = $request->preferred_payment_term; 
+        $buyer->description = $request->description;
+        $buyer->status = 'a';
+        $buyer->save();
 
-        return response()->json($Buyer, 200);
+        return response()->json($buyer, 200);
     }
 
     /**
@@ -56,12 +88,15 @@ class BuyerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Buyer $Buyer)
+    public function show($id)
     {
-        if($Buyer->status == 'a') {
-            return response()->json($Buyer, 200);
+        //$buyer = Contact::find([1,2,3,4,5]);
+        $buyer = Buyer::with('Contact', 'Product')->find($id);
+        
+        if($buyer->status == 'a') {
+            return response()->json($buyer, 200);
         } else {
-            return response()->json(['message' => 'deleted'], 404);
+            return response()->json(['message' => 'deactivated record'], 404);
         }
     }
 
@@ -72,29 +107,43 @@ class BuyerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Buyer $Buyer)
+    public function update(Request $request, $buyer)
     {
+        $buyer = Buyer::find($buyer);
+     
         if (!$request) {
             return response()->json([
                 'message' => 'Bad Request'
             ], 400);
         }
 
-        if (!$Buyer) {
+        if (!$buyer) {
             return response()->json([
                 'message' => 'Not found'
             ] ,404);
         }
 
-        $Buyer->name = $request->name;
-        $Buyer->image = $request->image;
-        $Buyer->title = $request->title;
-        $Buyer->email = $request->email;
-        $Buyer->phone = $request->phone;
+        $buyer->user_id = $request->user_id;
+        $buyer->company_name = $request->company_name;
+        $buyer->is_trader = $request->is_trader;
+        $buyer->is_affiliated = $request->is_affiliated;
+        $buyer->phone = $request->phone;
+        $buyer->email = $request->email;
+        $buyer->web = $request->web;
+        $buyer->address = $request->address;
+        $buyer->city = $request->city;
+        $buyer->country = $request->country;
+        $buyer->latitude = $request->latitude;
+        $buyer->longitude = $request->longitude;
+        $buyer->industry = $request->industry;
+        $buyer->annual_demand = $request->annual_demand;
+        $buyer->preferred_trading_term = $request->preferred_trading_term;
+        $buyer->preferred_payment_term = $request->preferred_payment_term; 
+        $buyer->description = $request->description;
+        $buyer->status = $request->status;
+        $buyer->save();
 
-        $Buyer->save();
-
-        return response()->json($Buyer, 200);
+        return response()->json($buyer, 200);
     }
 
     /**
@@ -103,17 +152,32 @@ class BuyerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Buyer $Buyer)
+    public function destroy($buyer)
     {
-        if (!$Buyer) {
+        $buyer = Buyer::find($buyer);
+     
+        if (!$buyer) {
             return response()->json([
                 'message' => 'Not found'
             ] ,404);
         }
 
-        $Buyer->status = 'x';
-        $Buyer->save();
+        $buyer->status = 'x';
+        $buyer->save();
 
-        return response()->json($Buyer, 200);
+        return response()->json($buyer, 200);
     }
+
+    public function getBuyerByName($name) {
+        $buyer = Buyer::where('company_name', 'like', '%'.$name.'%')->get();
+
+        return response()->json($buyer, 200);
+    }
+
+    public function getTotalBuyer() {
+        $total = Buyer::count();
+        $status = array('count' => $total);        
+        return response()->json($status,200);
+    }
+
 }

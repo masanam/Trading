@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 
 use App\Model\User;
 
+use Auth;
+
 use App\Http\Requests;
 
 class AuthenticateController extends Controller
@@ -40,9 +42,11 @@ class AuthenticateController extends Controller
             // something went wrong
             return response()->json(['error' => 'could_not_create_token'], 500);
         }
- 
+
+        $user = Auth::user();
+
         // if no errors are encountered we can return a JWT
-        return response()->json(compact('token', 'user'));
+        return response()->json(compact('token', 'user', $user), 200);
     }
 
     public function signup(Request $request)
@@ -51,8 +55,8 @@ class AuthenticateController extends Controller
         $user->name = trim($request->name);
         $user->title = trim($request->title);
         $user->image = trim($request->image);
-        $user->role = trim($request->role);
-        $user->status = trim($request->status);
+        $user->role = $request->role  ? $request->role : 'user';
+        $user->status = 'a';
         $user->email = trim(strtolower($request->email));
         $user->phone = trim($request->phone);
         $user->password = bcrypt($request->password);
@@ -60,7 +64,7 @@ class AuthenticateController extends Controller
 
         $token = JWTAuth::fromUser($user);
 
-        return response()->json(compact('token', 'user'));
+        return response()->json(compact('token', 'user'), 200);
     }
  
     public function getAuthenticatedUser()
@@ -86,6 +90,23 @@ class AuthenticateController extends Controller
         }
  
         // the token is valid and we have found the user via the sub claim
-        return response()->json(compact('user'));
+        return response()->json(compact('user'), 200);
+    }
+
+    public function signing(Request $request)
+    {
+        $disk = Storage::disk('s3');
+        $bucket = Config::get('filesystems.disks.s3.bucket');
+        $key = $request->file->filename;
+
+        if ($disk->exists($key)) {
+            $command = $disk->getDriver()->getAdapter()->getClient()->getCommand('GetObject', [
+                'Bucket'                     => $bucket,
+                'Key'                        => $key,
+                'ResponseContentDisposition' => 'attachment;'
+            ]);
+            $request = $disk->getDriver()->getAdapter()->getClient()->createPresignedRequest($command, '+5 minutes');
+            return response()->json([ 'url' => (string) $request->getUri() ]);
+        }
     }
 }

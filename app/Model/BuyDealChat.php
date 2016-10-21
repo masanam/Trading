@@ -2,15 +2,17 @@
 
 namespace App\Model;
 
-use App\Model\BuyDeal;
-
 use Illuminate\Database\Eloquent\Model;
+use Mpociot\Firebase\SyncsWithFirebase;
 
 class BuyDealChat extends Model
 {
-    protected $table = 'buy_deal_chat';
-
+	use SyncsWithFirebase;
+	
+	protected $table = 'buy_deal_chat';
+	protected $fillable = ['buy_deal_id', 'user_id', 'message'];
+            
     public function BuyDeal() {
-    	return $this->belongsTo('BuyDeal');
+    	return $this->belongsTo('App\Model\BuyDeal');
     }
 }

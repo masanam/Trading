@@ -1,0 +1,4 @@
+<section ng-controller="DashboardController">
+  <section ng-include="'./angular/core/views/index/dashboard-trader.view.html'" ng-if="Authentication.user"></section>
+  <section ng-include="'./angular/core/views/index/dashboard-guest.view.html'" ng-if="!Authentication.user"></section>
+</section>

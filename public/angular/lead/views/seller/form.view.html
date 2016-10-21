@@ -1,0 +1,104 @@
+<div class="form-group">
+  <label for="seller_name">Supplier Name*:</label>
+  <input name="company_name" type="text" class="form-control" id="company_name" ng-model="seller.company_name" required>
+</div>
+
+<div class="form-group">
+  <label for="contact">Supplier category</label>
+  <div class="btn-group">
+    <label class="btn btn-default" ng-model="seller.is_trader" uib-btn-radio="1" required>Trader</label>
+    <label class="btn btn-default" ng-model="seller.is_trader" uib-btn-radio="0" required>Miner</label>
+  </div>
+  
+</div>
+
+<div class="form-group">
+  <label for="contact">Supplier Status</label>
+  <div class="btn-group">
+    <label class="btn btn-default" ng-model="seller.is_affiliated" uib-btn-radio="1" required>Affiliated</label>
+    <label class="btn btn-default" ng-model="seller.is_affiliated" uib-btn-radio="0" required>Non- Affiliated</label>
+  </div>
+</div>
+</div>
+
+<div class="form-group">
+  <label for="contact_person">Contact Person*:</label>
+  <input name="contact_person" type="text" class="form-control" ng-model="seller.contact_person" required>
+</div>
+
+<div class="form-group">
+  <label for="phone">Phone Number*:</label>
+  <input name="phone" type="text" class="form-control" id="phone" ng-model="seller.phone" required>
+</div>
+
+<div class="form-group">
+  <label for="contact">Email*:</label>
+  <input name="email" type="email" class="form-control" id="email" ng-model="seller.email" required>
+</div>
+
+<div class="form-group">
+  <label for="web">Web:</label>
+  <input name="web" type="text" class="form-control" id="web" ng-model="seller.web">
+</div>
+
+<div class="form-group">
+  <label for="headquarter_location">Address*:</label>
+  <input name="address" type="text" class="form-control" id="address" ng-model="seller.address" required>
+</div>
+
+<div class="form-group">
+  <label for="headquarter_location">City*:</label>
+  <input name="city" type="text" class="form-control" id="city" ng-model="seller.city" required>
+</div>
+
+<div class="form-group">
+  <label for="headquarter_location">Country*:</label>
+  <input name="country" type="text" class="form-control" id="country" ng-model="seller.country" required>
+</div>
+
+<div class="form-group">
+  <label for="headquarter_location">Industry*:</label>
+  <input name="industry" type="text" class="form-control" id="industry" ng-model="seller.industry" required>
+</div>
+
+<div class="form-group">
+  <label for="headquarter_location">Total Annual Sales*:</label>
+  <input name="total_annual_sales" type="number" class="form-control" id="total_annual_sales" ng-model="seller.total_annual_sales" required>
+</div>
+
+<div class="form-group">
+  <label for="headquarter_location">Selling Terms*:</label>
+  <div class="form-group">
+    <div class="btn-group">
+      <label class="btn btn-default" ng-model="seller.preferred_trading_term" uib-btn-radio="'CNF'">CNF</label>
+      <label class="btn btn-default" ng-model="seller.preferred_trading_term" uib-btn-radio="'CIF'">CIF</label>
+      <label class="btn btn-default" ng-model="seller.preferred_trading_term" uib-btn-radio="'FAS'">FAS</label>
+      <label class="btn btn-default" ng-model="seller.preferred_trading_term" uib-btn-radio="'FOB'">FOB</label>
+      <label class="btn btn-default" ng-model="seller.preferred_trading_term" uib-btn-radio="'Franco'">Franco</label>
+      <div class="input-group" style="margin-bottom: 5px;">
+        <input name="preferred_trading_term" type="text" class="form-control" id="total_annual_sales" ng-model="seller.preferred_trading_term" placeholder="Input Other Term">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="form-group">
+  <label for="headquarter_location">Preferred Payment Term*:</label>
+  <input name="preferred_payment_term" type="text" class="form-control" id="preferred_payment_term" ng-model="seller.preferred_payment_term" required>
+</div>
+
+<div class="form-group">
+  <label for="headquarter_location">Purchasing Countries*:</label>
+  <input name="purchasing_countries" type="text" class="form-control" id="purchasing_countries" ng-model="seller.purchasing_countries" required>
+</div>
+
+<div class="form-group">
+  <label for="description">Description:</label>
+  <textarea name="description" class="form-control" id="description" ng-model="seller.description"></textarea>
+</div>
+
+<div class="form-group">
+  <label ng-show="error" class="alert alert-danger">{{error}}</label>
+</div>
+
+<button type="submit" class="btn btn-default">Submit</button>

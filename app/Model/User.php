@@ -2,6 +2,7 @@
 
 namespace App\Model;
 
+use App\Model\Deal;
 use App\Model\Buyer;
 use App\Model\Seller;
 use App\Model\Contact;
@@ -35,19 +36,39 @@ class User extends Authenticatable
 
     protected $table = 'users';
 
-    public function contact() {
+    public function Contact() {
         return $this->hasMany('Contact');
     }
 
-    public function buyer() {
+    public function Buyer() {
         return $this->hasMany('Buyer');
     }
 
-    public function seller() {
+    public function Seller() {
         return $this->hasMany('Seller');
     }
 
-    public function activity() {
+    public function Activity() {
         return $this->hasMany('Activity');
+    }
+    
+    public function Deal() {
+        return $this->hasMany('Deal');
+    }
+
+    public function BuyDeal() {
+        return $this->hasMany('BuyDeal');
+    }
+
+    public function SellDeal() {
+        return $this->hasMany('SellDeal');
+    }
+
+    public function BuyOrder() {
+        return $this->hasMany('BuyOrder');
+    }
+
+    public function SellOrder() {
+        return $this->hasMany('SellOrder');
     }
 }

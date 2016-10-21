@@ -1,0 +1,239 @@
+<div style="overflow:hidden">
+  <div class="col-lg-12">
+    <!--div class="form-group">
+      <label for="mine">Mine :</label>
+      <select class="form-control" id="mine" ng-model="product.mine_id">
+        <option ng-repeat="mine in mines" value="{{mine.id}}">{{mine.mine_name}}</option>
+      </select>
+    </div-->
+
+    <!--div class="form-group">
+      <label for="term">Commercial Term :</label>
+      <input type="text" class="form-control" id="commercial_term" nama="commercial_term" ng-model="product.commercial_term">
+    </div-->
+
+    <div class="form-group">
+      <label for="term">Product Name :</label>
+      <input type="text" class="form-control" id="product_name" nama="product_name" ng-model="product.product_name" required>
+    </div>
+
+    <!--div class="form-group">
+      <label for="order_date">Ready Date :</label>
+      <input type="date" class="form-control" id="ready_date" ng-model="product.ready_date">
+    </div>
+
+    <div class="form-group">
+      <label for="order_date">Expired Date :</label>
+      <input type="date" class="form-control" id="expired_date" ng-model="product.license_expired_date">
+    </div-->
+    
+    <!--div class="form-group" ng-if="seller" ng-init="findAllConcessionsBySeller(seller.id)">
+      <label for="concession">Concession:</label>
+      <select class="form-control col-md-12" id="concession" ng-model="product.concession_id">
+        <option ng-repeat="concession in concessions" value="{{ concession.id }}">{{ concession.concession_name }}</option>
+      </select>
+    </div-->
+
+    <div class="form-group" ng-if="!buyer && !seller && !concession" ng-init="findAllBuyers()">
+      <label for="buyer">Buyer:</label>
+      <select class="form-control col-md-12" id="buyer" ng-model="product.buyer_id">
+        <option ng-repeat="buyer in buyers" value="{{ buyer.id }}">{{ buyer.company_name }}</option>
+      </select>
+    </div>
+
+    <div class="form-group" ng-if="!buyer && !seller && !concession" ng-init="findAllSellers()">
+      <label for="seller">Seller:</label>
+      <select class="form-control col-md-12" id="seller" ng-model="product.seller_id">
+        <option value=""></option>
+        <option ng-repeat="seller in sellers" value="{{ seller.id }}">{{ seller.company_name }}</option>
+      </select>
+    </div>
+
+    <!--div class="form-group">
+      <label>Coal Quantity</label>
+      <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1">Volume</span>
+        <input type="text" class="form-control" placeholder="tones" ng-model="product.volume">
+      </div>
+    </div-->
+  <!--/div>
+
+  <div class="col-lg-8"-->
+    <div class="form-group">
+      <h2>Coal Quality</h2>
+      <table class="table table-striped">
+        <tr align="center">
+          <th>
+            Characteristics
+          </th>
+          <th>
+            Min
+          </th>
+          <th>
+            Max
+          </th>
+        </tr>
+        <tr>
+          <td>
+            Gross Caloric ARB
+          </td>
+          <td>
+            <input type="text" class="form-control" placeholder="kcal" ng-model="product.gcv_arb_min">
+          </td>
+          <td>
+            <input type="text" class="form-control" placeholder="kcal" ng-model="product.gcv_arb_max">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Gross Caloric ADB
+          </td>
+          <td>
+            <input type="text" class="form-control" placeholder="kcal" ng-model="product.gcv_adb_min">
+          </td>
+          <td>
+            <input type="text" class="form-control" placeholder="kcal" ng-model="product.gcv_adb_max">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Nett Caloric Value
+          </td>
+          <td>
+            <input type="text" class="form-control" placeholder="kcal" ng-model="product.ncv_min">
+          </td>
+          <td>
+            <input type="text" class="form-control" placeholder="kcal" ng-model="product.ncv_max">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            CV Nar 
+          </td>
+          <td>
+            <input type="text" class="form-control" placeholder="kcal" ng-model="product.cvnar_min">
+          </td>
+          <td>
+            <input type="text" class="form-control" placeholder="kcal" ng-model="product.cvnar_max">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Ash
+          </td>
+          <td>
+            <input type="text" class="form-control" placeholder="%" ng-model="product.ash_min">
+          </td>
+          <td>
+            <input type="text" class="form-control" placeholder="%" ng-model="product.ash_max">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Sulphur
+          </td>
+          <td>
+            <input type="text" class="form-control" placeholder="%" ng-model="product.ts_min">
+          </td>
+          <td>
+            <input type="text" class="form-control" placeholder="%" ng-model="product.ts_max">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Total Moisture
+          </td>
+          <td>
+            <input type="text" class="form-control" placeholder="%" ng-model="product.tm_min">
+          </td>
+          <td>
+            <input type="text" class="form-control" placeholder="%" ng-model="product.tm_max">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Inherent Moisture
+          </td>
+          <td>
+            <input type="text" class="form-control" placeholder="%" ng-model="product.im_min">
+          </td>
+          <td>
+            <input type="text" class="form-control" placeholder="%" ng-model="product.im_max">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Fixed Carbon
+          </td>
+          <td>
+            <input type="text" class="form-control" placeholder="%" ng-model="product.fc_min">
+          </td>
+          <td>
+            <input type="text" class="form-control" placeholder="%" ng-model="product.fc_max">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Volatile Matter
+          </td>
+          <td>
+            <input type="text" class="form-control" placeholder="%" ng-model="product.vm_min">
+          </td>
+          <td>
+            <input type="text" class="form-control" placeholder="%" ng-model="product.vm_max">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Hardness
+          </td>
+          <td>
+            <input type="text" class="form-control" placeholder="%" ng-model="product.hgi_min">
+          </td>
+          <td>
+            <input type="text" class="form-control" placeholder="%" ng-model="product.hgi_max">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Size
+          </td>
+          <td>
+            <input type="text" class="form-control" placeholder="%" ng-model="product.size_min">
+          </td>
+          <td>
+            <input type="text" class="form-control" placeholder="%" ng-model="product.size_max">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Fe 2o3
+          </td>
+          <td>
+            <input type="text" class="form-control" placeholder="%" ng-model="product.fe203_min">
+          </td>
+          <td>
+            <input type="text" class="form-control" placeholder="%" ng-model="product.fe203_max">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            AFT
+          </td>
+          <td>
+            <input type="text" class="form-control" placeholder="&#176" ng-model="product.aft_min">
+          </td>
+          <td>
+            <input type="text" class="form-control" placeholder="&#176" ng-model="product.aft_max">
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="form-group pull-right">
+    <button class="btn btn-success" type="submit">Create</button>
+    <button class="btn btn-default" type="reset">Reset</button>
+    
+  </div>
+</div>

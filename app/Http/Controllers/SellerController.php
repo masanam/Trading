@@ -8,19 +8,42 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
+use Auth;
+
 class SellerController extends Controller
 {
     public function __construct() {
         $this->middleware('jwt.auth');
     }
+    
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($search = false)
     {
-        $seller = Seller::get();
+        if (!$search) {
+            $seller = Seller::where('status', 'a')->get();
+        } else {
+            $seller = Seller::where('status', 'a')->where('company_name', 'LIKE', '%'.$search.'%')->get();
+        }
+
+        return response()->json($seller, 200);
+    }
+    
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search($search = false)
+    {
+        if (!$search) {
+            $seller = Seller::where('status', 'a')->get();
+        } else {
+            $seller = Seller::where('status', 'a')->where('company_name', 'LIKE', '%'.$search.'%')->get();
+        }
 
         return response()->json($seller, 200);
     }
@@ -40,11 +63,26 @@ class SellerController extends Controller
         }
 
         $seller = new Seller();
-        $seller->name = $request->name;
-        $seller->image = $request->image;
-        $seller->title = $request->title;
-        $seller->email = $request->email;
+        $seller->user_id = Auth::User()->id;
+        $seller->company_name = $request->company_name;
+        $seller->is_trader = $request->is_trader;
+        $seller->is_affiliated = $request->is_affiliated;
+        $seller->contact_person = $request->contact_person;
         $seller->phone = $request->phone;
+        $seller->email = $request->email;
+        $seller->web = $request->web;
+        $seller->address = $request->address;
+        $seller->city = $request->city;
+        $seller->country = $request->country;
+        $seller->latitude = $request->latitude;
+        $seller->longitude = $request->longitude;
+        $seller->industry = $request->industry;
+        $seller->total_annual_sales = $request->total_annual_sales;
+        $seller->preferred_trading_term = $request->preferred_trading_term;
+        $seller->preferred_payment_term = $request->preferred_payment_term; 
+        $seller->purchasing_countries = $request->purchasing_countries;
+        $seller->description = $request->description;
+        $seller->status = 'a';
         $seller->save();
 
         return response()->json($seller, 200);
@@ -56,10 +94,23 @@ class SellerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Seller $seller)
+    public function show($id)
     {
-        return response()->json($seller, 200);
+        $seller = Seller::with(
+                            'Concession', 'Contact', 'User', 'Product'
+                             )->find($id);
+
+        if($seller) {
+            if($seller->status == 'a') {
+                return response()->json($seller, 200);
+            } else {
+                return response()->json(['message' => 'deactivated record'], 404);
+            }
+        } else {
+            return response()->json('Not found', 404);
+        }
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -68,8 +119,10 @@ class SellerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Seller $seller)
+    public function update(Request $request, $seller)
     {
+        $seller = Seller::find($seller);
+
         if (!$request) {
             return response()->json([
                 'message' => 'Bad Request'
@@ -82,12 +135,27 @@ class SellerController extends Controller
             ] ,404);
         }
 
-        $seller->name = $request->name;
-        $seller->image = $request->image;
-        $seller->title = $request->title;
-        $seller->email = $request->email;
+        $seller->user_id = $request->user_id;
+        $seller->company_name = $request->company_name;
+        $seller->is_trader = $request->is_trader;
+        $seller->is_affiliated = $request->is_affiliated;
+        $seller->contact_person = $request->contact_person;
         $seller->phone = $request->phone;
+        $seller->email = $request->email;
+        $seller->web = $request->web;
+        $seller->address = $request->address;
+        $seller->city = $request->city;
+        $seller->country = $request->country;
+        $seller->latitude = $request->latitude;
+        $seller->longitude = $request->longitude;
+        $seller->industry = $request->industry;
+        $seller->total_annual_sales = $request->total_annual_sales;
+        $seller->preferred_trading_term = $request->preferred_trading_term;
+        $seller->preferred_payment_term = $request->preferred_payment_term; 
+        $seller->purchasing_countries = $request->purchasing_countries;
+        $seller->description = $request->description;
 
+        $seller->status = $request->status;
         $seller->save();
 
         return response()->json($seller, 200);
@@ -99,8 +167,10 @@ class SellerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Seller $seller)
+    public function destroy($seller)
     {
+        $seller = Seller::find($seller);
+        
         if (!$seller) {
             return response()->json([
                 'message' => 'Not found'
@@ -111,5 +181,17 @@ class SellerController extends Controller
         $seller->save();
 
         return response()->json($seller, 200);
+    }
+
+    public function getSellerByName($name) {
+        $seller = Seller::wherewhere('company_name', 'like', '%'.$name.'%')->get();
+
+        return response()->json($seller, 200);
+    }
+
+    public function getTotalSeller() {
+        $total = Seller::count();
+        $status = array('count' => $total);        
+        return response()->json($status, 200);
     }
 }

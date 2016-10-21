@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Model\User;
 
 use Illuminate\Http\Request;
+use Auth;
 
 use App\Http\Requests;
 
@@ -20,7 +21,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user = User::get();
+        $user = User::where('status', 'a')->get();
 
         return response()->json($user, 200);
     }
@@ -45,6 +46,12 @@ class UserController extends Controller
         $user->title = $request->title;
         $user->email = $request->email;
         $user->phone = $request->phone;
+        $user->password = bcrypt($request->password);
+
+        $user->role = 'user';
+
+        $user->status = 'a';
+
         $user->save();
 
         return response()->json($user, 200);
@@ -56,9 +63,19 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show($user)
     {
-        return response()->json($user, 200);
+        $user = User::find($user);
+
+        if($user->status == 'a') {
+            return response()->json($user, 200);
+        } else {
+            return response()->json(['message' => 'deactivated record'], 404);
+        }    
+    }
+
+    public function currentUser() {
+        return response()->json(Auth::user(), 200);
     }
 
     /**
@@ -68,8 +85,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, $user)
     {
+        $user = User::find($user);
+
         if (!$request) {
             return response()->json([
                 'message' => 'Bad Request'
@@ -87,6 +106,11 @@ class UserController extends Controller
         $user->title = $request->title;
         $user->email = $request->email;
         $user->phone = $request->phone;
+        $user->password = bcrypt($request->password);
+
+        $user->role = $request->role ? $request->role : 'user';
+
+        $user->status = 'a';
 
         $user->save();
 
@@ -99,8 +123,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy($user)
     {
+        $user = User::find($user);
+        
         if (!$user) {
             return response()->json([
                 'message' => 'Not found'

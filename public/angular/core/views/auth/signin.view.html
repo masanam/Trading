@@ -1,0 +1,39 @@
+<div class="container" ng-controller="AuthController">
+  <div class="login-box">
+    <div class="login-logo">
+      <img src="./images/sinarmas.png" style="width:40px; margin-top:-10px;"><b> Coaltrade</b></a>
+    </div>
+    <!-- /.login-logo -->
+    <div class="login-box-body">
+      <p class="login-box-msg">Sign in to start your session</p>
+
+      <div class="callout callout-danger" ng-if="err">
+        {{ err.message }}
+      </div>
+
+      <form ng-submit="login()" role="form">
+        <div class="form-group has-feedback">
+          <input type="email" class="form-control" placeholder="Email" required ng-model="auth.email">
+          <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+        </div>
+        <div class="form-group has-feedback">
+          <input type="password" class="form-control" placeholder="Password" required ng-model="auth.password">
+          <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+        </div>
+        <div class="row">
+          <!-- /.col -->
+          <div class="col-xs-4 col-xs-offset-8">
+            <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+          </div>
+          <!-- /.col -->
+        </div>
+      </form>
+
+      <!-- /.<a href="#">I forgot my password</a><br>-->
+      <a href="/auth/signup" class="text-center">Sign Up</a>
+
+    </div>
+    <!-- /.login-box-body -->
+  </div>
+  <!-- /.login-box -->
+</div>

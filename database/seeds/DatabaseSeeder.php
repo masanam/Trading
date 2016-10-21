@@ -19,6 +19,16 @@ class DatabaseSeeder extends Seeder
         $this->call(SellersTableSeeder::class);
         $this->call(BuyOrderTableSeeder::class);
         $this->call(SellOrderTableSeeder::class);
+        $this->call(VendorsTableSeeder::class);
+        $this->call(ConcessionTableSeeder::class);
+        $this->call(ProductTableSeeder::class);
+        $this->call(ContactTableSeeder::class);
+        $this->call(BuyerSellerTableSeeder::class);
+        $this->call(IndexTableSeeder::class);
+        $this->call(DealTableSeeder::class);
+        $this->call(BuyDealTableSeeder::class);
+        $this->call(SellDealTableSeeder::class);
+        $this->call(PortTableSeeder::class);
 
         Model::reguard();
     }

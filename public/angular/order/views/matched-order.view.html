@@ -1,0 +1,5 @@
+<div ng-controller="OrderController">
+  <h1>Matched Order<span ng-show="buyer !== undefined">for: {{buyer.company_name}}</span></h1>
+
+  <section ng-include="'/angular/order/views//table.view.html'" ng-init="findMatched()"></section>
+</div>

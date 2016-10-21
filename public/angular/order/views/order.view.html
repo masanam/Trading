@@ -1,0 +1,46 @@
+<div ng-controller="OrderController">
+  <h1>Buy Order <span ng-show="buyer !== undefined">for: {{buyer.company_name}}</span></h1>
+  <hr/>
+  
+  <div class="row">
+    <div class="col-md-12">
+      <ul class="nav nav-tabs nav-justified" ng-init="findUnattended()">
+        <li class="active">
+          <a data-toggle="tab" href="#open" ng-click="findUnattended()">
+            <i class="glyphicon glyphicon-fire"></i>
+            <span> Open Buy Order </span>
+            <i class="glyphicon glyphicon-chevron-right pull-right"></i>
+          </a>
+        </li>
+        <li>
+          <a data-toggle="tab" href="#call" ng-click="findUnmatched()">
+            <i class="glyphicon glyphicon-earphone"></i>
+            <span> Called Buy Order </span>
+            <i class="glyphicon glyphicon-chevron-right pull-right"></i>
+          </a>
+        </li>
+        <li>
+          <a data-toggle="tab" href="#match" ng-click="findMatched()">
+            <i class="glyphicon glyphicon-magnet"></i>
+            <span> Matched Buy Order </span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="tab-content">
+        <div id="open" class="tab-pane fade in active">
+        <br/>
+          <section ng-include="'/angular/order/views//table.view.html'"></section>
+        </div>
+        <div id="call" class="tab-pane fade">
+        <br/>
+          <section ng-include="'/angular/order/views//table.view.html'"></section>
+        </div>
+        <div id="match" class="tab-pane fade">
+        <br/>
+          <section ng-include="'/angular/order/views//table.view.html'"></section>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

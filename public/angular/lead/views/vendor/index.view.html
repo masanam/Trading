@@ -1,0 +1,238 @@
+<section class="content">
+<div class="col-lg-2">
+  <section ng-include="'./angular/lead/views/side-menu.view.html'"></section>
+</div>
+<div class="col-lg-10" ng-controller="VendorController">
+  <section ng-include="'./angular/lead/views/search-bar.view.html'"></section>
+  <div class="box">
+    <div class="box-header with-border">
+      <h1 class="box-title" style="font-size: 25px">Vendors</h1>
+      <div class="box-tools pull-right">
+        <button ui-sref="lead.create-vendor" class="btn btn-primary">+ Create New Vendor</button>
+      </div>
+    </div>
+    <div class="box-body">
+      <table ng-init="find()" st-table="displayedCollection" st-safe-src="vendors" class="table table-striped">
+        <thead>
+            <tr>
+              <th colspan="7"><input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
+            </tr>
+            <tr>
+                <th st-sort="id">#</th>
+                <th st-sort="company">Company</th>
+                <th st-sort="industry">Industry</th>
+                <th st-sort="phone">Phone</th>
+                <th st-sort="email">Email</th>
+                <!--th>Latitude</th>
+                <th>Longitude</th-->
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="(idx, vendor) in displayedCollection">
+                <td>{{ vendor.id }}</td>
+                <td>
+                  {{ vendor.company_name }}
+                </td>
+                <td>
+                  {{ vendor.industry }}
+                </td>
+                <td>{{ vendor.phone }}</td>
+                <td>{{ vendor.email }}</td>
+                <!--td>{{ vendor.latitude }}</td>
+                <td>{{ vendor.longitude }}</td-->
+                <td>
+                  <a ui-sref="lead.view-vendor({ id: vendor.id })"><i class="glyphicon glyphicon-info-sign"></i></a>
+                  <a ui-sref="lead.update-vendor({ id: vendor.id })"><i class="glyphicon glyphicon-pencil"></i></a>
+                  <a ng-click="delete(vendor)"><i class="glyphicon glyphicon-trash"></i></a>
+                </td>
+            </tr>
+
+            <tr ng-if="displayedCollection.length == 0">
+              <td colspan="6" class="text-center">No data available</td>
+            </tr>
+        </tbody>
+
+        <tfoot>
+          <tr>
+            <td colspan="7" class="text-center">
+              <div st-pagination="" st-items-by-page="10" st-displayed-pages="7"></div>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+  
+      <div id="createVendorModal" class="modal fade" role="dialog">
+        <!--div class="modal-dialog"-->
+        <div>
+          <!-- Modal content-->
+          <div class="modal-content container">
+            <div class="modal-header row">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Create Vendor</h4>
+            </div>
+            <div class="modal-body row">
+              <form role="form" ng-submit="create()">
+                <div ng-include="'/angular/views/vendor/form.view.html'"></div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div id="updateVendorModal" class="modal fade" role="dialog">
+        <!--div class="modal-dialog"-->
+        <div>
+          <!-- Modal content-->
+          <div class="modal-content container">
+            <div class="modal-header row">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Update a Vendor</h4>
+            </div>
+            <div class="modal-body row">
+              <form role="form" ng-submit="update()">
+                <div ng-include="'/angular/views/vendor/form.view.html'"></div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div id="vendorModal" class="modal fade" role="dialog">
+        <!--div class="modal-dialog"-->
+        <div>
+          <!-- Modal content-->
+          <div class="modal-content container">
+            <div class="modal-header row">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Vendor Profile</h4>
+            </div>
+
+            <div class="modal-body row">
+              <h1>{{vendor.company_name}}</h1>
+              <hr class="divider" />
+
+              <button type="button" class="btn btn-primary" ng-click="goToUpdatePopup(vendor.id)">
+                <i class="glyphicon glyphicon-pencil"></i> Update
+              </button>
+              <button type="button" class="btn btn-success" ng-click="goToPendingOrders(vendor.id)">
+                <i class="glyphicon glyphicon-plus"></i> Order
+              </button>
+              <button type="button" class="btn btn-info" ng-click="goToContact()">
+                <i class="glyphicon glyphicon-user"></i> Contact
+              </button>
+
+              <hr class="divider" />
+
+              <div class="row with-divider">
+                <div class="col-md-6">
+                  <ng-map ng-if="render" center="{{vendor.latitude}}, {{vendor.longitude}}">
+                    <marker position="{{vendor.latitude}}, {{vendor.longitude}}" title="This is the vendor headquarter"></marker>
+                  </ng-map>
+                </div>
+
+                <div class="col-md-6">
+                  <h3>Information</h3>
+                  <p>{{ vendor.headquarter_location }}</p>
+                  <p>{{ vendor.phone }}</p>
+                  <p>{{ vendor.email }}</p>
+                  <p ng-if="vendor.status == 'a'">Active</p>
+                  <p ng-if="vendor.status == 'x'">Deactivated</p>
+
+                  <h3>Contact Points</h3>
+                  <ul class="list-group">
+                    <li class="list-group-item" ng-repeat="contact in vendor.user">
+                      {{ contact.name }}
+                      <i class="glyphicon glyphicon-envelope" style="margin-left: 20px;"></i> {{ contact.email }}
+                      <i class="glyphicon glyphicon-earphone" style="margin-left: 20px;"></i> {{ contact.phone }}
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="row with-divider">
+                <!--div class="col-md-6">
+                  <h4>Pending Orders</h4>
+                  <hr class="divider" />
+                  <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Order Date</th>
+                            <th>Volume</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="(idx, pendingOrder) in pendingOrders">
+                            <td>{{ pendingOrder.id }}</td>
+                            <td>
+                              {{ pendingOrder.created_at | date:'medium' }}
+                            </td>
+                            <td>
+                              {{ pendingOrder.volume }}
+                            </td>
+                        </tr>
+                        <tr ng-hide="pendingOrders.length > 0">
+                          <td colspan="3">There is no pending orders.</td>
+                        </tr>
+                        <tr>
+                          <td colspan="3"><a class="btn btn-block btn-blue" ng-click="goToPendingOrders(vendor.id)">View More</a></td>
+                        </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-md-6">
+                  <h4>Last Order History</h4>
+                  <hr class="divider" />
+                  <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Last Order Date</th>
+                            <th>Volume</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="(idx, lastOrder) in lastOrders">
+                            <td>{{ lastOrder.id }}</td>
+                            <td>
+                              {{ lastOrder.created_at | date:'medium' }}
+                            </td>
+                            <td>
+                              {{ lastOrder.volume }}
+                            </td>
+                        </tr>
+                        <tr ng-hide="lastOrders.length > 0">
+                          <td colspan="3">There is no last orders.</td>
+                        </tr>
+                        <tr>
+                          <td colspan="3"><a class="btn btn-block btn-blue" ng-click="goToLastOrders(vendor.id)">View More</a></td>
+                        </tr>
+                    </tbody>
+                  </table>
+                </div-->
+              </div>
+              <div class="row">
+                <div class="col-md-3" ng-repeat="(idx, lastOrder) in Orders">
+                  <ng-map center="{{vendor.longitude}}, {{vendor.latitude}}">
+                    <marker center="{{vendor.longitude}}, {{vendor.latitude}}" title="This is the vendor headquarter"></marker>
+                  </ng-map>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>      
+  </div>
+</div>
+</section>

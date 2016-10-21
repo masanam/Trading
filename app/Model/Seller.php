@@ -2,6 +2,8 @@
 
 namespace App\Model;
 
+use Laravel\Scout\Searchable;
+
 use App\Model\User;
 use App\Model\SellOrder;
 use App\Model\Product;
@@ -13,23 +15,23 @@ class Seller extends Model
 {
     protected $table = 'sellers';
 
-    public function user() {
-    	return $this->belongsTo('User');
+    public function User() {
+    	return $this->belongsTo('App\Model\User');
     }
 
-    public function contact() {
-        return $this->hasMany('Contact');
+    public function Contact() {
+        return $this->hasMany('App\Model\Contact');
     }
 
     public function SellOrder() {
-    	return $this->hasMany('SellOrder');
+    	return $this->hasMany('App\Model\SellOrder');
     }
 
-    public function product() {
-    	return $this->hasMany('Product');
+    public function Product() {
+    	return $this->hasMany('App\Model\Product');
     }
 
-    public function mine() {
-    	return $this->hasMany('Mine');
+    public function Concession() {
+    	return $this->hasMany('App\Model\Concession');
     }
 }

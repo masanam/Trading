@@ -1,0 +1,47 @@
+<section ng-controller="ChatController" ng-init="findCurrentUser();">
+  <div class="box box-danger direct-chat direct-chat-danger">
+    <div class="box-header with-border">
+      <h3 class="box-title">Direct Chat</h3>
+      <div class="box-tools pull-right">
+        <span data-toggle="tooltip" title="3 New Messages" class="badge bg-red">3</span>
+        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+        <!-- In box-tools add this button if you intend to use the contacts pane -->
+        <button class="btn btn-box-tool" data-toggle="tooltip" title="Contacts" data-widget="chat-pane-toggle"><i class="fa fa-comments"></i></button>
+        <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+      </div>
+    </div><!-- /.box-header -->
+    <div class="box-body" scroll-glue="glued">
+      <!-- Conversations are loaded here -->
+      <div class="direct-chat-messages" ng-init="findChatByDeal('buy')">
+        <!-- Message. Default to the left -->
+        <div class="direct-chat-msg" ng-repeat="chat in chats">
+          <div class="direct-chat-info clearfix" ng-if="chat.user_id !== user.id">
+            <span class="direct-chat-name pull-left">{{ chat.author }}</span>
+            <span class="direct-chat-timestamp pull-right">{{ chat.created_at }}</span>
+          </div><!-- /.direct-chat-info -->
+          <img class="direct-chat-img" ng-src="images/default.png" ng-src-fallback="images/default.png" alt="message user image"><!-- /.direct-chat-img -->
+          <div class="direct-chat-text">
+            {{ chat.message }}
+          </div><!-- /.direct-chat-text -->
+          <div class="direct-chat-info clearfix" ng-if="chat.user_id === user.id">
+            <span class="direct-chat-name pull-right">{{ chat.author }}</span>
+            <span class="direct-chat-timestamp pull-right">{{ chat.created_at }}</span>
+          </div><!-- /.direct-chat-info -->
+          <img class="direct-chat-img" ng-src="images/default.png" ng-src-fallback="images/default.png" alt="message user image"><!-- /.direct-chat-img -->
+          <div class="direct-chat-text">
+            {{ chat.message }}
+          </div><!-- /.direct-chat-text -->
+        </div><!-- /.direct-chat-msg -->
+        
+      </div><!--/.direct-chat-messages-->
+    </div><!-- /.box-body -->
+    <div class="box-footer">
+      <form class="input-group" ng-submit="sendMessage('buy')">
+        <input type="text" name="message" placeholder="Type Message ..." class="form-control" ng-model="message">
+        <span class="input-group-btn">
+          <button type="submit" class="btn btn-danger btn-flat">Send</button>
+        </span>
+      </form>
+    </div><!-- /.box-footer-->
+  </div><!--/.direct-chat -->
+</section>

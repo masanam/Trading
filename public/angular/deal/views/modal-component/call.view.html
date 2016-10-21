@@ -1,0 +1,48 @@
+<div class="col-lg-12" style="margin: 20px 0;">
+  <ul class="list-group">
+    <li class="list-group-item list-group-item-info">
+      <h2>{{ buyer.company_name }}</h2>
+      <span class="label label-primary">BUYER</span> <span class="label label-default">STARTER</span>
+      <p>{{ buyer.phone }}</p>
+      <p>{{ buyer.email }}</p>
+
+      <ul class="list-group">
+        <li class="list-group-item" ng-repeat="contact in buyer.contact">
+          {{ contact.name }}
+          <i class="glyphicon glyphicon-envelope" style="margin-left: 20px;"></i> {{ contact.email }}
+          <i class="glyphicon glyphicon-earphone" style="margin-left: 20px;"></i> {{ contact.phone }}
+        </li>
+      </ul>
+    </li>
+
+    <li class="list-group-item" ng-repeat="seller in sellers">
+      <h2>{{ seller.company_name }}</h2>
+      <span class="label label-success">SELLER</span>
+      <p>{{ seller.phone }}</p>
+      <p>{{ seller.email }}</p>
+
+      <ul class="list-group">
+        <li class="list-group-item" ng-repeat="contact in seller.contact">
+          {{ contact.name }}
+          <i class="glyphicon glyphicon-envelope" style="margin-left: 20px;"></i> {{ contact.email }}
+          <i class="glyphicon glyphicon-earphone" style="margin-left: 20px;"></i> {{ contact.phone }}
+        </li>
+      </ul>
+    </li>
+
+    <li class="list-group-item" ng-repeat="vendor in vendors">
+      <h2>{{ vendor.company_name }}</h2>
+      <span class="label label-warning">VENDOR</span>
+      <p>{{ vendor.phone }}</p>
+      <p>{{ vendor.email }}</p>
+
+      <ul class="list-group">
+        <li class="list-group-item" ng-repeat="contact in vendor.contact">
+          {{ contact.name }}
+          <i class="glyphicon glyphicon-envelope" style="margin-left: 20px;"></i> {{ contact.email }}
+          <i class="glyphicon glyphicon-earphone" style="margin-left: 20px;"></i> {{ contact.phone }}
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>

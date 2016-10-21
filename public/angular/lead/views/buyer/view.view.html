@@ -1,0 +1,211 @@
+<div class="content" ng-controller="BuyerController" ng-init="findOne()">
+  <!-- HEADER -->
+  <div class="row submenu-header">
+    <div class="submenu-header-item">
+      <button type="button" class="btn btn-primary" ui-sref="lead.buyer">
+        <i class="glyphicon glyphicon-arrow-left"></i> Back
+      </button>
+    </div>
+    <div class="submenu-header-item">
+      <h4>{{ $stateParams.type }} Profile</h4>
+    </div>
+  </div>
+
+  <!-- PRIMARY DETAIL -->
+  
+    <div class="box box-widget widget-user">
+            <!-- Add the bg color to the header using any of the bg-* classes -->
+      <div class="widget-user-header bg-aqua-active">
+        <h3 class="widget-user-username">{{ buyer.company_name }}</h3>
+        <h5 class="widget-user-desc">{{ buyer.industry }}</h5>
+      </div>
+      <div class="box-tools pull-right">
+        <span class="badge"><i class='fa fa-share-alt'></i> AFFILIATED</span>
+        <span class="badge"><i class='fa fa-tags'></i> TRADER</span>
+      </div>
+      <div class="widget-user-image">
+        <img class="img-circle" src="/images/default.jpg" alt="User Avatar">
+      </div>
+
+      <div class="box-footer">
+        <div class="row">
+          <div class="col-sm-12 border-right">
+            <div class="description-block">
+              <h5 class="description-text">{{ buyer.address }}</h5>
+                  
+            </div>
+          </div> 
+        </div>
+      </div>
+    </div>
+  
+
+  <div style="margin-top:10px;">
+    <div class="col-lg-4" style="padding-left:0px;">
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title" style="font-size: 25px">About</h3>
+          <div class="box-tools pull-right">
+            <button type="button" ui-sref="lead.update-buyer({ id: buyer.id })" class="btn btn-info"><i class="glyphicon glyphicon-pencil"></i> Update</button>
+          </div>
+        </div>
+        <div class="box-body">
+          <div class="row-fluid" style="margin: 10px;">
+
+            <table class="table table-striped">
+              <tr><td>Country:</td><td>{{ buyer.country }}</td></tr>
+              <tr><td>Address:</td><td>{{ buyer.address }}</td></tr>
+              <tr><td>City:</td><td>{{ buyer.city }}</td></tr>
+              <tr><td>Latitude:</td><td>{{ buyer.latitude }}</td></tr>
+              <tr><td>Longitude:</td><td>{{ buyer.longitude }}</td></tr>
+              <tr><td>Industry:</td><td>{{ buyer.industry }}</td></tr>
+              <tr><td>Annual Demand:</td><td>{{ buyer.annual_demand }}</td></tr>
+              <tr><td>Preferred Trading Term:</td><td>{{ buyer.preferred_trading_term }}</td></tr>
+              <tr><td>Preferred Payment Term:</td><td>{{ buyer.preferred_payment_term }}</td></tr>
+              <tr><td>Phone:</td><td>{{ buyer.phone }}</td></tr>
+              <tr><td>Email:</td><td>{{ buyer.email }}</td></tr>
+              <tr><td>Web:</td><td>{{ buyer.web }}</td></tr>
+              <tr><td>Desc:</td><td>{{ buyer.description }}</td></tr>
+              <tr ng-if="buyer.status == 'a'"><td>Status:</td> <td>Active</td></tr>
+              <tr ng-if="buyer.status == 'x'"><td>Status:</td> <td>Deactivated</td></tr>
+
+            </table>
+
+            <!--ng-map center="{{buyer.longitude}}, {{buyer.latitude}}">
+              <marker center="{{buyer.longitude}}, {{buyer.latitude}}"></marker>
+            </ng-map-->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-8">
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title" style="font-size: 25px">Contacts</h3>
+          <div class="box-tools pull-right">
+            <button type="button" ng-click="addContact()" class="btn btn-info"><i class="glyphicon glyphicon-plus"></i> Add New Contact</button>
+          </div>
+        </div>
+        <div class="box-body">
+          <div class="row" style="margin: 10px;">
+            <ul class="list-group">
+              <li class="list-group-item" ng-repeat="contact in buyer.contact">
+                {{ contact.name }}
+                <i class="glyphicon glyphicon-envelope" style="margin-left: 50px;"></i> {{ contact.email }}
+                <i class="glyphicon glyphicon-earphone" style="margin-left: 50px;"></i> {{ contact.phone }}
+
+                <span class="pull-right">
+                  <a href="#" ng-click="deleteContact(contact)"><i class="glyphicon glyphicon-remove"></i></a>
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+     <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title" style="font-size: 25px">Products</h3>
+          <div class="box-tools pull-right">
+            <button type="button" ng-click="addProduct()" class="btn btn-info"><i class="glyphicon glyphicon-plus"></i> Add New Product</button>
+          </div>
+        </div>
+        <div class="box-body">
+          <div class="row" style="margin: 10px;">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th><i class="glyphicon glyphicon-scale"></i> GCV ADB (kcal)</th>
+                  <th><i class="glyphicon glyphicon-scale"></i> GCV ARB (kcal)</th>
+                  <th><i class="glyphicon glyphicon-scale"></i> NCV (kcal)</th>
+                  <th><!----></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="product in buyer.product">
+                  <td>{{ product.product_name }}</td>
+                  <td>{{ product.gcv_adb_min | number }} - {{ product.gcv_adb_max | number }}</td>
+                  <td>{{ product.gcv_arb_min | number }} - {{ product.gcv_arb_max | number }}</td>
+                  <td>{{ product.ncv_min | number }} - {{ product.ncv_max | number }}</td>
+                  <td><span class="pull-right">
+                    
+                    <!--<button type="button" ng-click="viewProduct({ id: product.id })" class="btn btn-info"><i class="glyphicon glyphicon-eye-open"></i></button>-->
+                    <a ui-sref="lead.view-product({ id: product.id })"><i class="glyphicon glyphicon-eye-open"></i></a>
+                    <a href="#" ng-click="deleteProduct(product)"><i class="glyphicon glyphicon-remove"></i></a>
+                  </span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!--div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title" style="font-size: 25px">Insights</h3>
+          <div class="box-tools pull-right">
+          </div>
+        </div>
+        <div class="box-body">
+          <div class="row" style="margin: 10px;">
+            -- FEATURES COMING SOON --
+          </div>
+        </div>
+      </div-->
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title" style="font-size: 25px">Order History</h3>
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-info" ui-sref="buy-order.create"><i class="glyphicon glyphicon-plus"></i> Add New Order</button>
+          </div>
+        </div>
+        <div class="box-body">
+          <div class="row" style="margin: 10px;">
+            <table class="table table-striped">
+              <thead>
+                  <tr>
+                      <th>#</th>
+                      <th>Last Order Date</th>
+                      <th>Volume</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr ng-repeat="(idx, lastOrder) in lastOrders">
+                      <td>{{ lastOrder.id }}</td>
+                      <td>
+                        {{ lastOrder.created_at | date:'medium' }}
+                      </td>
+                      <td>
+                        {{ lastOrder.volume | number }}
+                      </td>
+                  </tr>
+                  <tr ng-hide="lastOrders.length > 0">
+                    <td colspan="3">There is no previous orders.</td>
+                  </tr>
+                  <!--tr>
+                    <td colspan="3">-- FEATURES COMING SOON --</td>
+                  </tr-->
+                  <tr>
+                    <td colspan="3"><a class="btn btn-block btn-blue" ng-click="goToLastOrders(buyer.id)">View More</a></td>
+                  </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!--div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title" style="font-size: 25px">Notes</h3>
+          <div class="box-tools pull-right">
+          </div>
+        </div>
+        <div class="box-body">
+          <div class="row" style="margin: 10px;">
+            -- FEATURES COMING SOON --
+          </div>
+        </div>
+      </div-->
+
+    </div>
+  </div>
+</div>
