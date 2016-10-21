@@ -228,7 +228,7 @@ angular.module('concession').controller('ConcessionModalController', function ($
     var concession = $scope.concession;
     
     concession.$save(function (response) {
-      $location.path('lead/seller/'+$stateParams.id+'/setup-product').search({new: $scope.new});
+      $location.path('lead/seller/'+$stateParams.id+'/setup-product').search({ new: $scope.new });
       $uibModalInstance.close('success');
       $scope.success = true;
     }, function (response) {
