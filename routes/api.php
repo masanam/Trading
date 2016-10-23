@@ -14,22 +14,28 @@ use Illuminate\Http\Request;
 */
 
 Route::group(['middleware' => ['cors']], function() {
+    //Authentications API
     Route::resource('authenticate', 'AuthenticateController', ['only' => ['index']]);
     Route::post('authenticate', 'AuthenticateController@authenticate');
     Route::post('authenticate/signup', 'AuthenticateController@signup');
     Route::get('authenticate/user', 'AuthenticateController@getAuthenticatedUser');
 
+    //S3 Upload file signing API
     Route::post('signing', 'AuthenticateController@upload');
 
+    //Coal Index Price API
     Route::get('index', 'IndexController@index');
     Route::post('index/price', 'IndexController@price');
     Route::post('index/single-price', 'IndexController@singlePrice');
 
+    //User Management API
     Route::get('user/current', 'UserController@currentUser');
     Route::resource('user', 'UserController', ['except' => [
         'create', 'edit'
     ]]);
 
+    //COALPEDIA API GROUP
+    //Contact Management API
     Route::get('contact/total', 'ContactController@getTotalContact');
     Route::get('contact/search/{search?}', 'ContactController@search');
     Route::delete('contact/{id}', 'ContactController@destroy');
@@ -37,12 +43,28 @@ Route::group(['middleware' => ['cors']], function() {
         'create', 'edit'
     ]]);
 
+    //Buyer Management API
     Route::get('buyer/total', 'BuyerController@getTotalBuyer');
     Route::get('buyer/search/{search?}', 'BuyerController@search');
     Route::resource('buyer', 'BuyerController', ['except' => [
         'create', 'edit'
     ]]);
 
+    //Seller Management API
+    Route::get('seller/total', 'SellerController@getTotalSeller');
+    Route::get('seller/search/{search?}', 'SellerController@search');
+    Route::resource('seller', 'SellerController', ['except' => [
+        'create', 'edit'
+    ]]);
+
+    //Vendor Management API
+    Route::get('vendor/total', 'VendorController@getTotalVendor');
+    Route::get('vendor/search/{search?}', 'VendorController@search');
+    Route::resource('vendor', 'VendorController', ['except' => [
+        'create', 'edit'
+    ]]);
+
+    //Port Management API
     Route::post('port/buyer/store', 'PortController@storeBuyerPort');
     Route::post('port/seller/store', 'PortController@storeSellerPort');
     Route::get('port/buyer/my/{buyer_id}', 'PortController@buyerMyPort');
@@ -52,9 +74,23 @@ Route::group(['middleware' => ['cors']], function() {
         'create', 'edit'
     ]]);
 
-    Route::get('seller/total', 'SellerController@getTotalSeller');
-    Route::get('seller/search/{search?}', 'SellerController@search');
-    Route::resource('seller', 'SellerController', ['except' => [
+    //Product Management API
+    Route::get('product/{id}/my/buyer', 'ProductController@findMyProductBuyer');
+    Route::get('product/{id}/my/seller', 'ProductController@findMyProductSeller');
+    Route::get('product/total', 'ProductController@getTotalProduct');
+    Route::get('product/search/{search?}', 'ProductController@search');
+    Route::delete('product/{id}', 'ProductController@destroyByID');
+    Route::resource('product', 'ProductController', ['except' => [
+        'create', 'edit'
+    ]]);
+
+    //Concession Management API
+    Route::get('concession/total', 'ConcessionController@getTotalConcession');
+    Route::get('concession/search', 'ConcessionController@search');
+    Route::get('concession/filter', 'ConcessionController@filter');
+    Route::get('concession/my/{id}', 'ConcessionController@findMyConcession');
+    Route::get('concession/detail/{id}', 'ConcessionController@detail');
+    Route::resource('concession', 'ConcessionController', ['except' => [
         'create', 'edit'
     ]]);
 
@@ -85,37 +121,10 @@ Route::group(['middleware' => ['cors']], function() {
 
     Route::get('order/lastOrder/{type}/{id}', 'BuySellOrderController@lastOrderByUser');
     Route::get('order/lastOrders/{type}/{id}', 'BuySellOrderController@lastOrderForDetail');
-    //Route::get('order/{user_id}', 'BuySellOrderController@orderDealByUser');
     Route::resource('order', 'BuySellOrderController', ['only' => [
         'index'
     ]]);
 
-    Route::get('product/{id}/my/buyer', 'ProductController@findMyProductBuyer');
-    Route::get('product/{id}/my/seller', 'ProductController@findMyProductSeller');
-    Route::get('product/total', 'ProductController@getTotalProduct');
-    Route::get('product/search/{search?}', 'ProductController@search');
-    Route::delete('product/{id}', 'ProductController@destroyByID');
-    Route::resource('product', 'ProductController', ['except' => [
-        'create', 'edit'
-    ]]);
-
-    Route::get('concession/total', 'ConcessionController@getTotalConcession');
-    Route::get('concession/search', 'ConcessionController@search');
-    Route::get('concession/filter', 'ConcessionController@filter');
-    Route::get('concession/my/{id}', 'ConcessionController@findMyConcession');
-    Route::get('concession/detail/{id}', 'ConcessionController@detail');
-    Route::resource('concession', 'ConcessionController', ['except' => [
-        'create', 'edit'
-    ]]);
-
-    Route::get('vendor/total', 'VendorController@getTotalVendor');
-    Route::get('vendor/search/{search?}', 'VendorController@search');
-    Route::resource('vendor', 'VendorController', ['except' => [
-        'create', 'edit'
-    ]]);
-
-    // Route::get('buy-deal/chat/{buy_deal}', 'BuyDealChatController@showAllBuyDealChatsByOrderDeal');
-    // Route::post('buy-deal/chat/send', 'BuyDealChatController@sendChat');
     Route::delete('buy-deal/{dealId}', 'BuyDealController@destroyByDeal');
     Route::get('buy-deal/getByDeal/{dealId}', 'BuyDealController@getByDeal');
     Route::get('buy-deal/getOneByDealAndOrder/{buyOrder}/{dealId}', 'BuyDealController@getOneByDealAndOrder');
@@ -124,8 +133,6 @@ Route::group(['middleware' => ['cors']], function() {
         'create', 'edit'
     ]]);
     
-    // Route::get('sell-deal/chat/{sell_deal}', 'SellDealChatController@showAllSellDealChatsByOrderDeal');
-    // Route::post('sell-deal/chat/send', 'SellDealChatController@sendChat');
     Route::delete('sell-deal/{dealId}', 'SellDealController@destroyByDeal');
     Route::get('sell-deal/getByDeal/{dealId}', 'SellDealController@getByDeal');
     Route::get('sell-deal/getOneByDealAndOrder/{sellOrder}/{dealId}', 'SellDealController@getOneByDealAndOrder');
