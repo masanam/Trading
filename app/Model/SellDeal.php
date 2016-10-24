@@ -17,10 +17,6 @@ class SellDeal extends Model
     	return $this->belongsTo('App\Model\SellOrder');
     }
 
-    public function SellDealChat() {
-        return $this->hasOne('App\Model\SellDealChat');
-    }
-
     public function SellDealApproval() {
         return $this->hasMany('App\Model\SellDealApproval');
     }

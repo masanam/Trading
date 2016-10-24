@@ -17,10 +17,6 @@ class BuyDeal extends Model
     	return $this->belongsTo('App\Model\BuyOrder');
     }
 
-    public function BuyDealChat() {
-    	return $this->hasOne('App\Model\BuyDealChat');
-    }
-
     public function BuyDealApproval() {
         return $this->hasMany('App\Model\BuyDealApproval');
     }
