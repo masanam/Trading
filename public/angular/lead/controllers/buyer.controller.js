@@ -18,9 +18,6 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
       startingDay: 1
     };
 
-    $scope.open = function() {
-      $scope.popup.opened = true;
-    };
 
     $scope.popup = {
       opened: false
@@ -32,6 +29,15 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
 
     $scope.popup2 = {
       opened: false
+    };
+
+    $scope.data = {
+      availableOptions: [
+        { id: 'TT', name: 'TT' },
+        { id: 'LC on Sight f', name: 'LC on Sight' },
+        { id: 'LC on 30 days', name: 'LC on 30 days' }
+      ],
+ 
     };
 
     $scope.format = 'dd.MM.yyyy';

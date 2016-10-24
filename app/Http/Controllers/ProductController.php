@@ -108,8 +108,6 @@ class ProductController extends Controller
         $product->size_max = $request->size_max;
         $product->fe203_min = $request->fe203_min;
         $product->fe203_max = $request->fe203_max;
-        $product->cvnar_min = $request->cvnar_min;
-        $product->cvnar_max = $request->cvnar_max;
         $product->aft_min = $request->aft_min;
         $product->aft_max = $request->aft_max;
 
@@ -213,8 +211,6 @@ class ProductController extends Controller
         $product->size_max = $request->size_max;
         $product->fe203_min = $request->fe203_min;
         $product->fe203_max = $request->fe203_max;
-        $product->cvnar_min = $request->cvnar_min;
-        $product->cvnar_max = $request->cvnar_max;
         $product->aft_min = $request->aft_min;
         $product->aft_max = $request->aft_max;
         /*$product->size_reject = $request->size_reject;

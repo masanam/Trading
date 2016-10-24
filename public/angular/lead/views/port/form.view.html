@@ -1,16 +1,16 @@
 <div class="form-group">
   <label for="port_name">Name of Port:</label>
-  <input name="port_name" type="text" class="form-control" id="port_name" ng-model="port.port_name">
+  <input name="port_name" type="text" class="form-control" id="port_name" ng-model="port.port_name" required>
 </div>
 
 <div class="form-group">
   <label for="owner">Owner of Port:</label>
-  <input name="owner" type="text" class="form-control" id="owner" ng-model="port.owner">
+  <input name="owner" type="text" class="form-control" id="owner" ng-model="port.owner" required>
 </div>
 
 <div class="form-group">
   <label for="location">Location:</label>
-  <input name="location" type="text" class="form-control" id="location" ng-model="port.location">
+  <input name="location" type="text" class="form-control" id="location" ng-model="port.location" required>
 </div>
 
 <div class="form-group">
@@ -25,11 +25,11 @@
 
 <div class="form-group">
   <label for="size">Size of Port (Ha):</label>
-  <input name="size" type="number" class="form-control" min="0" id="size" ng-model="port.size">
+  <input name="size" type="number" class="form-control" min="0" id="size" ng-model="port.size" required>
 </div>
 
 <div class="form-group">
-  <label for="contact">Port Coordinates:</label>
+  <label for="contact">Port Coordinates*:</label>
   <div class="input-group" style="margin-bottom: 5px;">
     <span class="input-group-addon" style="width: 200px;">Latitude</span>
     <input type="number" class="form-control" placeholder="Latitude" ng-model="port.latitude" min="-90" max="90" step="any" required>
@@ -39,7 +39,7 @@
 </div>
 
 <div class="form-group">
-  <label for="web">Port Facility :</label>
+  <label for="web">Port Facility* :</label>
   <div class="input-group" style="margin-bottom: 5px;">
     <div class="btn-group">
       <label class="btn btn-default" ng-model="port.has_conveyor" uib-btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0">Conveyor</label>
@@ -51,27 +51,27 @@
 
 <div class="form-group">
   <label for="draft_height">Draft of Loading Port (m):</label>
-  <input name="draft_height" type="number" min="0" class="form-control" id="draft_height" ng-model="port.draft_height">
+  <input name="draft_height" type="number" min="0" class="form-control" id="draft_height" ng-model="port.draft_height" required>
 </div>
 
 <div class="form-group">
   <label for="anchorage_distance">Distance from port to anchorage (NM or Hours ):</label>
-  <input name="anchorage_distance" type="number" min="0" class="form-control" id="anchorage_distance" ng-model="port.anchorage_distance">
+  <input name="anchorage_distance" type="number" min="0" class="form-control" id="anchorage_distance" ng-model="port.anchorage_distance" required>
 </div>
 
 <div class="form-group">
   <label for="daily_discharge_rate">Daily discharge rate (mtpd):</label>
-  <input name="daily_discharge_rate" type="number" min="0" class="form-control" id="daily_discharge_rate" ng-model="port.daily_discharge_rate">
+  <input name="daily_discharge_rate" type="number" min="0" class="form-control" id="daily_discharge_rate" ng-model="port.daily_discharge_rate" required>
 </div>
 
 <div class="form-group" ng-hide="type!=='buyer'">
   <label for="distance">Distance from Discharging port to Factory (KM):</label>
-  <input name="distance" type="number" min="0" class="form-control" id="distance" ng-model="buyer_port.distance">
+  <input name="distance" type="number" min="0" class="form-control" id="distance" ng-model="buyer_port.distance" required>
 </div>
 
 <div class="form-group" ng-hide="type!=='seller'">
   <label for="distance">Distance from Discharging port to Factory (KM):</label>
-  <input name="distance" type="number" min="0" class="form-control" id="distance" ng-model="seller_port.distance">
+  <input name="distance" type="number" min="0" class="form-control" id="distance" ng-model="seller_port.distance" required>
 </div>
 
 <div class="form-group">

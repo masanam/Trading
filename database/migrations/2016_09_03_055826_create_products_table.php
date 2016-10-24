@@ -43,8 +43,6 @@ class CreateProductsTable extends Migration
             $table->integer('size_max')->nullable();
             $table->integer('fe203_min')->nullable(); //size/piece
             $table->integer('fe203_max')->nullable();
-            $table->integer('cvnar_min')->nullable(); //size/piece
-            $table->integer('cvnar_max')->nullable();
             $table->integer('aft_min')->nullable(); //size/piece
             $table->integer('aft_max')->nullable();
 

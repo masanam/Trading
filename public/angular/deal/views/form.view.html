@@ -9,12 +9,12 @@
 
 <div class="form-group">
   <label for="order_date">Order Date :</label>
-  <input type="date" class="form-control" id="order_date" ng-model="order.order_date">
+  <input type="date" class="form-control" id="order_date" ng-model="order.order_date" required>
 </div>
 
 <div class="form-group">
   <label for="deadline">Deadline :</label>
-  <input type="date" class="form-control" id="deadline" ng-model="order.deadline">
+  <input type="date" class="form-control" id="deadline" ng-model="order.deadline" required>
 </div>
 
 <div class="form-group">
@@ -26,13 +26,13 @@
     <label>Pickup Location</label>
     <div class="input-group" style="margin-bottom: 5px;">
         <span class="input-group-addon" id="basic-addon1">Address</span>
-        <input type="text" class="form-control" placeholder="Address" ng-model="order.address">
+        <input type="text" class="form-control" placeholder="Address" ng-model="order.address" required>
     </div>
     <div class="input-group" style="margin-bottom: 5px;">
         <span class="input-group-addon" style="width: 200px;">Latitude</span>
-        <input type="text" class="form-control" placeholder="Latitude" ng-model="order.latitude">
+        <input type="text" class="form-control" placeholder="Latitude" ng-model="order.latitude" required>
         <span class="input-group-addon">Longitude</span>
-        <input type="text" class="form-control" placeholder="Longitude" ng-model="order.longitude">
+        <input type="text" class="form-control" placeholder="Longitude" ng-model="order.longitude" required>
     </div>
 </div>
 
@@ -40,7 +40,7 @@
   <label>Coal Volume</label>
   <div class="input-group">
     <span class="input-group-addon" id="basic-addon1">Volume</span>
-    <input type="text" class="form-control" placeholder="tones" ng-model="order.volume">
+    <input type="text" class="form-control" placeholder="tones" ng-model="order.volume" required>
   </div>
 </div>
 <hr/>

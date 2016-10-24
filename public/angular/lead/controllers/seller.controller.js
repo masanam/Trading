@@ -9,6 +9,13 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
     $scope.product = {};
     $scope.new = $location.search().new;
 
+    $scope.data = {
+      availableOptions: [
+        { id: 'TT', name: 'TT' },
+        { id: 'LC on Sight f', name: 'LC on Sight' },
+        { id: 'LC on 30 days', name: 'LC on 30 days' }
+      ],
+    };
 
     $scope.nextToConcession= function(){
       console.log($scope.seller.selected);
