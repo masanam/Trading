@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\SellDealChat;
 use App\Model\SellDeal;
 use App\Model\SellOrder;
 use App\Model\SellOrderPricing;
@@ -28,7 +27,7 @@ class SellDealController extends Controller
     {
         $sell_deal = SellDeal::where('status', 'a')->with(
                             'SellOrder', 'SellOrder.SellOrderPricing', 'SellOrder.Seller',
-                             'SellOrder.Seller.User', 'User', 'Deal', 'SellDealChat'
+                             'SellOrder.Seller.User', 'User', 'Deal'
                         )->get();
 
         return response()->json($sell_deal, 200);
@@ -84,11 +83,11 @@ class SellDealController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($sell_deal)
+    public function show($id)
     {
         $sell_deal = SellDeal::with(
                             'SellOrder', 'SellOrder.SellOrderPricing', 'SellOrder.Seller',
-                             'SellOrder.Seller.User', 'User', 'Deal', 'SellDealChat'
+                             'SellOrder.Seller.User', 'User', 'Deal'
                              )->find($id);
 
         if($sell_deal) {
@@ -187,7 +186,7 @@ class SellDealController extends Controller
       }
       
       $sell_deal = SellDeal::with('SellOrder', 'SellOrder.SellOrderPricing', 'SellOrder.Seller',
-                             'SellOrder.Seller.User', 'User', 'Deal', 'SellDealChat')->where([['deal_id', $dealId], ['status', 'a']])
+                             'SellOrder.Seller.User', 'User', 'Deal')->where([['deal_id', $dealId], ['status', 'a']])
              ->orderBy('id', 'asc')
              ->get();
 
@@ -198,7 +197,7 @@ class SellDealController extends Controller
     // Get One Sell Deal by Deal ID and Sell Order ID
     public function getOneByDealAndOrder($sell_order, $dealId) {
         $sell_deal = SellDeal::with('SellOrder', 'SellOrder', 'SellOrder.SellOrderPricing', 'SellOrder.Seller',
-                             'SellOrder.Seller.User', 'User', 'Deal', 'SellDealChat')
+                             'SellOrder.Seller.User', 'User', 'Deal')
                     ->where([['deal_id', $dealId], 
                       ['status', 'a'],
                       ['sell_order_id', $sell_order]])

@@ -22,7 +22,7 @@ class BuySellDealController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $buy_sell_deal = new \Illuminate\Database\Eloquent\Collection();
 
@@ -64,6 +64,7 @@ class BuySellDealController extends Controller
 
         // $buy_sell_deal = $buy_sell_deal->sortBy('order_date');
 
+        if($request->envelope) return response()->json([ 'order_deal' => $buy_sell_deal ], 200);
         return response()->json($buy_sell_deal, 200);
     }
 

@@ -6,7 +6,6 @@ use App\Model\BuyDeal;
 use App\Model\BuyOrder;
 use App\Model\BuyOrderPricing;
 use App\Model\BuyDealApproval;
-use App\Model\BuyDealChat;
 
 use Illuminate\Http\Request;
 use Auth;
@@ -29,7 +28,7 @@ class BuyDealController extends Controller
         $buy_deal = BuyDeal::where('status', 'a')
                         ->with(
                             'BuyOrder', 'BuyOrder.BuyOrderPricing', 'BuyOrder.Buyer',
-                             'BuyOrder.Buyer.User', 'User', 'Deal', 'BuyDealChat'
+                             'BuyOrder.Buyer.User', 'User', 'Deal'
                         )->get();
 
         return response()->json($buy_deal, 200);
@@ -91,7 +90,7 @@ class BuyDealController extends Controller
     {
         $buy_deal = BuyDeal::with(
                             'BuyOrder', 'BuyOrder.BuyOrderPricing', 'BuyOrder.Buyer',
-                             'BuyOrder.Buyer.User', 'User', 'Deal', 'BuyDealChat'
+                             'BuyOrder.Buyer.User', 'User', 'Deal'
                              )->find($id);
 
         if($buy_deal) {
@@ -130,7 +129,7 @@ class BuyDealController extends Controller
     // Get All Buy Deal by Deal ID
     public function getByDeal($dealId) {
         $buy_deal = BuyDeal::with('BuyOrder', 'BuyOrder.BuyOrderPricing', 'BuyOrder.Buyer',
-                             'BuyOrder.Buyer.User', 'User', 'Deal', 'BuyDealChat')->where([['deal_id', $dealId], ['status', 'a']])
+                             'BuyOrder.Buyer.User', 'User', 'Deal')->where([['deal_id', $dealId], ['status', 'a']])
                ->orderBy('id', 'asc')
                ->get();
 
@@ -141,7 +140,7 @@ class BuyDealController extends Controller
     // Get One Buy Deal by Deal ID and Buy Order ID
     public function getOneByDealAndOrder($buy_order, $dealId) {
         $buy_deal = BuyDeal::with('BuyOrder', 'BuyOrder.BuyOrderPricing', 'BuyOrder.Buyer',
-                             'BuyOrder.Buyer.User', 'User', 'Deal', 'BuyDealChat')
+                             'BuyOrder.Buyer.User', 'User', 'Deal')
                     ->where([['deal_id', $dealId], 
                       ['status', 'a'],
                       ['buy_order_id', $buy_order]])

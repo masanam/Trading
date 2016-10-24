@@ -20,8 +20,10 @@
         <h5 class="widget-user-desc">{{ buyer.industry }}</h5>
       </div>
       <div class="box-tools pull-right">
-        <span class="badge"><i class='fa fa-share-alt'></i> AFFILIATED</span>
-        <span class="badge"><i class='fa fa-tags'></i> TRADER</span>
+        <span class="badge" ng-if="buyer.is_affiliated==0"><i class='fa fa-share-alt'></i> NON-AFFILIATED</span>
+        <span class="badge" ng-if="buyer.is_affiliated==1"><i class='fa fa-share-alt'></i> AFFILIATED</span>
+        <span class="badge" ng-if="buyer.is_trader==0"><i class='fa fa-tags'></i> END-USER</span>
+        <span class="badge" ng-if="buyer.is_trader==1"><i class='fa fa-tags'></i> TRADER</span>
       </div>
       <div class="widget-user-image">
         <img class="img-circle" src="/images/default.jpg" alt="User Avatar">
@@ -59,7 +61,7 @@
               <tr><td>Latitude:</td><td>{{ buyer.latitude }}</td></tr>
               <tr><td>Longitude:</td><td>{{ buyer.longitude }}</td></tr>
               <tr><td>Industry:</td><td>{{ buyer.industry }}</td></tr>
-              <tr><td>Annual Demand:</td><td>{{ buyer.annual_demand }}</td></tr>
+              <tr><td>Annual Demand:</td><td>{{ buyer.annual_demand }} <span class='badge badger-danger'>Million Ton</span></td></tr>
               <tr><td>Preferred Trading Term:</td><td>{{ buyer.preferred_trading_term }}</td></tr>
               <tr><td>Preferred Payment Term:</td><td>{{ buyer.preferred_payment_term }}</td></tr>
               <tr><td>Phone:</td><td>{{ buyer.phone }}</td></tr>
