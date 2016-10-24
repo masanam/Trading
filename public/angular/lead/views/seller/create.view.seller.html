@@ -3,7 +3,16 @@
   <h4 class="modal-title">Create Supplier</h4>
 </div>
 <div class="modal-body" ng-init="init()">
-  <form role="form" ng-submit="createSeller()">
+  <form role="form" ng-submit="createSeller()" ng-show="!success">
     <div ng-include="'/angular/lead/views/seller/form.view.html'"></div>
   </form>
+  <div class="alert bg-green" ng-show="success">
+    <strong>Success creating Seller!</strong>
+    <p>Please wait you will be directed to next step.</p>
+    <div class="progress">
+	    <div class="progress-bar" role="progressbar" aria-valuenow="{{progress}}" aria-valuemin="0" aria-valuemax="100" style="width:{{progress}}%">
+	      {{progress}}%
+	    </div>
+	  </div>
+  </div>
 </div>

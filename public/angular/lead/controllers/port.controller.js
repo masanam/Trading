@@ -111,7 +111,7 @@ angular.module('port').controller('PortController', ['$scope', '$stateParams', '
 
 
 
-angular.module('port').controller('PortModalController', function ($scope, $stateParams, $uibModalInstance, Port) {
+angular.module('port').controller('PortModalController', function ($scope, $stateParams, $uibModalInstance, $interval, Port) {
 
   $scope.init = function(type){
     $scope.port = new Port();
@@ -165,7 +165,17 @@ angular.module('port').controller('PortModalController', function ($scope, $stat
       $scope.buyer_port.buyer_id = $stateParams.id;
       $scope.buyer_port.port_id = res.id;
       $scope.buyer_port.$save({ type: 'buyer', action: 'store' }, function(res) {
-        $uibModalInstance.close('success');
+        $scope.progress = 0;
+        $scope.success = true;
+        var stop = $interval(function() {
+          if ($scope.progress >= 0 && $scope.progress < 100) {
+            $scope.progress++;
+          } else {
+            $interval.cancel(stop);
+            stop = undefined;
+            $uibModalInstance.close('success');
+          }
+        }, 75);
       });
     });
   };
@@ -191,7 +201,17 @@ angular.module('port').controller('PortModalController', function ($scope, $stat
       $scope.seller_port.seller_id = $stateParams.id;
       $scope.seller_port.port_id = res.id;
       $scope.seller_port.$save({ type: 'seller', action: 'store' }, function(res) {
-        $uibModalInstance.close('success');
+        $scope.progress = 0;
+        $scope.success = true;
+        var stop = $interval(function() {
+          if ($scope.progress >= 0 && $scope.progress < 100) {
+            $scope.progress++;
+          } else {
+            $interval.cancel(stop);
+            stop = undefined;
+            $uibModalInstance.close('success');
+          }
+        }, 75);
       });
     });
   };

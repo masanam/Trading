@@ -266,16 +266,27 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
 ]);
 
 //controller Create Buyer Modal
-angular.module('deal').controller('BuyerModalController', function ($scope, $uibModalInstance, Buyer, $location) {
+angular.module('deal').controller('BuyerModalController', function ($scope, $uibModalInstance, $timeout, $interval, Buyer, $location) {
   
   $scope.create = function(createBuyer) {
     $scope.loading = true;
-
     var buyer = new Buyer($scope.buyer);
 
     buyer.$save(function(response) {
-      $location.path('lead/buyer/'+response.id+'/setup-product').search({ new: 'true' });
-      $uibModalInstance.close('success');
+      $scope.progress = 0;
+      $scope.success = true;
+      var stop = $interval(function() {
+        if ($scope.progress >= 0 && $scope.progress < 100) {
+          $scope.progress++;
+        } else {
+          $interval.cancel(stop);
+          stop = undefined;
+          $location.path('lead/buyer/'+response.id+'/setup-product').search({ new: 'true' });
+          $uibModalInstance.close();
+        }
+      }, 75);
+      // $location.path('lead/buyer/'+response.id+'/setup-product').search({ new: 'true' });
+      // $uibModalInstance.close('success');
       $scope.loading = false;
     });
   };
@@ -327,23 +338,31 @@ angular.module('buyer').controller('CreateContactModalFormBuyerController', func
   };
 });
 
-angular.module('buyer').controller('CreateProductModalFromBuyerController', function ($scope, $filter, $uibModalInstance, Product, Authentication, $location, $stateParams) {
+angular.module('buyer').controller('CreateProductModalFromBuyerController', function ($scope, $filter, $uibModalInstance, $interval, Product, Authentication, $location, $stateParams) {
   
   $scope.product = new Product();
   
   $scope.createProduct= function(){
     
-    $scope.success = $scope.error = null;
+    // $scope.success = $scope.error = null;
     //$scope.product.license_expired_date = $filter('date')($scope.product.license_expired_date, 'yyyy-MM-dd');
 
     var product = $scope.product;
     product.buyer_id = $scope.buyer.id;
-    
     product.$save(function (response) {
       $scope.product = response;
-      $location.path('lead/port/buyer/'+$stateParams.id).search({ new: $scope.new });
-      $scope.close();
+      $scope.progress = 0;
       $scope.success = true;
+      var stop = $interval(function() {
+        if ($scope.progress >= 0 && $scope.progress < 100) {
+          $scope.progress++;
+        } else {
+          $interval.cancel(stop);
+          stop = undefined;
+          $location.path('lead/port/buyer/'+$stateParams.id).search({ new: $scope.new });
+          $scope.close();
+        }
+      }, 75);
     }, function (response) {
       $scope.error = response.data.message;
     });

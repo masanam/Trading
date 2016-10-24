@@ -327,7 +327,7 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
   }
 ]);
 
-angular.module('seller').controller('CreateSellerModalController', function ($scope, $filter, $location, $uibModalInstance, Seller) {
+angular.module('seller').controller('CreateSellerModalController', function ($scope, $filter, $location, $uibModalInstance, $interval, Seller) {
   
   $scope.initializeOrder = function(){
     $scope.seller = {
@@ -351,8 +351,18 @@ angular.module('seller').controller('CreateSellerModalController', function ($sc
     var seller = new Seller($scope.seller);
 
     seller.$save(function(response) {
-      $location.path('lead/seller/setup-concession-seller/'+response.id).search({ new: 'true' });
-      $uibModalInstance.close('success');
+      $scope.progress = 0;
+      $scope.success = true;
+      var stop = $interval(function() {
+        if ($scope.progress >= 0 && $scope.progress < 100) {
+          $scope.progress++;
+        } else {
+          $interval.cancel(stop);
+          stop = undefined;
+          $location.path('lead/seller/setup-concession-seller/'+response.id).search({ new: 'true' });
+          $uibModalInstance.close('success');
+        }
+      }, 75);
       $scope.loading=false;
     });
   };
@@ -404,7 +414,7 @@ angular.module('seller').controller('CreateContactModalFromSellerController', fu
   };
 });
 
-angular.module('seller').controller('CreateProductModalFromSellerController', function ($scope, $location, $stateParams, $filter, $uibModalInstance, Product, Authentication) {
+angular.module('seller').controller('CreateProductModalFromSellerController', function ($scope, $location, $stateParams, $filter, $uibModalInstance, $interval, Product, Authentication) {
   
   $scope.product = new Product();
     
@@ -418,9 +428,18 @@ angular.module('seller').controller('CreateProductModalFromSellerController', fu
     
     product.$save(function (response) {
       $scope.product = response;
-      $location.path('lead/port/seller/'+$stateParams.id).search({ new: $scope.new });
-      $uibModalInstance.close('success');
+      $scope.progress = 0;
       $scope.success = true;
+      var stop = $interval(function() {
+        if ($scope.progress >= 0 && $scope.progress < 100) {
+          $scope.progress++;
+        } else {
+          $interval.cancel(stop);
+          stop = undefined;
+          $location.path('lead/port/seller/'+$stateParams.id).search({ new: $scope.new });
+          $uibModalInstance.close('success');
+        }
+      }, 75);
     }, function (response) {
       $scope.error = response.data.message;
     });

@@ -16,6 +16,6 @@ class BuyerPort extends Model
     }
 
     public function Port() {
-        return $this->hasMany('App\Model\Port', 'id', 'port_id');
+        return $this->hasOne('App\Model\Port', 'id', 'port_id');
     }
 }

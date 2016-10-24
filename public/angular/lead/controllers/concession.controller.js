@@ -228,9 +228,18 @@ angular.module('concession').controller('ConcessionModalController', function ($
     var concession = $scope.concession;
     
     concession.$save(function (response) {
-      $location.path('lead/seller/'+$stateParams.id+'/setup-product').search({ new: $scope.new });
-      $uibModalInstance.close('success');
+      $scope.progress = 0;
       $scope.success = true;
+      var stop = $interval(function() {
+        if ($scope.progress >= 0 && $scope.progress < 100) {
+          $scope.progress++;
+        } else {
+          $interval.cancel(stop);
+          stop = undefined;
+          $location.path('lead/seller/'+$stateParams.id+'/setup-product').search({ new: $scope.new });
+          $uibModalInstance.close('success');
+        }
+      }, 75);
     }, function (response) {
       $uibModalInstance.dismiss('cancel');
       $scope.error = response.data.message;
