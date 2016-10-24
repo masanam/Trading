@@ -62,7 +62,7 @@
 </div>
 
 <div class="form-group">
-  <label for="headquarter_location">Total Annual Sales*:</label>
+  <label for="headquarter_location">Total Annual Sales (Million USD)*:</label>
   <input name="total_annual_sales" type="number" class="form-control" id="total_annual_sales" ng-model="seller.total_annual_sales" required>
 </div>
 
@@ -84,7 +84,10 @@
 
 <div class="form-group">
   <label for="headquarter_location">Preferred Payment Term*:</label>
-  <input name="preferred_payment_term" type="text" class="form-control" id="preferred_payment_term" ng-model="seller.preferred_payment_term" required>
+  <select name="preferred_payment_term" id="preferred_payment_term" class="form-control"
+      ng-model="seller.preferred_payment_term">
+      <option ng-repeat="option in data.availableOptions" value="{{option.id}}">{{option.name}}</option>
+  </select>
 </div>
 
 <div class="form-group">
