@@ -51,8 +51,8 @@ class BuyOrderController extends Controller
 
         $buy_order->order_date = date('Y-m-d',strtotime($request->order_date));
         $buy_order->order_deadline = date('Y-m-d',strtotime($request->order_deadline));
-        $buy_order->ready_date = date('Y-m-d',strtotime($request->ready_date);
-        $buy_order->expired_date = date('Y-m-d',strtotime($request->expired_date);
+        $buy_order->ready_date = date('Y-m-d',strtotime($request->ready_date));
+        $buy_order->expired_date = date('Y-m-d',strtotime($request->expired_date));
 
         $buy_order->address = $request->address;
         $buy_order->city = $request->city;
@@ -181,8 +181,8 @@ class BuyOrderController extends Controller
 
         $buy_order->order_date = date('Y-m-d',strtotime($request->order_date));
         $buy_order->order_deadline = date('Y-m-d',strtotime($request->order_deadline));
-        $buy_order->ready_date = date('Y-m-d',strtotime($request->ready_date);
-        $buy_order->expired_date = date('Y-m-d',strtotime($request->expired_date);
+        $buy_order->ready_date = date('Y-m-d',strtotime($request->ready_date));
+        $buy_order->expired_date = date('Y-m-d',strtotime($request->expired_date));
 
         $buy_order->address = $request->address;
         $buy_order->city = $request->city;
