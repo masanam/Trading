@@ -41,6 +41,10 @@ angular.module('port').controller('PortController', ['$scope', '$stateParams', '
       });
     };
 
+    $scope.nextToFinish= function(){
+      $location.path('lead/buyer/'+$stateParams.id);
+    };
+
 
     $scope.openModalAvailableBuyer = function () {
       var modalInstance = $uibModal.open({
