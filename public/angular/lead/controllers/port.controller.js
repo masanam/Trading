@@ -8,11 +8,14 @@ angular.module('port').controller('PortController', ['$scope', '$stateParams', '
       $scope.buyer_port = new Port();
       $scope.ports=[];
       $scope.port={};
+      $scope.selectedPort = {};
       $scope.new = $location.search().new;
     };
 
     $scope.findAllPorts = function(){
-      $scope.ports = Port.query();
+      $scope.ports = Port.query({}, {}, function(){
+        $scope.port.selected = $scope.ports[$scope.ports.length-1];
+      });
     };
 
     $scope.findMyPortsBuyer = function(){
@@ -41,10 +44,21 @@ angular.module('port').controller('PortController', ['$scope', '$stateParams', '
       });
     };
 
-    $scope.nextToFinish= function(){
-      $location.path('lead/buyer/'+$stateParams.id);
+    $scope.finishBuyer= function(){
+      if ($scope.port.selected) {
+        $location.path('lead/buyer/'+$stateParams.id);
+      }else{
+        $scope.error = 'Please Select A Port or Create New port';
+      }
     };
 
+    $scope.finishSeller= function(){
+      if ($scope.port.selected) {
+        $location.path('lead/seller/'+$stateParams.id);
+      }else{
+        $scope.error = 'Please Select A Port or Create New port';
+      }
+    };
 
     $scope.openModalAvailableBuyer = function () {
       var modalInstance = $uibModal.open({
@@ -89,9 +103,10 @@ angular.module('port').controller('PortModalController', function ($scope, $stat
     $scope.type = type;
   };
 
-  $scope.findAllPorts = function(){
+  /*$scope.findAllPorts = function(){
     $scope.ports = Port.query();
-  };
+    $scope.port.selected = $scope.ports[0] ;
+  };*/
 
   $scope.saveAvailableBuyer = function(){
     $scope.buyer_port.buyer_id = $stateParams.id;
@@ -136,12 +151,14 @@ angular.module('port').controller('PortModalController', function ($scope, $stat
         var stop = $interval(function() {
           if ($scope.progress >= 0 && $scope.progress < 100) {
             $scope.progress++;
-            $location.path('lead/buyer/'+$stateParams.id);
+            $scope.selected = $scope.port.port_name ;
           } else {
             $interval.cancel(stop);
-            stop = undefined;
-            $scope.ports.push(res);
-            $scope.ports[$scope.ports.length-1].port = $scope.port;
+            //stop = undefined;
+            //$scope.ports.push(res);
+            //$scope.ports[$scope.ports.length-1].port = $scope.port;
+            $scope.selectedPort = res;
+            $scope.findAllPorts();
             $uibModalInstance.close('success');
           }
         }, 75);
@@ -177,7 +194,9 @@ angular.module('port').controller('PortModalController', function ($scope, $stat
             $scope.progress++;
           } else {
             $interval.cancel(stop);
-            stop = undefined;
+            //stop = undefined;
+            $scope.selectedPort = res;
+            $scope.findAllPorts();
             $uibModalInstance.close('success');
           }
         }, 75);
