@@ -40,7 +40,7 @@ class SellerController extends Controller
     public function search($search = false)
     {
         if (!$search) {
-            $seller = Seller::where('status', 'a')->get();
+            $seller = Seller::with('SellOrder')->where('status', 'a')->get();
         } else {
             $seller = Seller::where('status', 'a')->where('company_name', 'LIKE', '%'.$search.'%')->get();
         }

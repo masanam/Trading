@@ -23,7 +23,7 @@ class Buyer extends Model
     }
 
     public function BuyOrder() {
-    	return $this->hasMany('App\Model\BuyOrder');
+    	return $this->hasMany('App\Model\BuyOrder')->orderBy('order_date', 'desc');
     }
 
     public function Product() {

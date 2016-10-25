@@ -80,7 +80,7 @@ class BuySellOrderController extends Controller
                                     $query->select('company_name');
                                 }, 'BuyOrderPricing', 'User'
                             ])->get();
-        } else if($type == 'seller') {
+        }else if($type == 'seller') {
             $buy_sell_order = SellOrder::where('order_status', '!=', 'x')->where('seller_id', $id)
                             ->with([
                                 'Seller' => function ($query) {
