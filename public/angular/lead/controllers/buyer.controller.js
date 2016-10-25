@@ -7,6 +7,7 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
     $scope.demand = {};
     $scope.product = {};
     $scope.new = $location.search().new;
+    $scope.id = $stateParams.id;
 
     $scope.today = function() {
       $scope.dt = new Date();

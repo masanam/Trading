@@ -18,6 +18,7 @@ class CreateSellerPortTable extends Migration
             $table->integer('port_id')->unsigned();
             $table->integer('seller_id')->unsigned();
             $table->integer('distance');
+            $table->char('status', 1); // a = aktif , x = non aktif
             
             $table->timestamps();
         });

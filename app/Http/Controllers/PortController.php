@@ -30,13 +30,13 @@ class PortController extends Controller
 
     public function buyerMyPort($buyer_id)
     {
-        $port = BuyerPort::with('Port')->where('buyer_id', '=', $buyer_id)->get();
+        $port = BuyerPort::with('Port')->where('buyer_id', '=', $buyer_id)->where('status', '=', 'a')->get();
         return response()->json($port, 200);
     }
 
     public function sellerMyPort($seller_id)
     {
-        $port = SellerPort::with('Port')->where('seller_id', '=', $seller_id)->get();
+        $port = SellerPort::with('Port')->where('seller_id', '=', $seller_id)->where('status', '=', 'a')->get();
         return response()->json($port, 200);
     }
 
@@ -128,6 +128,7 @@ class PortController extends Controller
         $buyer_port->buyer_id = $request->buyer_id;
         $buyer_port->port_id = $request->port_id;
         $buyer_port->distance = $request->distance;
+        $buyer_port->status = 'a';
         $buyer_port->save();
 
         return response()->json($buyer_port, 200);
@@ -145,6 +146,7 @@ class PortController extends Controller
         $seller_port->seller_id = $request->seller_id;
         $seller_port->port_id = $request->port_id;
         $seller_port->distance = $request->distance;
+        $seller_port->status = 'a';
         $seller_port->save();
 
         return response()->json($seller_port, 200);

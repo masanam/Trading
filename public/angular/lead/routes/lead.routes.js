@@ -105,12 +105,12 @@ angular.module('lead').config(['$stateProvider', '$urlRouterProvider',
       })
       .state('lead.port-buyer', {
         url: '/port/buyer/{id}',
-        templateUrl: '/angular/lead/views/port/create-buyer-port.view.html',
+        templateUrl: '/angular/lead/views/port/buyer/index.view.html',
         roles: ['user', 'trader']
       })
       .state('lead.port-seller', {
         url: '/port/seller/{id}',
-        templateUrl: '/angular/lead/views/port/create-seller-port.view.html',
+        templateUrl: '/angular/lead/views/port/seller/index.view.html',
         roles: ['user', 'trader']
       })
 
@@ -149,6 +149,11 @@ angular.module('lead').config(['$stateProvider', '$urlRouterProvider',
         url: '/contact/{id}',
         templateUrl: '/angular/lead/views/contact/view.view.html',
         roles: ['user']
+      })
+      .state('lead.view-port', {
+        url: '/port/{id}/{portId}',
+        templateUrl: '/angular/lead/views/port/view.view.html',
+        roles: ['user', 'trader']
       })
       .state('lead.create', {
         url: '/create',

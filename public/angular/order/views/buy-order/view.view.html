@@ -16,16 +16,28 @@
       <h3 class="box-title">Buy Order</h3>
     </div>
     <div class="box-body">
-      <div class="form-group">
+      <div class="form-group row-fluid">
         <h1>{{ buy_order.buyer.company_name }}</h1>
         <label>Product Name : </label>
         <p>{{ buy_order.product_name }}</p>
         <label>Address : </label>
         <p>{{ buy_order.address }}</p>
-        <label>Order Date : </label>
-        <p>{{ buy_order.order_date }}</p>
-        <label>Deadline : </label>
-        <p>{{ buy_order.order_deadline }}</p>
+        <div class="col-xs-6" style="padding-left:0">
+          <label>City : </label>
+          <p>{{ buy_order.city }}</p>
+          <label>Order Date : </label>
+          <p>{{ buy_order.order_date }}</p>
+          <label>Deadline : </label>
+          <p>{{ buy_order.order_deadline }}</p>
+        </div>
+        <div class="col-xs-6" style="padding-left:0">
+          <label>Country : </label>
+          <p>{{ buy_order.country }}</p>
+          <label>Ready Date : </label>
+          <p>{{ buy_order.ready_date }}</p>
+          <label>Expired Date : </label>
+          <p>{{ buy_order.expired_date }}</p>
+        </div>
         <label>Penalty : </label>
         <p>{{ buy_order.penalty_desc }}</p>
       </div>

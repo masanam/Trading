@@ -16,17 +16,17 @@ angular.module('port').controller('PortController', ['$scope', '$stateParams', '
     };
 
     $scope.findMyPortsBuyer = function(){
-      $scope.ports = Port.query({ type: 'buyer', action: 'my', id:$stateParams.id });
+      $scope.ports = Port.query({ type: 'buyer', action: 'my', id: $stateParams.id });
     };
 
     $scope.findMyPortsSeller = function(){
-      $scope.ports = Port.query({ type: 'seller', action: 'my', id:$stateParams.id });
+      $scope.ports = Port.query({ type: 'seller', action: 'my', id: $stateParams.id });
     };
 
     $scope.openModalNewBuyer = function () {
       var modalInstance = $uibModal.open({
         windowClass: 'xl-modal',
-        templateUrl: './angular/lead/views/port/buyer-create.view.html',
+        templateUrl: './angular/lead/views/port/buyer/buyer-create.view.html',
         controller: 'PortModalController',
         scope: $scope
       });
@@ -35,7 +35,7 @@ angular.module('port').controller('PortController', ['$scope', '$stateParams', '
     $scope.openModalNewSeller = function () {
       var modalInstance = $uibModal.open({
         windowClass: 'xl-modal',
-        templateUrl: './angular/lead/views/port/seller-create.view.html',
+        templateUrl: './angular/lead/views/port/seller/seller-create.view.html',
         controller: 'PortModalController',
         scope: $scope
       });
@@ -49,7 +49,7 @@ angular.module('port').controller('PortController', ['$scope', '$stateParams', '
     $scope.openModalAvailableBuyer = function () {
       var modalInstance = $uibModal.open({
         windowClass: 'xl-modal',
-        templateUrl: './angular/lead/views/port/buyer-available.view.html',
+        templateUrl: './angular/lead/views/port/available/buyer-available.view.html',
         controller: 'PortModalController',
         scope: $scope
       });
@@ -58,7 +58,7 @@ angular.module('port').controller('PortController', ['$scope', '$stateParams', '
     $scope.openModalAvailableSeller = function () {
       var modalInstance = $uibModal.open({
         windowClass: 'xl-modal',
-        templateUrl: './angular/lead/views/port/seller-available.view.html',
+        templateUrl: './angular/lead/views/port/available/seller-available.view.html',
         controller: 'PortModalController',
         scope: $scope
       });
@@ -71,44 +71,6 @@ angular.module('port').controller('PortController', ['$scope', '$stateParams', '
     $scope.backToProductSeller= function(){
       $location.path('lead/seller/'+$stateParams.id+'/setup-product');
     };
-
-    // $scope.getSelected = function(index,port){
-    //   if (port.isSelected) {
-    //     // $count = $count + 1;
-    //     // $scope.buyer_ports.splice(index, 0, { port_id:port.id, buyer_id:$stateParams.id });
-    //     $scope.buyer_ports.splice(index, 0, port.id);
-    //     console.log($scope.buyer_ports);
-    //   }else{
-    //     $scope.i = $scope.buyer_ports.lastIndexOf(port.id);
-    //     $scope.buyer_ports.splice($scope.i, 1);
-    //     console.log($scope.buyer_ports);
-    //     // console.log(displayedCollection.length);
-    //   }
-    // };
-
-    // $scope.create = function() {
-    //   console.log($scope.buyer_port.distance);
-    //   for (var i = 0, len = buyer_ports.length; i < len; i++) {
-    //     $scope.buyer_port.buyer_id = $stateParams.id;
-    //     $scope.buyer_port.port_id = buyer_ports[i];
-    //   }
-      // console.log($scope.ports);
-      // $scope.ports.$save(
-      //   function(res) {
-      //     $scope.buyer_ports.port_id = res.id;
-      //     $scope.buyer_ports.buyer_id = $scope.id;
-      //     $scope.buyer_ports.$save({ type: 'buyer', action: 'store' });
-      //   }
-      // );
-    // };
-
-    // $scope.setSelected = function(port) {
-    //   $scope.buyer_ports.port_id = port.id;
-    //   $scope.buyer_ports.buyer_id = $stateParams.id;
-
-    //   console.log($scope.buyer_ports);
-    // };
-
 
   }
 ]);
