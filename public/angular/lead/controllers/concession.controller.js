@@ -115,7 +115,7 @@ angular.module('concession').controller('ConcessionController', ['$scope', '$htt
   }
 ]);
 
-angular.module('concession').controller('ConcessionModalController', function ($scope, $stateParams, $location, $uibModalInstance, $filter, Concession, NgMap) {
+angular.module('concession').controller('ConcessionModalController', function ($scope, $stateParams, $location, $uibModalInstance, $filter, Concession, NgMap, $interval) {
   
   $scope.init = function () {
     $scope.concession = new Concession();
