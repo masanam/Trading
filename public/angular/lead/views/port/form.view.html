@@ -64,12 +64,12 @@
   <input name="daily_discharge_rate" type="number" min="0" class="form-control" id="daily_discharge_rate" ng-model="port.daily_discharge_rate" required>
 </div>
 
-<div class="form-group" ng-hide="type!=='buyer'">
+<div class="form-group" ng-if="type==='buyer'">
   <label for="distance">Distance from Discharging port to Factory (KM):</label>
   <input name="distance" type="number" min="0" class="form-control" id="distance" ng-model="buyer_port.distance" required>
 </div>
 
-<div class="form-group" ng-hide="type!=='seller'">
+<div class="form-group" ng-if="type==='seller'">
   <label for="distance">Distance from Discharging port to Factory (KM):</label>
   <input name="distance" type="number" min="0" class="form-control" id="distance" ng-model="seller_port.distance" required>
 </div>

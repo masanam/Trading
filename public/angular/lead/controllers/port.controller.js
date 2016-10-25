@@ -144,7 +144,7 @@ angular.module('port').controller('PortModalController', function ($scope, $stat
   };
 
   $scope.savePortBuyer = function(){
-    console.log($scope.ports);
+    // console.log($scope.ports);
     var port = new Port({
       port_name: $scope.port.port_name,
       anchorage_distance: $scope.port.anchorage_distance,
@@ -161,7 +161,7 @@ angular.module('port').controller('PortModalController', function ($scope, $stat
       size: $scope.port.size
     });
     port.$save(function(res) {
-      $scope.ports.push(res);
+      $scope.port = res;
       $scope.buyer_port.buyer_id = $stateParams.id;
       $scope.buyer_port.port_id = res.id;
       $scope.buyer_port.$save({ type: 'buyer', action: 'store' }, function(res) {
@@ -173,6 +173,8 @@ angular.module('port').controller('PortModalController', function ($scope, $stat
           } else {
             $interval.cancel(stop);
             stop = undefined;
+            $scope.ports.push(res);
+            $scope.ports[$scope.ports.length-1].port = $scope.port;
             $uibModalInstance.close('success');
           }
         }, 75);
