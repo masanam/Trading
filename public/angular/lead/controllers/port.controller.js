@@ -115,7 +115,7 @@ angular.module('port').controller('PortController', ['$scope', '$stateParams', '
 
 
 
-angular.module('port').controller('PortModalController', function ($scope, $stateParams, $uibModalInstance, $interval, Port) {
+angular.module('port').controller('PortModalController', function ($scope, $stateParams, $uibModalInstance, $interval, Port, $location) {
 
   $scope.init = function(type){
     $scope.port = new Port();
@@ -174,6 +174,7 @@ angular.module('port').controller('PortModalController', function ($scope, $stat
         var stop = $interval(function() {
           if ($scope.progress >= 0 && $scope.progress < 100) {
             $scope.progress++;
+            $location.path('lead/buyer/'+$stateParams.id);
           } else {
             $interval.cancel(stop);
             stop = undefined;
