@@ -9,6 +9,7 @@ use Auth;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use App\Model\BuyOder;
 
 class BuyerController extends Controller
 {
@@ -38,7 +39,7 @@ class BuyerController extends Controller
      */
     public function search($q = false)
     {
-        $buyer = Buyer::where('status', 'a');
+        $buyer = Buyer::with('BuyOrder')->where('status', 'a');
         if ($q) $buyer->where('company_name', 'LIKE', '%'.$q.'%');
         $buyer = $buyer->get();
         return response()->json($buyer, 200);

@@ -24,7 +24,7 @@
             <th st-sort="email">Email</th>
             <th st-sort="phone">Phone</th>
             <th st-sort="web">Web</th>
-            <th st-sort="last_sell_order">Last Sell Order Date</th>
+            <th st-sort="sell_order[0].order_date">Last Sell Order Date</th>
             <th st-sort=""></th>
           </tr>
 
@@ -38,8 +38,8 @@
             <td>{{ seller.phone }}</td>
             <td><a href="{{seller.web}}">{{ seller.web }}</a></td>
             <td>
-              <span ng-if="seller.last_order">{{ seller.last_order | convertToDate | date : 'd MMMM yy' }}</span>
-              <span ng-if="!seller.last_order">N/A</span>
+              <span ng-if="seller.sell_order">{{ seller.sell_order[0].order_date | convertToDate | date : 'd MMMM yy' }}</span>
+              <span ng-if="!seller.sell_order">N/A</span>
             </td>
             <!--td>
               <a ui-sref="seller.update({ id: seller.id })"><i class="glyphicon glyphicon-pencil"></i></a>

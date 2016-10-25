@@ -24,7 +24,7 @@ class Seller extends Model
     }
 
     public function SellOrder() {
-    	return $this->hasMany('App\Model\SellOrder');
+    	return $this->hasMany('App\Model\SellOrder')->orderBy('order_date', 'desc');
     }
 
     public function Product() {
