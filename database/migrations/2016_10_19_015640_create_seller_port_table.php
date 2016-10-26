@@ -26,6 +26,7 @@ class CreateSellerPortTable extends Migration
         Schema::table('seller_port', function (Blueprint $table) {
             $table->foreign('port_id')->references('id')->on('ports')->onDelete('cascade');
             $table->foreign('seller_id')->references('id')->on('sellers')->onDelete('cascade');
+            $table->unique(array('port_id', 'seller_id'));
         });    }
 
     /**
@@ -35,6 +36,6 @@ class CreateSellerPortTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('buyer_port');
+        Schema::dropIfExists('seller_port');
     }
 }

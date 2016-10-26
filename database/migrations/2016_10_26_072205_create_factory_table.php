@@ -23,8 +23,8 @@ class CreateFactoryTable extends Migration
             $table->string('country')->nullable();
             $table->decimal('latitude', 10, 8)->nullable();
             $table->decimal('longitude', 11, 8)->nullable();
-            $table->integer('size')->nullable();
-            $table->integer('consumption')->nullable();
+            $table->integer('size')->unsigned()->nullable();
+            $table->integer('consumption')->unsigned()->nullable();
             $table->integer('port_id')->nullable();
             $table->decimal('port_distance', 6, 2)->nullable();
             $table->char('status', 1); // A = Active , X = Deleted

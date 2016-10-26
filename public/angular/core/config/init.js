@@ -21,3 +21,4 @@ ApplicationConfiguration.registerModule('dashboard');
 ApplicationConfiguration.registerModule('chat');
 ApplicationConfiguration.registerModule('map');
 ApplicationConfiguration.registerModule('port');
+ApplicationConfiguration.registerModule('factory');

@@ -26,6 +26,7 @@ class CreateBuyerPortTable extends Migration
         Schema::table('buyer_port', function (Blueprint $table) {
             $table->foreign('port_id')->references('id')->on('ports')->onDelete('cascade');
             $table->foreign('buyer_id')->references('id')->on('buyers')->onDelete('cascade');
+            $table->unique(array('port_id', 'buyer_id'));
         });
     }
 

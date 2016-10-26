@@ -74,12 +74,15 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
       });
     };
 
-    $scope.nextToProduct= function(){
-      console.log($scope.buyer.selected);
-      $location.path('lead/buyer/'+$scope.buyer.selected.id+'/setup-product');
+    $scope.backToFactory = function(){
+      $location.path('lead/buyer/setup-factory/'+$stateParams.id);
     };
 
-    $scope.nexToPort= function(){
+    $scope.nextToFactory = function(){
+      $location.path('lead/buyer/setup-factory/'+$scope.buyer.selected.id);
+    };
+
+    $scope.nexToPort = function(){
       console.log($scope.product.selected);
       if ($scope.product.selected) {
         $location.path('lead/port/buyer/'+$stateParams.id);
@@ -288,7 +291,7 @@ angular.module('deal').controller('BuyerModalController', function ($scope, $uib
         } else {
           $interval.cancel(stop);
           stop = undefined;
-          $location.path('lead/buyer/'+response.id+'/setup-product').search({ new: 'true' });
+          $location.path('lead/buyer/setup-factory/'+response.id).search({ new: 'true' });
           $uibModalInstance.close();
         }
       }, 75);
