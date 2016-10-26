@@ -151,4 +151,40 @@ class PortController extends Controller
 
         return response()->json($seller_port, 200);
     }
+
+    public function changePortStatusBuyer($buyer_id, $status)
+    {
+        $buyer_port = BuyerPort::find($buyer_id);
+
+        if (!$buy_order) {
+            return response()->json([
+                'message' => 'Not found'
+            ] ,404);
+        }
+
+        if ($status) {
+          $buyer_port->status = $status;
+          $buyer_port->save();
+        }
+
+        return response()->json($buy_order, 200);
+    }
+
+    public function changePortStatusSeller($seller_id, $status)
+    {
+        $seller_port = SellerPort::find($seller_id);
+
+        if (!$seller_port) {
+            return response()->json([
+                'message' => 'Not found'
+            ] ,404);
+        }
+
+        if ($status) {
+          $seller_port->status = $status;
+          $seller_port->save();
+        }
+
+        return response()->json($buy_order, 200);
+    }
 }
