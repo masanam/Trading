@@ -152,11 +152,11 @@ class PortController extends Controller
         return response()->json($seller_port, 200);
     }
 
-    public function changePortStatusBuyer($buyer_id, $status)
+    public function changePortStatusBuyer($buyer_id, $port_id, $status)
     {
-        $buyer_port = BuyerPort::find($buyer_id);
+        $buyer_port = BuyerPort::where('buyer_id', '=', $buyer_id)->where('port_id', '=', $port_id)->first();
 
-        if (!$buy_order) {
+        if (!$buyer_port) {
             return response()->json([
                 'message' => 'Not found'
             ] ,404);
@@ -167,12 +167,12 @@ class PortController extends Controller
           $buyer_port->save();
         }
 
-        return response()->json($buy_order, 200);
+        return response()->json($buyer_port, 200);
     }
 
-    public function changePortStatusSeller($seller_id, $status)
+    public function changePortStatusSeller($seller_id, $port_id, $status)
     {
-        $seller_port = SellerPort::find($seller_id);
+        $seller_port = SellerPort::where('seller_id', '=', $seller_id)->where('port_id', '=', $port_id)->first();
 
         if (!$seller_port) {
             return response()->json([
@@ -185,6 +185,6 @@ class PortController extends Controller
           $seller_port->save();
         }
 
-        return response()->json($buy_order, 200);
+        return response()->json($seller_port, 200);
     }
 }

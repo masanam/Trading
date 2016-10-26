@@ -86,9 +86,10 @@ angular.module('port').controller('PortController', ['$scope', '$stateParams', '
       $location.path('lead/seller/'+$stateParams.id+'/setup-product');
     };
 
-    $scope.delete = function(port, status){
-      $scope.ports.splice($scope.buy_orders.indexOf(port), 1);
-      $scope.port = Order.get({ action: 'status', id: port.id, status: status });
+    //Delete a Buyer port at Detail Buyer
+    $scope.delete = function(port, status, type){
+      $scope.ports.splice($scope.ports.indexOf(port), 1);
+      $scope.port = Port.get({ type:type, action: 'status', id: $stateParams.id, portId:port.id , status: status });
     }
 
   }
