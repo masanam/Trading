@@ -90,7 +90,7 @@ angular.module('port').controller('PortController', ['$scope', '$stateParams', '
     $scope.delete = function(port, status, type){
       $scope.ports.splice($scope.ports.indexOf(port), 1);
       $scope.port = Port.get({ type:type, action: 'status', id: $stateParams.id, portId:port.id , status: status });
-    }
+    };
 
   }
 ]);
