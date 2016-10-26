@@ -6,7 +6,7 @@
     <section ng-include="'./angular/lead/views/search-bar.view.html'"></section>
     <div class="box">
       <div class="box-header with-border">
-        <h1 class="box-title" style="font-size: 25px">Create Sellers</h1>
+        <h1 class="box-title" style="font-size: 25px">Create Supplier</h1>
         <div class="box-tools pull-right">
           <button type="button" class="btn btn-success" ng-click="nextToConcession()">
             <i class="glyphicon glyphicon-arrow-right"></i> Next
@@ -18,9 +18,9 @@
           <label ng-show="error" class="alert bg-red" style="width:100%">{{error}}</label>
         </div>
   		  <div class="select-box" ng-init="findAllSellers()">
-          <label for="id">Seller Name :</label>
-          <ui-select ng-model="seller.selected" style="min-width: 300px;" title="Choose Seller Name" append-to-body="true">
-            <ui-select-match placeholder="Seller Name">{{ seller.selected.company_name }}</ui-select-match>
+          <label for="id">Supplier Name :</label>
+          <ui-select ng-model="seller.selected" style="min-width: 300px;" title="Choose Supplier Name" append-to-body="true">
+            <ui-select-match placeholder="Supplier Name">{{ seller.selected.company_name }}</ui-select-match>
             <ui-select-choices repeat="seller in sellers | propsFilter: {company_name: $select.search}">
               <div ng-bind-html="company_name | highlight: $select.search"></div>
               <small>
