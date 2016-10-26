@@ -238,7 +238,7 @@
                     
                     <!--<button type="button" ng-click="viewProduct({ id: product.id })" class="btn btn-info"><i class="glyphicon glyphicon-eye-open"></i></button>-->
                     <a ui-sref="lead.view-port({ id: id, portId: port.port.id })"><i class="glyphicon glyphicon-eye-open"></i></a>
-                    <a href="#" ng-click="deleteProduct(product)"><i class="glyphicon glyphicon-remove"></i></a>
+                    <a href="#" ng-click="delete(port.port, 'x')"><i class="glyphicon glyphicon-remove"></i></a>
                   </span></td>
                 </tr>
               </tbody>

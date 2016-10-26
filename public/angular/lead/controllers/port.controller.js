@@ -78,13 +78,18 @@ angular.module('port').controller('PortController', ['$scope', '$stateParams', '
       });
     };
 
-    $scope.backToProduct= function(){
+    $scope.backToProduct = function(){
       $location.path('lead/buyer/'+$stateParams.id+'/setup-product');
     };
 
-    $scope.backToProductSeller= function(){
+    $scope.backToProductSeller = function(){
       $location.path('lead/seller/'+$stateParams.id+'/setup-product');
     };
+
+    $scope.delete = function(port, status){
+      $scope.ports.splice($scope.buy_orders.indexOf(port), 1);
+      $scope.port = Order.get({ action: 'status', id: port.id, status: status });
+    }
 
   }
 ]);
