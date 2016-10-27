@@ -25,14 +25,14 @@ angular.module('factory').controller('FactoryModalController',
         }, 75);
       }, function (res) {
         $uibModalInstance.dismiss('cancel');
-        $scope.error = response.data.message;
+        $scope.error = res.data.message;
       });
       
     };
 
     $scope.close = function () {
-	    $uibModalInstance.dismiss('cancel');
-	  };
+      $uibModalInstance.dismiss('cancel');
+    };
     
   }
 );
