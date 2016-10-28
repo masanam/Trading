@@ -6,7 +6,7 @@ angular.module('factory').controller('SelectFactoryController', ['$scope', '$sta
     $scope.findMyFactorys = function() {
       $scope.factorys = Factory.query({ action: 'my', id: $stateParams.id }, function(factorys){
         if(factorys.length === 0){
-          $scope.openModalNewSeller();
+          $scope.openModal();
         }
       });
     };
