@@ -2,19 +2,15 @@
 
 namespace App\Model;
 
-use App\Model\Deal;
-use App\Model\Buyer;
-use App\Model\Seller;
-use App\Model\Contact;
-use App\Model\Activity;
+use Illuminate\Auth\Authenticatable;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Auth\Passwords\CanResetPassword;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
-use Laravel\Passport\HasApiTokens;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-
-class User extends Authenticatable
+class User extends Model implements AuthenticatableContract, CanResetPasswordContract
 {
-    use HasApiTokens, Notifiable;
+    use Authenticatable, CanResetPassword;
 
     /**
      * The attributes that are mass assignable.
