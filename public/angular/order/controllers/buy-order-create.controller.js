@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('order').controller('BuyOrderCreateController', ['$scope', '$filter', '$location', 'Buyer', 'Order', 'Product', 'NgMap',
-  function ($scope, $filter, $location, Buyer, Order, Product, NgMap) {
+angular.module('order').controller('BuyOrderCreateController', ['$scope', '$filter', '$location', 'Buyer', 'Order', 'Product', 'Port', 'NgMap',
+  function ($scope, $filter, $location, Buyer, Order, Product, Port, NgMap) {
   
     $scope.init = function(){
       $scope.state = 0;
@@ -77,13 +77,26 @@ angular.module('order').controller('BuyOrderCreateController', ['$scope', '$filt
       $scope.buyers = Buyer.query();
     };
 
+    //Port (Optional) init
+    $scope.findAllPorts = function() {
+      $scope.ports = Port.query();
+    };
+
     $scope.findAllProducts = function() {
       $scope.products = Product.query();
     };
 
-    // $scope.findAllPorts = function() {
-    //   $scope.ports = Port.query();
-    // };
+    //Selected Port attribut
+    $scope.selectedPort = function(id) {
+      Port.get({ id:id }, function(res){
+        $scope.order.port_id = res.id;
+        $scope.order.port_name = res.port_name;
+        $scope.order.port_daily_rate = res.daily_discharge_rate;
+        $scope.order.port_draft_height = res.draft_height;
+        $scope.order.port_latitude = parseFloat(res.latitude);
+        $scope.order.port_longitude = parseFloat(res.longitude);
+      });
+    };
 
     $scope.create = function() {
       $scope.order.order_date = $filter('date')($scope.order.order_date, 'yyyy-MM-dd');

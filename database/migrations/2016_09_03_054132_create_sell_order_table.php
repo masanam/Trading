@@ -20,15 +20,15 @@ class CreateSellOrderTable extends Migration
 
             $table->integer('seller_id')->unsigned();
 
-            $table->date('order_date');
-            $table->date('order_deadline');
+            $table->date('order_date')->nullable();
+            $table->date('order_deadline')->nullable();
             $table->date('ready_date')->nullable();
             $table->date('expired_date')->nullable();
 
             $table->integer('concession_id')->nullable(); //weak relation tempat dikirim
-            $table->string('address');
-            $table->string('city');
-            $table->string('country');
+            $table->string('address')->nullable();
+            $table->string('city')->nullable();
+            $table->string('country')->nullable();
             $table->decimal('latitude', 10, 8)->nullable();
             $table->decimal('longitude', 11, 8)->nullable();
             $table->integer('port_distance')->nullable();
@@ -88,13 +88,13 @@ class CreateSellOrderTable extends Migration
             $table->integer('size_reject')->nullable();
             $table->integer('size_bonus')->nullable();
 
-            $table->integer('volume');
-            $table->integer('min_price');
+            $table->integer('volume')->nullable();
+            $table->integer('min_price')->nullable();
             $table->string('trading_term')->nullable();
             $table->string('payment_terms')->nullable();
-            $table->longText('commercial_term');
-            $table->longText('penalty_desc');
-            $table->char('order_status', 1); // open(o), progress(p), finish(f), cancel(c) 
+            $table->longText('commercial_term')->nullable();
+            $table->longText('penalty_desc')->nullable();
+            $table->char('order_status', 1); // customer(1), concession(2), product(3), port(4), lead(l), open(o), staged(s), finish(f), cancel(c), deleted(x)
             $table->char('progress_status', 1)->nullable();
             
             $table->timestamps();

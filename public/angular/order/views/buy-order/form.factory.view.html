@@ -1,6 +1,6 @@
 <div class="form-group">
   <label for="factory_name">Name of Factory*:</label>
-  <input type="text" class="form-control" id="factory_name" ng-model="factory.factory_name" required>
+  <input type="text" class="form-control" id="factory_name" ng-model="factory.factory_name" placeholder="Example: Pabrik A" required>
 </div>
 
 <div class="form-group">
@@ -36,16 +36,6 @@
 <div class="form-group">
   <label for="size">Size of Factory (Ha):</label>
   <input type="number" min="0" class="form-control" id="size" ng-model="factory.size">
-</div>
-
-<div class="form-group">
-  <label>Port Location</label>
-  <div class="input-group col-md-12" style="margin-bottom: 5px;">
-    <span class="input-group-addon" style="width: 200px;">Name</span>
-    <input type="text" class="form-control" id="port_name" ng-model="factory.port_name" required>
-    <span class="input-group-addon" style="width: 200px;">Distance (km)</span>
-    <input type="number" min="0" step="any" class="form-control" id="port_distance" ng-model="factory.port_distance" required>
-  </div>
 </div>
 
 <div class="form-group">

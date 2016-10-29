@@ -153,6 +153,10 @@ class FactoryController extends Controller
     public function findMyFactory($id)
     {
         $factory = Factory::where('status', 'a')->where('buyer_id', $id)->get();
+        foreach ($factory as $fac) {
+            $fac->latitude = floatval($fac->latitude);
+            $fac->longitude = floatval($fac->longitude);
+        }
 
         return response()->json($factory, 200);
     }

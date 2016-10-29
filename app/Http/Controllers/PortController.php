@@ -25,6 +25,10 @@ class PortController extends Controller
     public function index()
     {
         $port = Port::get();
+        foreach ($port as $temp) {
+            $temp->latitude = floatval($temp->latitude);
+            $temp->longitude = floatval($temp->longitude);
+        }
         return response()->json($port, 200);
     }
 
