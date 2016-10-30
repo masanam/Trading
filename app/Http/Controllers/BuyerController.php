@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Model\BuyOder;
 
+use App\Events\InputEditCoalpedia;
+
 class BuyerController extends Controller
 {
     public function __construct() {
@@ -60,7 +62,7 @@ class BuyerController extends Controller
         }
 
         $buyer = new Buyer();
-        $buyer->user_id = Auth::User()->id;
+        $buyer->user_id = Auth::user()->id;
         $buyer->company_name = $request->company_name;
         $buyer->is_trader = $request->is_trader;
         $buyer->is_affiliated = $request->is_affiliated;
@@ -79,6 +81,8 @@ class BuyerController extends Controller
         $buyer->description = $request->description;
         $buyer->status = 'a';
         $buyer->save();
+
+        event(new InputEditCoalpedia(Auth::user(), $buyer->id, 'buyers', 'create'));
 
         return response()->json($buyer, 200);
     }
@@ -143,6 +147,8 @@ class BuyerController extends Controller
         $buyer->description = $request->description;
         $buyer->status = $request->status;
         $buyer->save();
+
+        event(new InputEditCoalpedia(Auth::user(), $buyer->id, 'buyers', 'update'));
 
         return response()->json($buyer, 200);
     }

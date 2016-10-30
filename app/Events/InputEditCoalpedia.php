@@ -22,13 +22,13 @@ class InputEditCoalpedia
      *
      * @return void
      */
-    public function __construct($user, $entry, $entry_category, $action)
+    public function __construct($user, $entity_id, $table, $action)
     {
         $this->user = $user;
-        $this->entry = $entry;
-        $this->entry_category = $entry_category;
+        $this->table = $table;
+        $this->entity_id = $entity_id;
         $this->action = $action;
-    // }
+    }
 
     /**
      * Get the channels the event should broadcast on.

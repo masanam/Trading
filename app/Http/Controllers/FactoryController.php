@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
+use App\Events\InputEditCoalpedia;
+
 use Illuminate\Support\Facades\DB;
 
 class FactoryController extends Controller
@@ -59,6 +61,8 @@ class FactoryController extends Controller
         $factory->port_distance = $request->port_distance;
         $factory->status = 'a';
         $factory->save();
+
+        event(new InputEditCoalpedia(Auth::user(), $factory->id, 'factory', 'create'));
 
         return response()->json($factory, 200);
     }
@@ -117,6 +121,8 @@ class FactoryController extends Controller
         $factory->port_distance = $request->port_distance;
 
         $factory->save();
+
+        event(new InputEditCoalpedia(Auth::user(), $factory->id, 'factory', 'update'));
 
         return response()->json($factory, 200);
     }
