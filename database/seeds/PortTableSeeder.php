@@ -12,7 +12,7 @@ class PortTableSeeder extends Seeder
      */
     public function run()
     {
-    	Port::create(['port_name' => 'Jetty Indexim', 'owner' => 'Indexim', 'is_private' => 1, 'location' => 'Kaliorang', 'size' => 0, 'river_capacity' => 0, 'latitude' => 0.8827427, 'longitude' => 117.81001, 'anchorage_distance' => 0, 'has_conveyor' => 0, 'has_crusher' => 0, 'has_blending' => 1, 'draft_height' => 0]);
+    	Port::create(['port_name' => 'Jetty Indexim', 'owner' => 'Indexim', 'is_private' => 1, 'location' => 'Kaliorang', 'size' => 0, 'river_capacity' => 0, 'latitude' => 0.8827427, 'longitude' => 117.81001, 'anchorage_distance' => 0, 'has_conveyor' => 0, 'has_crusher' => 0, 'has_blending' => 1, 'draft_height' => 222222, 'daily_discharge_rate'=>11111]);
 			Port::create(['port_name' => 'Berau Coal, PT', 'owner' => 'Kalimantan Timur', 'is_private' => 1, 'location' => 'Sungai Segah', 'size' => 0, 'river_capacity' => 0, 'latitude' => 2.156904, 'longitude' => 117.4911258, 'anchorage_distance' => 0, 'has_conveyor' => 0, 'has_crusher' => 0, 'has_blending' => 0, 'draft_height' => 0]);
 			Port::create(['port_name' => 'Jetty MAS', 'owner' => 'MAS', 'is_private' => 1, 'location' => 'Sungai Segah', 'size' => 0, 'river_capacity' => 0, 'latitude' => 2.156904, 'longitude' => 117.4911258, 'anchorage_distance' => 0, 'has_conveyor' => 0, 'has_crusher' => 0, 'has_blending' => 1, 'draft_height' => 0]);
 			Port::create(['port_name' => 'Jetty BBE', 'owner' => 'BBE', 'is_private' => 1, 'location' => 'Kalimantan Timur', 'size' => 0, 'river_capacity' => 0, 'latitude' => 2.056904, 'longitude' => 118.4911258, 'anchorage_distance' => 0, 'has_conveyor' => 0, 'has_crusher' => 0, 'has_blending' => 1, 'draft_height' => 0]);

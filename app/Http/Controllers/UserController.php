@@ -7,6 +7,8 @@ use App\Model\User;
 use Illuminate\Http\Request;
 use Auth;
 
+use App\Events\EditUserProfile;
+
 use App\Http\Requests;
 
 class UserController extends Controller
@@ -101,6 +103,8 @@ class UserController extends Controller
             ] ,404);
         }
 
+        $lastImage = $user->image;
+
         $user->name = $request->name;
         $user->image = $request->image;
         $user->title = $request->title;
@@ -113,6 +117,14 @@ class UserController extends Controller
         $user->status = 'a';
 
         $user->save();
+
+        // if the new photo url is not the same with the old one, they've changed their photo
+        if($lastImage != $user->image) {
+            event(new EditUserProfile($user, 'photo'));
+        }
+
+        // regardless of whether they change the photo or not, they still change the profile
+        event(new EditUserProfile($user, 'edit'));
 
         return response()->json($user, 200);
     }

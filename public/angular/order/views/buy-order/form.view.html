@@ -58,27 +58,17 @@
             </div>
           </div>
 
-          <div class="form-group">
-            <label for="port_distance">Port Distance :</label>
-            <input type="number" class="form-control" id="port_distance" ng-model="order.port_distance" min="0"  required>
-          </div>
-
-          <div class="form-group">
-            <label for="port_id">Port Id (optional):</label>
-            <input type="number" class="form-control" id="port_id" ng-model="order.port_id" min="0" >
+          <div class="form-group" ng-init="findAllPorts()">
+            <label for="port_id">Port (optional):</label>
+            <select class="form-control" id="port" ng-model="order.port_id" ng-change="selectedPort(order.port_id)">
+              <option value=""></option>
+              <option ng-repeat="port in ports | orderBy : 'port_name'" value="{{ port.id }}">{{ port.port_name }}</option>
+            </select>
           </div>
 
           <div class="form-group">
             <label for="port_name">Port Name :</label>
             <input type="text" class="form-control" id="port_name" ng-model="order.port_name" required>
-          </div>
-
-          <div class="form-group">
-            <label for="port_status">Port Status :</label>
-            <select class="form-control" id="port_status" ng-model="order.port_status" required>
-              <option value="public">Public</option>
-              <option value="private">Private</option>
-            </select>
           </div>
 
           <div class="form-group">
@@ -97,6 +87,20 @@
             <span class="input-group-addon">Port Longitude</span>
             <input type="number" class="form-control" placeholder="Port Longitude" ng-model="order.port_longitude" min="-180" max="180" step="any" required>
           </div>
+
+          <div class="form-group">
+            <label for="port_status">Port Status :</label>
+            <select class="form-control" id="port_status" ng-model="order.port_status" required>
+              <option value="public">Public</option>
+              <option value="private">Private</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="port_distance">Port Distance :</label>
+            <input type="number" class="form-control" id="port_distance" ng-model="order.port_distance" min="0"  required>
+          </div>
+
         </div>
         <div ng-show="state == 1">
           <div class="alert alert-danger" ng-show="error">

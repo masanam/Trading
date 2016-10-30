@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('factory').controller('FactoryController', ['$scope', '$stateParams', '$location', '$uibModal', 'Factory', '$window',
-  function($scope, $stateParams, $location, $uibModal, Factory, $window) {
+angular.module('factory').controller('FactoryController', ['$scope', '$stateParams', '$location', '$uibModal', 'Factory',
+  function($scope, $stateParams, $location, $uibModal, Factory) {
     $scope.factorys = [];
     $scope.factory = {};
     $scope.new = $location.search().new;

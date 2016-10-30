@@ -55,7 +55,23 @@ angular.module('order-history').config(['$stateProvider', '$urlRouterProvider',
       })
       .state('buy-order.create', {
         url: '/create',
-        templateUrl: '/angular/order/views/buy-order/form.view.html'
+        templateUrl: '/angular/order/views/buy-order/step.customer.view.html'
+      })
+      .state('buy-order.step-customer', {
+        url: '/create/customer/:order_id',
+        templateUrl: '/angular/order/views/buy-order/step.customer.view.html'
+      })
+      .state('buy-order.step-factory', {
+        url: '/create/factory/:id/:order_id',
+        templateUrl: '/angular/order/views/buy-order/step.factory.view.html'
+      })
+      .state('buy-order.step-product', {
+        url: '/create/product/:id/:order_id/:factory_id',
+        templateUrl: '/angular/order/views/buy-order/step.product.view.html'
+      })
+      .state('buy-order.step-port', {
+        url: '/create/port/:id/:order_id/:factory_id',
+        templateUrl: '/angular/order/views/buy-order/step.port.view.html'
       })
       .state('buy-order.view', {
         url: '/:id',

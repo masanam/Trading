@@ -6,7 +6,7 @@
     <section ng-include="'./angular/lead/views/search-bar.view.html'"></section>
     <div class="box box-info">
       <div class="box-header with-border">
-        <h1 class="box-title" style="font-size: 25px">Create Costumer</h1>
+        <h1 class="box-title" style="font-size: 25px">Create Customer</h1>
         <div class="box-tools pull-right">
           <button type="button" class="btn btn-danger" ui-sref="lead.buyer">
           <i class="glyphicon glyphicon-arrow-left"></i> Back
@@ -65,12 +65,12 @@
 
               <ul class="list-group list-group-unbordered" col-mg-4>
                 <li class="list-group-item">
-                  <b>Costumer Category</b>
+                  <b>Customer Category</b>
                   <span class="badge" ng-show="buyer.selected.is_trader===1"><i class='fa fa-share-alt'></i> TRADER</span>
                   <span class="badge" ng-show="buyer.selected.is_trader===0"><i class='fa fa-share-alt'></i> END USER</span>
                 </li>
                 <li class="list-group-item">
-                  <b>Costumer status </b>
+                  <b>Customer status </b>
                   <span class="badge" ng-show="buyer.selected.is_affiliated===1"><i class='fa fa-tags'></i> AFFILIATED</span>
                   <span class="badge" ng-show="buyer.selected.is_affiliated===0"><i class='fa fa-tags'></i> NON - AFFILIATED</span>
                 </li>

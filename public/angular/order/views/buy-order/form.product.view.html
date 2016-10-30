@@ -1,0 +1,225 @@
+<div class="form-group">
+  <label for="term">Product Name :</label>
+  <input type="text" class="form-control" id="product_name" nama="product_name" ng-model="product.product_name" required>
+</div>
+<div class="form-group">
+  <h2>Coal Quality</h2>
+  <table class="table table-striped">
+    <tr align="center">
+      <th>
+        Characteristics
+      </th>
+      <th>
+        Min
+      </th>
+      <th>
+        Max
+      </th>
+    </tr>
+    <tr>
+      <td>
+        Gross Caloric ARB
+      </td>
+      <td>
+        <input type="text" class="form-control" placeholder="kcal" ng-model="product.gcv_arb_min">
+      </td>
+      <td>
+        <input type="text" class="form-control" placeholder="kcal" ng-model="product.gcv_arb_max">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Gross Caloric ADB
+      </td>
+      <td>
+        <input type="text" class="form-control" placeholder="kcal" ng-model="product.gcv_adb_min">
+      </td>
+      <td>
+        <input type="text" class="form-control" placeholder="kcal" ng-model="product.gcv_adb_max">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Nett Caloric Value
+      </td>
+      <td>
+        <input type="text" class="form-control" placeholder="kcal" ng-model="product.ncv_min">
+      </td>
+      <td>
+        <input type="text" class="form-control" placeholder="kcal" ng-model="product.ncv_max">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Ash
+      </td>
+      <td>
+        <input type="text" class="form-control" placeholder="%" ng-model="product.ash_min">
+      </td>
+      <td>
+        <input type="text" class="form-control" placeholder="%" ng-model="product.ash_max">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Total Sulphur
+      </td>
+      <td>
+        <input type="text" class="form-control" placeholder="%" ng-model="product.ts_min">
+      </td>
+      <td>
+        <input type="text" class="form-control" placeholder="%" ng-model="product.ts_max">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Total Moisture
+      </td>
+      <td>
+        <input type="text" class="form-control" placeholder="%" ng-model="product.tm_min">
+      </td>
+      <td>
+        <input type="text" class="form-control" placeholder="%" ng-model="product.tm_max">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Inherent Moisture
+      </td>
+      <td>
+        <input type="text" class="form-control" placeholder="%" ng-model="product.im_min">
+      </td>
+      <td>
+        <input type="text" class="form-control" placeholder="%" ng-model="product.im_max">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Fixed Carbon
+      </td>
+      <td>
+        <input type="text" class="form-control" placeholder="%" ng-model="product.fc_min">
+      </td>
+      <td>
+        <input type="text" class="form-control" placeholder="%" ng-model="product.fc_max">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Volatile Matter
+      </td>
+      <td>
+        <input type="text" class="form-control" placeholder="%" ng-model="product.vm_min">
+      </td>
+      <td>
+        <input type="text" class="form-control" placeholder="%" ng-model="product.vm_max">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Hardness
+      </td>
+      <td>
+        <input type="text" class="form-control" placeholder="%" ng-model="product.hgi_min">
+      </td>
+      <td>
+        <input type="text" class="form-control" placeholder="%" ng-model="product.hgi_max">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Size
+      </td>
+      <td>
+        <input type="text" class="form-control" placeholder="%" ng-model="product.size_min">
+      </td>
+      <td>
+        <input type="text" class="form-control" placeholder="%" ng-model="product.size_max">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Fe2o3
+      </td>
+      <td>
+        <input type="text" class="form-control" placeholder="%" ng-model="product.fe203_min">
+      </td>
+      <td>
+        <input type="text" class="form-control" placeholder="%" ng-model="product.fe203_max">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        AFT
+      </td>
+      <td>
+        <input type="text" class="form-control" placeholder="&#176" ng-model="product.aft_min">
+      </td>
+      <td>
+        <input type="text" class="form-control" placeholder="&#176" ng-model="product.aft_max">
+      </td>
+    </tr>
+  </table>
+  
+  <label>Volume of Coal :</label>
+  <input type="text" class="form-control" placeholder="Tones" ng-model="product.volume" required>
+
+  <h2>Coal Reject</h2>
+  <table class="table table-striped">
+    <tr align="center">
+      <th>
+        Characteristics
+      </th>
+      <th>
+        Min
+      </th>
+      <th>
+        Max
+      </th>
+    </tr>
+    <tr>
+      <td>
+        Gross Caloric ARB
+      </td>
+      <td>
+        <input type="text" class="form-control" placeholder="kcal" ng-model="product.gcv_arb_reject">
+      </td>
+      <td>
+        <input type="text" class="form-control" placeholder="kcal" ng-model="product.gcv_arb_bonus">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Gross Caloric ADB
+      </td>
+      <td>
+        <input type="text" class="form-control" placeholder="kcal" ng-model="product.gcv_adb_reject">
+      </td>
+      <td>
+        <input type="text" class="form-control" placeholder="kcal" ng-model="product.gcv_adb_bonus">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Ash
+      </td>
+      <td>
+        <input type="text" class="form-control" placeholder="%" ng-model="product.ash_reject">
+      </td>
+      <td>
+        <input type="text" class="form-control" placeholder="%" ng-model="product.ash_bonus">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Total Sulphur
+      </td>
+      <td>
+        <input type="text" class="form-control" placeholder="%" ng-model="product.ts_reject">
+      </td>
+      <td>
+        <input type="text" class="form-control" placeholder="%" ng-model="product.ts_bonus">
+      </td>
+    </tr>
+  </table>
+</div>

@@ -20,7 +20,7 @@ angular.module('auth').config(['$stateProvider', '$urlRouterProvider',
       })
       .state('auth.forgot', {
         url: '/forgot',
-        templateUrl: '/angular/core/views/auth/signup.view.html'
+        templateUrl: '/angular/core/views/user/forgot-password.view.html'
       });
   }
 ]);
