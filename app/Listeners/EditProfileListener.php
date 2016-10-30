@@ -6,6 +6,9 @@ use App\Events\EditUserProfile;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
+use App\Model\User;
+use App\Model\Activity;
+
 class EditProfileListener
 {
     /**

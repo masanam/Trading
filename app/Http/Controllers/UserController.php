@@ -7,6 +7,8 @@ use App\Model\User;
 use Illuminate\Http\Request;
 use Auth;
 
+use App\Events\EditUserProfile;
+
 use App\Http\Requests;
 
 class UserController extends Controller
@@ -104,7 +106,7 @@ class UserController extends Controller
         $lastImage = $user->image;
 
         $user->name = $request->name;
-        $user->image = $request->image;
+        $user->image = 'http://www.goldenenergymines.com/images/mochtar.png';
         $user->title = $request->title;
         $user->email = $request->email;
         $user->phone = $request->phone;
