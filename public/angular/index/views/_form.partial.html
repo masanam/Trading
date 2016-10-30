@@ -1,0 +1,35 @@
+<fieldset>
+  <div class="form-group col-lg-12" show-errors>
+    <label for="index_provider">Provider</label>
+    <input name="index_provider" type="text" ng-model="index.index_provider" id="index_provider" class="form-control" placeholder="Provider" required>
+  </div>
+
+  <div class="form-group col-lg-12" show-errors>
+    <label for="index_name">Name</label>
+    <input name="index_name" type="text" ng-model="index.index_name" id="index_name" class="form-control" placeholder="Name" required>
+  </div>
+
+  <div class="form-group col-lg-12" show-errors>
+    <label for="quality">Quality</label>
+    <input name="quality" type="text" ng-model="index.quality" id="quality" class="form-control" placeholder="Quality of Resource" required>
+  </div>
+
+  <div show-errors>
+    <label for="frequency">Frequency</label>
+    <div class="btn-group">
+        <label class="btn btn-default" ng-model="index.frequency" uib-btn-radio="'m'">Monthly</label>
+        <label class="btn btn-default" ng-model="index.frequency" uib-btn-radio="'w'">Weekly</label>
+        <label class="btn btn-default" ng-model="index.frequency" uib-btn-radio="'d'">Daily</label>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="pull-right">
+    <input type="submit" class="btn btn-default">
+  </div>
+
+  <div ng-show="error" class="text-danger">
+    <strong>{{ error.message }}</strong>
+  </div>
+</fieldset>

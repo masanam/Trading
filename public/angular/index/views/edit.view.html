@@ -1,0 +1,8 @@
+<div class="box-header">
+  <h1>Edit Index</h1>
+</div>
+<div class="box-body" ng-init="findOne()">
+  <form name="articleForm" class="form-horizontal" ng-submit="update(articleForm.$valid)">
+    <section ng-static-include="'/angular/index/views/_form.partial.html'"></section>
+  </form>
+</div>
