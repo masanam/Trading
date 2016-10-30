@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateActivitiesTable extends Migration
+class CreateLoginUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,10 @@ class CreateActivitiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('activities', function (Blueprint $table) {
+        Schema::create('login_user', function (Blueprint $table) {
             $table->increments('id');
-
             $table->integer('user_id');
-            $table->string('action');
-            $table->string('table')->nullable();
-            $table->string('entity_id')->nullable();
-
+            $table->integer('num_login');
             $table->timestamps();
         });
     }
@@ -32,6 +28,6 @@ class CreateActivitiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('activities');
+        Schema::dropIfExists('login_user');
     }
 }

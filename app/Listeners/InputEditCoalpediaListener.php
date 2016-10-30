@@ -2,13 +2,12 @@
 
 namespace App\Listeners;
 
-use App\Events\MessageReceived;
+use App\Events\InputEditCoalpedia;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class EventListener implements ShouldQueue
+class InputEditCoalpediaListener
 {
-    use InteractsWithQueue;
     /**
      * Create the event listener.
      *
@@ -22,13 +21,11 @@ class EventListener implements ShouldQueue
     /**
      * Handle the event.
      *
-     * @param  SomeEvent  $event
+     * @param  InputEditCoalpedia  $event
      * @return void
      */
-    public function handle(MessageReceived $event)
+    public function handle(InputEditCoalpedia $event)
     {
-        if (true) {
-            $this->release(30);
-        }
+        //
     }
 }

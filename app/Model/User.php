@@ -47,6 +47,10 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public function Activity() {
         return $this->hasMany('Activity');
     }
+
+    public function LoginUser() {
+        return $this->hasMany('LoginUser');
+    }
     
     public function Deal() {
         return $this->hasMany('Deal');
