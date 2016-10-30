@@ -24,9 +24,11 @@ Route::group(['middleware' => ['cors']], function() {
     Route::post('signing', 'AuthenticateController@upload');
 
     //Coal Index Price API
-    Route::get('index', 'IndexController@index');
     Route::post('index/price', 'IndexController@price');
     Route::post('index/single-price', 'IndexController@singlePrice');
+    Route::get('index/single-date', 'IndexController@singleDate');
+    Route::get('index/{id}/price', 'IndexController@indexPrice');
+    Route::resource('index', 'IndexController');
 
     //User Management API
     Route::get('user/current', 'UserController@currentUser');
