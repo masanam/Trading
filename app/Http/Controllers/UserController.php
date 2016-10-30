@@ -106,7 +106,7 @@ class UserController extends Controller
         $lastImage = $user->image;
 
         $user->name = $request->name;
-        $user->image = 'http://www.goldenenergymines.com/images/mochtar.png';
+        $user->image = $request->image;
         $user->title = $request->title;
         $user->email = $request->email;
         $user->phone = $request->phone;
