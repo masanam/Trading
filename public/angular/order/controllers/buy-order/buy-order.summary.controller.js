@@ -3,7 +3,7 @@
 angular.module('order').controller('BuyOrderSummaryController', ['$scope', '$stateParams', '$location', '$uibModal', 'Port', 'Factory', 'Order',
   function($scope, $stateParams, $location, $uibModal, Port, Factory, Order) {
 
-    $scope.port = {};
+    $scope.buy_order = {};
     $scope.order_id = $stateParams.order_id;
     $scope.factory_id = $stateParams.factory_id;
 
@@ -12,15 +12,13 @@ angular.module('order').controller('BuyOrderSummaryController', ['$scope', '$sta
     $scope.findSummary = function(){
       $scope.buy_order = Order.get({ type: 'buy' , id: $stateParams.order_id },function(res){
         $scope.buy_order.order_date = new Date();
+        $scope.buy_order.order_deadline = new Date();
+        $scope.buy_order.ready_date = new Date();
+        $scope.buy_order.expired_date = new Date();
       });
     };
 
-    //selected port after create new
-    $scope.postCreatePorts = function(){
-      $scope.ports = Port.query({}, {}, function(){
-        $scope.port.selected = $scope.ports[$scope.ports.length-1];
-      });
-    };
+    
 
     $scope.today = function() {
       $scope.dt = new Date();
@@ -88,48 +86,56 @@ angular.module('order').controller('BuyOrderSummaryController', ['$scope', '$sta
     };
 
     //button next to summary page and update order update factory port
-    $scope.nextSummary = function(){
-      if($scope.port.distance) {
-        Factory.get({ id: $scope.factory_id }, function(res){
-          $scope.factory = res;
-          $scope.factory.port_id = $scope.port.selected.id;
-          $scope.factory.port_distance = $scope.port.distance;
-          $scope.factory.$update({ id: $scope.factory_id });
-        });
-        Order.get({ type: 'buy', id: $stateParams.order_id }, function(res){
-          $scope.order = res;
-          $scope.order.buyer_id = $stateParams.id;
-          $scope.order.port_distance = $scope.port.distance;
-          $scope.order.port_id = $scope.port.selected.id;
-          $scope.order.port_name = $scope.port.selected.port_name;
-          $scope.order.port_status = $scope.port.selected.is_private;
-          $scope.order.port_daily_rate = $scope.port.selected.daily_discharge_rate;
-          $scope.order.port_draft_height = $scope.port.selected.draft_height;
-          $scope.order.port_latitude = $scope.port.selected.latitude;
-          $scope.order.port_longitude = $scope.port.selected.longitude;
-          
-          $scope.order.order_status = 4;
-          
-          $scope.order.$update({ type: 'buy', id: $stateParams.order_id }, function(res) {
-            $location.path('buy-order/create/summary/'+$stateParams.id+'/'+$stateParams.order_id+'/'+$stateParams.factory_id);
-          });
-        });
+    $scope.finish = function(){
+      if(!$scope.buy_order.order_date) {
+        $scope.error = 'Please fill Order Date !';
+        return;
+      }if(!$scope.buy_order.order_deadline) {
+        $scope.error = 'Please fill Order Deadline !';
+        return;
       }
-      else{
-        $scope.error = 'Please fill Distance from Discharging Port to Factory !';
+      if(!$scope.buy_order.ready_date) {
+        $scope.error = 'Please fill Ready Date !';
+        return;
       }
+      if(!$scope.buy_order.expired_date) {
+        $scope.error = 'Please fill Expired Date !';
+        return;
+      }
+      if(!$scope.buy_order.max_price) {
+        $scope.error = 'Please fill Max Price !';
+        return;
+      }
+      if(!$scope.buy_order.trading_term) {
+        $scope.error = 'Please fill Buying Term !';
+        return;
+      }
+      if(!$scope.buy_order.payment_terms) {
+        $scope.error = 'Please fill Payment Terms !';
+        return;
+      }
+
+      $scope.error = null;
+      Order.get({ type: 'buy', id: $stateParams.order_id }, function(res){
+        $scope.order = res;
+        $scope.order.buyer_id = $stateParams.id;
+        $scope.order.order_date = $scope.buy_order.order_date;
+        $scope.order.order_deadline = $scope.buy_order.order_deadline;
+        $scope.order.ready_date = $scope.buy_order.ready_date;
+        $scope.order.expired_date = $scope.buy_order.expired_date;
+        $scope.order.max_price = $scope.buy_order.max_price;
+        $scope.order.trading_term = $scope.buy_order.trading_term;
+        $scope.order.payment_terms = $scope.buy_order.payment_terms;
+        $scope.order.penalty_desc = $scope.buy_order.penalty;
+        
+        $scope.order.order_status = 'l';
+        
+        $scope.order.$update({ type: 'buy', id: $stateParams.order_id }, function(res) {
+          $location.path('buy-order/'+res.id);
+        });
+      });
       
     };
     
-    //open modal create port
-    $scope.openModal = function () {
-      var modalInstance = $uibModal.open({
-        windowClass: 'xl-modal',
-        templateUrl: './angular/order/views/buy-order/modal.port.view.html',
-        controller: 'PortModalBuyOrderController',
-        scope: $scope
-      });
-    };
-
   }
 ]);
