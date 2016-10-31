@@ -5,7 +5,7 @@
       <i class="glyphicon glyphicon-arrow-left"></i> Back
     </button>
     <div class="pull-right">
-      <button type="button" class="btn btn-primary" ng-click="backToPort()">
+      <button type="button" class="btn btn-primary" ng-click="finish()">
         <i class="glyphicon glyphicon-arrow-right"></i> Finish
       </button>
     </div>
@@ -17,6 +17,9 @@
     </div>
     <div class="box-body">
       <div class="form-group row-fluid">
+        <div class="form-group">
+          <label ng-show="error" class="alert bg-red" style="width:100%">{{error}}</label>
+        </div>
         <h1>{{ buy_order.buyer.company_name }}</h1>
         <label>Product Name : </label>
         <p>{{ buy_order.product_name }}</p>
@@ -25,30 +28,55 @@
         <div class="col-xs-6" style="padding-left:0">
           <label>City : </label>
           <p>{{ buy_order.city }}</p>
+          <label>Volume of Coal : </label>
+          <p>{{ buy_order.volume }} Tones</p>
           <label>Order Date : </label>
-          <p class="input-group">
-            <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="buy_order.order_date" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
-            <span class="input-group-btn">
-              <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
-            </span>
-          </p>{{buy_order.order_date}}
+          <p class="form-inline">
+            <input type="date" class="form-control" ng-model="buy_order.order_date"/>
+          </p>
           <label>Deadline : </label>
-          <p>{{ buy_order.order_deadline }}</p>
-          <label>Trading Term : </label>
-          <p>{{ buy_order.trading_term | uppercase }}</p>
+          <p class="form-inline">
+            <input type="date" class="form-control" ng-model="buy_order.order_deadline"/>
+          </p>
+          <label>Buying Term : </label>
+          <p class="form-inline">
+            <select class="form-control" ng-model="buy_order.trading_term">
+              <option value="CNF">CNF</option>
+              <option value="CIF">CIF</option>
+              <option value="FAS">FAS</option>
+              <option value="FOB">FOB</option>
+              <option value="Franco">Franco</option>
+            </select>
+            <input type="text" class="form-control" ng-model="buy_order.trading_term" placeholder="Other" />
+          </p>
         </div>
         <div class="col-xs-6" style="padding-left:0">
           <label>Country : </label>
           <p>{{ buy_order.country }}</p>
+          <label>Max Price : </label>
+          <div class="input-group">
+            <span class="input-group-addon">$</span>
+            <input type="text" class="form-control" ng-model="buy_order.max_price">
+          </div>
           <label>Ready Date : </label>
-          <p>{{ buy_order.ready_date }}</p>
+          <p class="input-group">
+            <input type="date" class="form-control" ng-model="buy_order.ready_date"/>
+          </p>
           <label>Expired Date : </label>
-          <p>{{ buy_order.expired_date }}</p>
+          <p class="input-group">
+            <input type="date" class="form-control" ng-model="buy_order.expired_date"/>
+          </p>
           <label>Payment Terms : </label>
-          <p>{{ buy_order.payment_terms | uppercase }}</p>
+          <select class="form-control" ng-model="buy_order.payment_terms">
+            <option value="TT">TT</option>
+            <option value="LC on Sight">LC on Sight</option>
+            <option value="LC on 30 days">LC on 30 days</option>
+          </select>
         </div>
-        <label>Penalty : </label>
-        <p>{{ buy_order.penalty_desc }}</p>
+        <div class="col-xs-12" style="padding-left:0">
+          <label>Penalty : </label>
+          <textarea class="form-control" ng-model="buy_order.penalty"></textarea>
+        </div>
       </div>
     </div>
   </div>

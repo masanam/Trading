@@ -131,6 +131,11 @@ class BuyOrderController extends Controller
         $buyer = Buyer::find($request->buyer_id);
         $buy_order->buyer = $buyer;
 
+        $buy_order->order_date = $request->order_date;
+        $buy_order->order_deadline = $request->order_deadline;
+        $buy_order->ready_date = $request->ready_date;
+        $buy_order->expired_date = $request->expired_date;
+
         // $activity = $this->storeActivity($buy_order->buyer_id, 'create', 'BuyOrder', $buy_order->id);
 
         return response()->json($buy_order, 200);
@@ -144,9 +149,9 @@ class BuyOrderController extends Controller
      */
     public function show($id)
     {
-        $buy_order = BuyOrder::with('Buyer')->find($id);
+        $buy_order = BuyOrder::with('Buyer')->with('Port')->find($id);
 
-        if($buy_order->order_status == 'o' || $buy_order->order_status == 1 || $buy_order->order_status == 2 || $buy_order->order_status == 3 || $buy_order->order_status == 4) {
+        if($buy_order->order_status == 'o' || $buy_order->order_status == 1 || $buy_order->order_status == 2 || $buy_order->order_status == 3 || $buy_order->order_status == 4 || $buy_order->order_status == 'l') {
             return response()->json($buy_order, 200);
         }else {
             return response()->json(['message' => 'deactivated record'], 404);
@@ -257,6 +262,11 @@ class BuyOrderController extends Controller
         $buy_order->progress_status = $request->progress_status;
 
         $buy_order->save();
+
+        $buy_order->order_date = $request->order_date;
+        $buy_order->order_deadline = $request->order_deadline;
+        $buy_order->ready_date = $request->ready_date;
+        $buy_order->expired_date = $request->expired_date;
 
         return response()->json($buy_order, 200);
     }
