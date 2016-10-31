@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('chat').controller('ChatController', ['$scope', '$stateParams', 'Deal', 'OrderDeal', 'Authentication', '$location', '$stateParams', 'Chat',
-	function($scope, $stateParams, Deal, OrderDeal, Authentication, $location, $stateParams, Chat) {
+angular.module('chat').controller('ChatController', ['$scope', '$stateParams', 'Deal', 'OrderDeal', 'Authentication', '$location', 'Chat',
+	function($scope, $stateParams, Deal, OrderDeal, Authentication, $location, Chat) {
   $scope.deals = [];
 
   $scope.deal = {};
