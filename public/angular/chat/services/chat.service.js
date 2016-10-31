@@ -27,22 +27,22 @@ angular.module('chat').factory('Chat', ['firebase', '$firebaseArray', 'Authentic
       //   }
       // },
 
-      findChatByDeal: function(deal, callback) {
-        var path_chat = 'deal_chat/' + deal.id;
+      findChatByDeal: function(dealId, callback) {
+        var path_chat = 'deal_chat/' + dealId;
         var ref = mainApp.database().ref(path_chat);
         var chats = $firebaseArray(ref);
         return callback(chats);
       },
 
-      sendChat: function(deal, message) {
+      sendChat: function(dealId, message) {
         var chat = {
-          'deal_id': deal.id,
+          'deal_id': dealId,
           'user_id': Authentication.user.id,
           'author': Authentication.user.name,
           'message': message
         };
 
-        var key = mainApp.database().ref('deal_chat/'+deal.id).push(chat).key;
+        var key = mainApp.database().ref('deal_chat/'+dealId).push(chat).key;
       }
     };
   }

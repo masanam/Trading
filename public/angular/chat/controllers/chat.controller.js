@@ -1,12 +1,10 @@
 'use strict';
 
-angular.module('chat').controller('ChatController', ['$scope', 'Deal', 'OrderDeal', 'Authentication', '$location', '$stateParams', 'Chat',
-	function($scope, Deal, OrderDeal, Authentication, $location, $stateParams, Chat) {
+angular.module('chat').controller('ChatController', ['$scope', '$stateParams', 'Deal', 'OrderDeal', 'Authentication', '$location', '$stateParams', 'Chat',
+	function($scope, $stateParams, Deal, OrderDeal, Authentication, $location, $stateParams, Chat) {
   $scope.deals = [];
 
-  $scope.deal = {
-    id: 1,
-  };
+  $scope.deal = {};
 
   // TESTING
   $scope.chat = {};
@@ -25,10 +23,9 @@ angular.module('chat').controller('ChatController', ['$scope', 'Deal', 'OrderDea
   };
 
   $scope.findChatByDeal = function(type) {
-    Chat.findChatByDeal($scope.deal, function(res){
+    Chat.findChatByDeal($stateParams.dealId, function(res){
       $scope.chats = res;
     });
-    console.log($scope.chats);
   };
 
   $scope.findCurrentUser = function() {
@@ -38,7 +35,7 @@ angular.module('chat').controller('ChatController', ['$scope', 'Deal', 'OrderDea
 
   $scope.sendMessage = function(type) {
     var message = $scope.message;
-    $scope.chat.key = Chat.sendChat($scope.deal, message);
+    $scope.chat.key = Chat.sendChat($stateParams.dealId, message);
     
     $scope.initialize();
   };

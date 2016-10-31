@@ -11,8 +11,9 @@ angular.module('chat').config(['$stateProvider', '$urlRouterProvider',
         template: '<ui-view>'
       })
       .state('chat.index', {
-        url: '',
-        templateUrl: '/angular/chat/views/chat.view.html'
+        url: '/deal/{dealId}',
+        templateUrl: '/angular/chat/views/view-chat.view.html'
       });
+
   }
 ]);
