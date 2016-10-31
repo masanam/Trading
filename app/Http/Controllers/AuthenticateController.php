@@ -6,6 +6,8 @@ use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Login;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Config;
 
 use App\Model\User;
 
@@ -97,18 +99,28 @@ class AuthenticateController extends Controller
 
     public function signing(Request $request)
     {
+      /*var_dump($request);
+      $image = $request->file('file');
+      $imageFileName = time() . '.' . $image->getClientOriginalExtension();
+      $s3 = \Storage::disk('s3');
+      $filePath = '/abc/' . $imageFileName;
+      $s3->put($filePath, file_get_contents($image), 'public');*/
+      
+      //return response()->json([ 'url' => (string) $request->getUri() ]);
+      
         $disk = Storage::disk('s3');
-        $bucket = Config::get('filesystems.disks.s3.bucket');
-        $key = $request->file->filename;
+        //$bucket = Config::get('filesystems.disks.s3.bucket');
+        $bucket = config('s3upload');
+        $key = $request->filename;
 
         if ($disk->exists($key)) {
-            $command = $disk->getDriver()->getAdapter()->getClient()->getCommand('GetObject', [
-                'Bucket'                     => $bucket,
-                'Key'                        => $key,
-                'ResponseContentDisposition' => 'attachment;'
-            ]);
-            $request = $disk->getDriver()->getAdapter()->getClient()->createPresignedRequest($command, '+5 minutes');
-            return response()->json([ 'url' => (string) $request->getUri() ]);
+          $command = $disk->getDriver()->getAdapter()->getClient()->getCommand('GetObject', [
+            'Bucket'                     => $bucket,
+            'Key'                        => $key,
+            'ResponseContentDisposition' => 'attachment;'
+          ]);
+          $request = $disk->getDriver()->getAdapter()->getClient()->createPresignedRequest($command, '+5 minutes');
+          return response()->json([ 'url' => (string) $request->getUri() ]);
         }
     }
 }
