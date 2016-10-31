@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('order').controller('BuyOrderPortController', ['$scope', '$stateParams', '$location', '$uibModal', 'Port', 'Factory', 'Order',
+angular.module('order').controller('BuyOrderSummaryController', ['$scope', '$stateParams', '$location', '$uibModal', 'Port', 'Factory', 'Order',
   function($scope, $stateParams, $location, $uibModal, Port, Factory, Order) {
 
     $scope.port = {};
@@ -8,9 +8,11 @@ angular.module('order').controller('BuyOrderPortController', ['$scope', '$stateP
     $scope.factory_id = $stateParams.factory_id;
 
 
-    //Init select port
-    $scope.findAllPorts = function(){
-      $scope.ports = Port.query();
+    //Init select summary
+    $scope.findSummary = function(){
+      $scope.buy_order = Order.get({ type: 'buy' , id: $stateParams.order_id },function(res){
+        $scope.buy_order.order_date = new Date();
+      });
     };
 
     //selected port after create new
@@ -20,9 +22,69 @@ angular.module('order').controller('BuyOrderPortController', ['$scope', '$stateP
       });
     };
 
-    //back button to product
-    $scope.backToProduct = function(){
-      $location.path('buy-order/create/product/'+$stateParams.id+'/'+$stateParams.order_id+'/'+$stateParams.factory_id);
+    $scope.today = function() {
+      $scope.dt = new Date();
+    };
+    $scope.today();
+
+    $scope.clear = function() {
+      $scope.dt = null;
+    };
+
+    $scope.inlineOptions = {
+      customClass: getDayClass,
+      minDate: new Date(),
+      showWeeks: true
+    };
+    $scope.dateOptions = {
+      formatYear: 'yy',
+      maxDate: new Date(2020, 5, 22),
+      minDate: new Date(),
+      startingDay: 1
+    };
+    $scope.toggleMin = function() {
+      $scope.inlineOptions.minDate = $scope.inlineOptions.minDate ? null : new Date();
+      $scope.dateOptions.minDate = $scope.inlineOptions.minDate;
+    };
+
+    $scope.toggleMin();
+
+    $scope.setDate = function(year, month, day) {
+      $scope.dt = new Date(year, month, day);
+    };
+
+    $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+    $scope.format = $scope.formats[0];
+    $scope.altInputFormats = ['M!/d!/yyyy'];
+    $scope.open1 = function() {
+      $scope.popup1.opened = true;
+    };
+    $scope.popup1 = {
+      opened: false
+    };
+    function getDayClass(data) {
+      var date = data.date,
+        mode = data.mode;
+      if (mode === 'day') {
+        var dayToCheck = new Date(date).setHours(0,0,0,0);
+
+        for (var i = 0; i < $scope.events.length; i++) {
+          var currentDay = new Date($scope.events[i].date).setHours(0,0,0,0);
+
+          if (dayToCheck === currentDay) {
+            return $scope.events[i].status;
+          }
+        }
+      }
+
+      return '';
+    }
+
+
+
+    //back button to port
+    $scope.backToPort = function(){
+      $location.path('buy-order/create/port/'+$stateParams.id+'/'+$stateParams.order_id+'/'+$stateParams.factory_id);
     };
 
     //button next to summary page and update order update factory port

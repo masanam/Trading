@@ -4,6 +4,7 @@ angular.module('order').controller('BuyOrderCustomerController', ['$scope', '$st
   function ($scope, $stateParams, $location, $uibModal, Buyer, Order, NgMap) {
 
     $scope.buyer = {};
+    $scope.order_id = $stateParams.order_id;
 
     //Init select customer
     $scope.findAllBuyers = function() {
@@ -11,10 +12,11 @@ angular.module('order').controller('BuyOrderCustomerController', ['$scope', '$st
     };
 
     //button next to factory page
-    $scope.nextToFactory = function(order){
-      order = order || false;
+    $scope.nextToFactory = function(order_id){
+      $scope.order = order_id ;
       //new order
-      if (!order) {
+      console.log($scope.order.order_id);
+      if ($scope.order.order_id===undefined) {
         $scope.order = new Order({
           buyer_id: $scope.buyer.selected.id
         });
@@ -23,7 +25,7 @@ angular.module('order').controller('BuyOrderCustomerController', ['$scope', '$st
         });
       }
       //order from back
-      else if (order) {
+      else if ($scope.order.order_id) {
         $scope.order = new Order({
           buyer_id: $scope.buyer.selected.id,
           order_status: 1

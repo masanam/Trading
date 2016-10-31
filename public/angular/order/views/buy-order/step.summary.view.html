@@ -1,12 +1,12 @@
-<div class="content" ng-controller="BuyOrderController" ng-init="findOne()">
+<div class="content" ng-controller="BuyOrderSummaryController" ng-init="findSummary()">
   <!-- HEADER -->
   <div class="row-fluid" style="margin-bottom: 10px">
-    <button type="button" class="btn btn-primary" ui-sref="buy-order.index">
+    <button type="button" class="btn btn-primary" ng-click="backToPort()">
       <i class="glyphicon glyphicon-arrow-left"></i> Back
     </button>
     <div class="pull-right">
-      <button type="button" class="btn btn-primary" ui-sref="buy-order.index">
-        <i class="glyphicon glyphicon-arrow-right"></i> Start Deal
+      <button type="button" class="btn btn-primary" ng-click="backToPort()">
+        <i class="glyphicon glyphicon-arrow-right"></i> Finish
       </button>
     </div>
   </div>
@@ -26,7 +26,12 @@
           <label>City : </label>
           <p>{{ buy_order.city }}</p>
           <label>Order Date : </label>
-          <p>{{ buy_order.order_date }}</p>
+          <p class="input-group">
+            <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="buy_order.order_date" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+            <span class="input-group-btn">
+              <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+          </p>{{buy_order.order_date}}
           <label>Deadline : </label>
           <p>{{ buy_order.order_deadline }}</p>
           <label>Trading Term : </label>
@@ -77,14 +82,14 @@
     <div class="box-body">
       <div class="row">
         <div class="col-md-12 col-lg-12">
-          <table class="table">
+          <table class="table" style="margin-bottom:0">
             <tbody>
               <tr>
                 <td><h4><b>Gross Caloric ARB <div class="pull-right">:</div></b></h4></td>
                 <td><h4>{{buy_order.gcv_arb_min}} - {{buy_order.gcv_arb_max}} kcal</h4></td>
                 <td class="hidden-xs hidden-sm"><h4><b>Gross Caloric ADB <div class="pull-right">:</div></b></h4></td>
                 <td class="hidden-xs hidden-sm"><h4>{{buy_order.gcv_adb_min}} - {{buy_order.gcv_adb_max}} kcal</h4></td>
-                <td class="hidden-xs hidden-sm"><h4><b>Nett Caloric Value <div class="pull-right">:</div></b></h4></td>
+                <td class="hidden-xs hidden-sm"><h4><b>Total Sulphur <div class="pull-right">:</div></b></h4></td>
                 <td class="hidden-xs hidden-sm"><h4>{{buy_order.ncv_min}} - {{buy_order.ncv_max}} kcal</h4></td>
               </tr>
               <tr class="hidden-md hidden-lg">
@@ -92,7 +97,7 @@
                 <td><h4>{{buy_order.gcv_adb_min}} - {{buy_order.gcv_adb_max}} kcal</h4></td>
               </tr>
               <tr class="hidden-md hidden-lg">
-                <td><h4><b>Nett Caloric Value <div class="pull-right">:</div></b></h4></td>
+                <td><h4><b>Total Sulphur <div class="pull-right">:</div></b></h4></td>
                 <td><h4>{{buy_order.ncv_min}} - {{buy_order.ncv_max}} kcal</h4></td>
               </tr>
             </tbody>
@@ -138,6 +143,62 @@
               <tr>
                 <td><b>Size <div class="pull-right">:</div></b></td>
                 <td>{{buy_order.size_min}} - {{buy_order.size_max}} mm</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box box-primary box-solid">
+    <div class="box-header ">
+      <h3 class="box-title">Product Reject & Bonus</h3>
+    </div>
+    <div class="box-body">
+      <div class="row">
+        <div class="col-md-6 col-lg-6">
+          <h3 style="text-align:center;font-weight:bold;margin-top:0">Reject</h3>
+          <table class="table">
+            <tbody>
+              <tr>
+                <td><b>Gross Caloric ARB <div class="pull-right">:</div></b></td>
+                <td>{{buy_order.gcv_arb_reject}} kcal</td>
+              </tr>
+              <tr>
+                <td><b>Gross Caloric ADB <div class="pull-right">:</div></b></td>
+                <td>{{buy_order.gcv_adb_reject}} kcal</td>
+              </tr>
+              <tr>
+                <td><b>Ash <div class="pull-right">:</div></b></td>
+                <td>{{buy_order.ash_reject}} %</td>
+              </tr>
+              <tr>
+                <td><b>Total Sulphur <div class="pull-right">:</div></b></td>
+                <td>{{buy_order.ts_reject}} %</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-md-6 col-lg-6">
+          <h3 style="text-align:center;font-weight:bold;margin-top:0">Bonus</h3>
+          <table class="table">
+            <tbody>
+              <tr>
+                <td><b>Gross Caloric ARB <div class="pull-right">:</div></b></td>
+                <td>{{buy_order.gcv_arb_bonus}} kcal</td>
+              </tr>
+              <tr>
+                <td><b>Gross Caloric ADB <div class="pull-right">:</div></b></td>
+                <td>{{buy_order.gcv_adb_bonus}} kcal</td>
+              </tr>
+              <tr>
+                <td><b>Ash <div class="pull-right">:</div></b></td>
+                <td>{{buy_order.ash_bonus}} %</td>
+              </tr>
+              <tr>
+                <td><b>Total Sulphur <div class="pull-right">:</div></b></td>
+                <td>{{buy_order.ts_bonus}} %</td>
               </tr>
             </tbody>
           </table>
