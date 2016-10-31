@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
         $this->call(BuyDealTableSeeder::class);
         $this->call(SellDealTableSeeder::class);
         $this->call(PortTableSeeder::class);
+        $this->call(FactoryTableSeeder::class);
 
         Model::reguard();
     }

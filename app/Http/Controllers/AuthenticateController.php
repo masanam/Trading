@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Http\Request;
+use Illuminate\Auth\Events\Login;
 
 use App\Model\User;
 
@@ -45,6 +46,7 @@ class AuthenticateController extends Controller
 
         $user = Auth::user();
 
+        event(new Login($user, false));
         // if no errors are encountered we can return a JWT
         return response()->json(compact('token', 'user', $user), 200);
     }

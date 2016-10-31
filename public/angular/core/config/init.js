@@ -8,7 +8,7 @@ ApplicationConfiguration.registerModule('user');
 ApplicationConfiguration.registerModule('seller');
 ApplicationConfiguration.registerModule('concession');
 ApplicationConfiguration.registerModule('product');
-ApplicationConfiguration.registerModule('production');
+ApplicationConfiguration.registerModule('index');
 ApplicationConfiguration.registerModule('buyer');
 ApplicationConfiguration.registerModule('vendor');
 ApplicationConfiguration.registerModule('trade');

@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
+use App\Events\InputEditCoalpedia;
+
 use Illuminate\Support\Facades\DB;
 
 class ConcessionController extends Controller
@@ -232,6 +234,8 @@ class ConcessionController extends Controller
         $concession->status = 'a';
         $concession->save();
 
+        event(new InputEditCoalpedia(Auth::user(), $concession->id, 'concessions', 'create'));
+
         return response()->json($concession, 200);
     }
 
@@ -329,6 +333,8 @@ class ConcessionController extends Controller
         $concession->license_type = $request->license_type;
 
         $concession->save();
+
+        event(new InputEditCoalpedia(Auth::user(), $concession->id, 'concessions', 'update'));
 
         return response()->json($concession, 200);
     }

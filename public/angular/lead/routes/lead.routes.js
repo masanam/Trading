@@ -13,142 +13,142 @@ angular.module('lead').config(['$stateProvider', '$urlRouterProvider',
       .state('lead.index', {
         url: '',
         templateUrl: '/angular/lead/views/index.view.html',
-        roles: ['user', 'trader']
+        roles: ['user', 'trader', 'manager']
       })
 
       //browse page
       .state('lead.buyer', {
         url: '/buyer?keyword',
         templateUrl: '/angular/lead/views/buyer/index.view.html',
-        roles: ['user', 'trader']
+        roles: ['user', 'trader', 'manager']
       })
       .state('lead.seller', {
         url: '/seller?keyword',
         templateUrl: '/angular/lead/views/seller/index.view.html',
-        roles: ['user', 'trader']
+        roles: ['user', 'trader', 'manager']
       })
       .state('lead.vendor', {
         url: '/vendor?keyword',
         templateUrl: '/angular/lead/views/vendor/index.view.html',
-        roles: ['user', 'trader']
+        roles: ['user', 'trader', 'manager']
       })
       .state('lead.product', {
         url: '/product?keyword',
         templateUrl: '/angular/lead/views/product/index.view.html',
-        roles: ['user', 'trader']
+        roles: ['user', 'trader', 'manager']
       })
       .state('lead.concession', {
         url: '/concession?keyword',
         templateUrl: '/angular/lead/views/concession/index.view.html',
-        roles: ['user', 'trader']
+        roles: ['user', 'trader', 'manager']
       })
       .state('lead.contact', {
         url: '/contact?keyword',
         templateUrl: '/angular/lead/views/contact/index.view.html',
-        roles: ['user', 'trader']
+        roles: ['user', 'trader', 'manager']
       })
 
       //CREATE PAGES
       .state('lead.create-buyer', {
         url: '/buyer/create',
         templateUrl: '/angular/lead/views/buyer/create.view.html',
-        roles: ['user', 'trader']
+        roles: ['user', 'trader', 'manager']
       })
       .state('lead.create-seller', {
         url: '/seller/create',
         templateUrl: '/angular/lead/views/seller/create.view.html',
-        roles: ['user', 'trader']
+        roles: ['user', 'trader', 'manager']
       })
       .state('lead.create-vendor', {
         url: '/vendor/create',
         templateUrl: '/angular/lead/views/vendor/create.view.html',
-        roles: ['user', 'trader']
+        roles: ['user', 'trader', 'manager']
       })
 
       //SETUP PAGES
       .state('lead.setup-product-buyer', {
         url: '/buyer/{id}/setup-product',
         templateUrl: '/angular/lead/views/buyer/setup.product.view.html',
-        roles: ['user', 'trader']
+        roles: ['user', 'trader', 'manager']
       })
       .state('lead.setup-product-seller', {
         url: '/seller/{id}/setup-product',
         templateUrl: '/angular/lead/views/seller/setup.product.view.html',
-        roles: ['user', 'trader']
+        roles: ['user', 'trader', 'manager']
       })
       .state('lead.setup-factory', {
         url: '/buyer/setup-factory/{id}',
         templateUrl: '/angular/lead/views/factory/index.view.html',
-        roles: ['user', 'trader']
+        roles: ['user', 'trader', 'manager']
       })
       .state('lead.setup-concession-seller', {
         url: '/seller/setup-concession-seller/{id}',
         templateUrl: '/angular/lead/views/concession/index.view.html',
-        roles: ['user', 'trader']
+        roles: ['user', 'trader', 'manager']
       })
 
       //UPDATE PAGES
       .state('lead.update-buyer', {
         url: '/buyer/update/{id}',
         templateUrl: '/angular/lead/views/buyer/update.view.html',
-        roles: ['user', 'trader']
+        roles: ['user', 'trader', 'manager']
       })
       .state('lead.update-seller', {
         url: '/seller/update/{id}',
         templateUrl: '/angular/lead/views/seller/update.view.html',
-        roles: ['user', 'trader']
+        roles: ['user', 'trader', 'manager']
       })
       .state('lead.update-product', {
         url: '/product/update/{id}',
         templateUrl: '/angular/lead/views/product/update.view.html',
-        roles: ['user', 'trader']
+        roles: ['user', 'trader', 'manager']
       })
       .state('lead.update-vendor', {
         url: '/vendor/update/{id}',
         templateUrl: '/angular/lead/views/vendor/update.view.html',
-        roles: ['user', 'trader']
+        roles: ['user', 'trader', 'manager']
       })
       .state('lead.port-buyer', {
         url: '/port/buyer/{id}',
         templateUrl: '/angular/lead/views/port/buyer/index.view.html',
-        roles: ['user', 'trader']
+        roles: ['user', 'trader', 'manager']
       })
       .state('lead.port-seller', {
         url: '/port/seller/{id}',
         templateUrl: '/angular/lead/views/port/seller/index.view.html',
-        roles: ['user', 'trader']
+        roles: ['user', 'trader', 'manager']
       })
 
       //VIEW PAGES
       /*.state('lead.view', {
         url: '/{type}/{id}',
         templateUrl: '/angular/lead/views/view-lead.view.html',
-        roles: ['user', 'trader']
+        roles: ['user', 'trader', 'manager']
       })*/
       .state('lead.view-buyer', {
         url: '/buyer/{id}',
         templateUrl: '/angular/lead/views/buyer/view.view.html',
-        roles: ['user', 'trader']
+        roles: ['user', 'trader', 'manager']
       })
       .state('lead.view-seller', {
         url: '/seller/{id}',
         templateUrl: '/angular/lead/views/seller/view.view.html',
-        roles: ['user', 'trader']
+        roles: ['user', 'trader', 'manager']
       })
       .state('lead.view-vendor', {
         url: '/vendor/{id}',
         templateUrl: '/angular/lead/views/vendor/view.view.html',
-        roles: ['user', 'trader']
+        roles: ['user', 'trader', 'manager']
       })
       .state('lead.view-product', {
         url: '/product/{id}',
         templateUrl: '/angular/lead/views/product/view.view.html',
-        roles: ['user', 'trader']
+        roles: ['user', 'trader', 'manager']
       })
       .state('lead.view-concession', {
         url: '/concession/{id}',
         templateUrl: '/angular/lead/views/concession/view.view.html',
-        roles: ['user', 'trader']
+        roles: ['user', 'trader', 'manager']
       })
       .state('lead.view-contact', {
         url: '/contact/{id}',
@@ -158,7 +158,7 @@ angular.module('lead').config(['$stateProvider', '$urlRouterProvider',
       .state('lead.view-port', {
         url: '/port/{id}/{portId}',
         templateUrl: '/angular/lead/views/port/view.view.html',
-        roles: ['user', 'trader']
+        roles: ['user', 'trader', 'manager']
       })
       .state('lead.create', {
         url: '/create',

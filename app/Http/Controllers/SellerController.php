@@ -10,6 +10,8 @@ use App\Http\Requests;
 
 use Auth;
 
+use App\Events\InputEditCoalpedia;
+
 class SellerController extends Controller
 {
     public function __construct() {
@@ -85,6 +87,8 @@ class SellerController extends Controller
         $seller->status = 'a';
         $seller->save();
 
+        event(new InputEditCoalpedia(Auth::user(), $seller->id, 'sellers', 'create'));
+
         return response()->json($seller, 200);
     }
 
@@ -157,6 +161,8 @@ class SellerController extends Controller
 
         $seller->status = $request->status;
         $seller->save();
+
+        event(new InputEditCoalpedia(Auth::user(), $seller->id, 'sellers', 'update'));
 
         return response()->json($seller, 200);
     }

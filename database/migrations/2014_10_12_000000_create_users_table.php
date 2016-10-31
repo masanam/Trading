@@ -27,6 +27,8 @@ class CreateUsersTable extends Migration
             $table->string('password');
 
             $table->string('role');
+
+            $table->datetime('last_login')->nullable();
             
             $table->char('status', 1); // A = Active , X = Deleted
             $table->rememberToken();

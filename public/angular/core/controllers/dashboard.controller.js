@@ -3,7 +3,7 @@
 angular.module('index').controller('DashboardController', ['$scope', '$state', '$http', 'NgMap', 'Concession', 'Buyer', 'Order', 'News', 'Authentication', 'Deal',
   function($scope, $state, $http, NgMap, Concession, Buyer, Order, News, Authentication, Deal) {
     var heatmap;
-    $state.go('lead.index');
+    $state.go('dashboard.main');
     $scope.Authentication = Authentication;
     $scope.showNews = 5;
     $scope.msg1 = true;

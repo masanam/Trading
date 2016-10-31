@@ -1,0 +1,106 @@
+<section ng-controller="MainDashboardController" class="content">
+  <div class="col-lg-12">
+    <div class="box box-info">
+      <div class="box-header with-border">
+        <h3 class="box-title">Index Prices</h3>
+
+        <div class="box-tools pull-right btn-group">
+          <button class="btn btn-default" ng-click="indexPage = indexPage-1" ng-disabled="indexPage==0">Prev</button>
+          <button class="btn btn-default" ng-click="indexPage = indexPage+1" ng-disabled="indexPage>(indices.length/6)-1">Next</button>
+        </div>
+      </div>
+      <div class="box-body" ng-init="getIndices()">
+      	<div ng-repeat="index in indices | startFrom:indexPage*6 | limitTo:6"
+      		class="col-lg-2 col-sm-4 col-xs-6 description-block border-right">
+      		<p>{{ index.index_provider }} {{ index.index_name }}</p>
+      		<h1>$ {{ index.price | number:2 }}</h1>
+      		<small class="text-muted">last updated: {{ index.date | date }}</small>
+      	</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-3 col-sm-4">
+    <div class="small-box bg-red">
+      <div class="inner">
+        <h4>Customer</h4>
+        <p>Coalpedia</p>
+      </div>
+      <div class="icon">
+        <i class="fa fa-building"></i>
+      </div>
+      <a ui-sref="lead.buyer" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+    </div>
+  </div>
+
+  <div class="col-lg-3 col-sm-4">
+    <div class="small-box bg-aqua">
+      <div class="inner">
+        <h4>Supplier</h4>
+        <p>Coalpedia</p>
+      </div>
+      <div class="icon">
+        <i class="fa fa-industry"></i>
+      </div>
+       <a ui-sref="lead.seller" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+    </div>
+  </div>
+
+  <div class="col-lg-3 col-sm-4">
+    <div class="small-box bg-green">
+      <div class="inner">
+        <h4>Map</h4>
+
+        <p>Dashboard</p>
+      </div>
+      <div class="icon">
+        <i class="fa fa-map"></i>
+      </div>
+      <a ui-sref="map.index" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+    </div>
+  </div>
+
+  <div class="col-lg-3 col-sm-4">
+    <div class="small-box bg-yellow">
+      <div class="inner">
+        <h4>Index Price</h4>
+
+        <p>Dashboard</p>
+      </div>
+      <div class="icon">
+        <i class="fa fa-line-chart"></i>
+      </div>
+      <a ui-sref="dashboard.index" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+    </div>
+  </div>
+
+  <div class="col-xs-12">
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">Orders</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body no-padding" ng-controller="OrderHistoryController" ng-init="findAvailableSell()">
+          <section ng-include="'/angular/order/views/history/table.view.html'"></section>
+        </div>
+        <!-- /.box-body -->
+      </div>
+      <!-- /. box -->
+    </div>
+  </div>
+
+  <div class="col-xs-12">
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">Deals</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body no-padding" ng-controller="DealController" ng-init="findDeals()">
+          <section ng-include="'/angular/deal/views/table.view.html'"></section>
+        </div>
+        <!-- /.box-body -->
+      </div>
+      <!-- /. box -->
+    </div>
+  </div>
+</section>

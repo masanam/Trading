@@ -1,14 +1,18 @@
 'use strict';
 
 // Setting up route
-angular.module('dashboard').config(['$stateProvider', '$urlRouterProvider',
-  function ($stateProvider, $urlRouterProvider) {
+angular.module('dashboard').config(['$stateProvider',
+  function ($stateProvider) {
     // Home state routing
     $stateProvider
       .state('dashboard', {
         url: '/dashboard',
         abstract: true,
         template: '<ui-view>'
+      })
+      .state('dashboard.main', {
+        url: '/main',
+        templateUrl: '/angular/dashboard/views/main.view.html'
       })
       .state('dashboard.map', {
         url: '/map',

@@ -17,8 +17,14 @@
   <div class="input-group col-md-12" style="margin-bottom: 5px;">
     <span class="input-group-addon" style="width: 200px;">City*</span>
     <input type="text" class="form-control" placeholder="City" ng-model="factory.city" required>
-    <span class="input-group-addon">Country*</span>
+    <span class="input-group-addon" style="width: 200px;">Country*</span>
     <input type="text" class="form-control" placeholder="Country" ng-model="factory.country" required>
+  </div>
+  <div class="input-group col-md-12" style="margin-bottom: 5px;">
+    <span class="input-group-addon" style="width: 200px;">Latitude</span>
+    <input type="number" min="-90" max="90" step="any" class="form-control" placeholder="Latitude" ng-model="factory.latitude" required>
+    <span class="input-group-addon" style="width: 200px;">Longitude</span>
+    <input type="number" min="-180" max="180" step="any" class="form-control" placeholder="Longitude" ng-model="factory.longitude" required>
   </div>
 </div>
 
@@ -39,12 +45,6 @@
     <input type="text" class="form-control" id="port_name" ng-model="factory.port_name" required>
     <span class="input-group-addon" style="width: 200px;">Distance (km)</span>
     <input type="number" min="0" step="any" class="form-control" id="port_distance" ng-model="factory.port_distance" required>
-  </div>
-  <div class="input-group col-md-12" style="margin-bottom: 5px;">
-    <span class="input-group-addon" style="width: 200px;">Latitude</span>
-    <input type="number" min="-90" max="90" step="any" class="form-control" placeholder="Latitude" ng-model="factory.latitude" required>
-    <span class="input-group-addon" style="width: 200px;">Longitude</span>
-    <input type="number" min="-180" max="180" step="any" class="form-control" placeholder="Longitude" ng-model="factory.longitude" required>
   </div>
 </div>
 

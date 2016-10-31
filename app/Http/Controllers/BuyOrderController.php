@@ -123,7 +123,7 @@ class BuyOrderController extends Controller
         $buy_order->commercial_term = $request->commercial_term;
         $buy_order->penalty_desc = $request->penalty_desc;
 
-        $buy_order->order_status = 'o';
+        $buy_order->order_status = '1';
         $buy_order->progress_status = $request->progress_status;
 
         $buy_order->save();
@@ -146,9 +146,9 @@ class BuyOrderController extends Controller
     {
         $buy_order = BuyOrder::with('Buyer')->find($id);
 
-        if($buy_order->order_status == 'o') {
+        if($buy_order->order_status == 'o' || $buy_order->order_status == 1 || $buy_order->order_status == 2 || $buy_order->order_status == 3 || $buy_order->order_status == 4) {
             return response()->json($buy_order, 200);
-        } else {
+        }else {
             return response()->json(['message' => 'deactivated record'], 404);
         }
     }
@@ -253,7 +253,7 @@ class BuyOrderController extends Controller
         $buy_order->commercial_term = $request->commercial_term;
         $buy_order->penalty_desc = $request->penalty_desc;
 
-        $buy_order->order_status = 'o';
+        $buy_order->order_status = $request->order_status;
         $buy_order->progress_status = $request->progress_status;
 
         $buy_order->save();

@@ -1,0 +1,53 @@
+<div class="box-header with-border">
+  <h1 class="box-title" style="font-size: 25px">Index</h1>
+  <div class="box-tools pull-right">
+    <button ui-sref="index.create" class="col-md-12 btn btn-primary">+ Create New</button>
+  </div>
+</div>
+<div class="box-body">
+  <table ng-init="find()" st-table="indices" st-safe-src="index" class="table table-striped">
+    <thead>
+      <tr>
+          <th colspan="9"><input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
+      </tr>
+      <tr>
+        <th st-sort="id">#</th>
+        <th st-sort="index_provider">Index</th>
+        <th st-sort="frequency">Frequency</th>
+        <th st-sort="created_at">Created At</th>
+        <th st-sort="updated_at">Updated At</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr ng-repeat="index in indices">
+        <td>{{ index.id }}</td>
+        <td>{{ index.index_provider }} {{ index.index_name }}</td>
+        <td>{{ index.frequency }}</td>
+        <td>{{ index.created_at }}</td>
+        <td>{{ index.updated_at }}</td>
+        <td>
+          <a ui-sref="index.view({ indexId: index.id })"><i class="glyphicon glyphicon-eye-open"></i></a>
+          <a ui-sref="index.edit({ indexId: index.id })"><i class="glyphicon glyphicon-pencil"></i></a>
+          <a ng-click="remove(index)"><i class="glyphicon glyphicon-trash"></i></a>
+        </td>
+      </tr>
+      <tr ng-if="indices.length == 0">
+        <td colspan="6" class="text-center">No data available</td>
+      </tr>
+    </tbody>
+
+    <!-- <tfoot>
+      <tr>
+        <td colspan="6" class="text-center">
+          <div st-pagination="" st-items-by-page="10" st-displayed-pages="5"></div>
+        </td>
+      </tr>
+    </tfoot> -->
+  </table>
+
+  <div class="callout callout-warning text-center" ng-if="indices.$resolved && !indices.length">
+    No indices yet, why don't you <a ui-sref="index.create">create one</a>?
+  </div>  
+</div>

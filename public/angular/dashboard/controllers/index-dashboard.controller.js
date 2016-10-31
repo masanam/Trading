@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('dashboard').controller('IndexPriceController', ['$scope', 'Index',
+angular.module('dashboard').controller('IndexDashboardController', ['$scope', 'Index',
   function($scope, Index) {
     $scope.dateEnd = new Date();
     $scope.dateStart = new Date();
