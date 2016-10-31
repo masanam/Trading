@@ -6,6 +6,7 @@ use App\Model\Concession;
 use App\Model\Seller;
 use App\Model\Product;
 use App\Model\Port;
+use Auth;
 
 use Illuminate\Http\Request;
 
@@ -228,12 +229,17 @@ class ConcessionController extends Controller
         $concession->stockpile_distance = $request->stockpile_distance;
         $concession->port_id = $request->port_id;
         $concession->port_distance = $request->port_distance;
-        $concession->license_expiry_date = $request->license_expiry_date;
-        $concession->license_type = $request->license_type;
+        $concession->license_expiry_date = date('Y-m-d',strtotime($request->license_expiry_date));
+        $concession->license_type = date('Y-m-d',strtotime($request->license_type));
         $concession->status = 'a';
         $concession->save();
 
-        event(new InputEditCoalpedia(Auth::user(), $concession->id, 'concessions', 'create'));
+        $concession->license_expiry_date = $request->license_expiry_date;
+        $concession->license_type = $request->license_type;
+        $concession->latitude = floatval($request->latitude);
+        $concession->longitude = floatval($request->longitude);
+        $concession->stripping_ratio = floatval($request->stripping_ratio);
+        // event(new InputEditCoalpedia(Auth::user(), $concession->id, 'concessions', 'create'));
 
         return response()->json($concession, 200);
     }
@@ -323,8 +329,8 @@ class ConcessionController extends Controller
         $concession->remaining_volume = $request->remaining_volume;
         $concession->annual_production = $request->annual_production;
         $concession->hauling_road_name = $request->hauling_road_name;
-        $concession->road_accessibility = $request->road_accessibility;
-        $concession->road_capacity = $request->road_capacity;
+        $concession->stockpile_capacity = $request->stockpile_capacity;
+        $concession->stockpile_coverage = $request->stockpile_coverage;
         $concession->stockpile_distance = $request->stockpile_distance;
         $concession->port_id = $request->port_id;
         $concession->port_distance = $request->port_distance;
@@ -333,7 +339,7 @@ class ConcessionController extends Controller
 
         $concession->save();
 
-        event(new InputEditCoalpedia(Auth::user(), $concession->id, 'concessions', 'update'));
+        // event(new InputEditCoalpedia(Auth::user(), $concession->id, 'concessions', 'update'));
 
         return response()->json($concession, 200);
     }
@@ -370,6 +376,12 @@ class ConcessionController extends Controller
     public function findMyConcession($id)
     {
         $concession = Concession::where('status', 'a')->where('seller_id', $id)->get();
+        foreach ($concession as $con) {
+          $con->latitude = floatval($con->latitude);
+          $con->longitude = floatval($con->longitude);
+          $con->stripping_ratio = floatval($con->stripping_ratio);
+          $con->port_distance = floatval($con->port_distance);
+        }
 
         return response()->json($concession, 200);
     }

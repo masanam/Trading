@@ -94,7 +94,27 @@ angular.module('order-history').config(['$stateProvider', '$urlRouterProvider',
       })
       .state('sell-order.create', {
         url: '/create',
-        templateUrl: '/angular/order/views/sell-order/form.view.html'
+        templateUrl: '/angular/order/views/sell-order/step.supplier.view.html'
+      })
+      .state('sell-order.step-supplier', {
+        url: '/create/supplier/:order_id',
+        templateUrl: '/angular/order/views/sell-order/step.supplier.view.html'
+      })
+      .state('sell-order.step-concession', {
+        url: '/create/concession/:id/:order_id',
+        templateUrl: '/angular/order/views/sell-order/step.concession.view.html'
+      })
+      .state('sell-order.step-product', {
+        url: '/create/product/:id/:order_id/:concession_id',
+        templateUrl: '/angular/order/views/sell-order/step.product.view.html'
+      })
+      .state('sell-order.step-port', {
+        url: '/create/port/:id/:order_id/:concession_id',
+        templateUrl: '/angular/order/views/sell-order/step.port.view.html'
+      })
+      .state('sell-order.step-summary', {
+        url: '/create/summary/:id/:order_id/:concession_id',
+        templateUrl: '/angular/order/views/sell-order/step.summary.view.html'
       })
       .state('sell-order.view', {
         url: '/:id',
