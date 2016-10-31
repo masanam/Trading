@@ -15,7 +15,7 @@
 
               <section class="row">
                 <div class="col-md-12">
-                  <div class="col-md-6">
+                  <div class="col-md-3">
                     <div class="panel panel-default col-md-12">
                       <h1>Buy Order</h1>
                       <section ng-if="buyOrders.length > 0">
@@ -59,14 +59,14 @@
                       </section>
                       <section class="row">
                         <div class="form-group col-md-12">
-                          <button ng-click="openCreateBuyModal()" class="col-md-5 btn btn-primary">+ Create Buy Order</button>
-                          <h4 style="margin-left:15px; margin-right:25px;" class="col-md-1">OR</h4>
-                          <button ng-click="openExistingBuyModal()" class="col-md-5 btn btn-success">+ Choose Existing Buy Order</button>
+                          <button ng-click="openCreateBuyModal()" class="col-md-12 btn btn-primary">+ Create Buy Order</button>
+                          <h4 style="margin-left:75px; margin-right:25px;" class="col-md-1">OR</h4>
+                          <button ng-click="openExistingBuyModal()" class="col-md-12 btn btn-success">+ Choose Existing Buy Order</button>
                         </div>
                       </section>
                     </div>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-md-3">
                     <div class="panel panel-default col-md-12">
                       <h1>Sell Order</h1>
                       <section ng-show="sellOrders.length > 0">
@@ -110,20 +110,49 @@
                       </section>
                       <section class="row">
                         <div class="form-group col-md-12">
-                          <button ng-click="openCreateSellModal()" class="col-md-5 btn btn-primary">+ Create Sell Order</button>
-                          <h4 style="margin-left:15px; margin-right:25px;" class="col-md-1">OR</h4>
-                          <button ng-click="openExistingSellModal()" class="col-md-5 btn btn-success">+ Choose Existing Sell Order</button>
+                          <button ng-click="openCreateSellModal()" class="col-md-12 btn btn-primary">+ Create Sell Order</button>
+                          <h4 style="margin-left:75px; margin-right:25px;" class="col-md-1">OR</h4>
+                          <button ng-click="openExistingSellModal()" class="col-md-12 btn btn-success">+ Choose Existing Sell Order</button>
                         </div>
                       </section>
                     </div>
                   </div>
+                
+                 <div class="col-md-6">
+                    <div class="panel panel-default col-md-12">
+                    <h1>Grafik</h1>
+
+
+                    
+                    </div>
+                 </div>    
+
                 </div>
               </section>
-          <section class="row">
-            <div class="col-md-12">
-              <button ng-click="createDeal()" class="col-md-12 btn-success btn"><i class="glyphicon glyphicon-save"></i> Save Deal</button>
-            </div>
-          </section>
+
+              <section class="row">
+                <div class="col-md-12">
+                 <div class="panel panel-default col-md-6">
+                    <h4>Margin </h4>
+                    <h4>Index Option Daviation </h4>
+                    <h4>Buy : </h4> 
+                    <h4>Sell : </h4>
+
+                 </div>   
+
+                 <div class="panel panel-default col-md-6">
+                    <h1>Chart</h1>
+
+                 </div>   
+                  
+                </div>
+              </section>
+
+              <section class="row" >
+                <div class="col-md-12">
+                  <button ng-click="createDeal()" class="col-md-12 btn-success btn"><i class="glyphicon glyphicon-save"></i> Save Deal</button>
+                </div>
+              </section>
             </div>
             <!-- /.box-body -->
           </div>
