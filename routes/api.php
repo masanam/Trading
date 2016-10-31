@@ -159,6 +159,7 @@ Route::group(['middleware' => ['cors']], function() {
     
     Route::get('deal/table/{status}', 'DealController@index');
     Route::get('deal/status/{deal}/{status}', 'DealController@changeStatus');
+    Route::get('deal/user/{user}', 'DealController@findByUser');
     Route::resource('deal', 'DealController', ['except' => [
         'index', 'create', 'edit', 'destroy'
     ]]);

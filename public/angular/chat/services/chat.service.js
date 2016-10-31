@@ -34,7 +34,7 @@ angular.module('chat').factory('Chat', ['firebase', '$firebaseArray', 'Authentic
         return callback(chats);
       },
 
-      sendChat: function(type, order_deal, message) {
+      sendChat: function(deal, message) {
         var chat = {
           'deal_id': deal.id,
           'user_id': Authentication.user.id,
