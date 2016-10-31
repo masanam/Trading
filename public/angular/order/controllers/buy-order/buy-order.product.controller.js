@@ -15,7 +15,7 @@ angular.module('order').controller('BuyOrderProductController', ['$scope', '$sta
       });
     };
 
-    //bcak button to factory
+    //back button to factory
     $scope.backToFactory = function(){
       $location.path('buy-order/create/factory/'+$stateParams.id+'/'+$stateParams.order_id);
     };

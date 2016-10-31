@@ -22,7 +22,7 @@ angular.module('order').controller('BuyOrderPortController', ['$scope', '$stateP
 
     //back button to product
     $scope.backToProduct = function(){
-      $location.path('buy-order/create/product/'+$stateParams.id+'/'+$stateParams.order_id);
+      $location.path('buy-order/create/product/'+$stateParams.id+'/'+$stateParams.order_id+'/'+$stateParams.factory_id);
     };
 
     //button next to summary page and update order update factory port
@@ -49,7 +49,7 @@ angular.module('order').controller('BuyOrderPortController', ['$scope', '$stateP
           $scope.order.order_status = 4;
           
           $scope.order.$update({ type: 'buy', id: $stateParams.order_id }, function(res) {
-            $location.path('buy-order/create/summary/'+$stateParams.id+'/'+$stateParams.order_id);
+            $location.path('buy-order/create/summary/'+$stateParams.id+'/'+$stateParams.order_id+'/'+$stateParams.factory_id);
           });
         });
       }

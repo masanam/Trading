@@ -73,6 +73,10 @@ angular.module('order-history').config(['$stateProvider', '$urlRouterProvider',
         url: '/create/port/:id/:order_id/:factory_id',
         templateUrl: '/angular/order/views/buy-order/step.port.view.html'
       })
+      .state('buy-order.step-summary', {
+        url: '/create/summary/:id/:order_id/:factory_id',
+        templateUrl: '/angular/order/views/buy-order/step.summary.view.html'
+      })
       .state('buy-order.view', {
         url: '/:id',
         templateUrl: '/angular/order/views/buy-order/view.view.html'

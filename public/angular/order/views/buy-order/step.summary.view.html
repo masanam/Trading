@@ -1,12 +1,12 @@
-<div class="content" ng-controller="BuyOrderController" ng-init="findOne()">
+<div class="content" ng-controller="BuyOrderSummaryController" ng-init="findSummary()">
   <!-- HEADER -->
   <div class="row-fluid" style="margin-bottom: 10px">
-    <button type="button" class="btn btn-primary" ui-sref="buy-order.index">
+    <button type="button" class="btn btn-primary" ng-click="backToPort()">
       <i class="glyphicon glyphicon-arrow-left"></i> Back
     </button>
     <div class="pull-right">
-      <button type="button" class="btn btn-primary" ui-sref="buy-order.index">
-        <i class="glyphicon glyphicon-arrow-right"></i> Start Deal
+      <button type="button" class="btn btn-primary" ng-click="finish()">
+        <i class="glyphicon glyphicon-arrow-right"></i> Finish
       </button>
     </div>
   </div>
@@ -17,6 +17,9 @@
     </div>
     <div class="box-body">
       <div class="form-group row-fluid">
+        <div class="form-group">
+          <label ng-show="error" class="alert bg-red" style="width:100%">{{error}}</label>
+        </div>
         <h1>{{ buy_order.buyer.company_name }}</h1>
         <label>Product Name : </label>
         <p>{{ buy_order.product_name }}</p>
@@ -28,26 +31,52 @@
           <label>Volume of Coal : </label>
           <p>{{ buy_order.volume }} Tones</p>
           <label>Order Date : </label>
-          <p>{{ buy_order.order_date }}</p>
+          <p class="form-inline">
+            <input type="date" class="form-control" ng-model="buy_order.order_date"/>
+          </p>
           <label>Deadline : </label>
-          <p>{{ buy_order.order_deadline }}</p>
-          <label>Trading Term : </label>
-          <p>{{ buy_order.trading_term | uppercase }}</p>
+          <p class="form-inline">
+            <input type="date" class="form-control" ng-model="buy_order.order_deadline"/>
+          </p>
+          <label>Buying Term : </label>
+          <p class="form-inline">
+            <select class="form-control" ng-model="buy_order.trading_term">
+              <option value="CNF">CNF</option>
+              <option value="CIF">CIF</option>
+              <option value="FAS">FAS</option>
+              <option value="FOB">FOB</option>
+              <option value="Franco">Franco</option>
+            </select>
+            <input type="text" class="form-control" ng-model="buy_order.trading_term" placeholder="Other" />
+          </p>
         </div>
         <div class="col-xs-6" style="padding-left:0">
           <label>Country : </label>
           <p>{{ buy_order.country }}</p>
           <label>Max Price : </label>
-          <p>$ {{ buy_order.max_price }}</p>
+          <div class="input-group">
+            <span class="input-group-addon">$</span>
+            <input type="text" class="form-control" ng-model="buy_order.max_price">
+          </div>
           <label>Ready Date : </label>
-          <p>{{ buy_order.ready_date }}</p>
+          <p class="input-group">
+            <input type="date" class="form-control" ng-model="buy_order.ready_date"/>
+          </p>
           <label>Expired Date : </label>
-          <p>{{ buy_order.expired_date }}</p>
+          <p class="input-group">
+            <input type="date" class="form-control" ng-model="buy_order.expired_date"/>
+          </p>
           <label>Payment Terms : </label>
-          <p>{{ buy_order.payment_terms | uppercase }}</p>
+          <select class="form-control" ng-model="buy_order.payment_terms">
+            <option value="TT">TT</option>
+            <option value="LC on Sight">LC on Sight</option>
+            <option value="LC on 30 days">LC on 30 days</option>
+          </select>
         </div>
-        <label>Penalty : </label>
-        <p>{{ buy_order.penalty_desc }}</p>
+        <div class="col-xs-12" style="padding-left:0">
+          <label>Penalty : </label>
+          <textarea class="form-control" ng-model="buy_order.penalty"></textarea>
+        </div>
       </div>
     </div>
   </div>
@@ -88,7 +117,7 @@
                 <td><h4>{{buy_order.gcv_arb_min}} - {{buy_order.gcv_arb_max}} kcal</h4></td>
                 <td class="hidden-xs hidden-sm"><h4><b>Gross Caloric ADB <div class="pull-right">:</div></b></h4></td>
                 <td class="hidden-xs hidden-sm"><h4>{{buy_order.gcv_adb_min}} - {{buy_order.gcv_adb_max}} kcal</h4></td>
-                <td class="hidden-xs hidden-sm"><h4><b>Nett Caloric Value <div class="pull-right">:</div></b></h4></td>
+                <td class="hidden-xs hidden-sm"><h4><b>Total Sulphur <div class="pull-right">:</div></b></h4></td>
                 <td class="hidden-xs hidden-sm"><h4>{{buy_order.ncv_min}} - {{buy_order.ncv_max}} kcal</h4></td>
               </tr>
               <tr class="hidden-md hidden-lg">
@@ -96,7 +125,7 @@
                 <td><h4>{{buy_order.gcv_adb_min}} - {{buy_order.gcv_adb_max}} kcal</h4></td>
               </tr>
               <tr class="hidden-md hidden-lg">
-                <td><h4><b>Nett Caloric Value <div class="pull-right">:</div></b></h4></td>
+                <td><h4><b>Total Sulphur <div class="pull-right">:</div></b></h4></td>
                 <td><h4>{{buy_order.ncv_min}} - {{buy_order.ncv_max}} kcal</h4></td>
               </tr>
             </tbody>

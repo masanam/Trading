@@ -122,7 +122,7 @@ class FactoryController extends Controller
 
         $factory->save();
 
-        event(new InputEditCoalpedia(Auth::user(), $factory->id, 'factory', 'update'));
+        // event(new InputEditCoalpedia(Auth::user(), $factory->id, 'factory', 'update'));
 
         return response()->json($factory, 200);
     }
