@@ -56,8 +56,7 @@ class ConcessionController extends Controller
                                           ->whereHas('Product' , function($q) use ($gt_params) {
                                             $q->where('products.'.$gt_params[0].'_min', '>=', $gt_params[1]);
                                           })
-                                          ->where('concession.status', 'a')
-                                          ->get();
+                                          ->where('concession.status', 'a');
               }
             }
             if(isset($_GET['lt'])){
@@ -76,8 +75,7 @@ class ConcessionController extends Controller
                                             $q->where('products.'.$lt_params[0].'_max', '<=', $lt_params[1]);
                                           })
                                           ->with('Port')
-                                          ->where('concession.status', 'a')
-                                          ->get();
+                                          ->where('concession.status', 'a');
               }
             }
             if(isset($_GET['bet'])){
@@ -97,10 +95,13 @@ class ConcessionController extends Controller
                                             $q->where('products.'.$bet_params[0].'_min', '<=', $bet_params[1])
                                               ->where('products.'.$bet_params[0].'_max', '>=', $bet_params[1]);
                                           })
-                                          ->where('concession.status', 'a')
-                                          ->get();
+                                          ->where('concession.status', 'a');
               }
             }
+            if(){
+              
+            }
+            $concession = $concession->get();
         }
 
         return response()->json($concession, 200);
