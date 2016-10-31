@@ -93,7 +93,7 @@ Route::group(['middleware' => ['cors']], function() {
 
     //Concession Management API
     Route::get('concession/total', 'ConcessionController@getTotalConcession');
-    Route::get('concession/search', 'ConcessionController@search');
+    //Route::get('concession/search', 'ConcessionController@search');
     Route::get('concession/filter', 'ConcessionController@filter');
     Route::get('concession/my/{id}', 'ConcessionController@findMyConcession');
     Route::get('concession/detail/{id}', 'ConcessionController@detail');
