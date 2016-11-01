@@ -86,11 +86,11 @@ angular.module('map').controller('MapController', ['$scope', '$http', '$statePar
         }
         temp_search.push($scope.search.keyword);
 
-        $scope.concessions = Map.query({ action: 'search' , 'product': $scope.search_product[0] , 'port': $scope.search_port[0] , 'seller': $scope.search_seller[0] , 'concession': $scope.search_concession[0] });
+        $scope.concessions = Map.query({ action: 'filter' , 'product': $scope.search_product[0] , 'port': $scope.search_port[0] , 'seller': $scope.search_seller[0] , 'concession': $scope.search_concession[0] });
 
         console.log($scope.concessions);
       }else{
-        $scope.concessions = Map.query({ action: 'search' });
+        $scope.concessions = Map.query({ action: 'filter' });
       }
     };
 
