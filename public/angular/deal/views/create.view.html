@@ -26,7 +26,7 @@
                               <button type="button" class="btn close" ng-click="deleteBuyOrder(order)">&times;</button>
                             </span>
                             <span>
-                              <div class="col-md-7">
+                              <div class="col-md-12">
                                 <h3>
                                   {{order.buyer.company_name}}
                                 </h3>
@@ -34,8 +34,6 @@
                                   {{order.volume | number}} tonnes - 
                                   $ {{ (order.volume*order.max_price) | number }}
                                 </h4>
-                              </div>
-                              <div class="col-md-5">
                                 <h5>
                                   <b>GCV ARB</b>: {{order.gcv_arb_min | number}} -  {{order.gcv_arb_max | number}}
                                 </h5>
@@ -76,7 +74,7 @@
                               <button type="button" class="btn close" ng-click="deleteSellOrder(order)">&times;</button>
                             </span>
                             <span>
-                              <div class="col-md-7">
+                              <div class="col-md-12">
                                 <h3>
                                   {{order.seller.company_name}}
                                 </h3>
@@ -84,8 +82,6 @@
                                   {{order.volume | number}} tonnes - 
                                   $ {{ (order.volume*order.min_price) | number }}
                                 </h4>
-                              </div>
-                              <div class="col-md-5">
                                 <h5>
                                   <b>GCV ARB</b>: {{order.gcv_arb_min | number}} -  {{order.gcv_arb_max | number}}
                                 </h5>
@@ -96,10 +92,11 @@
                                   <b>NCV</b>: {{order.ncv_min | number}} -  {{order.ncv_max | number}}
                                 </h5>
                               </div>
+                             
                             </span>
                             <span class="pull-right">
                               <!--button type="button" class="check" ng-click="markSellOrder(order)"></button-->
-                              <button type="button" class="btn btn-default" ng-click="openSellModal(order)">Detail</button>
+                              <button type="button" class="btn btn-default" ng-click="(order)">Detail</button>
                             </span>
                           </div>
                         </div>
@@ -119,7 +116,15 @@
                  <div class="col-md-6">
                     <div class="panel panel-default col-md-12">
                     <h1>Grafik</h1>
-
+                      <div class="form-group" ng-init="getIndices()">
+                        <label for="chose">Choose index:</label>
+                        <!-- <select class="form-control" id="mine" ng-model="order.mine" ng-change="order.mine_id = order.mine.id" ng-options="mine as mine.mine_name for mine in mines track by mine.id">
+                        </select> -->
+                        <select class="form-control" id="index" ng-model="index">
+                          <option value=""></option>
+                          <option ng-repeat="index in indices" value="{{ index.id }}">  {{ index.index_provider }} - {{ index.index_name }}</option>
+                        </select>
+                      </div>
 
                     
                     </div>
@@ -131,11 +136,10 @@
               <section class="row">
                 <div class="col-md-12">
                  <div class="panel panel-default col-md-6">
-                    <h4>Margin $ {{ getbuyTotal() - getSellTotal() | number }} </h4>
-                    <h4>Index Daviation </h4>
-                    <h4>Buy : </h4> 
-                    <h4>Sell : </h4>
-
+                    <h4>Buying Cost : $ {{ getbuyTotal() | number }}</h4> 
+                    <h4>Selling Price : $ {{ getSellTotal() | number }}</h4>
+                    <h4>Expected Margin : $ {{ getbuyTotal() - getSellTotal() | number }} </h4>
+                    <h4>Index Deviation</h4>
                  </div>   
 
                  <div class="panel panel-default col-md-6">
