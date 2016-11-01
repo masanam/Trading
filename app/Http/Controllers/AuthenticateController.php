@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Support\Facades\Storage;
 
+use Illuminate\Support\Facades\Config;
 
 use App\Model\User;
 
