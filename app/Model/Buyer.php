@@ -29,4 +29,8 @@ class Buyer extends Model
     public function Product() {
     	return $this->hasMany('App\Model\Product');
     }
+
+    public function Factory() {
+        return $this->hasMany('App\Model\Factory')->where('status','a');
+    }
 }

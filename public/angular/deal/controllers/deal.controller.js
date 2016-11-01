@@ -3,6 +3,7 @@
 angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Deal', 'Order', 'Buyer', 'Seller', 'SellDeal', 'BuyDeal', 'Authentication', '$location', '$stateParams', 'BuyDealChat', 'SellDealChat',
   function($scope, $uibModal, Deal, Order, Buyer, Seller, SellDeal, BuyDeal, Authentication, $location, $stateParams, BuyDealChat, SellDealChat) {
     $scope.deals = [];
+    
 
     $scope.findDeals = function(){
       $scope.deals = Deal.query({ action:'table', status: 'a' });
@@ -43,7 +44,6 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
     };
 
     $scope.findAllBuyers = function(){
-      console.log('asasdasd');
       $scope.buyers = Buyer.query();
     };
     
@@ -154,6 +154,24 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
         total += product.volume;
       }
       return total;
+    };
+
+    $scope.getSellTotal= function(){
+      var selltotal = 0; 
+      for(var i = 0; i < $scope.sellOrders.length; i++){
+        var product = $scope.sellOrders[i];
+        selltotal += product.volume * product.min_price;
+      }
+      return selltotal;
+    };
+
+    $scope.getbuyTotal= function(){
+      var buytotal = 0;
+      for(var i = 0; i < $scope.buyOrders.length; i++){
+        var product = $scope.buyOrders[i];
+        buytotal += product.volume * product.max_price;
+      }
+      return buytotal;
     };
     
     $scope.createDeal = function(){

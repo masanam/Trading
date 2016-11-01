@@ -29,6 +29,6 @@ class SellOrder extends Model
     }
 
     public function Port() {
-        return $this->hasOne('App\Model\Port');
+        return $this->hasOne('App\Model\Port', 'id', 'port_id');
     }
 }
