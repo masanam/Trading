@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module('order').controller('ModalBuyOrderController', function ($scope, $stateParams, $uibModalInstance, $interval, Buyer, Order, $location) {
+angular.module('order').controller('ModalSellOrderController', function ($scope, $stateParams, $uibModalInstance, $interval, Seller, Order, $location) {
   
-  //Options Preferred Buying Term
+  //Options Preferred Selling Term
   $scope.data = {
     availableOptions: [
       { id: 'TT', name: 'TT' },
@@ -11,12 +11,12 @@ angular.module('order').controller('ModalBuyOrderController', function ($scope, 
     ]
   };
 
-  //creating a customer/buyer
+  //creating a supplier/seller
   $scope.create = function() {
     $scope.loading = true;
-    var buyer = new Buyer($scope.buyer);
+    var seller = new Seller($scope.seller);
 
-    buyer.$save(function(res) {
+    seller.$save(function(res) {
       $scope.success = true;
       $scope.progress = 0;
       var stop = $interval(function() {
@@ -28,23 +28,23 @@ angular.module('order').controller('ModalBuyOrderController', function ($scope, 
           $interval.cancel(stop);
           stop = undefined;
 
-          //go to step factory
+          //go to step concession
           $scope.order = new Order({
-            buyer_id: res.id,
+            seller_id: res.id,
             order_status: 1
           });
 
-          //from existing order / back button
+          //go to step concession from existing order / back button
           if ($stateParams.order_id) {
-            $scope.order.$update({ type: 'buy', id: $stateParams.order_id }, function(res) {
-              $location.path('buy-order/create/factory/'+res.buyer_id+'/'+res.id);
+            $scope.order.$update({ type: 'sell', id: $stateParams.order_id }, function(res) {
+              $location.path('sell-order/create/concession/'+res.seller_id+'/'+res.id);
               $uibModalInstance.close('success');
             });
           }
-          //new order
+          //go to step concession new order
           else{
-            $scope.order.$save({ type: 'buy' }, function(res) {
-              $location.path('buy-order/create/factory/'+res.buyer_id+'/'+res.id);
+            $scope.order.$save({ type: 'sell' }, function(res) {
+              $location.path('sell-order/create/concession/'+res.seller_id+'/'+res.id);
               $uibModalInstance.close('success');
             });
           }

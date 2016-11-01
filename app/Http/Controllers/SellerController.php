@@ -87,7 +87,7 @@ class SellerController extends Controller
         $seller->status = 'a';
         $seller->save();
 
-        event(new InputEditCoalpedia(Auth::user(), $seller->id, 'sellers', 'create'));
+        // event(new InputEditCoalpedia(Auth::user(), $seller->id, 'sellers', 'create'));
 
         return response()->json($seller, 200);
     }

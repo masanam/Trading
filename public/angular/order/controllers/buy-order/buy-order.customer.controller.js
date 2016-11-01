@@ -15,7 +15,6 @@ angular.module('order').controller('BuyOrderCustomerController', ['$scope', '$st
     $scope.nextToFactory = function(order_id){
       $scope.order = order_id ;
       //new order
-      console.log($scope.order.order_id);
       if ($scope.order.order_id===undefined) {
         $scope.order = new Order({
           buyer_id: $scope.buyer.selected.id

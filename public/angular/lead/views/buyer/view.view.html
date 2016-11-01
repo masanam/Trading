@@ -142,6 +142,57 @@
           </div>
         </div>
       </div>
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title" style="font-size: 25px">Factorys</h3>
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-info" ng-click="addFactory()"><i class="glyphicon glyphicon-plus"></i> Add New Factorys</button>
+          </div>
+        </div>
+        <div class="box-body">
+          <div class="row" style="margin: 10px;">
+          
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th><i class="glyphicon glyphicon-map-marker"></i> Location</th>
+                  <th><i class="glyphicon glyphicon-scale"></i> Consumption (tonnes)</th>
+                  <th><!--span class="pull-right">
+                    <a ui-sref="lead.view-product({ id: product.id })"><i class="glyphicon glyphicon-eye-open"></i></a>
+                    <a href="#" ng-click="deleteProduct(product)"><i class="glyphicon glyphicon-remove"></i></a>
+                  </span--></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="factory in buyer.factory">
+                  <td>{{ factory.factory_name }}</td>
+                  <td>{{ factory.longitude | number }}, {{ factory.latitude | number }} (Port: {{ factory.port_name || 'N/A' }})</td>
+                  <td>{{ factory.consumption | number }}</td>
+                  <td><span class="pull-right">
+                    <a ui-sref="lead.view-factory({ id: factory.id })"><i class="glyphicon glyphicon-eye-open"></i></a>
+                    <span class="pull-right">
+                      <a href="#" ng-click="deleteFactory(factory)"><i class="glyphicon glyphicon-remove"></i></a>
+                    </span>
+                  </span></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <!--ul class="list-group">
+              <li class="list-group-item" ng-repeat="concession in seller.concession">
+                {{ concession.concession_name }}
+                <i class="glyphicon glyphicon-map-marker" style="margin-left: 50px;"></i>
+                  {{ concession.longitude | number }}, {{ concession.latitude | number }} (Port: {{ concession.port_name || 'N/A' }})
+                <i class="glyphicon glyphicon-scale" style="margin-left: 50px;"></i> {{ concession.reserves | number }} tones
+                <span class="pull-right">
+                  <a href="#" ng-click="deleteConcession(concession)"><i class="glyphicon glyphicon-remove"></i></a>
+                </span>
+              </li>
+            </ul-->
+          </div>
+        </div>
+      </div>
       <!--div class="box box-info">
         <div class="box-header with-border">
           <h3 class="box-title" style="font-size: 25px">Insights</h3>
