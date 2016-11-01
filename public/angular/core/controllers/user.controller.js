@@ -3,6 +3,8 @@
 angular.module('user').controller('UserController', ['$scope', '$http', '$stateParams', '$state', 'User', 'Authentication', 'S3Upload',
   function($scope, $http, $stateParams, $state, User, Authentication, S3Upload) {
     $scope.user = {};
+    $scope.password = '';
+    $scope.cpassword = '';
 
     $scope.selectImage = function(files) {
       if (files) {
@@ -29,11 +31,17 @@ angular.module('user').controller('UserController', ['$scope', '$http', '$stateP
 
     $scope.update = function() {
       $scope.loading = true;
-
-      $scope.user.$update({ id: $scope.user.id }, function(response) {
-        $state.go('user.index');
-        $scope.loading = false;
-      });
+      
+      if($scope.user.password === $scope.user.cpassword){
+        
+        $scope.user.$update({ id: $scope.user.id }, function(response) {
+          $state.go('user.index');
+          $scope.loading = false;
+        });
+      } else {
+        alert('Password does not match!');
+      }
+      
     };
 
     $scope.resetPassword = function() {

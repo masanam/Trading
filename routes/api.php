@@ -21,7 +21,7 @@ Route::group(['middleware' => ['cors']], function() {
     Route::get('authenticate/user', 'AuthenticateController@getAuthenticatedUser');
 
     //S3 Upload file signing API
-    Route::post('signing', 'AuthenticateController@upload');
+    Route::post('signing', 'AuthenticateController@signing');
 
     //Coal Index Price API
     Route::post('index/price', 'IndexController@price');
@@ -93,7 +93,7 @@ Route::group(['middleware' => ['cors']], function() {
 
     //Concession Management API
     Route::get('concession/total', 'ConcessionController@getTotalConcession');
-    Route::get('concession/search', 'ConcessionController@search');
+    //Route::get('concession/search', 'ConcessionController@search');
     Route::get('concession/filter', 'ConcessionController@filter');
     Route::get('concession/my/{id}', 'ConcessionController@findMyConcession');
     Route::get('concession/detail/{id}', 'ConcessionController@detail');
@@ -159,6 +159,7 @@ Route::group(['middleware' => ['cors']], function() {
     
     Route::get('deal/table/{status}', 'DealController@index');
     Route::get('deal/status/{deal}/{status}', 'DealController@changeStatus');
+    Route::get('deal/user/{user}', 'DealController@findByUser');
     Route::resource('deal', 'DealController', ['except' => [
         'index', 'create', 'edit', 'destroy'
     ]]);
