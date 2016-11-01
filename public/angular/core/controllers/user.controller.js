@@ -14,12 +14,12 @@ angular.module('user').controller('UserController', ['$scope', '$http', '$stateP
           if(err) return alert(err);
 
           //kalo sukses, ubah database nama file nya
-          var fileUrl = config.url + '/' + folder + '/' + $scope.authentication.user.username + '/' + filename;
+          var fileUrl = config.url + '/' + folder + '/' + filename;
           var profile = new User(Authentication.user);
           profile.image = fileUrl;
           
-          profile.$update(function () {
-            $scope.user.image = $scope.profile.image = Authentication.user.image = fileUrl;
+          profile.$update({ id: profile.id }, function () {
+            $scope.user.image = Authentication.user.image = fileUrl;
           }, function (errorResponse) {
             $scope.error = errorResponse.data.message;
           });
