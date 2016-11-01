@@ -35,29 +35,29 @@
       </li>
       <li class="treeview">
         <a ui-sref="order.index">
-          <i class="ion ion-archive" style="font-size: 20px; margin-left: -3px;"></i>
-          <span>Buy / Sell Leads</span>
+          <i class="ion ion-magnet" style="font-size: 20px; margin-left: -3px;"></i>
+          <span>Leads</span>
         </a>
         <ul class="treeview-menu">
-          <li><a ui-sref="buy-order.index"><i class="ion ion-log-in"></i> Buy Order</a></li>
-          <li><a ui-sref="sell-order.index"><i class="ion ion-log-out"></i> Sell Order</a></li>
+          <li><a ui-sref="buy-order.index"><i class="ion ion-log-in"></i> Buy Leads</a></li>
+          <li><a ui-sref="sell-order.index"><i class="ion ion-log-out"></i> Sell Leads</a></li>
         </ul>
       </li>
       <li class="treeview">
         <a ui-sref="deal.index">
-          <i class="ion ion-cash" style="font-size: 20px; margin-left: -3px;"></i>
+          <i class="ion ion-pricetags" style="font-size: 20px; margin-left: -3px;"></i>
           <span>Orders</span>
         </a>
       </li>
       <li class="treeview">
         <a ui-sref="history-order.index">
-          <i class="ion ion-ios-refresh" style="font-size: 20px; margin-left: -3px;"></i>
+          <i class="ion ion-document-text" style="font-size: 20px; margin-left: -3px;"></i>
           <span>History</span>
         </a>
       </li>
       <li class="treeview" ng-if="Authentication.user.role === 'manager'">
         <a ui-sref="index.list">
-          <i class="ion ion-ios-cog" style="font-size: 20px; margin-left: -3px;"></i>
+          <i class="ion ion-gear-a" style="font-size: 20px; margin-left: -3px;"></i>
           <span>Management</span>
         </a>
         <ul class="treeview-menu">
