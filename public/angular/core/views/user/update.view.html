@@ -13,7 +13,8 @@
             <div class="widget-user-image" aria-label="{{profile.name}}" ng-change="selectImage(pic)"
               ngf-select ng-model="pic" name="file" ngf-pattern="'image/*'"  ngf-min-height="100"
               ngf-accept="'image/*'" ngf-max-size="1MB" ngf-resize="{width: 500, height: 500}">
-              <img class="img-circle" src="{{ Authentication.user.image }}" alt="User Avatar">
+              <div style="background-image:url({{ Authentication.user.image }});"  
+                class="img-circle div-img-circle big" alt="User Avatar"></div>
             </div>
             <div class="box-footer">
               <div class="row">

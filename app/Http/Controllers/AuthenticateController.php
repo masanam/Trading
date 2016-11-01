@@ -136,19 +136,5 @@ class AuthenticateController extends Controller
         ];
 
         return response()->json($credentials);
-
-        // $client = $s3->getDriver()->getAdapter()->getClient();
-
-        // $command = $client->getCommand('PutObject', [
-        //     'Bucket' => config('filesystems.disks.s3.bucket'),
-        //     'Key'    => $path,
-        //     'ContentType' => $request->type,
-        //     'Content-Disposition' => 'multipart/form-data;',
-        //     'ACL' => 'public-read'
-        // ]);
-
-        // $request = $client->createPresignedRequest($command, $expiration);
-
-        // return response()->json([ 'url' => (string) $request->getUri() ]);
     }
 }
