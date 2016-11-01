@@ -7,6 +7,7 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Support\Facades\Storage;
+
 use Illuminate\Support\Facades\Config;
 
 use App\Model\User;
@@ -99,28 +100,42 @@ class AuthenticateController extends Controller
 
     public function signing(Request $request)
     {
-      /*var_dump($request);
-      $image = $request->file('file');
-      $imageFileName = time() . '.' . $image->getClientOriginalExtension();
-      $s3 = \Storage::disk('s3');
-      $filePath = '/abc/' . $imageFileName;
-      $s3->put($filePath, file_get_contents($image), 'public');*/
-      
-      //return response()->json([ 'url' => (string) $request->getUri() ]);
-      
-        $disk = Storage::disk('s3');
-        //$bucket = Config::get('filesystems.disks.s3.bucket');
-        $bucket = config('s3upload');
-        $key = $request->filename;
+        $aws = config('filesystems.disks.s3');
+        $s3 = Storage::disk('s3');
 
-        if ($disk->exists($key)) {
-          $command = $disk->getDriver()->getAdapter()->getClient()->getCommand('GetObject', [
-            'Bucket'                     => $bucket,
-            'Key'                        => $key,
-            'ResponseContentDisposition' => 'attachment;'
-          ]);
-          $request = $disk->getDriver()->getAdapter()->getClient()->createPresignedRequest($command, '+5 minutes');
-          return response()->json([ 'url' => (string) $request->getUri() ]);
-        }
+        $s3Url = 'https://' . $aws['bucket'] . '.s3-' . $aws['region'] . '.amazonaws.com';
+        $filename = $request->filename;
+        $path = $request->folder . '/' . $filename;
+        $readType = 'public-read';
+        $expiration = date('Y-m-d\TH:i:s\Z', strtotime('+5 minutes'));
+
+        $s3Policy = [
+            'expiration' => $expiration,
+            'conditions' => [
+                [ 'bucket' => $aws['bucket'] ],
+                [ 'starts-with', '$key', $path ],
+                [ 'acl' => $readType ],
+                [ 'success_action_status' => '201' ],
+                //[ 'starts-with', '$Content-Type', $request->type ],
+                [ 'content-length-range', 2048, 10485760 ], //min and max
+            ]
+        ];
+        $base64Policy = base64_encode(json_encode($s3Policy));
+        $signature = base64_encode(hash_hmac( 'sha1', utf8_encode($base64Policy), $aws['secret'], true));
+
+        $credentials = [
+            'url' => $s3Url,
+            'fields' => [
+                'key' => $path,
+                'AWSAccessKeyId' => $aws['key'],
+                'acl' => $readType,
+                'policy' => $base64Policy,
+                'signature' => $signature,
+                //'Content-Type' => $request->type,
+                'success_action_status' => '201'
+            ]
+        ];
+
+        return response()->json($credentials);
     }
 }

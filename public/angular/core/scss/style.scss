@@ -275,6 +275,20 @@ ul.nav-wizard.nav-wizard-backnav .active ~ li a:focus {
    margin: 0 !important;
 }
 
+.div-img-circle {
+  background-size:cover;
+
+}
+
+.small {
+  height:30px; width:30px;
+  border: white 1px solid;
+}
+.big {
+  height:100px; width:100px;
+  border: white 3px solid;
+}
+
 /*.panel-body
 {
     overflow-y: scroll;

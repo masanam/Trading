@@ -5,7 +5,8 @@
     <!-- Sidebar user panel -->
     <div class="user-panel" ui-sref="user.edit">
       <div class="pull-left image">
-        <img src="{{ Authentication.user.image }}" class="img-circle" alt="User Image">
+        <div style="background-image:url({{ Authentication.user.image }});"  
+          class="img-circle div-img-circle small" alt="User Image"></div>
       </div>
       <div class="pull-left info">
         <p>{{ Authentication.user.name }}</p>

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('order').controller('BuyOrderProductController', ['$scope', '$stateParams', '$location', '$uibModal', 'Product', 'Order',
+angular.module('order').controller('SellOrderProductController', ['$scope', '$stateParams', '$location', '$uibModal', 'Product', 'Order',
   function($scope, $stateParams, $location, $uibModal, Product, Order) {
 
     $scope.product = {};
@@ -8,24 +8,24 @@ angular.module('order').controller('BuyOrderProductController', ['$scope', '$sta
 
     //Init select product
     $scope.findMyProducts = function() {
-      $scope.products = Product.query({ action: 'my', id: $stateParams.id, type: 'buyer' }, function(products){
+      $scope.products = Product.query({ action: 'my', id: $stateParams.id, type: 'seller' }, function(products){
         if(products.length === 0){
           $scope.openModal();
         }
       });
     };
 
-    //back button to factory
-    $scope.backToFactory = function(){
-      $location.path('buy-order/create/factory/'+$stateParams.id+'/'+$stateParams.order_id);
+    //back button to concession
+    $scope.backToConcession = function(){
+      $location.path('sell-order/create/concession/'+$stateParams.id+'/'+$stateParams.order_id);
     };
 
     //button next to port page and update order
     $scope.nextToPort = function(){
       if($scope.product.selected.volume) {
-        Order.get({ type: 'buy', id: $stateParams.order_id }, function(res){
+        Order.get({ type: 'sell', id: $stateParams.order_id }, function(res){
           $scope.order = res;
-          $scope.order.buyer_id = $stateParams.id;
+          $scope.order.seller_id = $stateParams.id;
           $scope.order.product_name = $scope.product.selected.product_name;
           $scope.order.product_id = $scope.product.selected.id;
           $scope.order.gcv_arb_min = $scope.product.selected.gcv_arb_min;
@@ -75,8 +75,8 @@ angular.module('order').controller('BuyOrderProductController', ['$scope', '$sta
           $scope.order.volume = $scope.product.selected.volume;
           $scope.order.order_status = 3;
           
-          $scope.order.$update({ type: 'buy', id: $stateParams.order_id }, function(res) {
-            $location.path('buy-order/create/port/'+$stateParams.id+'/'+$stateParams.order_id+'/'+$stateParams.factory_id);
+          $scope.order.$update({ type: 'sell', id: $stateParams.order_id }, function(res) {
+            $location.path('sell-order/create/port/'+$stateParams.id+'/'+$stateParams.order_id+'/'+$stateParams.concession_id);
           });
         });
       }
@@ -86,12 +86,12 @@ angular.module('order').controller('BuyOrderProductController', ['$scope', '$sta
       
     };
     
-    //open modal create factory
+    //open modal create concession
     $scope.openModal = function () {
       var modalInstance = $uibModal.open({
         windowClass: 'xl-modal',
-        templateUrl: './angular/order/views/buy-order/modal.product.view.html',
-        controller: 'ProductModalBuyOrderController',
+        templateUrl: './angular/order/views/sell-order/modal.product.view.html',
+        controller: 'ProductModalSellOrderController',
         scope: $scope
       });
     };
