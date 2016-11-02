@@ -66,7 +66,7 @@ class ConcessionController extends Controller
               foreach($_GET['lt'] as $input_lt){
                 $lt_params = explode(",",$input_lt);
                 $concession = $concession->whereHas('Product' , function($q) use ($lt_params) {
-                                            $q->where('products.'.$gt_params[0].'_max', '<=', $lt_params[1]);
+                                            $q->where('products.'.$lt_params[0].'_max', '<=', $lt_params[1]);
                                           });
               }
             }
@@ -87,14 +87,12 @@ class ConcessionController extends Controller
             }
             if(isset($_GET['concession'])) {
               $concession_param = $_GET['concession'];
-              $concession = $concession->whereHas('Concession' , function($q) use ($concession_param) {
-                                      $q->where([['concession.status', 'a'],['concession.concession_name', 'LIKE' , '%'.$concession_param.'%']]);
-                                    });
+              $concession = $concession->where('concession.concession_name', 'LIKE' , '%'.$concession_param.'%');
             }
             if(isset($_GET['seller'])) {
               $seller_param = $_GET['seller'];
               $concession = $concession->whereHas('Seller' , function($q) use ($seller_param) {
-                                      $q->where([['sellers.status', 'a'],['sellers.seller_name', 'LIKE' , '%'.$seller_param.'%']]);
+                                      $q->where([['sellers.status', 'a'],['sellers.company_name', 'LIKE' , '%'.$seller_param.'%']]);
                                     });
             }
             if(isset($_GET['port'])) {
@@ -103,6 +101,7 @@ class ConcessionController extends Controller
                                       $q->where([['ports.port_name', 'LIKE' , '%'.$port_param.'%']]);
                                     });
             }
+            //var_dump($concession->toSql());
             $concession = $concession->where('concession.status', 'a')->get();
         }
 
