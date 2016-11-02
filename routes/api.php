@@ -45,6 +45,8 @@ Route::group(['middleware' => ['cors']], function() {
     //Port Management API
     Route::post('port/buyer/store', 'PortController@storeBuyerPort');
     Route::post('port/seller/store', 'PortController@storeSellerPort');
+    Route::get('port/buyer/allMy/{buyer_id}', 'PortController@buyerAllMyPort');
+    Route::get('port/seller/allMy/{seller_id}', 'PortController@sellerAllMyPort');
     Route::get('port/buyer/my/{buyer_id}', 'PortController@buyerMyPort');
     Route::get('port/seller/my/{seller_id}', 'PortController@sellerMyPort');
     Route::get('port/buyer/status/{buyer_id}/{port_id}/{status}', 'PortController@changePortStatusBuyer');
@@ -70,7 +72,7 @@ Route::group(['middleware' => ['cors']], function() {
     //Factory Management API
     Route::get('factory/my/{id}', 'FactoryController@findMyFactory');
     Route::resource('factory', 'FactoryController', ['except' => [
-        'create'
+        'create', 'edit'
     ]]);
 
 
