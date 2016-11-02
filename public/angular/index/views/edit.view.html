@@ -1,5 +1,8 @@
 <div class="box-header">
-  <h1>Edit Index</h1>
+  <a class="btn btn-default" ui-sref="index.list">
+    <i class="glyphicon glyphicon-chevron-left"></i> Back
+  </a>
+  <h1 class="box-title">Edit Index</h1>
 </div>
 <div class="box-body" ng-init="findOne()">
   <form name="articleForm" class="form-horizontal" ng-submit="update(articleForm.$valid)">
