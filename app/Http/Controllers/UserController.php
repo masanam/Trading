@@ -36,9 +36,16 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $user = User::where(['email' => $request->email])->get();
+        
         if(!$request) {
             return response()->json([
                 'message' => 'Bad Request'
+            ], 400);
+        }
+        else if(!empty($user)){
+            return response()->json([
+                'message' => 'Your email is already registered. If you forgot your password, please send an enquiry to info@volantech.io'
             ], 400);
         }
 
