@@ -25,6 +25,7 @@ class CreateBuyOrderTable extends Migration
             $table->date('ready_date')->nullable();
             $table->date('expired_date')->nullable();
 
+            $table->integer('factory_id')->nullable(); //weak relation tempat dikirim
             $table->string('address')->nullable();
             $table->string('city')->nullable();
             $table->string('country')->nullable();
@@ -93,7 +94,7 @@ class CreateBuyOrderTable extends Migration
             $table->string('payment_terms')->nullable();
             $table->longText('commercial_term')->nullable();
             $table->longText('penalty_desc')->nullable();
-            $table->char('order_status', 1); // customer(1), factory(2), product(3), port(4), lead(l), open(o), staged(s), finish(f), cancel(c), deleted(x)
+            $table->char('order_status', 1); // customer(0), factory(1), product(2), port(3), summary(4), lead(l), open(o), staged(s), finish(f), cancel(c), deleted(x)
             $table->char('progress_status', 1)->nullable();
 
             $table->timestamps();

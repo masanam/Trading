@@ -22,6 +22,7 @@ angular.module('order').controller('FactoryModalBuyOrderController',
             stop = undefined;
             $scope.order = new Order({
               buyer_id: $stateParams.id,
+              factory_id: res.id,
               address: res.address,
               city: res.city,
               country: res.country,

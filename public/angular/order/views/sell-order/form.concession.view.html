@@ -20,6 +20,12 @@
     <span class="input-group-addon">Country of coal purchase*</span>
     <input type="text" class="form-control" placeholder="Country" ng-model="concession.country" required>
   </div>
+  <div class="input-group col-md-12" style="margin-bottom: 5px;">
+    <span class="input-group-addon" style="width: 200px;">Latitude</span>
+    <input type="number" min="-90" max="90" step="any" class="form-control" placeholder="Latitude" ng-model="concession.latitude" required>
+    <span class="input-group-addon" style="width: 200px;">Longitude</span>
+    <input type="number" min="-180" max="180" step="any" class="form-control" placeholder="Longitude" ng-model="concession.longitude" required>
+  </div>
 </div>  
 
 <div class="row">
@@ -82,15 +88,6 @@
     <div class="input-group col-md-12" style="margin-bottom: 5px;">
       <span class="input-group-addon" style="width: 200px;">Name</span>
       <input type="text" class="form-control" id="port_name" ng-model="concession.port_name" required>
-      <span class="input-group-addon" style="width: 200px;">Distance</span>
-      <input type="number" min="0" step="any" class="form-control" id="port_distance" ng-model="concession.port_distance" required>
-    </div>
-    <div class="input-group col-md-12" style="margin-bottom: 5px;">
-      <span class="input-group-addon" style="width: 200px;">Latitude</span>
-      <input type="number" min="-90" max="90" step="any" class="form-control" placeholder="Latitude" ng-model="concession.latitude" required>
-      <span class="input-group-addon" style="width: 200px;">Longitude</span>
-      <input type="number" min="-180" max="180" step="any" class="form-control" placeholder="Longitude" ng-model="concession.longitude" required>
-    </div>
 </div>
 
 <div class="form-group">
