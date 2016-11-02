@@ -14,7 +14,7 @@ angular.module('factory').controller('FactoryController', ['$scope', '$statePara
         scope: $scope
       });
     };
-
+    
     $scope.nextToProduct = function(){
       $location.path('lead/buyer/'+$stateParams.id+'/setup-product');
     };

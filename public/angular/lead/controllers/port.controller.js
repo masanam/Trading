@@ -156,6 +156,7 @@ angular.module('port').controller('PortModalController', function ($scope, $stat
       owner: $scope.port.owner,
       size: $scope.port.size
     });
+    console.log('haha');
     port.$save(function(res) {
       $scope.port = res;
       $scope.buyer_port.buyer_id = $stateParams.id;

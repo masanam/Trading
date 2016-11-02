@@ -41,8 +41,11 @@
 <div class="form-group">
   <label>Port Location</label>
   <div class="input-group col-md-12" style="margin-bottom: 5px;">
-    <span class="input-group-addon" style="width: 200px;">Name</span>
-    <input type="text" class="form-control" id="port_name" ng-model="factory.port_name" required>
+    <span class="input-group-addon" style="width: 200px;">Port Name</span>
+    <!--input type="text" class="form-control" id="port_name" ng-model="factory.port_name" required-->
+    <select ng-model="factory.port_id" class="form-control" ng-options='port.id as port.port_name for port in ports'>
+      <!--option ng-repeat="port in ports" value="{{port.id}}">{{port.port_name}}</option-->
+    </select>
     <span class="input-group-addon" style="width: 200px;">Distance (km)</span>
     <input type="number" min="0" step="any" class="form-control" id="port_distance" ng-model="factory.port_distance" required>
   </div>
