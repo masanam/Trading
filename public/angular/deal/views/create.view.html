@@ -3,7 +3,7 @@
       <div class="col-md-12">
           <div class="box box-primary box-solid">
             <div class="box-header with-border">
-              <h3 class="box-title">Create New Deals</h3>
+              <h3 class="box-title">Create New Order</h3>
                <button ui-sref="deal.index" class="btn btn-default">< Back</button> 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -15,8 +15,41 @@
 
               <section class="row">
                 <div class="col-md-12">
-                  <div class="col-md-3">
-                    <div class="panel panel-default col-md-12">
+                  
+
+                  <div class="panel panel-primary col-md-6">
+                    <h4>Buying Cost : $ {{ getbuyTotal() | number }}</h4> 
+                    <h4>Selling Price : $ {{ getSellTotal() | number }}</h4>
+                    <h4>Expected Margin : $ {{ getbuyTotal() - getSellTotal() | number }} </h4>
+                    <h4>Index Deviation</h4>
+                  </div>  
+
+                  
+                
+                 <div class="col-md-6">
+                    <div class="panel panel-primary col-md-12">
+                    <h1>Grafik</h1>
+                      <div class="form-group" ng-init="getIndices()">
+                        <label for="chose">Choose index:</label>
+                        <!-- <select class="form-control" id="mine" ng-model="order.mine" ng-change="order.mine_id = order.mine.id" ng-options="mine as mine.mine_name for mine in mines track by mine.id">
+                        </select> -->
+                        <select class="form-control" id="index" ng-model="index">
+                          <option value=""></option>
+                          <option ng-repeat="index in indices" value="{{ index.id }}">  {{ index.index_provider }} - {{ index.index_name }}</option>
+                        </select>
+                      </div>
+
+                    
+                    </div>
+                 </div>    
+
+                </div>
+              </section>
+
+              <section class="row">
+                <div class="col-md-12">
+                <div class='col-md-3'>
+                  <div class="panel panel-primary col-md-12">
                       <h1>Buy Order</h1>
                       <section ng-if="buyOrders.length > 0">
                         <div ng-repeat="order in buyOrders" class="panel panel-default">
@@ -62,9 +95,12 @@
                         </div>
                       </section>
                     </div>
-                  </div>
-                  <div class="col-md-3">
-                    <div class="panel panel-default col-md-12">
+                </div>
+                    
+
+
+                    <div class='col-md-3'>
+                      <div class="panel panel-primary col-md-12">
                       <h1>Sell Order</h1>
                       <section ng-show="sellOrders.length > 0">
                         <div ng-repeat="order in sellOrders" ng-click="openSellModal(order)" class="panel panel-default">
@@ -111,38 +147,12 @@
                         </div>
                       </section>
                     </div>
-                  </div>
-                
-                 <div class="col-md-6">
-                    <div class="panel panel-default col-md-12">
-                    <h1>Grafik</h1>
-                      <div class="form-group" ng-init="getIndices()">
-                        <label for="chose">Choose index:</label>
-                        <!-- <select class="form-control" id="mine" ng-model="order.mine" ng-change="order.mine_id = order.mine.id" ng-options="mine as mine.mine_name for mine in mines track by mine.id">
-                        </select> -->
-                        <select class="form-control" id="index" ng-model="index">
-                          <option value=""></option>
-                          <option ng-repeat="index in indices" value="{{ index.id }}">  {{ index.index_provider }} - {{ index.index_name }}</option>
-                        </select>
-                      </div>
-
-                    
                     </div>
-                 </div>    
+                    
+               
+                  
 
-                </div>
-              </section>
-
-              <section class="row">
-                <div class="col-md-12">
-                 <div class="panel panel-default col-md-6">
-                    <h4>Buying Cost : $ {{ getbuyTotal() | number }}</h4> 
-                    <h4>Selling Price : $ {{ getSellTotal() | number }}</h4>
-                    <h4>Expected Margin : $ {{ getbuyTotal() - getSellTotal() | number }} </h4>
-                    <h4>Index Deviation</h4>
-                 </div>   
-
-                 <div class="panel panel-default col-md-6">
+                 <div class="panel panel-primary col-md-6">
                     <h1>Chat</h1>
 
                  </div>   
