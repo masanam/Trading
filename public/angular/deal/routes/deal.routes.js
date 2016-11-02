@@ -29,6 +29,7 @@ angular.module('deal').config(['$stateProvider', '$urlRouterProvider',
       .state('deal.update', {
         url: '/{id}/update',
         templateUrl: '/angular/deal/views/update.view.html'
-      });
+      }):
+    
   }
 ]);

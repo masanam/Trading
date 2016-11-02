@@ -19,7 +19,7 @@
       </tr>
   </thead>
   <tbody>
-    <tr ng-repeat="deal in dealCollections" ui-sref="deal.view({id: deal.id})">
+    <tr ng-repeat="deal in dealCollections" >
       <td st-ratio="20">{{deal.trader_name}}</td>
       <td st-ratio="10">{{deal.buyer_name}}</td>
       <td st-ratio="10">{{deal.seller_name}}</td>
@@ -39,11 +39,11 @@
       <td st-ratio="10">{{deal.total_cogs | number }}</td>
       <td st-ratio="10">{{ (deal.total_sales-deal.total_cogs) | number }}</td>
       <td>
-          <deal-status status=deal.status></deal-status>
+          <badge badge-warning>Open</badge>
       </td>
       <td>
-          <a ui-sref="lead.view-buyer({ id: buyer.id })"><i class="glyphicon glyphicon-info-sign"></i></a>
-          <a ui-sref="lead.update-buyer({ id: buyer.id })"><i class="glyphicon glyphicon-pencil"></i></a>
+          <a ui-sref="deal.view({id: deal.id})"><i class="glyphicon glyphicon-info-sign"></i></a>
+          <a ui-sref="deal.view({id: deal.id})"><i class="glyphicon glyphicon-pencil"></i></a>
           <a ng-click="delete(buyer)"><i class="glyphicon glyphicon-trash"></i></a>
       </td>
     </tr>
