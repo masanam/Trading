@@ -11,6 +11,8 @@ angular.module('order').controller('ConcessionModalSellOrderController',
       $scope.concession.seller_id = $stateParams.id;
       
       $scope.concession.$save(function (res) {
+
+        console.log(res);
         $scope.progress = 0;
         $scope.success = true;
         $scope.concession_id = res.id;
@@ -22,6 +24,7 @@ angular.module('order').controller('ConcessionModalSellOrderController',
             stop = undefined;
             $scope.order = new Order({
               seller_id: $stateParams.id,
+              concession_id: res.id,
               address: res.address,
               city: res.city,
               country: res.country,

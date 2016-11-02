@@ -27,8 +27,10 @@ Route::group(['middleware' => ['cors']], function() {
     Route::post('index/price', 'IndexController@price');
     Route::post('index/single-price', 'IndexController@singlePrice');
     Route::get('index/single-date', 'IndexController@singleDate');
+    Route::post('index/single-date', 'IndexController@storeSingleDate');
     Route::get('index/{id}/price', 'IndexController@indexPrice');
     Route::resource('index', 'IndexController');
+    Route::resource('index/price', 'IndexPriceController');
 
     //User Management API
     //Forgot Password API
@@ -72,6 +74,8 @@ Route::group(['middleware' => ['cors']], function() {
     //Port Management API
     Route::post('port/buyer/store', 'PortController@storeBuyerPort');
     Route::post('port/seller/store', 'PortController@storeSellerPort');
+    Route::get('port/buyer/allMy/{buyer_id}', 'PortController@buyerAllMyPort');
+    Route::get('port/seller/allMy/{seller_id}', 'PortController@sellerAllMyPort');
     Route::get('port/buyer/my/{buyer_id}', 'PortController@buyerMyPort');
     Route::get('port/seller/my/{seller_id}', 'PortController@sellerMyPort');
     Route::get('port/buyer/status/{buyer_id}/{port_id}/{status}', 'PortController@changePortStatusBuyer');

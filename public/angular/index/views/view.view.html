@@ -1,10 +1,13 @@
-<div class="box-info" ng-init="findOne()">
+<div class="box-header" ng-init="findOne()">
   <h1 class="box-title">{{ index.index_provider }} {{ index.index_name }}</h1>
   <p>{{ index.quality }}</p>
+  <span class="badge badge-primary">
+    {{ index.frequency === 'm' ? 'Monthly' : index.frequency === 'w' ? 'Weekly' : 'Daily' }}
+  </span>
   <div class="box-tools pull-right">
-    <span class="badge badge-primary">
-      {{ index.frequency === 'm' ? 'Monthly' : index.frequency === 'w' ? 'Weekly' : 'Daily' }}
-    </span>
+    <a class="btn btn-default" ui-sref="index.list">
+      <i class="glyphicon glyphicon-chevron-left"></i> Back
+    </a>
     <a class="btn btn-primary" ui-sref="index.edit({indexId: index.id})">
       <i class="glyphicon glyphicon-edit"></i>
     </a>

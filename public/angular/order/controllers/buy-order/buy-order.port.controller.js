@@ -10,7 +10,23 @@ angular.module('order').controller('BuyOrderPortController', ['$scope', '$stateP
 
     //Init select port
     $scope.findAllPorts = function(){
-      $scope.ports = Port.query();
+      Order.get({ type: 'buy', id: $stateParams.order_id }, function(res){
+        Port.query({ type: 'buyer', action: 'allMy', id:res.buyer_id }, function(res){
+          for (var i=0; i<res.length; i++){
+            res[i].latitude = parseFloat(res[i].latitude);
+            res[i].longitude = parseFloat(res[i].longitude);
+          }
+          $scope.ports = res;
+        });
+        $scope.port.distance = parseFloat(res.factory.port_distance);
+        if (res.factory.port_id) {
+          Port.get({ id:res.factory.port_id }, function(res){
+            res.latitude = parseFloat(res.latitude);
+            res.longitude = parseFloat(res.longitude);
+            $scope.port.selected = res;
+          });
+        }
+      });
     };
 
     //selected port after create new

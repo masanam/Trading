@@ -9,6 +9,7 @@ use App\Model\Concession;
 use Auth;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 use App\Http\Requests;
 
@@ -24,11 +25,21 @@ class PortController extends Controller
      */
     public function index()
     {
-        $port = Port::get();
+        $port = Port::where('is_private', '=', 0)->get();
         foreach ($port as $temp) {
             $temp->latitude = floatval($temp->latitude);
             $temp->longitude = floatval($temp->longitude);
         }
+        return response()->json($port, 200);
+    }
+
+    public function buyerAllMyPort($buyer_id){
+        $port =  Port::leftJoin('buyer_port', 'ports.id', '=', 'buyer_port.port_id')->where('buyer_port.buyer_id', '=', $buyer_id)->orwhere('buyer_port.buyer_id', '=', null)->get();
+        return response()->json($port, 200);
+    }
+
+    public function sellerAllMyPort($seller_id){
+        $port =  Port::leftJoin('seller_port', 'ports.id', '=', 'seller_port.port_id')->where('seller_port.seller_id', '=', $seller_id)->orwhere('seller_port.seller_id', '=', null)->get();
         return response()->json($port, 200);
     }
 

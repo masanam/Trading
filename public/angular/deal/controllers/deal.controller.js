@@ -6,15 +6,23 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
     
 
     $scope.findDeals = function(){
-      $scope.deals = Deal.query({ action:'table', status: 'a' });
-    };
-    
-    $scope.findFinished = function(){
       $scope.deals = Deal.query({ action:'table', status: 'f' });
     };
     
+    $scope.findOpen = function(){
+      $scope.deals = Deal.query({ action:'table', status: 'o' });
+    };
+    
     $scope.findCancelled = function(){
+      $scope.deals = Deal.query({ action:'table', status: 'c' });
+    };
+
+    $scope.findDelete = function(){
       $scope.deals = Deal.query({ action:'table', status: 'x' });
+    };
+
+    $scope.findDraft = function(){
+      $scope.deals = Deal.query({ action:'table', status: 'd' });
     };
     
     $scope.findOne = function(){

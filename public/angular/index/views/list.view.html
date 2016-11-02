@@ -1,11 +1,12 @@
 <div class="box-header with-border">
   <h1 class="box-title" style="font-size: 25px">Index</h1>
-  <div class="box-tools pull-right">
+  <div class="box-tools pull-right btn-group">
+    <button ui-sref="index.today-price" class="col-md-12 btn btn-primary">+ Add Today Price</button>
     <button ui-sref="index.create" class="col-md-12 btn btn-primary">+ Create New</button>
   </div>
 </div>
-<div class="box-body">
-  <table ng-init="find()" st-table="indices" st-safe-src="index" class="table table-striped">
+<div class="box-body" ng-init="find()">
+  <table st-table="indices" st-safe-src="indexCollection" class="table table-striped">
     <thead>
       <tr>
           <th colspan="9"><input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
@@ -30,7 +31,7 @@
         <td>
           <a ui-sref="index.view({ indexId: index.id })"><i class="glyphicon glyphicon-eye-open"></i></a>
           <a ui-sref="index.edit({ indexId: index.id })"><i class="glyphicon glyphicon-pencil"></i></a>
-          <a ng-click="remove(index)"><i class="glyphicon glyphicon-trash"></i></a>
+          <!-- <a ng-click="remove(index)"><i class="glyphicon glyphicon-trash"></i></a> -->
         </td>
       </tr>
       <tr ng-if="indices.length == 0">
