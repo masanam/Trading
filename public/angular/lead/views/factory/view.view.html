@@ -2,7 +2,7 @@
   <!-- HEADER -->
   <div class="row submenu-header">
     <div class="submenu-header-item">
-      <button type="button" class="btn btn-default" ng-click="goBack()">
+      <button type="button" class="btn btn-default" ng-click="goBackToBuyer()">
         <i class="glyphicon glyphicon-arrow-left"></i> Back
       </button>
     </div>
@@ -25,7 +25,7 @@
       <div class="row" style="background:#eee; padding: 10px;">
         <h3>About</h3>
 
-        <button type="button" class="btn btn-primary" ng-click="updateModal(factory.id)">
+        <button type="button" class="btn btn-primary" ng-click="goToUpdateFactory(factory.id)">
           <i class="glyphicon glyphicon-pencil"></i> Update
         </button><br><br>
 
@@ -37,6 +37,7 @@
           <tr><td>Longitude:</td><td>{{ factory.longitude }}</td></tr>
           <tr><td>Size:</td><td>{{ factory.size | number }}</td></tr>
           <tr><td>Consumption:</td><td>{{ factory.consumption | number }}</td></tr>
+          <tr><td>Port Name:</td><td>{{ factory.port.port_name }}</td></tr>
           <tr><td>Distance to Port:</td><td>{{ factory.port_distance | number }} km</td></tr>
           <tr ng-if="factory.status == 'a'"><td>Status:</td> <td>Active</td></tr>
           <tr ng-if="factory.status == 'x'"><td>Status:</td> <td>Deactivated</td></tr>
@@ -48,6 +49,15 @@
       <div class="row" style="background:#eee; padding: 10px; margin-left:10px;">
         <ng-map zoom="4" center="Indonesia" default-style="false" style="width:100%; height:500px;">
           <marker position="{{factory.latitude}}, {{factory.longitude}}" id="mark{{factory.id}}" on-click="showDetail({{pos}})"></marker>
+          <marker 
+            icon="{
+              url: '/images/boat.png'
+            }" 
+            position="{{factory.port.latitude}}, {{factory.port.longitude}}" 
+            id="markport{{factory.port.id}}" 
+            on-click="showPortDetail({{pos}})"
+          >
+          </marker>
         </ng-map>
       </div>
 

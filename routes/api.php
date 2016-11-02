@@ -105,7 +105,7 @@ Route::group(['middleware' => ['cors']], function() {
     Route::get('factory/my/{id}', 'FactoryController@findMyFactory');
     //Route::put('factory/{id}', 'FactoryController@update');
     Route::resource('factory', 'FactoryController', ['except' => [
-        'create'
+        'create', 'edit'
     ]]);
 
     Route::resource('order/buy', 'BuyOrderController', ['except' => [

@@ -251,7 +251,7 @@ class ConcessionController extends Controller
      */
     public function show($concession)
     {
-        $concession = Concession::find($concession);
+        $concession = Concession::with('Port')->find($concession);
 
         if($concession->status == 'a') {
             return response()->json($concession, 200);

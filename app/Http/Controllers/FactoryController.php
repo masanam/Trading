@@ -75,8 +75,7 @@ class FactoryController extends Controller
      */
     public function show($factory)
     {
-        $factory = Factory::find($factory);
-
+        $factory = Factory::with('Port')->find($factory);
         if($factory->status == 'a') {
             return response()->json($factory, 200);
         } else {

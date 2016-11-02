@@ -1,7 +1,7 @@
-<section ng-controller="MineController" ng-init="findOne(mineId)" >
-  <h1>Update Mine {{ mine.mine_name }}</h1>
+<section ng-controller="ConcessionController" ng-init="findOne()" >
+  <h1>Update Concession {{ concession.concession_name }}</h1>
 
-  <form role="form" ng-submit="update()">
-    <div ng-include="'/angular/views/mine/form.view.html'"></div>
+  <form role="form" ng-submit="updateConcession()" ng-init="init()" ng-show="!success">
+    <div ng-include="'/angular/lead/views/concession/form.view.html'"></div>
   </form>
 </section>
