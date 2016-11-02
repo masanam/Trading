@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('factory').controller('DetailFactoryController', ['$scope', '$stateParams', 'Factory', '$window', '$uibModal',
-  function($scope, $stateParams, Factory, $window, $uibModal) {
+angular.module('factory').controller('DetailFactoryController', ['$scope', '$stateParams', 'Factory', '$window', '$uibModal', '$state',
+  function($scope, $stateParams, Factory, $window, $uibModal, $state) {
 
     $scope.findOne = function() {
       $scope.factoryId = $stateParams.id;
@@ -17,9 +17,13 @@ angular.module('factory').controller('DetailFactoryController', ['$scope', '$sta
         scope: $scope
       });
     };
+    
+    $scope.goBackToBuyer = function(){
+      $state.go('buyer.view', { id: $scope.factory.buyer_id });
+    };
 
-    $scope.goBack = function(){
-      $window.history.back();
+    $scope.goToUpdateFactory = function(factoryId){
+      $state.go('factory.update', { id: factoryId });
     };
     
   }

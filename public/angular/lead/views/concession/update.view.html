@@ -1,3 +1,4 @@
+<<<<<<< HEAD
  <div class="box box-info" ng-controller="ConcessionController">
         <div class="box-header with-border">
           <h3 class="box-title" style="font-size: 25px">Update Concession {{ concession.concession_name }}</h3>
@@ -17,3 +18,12 @@
         </div>
 </div>
 
+=======
+<section ng-controller="ConcessionController" ng-init="findOne()" >
+  <h1>Update Concession {{ concession.concession_name }}</h1>
+
+  <form role="form" ng-submit="updateConcession()" ng-init="init()" ng-show="!success">
+    <div ng-include="'/angular/lead/views/concession/form.view.html'"></div>
+  </form>
+</section>
+>>>>>>> 627287153c89c88943f737014c21dbeafb0f94c0

@@ -178,7 +178,7 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
     };
 
     $scope.find = function() {
-      $scope.buyers = Buyer.query({ action: 'search', search: $stateParams.keyword });
+      $scope.buyers = Buyer.query({ q: $stateParams.keyword });
     };
 
     $scope.findOne = function(id) {
