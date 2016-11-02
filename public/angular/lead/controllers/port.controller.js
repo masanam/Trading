@@ -210,17 +210,10 @@ angular.module('port').controller('PortModalController', function ($scope, $stat
       $scope.buyer_port.buyer_id = $stateParams.id;
       $scope.buyer_port.port_id = res.id;
       $scope.buyer_port.$save({ type: 'buyer', action: 'store' }, function(res) {
-        $scope.progress = 0;
         $scope.success = true;
-        var stop = $interval(function() {
-          if ($scope.progress >= 0 && $scope.progress < 100) {
-            $scope.progress++;
-          } else {
-            $interval.cancel(stop);
-            $scope.findMyPortsBuyer();
-            $uibModalInstance.close('success');
-          }
-        }, 75);
+        $scope.findMyPortsBuyer();
+        $uibModalInstance.close('success');
+      
       });
     });
   };
@@ -283,17 +276,10 @@ angular.module('port').controller('PortModalController', function ($scope, $stat
       $scope.seller_port.seller_id = $stateParams.id;
       $scope.seller_port.port_id = res.id;
       $scope.seller_port.$save({ type: 'seller', action: 'store' }, function(res) {
-        $scope.progress = 0;
         $scope.success = true;
-        var stop = $interval(function() {
-          if ($scope.progress >= 0 && $scope.progress < 100) {
-            $scope.progress++;
-          } else {
-            $interval.cancel(stop);
-            $scope.findMyPortsSeller();
-            $uibModalInstance.close('success');
-          }
-        }, 75);
+        $scope.findMyPortsSeller();
+        $uibModalInstance.close('success');
+       
       });
     });
   };
