@@ -31,15 +31,9 @@ angular.module('index').config(['$stateProvider',
         roles: ['manager']
       })
 
-      // Add Index Price of specific Index 
-      .state('index.create-price', {
-        url: '/:indexId/price/create',
-        templateUrl: '/angular/index/views/index-price/create.view.html',
-        roles: ['manager']
-      })
       // Update Index Price
       .state('index.today-price', {
-        url: '/:indexId/price/today',
+        url: '/price/today',
         templateUrl: '/angular/index/views/index-price/today.view.html',
         roles: ['manager']
       })

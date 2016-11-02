@@ -27,8 +27,10 @@ Route::group(['middleware' => ['cors']], function() {
     Route::post('index/price', 'IndexController@price');
     Route::post('index/single-price', 'IndexController@singlePrice');
     Route::get('index/single-date', 'IndexController@singleDate');
+    Route::post('index/single-date', 'IndexController@storeSingleDate');
     Route::get('index/{id}/price', 'IndexController@indexPrice');
     Route::resource('index', 'IndexController');
+    Route::resource('index/price', 'IndexPriceController');
 
     //User Management API
     //Forgot Password API
