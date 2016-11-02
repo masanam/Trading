@@ -59,7 +59,7 @@ angular.module('concession').controller('ConcessionController', ['$scope', '$htt
     };
 
     $scope.goBack = function(){
-      $window.history.back();
+      $state.go('lead.seller');
     };
 
     $scope.nextToProduct= function(){
