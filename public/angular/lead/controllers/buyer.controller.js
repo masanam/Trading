@@ -205,8 +205,6 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
       // $('#updateBuyerModal').modal('show');
     };
     
-    
-    
     $scope.goToLastOrders = function(id){
       // $('#buyerModal').modal('hide');
       // $('.modal-backdrop').hide();

@@ -1,7 +1,7 @@
   <section class="content" ng-controller="DealController">
     <div class="box box-primary box-solid">
             <div class="box-header ">
-                <h3 class="box-title">Deals <span ng-show="buyer !== undefined">for: {{buyer.company_name}}</span>
+                <h3 class="box-title">Order <span ng-show="buyer !== undefined">for: {{buyer.company_name}}</span>
                <button ui-sref="deal.create" class="btn-default btn">+ Create</button>   </h3>
             </div>
 
@@ -15,18 +15,7 @@
                 </uib-tab-heading>
                 <section ng-include="'/angular/deal/views/table.view.html'"></section>
               </uib-tab>
-              <uib-tab index="1">
-                <uib-tab-heading ng-click="findFinished()">
-                  <i class='glyphicon glyphicon-earphone'></i>  Finished<i class='glyphicon glyphicon-chevron-right pull-right'></i>
-                </uib-tab-heading>
-                <section ng-include="'/angular/deal/views/table.view.html'"></section>
-              </uib-tab>
-              <uib-tab index="2">
-                <uib-tab-heading ng-click="findCancelled()">
-                  <i class='glyphicon glyphicon-magnet'></i>  Cancelled<i class='glyphicon glyphicon-chevron-right pull-right'></i>
-                </uib-tab-heading>
-                <section ng-include="'/angular/deal/views/table.view.html'"></section>
-              </uib-tab>
+              
           </uib-tabset>
 
               </div>
