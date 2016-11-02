@@ -9,14 +9,15 @@
       </tr>
       <tr>
         <th st-sort="trader" st-ratio="20">Trader</th>
-        <th st-sort="buyer" st-ratio="10">Buyer(s)</th>
-        <th st-sort="seller" st-ratio="10">Seller(s)</th>
+        <th st-sort="buyer" st-ratio="10">Costumer</th>
+        <th st-sort="seller" st-ratio="10">Supplier</th>
         <th st-sort="created" st-ratio="10">Created</th>
         <th st-sort="volume" st-ratio="10">Volume (tonnes)</th>
         <th st-sort="total_sales" st-ratio="10">Total Sales (USD)</th>
         <th st-sort="total_cogs" st-ratio="10">Total CoGS (USD)</th>
         <th st-sort="margin" st-ratio="10">Margin (USD)</th>
         <th st-sort="status" st-ratio="10">Status</th>
+        <th st-sort="" st-ratio="10"></th>
       </tr>
   </thead>
   <tbody>
@@ -41,6 +42,11 @@
       <td st-ratio="10">{{ (deal.total_sales-deal.total_cogs) | number }}</td>
       <td>
           <deal-status status=deal.status></deal-status>
+      </td>
+      <td>
+          <a ui-sref="lead.view-buyer({ id: buyer.id })"><i class="glyphicon glyphicon-info-sign"></i></a>
+          <a ui-sref="lead.update-buyer({ id: buyer.id })"><i class="glyphicon glyphicon-pencil"></i></a>
+          <a ng-click="delete(buyer)"><i class="glyphicon glyphicon-trash"></i></a>
       </td>
     </tr>
     <tr ng-if="dealCollections.length == 0">

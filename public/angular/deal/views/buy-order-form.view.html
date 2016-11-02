@@ -1,9 +1,9 @@
 <div class="form-group" ng-init="findAllBuyers()">
   <label for="buyer">Buyer:</label>
-  <!-- <select class="form-control" id="mine" ng-model="order.mine" ng-change="order.mine_id = order.mine.id" ng-options="mine as mine.mine_name for mine in mines track by mine.id">
+  <!-- <select class="form-control" id="buyer" ng-model="order.buyer_id" ng-change="order.buyer_id = order.buyer.id" ng-options="buyer as buyer.company_name for buyer in buyers track by buyer.id">
   </select> -->
   <select class="form-control col-md-12" id="buyer" ng-model="order.buyer_id">
-    <option ng-repeat="buyer in buyers" value="{{ buyer.id }}">{{ buyer.company_name }}</option>
+    <option ng-repeat="buyer in buyers" value="{{ option.id }}">{{ buyer.company_name }}</option>
   </select>
 </div>
 

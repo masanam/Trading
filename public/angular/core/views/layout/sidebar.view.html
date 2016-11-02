@@ -39,8 +39,8 @@
           <span>Buy / Sell Leads</span>
         </a>
         <ul class="treeview-menu">
-          <li><a ui-sref="buy-order.index"><i class="fa fa-circle-o"></i> Buy Order</a></li>
-          <li><a ui-sref="sell-order.index"><i class="fa fa-circle-o"></i> Sell Order</a></li>
+          <li><a ui-sref="buy-order.index"><i class="ion ion-log-in"></i> Buy Order</a></li>
+          <li><a ui-sref="sell-order.index"><i class="ion ion-log-out"></i> Sell Order</a></li>
         </ul>
       </li>
       <li class="treeview">
@@ -55,21 +55,16 @@
           <span>History</span>
         </a>
       </li>
-      <li class="treeview">
-        <a>
-          <i class="ion ion-cash"></i>
+      <li class="treeview" ng-if="Authentication.user.role === 'manager'">
+        <a ui-sref="index.list">
+          <i class="ion ion-ios-cog" style="font-size: 20px; margin-left: -3px;"></i>
           <span>Management</span>
         </a>
         <ul class="treeview-menu">
-          <li><a ui-sref="buy-order-management.index"><i class="fa fa-circle-o"></i> Buy Order</a></li>
-          <li><a ui-sref="sell-order-management.index"><i class="fa fa-circle-o"></i> Sell Order</a></li>
+          <li><a ui-sref="index.list"><i class="fa fa-line-chart"></i> Indices</a></li>
+          <li><a ui-sref="buy-order-management.index"><i class="ion ion-log-in"></i> Buy Order</a></li>
+          <li><a ui-sref="sell-order-management.index"><i class="ion ion-log-out"></i> Sell Order</a></li>
         </ul>
-      </li>
-      <li class="treeview">
-        <a ui-sref="chat.index">
-          <i class="ion ion-ios-chatboxes" style="font-size: 20px; margin-left: -3px;"></i>
-          <span>Chat</span>
-        </a>
       </li>
     </ul>
   </section>
