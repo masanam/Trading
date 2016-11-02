@@ -18,12 +18,24 @@ angular.module('order').controller('BuyOrderController', ['$scope', '$stateParam
       $scope.buy_order = Order.get({ type: 'buy', id: $scope.buy_orderId });
     };
 
+    $scope.toCustomer = function(id) {
+      $location.path('buy-order/create/customer/'+id);
+    };
+
+    $scope.toFactory = function(buyer_id,id) {
+      $location.path('buy-order/create/factory/'+buyer_id+'/'+id);
+    };
+
     $scope.toProduct = function(buyer_id,id,factory_id) {
       $location.path('buy-order/create/product/'+buyer_id+'/'+id+'/'+factory_id);
     };
 
     $scope.toPort = function(buyer_id,id,factory_id) {
       $location.path('buy-order/create/port/'+buyer_id+'/'+id+'/'+factory_id);
+    };
+
+    $scope.toSummary = function(buyer_id,id,factory_id) {
+      $location.path('buy-order/create/summary/'+buyer_id+'/'+id+'/'+factory_id);
     };
   }
 ]);

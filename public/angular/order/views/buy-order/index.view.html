@@ -41,8 +41,8 @@
             <td ng-if="buy_order.order_status==='o'">Open</td>
             <td ng-if="buy_order.order_status==='s'">Staged</td>
             <td ng-if="buy_order.order_status==='l'">Lead</td>
-            <td ng-if="buy_order.order_status==='0'">Step Customer</td>
-            <td ng-if="buy_order.order_status==='1'">Step Factory</td>
+            <td ng-if="buy_order.order_status==='0'"><a style="cursor:pointer" ng-click="toCustomer(buy_order.id)">Step Customer</a></td>
+            <td ng-if="buy_order.order_status==='1'"><a style="cursor:pointer" ng-click="toFactory(buy_order.buyer_id,buy_order.id)">Step Factory</a></td>
             <td ng-if="buy_order.order_status==='2'"><a style="cursor:pointer" ng-click="toProduct(buy_order.buyer_id,buy_order.id,buy_order.factory_id)">Step Product</a></td>
             <td ng-if="buy_order.order_status==='3'"><a style="cursor:pointer" ng-click="toPort(buy_order.buyer_id,buy_order.id,buy_order.factory_id)">Step Port</a></td>
             <td ng-if="buy_order.order_status==='4'"><a style="cursor:pointer" ng-click="toSummary(buy_order.buyer_id,buy_order.id,buy_order.factory_id)">Step Summary</a></td>

@@ -41,10 +41,11 @@
             <td ng-if="sell_order.order_status==='o'">Open</td>
             <td ng-if="sell_order.order_status==='s'">Staged</td>
             <td ng-if="sell_order.order_status==='l'">Lead</td>
-            <td ng-if="sell_order.order_status==='1'">Step Supplier</td>
-            <td ng-if="sell_order.order_status==='2'">Step Concession</td>
-            <td ng-if="sell_order.order_status==='3'">Step Product</td>
-            <td ng-if="sell_order.order_status==='4'">Step Port</td>
+            <td ng-if="sell_order.order_status==='0'"><a style="cursor:pointer" ng-click="toProduct(sell_order.id)">Step Supplier</a></td>
+            <td ng-if="sell_order.order_status==='1'"><a style="cursor:pointer" ng-click="toProduct(sell_order.seller_id,sell_order.id)">Step Concession</a></td>
+            <td ng-if="sell_order.order_status==='2'"><a style="cursor:pointer" ng-click="toProduct(sell_order.seller_id,sell_order.id,sell_order.concession_id)">Step Product</a></td>
+            <td ng-if="sell_order.order_status==='3'"><a style="cursor:pointer" ng-click="toPort(sell_order.seller_id,sell_order.id,sell_order.concession_id)">Step Port</a></td>
+            <td ng-if="sell_order.order_status==='4'"><a style="cursor:pointer" ng-click="toSummary(sell_order.seller_id,sell_order.id,sell_order.concession_id)">Step Summary</a></td>
             <td>
               <a ui-sref="sell-order.view({ id: sell_order.id })"><i class="glyphicon glyphicon-info-sign"></i></a>
             </td>
