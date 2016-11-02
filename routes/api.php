@@ -26,8 +26,8 @@ Route::group(['middleware' => ['cors']], function() {
     //Coal Index Price API
     Route::post('index/price', 'IndexController@price');
     Route::post('index/single-price', 'IndexController@singlePrice');
-    Route::get('index/single-date', 'IndexController@singleDate');
     Route::post('index/single-date', 'IndexController@storeSingleDate');
+    Route::get('index/single-date', 'IndexController@singleDate');
     Route::get('index/{id}/price', 'IndexController@indexPrice');
     Route::resource('index', 'IndexController');
     Route::resource('index/price', 'IndexPriceController');
@@ -44,29 +44,24 @@ Route::group(['middleware' => ['cors']], function() {
     //COALPEDIA API GROUP
     //Contact Management API
     Route::get('contact/total', 'ContactController@getTotalContact');
-    Route::get('contact/search/{search?}', 'ContactController@search');
-    Route::delete('contact/{id}', 'ContactController@destroy');
     Route::resource('contact', 'ContactController', ['except' => [
         'create', 'edit'
     ]]);
 
     //Buyer Management API
     Route::get('buyer/total', 'BuyerController@getTotalBuyer');
-    Route::get('buyer/search/{search?}', 'BuyerController@search');
     Route::resource('buyer', 'BuyerController', ['except' => [
         'create', 'edit'
     ]]);
 
     //Seller Management API
     Route::get('seller/total', 'SellerController@getTotalSeller');
-    Route::get('seller/search/{search?}', 'SellerController@search');
     Route::resource('seller', 'SellerController', ['except' => [
         'create', 'edit'
     ]]);
 
     //Vendor Management API
     Route::get('vendor/total', 'VendorController@getTotalVendor');
-    Route::get('vendor/search/{search?}', 'VendorController@search');
     Route::resource('vendor', 'VendorController', ['except' => [
         'create', 'edit'
     ]]);
