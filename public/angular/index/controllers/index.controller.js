@@ -11,13 +11,13 @@ angular.module('index').controller('IndexController', ['$scope', '$stateParams',
       var index = new Index($scope.index);
 
       // Redirect after save
-      index.$save(function (response) {
-        $state.go('index.view', { indexId: response.id });
+      index.$save(function (res) {
+        $state.go('index.view', { indexId: res.id });
 
         // Clear form fields
         $scope.index = new Index();
-      }, function (errorResponse) {
-        $scope.error = errorResponse;
+      }, function (err) {
+        $scope.error = err;
       });
     };
 
@@ -44,10 +44,10 @@ angular.module('index').controller('IndexController', ['$scope', '$stateParams',
 
       var index = $scope.index;
 
-      index.$update(function (response) {
-        $state.go('index.view', { indexId: response.id });
-      }, function (errorResponse) {
-        $scope.error = errorResponse.data.message;
+      index.$update({ indexId: index.id }, function (res) {
+        $state.go('index.view', { indexId: res.id });
+      }, function (err) {
+        $scope.error = err.data.message;
       });
     };
 

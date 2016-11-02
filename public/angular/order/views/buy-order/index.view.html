@@ -1,7 +1,7 @@
 <section class="content" ng-controller="BuyOrderController">
   <div class="box">
     <div class="box-header with-border">
-      <h1 class="box-title" style="font-size: 25px">Buy Orders</h1>
+      <h1 class="box-title" style="font-size: 25px">Buy Leads</h1>
       <div class="box-tools pull-right">
         <button ui-sref="buy-order.create" class="col-md-12 btn btn-primary">+ Create New</button>
       </div>
@@ -10,7 +10,7 @@
       <table  ng-init="findBuyOrder()" st-table="displayedCollection" st-safe-src="buy_orders" class="table table-striped">
         <thead>
           <tr>
-            <th colspan="9"><input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
+            <th colspan="11"><input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
           </tr>
           <tr>
             <th st-sort="id">#</th>
@@ -22,6 +22,7 @@
             <th st-sort="ncv_min">NCV</th>
             <th st-sort="max_price/volume">Price / Tones</th>
             <th st-sort="max_price">Price Total</th>
+            <th st-sort="order_status">Status</th>
             <th></th>
           </tr>
         </thead>
@@ -37,18 +38,26 @@
             <td>{{ buy_order.ncv_min }} - {{ buy_order.ncv_max }}</td>
             <td>{{ buy_order.max_price/buy_order.volume | currency : $ : 2}}</td>
             <td>{{ buy_order.max_price | currency : $ : 2}}</td>
+            <td ng-if="buy_order.order_status==='o'">Open</td>
+            <td ng-if="buy_order.order_status==='s'">Staged</td>
+            <td ng-if="buy_order.order_status==='l'">Lead</td>
+            <td ng-if="buy_order.order_status==='0'"><a style="cursor:pointer" ng-click="toCustomer(buy_order.id)">Step Customer</a></td>
+            <td ng-if="buy_order.order_status==='1'"><a style="cursor:pointer" ng-click="toFactory(buy_order.buyer_id,buy_order.id)">Step Factory</a></td>
+            <td ng-if="buy_order.order_status==='2'"><a style="cursor:pointer" ng-click="toProduct(buy_order.buyer_id,buy_order.id,buy_order.factory_id)">Step Product</a></td>
+            <td ng-if="buy_order.order_status==='3'"><a style="cursor:pointer" ng-click="toPort(buy_order.buyer_id,buy_order.id,buy_order.factory_id)">Step Port</a></td>
+            <td ng-if="buy_order.order_status==='4'"><a style="cursor:pointer" ng-click="toSummary(buy_order.buyer_id,buy_order.id,buy_order.factory_id)">Step Summary</a></td>
             <td>
               <a ui-sref="buy-order.view({ id: buy_order.id })"><i class="glyphicon glyphicon-info-sign"></i></a>
             </td>
           </tr>
           <tr ng-if="displayedCollection.length == 0">
-              <td colspan="9" class="text-center">No data available</td>
+              <td colspan="11" class="text-center">No data available</td>
           </tr>
         </tbody>
 
         <tfoot>
           <tr>
-            <td colspan="9" class="text-center">
+            <td colspan="11" class="text-center">
               <div st-pagination="" st-items-by-page="10" st-displayed-pages="5"></div>
             </td>
           </tr>

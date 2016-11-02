@@ -22,7 +22,7 @@ class SellOrderController extends Controller
      */
     public function index()
     {
-        $sell_order = SellOrder::with('Seller')->where('order_status', 'o')->get();
+        $sell_order = SellOrder::with('Seller')->where('order_status', 1)->orwhere('order_status', 2)->orwhere('order_status', 3)->orwhere('order_status', 4)->orwhere('order_status', 'o')->orwhere('order_status', 'l')->orwhere('order_status', 's')->get();
 
         return response()->json($sell_order, 200);
     }
@@ -144,7 +144,7 @@ class SellOrderController extends Controller
      */
     public function show($id)
     {
-        $sell_order = SellOrder::with('Seller')->find($id);
+        $sell_order = SellOrder::with('Seller','Port','Concession')->find($id);
 
         if($sell_order->order_status == 'o' || $sell_order->order_status == 1 || $sell_order->order_status == 2 || $sell_order->order_status == 3 || $sell_order->order_status == 4 || $sell_order->order_status == 'l') {
             return response()->json($sell_order, 200);
@@ -184,6 +184,7 @@ class SellOrderController extends Controller
         $sell_order->ready_date = date('Y-m-d',strtotime($request->ready_date));
         $sell_order->expired_date = date('Y-m-d',strtotime($request->expired_date));
 
+        $sell_order->concession_id = $request->concession_id;
         $sell_order->address = $request->address;
         $sell_order->city = $request->city;
         $sell_order->country = $request->country;

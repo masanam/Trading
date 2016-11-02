@@ -127,7 +127,7 @@ class BuyOrderTableSeeder extends Seeder
             'port_latitude'=>'-7.1844498',
             'port_longitude'=>'112.6528737',
             'product_name'=>'',
-            'order_status' => 'p'
+            'order_status' => 's'
       ]);
 
       BuyOrder::create([
@@ -242,7 +242,7 @@ class BuyOrderTableSeeder extends Seeder
             'commercial_term' => 'commercial_term',
 
             'volume' => 4500,
-            'order_status' => 'p',
+            'order_status' => 's',
 
             'port_id' => $faker->numberBetween($min = 1, $max = 3)
       ]);
@@ -443,7 +443,7 @@ class BuyOrderTableSeeder extends Seeder
             'expired_date'=>$faker->dateTimeBetween($startDate = "5 days", $endDate = "10 days")->format('Y-m-d'),
 
             'volume' => $faker->numberBetween($min = 1000, $max = 2000),
-            'order_status' => $faker->randomElement($array = array ('o','f')),
+            'order_status' => $faker->randomElement($array = array ('l','o','s',1,2,3,4)),
             
             'port_id' => $faker->numberBetween($min = 1, $max = 3)
           ]));

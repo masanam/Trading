@@ -78,12 +78,11 @@ class IndexPriceController extends Controller
       ] ,404);
     }
 
-    $indexPrice->date = $request->date;
+    $indexPrice->date = date('Y-m-d', strtotime($request->date));
     $indexPrice->price = $request->price;
     $indexPrice->updated_at = Date('Y-m-d H:i:s');
     $indexPrice->save();
 
     return response()->json($indexPrice, 200);
   }
-
 }
