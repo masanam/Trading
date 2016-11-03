@@ -94,7 +94,7 @@ class CreateSellOrderTable extends Migration
             $table->string('payment_terms')->nullable();
             $table->longText('commercial_term')->nullable();
             $table->longText('penalty_desc')->nullable();
-            $table->char('order_status', 1); // supplier(0), concession(1), product(2), port(3), summary(4), lead(l), open(o), staged(s), finish(f), cancel(c), deleted(x)
+            $table->char('order_status', 1); // supplier(0), concession(1), product(2), port(3), summary(4), lead(l), open(o), staged(s), partial(p), finish(f), cancel(c), deleted(x)
             $table->char('progress_status', 1)->nullable();
             
             $table->timestamps();
