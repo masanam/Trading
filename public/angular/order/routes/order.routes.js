@@ -1,8 +1,8 @@
 'use strict';
 
 // Setting up route
-angular.module('order-history').config(['$stateProvider', '$urlRouterProvider',
-  function ($stateProvider, $urlRouterProvider) {
+angular.module('order-history').config(['$stateProvider',
+  function ($stateProvider) {
     // Home state routing
     $stateProvider
       .state('order', {
@@ -13,34 +13,6 @@ angular.module('order-history').config(['$stateProvider', '$urlRouterProvider',
       .state('order.index', {
         url: '',
         templateUrl: '/angular/order/views//index.view.html'
-      })
-      .state('order.history', {
-        url: '/history',
-        templateUrl: '/angular/order/views//history.view.html'
-      })
-      .state('order.viewBuyer', {
-        url: '/buyer/:buyerId',
-        templateUrl: '/angular/order/views//history.view.html'
-      })
-      .state('order.unattended-order', {
-        url: '/wait-for-call',
-        templateUrl: '/angular/order/views//unattended-order.view.html'
-      })
-      .state('order.unmatched-order', {
-        url: '/wait-for-match',
-        templateUrl: '/angular/order/views//unmatched-order.view.html'
-      })
-      .state('order.matched-order', {
-        url: '/wait-for-nego',
-        templateUrl: '/angular/order/views//matched-order.view.html'
-      })
-      .state('order.due-today', {
-        url: '/due-today',
-        templateUrl: '/angular/order/views//due-today.view.html'
-      })
-      .state('order.view', {
-        url: '/:id',
-        templateUrl: '/angular/order/views//view-order-buyer.view.html'
       });
 
     $stateProvider

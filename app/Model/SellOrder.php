@@ -12,12 +12,8 @@ class SellOrder extends Model
 {
     protected $table = 'sell_order';
 
-    public function Seller() {
+    public function buyer() {
     	return $this->belongsTo('App\Model\Seller');
-    }
-
-    public function SellDeal() {
-    	return $this->hasMany('App\Model\SellDeal');
     }
 
     public function SellOrderPricing() {

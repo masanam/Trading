@@ -16,10 +16,6 @@ class BuyOrder extends Model
     	return $this->belongsTo('App\Model\Buyer');
     }
 
-    public function BuyDeal() {
-    	return $this->hasMany('App\Model\BuyDeal');
-    }
-
     public function BuyOrderPricing() {
     	return $this->hasMany('App\Model\BuyOrderPricing');
     }
