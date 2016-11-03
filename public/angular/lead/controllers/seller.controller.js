@@ -473,6 +473,7 @@ angular.module('seller').controller('CreateProductModalFromSellerController', fu
     product.seller_id = $scope.seller.id;
     
     product.$save(function (response) {
+      $scope.seller.product.push($scope.product);
       $scope.product = response;
       $scope.success = true;
       $uibModalInstance.close('success');
