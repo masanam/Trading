@@ -5,7 +5,6 @@ angular.module('order').controller('BuyOrderController', ['$scope', '$stateParam
     
     $scope.findBuyOrder = function() {
       $scope.buy_orders = Order.query({ type: 'buy' });
-      console.log($scope.Authentication.user.role);
     };
 
     $scope.findOne = function(id) {

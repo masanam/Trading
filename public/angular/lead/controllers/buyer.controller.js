@@ -406,6 +406,7 @@ angular.module('buyer').controller('CreateProductModalFromBuyerController', func
     var product = $scope.product;
     product.buyer_id = $scope.buyer.id;
     product.$save(function (response) {
+      $scope.buyer.product.push($scope.product);
       $scope.product = response;
       $scope.success = true;
       $scope.close();
