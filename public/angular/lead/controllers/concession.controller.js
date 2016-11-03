@@ -22,15 +22,6 @@ angular.module('concession').controller('ConcessionController', ['$scope', '$htt
       });
     };
 
-    $scope.update = function() {
-      $scope.loading = true;
-
-      $scope.concession.$update({ id: $scope.concession.id }, function(response) {
-        $state.go('lead.seller');
-        $scope.loading = false;
-      });
-    };
-
     $scope.delete = function(concession) {
       $scope.loading = true;
 
@@ -62,6 +53,9 @@ angular.module('concession').controller('ConcessionController', ['$scope', '$htt
         res.port_distance=parseFloat(res.port_distance);
         res.license_expiry_date=new Date(res.license_expiry_date);
         $scope.concession = res;
+        
+        $scope.polygon.polygonString = $scope.concession.polygon;
+        $scope.updatePolygonString($scope.concession.polygon);
 
       });
     };
@@ -181,6 +175,21 @@ angular.module('concession').controller('ConcessionController', ['$scope', '$htt
     }else{
       $scope.concession.polygon = '';
     }
+    
+    $scope.update = function() {
+      $scope.loading = true;
+      
+      if($scope.polygon.array.length !== 0){
+        $scope.concession.polygon = createStringByArray($scope.polygon.array);
+      }else{
+        $scope.concession.polygon = '';
+      }
+
+      $scope.concession.$update({ id: $scope.concession.id }, function(response) {
+        $state.go('lead.view-concession', { id: $scope.concession.id });
+        $scope.loading = false;
+      });
+    };
     
     $scope.deleteProduct = function(product){
       Product.delete({ id: product.id }, function (response) {

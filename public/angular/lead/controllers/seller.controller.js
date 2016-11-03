@@ -542,7 +542,7 @@ angular.module('seller').controller('CreateConcessionModalController', function 
     $scope.concession.license_expiry_date = $filter('date')($scope.concession.license_expiry_date, 'yyyy-MM-dd');
     $scope.concession.seller_id = $scope.seller.id;
     
-    if($scope.polygon.array.length === 0){
+    if($scope.polygon.array.length !== 0){
       $scope.concession.polygon = createStringByArray($scope.polygon.array);
     }else{
       $scope.concession.polygon = '';

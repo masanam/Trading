@@ -27,11 +27,11 @@ Route::group(['middleware' => ['cors']], function() {
     Route::post('signing', 'AuthenticateController@signing');
 
     //Coal Index Price API
-    Route::post('index/price', 'IndexController@price');
+    /*Route::post('index/price', 'IndexController@price');
     Route::post('index/single-price', 'IndexController@singlePrice');
     Route::get('index/single-date', 'IndexController@singleDate');
     Route::get('index/{id}/price', 'IndexController@indexPrice');
-    Route::resource('index', 'IndexController');
+    Route::resource('index', 'IndexController');*/
 
     //User Management API
     //Forgot Password API
@@ -98,8 +98,12 @@ Route::group(['middleware' => ['cors']], function() {
     Route::get('index/single-date', 'IndexController@singleDate');
     Route::get('index/{id}/price', 'IndexController@indexPrice');
 
-    Route::resource('index', 'IndexController');
-    Route::resource('index/price', 'IndexPriceController');
+    Route::resource('index', 'IndexController', ['except' => [
+        'create', 'edit'
+    ]]);
+    /*Route::resource('index/price', 'IndexPriceController', ['except' => [
+        'create', 'edit'
+    ]]);*/
 
 
     /* 
