@@ -28,24 +28,60 @@ angular.module('map').controller('MapController', ['$scope', '$http', '$statePar
       
       var temp_filter = [];
       
-      if($scope.filters.length > 0){      
-        for(var i = 0; i < $scope.filters.length; i++){
-          if($scope.filters[i].operand === '>='){
-            temp_filter = $scope.filters_gt;
+      $scope.search_port = [];
+      $scope.search_product = [];
+      $scope.search_concession = [];
+      $scope.search_seller = [];
+
+      var temp_search = [];
+      
+      var params = {};
+      
+      if($scope.search || $scope.filters.length > 0){
+        if($scope.search){
+          if($scope.search.category === 'port'){
+            temp_search = $scope.search_port;
           }
-          else if($scope.filters[i].operand === '<='){
-            temp_filter = $scope.filters_lt;
+          else if($scope.search.category === 'product'){
+            temp_search = $scope.search_product;
           }
-          else{
-            temp_filter = $scope.filters_bet;
+          else if($scope.search.category === 'concession'){
+            temp_search = $scope.search_concession;
           }
-          temp_filter.push($scope.filters[i].field+','+$scope.filters[i].number);
+          else if($scope.search.category === 'seller'){
+            temp_search = $scope.search_seller;
+          }
+          temp_search.push($scope.search.keyword);
+
+          params.product = $scope.search_product[0];
+          params.port = $scope.search_port[0];
+          params.seller = $scope.search_seller[0];
+          params.concession = $scope.search_concession[0];
         }
         
-        $scope.concessions = Map.query({ action: 'filter' , 'gt[]': $scope.filters_gt, 'bet[]': $scope.filters_bet, 'lt[]': $scope.filters_lt });
-      }else{
-        $scope.concessions = Map.query({ action: 'filter' });
+        if($scope.filters.length > 0){      
+          for(var i = 0; i < $scope.filters.length; i++){
+            if($scope.filters[i].operand === '>='){
+              temp_filter = $scope.filters_gt;
+            }
+            else if($scope.filters[i].operand === '<='){
+              temp_filter = $scope.filters_lt;
+            }
+            else{
+              temp_filter = $scope.filters_bet;
+            }
+            temp_filter.push($scope.filters[i].field+','+$scope.filters[i].number);
+          }
+          
+          params['gt[]'] = $scope.filters_gt;
+          params['lt[]'] = $scope.filters_lt;
+          params['bet[]'] = $scope.filters_bet;
+        }
       }
+      
+      params.action = 'filter';
+      
+      $scope.concessions = Map.query(params);
       //console.log($scope.concessions);
     };
     
@@ -64,34 +100,7 @@ angular.module('map').controller('MapController', ['$scope', '$http', '$statePar
     };
 
     $scope.searchByCategory = function(){
-      $scope.search_port = [];
-      $scope.search_product = [];
-      $scope.search_concession = [];
-      $scope.search_seller = [];
-
-      var temp_search = [];
-
-      if($scope.search){
-        if($scope.search.category === 'port'){
-          temp_search = $scope.search_port;
-        }
-        else if($scope.search.category === 'product'){
-          temp_search = $scope.search_product;
-        }
-        else if($scope.search.category === 'concession'){
-          temp_search = $scope.search_concession;
-        }
-        else if($scope.search.category === 'seller'){
-          temp_search = $scope.search_seller;
-        }
-        temp_search.push($scope.search.keyword);
-
-        $scope.concessions = Map.query({ action: 'search' , 'product': $scope.search_product[0] , 'port': $scope.search_port[0] , 'seller': $scope.search_seller[0] , 'concession': $scope.search_concession[0] });
-
-        console.log($scope.concessions);
-      }else{
-        $scope.concessions = Map.query({ action: 'search' });
-      }
+      
     };
 
     $scope.showDetail = function(event, concession) {

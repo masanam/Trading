@@ -1,0 +1,9 @@
+<div class="modal-header" ng-init="init();">
+  <button type="button" class="close" ng-click="close()">&times;</button>
+  <h4 class="modal-title">Create Factory</h4>
+</div>
+<div class="modal-body">
+  <form role="form" ng-submit="create()">
+    <div ng-include="'/angular/lead/views/factory/form.view.html'"></div>
+  </form>
+</div>

@@ -31,16 +31,16 @@ angular.module('index').config(['$stateProvider',
         roles: ['manager']
       })
 
-      // Add Index Price of specific Index 
-      .state('index.create-price', {
-        url: '/:indexId/price/create',
-        templateUrl: '/angular/index/views/create.view.html',
+      // Update Index Price
+      .state('index.today-price', {
+        url: '/price/today',
+        templateUrl: '/angular/index/views/index-price/today.view.html',
         roles: ['manager']
       })
       // Update Index Price
       .state('index.edit-price', {
         url: '/:indexId/price/:indexPriceId/edit',
-        templateUrl: '/angular/index/views/edit-price.view.html',
+        templateUrl: '/angular/index/views/index-price/edit.view.html',
         roles: ['manager']
       });
   }

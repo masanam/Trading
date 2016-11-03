@@ -35,10 +35,28 @@ angular.module('port').controller('PortController', ['$scope', '$stateParams', '
       });
     };
 
+    $scope.openModalDetailBuyer = function () {
+      var modalInstance = $uibModal.open({
+        windowClass: 'xl-modal',
+        templateUrl: './angular/lead/views/port/buyer/detail.buyer-create.view.html',
+        controller: 'PortModalController',
+        scope: $scope
+      });
+    };
+
     $scope.openModalNewSeller = function () {
       var modalInstance = $uibModal.open({
         windowClass: 'xl-modal',
         templateUrl: './angular/lead/views/port/seller/seller-create.view.html',
+        controller: 'PortModalController',
+        scope: $scope
+      });
+    };
+
+    $scope.openModalDetailSeller = function () {
+      var modalInstance = $uibModal.open({
+        windowClass: 'xl-modal',
+        templateUrl: './angular/lead/views/port/seller/detail.seller-create.view.html',
         controller: 'PortModalController',
         scope: $scope
       });
@@ -172,6 +190,34 @@ angular.module('port').controller('PortModalController', function ($scope, $stat
     });
   };
 
+  $scope.savePortDetailBuyer = function(){
+    var port = new Port({
+      port_name: $scope.port.port_name,
+      anchorage_distance: $scope.port.anchorage_distance,
+      daily_discharge_rate: $scope.port.daily_discharge_rate,
+      draft_height: $scope.port.draft_height,
+      has_blending: $scope.port.has_blending,
+      has_conveyor: $scope.port.has_conveyor,
+      has_crusher: $scope.port.has_crusher,
+      is_private: $scope.port.is_private,
+      latitude: $scope.port.latitude,
+      location: $scope.port.location,
+      longitude: $scope.port.longitude,
+      owner: $scope.port.owner,
+      size: $scope.port.size
+    });
+    port.$save(function(res) {
+      $scope.buyer_port.buyer_id = $stateParams.id;
+      $scope.buyer_port.port_id = res.id;
+      $scope.buyer_port.$save({ type: 'buyer', action: 'store' }, function(res) {
+        $scope.success = true;
+        $scope.findMyPortsBuyer();
+        $uibModalInstance.close('success');
+      
+      });
+    });
+  };
+
   $scope.savePortSeller = function(){
     var port = new Port({
       port_name: $scope.port.port_name,
@@ -206,6 +252,34 @@ angular.module('port').controller('PortModalController', function ($scope, $stat
             $uibModalInstance.close('success');
           }
         }, 75);
+      });
+    });
+  };
+
+  $scope.savePortDetailSeller = function(){
+    var port = new Port({
+      port_name: $scope.port.port_name,
+      anchorage_distance: $scope.port.anchorage_distance,
+      daily_discharge_rate: $scope.port.daily_discharge_rate,
+      draft_height: $scope.port.draft_height,
+      has_blending: $scope.port.has_blending,
+      has_conveyor: $scope.port.has_conveyor,
+      has_crusher: $scope.port.has_crusher,
+      is_private: $scope.port.is_private,
+      latitude: $scope.port.latitude,
+      location: $scope.port.location,
+      longitude: $scope.port.longitude,
+      owner: $scope.port.owner,
+      size: $scope.port.size
+    });
+    port.$save(function(res) {
+      $scope.seller_port.seller_id = $stateParams.id;
+      $scope.seller_port.port_id = res.id;
+      $scope.seller_port.$save({ type: 'seller', action: 'store' }, function(res) {
+        $scope.success = true;
+        $scope.findMyPortsSeller();
+        $uibModalInstance.close('success');
+       
       });
     });
   };

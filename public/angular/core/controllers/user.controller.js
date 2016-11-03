@@ -3,6 +3,8 @@
 angular.module('user').controller('UserController', ['$scope', '$http', '$stateParams', '$state', 'User', 'Authentication', 'S3Upload',
   function($scope, $http, $stateParams, $state, User, Authentication, S3Upload) {
     $scope.user = {};
+    $scope.password = '';
+    $scope.cpassword = '';
 
     $scope.selectImage = function(files) {
       if (files) {
@@ -14,12 +16,12 @@ angular.module('user').controller('UserController', ['$scope', '$http', '$stateP
           if(err) return alert(err);
 
           //kalo sukses, ubah database nama file nya
-          var fileUrl = config.url + '/' + folder + '/' + $scope.authentication.user.username + '/' + filename;
+          var fileUrl = config.url + '/' + folder + '/' + filename;
           var profile = new User(Authentication.user);
           profile.image = fileUrl;
           
-          profile.$update(function () {
-            $scope.user.image = $scope.profile.image = Authentication.user.image = fileUrl;
+          profile.$update({ id: profile.id }, function () {
+            $scope.user.image = Authentication.user.image = fileUrl;
           }, function (errorResponse) {
             $scope.error = errorResponse.data.message;
           });
@@ -29,11 +31,20 @@ angular.module('user').controller('UserController', ['$scope', '$http', '$stateP
 
     $scope.update = function() {
       $scope.loading = true;
-
-      $scope.user.$update({ id: $scope.user.id }, function(response) {
-        $state.go('user.index');
-        $scope.loading = false;
-      });
+      
+      if($scope.user.password === $scope.user.cpassword){
+        
+        $scope.user.$update({ id: $scope.user.id }, function(response) {
+          //$state.go('user.index');
+          $scope.loading = false;
+          $scope.success = "Your profile has been updated successfully";
+          $scope.error = undefined;
+        });
+      } else {
+        $scope.success = undefined;
+        $scope.error = "Password does not match!";
+      }
+      
     };
 
     $scope.resetPassword = function() {

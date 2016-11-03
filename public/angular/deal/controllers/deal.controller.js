@@ -1,19 +1,27 @@
 'use strict';
 
-angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Deal', 'Order', 'Buyer', 'Seller', 'SellDeal', 'BuyDeal', 'Authentication', '$location', '$stateParams', 'BuyDealChat', 'SellDealChat',
-  function($scope, $uibModal, Deal, Order, Buyer, Seller, SellDeal, BuyDeal, Authentication, $location, $stateParams, BuyDealChat, SellDealChat) {
+angular.module('deal').controller('DealController', ['$scope', '$uibModal', '$window', 'Deal', 'Order', 'Buyer', 'Seller', 'SellDeal', 'BuyDeal', 'Authentication', '$location', '$stateParams', 'BuyDealChat', 'SellDealChat','Index',
+  function($scope, $uibModal, $window, Deal, Order, Buyer, Seller, SellDeal, BuyDeal, Authentication, $location, $stateParams, BuyDealChat, SellDealChat, Index) {
     $scope.deals = [];
-
+  
     $scope.findDeals = function(){
-      $scope.deals = Deal.query({ action:'table', status: 'a' });
-    };
-    
-    $scope.findFinished = function(){
       $scope.deals = Deal.query({ action:'table', status: 'f' });
     };
     
+    $scope.findOpen = function(){
+      $scope.deals = Deal.query({ action:'table', status: 'o' });
+    };
+    
     $scope.findCancelled = function(){
+      $scope.deals = Deal.query({ action:'table', status: 'c' });
+    };
+
+    $scope.findDelete = function(){
       $scope.deals = Deal.query({ action:'table', status: 'x' });
+    };
+
+    $scope.findDraft = function(){
+      $scope.deals = Deal.query({ action:'table', status: 'd' });
     };
     
     $scope.findOne = function(){
@@ -43,12 +51,15 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
     };
 
     $scope.findAllBuyers = function(){
-      console.log('asasdasd');
       $scope.buyers = Buyer.query();
     };
     
     $scope.findAllSellers = function(){
       $scope.sellers = Seller.query();
+    };
+
+    $scope.getIndices = function () {
+      $scope.indices = Index.query();
     };
     
     //$scope.deal = Deal.get;
@@ -154,6 +165,24 @@ angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Dea
         total += product.volume;
       }
       return total;
+    };
+
+    $scope.getSellTotal= function(){
+      var selltotal = 0; 
+      for(var i = 0; i < $scope.sellOrders.length; i++){
+        var product = $scope.sellOrders[i];
+        selltotal += product.volume * product.min_price;
+      }
+      return selltotal;
+    };
+
+    $scope.getbuyTotal= function(){
+      var buytotal = 0;
+      for(var i = 0; i < $scope.buyOrders.length; i++){
+        var product = $scope.buyOrders[i];
+        buytotal += product.volume * product.max_price;
+      }
+      return buytotal;
     };
     
     $scope.createDeal = function(){

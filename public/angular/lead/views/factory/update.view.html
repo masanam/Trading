@@ -1,0 +1,12 @@
+<section ng-controller="UpdateFactoryController" class="container" ng-init="init()">
+  <br/>
+  <button type="button" class="btn btn-primary" ng-click="goBackToDetail()">
+    <i class="glyphicon glyphicon-arrow-left"></i> Back
+  </button>
+  <h4>Update Factory</h4>
+  <div>
+    <form role="form" ng-submit="update()">
+      <div ng-include="'/angular/lead/views/factory/form.view.html'"></div>
+    </form>
+  </div>
+</section>

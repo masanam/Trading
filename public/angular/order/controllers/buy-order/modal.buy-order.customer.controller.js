@@ -2,7 +2,6 @@
 
 angular.module('order').controller('ModalBuyOrderController', function ($scope, $stateParams, $uibModalInstance, $interval, Buyer, Order, $location) {
   
-  console.log($stateParams.order_id);
   //Options Preferred Buying Term
   $scope.data = {
     availableOptions: [

@@ -23,29 +23,11 @@ class SellerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($search = false)
+    public function index(Request $request)
     {
-        if (!$search) {
-            $seller = Seller::where('status', 'a')->get();
-        } else {
-            $seller = Seller::where('status', 'a')->where('company_name', 'LIKE', '%'.$search.'%')->get();
-        }
-
-        return response()->json($seller, 200);
-    }
-    
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function search($search = false)
-    {
-        if (!$search) {
-            $seller = Seller::with('SellOrder')->where('status', 'a')->get();
-        } else {
-            $seller = Seller::where('status', 'a')->where('company_name', 'LIKE', '%'.$search.'%')->get();
-        }
+        $seller = Seller::where('status', 'a');
+        if ($request->q) $seller->where('company_name', 'LIKE', '%'.$request->q.'%');
+        $seller = $seller->get();
 
         return response()->json($seller, 200);
     }
@@ -100,9 +82,18 @@ class SellerController extends Controller
      */
     public function show($id)
     {
-        $seller = Seller::with(
-                            'Concession', 'Contact', 'User', 'Product'
-                             )->find($id);
+        $seller = Seller::with(['Concession' => function($q) {
+                                    $q->where('status', 'a');
+                                }, 
+                                'Contact' => function($q) {
+                                    $q->where('status', 'a');
+                                }, 
+                                'User' => function($q) {
+                                    $q->where('status', 'a');
+                                }, 
+                                'Product' => function($q) {
+                                    $q->where('status', 'a');
+                                }])->find($id);
 
         if($seller) {
             if($seller->status == 'a') {

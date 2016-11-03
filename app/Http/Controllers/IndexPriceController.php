@@ -31,10 +31,11 @@ class IndexPriceController extends Controller
     $indexPrice = new IndexPrice();
     
     $indexPrice->date = $request->date;
+    $indexPrice->index_id = $request->index_id;
     $indexPrice->price = $request->price;
 
     //date logic masuk sini
-    $indexPrice->quality = $request->quality;
+    //$indexPrice->quality = $request->quality;
 
     $indexPrice->created_at = Date('Y-m-d H:i:s');
     $indexPrice->updated_at = Date('Y-m-d H:i:s');
@@ -78,12 +79,11 @@ class IndexPriceController extends Controller
       ] ,404);
     }
 
-    $indexPrice->date = $request->date;
+    $indexPrice->date = date('Y-m-d', strtotime($request->date));
     $indexPrice->price = $request->price;
     $indexPrice->updated_at = Date('Y-m-d H:i:s');
     $indexPrice->save();
 
     return response()->json($indexPrice, 200);
   }
-
 }

@@ -22,34 +22,38 @@
   </div>
   <div class="input-group col-md-12" style="margin-bottom: 5px;">
     <span class="input-group-addon" style="width: 200px;">Latitude</span>
-    <input type="number" min="-90" max="90" step="any" class="form-control" placeholder="Latitude" ng-model="factory.latitude" required>
+    <input type="number" min="-90" max="90" step="any" string-to-number class="form-control" placeholder="Latitude" ng-model="factory.latitude" required>
     <span class="input-group-addon" style="width: 200px;">Longitude</span>
-    <input type="number" min="-180" max="180" step="any" class="form-control" placeholder="Longitude" ng-model="factory.longitude" required>
+    <input type="number" min="-180" max="180" step="any" string-to-number class="form-control" placeholder="Longitude" ng-model="factory.longitude" required>
   </div>
 </div>
 
 <div class="form-group">
   <label for="consumption">Consumption:</label>
-  <input type="number" min="0" step="any" class="form-control" id="consumption" ng-model="factory.consumption">
+  <input type="number" min="0" step="any" class="form-control" string-to-number id="consumption" ng-model="factory.consumption">
 </div>
 
 <div class="form-group">
   <label for="size">Size of Factory (Ha):</label>
-  <input type="number" min="0" class="form-control" id="size" ng-model="factory.size">
+  <input type="number" min="0" class="form-control" string-to-number id="size" ng-model="factory.size">
 </div>
 
 <div class="form-group">
   <label>Port Location</label>
   <div class="input-group col-md-12" style="margin-bottom: 5px;">
-    <span class="input-group-addon" style="width: 200px;">Name</span>
-    <input type="text" class="form-control" id="port_name" ng-model="factory.port_name" required>
+    <span class="input-group-addon" style="width: 200px;">Port Name</span>
+    <span ng-if="!update" class="input-group-addon bg-red">You can add the Port Related to this Factory in the next page.</span>
+    <!--input type="text" class="form-control" id="port_name" ng-model="factory.port_name" required-->
+    <select ng-if="update" ng-model="factory.port_id" class="form-control" ng-options='port.id as port.port_name for port in ports'>
+      <!--option ng-repeat="port in ports" value="{{port.id}}">{{port.port_name}}</option-->
+    </select>
     <span class="input-group-addon" style="width: 200px;">Distance (km)</span>
-    <input type="number" min="0" step="any" class="form-control" id="port_distance" ng-model="factory.port_distance" required>
+    <input type="number" min="0" step="any" class="form-control" string-to-number id="port_distance" ng-model="factory.port_distance" required>
   </div>
 </div>
 
 <div class="form-group">
-  <label ng-show="error" class="alert alert-danger">{{error}}</label>
+  <label ng-show="error" class="col-sm-12 callout callout-danger">{{error}}</label>
 </div>
 
 <button type="submit" class="btn btn-default">Submit</button>

@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stateParams', '$state', '$timeout', 'Buyer', 'Order', 'Product', '$uibModal', 'Contact', 'User','$location',
-  function($scope, $http, $stateParams, $state, $timeout, Buyer, Order, Product, $uibModal, Contact, User, $location) {
+angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stateParams', '$state', '$timeout', 'Buyer', 'Order', 'Factory', 'Product', '$uibModal', 'Contact', 'User','$location',
+  function($scope, $http, $stateParams, $state, $timeout, Buyer, Order, Factory, Product, $uibModal, Contact, User, $location) {
     $scope.buyers = [];
     $scope.buyer = {};
     $scope.demand = {};
@@ -178,7 +178,7 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
     };
 
     $scope.find = function() {
-      $scope.buyers = Buyer.query({ action: 'search', search: $stateParams.keyword });
+      $scope.buyers = Buyer.query({ q: $stateParams.keyword });
     };
 
     $scope.findOne = function(id) {
@@ -204,8 +204,6 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
       // $('#buyerModal').modal('hide');
       // $('#updateBuyerModal').modal('show');
     };
-    
-    
     
     $scope.goToLastOrders = function(id){
       // $('#buyerModal').modal('hide');
@@ -250,6 +248,14 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
       });
     };
 
+    $scope.addFactory = function () {
+      var modalInstance = $uibModal.open({
+        windowClass: 'xl-modal',
+        templateUrl: './angular/lead/views/factory/create.view.html',
+        controller: 'CustomerFactoryModalController',
+        scope: $scope
+      });
+    };
 
     $scope.viewProduct = function (product) {
       
@@ -258,6 +264,17 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
         templateUrl: './angular/lead/views/product/view-from-buyer.html',
         controller: 'ViewProductModalFromBuyerController',
         scope: $scope,
+      });
+    };
+
+    $scope.deleteFactory = function(factory){
+      Factory.delete({ id: factory.id }, function (response) {
+        $scope.factory = response;
+        
+        $scope.buyer.factory.splice($scope.buyer.factory.indexOf(factory), 1);
+        $scope.success = true;
+      }, function (response) {
+        $scope.error = response.data.message;
       });
     };
     

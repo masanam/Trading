@@ -31,4 +31,8 @@ class BuyOrder extends Model
     public function Port() {
         return $this->hasOne('App\Model\Port', 'id', 'port_id');
     }
+
+    public function Factory() {
+        return $this->hasOne('App\Model\Factory', 'id', 'factory_id');
+    }
 }

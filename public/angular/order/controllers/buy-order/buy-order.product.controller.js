@@ -6,7 +6,7 @@ angular.module('order').controller('BuyOrderProductController', ['$scope', '$sta
     $scope.product = {};
     $scope.order_id = $stateParams.order_id;
 
-    //Init select factory
+    //Init select product
     $scope.findMyProducts = function() {
       $scope.products = Product.query({ action: 'my', id: $stateParams.id, type: 'buyer' }, function(products){
         if(products.length === 0){
@@ -72,6 +72,7 @@ angular.module('order').controller('BuyOrderProductController', ['$scope', '$sta
           $scope.order.size_max = $scope.product.selected.size_max;
           $scope.order.size_reject = $scope.product.selected.size_reject;
           $scope.order.size_bonus = $scope.product.selected.size_bonus;
+          $scope.order.volume = $scope.product.selected.volume;
           $scope.order.order_status = 3;
           
           $scope.order.$update({ type: 'buy', id: $stateParams.order_id }, function(res) {

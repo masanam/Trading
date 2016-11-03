@@ -5,7 +5,8 @@
     <!-- Sidebar user panel -->
     <div class="user-panel" ui-sref="user.edit">
       <div class="pull-left image">
-        <img src="{{ Authentication.user.image }}" class="img-circle" alt="User Image">
+        <div style="background-image:url({{ Authentication.user.image }});"  
+          class="img-circle div-img-circle small" alt="User Image"></div>
       </div>
       <div class="pull-left info">
         <p>{{ Authentication.user.name }}</p>
@@ -16,61 +17,64 @@
     <ul class="sidebar-menu">
       <li class="treeview">
         <a ui-sref="home">
-          <i class="ion ion-home" style="font-size: 25px; margin-left: -3px;"></i>
+          <i class="ion ion-home" style="font-size: 20px; margin-left: -3px;"></i>
           <span>Dashboard</span>
+        </a>
+      </li>
+      <li class="treeview">
+        <a ui-sref="lead.index">
+          <i class="ion ion-earth" style="font-size: 20px; margin-left: -3px;"></i>
+          <span>Coalpedia</span>
         </a>
         <ul class="treeview-menu">
           <li><a ui-sref="map.index"><i class="fa fa-map"></i> Map</a></li>
           <li><a ui-sref="dashboard.index"><i class="fa fa-line-chart"></i> Index</a></li>
-        </ul>
-      </li>
-      <li class="treeview">
-        <a ui-sref="lead.index">
-          <i class="ion ion-earth" style="font-size: 25px; margin-left: -3px;"></i>
-          <span>Leads</span>
-        </a>
-        <ul class="treeview-menu">
           <li><a ui-sref="lead.buyer"><i class="fa fa-circle-o"></i> Customer</a></li>
           <li><a ui-sref="lead.seller"><i class="fa fa-circle-o"></i> Supplier</a></li>
         </ul>
       </li>
       <li class="treeview">
         <a ui-sref="order.index">
-          <i class="ion ion-archive" style="font-size: 25px; margin-left: -3px;"></i>
-          <span>Orders</span>
+          <i class="ion ion-magnet" style="font-size: 20px; margin-left: -3px;"></i>
+          <span>Leads</span>
         </a>
         <ul class="treeview-menu">
-          <li><a ui-sref="buy-order.index"><i class="fa fa-circle-o"></i> Buy Order</a></li>
-          <li><a ui-sref="sell-order.index"><i class="fa fa-circle-o"></i> Sell Order</a></li>
+          <li><a ui-sref="buy-order.index"><i class="ion ion-log-in"></i> Buy Leads</a></li>
+          <li><a ui-sref="sell-order.index"><i class="ion ion-log-out"></i> Sell Leads</a></li>
         </ul>
       </li>
       <li class="treeview">
         <a ui-sref="deal.index">
-          <i class="ion ion-cash" style="font-size: 25px; margin-left: -3px;"></i>
-          <span>Deals</span>
+          <i class="ion ion-pricetags" style="font-size: 20px; margin-left: -3px;"></i>
+          <span>Orders</span>
         </a>
+        <ul class="treeview-menu">
+          <li><a ui-sref=""><i class="ion ion-log-in"></i> Approve Orders</a></li>
+          <li><a ui-sref=""><i class="ion ion-log-out"></i> Orders History</a></li>
+        </ul>
       </li>
       <li class="treeview">
         <a ui-sref="history-order.index">
-          <i class="ion ion-ios-refresh" style="font-size: 25px; margin-left: -3px;"></i>
+          <i class="ion ion-document-text" style="font-size: 20px; margin-left: -3px;"></i>
           <span>History</span>
         </a>
       </li>
       <li class="treeview">
-        <a>
-          <i class="ion ion-cash"></i>
+        <a href="https://goo.gl/forms/0zbygIKjG8jJZd5j1" target='_blank'>
+          <i class="ion ion-bug" style="font-size: 20px; margin-left: -3px;"></i>
+          <span>Bug Report</span>
+        </a>
+      </li>
+      <li class="treeview" ng-if="Authentication.user.role === 'manager'">
+        <a ui-sref="index.list">
+          <i class="ion ion-gear-a" style="font-size: 20px; margin-left: -3px;"></i>
           <span>Management</span>
         </a>
         <ul class="treeview-menu">
-          <li><a ui-sref="buy-order-management.index"><i class="fa fa-circle-o"></i> Buy Order</a></li>
-          <li><a ui-sref="sell-order-management.index"><i class="fa fa-circle-o"></i> Sell Order</a></li>
+          <li><a ui-sref="index.list"><i class="fa fa-line-chart"></i> Indices</a></li>
+          <li><a ui-sref="buy-order-management.index"><i class="ion ion-log-in"></i> Buy Order</a></li>
+          <li><a ui-sref="sell-order-management.index"><i class="ion ion-log-out"></i> Sell Order</a></li>
         </ul>
-      </li>
-      <li class="treeview">
-        <a ui-sref="chat.index">
-          <i class="ion ion-ios-chatboxes" style="font-size: 25px; margin-left: -3px;"></i>
-          <span>Chat</span>
-        </a>
       </li>
     </ul>
   </section>

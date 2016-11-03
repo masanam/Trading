@@ -5,7 +5,7 @@
 <div class="modal-body" ng-init="findAllSellOrders();">
 	<div class="row">
 		<div class="col-lg-8">
-			<select class="col-lg-12" ng-options="order as order.seller.company_name for order in orders track by order.id" ng-model="selectedOrder" ng-change="chooseBuyOrder(); isSelected = true;"></select>
+			<select class="col-lg-12" class="form-control" ng-options="order as order.seller.company_name for order in orders track by order.id" ng-model="selectedOrder" ng-change="chooseBuyOrder(); isSelected = true;"></select>
 		</div>
 		<div class="col-lg-2">
 			<button ng-click="submit()" class="col-lg-12 btn btn-success">+ Submit</button>

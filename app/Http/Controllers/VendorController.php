@@ -18,29 +18,11 @@ class VendorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($search = false)
+    public function index(Request $request)
     {
-        if (!$search) {
-            $vendor = Vendor::where('status', 'a')->get();
-        } else {
-            $vendor = Vendor::where('status', 'a')->where('company_name', 'LIKE', '%'.$search.'%')->get();
-        }
-
-        return response()->json($vendor, 200);
-    }
-    
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function search($search = false)
-    {
-        if (!$search) {
-            $vendor = Vendor::where('status', 'a')->get();
-        } else {
-            $vendor = Vendor::where('status', 'a')->where('company_name', 'LIKE', '%'.$search.'%')->get();
-        }
+        $vendor = Vendor::where('status', 'a');
+        if ($request->q) $vendor->where('company_name', 'LIKE', '%'.$request->q.'%');
+        $vendor = $vendor->get();
 
         return response()->json($vendor, 200);
     }

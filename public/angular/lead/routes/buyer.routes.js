@@ -12,19 +12,19 @@ angular.module('buyer').config(['$stateProvider', '$urlRouterProvider',
       })
       .state('buyer.index', {
         url: '',
-        templateUrl: '/angular/views/buyer/buyer.view.html'
+        templateUrl: '/angular/lead/views/buyer/index.view.html'
       })
       .state('buyer.create', {
         url: '/create',
-        templateUrl: '/angular/views/buyer/create.view.html'
+        templateUrl: '/angular/lead/views/buyer/create.view.html'
       })
       .state('buyer.view', {
         url: '/{id}',
-        templateUrl: '/angular/views/buyer/buyer.view.html'
+        templateUrl: '/angular/lead/views/buyer/view.view.html'
       })
       .state('buyer.update', {
         url: '/{id}/update',
-        templateUrl: '/angular/views/buyer/update.view.html'
+        templateUrl: '/angular/lead/views/buyer/update.view.html'
       });
   }
 ]);

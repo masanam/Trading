@@ -37,9 +37,16 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $user = User::where(['email' => $request->email])->get();
+        
         if(!$request) {
             return response()->json([
                 'message' => 'Bad Request'
+            ], 400);
+        }
+        else if(!empty($user)){
+            return response()->json([
+                'message' => 'Your email is already registered. If you forgot your password, please send an enquiry to info@volantech.io'
             ], 400);
         }
 
@@ -51,6 +58,7 @@ class UserController extends Controller
         $user->phone = $request->phone;
         $user->password = bcrypt($request->password);
 
+        $user->employee_id = $request->employee_id;
         $user->role = 'user';
 
         $user->status = 'a';
@@ -112,6 +120,7 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->phone = $request->phone;
         $user->password = bcrypt($request->password);
+        $user->employee_id = $request->employee_id;
 
         $user->role = $request->role ? $request->role : 'user';
 

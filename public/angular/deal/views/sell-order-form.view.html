@@ -4,30 +4,22 @@
   </select> -->
   <select class="form-control col-md-12" id="seller" ng-model="order.seller_id">
     <option value=""></option>
-    <option ng-repeat="seller in sellers" value="{{ seller.id }}">{{ seller.company_name }}</option>
+    <option ng-repeat="seller in sellers" value="{{ option.id }}">{{ seller.company_name }}</option>
   </select>
 </div>
+
 
 <div class="form-group">
   <div>
     <label for="order_date">Order Date :</label>
-    <p class="input-group">
-      <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="order.order_date" is-open="popup.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
-      <span class="input-group-btn">
-        <button type="button" class="btn btn-default" ng-click="open()"><i class="glyphicon glyphicon-calendar"></i></button>
-      </span>
-    </p>
+    <input type="date" class="form-control col-md-6" id="order_date" ng-model="order.order_date">
   </div>
   <div>
     <label for="deadline">Deadline :</label>
-    <p class="input-group">
-      <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="order.deadline" is-open="popup.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
-      <span class="input-group-btn">
-        <button type="button" class="btn btn-default" ng-click="open()"><i class="glyphicon glyphicon-calendar"></i></button>
-      </span>
-    </p>
+    <input type="date" class="form-control col-md-6" id="deadline" ng-model="order.deadline">
   </div>
 </div>
+
 
 <div class="form-group">
   <label for="penalty">Penalty Description :</label>

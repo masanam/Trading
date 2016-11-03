@@ -209,7 +209,7 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
     };
 
     $scope.find = function() {
-      $scope.sellers = Seller.query({ action: 'search', search: $stateParams.keyword });
+      $scope.sellers = Seller.query({ q: $stateParams.keyword });
     };
 
     $scope.findOne = function(id) {
@@ -299,11 +299,11 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
     };
     
     $scope.deleteContact = function(contact){
+      console.log(contact);
       Contact.delete({ id: contact.id }, function (response) {
         $scope.contact = response;
         
         $scope.seller.contact.splice($scope.seller.contact.indexOf(contact), 1);
-        $scope.close();
         $scope.success = true;
       }, function (response) {
         $scope.error = response.data.message;

@@ -1,16 +1,16 @@
 <section class="content" ng-controller="SellOrderController">
   <div class="box">
     <div class="box-header with-border">
-      <h1 class="box-title" style="font-size: 25px">Sell Orders</h1>
+      <h1 class="box-title" style="font-size: 25px">Sell Leads</h1>
       <div class="box-tools pull-right">
         <button ui-sref="sell-order.create" class="col-md-12 btn btn-primary">+ Create New</button>
       </div>
     </div>
     <div class="box-body">
-      <table  ng-init="findSellOrder()" st-table="displayedCollection" st-safe-src="sell_orders" class="table table-striped">
+      <table ng-init="findSellOrder()" st-table="displayedCollection" st-safe-src="sell_orders" class="table table-striped">
         <thead>
           <tr>
-            <th colspan="9"><input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
+            <th colspan="10"><input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
           </tr>
           <tr>
             <th st-sort="id">#</th>
@@ -22,6 +22,7 @@
             <th st-sort="ncv_min">NCV</th>
             <th st-sort="max_price/volume">Price / Tones</th>
             <th st-sort="max_price">Price Total</th>
+            <th st-sort="order_status">Status</th>
             <th></th>
           </tr>
         </thead>
@@ -35,14 +36,22 @@
             <td>{{ sell_order.gcv_arb_min }} - {{ sell_order.gcv_arb_max }}</td>
             <td>{{ sell_order.gcv_adb_min }} - {{ sell_order.gcv_adb_max }}</td>
             <td>{{ sell_order.ncv_min }} - {{ sell_order.ncv_max }}</td>
-            <td>{{ sell_order.max_price/sell_order.volume | currency : $ : 2}}</td>
-            <td>{{ sell_order.max_price | currency : $ : 2}}</td>
+            <td>{{ sell_order.min_price/sell_order.volume | currency : $ : 2}}</td>
+            <td>{{ sell_order.min_price | currency : $ : 2}}</td>
+            <td ng-if="sell_order.order_status==='o'">Open</td>
+            <td ng-if="sell_order.order_status==='s'">Staged</td>
+            <td ng-if="sell_order.order_status==='l'">Lead</td>
+            <td ng-if="sell_order.order_status==='0'"><a style="cursor:pointer" ng-click="toProduct(sell_order.id)">Step Supplier</a></td>
+            <td ng-if="sell_order.order_status==='1'"><a style="cursor:pointer" ng-click="toProduct(sell_order.seller_id,sell_order.id)">Step Concession</a></td>
+            <td ng-if="sell_order.order_status==='2'"><a style="cursor:pointer" ng-click="toProduct(sell_order.seller_id,sell_order.id,sell_order.concession_id)">Step Product</a></td>
+            <td ng-if="sell_order.order_status==='3'"><a style="cursor:pointer" ng-click="toPort(sell_order.seller_id,sell_order.id,sell_order.concession_id)">Step Port</a></td>
+            <td ng-if="sell_order.order_status==='4'"><a style="cursor:pointer" ng-click="toSummary(sell_order.seller_id,sell_order.id,sell_order.concession_id)">Step Summary</a></td>
             <td>
               <a ui-sref="sell-order.view({ id: sell_order.id })"><i class="glyphicon glyphicon-info-sign"></i></a>
             </td>
           </tr>
           <tr ng-if="displayedCollection.length == 0">
-              <td colspan="7" class="text-center">No data available</td>
+              <td colspan="10" class="text-center">No data available</td>
           </tr>
         </tbody>
 

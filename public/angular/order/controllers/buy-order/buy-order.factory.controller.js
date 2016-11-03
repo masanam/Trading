@@ -19,6 +19,7 @@ angular.module('order').controller('BuyOrderFactoryController', ['$scope', '$sta
     $scope.nextToProduct = function(){
       $scope.order = new Order({
         buyer_id: $stateParams.id,
+        factory_id: $scope.factory.selected.id,
         address: $scope.factory.selected.address,
         city: $scope.factory.selected.city,
         country: $scope.factory.selected.country,

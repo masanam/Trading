@@ -6,6 +6,7 @@ use App\Model\Factory;
 use App\Model\Buyer;
 use App\Model\Product;
 use App\Model\Port;
+use Auth;
 
 use Illuminate\Http\Request;
 
@@ -75,8 +76,7 @@ class FactoryController extends Controller
      */
     public function show($factory)
     {
-        $factory = Factory::find($factory);
-
+        $factory = Factory::with('Port')->find($factory);
         if($factory->status == 'a') {
             return response()->json($factory, 200);
         } else {
@@ -122,7 +122,7 @@ class FactoryController extends Controller
 
         $factory->save();
 
-        // event(new InputEditCoalpedia(Auth::user(), $factory->id, 'factory', 'update'));
+        event(new InputEditCoalpedia(Auth::user(), $factory->id, 'factory', 'update'));
 
         return response()->json($factory, 200);
     }

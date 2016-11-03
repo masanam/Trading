@@ -16,19 +16,31 @@ class DealTableSeeder extends Seeder
         Deal::create([
             'id' => 1,
             'user_id' => 2,
-            'status' => 'a'
+            'status' => 'o'
         ]);
 
         Deal::create([
             'id' => 2,
             'user_id' => 3,
-            'status' => 'a'
+            'status' => 'f'
         ]);
 
         Deal::create([
             'id' => 3,
             'user_id' => 2,
-            'status' => 'a'
+            'status' => 'x'
+        ]);
+
+        Deal::create([
+            'id' => 4,
+            'user_id' => 1,
+            'status' => 'c'
+        ]);
+
+        Deal::create([
+            'id' => 5,
+            'user_id' => 1,
+            'status' => 'd'
         ]);
     }
 }

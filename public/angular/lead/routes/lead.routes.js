@@ -150,6 +150,16 @@ angular.module('lead').config(['$stateProvider', '$urlRouterProvider',
         templateUrl: '/angular/lead/views/concession/view.view.html',
         roles: ['user', 'trader', 'manager']
       })
+      .state('lead.update-concession', {
+        url: '/concession/update/{id}',
+        templateUrl: '/angular/lead/views/concession/update.view.html',
+        roles: ['user', 'trader', 'manager']
+      })
+      .state('lead.view-factory', {
+        url: '/factory/{id}',
+        templateUrl: '/angular/lead/views/factory/view.view.html',
+        roles: ['user', 'trader', 'manager']
+      })
       .state('lead.view-contact', {
         url: '/contact/{id}',
         templateUrl: '/angular/lead/views/contact/view.view.html',

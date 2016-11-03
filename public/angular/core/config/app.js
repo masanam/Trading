@@ -36,6 +36,7 @@ angular.module(ApplicationConfiguration.applicationModuleName).config(['$locatio
   }
 ]);
 
+
 angular.module(ApplicationConfiguration.applicationModuleName).config(['$urlRouterProvider', '$authProvider',
   function($urlRouterProvider, $authProvider) {
     // Satellizer configuration that specifies which API

@@ -28,9 +28,9 @@
           <label>Volume of Coal : </label>
           <p>{{ buy_order.volume }} Tones</p>
           <label>Order Date : </label>
-          <p>{{ buy_order.order_date }}</p>
+          <p>{{ buy_order.order_date | date : 'd-MMMM-yyyy' }}</p>
           <label>Deadline : </label>
-          <p>{{ buy_order.order_deadline }}</p>
+          <p>{{ buy_order.order_deadline | date : 'd-MMMM-yyyy' }}</p>
           <label>Trading Term : </label>
           <p>{{ buy_order.trading_term | uppercase }}</p>
         </div>
@@ -40,9 +40,9 @@
           <label>Max Price : </label>
           <p>$ {{ buy_order.max_price }}</p>
           <label>Ready Date : </label>
-          <p>{{ buy_order.ready_date }}</p>
+          <p>{{ buy_order.ready_date | date : 'd-MMMM-yyyy' }}</p>
           <label>Expired Date : </label>
-          <p>{{ buy_order.expired_date }}</p>
+          <p>{{ buy_order.expired_date | date : 'd-MMMM-yyyy' }}</p>
           <label>Payment Terms : </label>
           <p>{{ buy_order.payment_terms | uppercase }}</p>
         </div>
@@ -52,24 +52,24 @@
     </div>
   </div>
 
-  <div class="box box-primary box-solid">
+  <div class="box box-primary box-solid" ng-if="buy_order.port_name">
     <div class="box-header ">
       <h3 class="box-title">Port</h3>
     </div>
     <div class="box-body">
         <h3><b>Port Name : </b></h3>
-        <h4>{{ buy_order.port_name }}</h4>
+        <h4>{{ buy_order.port_name || 'N / A' }}</h4>
       <div class="col-xs-4" style="padding-left:0">
-        <label>Port Daily Rate : </label>
-        <p>{{ buy_order.port_daily_rate }}</p>
+        <label>Port Discharging Rate : </label>
+        <p>{{ buy_order.port_daily_rate || 'N / A' }} tph</p>
       </div>
       <div class="col-xs-4" style="padding-left:0">
         <label>Port Distance : </label>
-        <p>{{ buy_order.port_distance }} km</p>
+        <p>{{ buy_order.port_distance || 'N / A' }} km</p>
       </div>
       <div class="col-xs-4" style="padding-left:0">
         <label>Port Draft Height : </label>
-        <p>{{ buy_order.port_draft_height }} m</p>
+        <p>{{ buy_order.port_draft_height || 'N / A' }} m</p>
       </div>
     </div>
   </div>
@@ -106,7 +106,7 @@
           <table class="table">
             <tbody>
               <tr>
-                <td><b>Ash <div class="pull-right">:</div></b></td>
+                <td style="width: 50%"><b>Ash <div class="pull-right">:</div></b></td>
                 <td>{{buy_order.ash_min}} - {{buy_order.ash_max}} %</td>
               </tr>
               <tr>
@@ -128,7 +128,7 @@
           <table class="table">
             <tbody>
               <tr>
-                <td><b>Fixed Carbon <div class="pull-right">:</div></b></td>
+                <td style="width: 50%"><b>Fixed Carbon <div class="pull-right">:</div></b></td>
                 <td>{{buy_order.fc_min}} - {{buy_order.fc_max}} %</td>
               </tr>
               <tr>
@@ -161,7 +161,7 @@
           <table class="table">
             <tbody>
               <tr>
-                <td><b>Gross Caloric ARB <div class="pull-right">:</div></b></td>
+                <td style="width: 50%"><b>Gross Caloric ARB <div class="pull-right">:</div></b></td>
                 <td>{{buy_order.gcv_arb_reject}} kcal</td>
               </tr>
               <tr>
@@ -184,7 +184,7 @@
           <table class="table">
             <tbody>
               <tr>
-                <td><b>Gross Caloric ARB <div class="pull-right">:</div></b></td>
+                <td style="width: 50%"><b>Gross Caloric ARB <div class="pull-right">:</div></b></td>
                 <td>{{buy_order.gcv_arb_bonus}} kcal</td>
               </tr>
               <tr>
