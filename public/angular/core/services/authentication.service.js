@@ -34,6 +34,8 @@ angular.module('user').factory('Authentication', ['$http', '$auth',
         // If signup is successful, redirect to the users state
         auth.authenticate();
         callback();
+      }).catch(function(err){
+        return callback({ message: err }, undefined);
       });
     };
 

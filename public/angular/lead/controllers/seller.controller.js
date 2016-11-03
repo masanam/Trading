@@ -299,11 +299,11 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
     };
     
     $scope.deleteContact = function(contact){
+      console.log(contact);
       Contact.delete({ id: contact.id }, function (response) {
         $scope.contact = response;
         
         $scope.seller.contact.splice($scope.seller.contact.indexOf(contact), 1);
-        $scope.close();
         $scope.success = true;
       }, function (response) {
         $scope.error = response.data.message;
@@ -315,6 +315,16 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
       var modalInstance = $uibModal.open({
         windowClass: 'xl-modal',
         templateUrl: './angular/lead/views/product/create-from-seller.view.html',
+        controller: 'CreateProductModalFromSellerController',
+        scope: $scope,
+      });
+    };
+
+    $scope.addProductDetail = function () {
+      
+      var modalInstance = $uibModal.open({
+        windowClass: 'xl-modal',
+        templateUrl: './angular/lead/views/product/create-from-seller.view.detail.html',
         controller: 'CreateProductModalFromSellerController',
         scope: $scope,
       });
@@ -452,6 +462,26 @@ angular.module('seller').controller('CreateProductModalFromSellerController', fu
     });
     
   };
+
+
+  $scope.createProductDetail= function(){
+    
+    $scope.success = $scope.error = null;
+    //$scope.product.license_expired_date = $filter('date')($scope.product.license_expired_date, 'yyyy-MM-dd');
+
+    var product = $scope.product;
+    product.seller_id = $scope.seller.id;
+    
+    product.$save(function (response) {
+      $scope.product = response;
+      $scope.success = true;
+      $uibModalInstance.close('success');
+    }, function (response) {
+      $scope.error = response.data.message;
+    });
+    
+  };
+
   
   $scope.close = function () {
     $uibModalInstance.dismiss('cancel');
@@ -542,7 +572,7 @@ angular.module('seller').controller('CreateConcessionModalController', function 
     $scope.concession.license_expiry_date = $filter('date')($scope.concession.license_expiry_date, 'yyyy-MM-dd');
     $scope.concession.seller_id = $scope.seller.id;
     
-    if($scope.polygon.array.length === 0){
+    if($scope.polygon.array.length !== 0){
       $scope.concession.polygon = createStringByArray($scope.polygon.array);
     }else{
       $scope.concession.polygon = '';

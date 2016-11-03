@@ -22,10 +22,20 @@ Route::group(['middleware' => ['cors']], function() {
     Route::post('authenticate', 'AuthenticateController@authenticate');
     Route::post('authenticate/signup', 'AuthenticateController@signup');
     Route::get('authenticate/user', 'AuthenticateController@getAuthenticatedUser');
+
+    //S3 Upload file signing API
     Route::post('signing', 'AuthenticateController@signing');
 
+    //Coal Index Price API
+    /*Route::post('index/price', 'IndexController@price');
+    Route::post('index/single-price', 'IndexController@singlePrice');
+    Route::get('index/single-date', 'IndexController@singleDate');
+    Route::get('index/{id}/price', 'IndexController@indexPrice');
+    Route::resource('index', 'IndexController');*/
+
+    //User Management API
+    //Forgot Password API
     Route::post('user/password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
-    Route::post('user/password/reset', 'Auth\ResetPasswordController@reset');
     Route::get('user/current', 'UserController@currentUser');
     Route::resource('user', 'UserController', ['except' => [ 'create', 'edit' ]]);
 
@@ -88,8 +98,12 @@ Route::group(['middleware' => ['cors']], function() {
     Route::get('index/single-date', 'IndexController@singleDate');
     Route::get('index/{id}/price', 'IndexController@indexPrice');
 
-    Route::resource('index', 'IndexController');
-    Route::resource('index/price', 'IndexPriceController');
+    Route::resource('index', 'IndexController', ['except' => [
+        'create', 'edit'
+    ]]);
+    /*Route::resource('index/price', 'IndexPriceController', ['except' => [
+        'create', 'edit'
+    ]]);*/
 
 
     /* 

@@ -231,7 +231,7 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
         $scope.contact = response;
         
         $scope.buyer.contact.splice($scope.buyer.contact.indexOf(contact), 1);
-        $scope.close();
+        //$scope.close();
         $scope.success = true;
       }, function (response) {
         $scope.error = response.data.message;
@@ -243,6 +243,16 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
       var modalInstance = $uibModal.open({
         windowClass: 'xl-modal',
         templateUrl: './angular/lead/views/product/create-from-buyer.view.html',
+        controller: 'CreateProductModalFromBuyerController',
+        scope: $scope,
+      });
+    };
+
+    $scope.addProductDetail = function () {
+      
+      var modalInstance = $uibModal.open({
+        windowClass: 'xl-modal',
+        templateUrl: './angular/lead/views/product/create-from-buyer.view.detail.html',
         controller: 'CreateProductModalFromBuyerController',
         scope: $scope,
       });
@@ -370,10 +380,6 @@ angular.module('buyer').controller('CreateProductModalFromBuyerController', func
   $scope.product = new Product();
   
   $scope.createProduct= function(){
-    
-    // $scope.success = $scope.error = null;
-    //$scope.product.license_expired_date = $filter('date')($scope.product.license_expired_date, 'yyyy-MM-dd');
-
     var product = $scope.product;
     product.buyer_id = $scope.buyer.id;
     product.$save(function (response) {
@@ -390,6 +396,20 @@ angular.module('buyer').controller('CreateProductModalFromBuyerController', func
           $scope.close();
         }
       }, 75);
+    }, function (response) {
+      $scope.error = response.data.message;
+    });
+    
+  };
+
+  $scope.createProductDetail= function(){
+    var product = $scope.product;
+    product.buyer_id = $scope.buyer.id;
+    product.$save(function (response) {
+      $scope.product = response;
+      $scope.success = true;
+      $scope.close();
+     
     }, function (response) {
       $scope.error = response.data.message;
     });

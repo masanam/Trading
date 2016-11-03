@@ -107,7 +107,7 @@
                   url: '/images/boat.png'
                 }"
                 position="{{pos.port.latitude}}, {{pos.port.longitude}}" 
-                id="markport{{pos.port.id}}" on-click="showPortDetail({{pos.port}})">  
+                id="markport{{pos.port.id}}" on-click="showPortDetail(pos.port)">  
               </marker>
               <directions
                 draggable="true"
@@ -152,6 +152,10 @@
                                 <div class="row">
                                   <span class="col-lg-6">Hauling Road Name:</span> 
                                   <span class="col-lg-6">{{concession.hauling_road_name || 'N/A'}}</span><br/>
+                                </div>
+                                <div class="row">
+                                  <span class="col-lg-6">Port Name:</span> 
+                                  <span class="col-lg-6">{{concession.port.port_name || 'N/A'}}<button class="btn btn-info btn-sm" ng-show="concession.port.port_name" ng-click="showPortDetail($event, concession.port)">Show</button></span><br/>
                                 </div>
                                 <div class="row">
                                   <span class="col-lg-6">Port Distance:</span> 
@@ -208,7 +212,7 @@
                         <div class="row">
                           <div class="col-lg-3">
                             <uib-tabset active="activePill" vertical="true" type="pills">
-                              <uib-tab ng-repeat="(idx, prod) in concession.product" index="idx" ng-click="showProduct(prod)" heading="{{prod.product_name}}"></uib-tab>
+                              <uib-tab ng-repeat="(idx, prod) in concession.product" index="idx" ng-click="showProduct(prod)" heading="{{prod.product_name || 'Coal'}}"></uib-tab>
                             </uib-tabset>
                           </div>
                           <div class="col-lg-9">

@@ -28,6 +28,7 @@ class CreateUsersTable extends Migration
 
             $table->string('role');
             $table->string('employee_id')->nullable();
+            $table->string('manager_id')->nullable();
 
             $table->datetime('last_login')->nullable();
             

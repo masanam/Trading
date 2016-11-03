@@ -82,9 +82,18 @@ class SellerController extends Controller
      */
     public function show($id)
     {
-        $seller = Seller::with(
-                            'Concession', 'Contact', 'User', 'Product'
-                             )->find($id);
+        $seller = Seller::with(['Concession' => function($q) {
+                                    $q->where('status', 'a');
+                                }, 
+                                'Contact' => function($q) {
+                                    $q->where('status', 'a');
+                                }, 
+                                'User' => function($q) {
+                                    $q->where('status', 'a');
+                                }, 
+                                'Product' => function($q) {
+                                    $q->where('status', 'a');
+                                }])->find($id);
 
         if($seller) {
             if($seller->status == 'a') {

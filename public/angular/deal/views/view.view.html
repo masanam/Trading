@@ -1,10 +1,11 @@
-<section ng-controller="DealController" ng-init="findOne()">    
-  <section class="row">
-    <div class="col-md-12">
-      <h1> <button ui-sref="deal.index" class="btn btn-danger"> < Back</button> Detail Deals</h1>
-      <hr/>
+<section class="content" ng-controller="DealController" ng-init="findOne()">
+<div class="box box-solid" >
+    <div class="box-header ">
+       <h4> <button ui-sref="deal.index" class="btn btn-primary"> < Back </button> Detail Deals</h4>
     </div>
-  </section>
+
+  <div class="box-body" >                
+     
   <section class="row">
     <div class="col-lg-12">
       <div class="col-lg-4">
@@ -154,7 +155,12 @@
       <button ng-click="updateDeal()" class="col-md-12 btn-success btn"> Update Deal</button>
     </div>
   </section>
+    </div>
+</div>   
+
 </section>
+
+
 
 <script type="text/ng-template" id="alertModal.html">
   <div class="modal-header">

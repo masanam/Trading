@@ -48,6 +48,7 @@
             <td ng-if="sell_order.order_status==='4'"><a style="cursor:pointer" ng-click="toSummary(sell_order.seller_id,sell_order.id,sell_order.concession_id)">Step Summary</a></td>
             <td>
               <a ui-sref="sell-order.view({ id: sell_order.id })"><i class="glyphicon glyphicon-info-sign"></i></a>
+              <a ng-if="sell_order.order_status!=='s'&&sell_order.order_status!=='o'" ng-click="changeOrderStatus(sell_order, 'x')" style="cursor: pointer" uib-tooltip="Delete Order"><i class="glyphicon glyphicon-trash"></i></a>
             </td>
           </tr>
           <tr ng-if="displayedCollection.length == 0">
