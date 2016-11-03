@@ -31,10 +31,11 @@ class IndexPriceController extends Controller
     $indexPrice = new IndexPrice();
     
     $indexPrice->date = $request->date;
+    $indexPrice->index_id = $request->index_id;
     $indexPrice->price = $request->price;
 
     //date logic masuk sini
-    $indexPrice->quality = $request->quality;
+    //$indexPrice->quality = $request->quality;
 
     $indexPrice->created_at = Date('Y-m-d H:i:s');
     $indexPrice->updated_at = Date('Y-m-d H:i:s');

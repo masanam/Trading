@@ -1,20 +1,27 @@
 'use strict';
 
-angular.module('deal').controller('DealController', ['$scope', '$uibModal', 'Deal', 'Order', 'Buyer', 'Seller', 'SellDeal', 'BuyDeal', 'Authentication', '$location', '$stateParams', 'BuyDealChat', 'SellDealChat','Index',
-  function($scope, $uibModal, Deal, Order, Buyer, Seller, SellDeal, BuyDeal, Authentication, $location, $stateParams, BuyDealChat, SellDealChat, Index) {
+angular.module('deal').controller('DealController', ['$scope', '$uibModal', '$window', 'Deal', 'Order', 'Buyer', 'Seller', 'SellDeal', 'BuyDeal', 'Authentication', '$location', '$stateParams', 'BuyDealChat', 'SellDealChat','Index',
+  function($scope, $uibModal, $window, Deal, Order, Buyer, Seller, SellDeal, BuyDeal, Authentication, $location, $stateParams, BuyDealChat, SellDealChat, Index) {
     $scope.deals = [];
-    
-
+  
     $scope.findDeals = function(){
-      $scope.deals = Deal.query({ action:'table', status: 'a' });
-    };
-    
-    $scope.findFinished = function(){
       $scope.deals = Deal.query({ action:'table', status: 'f' });
     };
     
+    $scope.findOpen = function(){
+      $scope.deals = Deal.query({ action:'table', status: 'o' });
+    };
+    
     $scope.findCancelled = function(){
+      $scope.deals = Deal.query({ action:'table', status: 'c' });
+    };
+
+    $scope.findDelete = function(){
       $scope.deals = Deal.query({ action:'table', status: 'x' });
+    };
+
+    $scope.findDraft = function(){
+      $scope.deals = Deal.query({ action:'table', status: 'd' });
     };
     
     $scope.findOne = function(){

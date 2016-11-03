@@ -23,26 +23,10 @@ class BuyerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($search = false)
-    {
-        if (!$search) {
-            $buyer = Buyer::where('status', 'a')->get();
-        } else {
-            // $buyer = Buyer::search($search)->where('status', 'a')->get();
-            $buyer = Buyer::where('status', 'a')->where('company_name', 'LIKE', '%'.$search.'%')->get();
-        }
-        return response()->json($buyer, 200);
-    }
-    
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function search($q = false)
+    public function index(Request $request)
     {
         $buyer = Buyer::with('BuyOrder')->where('status', 'a');
-        if ($q) $buyer->where('company_name', 'LIKE', '%'.$q.'%');
+        if ($request->q) $buyer->where('company_name', 'LIKE', '%'.$request->q.'%');
         $buyer = $buyer->get();
         return response()->json($buyer, 200);
     }
@@ -96,7 +80,13 @@ class BuyerController extends Controller
     public function show($id)
     {
         //$buyer = Contact::find([1,2,3,4,5]);
-        $buyer = Buyer::with('Contact', 'Product', 'Factory')->find($id);
+        $buyer = Buyer::with(['Contact' => function($q) {
+                            $q->where('contacts.status', 'a');
+                          },'Product' => function($q) {
+                            $q->where('products.status', 'a');
+                          },'Factory' => function($q) {
+                            $q->where('factory.status', 'a');
+                          }])->find($id);
         
         if($buyer->status == 'a') {
             return response()->json($buyer, 200);

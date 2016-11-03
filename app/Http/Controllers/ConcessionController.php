@@ -231,12 +231,12 @@ class ConcessionController extends Controller
         $concession->license_expiry_date = date('Y-m-d',strtotime($request->license_expiry_date));
         $concession->license_type = $request->license_type;
         $concession->status = 'a';
-        $concession->save();
-
-        $concession->license_expiry_date = $request->license_expiry_date;
         $concession->latitude = floatval($request->latitude);
         $concession->longitude = floatval($request->longitude);
         $concession->stripping_ratio = floatval($request->stripping_ratio);
+        $concession->save();
+
+      
         event(new InputEditCoalpedia(Auth::user(), $concession->id, 'concessions', 'create'));
 
         return response()->json($concession, 200);
@@ -250,7 +250,7 @@ class ConcessionController extends Controller
      */
     public function show($concession)
     {
-        $concession = Concession::find($concession);
+        $concession = Concession::with('Port')->find($concession);
 
         if($concession->status == 'a') {
             return response()->json($concession, 200);
@@ -332,8 +332,12 @@ class ConcessionController extends Controller
         $concession->stockpile_distance = $request->stockpile_distance;
         $concession->port_id = $request->port_id;
         $concession->port_distance = $request->port_distance;
-        $concession->license_expiry_date = $request->license_expiry_date;
+        $concession->license_expiry_date = date('Y-m-d',strtotime($request->license_expiry_date));
         $concession->license_type = $request->license_type;
+        $concession->status = 'a';
+        $concession->latitude = floatval($request->latitude);
+        $concession->longitude = floatval($request->longitude);
+        $concession->stripping_ratio = floatval($request->stripping_ratio);
 
         $concession->save();
 

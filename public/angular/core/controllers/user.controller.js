@@ -35,11 +35,14 @@ angular.module('user').controller('UserController', ['$scope', '$http', '$stateP
       if($scope.user.password === $scope.user.cpassword){
         
         $scope.user.$update({ id: $scope.user.id }, function(response) {
-          $state.go('user.index');
+          //$state.go('user.index');
           $scope.loading = false;
+          $scope.success = "Your profile has been updated successfully";
+          $scope.error = undefined;
         });
       } else {
-        alert('Password does not match!');
+        $scope.success = undefined;
+        $scope.error = "Password does not match!";
       }
       
     };
@@ -57,14 +60,15 @@ angular.module('user').controller('UserController', ['$scope', '$http', '$stateP
       }
     };
 
-    // $scope.forgotPassword = function() {
-    //   var user = new User({
-    //     'email': $scope.user.email
-    //   });
-    //   user.$save({ action: 'password' , email: 'email' }, function(response) {
-    //     console.log(response);
-    //   });
-    // };
+    $scope.forgotPassword = function() {
+      var user = new User({
+        'email': $scope.user.email
+      });
+      console.log(user);
+      user.$save({ action: 'password' , actionDetail: 'email' }, function(response) {
+        console.log(response);
+      });
+    };
 
     $scope.findOne = function() {
       $scope.userId = Authentication.user.id;

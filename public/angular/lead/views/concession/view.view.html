@@ -25,7 +25,7 @@
       <div class="row" style="background:#eee; padding: 10px;">
         <h3>About</h3>
 
-        <button type="button" class="btn btn-primary" ng-click="goToUpdatePopup(concession.id)">
+        <button type="button" class="btn btn-primary" ui-sref="lead.update-concession({ id: concession.id })">
           <i class="glyphicon glyphicon-pencil"></i> Update
         </button><br><br>
 
@@ -62,6 +62,15 @@
              fill-color="#FF0000"
              fill-opacity="0.35">
           </shape>
+          <marker 
+            icon="{
+              url: '/images/boat.png'
+            }" 
+            position="{{concession.port.latitude}}, {{concession.port.longitude}}" 
+            id="markport{{concession.port.id}}" 
+            on-click="showPortDetail({{pos}})"
+          >
+          </marker>
         </ng-map>
       </div>
       <div class="box box-info">

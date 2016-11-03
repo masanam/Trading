@@ -178,7 +178,7 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
     };
 
     $scope.find = function() {
-      $scope.buyers = Buyer.query({ action: 'search', search: $stateParams.keyword });
+      $scope.buyers = Buyer.query({ q: $stateParams.keyword });
     };
 
     $scope.findOne = function(id) {
@@ -231,7 +231,7 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
         $scope.contact = response;
         
         $scope.buyer.contact.splice($scope.buyer.contact.indexOf(contact), 1);
-        $scope.close();
+        //$scope.close();
         $scope.success = true;
       }, function (response) {
         $scope.error = response.data.message;
