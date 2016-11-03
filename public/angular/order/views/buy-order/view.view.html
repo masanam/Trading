@@ -16,6 +16,16 @@
       <h3 class="box-title">Buy Lead</h3>
     </div>
     <div class="box-body">
+      <div class="pull-right" ng-if="buy_order.order_status!=='o'&&buy_order.order_status!=='s'">
+        <button type="button" class="btn btn-primary" ng-click="changeOrderStatusAtDetail(buy_order, 'x')" >
+          <i class="glyphicon glyphicon-arrow-right"></i> Delete
+        </button>
+      </div>
+      <div class="pull-right" ng-if="buy_order.order_status==='l'">
+        <button type="button" class="btn btn-primary" ui-sref="buy-order.update({ id:buy_order.id })">
+          <i class="glyphicon glyphicon-arrow-right"></i> Update
+        </button>
+      </div>
       <div class="form-group row-fluid">
         <h1>{{ buy_order.buyer.company_name }}</h1>
         <label>Product Name : </label>

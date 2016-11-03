@@ -80,6 +80,10 @@ angular.module('order-history').config(['$stateProvider', '$urlRouterProvider',
       .state('buy-order.view', {
         url: '/:id',
         templateUrl: '/angular/order/views/buy-order/view.view.html'
+      })
+      .state('buy-order.update', {
+        url: '/update/:id',
+        templateUrl: '/angular/order/views/buy-order/update.view.html'
       });
 
     $stateProvider
@@ -119,6 +123,10 @@ angular.module('order-history').config(['$stateProvider', '$urlRouterProvider',
       .state('sell-order.view', {
         url: '/:id',
         templateUrl: '/angular/order/views/sell-order/view.view.html'
+      })
+      .state('sell-order.update', {
+        url: '/update/:id',
+        templateUrl: '/angular/order/views/sell-order/update.view.html'
       });
 
     $stateProvider
