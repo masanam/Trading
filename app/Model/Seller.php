@@ -20,7 +20,7 @@ class Seller extends Model
     }
 
     public function Contact() {
-        return $this->hasMany('App\Model\Contact');
+        return $this->hasMany('App\Model\Contact')->where('status','a');
     }
 
     public function SellOrder() {
