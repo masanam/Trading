@@ -113,7 +113,6 @@ angular.module('map').controller('MapController', ['$scope', '$http', '$statePar
     };
 
     $scope.showPortDetail = function(event, port) {
-      console.log(port);
       $scope.connectedConcessions = Port.query({ id: port.id , concession: 'concession' });
       $scope.port = Port.get({ id: port.id }, function(port) {
         $scope.event = event;
