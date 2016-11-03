@@ -20,7 +20,7 @@ class CreateOrdersTable extends Migration
             $table->timestamps();
         });
 
-        Schema::create('order_approval', function (Blueprint $table) {
+        Schema::create('order_approvals', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('order_id')->unsigned();
             $table->integer('user_id')->unsigned();
@@ -31,21 +31,20 @@ class CreateOrdersTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
 
-        Schema::create('detail_order', function (Blueprint $table) {
+        Schema::create('order_details', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('order_id')->nullable();
+            $table->integer('order_id')->unsigned();
             $table->integer('orderable_id')->unsigned();
             $table->string('orderable_type');
             $table->integer('price');
             $table->integer('volume');
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
         });
 
-        Schema::create('detail_order_negotiation', function (Blueprint $table) {
-            $table->integer('detail_order_id')->unsigned();
+        Schema::create('order_negotiations', function (Blueprint $table) {
+            $table->integer('order_detail_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->integer('old_volume');
             $table->integer('old_price');
@@ -54,9 +53,9 @@ class CreateOrdersTable extends Migration
             $table->text('notes');
             $table->timestamps();
 
-            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
+            $table->foreign('order_detail_id')->references('id')->on('order_details')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-        })
+        });
     }
 
     /**

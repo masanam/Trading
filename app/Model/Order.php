@@ -13,12 +13,12 @@ class Order extends Model
 
     public function buys()
 		{
-      return $this->morphedByMany(BuyOrder::class, 'detail_order', 'orderable_type', 'orderable_id');
+      return $this->morphedByMany(BuyOrder::class, 'orderable', 'order_details');
 		}
 
     public function sells()
 		{
-      return $this->morphedByMany(SellOrder::class, 'detail_order', 'orderable_type', 'orderable_id');
+      return $this->morphedByMany(SellOrder::class, 'orderable', 'order_details');
 		}
 
 		public function approval()
