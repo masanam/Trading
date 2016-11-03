@@ -7,6 +7,7 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Password;
 
 use Illuminate\Support\Facades\Config;
 
