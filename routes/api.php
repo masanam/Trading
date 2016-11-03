@@ -21,7 +21,7 @@ Route::group(['middleware' => ['cors']], function() {
     Route::get('authenticate/user', 'AuthenticateController@getAuthenticatedUser');
 
     //S3 Upload file signing API
-    Route::post('signing', 'AuthenticateController@upload');
+    Route::post('signing', 'AuthenticateController@signing');
 
     //Coal Index Price API
     Route::post('index/price', 'IndexController@price');
@@ -33,7 +33,6 @@ Route::group(['middleware' => ['cors']], function() {
     //User Management API
     //Forgot Password API
     Route::post('user/password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
-    Route::post('user/password/reset', 'Auth\ResetPasswordController@reset');
     Route::get('user/current', 'UserController@currentUser');
     Route::resource('user', 'UserController', ['except' => [
         'create', 'edit'

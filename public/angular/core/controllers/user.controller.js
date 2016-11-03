@@ -49,14 +49,15 @@ angular.module('user').controller('UserController', ['$scope', '$http', '$stateP
       }
     };
 
-    // $scope.forgotPassword = function() {
-    //   var user = new User({
-    //     'email': $scope.user.email
-    //   });
-    //   user.$save({ action: 'password' , email: 'email' }, function(response) {
-    //     console.log(response);
-    //   });
-    // };
+    $scope.forgotPassword = function() {
+      var user = new User({
+        'email': $scope.user.email
+      });
+      console.log(user);
+      user.$save({ action: 'password' , actionDetail: 'email' }, function(response) {
+        console.log(response);
+      });
+    };
 
     $scope.findOne = function() {
       $scope.userId = Authentication.user.id;

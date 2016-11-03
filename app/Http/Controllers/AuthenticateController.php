@@ -6,6 +6,8 @@ use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Login;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Password;
 
 use App\Model\User;
 
@@ -98,7 +100,7 @@ class AuthenticateController extends Controller
     public function signing(Request $request)
     {
         $disk = Storage::disk('s3');
-        $bucket = Config::get('filesystems.disks.s3.bucket');
+        $bucket = config('filesystems.disks.s3.bucket');
         $key = $request->file->filename;
 
         if ($disk->exists($key)) {
