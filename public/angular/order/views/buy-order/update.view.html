@@ -1,0 +1,293 @@
+<div class="content" ng-controller="UpdateBuyOrderController" ng-init="findOne()">
+  <!-- HEADER -->
+  <div class="row-fluid" style="margin-bottom: 10px">
+    <button type="button" class="btn btn-primary" ui-sref="buy-order.view({ id: buy_order.id })">
+      <i class="glyphicon glyphicon-arrow-left"></i> Back
+    </button>
+    <div class="pull-right">
+      <button type="button" class="btn btn-primary" ng-click="update()">
+        <i class="glyphicon glyphicon-arrow-right"></i> Update
+      </button>
+    </div>
+  </div>
+  <div class="box box-primary box-solid">
+    <div class="box-header ">
+      <h3 class="box-title">Buy Lead</h3>
+    </div>
+    <div class="box-body">
+      <div class="form-group row-fluid">
+        <div class="form-group">
+          <label ng-show="error" class="alert bg-red" style="width:100%">{{error}}</label>
+        </div>
+        <div class="form-group">
+          <h1>Name of Company</h1>
+          <input type="text" class="form-control" ng-model="buy_order.buyer_id"/>
+        </div>
+        <div class="form-group">
+          <label>Product Name : </label>
+          <input type="text" class="form-control" ng-model="buy_order.product_name"/>
+        </div>
+        <div class="form-group">
+          <label>Address : </label>
+          <input type="text" class="form-control" ng-model="buy_order.address"/>
+        </div>
+        <div class="col-xs-6" style="padding-left:0">
+          <label>City : </label>
+          <input type="text" class="form-control" ng-model="buy_order.city"/>
+          <label>Volume of Coal : </label>
+          <input type="number" class="form-control" ng-model="buy_order.volume"/>
+          <label>Order Date : </label>
+          <p class="form-inline">
+            <input type="date" class="form-control" ng-model="buy_order.order_date"/>
+          </p>
+          <label>Deadline : </label>
+          <p class="form-inline">
+            <input type="date" class="form-control" ng-model="buy_order.order_deadline"/>
+          </p>
+          <label>Buying Term : </label>
+          <p class="form-inline">
+            <select class="form-control" ng-model="buy_order.trading_term">
+              <option value="CNF">CNF</option>
+              <option value="CIF">CIF</option>
+              <option value="FAS">FAS</option>
+              <option value="FOB">FOB</option>
+              <option value="Franco">Franco</option>
+            </select>
+            <input type="text" class="form-control" ng-model="buy_order.trading_term" placeholder="Other" />
+          </p>
+        </div>
+        <div class="col-xs-6" style="padding-left:0">
+          <label>Country : </label>
+          <input type="text" class="form-control" ng-model="buy_order.country"/>
+          <label>Max Price : </label>
+          <div class="input-group">
+            <span class="input-group-addon">$</span>
+            <input type="text" class="form-control" ng-model="buy_order.max_price">
+          </div>
+          <label>Ready Date : </label>
+          <p class="input-group">
+            <input type="date" class="form-control" ng-model="buy_order.ready_date"/>
+          </p>
+          <label>Expired Date : </label>
+          <p class="input-group">
+            <input type="date" class="form-control" ng-model="buy_order.expired_date"/>
+          </p>
+          <label>Payment Terms : </label>
+          <select class="form-control" ng-model="buy_order.payment_terms">
+            <option value="TT">TT</option>
+            <option value="LC on Sight">LC on Sight</option>
+            <option value="LC on 30 days">LC on 30 days</option>
+          </select>
+        </div>
+        <div class="col-xs-12" style="padding-left:0">
+          <label>Penalty : </label>
+          <textarea class="form-control" ng-model="buy_order.penalty_desc"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box box-primary box-solid">
+    <div class="box-header ">
+      <h3 class="box-title">Port</h3>
+    </div>
+    <div class="box-body">
+        <h3><b>Port Name : </b></h3>
+        <input type="text" class="form-control" ng-model="buy_order.port_name"/>
+      <div class="col-xs-4" style="padding-left:0">
+        <label>Port Discharging Rate (Tph): </label>
+        <input type="number" class="form-control" ng-model="buy_order.port_daily_rate"/>
+      </div>
+      <div class="col-xs-4" style="padding-left:0">
+        <label>Port Distance (Km): </label>
+        <input type="number" class="form-control" ng-model="buy_order.port_distance"/>
+      </div>
+      <div class="col-xs-4" style="padding-left:0">
+        <label>Port Draft Height (M): </label>
+        <input type="number" class="form-control" ng-model="buy_order.port_draft_height"/>
+      </div>
+    </div>
+  </div>
+
+  <div class="box box-primary box-solid">
+    <div class="box-header ">
+      <h3 class="box-title">Product Quality</h3>
+    </div>
+    <div class="box-body">
+      <div class="row">
+        <div class="col-md-12 col-lg-12">
+          <table class="table" style="margin-bottom:0">
+            <tbody>
+              <tr>
+                <td class="hidden-xs">
+                  <h4 style="text-align:center"><b>Gross Caloric ARB</b></h4>
+                  <p class="form-inline" style="text-align:center"><input type="text" class="form-control" style="width:40%" ng-model="buy_order.gcv_arb_min"/> - <input type="text" class="form-control" style="width:40%" ng-model="buy_order.gcv_arb_max"/> kcal</p>
+                </td>
+                <td class="hidden-xs">
+                  <h4 style="text-align:center"><b>Gross Caloric ADB</b></h4>
+                  <p class="form-inline" style="text-align:center"><input type="text" class="form-control" style="width:40%" ng-model="buy_order.gcv_adb_min"/> - <input type="text" class="form-control" style="width:40%" ng-model="buy_order.gcv_adb_max"/> kcal</p>
+                </td>
+                <td class="hidden-xs">
+                  <h4 style="text-align:center"><b>Nett Calori Value</b></h4>
+                  <p class="form-inline" style="text-align:center"><input type="text" class="form-control" style="width:40%" ng-model="buy_order.ncv_min"/> - <input type="text" class="form-control" style="width:40%" ng-model="buy_order.ncv_max"/> kcal</p>
+                </td>
+                <td class="hidden-sm hidden-md hidden-lg">
+                  <h4 style="text-align:center"><b>Gross Caloric ARB</b></h4>
+                  <p class="form-inline" style="text-align:center"><input type="text" class="form-control" style="width:100%" ng-model="buy_order.gcv_arb_min"/> - <input type="text" class="form-control" style="width:100%" ng-model="buy_order.gcv_arb_max"/> kcal</p>
+                </td>
+                <td class="hidden-sm hidden-md hidden-lg">
+                  <h4 style="text-align:center"><b>Gross Caloric ADB</b></h4>
+                  <p class="form-inline" style="text-align:center"><input type="text" class="form-control" style="width:100%" ng-model="buy_order.gcv_adb_min"/> - <input type="text" class="form-control" style="width:100%" ng-model="buy_order.gcv_adb_max"/> kcal</p>
+                </td>
+                <td class="hidden-sm hidden-md hidden-lg">
+                  <h4 style="text-align:center"><b>Nett Calori Value</b></h4>
+                  <p class="form-inline" style="text-align:center"><input type="text" class="form-control" style="width:100%" ng-model="buy_order.ncv_min"/> - <input type="text" class="form-control" style="width:100%" ng-model="buy_order.ncv_max"/> kcal</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-md-6 col-lg-6">
+          <table class="table">
+            <tbody>
+              <tr>
+                <td style="width: 50%"><b>Ash <div class="pull-right">:</div></b></td>
+                <td>
+                  <p class="form-inline" style="text-align:center"><input type="text" class="form-group" style="width:40%" ng-model="buy_order.ash_min"/> - <input type="text" class="form-group" style="width:40%" ng-model="buy_order.ash_max"/> %</p>
+                </td>
+              </tr>
+              <tr>
+                <td><b>Total Sulphur <div class="pull-right">:</div></b></td>
+                <td>
+                  <p class="form-inline" style="text-align:center"><input type="text" class="form-group" style="width:40%" ng-model="buy_order.ts_min"/> - <input type="text" class="form-group" style="width:40%" ng-model="buy_order.ts_max"/> %</p>
+                </td>
+              </tr>
+              <tr>
+                <td><b>Total Moisture <div class="pull-right">:</div></b></td>
+                <td>
+                  <p class="form-inline" style="text-align:center"><input type="text" class="form-group" style="width:40%" ng-model="buy_order.tm_min"/> - <input type="text" class="form-group" style="width:40%" ng-model="buy_order.tm_max"/> %</p>
+                </td>
+              </tr>
+              <tr>
+                <td><b>Inherent Moisture <div class="pull-right">:</div></b></td>
+                <td>
+                  <p class="form-inline" style="text-align:center"><input type="text" class="form-group" style="width:40%" ng-model="buy_order.im_min"/> - <input type="text" class="form-group" style="width:40%" ng-model="buy_order.im_max"/> %</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-md-6 col-lg-6">
+          <table class="table">
+            <tbody>
+              <tr>
+                <td style="width: 50%"><b>Fixed Carbon <div class="pull-right">:</div></b></td>
+                <td>
+                  <p class="form-inline" style="text-align:center">
+                  <input type="text" class="form-group" style="width:40%" ng-model="buy_order.fc_min"/> - <input type="text" class="form-group" style="width:40%" ng-model="buy_order.fc_max"/> %
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td><b>Volatile Matter <div class="pull-right">:</div></b></td>
+                <td>
+                  <p class="form-inline" style="text-align:center">
+                  <input type="text" class="form-group" style="width:40%" ng-model="buy_order.vm_min"/> - <input type="text" class="form-group" style="width:40%" ng-model="buy_order.vm_max"/> %
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td><b>Hardness <div class="pull-right">:</div></b></td>
+                <td>
+                  <p class="form-inline" style="text-align:center">
+                  <input type="text" class="form-group" style="width:40%" ng-model="buy_order.hgi_min"/> - <input type="text" class="form-group" style="width:40%" ng-model="buy_order.hgi_max"/> %
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td><b>Size <div class="pull-right">:</div></b></td>
+                <td>
+                  <p class="form-inline" style="text-align:center">
+                  <input type="text" class="form-group" style="width:35%" ng-model="buy_order.size_min"/> - <input type="text" class="form-group" style="width:35%" ng-model="buy_order.size_max"/> mm
+                  </p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box box-primary box-solid">
+    <div class="box-header ">
+      <h3 class="box-title">Product Reject & Bonus</h3>
+    </div>
+    <div class="box-body">
+      <div class="row">
+        <div class="col-md-6 col-lg-6">
+          <h3 style="text-align:center;font-weight:bold;margin-top:0">Reject</h3>
+          <table class="table">
+            <tbody>
+              <tr>
+                <td style="width: 50%"><b>Gross Caloric ARB <div class="pull-right">:</div></b></td>
+                <td>
+                  <input type="text" class="form-inline" style="width:40%" ng-model="buy_order.gcv_arb_reject"/> kcal
+                </td>
+              </tr>
+              <tr>
+                <td><b>Gross Caloric ADB <div class="pull-right">:</div></b></td>
+                <td>
+                  <input type="text" class="form-inline" style="width:40%" ng-model="buy_order.gcv_adb_reject"/> kcal
+                </td>
+              </tr>
+              <tr>
+                <td><b>Ash <div class="pull-right">:</div></b></td>
+                <td>
+                  <input type="text" class="form-inline" style="width:40%" ng-model="buy_order.ash_reject"/> %
+                </td>
+              </tr>
+              <tr>
+                <td><b>Total Sulphur <div class="pull-right">:</div></b></td>
+                <td>
+                  <input type="text" class="form-inline" style="width:40%" ng-model="buy_order.ts_reject"/> %
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-md-6 col-lg-6">
+          <h3 style="text-align:center;font-weight:bold;margin-top:0">Bonus</h3>
+          <table class="table">
+            <tbody>
+              <tr>
+                <td style="width: 50%"><b>Gross Caloric ARB <div class="pull-right">:</div></b></td>
+                <td>
+                  <input type="text" class="form-inline" style="width:40%" ng-model="buy_order.gcv_arb_bonus"/> kcal
+                </td>
+              </tr>
+              <tr>
+                <td><b>Gross Caloric ADB <div class="pull-right">:</div></b></td>
+                <td>
+                  <input type="text" class="form-inline" style="width:40%" ng-model="buy_order.gcv_adb_bonus"/> kcal
+                </td>
+              </tr>
+              <tr>
+                <td><b>Ash <div class="pull-right">:</div></b></td>
+                <td>
+                  <input type="text" class="form-inline" style="width:40%" ng-model="buy_order.ash_bonus"/> %
+                </td>
+              </tr>
+              <tr>
+                <td><b>Total Sulphur <div class="pull-right">:</div></b></td>
+                <td>
+                  <input type="text" class="form-inline" style="width:40%" ng-model="buy_order.ts_bonus"/> %
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

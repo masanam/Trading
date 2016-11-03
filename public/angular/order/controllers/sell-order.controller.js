@@ -37,5 +37,15 @@ angular.module('order').controller('SellOrderController', ['$scope', '$uibModal'
     $scope.toSummary = function(seller_id,id,concession_id) {
       $location.path('sell-order/create/summary/'+seller_id+'/'+id+'/'+concession_id);
     };
+
+    $scope.changeOrderStatus = function(sell_order, order_status) {
+      $scope.sell_orders.splice($scope.sell_orders.indexOf(sell_order), 1);
+      $scope.sell_order = Order.get({ type: 'sell', id: sell_order.id, action: 'changeOrderStatus', order_status: order_status });
+    };
+
+    $scope.changeOrderStatusAtDetail = function(sell_order, order_status) {
+      $scope.sell_order = Order.get({ type: 'sell', id: sell_order.id, action: 'changeOrderStatus', order_status: order_status });
+      $location.path('sell-order');
+    };
   }
 ]);
