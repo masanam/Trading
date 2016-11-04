@@ -67,7 +67,6 @@ angular.module('concession').controller('ConcessionController', ['$scope', '$htt
     $scope.nextToProduct= function(){
       if ($scope.concession.selected) {
         MultiStepForm.tempConcessionId = $scope.concession.selected.id;
-        console.log(MultiStepForm.tempConcessionId);
         
         $location.path('lead/buyer/'+$scope.buyer.selected.id+'/setup-product');
       }else{
@@ -78,11 +77,11 @@ angular.module('concession').controller('ConcessionController', ['$scope', '$htt
     $scope.nextToProductSeller= function(){
       if ($scope.concession.selected) {
         MultiStepForm.tempConcessionId = $scope.concession.selected.id;
-        console.log(MultiStepForm.tempConcessionId);
+        
         $location.path('lead/seller/'+$stateParams.id+'/setup-product');
       }else{
         $scope.error = 'Please Select A Concession or Create New Concession';
-        console.log($scope.error);
+        
       }
 
     };
@@ -108,7 +107,7 @@ angular.module('concession').controller('ConcessionController', ['$scope', '$htt
     };
   
     $scope.resetMap = function(){
-      console.log($scope.map);
+      
       $scope.map.shapes.foo.setMap(null);
     };
   

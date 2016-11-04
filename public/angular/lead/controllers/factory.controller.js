@@ -16,10 +16,14 @@ angular.module('factory').controller('FactoryController', ['$scope', '$statePara
     };
     
     $scope.nextToProduct = function(){
-      console.log($scope.factory);
-      MultiStepForm.tempFactoryId = $scope.factory.id;
-      console.log(MultiStepForm.tempFactoryId);
-      $location.path('lead/buyer/'+$stateParams.id+'/setup-product');
+      if ($scope.factory.selected) {
+        MultiStepForm.tempFactoryId = $scope.factory.selected.id;
+        
+        $location.path('lead/buyer/'+$stateParams.id+'/setup-product');
+      }else{
+        $scope.error = 'Please Select A Factory or Create New Factory';
+      }
+      
     };
     
   }

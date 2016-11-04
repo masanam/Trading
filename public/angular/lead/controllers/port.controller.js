@@ -70,7 +70,7 @@ angular.module('port').controller('PortController', ['$scope', '$stateParams', '
       if ($scope.port.selected) {
         
         $scope.factory = Factory.get({ id: MultiStepForm.tempFactoryId }, function(res){
-          console.log(MultiStepForm.tempFactoryId);
+          
           $scope.factory = res;
           $scope.factory.port_id = $scope.port.selected.id;
           
