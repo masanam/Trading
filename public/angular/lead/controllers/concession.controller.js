@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('concession').controller('ConcessionController', ['$scope', '$http', '$stateParams', '$state', '$location', '$uibModal', 'Concession', '$window', 'Product','NgMap',
-  function($scope, $http, $stateParams, $state, $location, $uibModal, Concession, $window, Product, NgMap) {
+angular.module('concession').controller('ConcessionController', ['$scope', '$http', '$stateParams', '$state', '$location', '$uibModal', 'Concession', '$window', 'Product','NgMap','MultiStepForm',
+  function($scope, $http, $stateParams, $state, $location, $uibModal, Concession, $window, Product, NgMap, MultiStepForm) {
     $scope.concessions = [];
     $scope.concession = {};
     $scope.new = $location.search().new;
@@ -66,6 +66,9 @@ angular.module('concession').controller('ConcessionController', ['$scope', '$htt
 
     $scope.nextToProduct= function(){
       if ($scope.concession.selected) {
+        MultiStepForm.tempConcessionId = $scope.concession.selected.id;
+        console.log(MultiStepForm.tempConcessionId);
+        
         $location.path('lead/buyer/'+$scope.buyer.selected.id+'/setup-product');
       }else{
         $scope.error = 'Please Select A Concession or Create New Concession';
@@ -73,8 +76,9 @@ angular.module('concession').controller('ConcessionController', ['$scope', '$htt
     };
 
     $scope.nextToProductSeller= function(){
-      console.log($scope.concession.selected);
       if ($scope.concession.selected) {
+        MultiStepForm.tempConcessionId = $scope.concession.selected.id;
+        console.log(MultiStepForm.tempConcessionId);
         $location.path('lead/seller/'+$stateParams.id+'/setup-product');
       }else{
         $scope.error = 'Please Select A Concession or Create New Concession';

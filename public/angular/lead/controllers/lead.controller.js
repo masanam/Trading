@@ -38,10 +38,10 @@ angular.module('lead').controller('LeadController', ['$scope', '$state', '$http'
     $scope.total = function () {
       $scope.totalBuyer = Buyer.get({ action : 'total' });
       $scope.totalSeller = Seller.get({ action : 'total' });
-      $scope.totalVendor = Vendor.get({ action : 'total' });
+      /*$scope.totalVendor = Vendor.get({ action : 'total' });
       $scope.totalContact = Contact.get({ action : 'total' });
       $scope.totalConcession = Concession.get({ action : 'total' });
-      $scope.totalProduct = Product.get({ action : 'total' });
+      $scope.totalProduct = Product.get({ action : 'total' });*/
     };
   }
 ]);
