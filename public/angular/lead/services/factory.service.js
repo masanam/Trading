@@ -13,3 +13,12 @@ angular.module('factory').factory('Factory', ['$resource',
     });
   }
 ]);
+
+angular.module('factory').factory('MultiStepForm', ['$resource',
+  function ($resource) {
+    return {
+      tempFactoryId : undefined,
+      tempConcessionId : undefined,
+    };
+  }
+]);

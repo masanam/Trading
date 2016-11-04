@@ -41,6 +41,7 @@
           <tr><td>Reserves:</td><td>{{ concession.reserves | number }}</td></tr>
           <tr><td>Contracted Volume:</td><td>{{ concession.contracted_volume | number }}</td></tr>
           <tr><td>Remaining Volume:</td><td>{{ concession.remaining_volume | number }}</td></tr>
+          <tr><td>Port Name:</td><td>{{ concession.port.port_name || 'N/A' }}</td></tr>
           <tr><td>Distance to Port:</td><td>{{ concession.port_distance | number }}</td></tr>
           <tr><td>Annual Production:</td><td>{{ concession.annual_production | number }}</td></tr>
           <tr ng-if="concession.status == 'a'"><td>Status:</td> <td>Active</td></tr>
