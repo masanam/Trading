@@ -18,7 +18,7 @@ angular.module('port').controller('PortController', ['$scope', '$stateParams', '
 
 
     $scope.findOne = function(){
-      Port.get({ id: $stateParams.id }, function(res){
+      Port.get({ id: $stateParams.portId }, function(res){
         $scope.port = res;
         $scope.port.longitude = parseFloat($scope.port.longitude);
         $scope.port.latitude = parseFloat($scope.port.latitude);

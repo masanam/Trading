@@ -171,7 +171,7 @@ angular.module('lead').config(['$stateProvider', '$urlRouterProvider',
         roles: ['user', 'trader', 'manager']
       })
       .state('lead.update-port', {
-        url: '/port/update/{id}',
+        url: '/port/update/{portId}',
         templateUrl: '/angular/lead/views/port/update.port.html',
         roles: ['user', 'trader', 'manager']
       })
