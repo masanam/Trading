@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('port').controller('PortController', ['$scope', '$stateParams', '$uibModal', '$location', 'Port', 'MultiStepForm', 'Factory', 'Concession',
-  function($scope, $stateParams, $uibModal, $location, Port, MultiStepForm, Factory, Concession) {
+angular.module('port').controller('PortController', ['$scope', '$stateParams', '$uibModal', '$location', 'Port', 'MultiStepForm', 'Factory', 'Concession', '$window',
+  function($scope, $stateParams, $uibModal, $location, Port, MultiStepForm, Factory, Concession, $window) {
 
     $scope.init = function(){
       $scope.buyer_ports = [];
@@ -18,7 +18,11 @@ angular.module('port').controller('PortController', ['$scope', '$stateParams', '
 
 
     $scope.findOne = function(){
-      $scope.port = Port.get({ id: $stateParams.portId });
+      Port.get({ id: $stateParams.id }, function(res){
+        $scope.port = res;
+        $scope.port.longitude = parseFloat($scope.port.longitude);
+        $scope.port.latitude = parseFloat($scope.port.latitude);
+      });
     };
 
     $scope.backToDetail = function(){
@@ -33,7 +37,6 @@ angular.module('port').controller('PortController', ['$scope', '$stateParams', '
 
     $scope.findMyPortsBuyer = function(){
       $scope.ports = Port.query({ type: 'buyer', action: 'my', id: $stateParams.id });
-      console.log($scope.ports);
     };
 
     $scope.findMyPortsSeller = function(){
