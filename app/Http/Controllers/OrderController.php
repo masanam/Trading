@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Model\Order;
+use App\Model\OrderNegotiation;
 
 class OrderController extends Controller
 {
@@ -16,7 +17,8 @@ class OrderController extends Controller
    */
   public function index()
   {
-      $order = Order::get();
+      $orders = Order::with('approval')->get();
+      return response()->json($orders, 200);
   }
 
   /**
@@ -39,7 +41,16 @@ class OrderController extends Controller
   public function show($id)
   {
     $order = Order::with('sells', 'buys', 'approval')->find($id);
-    return response()->json($order);
+
+    // lazyloading semua negotiation log
+    foreach($order->sells as &$sell){
+      $sell->pivot->negotiations = OrderNegotiation::where('order_detail_id', '=', $sell->pivot->id)->get();
+    }
+    foreach($order->buys as &$buy){
+      $buy->pivot->negotiations = OrderNegotiation::where('order_detail_id', '=', $buy->pivot->id)->get();
+    }
+
+    return response()->json($order, 200);
   }
 
   /**
@@ -61,6 +72,10 @@ class OrderController extends Controller
    */
   public function destroy($id)
   {
-      //
+    $order = Order::find($id);
+    $order->status = 'x';
+    $order->save();
+
+    return response()->json([ 'status' => 'Record Deleted' ], 204);
   }
 }
