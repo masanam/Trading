@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('port').controller('PortController', ['$scope', '$stateParams', '$uibModal', '$location', 'Port', 'MultiStepForm', 'Factory', 'Concession', '$window',
-  function($scope, $stateParams, $uibModal, $location, Port, MultiStepForm, Factory, Concession, $window) {
+angular.module('port').controller('PortController', ['$scope', '$stateParams', '$uibModal', '$location', 'Port', 'MultiStepForm', 'Factory', 'Concession', '$window','$state',
+  function($scope, $stateParams, $uibModal, $location, Port, MultiStepForm, Factory, Concession, $window, $state) {
 
     $scope.init = function(){
       $scope.buyer_ports = [];
@@ -18,7 +18,7 @@ angular.module('port').controller('PortController', ['$scope', '$stateParams', '
 
 
     $scope.findOne = function(){
-      Port.get({ id: $stateParams.id }, function(res){
+      Port.get({ id: $stateParams.portId }, function(res){
         $scope.port = res;
         $scope.port.longitude = parseFloat($scope.port.longitude);
         $scope.port.latitude = parseFloat($scope.port.latitude);
@@ -27,6 +27,14 @@ angular.module('port').controller('PortController', ['$scope', '$stateParams', '
 
     $scope.backToDetail = function(){
       $window.history.back();
+    };
+
+    $scope.backToDetailBuyer = function(){
+      $location.path('lead/buyer/'+$stateParams.id);
+    };
+
+    $scope.backToDetailSeller = function(){
+      $location.path('lead/seller/'+$stateParams.id);
     };
 
     $scope.findAllPorts = function(){
@@ -78,6 +86,17 @@ angular.module('port').controller('PortController', ['$scope', '$stateParams', '
         scope: $scope
       });
     };
+
+    $scope.update = function() {
+      $scope.loading = true;
+
+      $scope.port.$update({ id: $stateParams.portId }, function(res) {
+        $location.path('lead/port/'+$stateParams.portId);
+        $scope.loading = false;
+      });
+    };
+
+
 
     $scope.finishBuyer= function(){
       if ($scope.port.selected) {
