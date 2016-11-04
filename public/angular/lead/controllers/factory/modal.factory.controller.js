@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('factory').controller('FactoryModalController',
-  function($scope, $stateParams, $uibModalInstance, $location, $interval, Factory) {
+  function($scope, $stateParams, $uibModalInstance, $location, $interval, Factory, MultiStepForm) {
 
     $scope.init = function () {
       $scope.factory = new Factory();
