@@ -1,0 +1,19 @@
+<section ng-controller="PortController" class="content">
+<div class="box box-info" >
+        <div class="box-header with-border">
+          <h3 class="box-title" style="font-size: 25px">Update Port {{ port.port_name }}</h3>
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-primary" ng-click="goBack()">
+            <i class="glyphicon glyphicon-arrow-left"></i> Back
+        </button>
+          </div>
+        </div>
+        <div class="box-body">
+        <section ng-init="findMyPortsBuyer()" >
+          <form role="form" ng-submit="update()" ng-show="!success">
+            <div ng-include="'/angular/lead/views/port/form.view.html'"></div>
+          </form> 
+        </div>
+        </section>
+</div>
+</section>

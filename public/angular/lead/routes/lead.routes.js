@@ -165,9 +165,19 @@ angular.module('lead').config(['$stateProvider', '$urlRouterProvider',
         templateUrl: '/angular/lead/views/contact/view.view.html',
         roles: ['user']
       })
-      .state('lead.view-port', {
-        url: '/port/{id}/{portId}',
-        templateUrl: '/angular/lead/views/port/view.view.html',
+      .state('lead.view-port-seller', {
+        url: '/port/{portId}',
+        templateUrl: '/angular/lead/views/port/seller/view.view.html',
+        roles: ['user', 'trader', 'manager']
+      })
+      .state('lead.update-port', {
+        url: '/port/update/{id}',
+        templateUrl: '/angular/lead/views/port/update.port.html',
+        roles: ['user', 'trader', 'manager']
+      })
+      .state('lead.view-port-buyer', {
+        url: '/port/{portId}',
+        templateUrl: '/angular/lead/views/port/buyer/view.view.html',
         roles: ['user', 'trader', 'manager']
       })
       .state('lead.create', {

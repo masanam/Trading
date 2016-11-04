@@ -12,6 +12,15 @@ angular.module('port').controller('PortController', ['$scope', '$stateParams', '
       $scope.new = $location.search().new;
     };
 
+
+    $scope.findOne = function(){
+      $scope.port = Port.get({ id: $stateParams.portId });
+    };
+
+    $scope.backToDetail = function(){
+      $window.history.back();
+    };
+
     $scope.findAllPorts = function(){
       $scope.ports = Port.query({}, {}, function(){
         $scope.port.selected = $scope.ports[$scope.ports.length-1];
@@ -20,6 +29,7 @@ angular.module('port').controller('PortController', ['$scope', '$stateParams', '
 
     $scope.findMyPortsBuyer = function(){
       $scope.ports = Port.query({ type: 'buyer', action: 'my', id: $stateParams.id });
+      console.log($scope.ports);
     };
 
     $scope.findMyPortsSeller = function(){
