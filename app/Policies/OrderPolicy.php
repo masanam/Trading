@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\User;
-use App\Order;
+use App\Model\User;
+use App\Model\Order;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class OrderPolicy
@@ -42,7 +42,7 @@ class OrderPolicy
    */
   public function update(User $user, Order $order)
   {
-      //
+    return $user->id === $order->user_id;
   }
 
   /**

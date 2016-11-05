@@ -7,9 +7,16 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Model\Order;
 use App\Model\OrderNegotiation;
+use Auth;
 
 class OrderController extends Controller
 {
+  public function __construct(Order $order)
+  {
+    $this->middleware('jwt.auth');
+    $this->order = $order;
+  }
+
   /**
    * Display a listing of the resource.
    *
@@ -17,8 +24,8 @@ class OrderController extends Controller
    */
   public function index()
   {
-      $orders = Order::with('approval')->get();
-      return response()->json($orders, 200);
+    $orders = Order::with('approval')->get();
+    return response()->json($orders, 200);
   }
 
   /**
@@ -29,7 +36,16 @@ class OrderController extends Controller
    */
   public function store(Request $request)
   {
-      //
+    if(!$request) {
+      return response()->json([
+        'message' => 'Bad Request'
+      ], 400);
+    }
+    $order = new Order($request);
+    $order->user_id = Auth::User()->id;
+    $order->save();
+
+    return response()->json($order, 200);
   }
 
   /**
@@ -41,6 +57,7 @@ class OrderController extends Controller
   public function show($id)
   {
     $order = Order::with('sells', 'buys', 'approval')->find($id);
+    $this->authorize('view', $order);
 
     // lazyloading semua negotiation log
     foreach($order->sells as &$sell){
@@ -54,14 +71,32 @@ class OrderController extends Controller
   }
 
   /**
-   * Show the form for editing the specified resource.
+   * edit the specified resource.
    *
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function edit($id)
+  public function update(Request $request, $id)
   {
-      //
+    $order = Order::find($id);
+
+    if(!$request) {
+      return response()->json([
+        'message' => 'Bad Request'
+      ], 400);
+    }
+    if (!$order) {
+      return response()->json([
+        'message' => 'Not found'
+      ] ,404);
+    }
+    $this->authorize('update', $order);
+
+    $order->status = $request->status;
+    //$order->updated_at = date('Y-m-d H:i:s');
+    $order->save();
+
+    return response()->json($order, 200);
   }
 
   /**
