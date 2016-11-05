@@ -44,7 +44,7 @@ angular.module('index').controller('IndexController', ['$scope', '$stateParams',
 
       var index = $scope.index;
 
-      index.$update({ indexId: index.id }, function (res) {
+      index.$update(function (res) {
         $state.go('index.view', { indexId: res.id });
       }, function (err) {
         $scope.error = err.data.message;
