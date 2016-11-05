@@ -1,13 +1,13 @@
 <div class="box-header with-border">
   <h1 class="box-title" style="font-size: 25px">Orders</h1>
 </div>
-<div class="box-body no-padding" ng-init="find()">
+<div class="box-body no-padding">
   <div class="box-body">
-    <div class="box-tools btn-group">
-      <label class="btn btn-default" ng-model="browse" uib-btn-radio="'pending'">Pending</label>
-      <label class="btn btn-default" ng-model="browse" uib-btn-radio="'draft'">Draft</label>
-      <label class="btn btn-default" ng-model="browse" uib-btn-radio="'subordinates'">Subordinates</label>
-      <label class="btn btn-default" ng-model="browse" uib-btn-radio="'associated'">Associated</label>
+    <div class="box-tools btn-group" ng-init="browse.category = 'pending'">
+      <label class="btn btn-default" ng-model="browse.category" uib-btn-radio="'pending'">Pending</label>
+      <label class="btn btn-default" ng-model="browse.category" uib-btn-radio="'draft'">Draft</label>
+      <label class="btn btn-default" ng-model="browse.category" uib-btn-radio="'subordinates'">Subordinates</label>
+      <label class="btn btn-default" ng-model="browse.category" uib-btn-radio="'associated'">Associated</label>
     </div>
 
     <div class="box-tools pull-right">
@@ -32,6 +32,7 @@
         <th st-sort="status">Status</th>
         <th st-sort="created_at">Created At</th>
         <th st-sort="updated_at">Updated At</th>
+        <th>Approval Status</th>
         <th></th>
       </tr>
     </thead>
@@ -41,8 +42,13 @@
         <td>{{ order.id }}</td>
         <td>{{ order.user_id }}</td>
         <td>{{ order.status }}</td>
-        <td>{{ order.created_at | date:'mediumDate' }}</td>
-        <td>{{ order.updated_at | date:'mediumDate' }}</td>
+        <td>{{ order.created_at | date:'d/M/yy' }}</td>
+        <td>{{ order.updated_at | date:'d/M/yy' }}</td>
+        <td>
+          <div ng-repeat="app in order.approvals.slice().reverse()">
+            {{ app.name | firstWord }} [{{ app.status }}]
+          </div>
+        </td>
         <td>
           <a ui-sref="order.view({ id: order.id })"><i class="glyphicon glyphicon-eye-open"></i></a>
           <a ng-click="remove(order)"><i class="glyphicon glyphicon-trash"></i></a>

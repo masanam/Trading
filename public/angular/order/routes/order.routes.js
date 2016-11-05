@@ -17,6 +17,14 @@ angular.module('order').config(['$stateProvider',
       .state('order.view', {
         url: '/:id',
         templateUrl: '/angular/order/views/order/view.view.html'
+      })
+      .state('order.approval-list', {
+        url: '/approval-list',
+        templateUrl: '/angular/order/views/order/list.view.html'
+      })
+      .state('order.approval', {
+        url: '/approval-list/:id',
+        templateUrl: '/angular/order/views/order/view.view.html'
       });
 
 
