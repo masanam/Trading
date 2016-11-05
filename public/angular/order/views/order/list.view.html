@@ -13,10 +13,10 @@
     <div class="box-tools pull-right">
       <button ui-sref="order.create" class="btn btn-primary">+ Create New Order</button>
 
-      Not sure about your order?
+      ... Or leads?
       <span class="btn-group">
-        <button ui-sref="order.today-price" class="btn btn-primary">+ Buy</button>
-        <button ui-sref="order.today-price" class="btn btn-primary">+ Sell</button>
+        <button ui-sref="buy-order.index" class="btn btn-primary">+ Buy</button>
+        <button ui-sref="sell-order.index" class="btn btn-primary">+ Sell</button>
       </span>
     </div>
   </div>
@@ -41,8 +41,8 @@
         <td>{{ order.id }}</td>
         <td>{{ order.user_id }}</td>
         <td>{{ order.status }}</td>
-        <td>{{ order.created_at }}</td>
-        <td>{{ order.updated_at }}</td>
+        <td>{{ order.created_at | date:'mediumDate' }}</td>
+        <td>{{ order.updated_at | date:'mediumDate' }}</td>
         <td>
           <a ui-sref="order.view({ id: order.id })"><i class="glyphicon glyphicon-eye-open"></i></a>
           <a ng-click="remove(order)"><i class="glyphicon glyphicon-trash"></i></a>
@@ -52,14 +52,6 @@
         <td colspan="6" class="text-center">No data available</td>
       </tr>
     </tbody>
-
-    <!-- <tfoot>
-      <tr>
-        <td colspan="6" class="text-center">
-          <div st-pagination="" st-items-by-page="10" st-displayed-pages="5"></div>
-        </td>
-      </tr>
-    </tfoot> -->
   </table>
 
   <div class="callout callout-warning text-center" ng-if="orders.$resolved && !orders.length">
