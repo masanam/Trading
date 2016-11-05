@@ -56,7 +56,7 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
 
     // Find list of order
     $scope.find = function () {
-      $scope.orders = Order.query({ browse: $scope.browse });
+      $scope.orders = Order.query({ possession: $scope.browse.possession, status: $scope.browse.status });
     };
 
     // Find existing order
