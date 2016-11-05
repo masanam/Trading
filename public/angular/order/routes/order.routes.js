@@ -1,7 +1,7 @@
 'use strict';
 
 // Setting up route
-angular.module('order-history').config(['$stateProvider',
+angular.module('order').config(['$stateProvider',
   function ($stateProvider) {
     // Home state routing
     $stateProvider
@@ -12,8 +12,10 @@ angular.module('order-history').config(['$stateProvider',
       })
       .state('order.index', {
         url: '',
-        templateUrl: '/angular/order/views//index.view.html'
+        templateUrl: '/angular/order/views/order/index.view.html'
       });
+
+
 
     $stateProvider
       .state('buy-order', {
