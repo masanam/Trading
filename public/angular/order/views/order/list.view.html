@@ -1,0 +1,68 @@
+<div class="box-header with-border">
+  <h1 class="box-title" style="font-size: 25px">Orders</h1>
+</div>
+<div class="box-body no-padding" ng-init="find()">
+  <div class="box-body">
+    <div class="box-tools btn-group">
+      <label class="btn btn-default" ng-model="browse" uib-btn-radio="'pending'">Pending</label>
+      <label class="btn btn-default" ng-model="browse" uib-btn-radio="'draft'">Draft</label>
+      <label class="btn btn-default" ng-model="browse" uib-btn-radio="'subordinates'">Subordinates</label>
+      <label class="btn btn-default" ng-model="browse" uib-btn-radio="'associated'">Associated</label>
+    </div>
+
+    <div class="box-tools pull-right">
+      <button ui-sref="order.create" class="btn btn-primary">+ Create New Order</button>
+
+      Not sure about your order?
+      <span class="btn-group">
+        <button ui-sref="order.today-price" class="btn btn-primary">+ Buy</button>
+        <button ui-sref="order.today-price" class="btn btn-primary">+ Sell</button>
+      </span>
+    </div>
+  </div>
+  
+  <table st-table="orders" st-safe-src="orderCollection" class="table table-striped">
+    <thead>
+      <tr>
+          <th colspan="9"><input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
+      </tr>
+      <tr>
+        <th st-sort="id">#</th>
+        <th st-sort="user_id">Trader</th>
+        <th st-sort="status">Status</th>
+        <th st-sort="created_at">Created At</th>
+        <th st-sort="updated_at">Updated At</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr ng-repeat="order in orders">
+        <td>{{ order.id }}</td>
+        <td>{{ order.user_id }}</td>
+        <td>{{ order.status }}</td>
+        <td>{{ order.created_at }}</td>
+        <td>{{ order.updated_at }}</td>
+        <td>
+          <a ui-sref="order.view({ id: order.id })"><i class="glyphicon glyphicon-eye-open"></i></a>
+          <a ng-click="remove(order)"><i class="glyphicon glyphicon-trash"></i></a>
+        </td>
+      </tr>
+      <tr ng-if="orders.length == 0">
+        <td colspan="6" class="text-center">No data available</td>
+      </tr>
+    </tbody>
+
+    <!-- <tfoot>
+      <tr>
+        <td colspan="6" class="text-center">
+          <div st-pagination="" st-items-by-page="10" st-displayed-pages="5"></div>
+        </td>
+      </tr>
+    </tfoot> -->
+  </table>
+
+  <div class="callout callout-warning text-center" ng-if="orders.$resolved && !orders.length">
+    No orders yet, why don't you <a ui-sref="order.create">create one</a>?
+  </div>  
+</div>

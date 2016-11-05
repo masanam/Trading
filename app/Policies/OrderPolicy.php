@@ -19,6 +19,9 @@ class OrderPolicy
    */
   public function view(User $user, Order $order)
   {
+    foreach($order->users as $orderUser){
+      if($orderUser->id === $user->id) return true;
+    }
     return $user->id === $order->user_id;
   }
 

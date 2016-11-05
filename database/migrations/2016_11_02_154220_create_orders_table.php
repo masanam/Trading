@@ -31,6 +31,15 @@ class CreateOrdersTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
 
+        Schema::create('order_users', function (Blueprint $table) {
+            $table->integer('order_id')->unsigned();
+            $table->integer('user_id')->unsigned();
+            $table->string('role'); // A = Approved ; R = Reject
+
+            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+        });
+
         Schema::create('order_details', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('order_id')->unsigned();
@@ -66,8 +75,9 @@ class CreateOrdersTable extends Migration
     public function down()
     {
         Schema::drop('orders');
-        Schema::drop('order_approval');
-        Schema::drop('detail_order');
-        Schema::drop('detail_order_negotiation');
+        Schema::drop('order_approvals');
+        Schema::drop('order_approvals');
+        Schema::drop('order_details');
+        Schema::drop('order_negotiations');
     }
 }

@@ -8,11 +8,15 @@ angular.module('order').config(['$stateProvider',
       .state('order', {
         url: '/order',
         abstract: true,
-        template: '<ui-view>'
+        templateUrl: '/angular/order/views/order/main.layout.html'
       })
-      .state('order.index', {
+      .state('order.list', {
         url: '',
-        templateUrl: '/angular/order/views/order/index.view.html'
+        templateUrl: '/angular/order/views/order/list.view.html'
+      })
+      .state('order.view', {
+        url: '/:id',
+        templateUrl: '/angular/order/views/order/view.view.html'
       });
 
 

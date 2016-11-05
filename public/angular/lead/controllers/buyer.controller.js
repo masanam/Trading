@@ -303,7 +303,7 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
 ]);
 
 //controller Create Buyer Modal
-angular.module('deal').controller('BuyerModalController', function ($scope, $uibModalInstance, $timeout, $interval, Buyer, $location) {
+angular.module('buyer').controller('BuyerModalController', function ($scope, $uibModalInstance, $timeout, $interval, Buyer, $location) {
   
   $scope.create = function(createBuyer) {
     $scope.loading = true;

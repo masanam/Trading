@@ -21,12 +21,16 @@ class Order extends Model
       return $this->morphedByMany(SellOrder::class, 'orderable', 'order_details')->withPivot('id', 'price', 'volume');;
 		}
 
-		public function approval()
+		public function approvals()
 		{
 			return $this->belongsToMany(User::class, 'order_approvals')->withPivot('status', 'updated_at');
 		}
 
+    public function trader() {
+    	return $this->belongsTo(User::class, 'user_id');
+    }
+
     public function users() {
-    	return $this->belongsTo(User::class);
+    	return $this->belongsToMany(User::class, 'order_users')->withPivot('role');
     }
 }
