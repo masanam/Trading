@@ -24,7 +24,7 @@ class OrderController extends Controller
    */
   public function index()
   {
-    $orders = Order::with('approvals')->get();
+    $orders = Order::with('trader', 'approvals')->get();
     return response()->json($orders, 200);
   }
 

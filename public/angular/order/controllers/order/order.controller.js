@@ -3,6 +3,9 @@
 angular.module('order').controller('OrderController', ['$scope', '$stateParams', '$state', 'Order',
   function($scope, $stateParams, $state, Order) {
     $scope.browse = {};
+
+    $scope.$watchGroup(['browse.status', 'browse.possession'], function() { $scope.find(); });
+
     // Create new Article
     $scope.create = function (isValid) {
       $scope.error = null;
@@ -50,10 +53,6 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
         $scope.error = err.data.message;
       });
     };
-
-    $scope.$watch('browse.category', function(newValue, oldValue) {
-      $scope.find();
-    });
 
     // Find list of order
     $scope.find = function () {

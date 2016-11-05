@@ -5,13 +5,20 @@
     <button ui-sref="order.create" class="btn btn-primary">+ Create New Order</button>
   </div>
 </div>
-<div class="box-body no-padding">
+<div class="box-body no-padding" ng-init="find();">
   <div class="box-body">
-    <div class="box-tools btn-group" ng-init="browse.category = 'pending'; find();">
-      <label class="btn btn-default" ng-model="browse.category" uib-btn-radio="'pending'">Pending</label>
-      <label class="btn btn-default" ng-model="browse.category" uib-btn-radio="'draft'">Draft</label>
-      <label class="btn btn-default" ng-model="browse.category" uib-btn-radio="'subordinates'">Subordinates</label>
-      <label class="btn btn-default" ng-model="browse.category" uib-btn-radio="'associated'">Associated</label>
+    <div class="box-tools btn-group" ng-init="browse.possession = 'my'">
+      <label class="btn btn-default" ng-model="browse.possession" uib-btn-radio="'my'">Mine</label>
+      <label class="btn btn-default" ng-model="browse.possession" uib-btn-radio="'subordinates'">Subordinates</label>
+      <label class="btn btn-default" ng-model="browse.possession" uib-btn-radio="'associated'">Associated</label>
+    </div>
+
+    <div class="box-tools btn-group" ng-init="browse.status = 'p'">
+      <label class="btn btn-default" ng-model="browse.status" uib-btn-radio="'p'">Pending</label>
+      <label class="btn btn-default" ng-model="browse.status" uib-btn-radio="'d'">Draft</label>
+      <label class="btn btn-default" ng-model="browse.status" uib-btn-radio="'o'">Open</label>
+      <label class="btn btn-default" ng-model="browse.status" uib-btn-radio="'f'">Finalized</label>
+      <label class="btn btn-default" ng-model="browse.status" uib-btn-radio="'x'">Deleted</label>
     </div>
 
     <div class="box-tools pull-right">
@@ -42,7 +49,7 @@
     <tbody>
       <tr ng-repeat="order in orders">
         <td>{{ order.id }}</td>
-        <td>{{ order.user_id }}</td>
+        <td>{{ order.trader.name }}</td>
         <td>{{ order.status }}</td>
         <td>{{ order.created_at | date:'d/M/yy' }}</td>
         <td>{{ order.updated_at | date:'d/M/yy' }}</td>
