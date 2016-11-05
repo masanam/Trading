@@ -42,7 +42,7 @@ angular.module(ApplicationConfiguration.applicationModuleName).config(['$locatio
         var match;
         // Check for string properties which look like dates.
         if (typeof value === "string" && (match = value.match(dateRegex))) {
-          var milliseconds = Date.parse(match[0])
+          var milliseconds = Date.parse(match[0]);
           if (!isNaN(milliseconds)) {
             input[key] = new Date(milliseconds);
           }
@@ -51,7 +51,7 @@ angular.module(ApplicationConfiguration.applicationModuleName).config(['$locatio
           convertDateStringsToDates(value);
         }
       }
-    }
+    };
 
     $httpProvider.defaults.transformResponse.push(function(input){
       convertDateStringsToDates(input);
