@@ -1,9 +1,13 @@
 <div class="box-header with-border">
   <h1 class="box-title" style="font-size: 25px">Orders</h1>
+
+  <div class="box-tools pull-right">
+    <button ui-sref="order.create" class="btn btn-primary">+ Create New Order</button>
+  </div>
 </div>
 <div class="box-body no-padding">
   <div class="box-body">
-    <div class="box-tools btn-group" ng-init="browse.category = 'pending'">
+    <div class="box-tools btn-group" ng-init="browse.category = 'pending'; find();">
       <label class="btn btn-default" ng-model="browse.category" uib-btn-radio="'pending'">Pending</label>
       <label class="btn btn-default" ng-model="browse.category" uib-btn-radio="'draft'">Draft</label>
       <label class="btn btn-default" ng-model="browse.category" uib-btn-radio="'subordinates'">Subordinates</label>
@@ -11,8 +15,6 @@
     </div>
 
     <div class="box-tools pull-right">
-      <button ui-sref="order.create" class="btn btn-primary">+ Create New Order</button>
-
       ... Or leads?
       <span class="btn-group">
         <button ui-sref="buy-order.index" class="btn btn-primary">+ Buy</button>
