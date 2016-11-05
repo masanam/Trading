@@ -43,7 +43,7 @@ class OrdersTableSeeder extends Seeder
       $order->buys()->attach($object['buy']);
       $order->sells()->attach($object['sell']);
       $order->users()->attach($object['user']);
-      $order->approval()->attach($object['approval']);
+      $order->approvals()->attach($object['approval']);
     }
 
     OrderNegotiation::create([
