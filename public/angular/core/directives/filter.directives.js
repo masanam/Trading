@@ -8,8 +8,8 @@ angular.module('index').filter('convertToDate', function() {
 
 angular.module('index').filter('firstWord', function() {
   return function(str){
-			if(!str) return str;
-			str = str.split(' ');
-    	return str[0];
+    if(!str) return str;
+    str = str.split(' ');
+    return str[0];
   };
 });
