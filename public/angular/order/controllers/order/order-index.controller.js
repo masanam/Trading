@@ -4,7 +4,7 @@ angular.module('order').controller('OrderIndexController', ['$scope', '$statePar
   function($scope, $stateParams, $state, Index) {
     $scope.getIndices = function () {
       $scope.indices = Index.query({ action: 'single-date' }, function(){
-      	$scope.display.index = $scope.indices[$scope.indices.length-1];
+        $scope.display.index = $scope.indices[$scope.indices.length-1];
       });
     };
 
