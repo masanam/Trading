@@ -16,7 +16,7 @@
       </div>
     </div>
 
-    <div class="box-body">
+    <div class="box-header">
       <small>
         <em class="text-muted">
           Created at
@@ -25,23 +25,24 @@
           {{ order.updated_at | date:'mediumDate' }}
         </em>
       </small>
-
-      <section ng-static-include="'/angular/order/views/order/_order-detail.partial.html'"></section>
-
     </div>
+
+    <div class="box-body no-padding" ng-static-include="'/angular/order/views/order/_order-detail.partial.html'"></div>
+  </div>
+
+  <div class="box">
+    <div class="box-body" ng-static-include="'/angular/order/views/order/_index-deviation.partial.html'"></div>
   </div>
 </div>
 
 <div class="col-lg-4">
   <div class="box">
-    <div class="box-header with-border">
-      <h2>Approval</h2>
-      <div ng-repeat="approval in order.approvals">
-        {{ approval.name }} : {{ approval.pivot.status }}
-      </div>
+    <div class="box-header">Approval</div>
+    <div class="box-body no-padding with-border">
+      <div ng-static-include="'/angular/order/views/order/_approval.partial.html'"></div>
     </div>
-    <div class="box-body">
-      <h2>Reserved for Chat</h2>
+    <div class="box-body">`
+      <div ng-static-include="'/angular/order/views/order/_chat.partial.html'"></div>
     </div>
   </div>
 </div>
