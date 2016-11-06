@@ -17,7 +17,7 @@ class OrdersTableSeeder extends Seeder
     $array = [
       [
         'order' => [ 'id' => 1, 'user_id' => 7, 'status' => 'o', ],
-        'buy' => [ 1 => [ 'volume' => 1000, 'price' => 51000 ] ],
+        'buy' => [ 1 => [ 'volume' => 500, 'price' => 25000 ], 4 => [ 'volume' => 500, 'price' => 26000 ] ],
         'sell' => [ 1 => [ 'volume' => 1000, 'price' => 53000 ] ],
         'user' => [ 1 => [ 'role' => 'approver' ], 8 => [ 'role' => 'associated' ], 7 => [ 'role' => 'admin' ] ],
         'approval' => [ 1 => [ 'status' => 'a' ], 2 => [ 'status' => 'a' ] ]
