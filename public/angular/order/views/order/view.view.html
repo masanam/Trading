@@ -1,41 +1,47 @@
-<div class="box-header with-border" ng-init="findOne()">
-  <h1 class="box-title">{{ order.id }} - {{ order.trader.name }}</h1>
+<div class="col-lg-8">
+  <div class="box">
+    <div class="box-header with-border" ng-init="findOne()">
+      <h1 class="box-title">ORD #{{ ("10000"+order.id).slice(-4) }} - {{ order.trader.name }}</h1>
 
-  <span class="badge badge-primary">
-    {{ order.status === 'o' ? 'Open' : order.status === 'f' ? 'Finalized' : 'Cancelled' }}
-  </span>
-  <div class="box-tools pull-right">
-    <a class="btn btn-default" ui-sref="order.list">
-      <i class="glyphicon glyphicon-chevron-left"></i> Back
-    </a>
-    <a class="btn btn-primary" ng-click="remove(order);">
-      <i class="glyphicon glyphicon-trash"></i>
-    </a>
+      <span class="badge badge-primary">
+        {{ order.status === 'o' ? 'Open' : order.status === 'f' ? 'Finalized' : 'Cancelled' }}
+      </span>
+      <div class="box-tools pull-right">
+        <a class="btn btn-default" ui-sref="order.list">
+          <i class="glyphicon glyphicon-chevron-left"></i> Back
+        </a>
+        <a class="btn btn-primary" ng-click="remove(order);">
+          <i class="glyphicon glyphicon-trash"></i>
+        </a>
+      </div>
+    </div>
+
+    <div class="box-body">
+      <small>
+        <em class="text-muted">
+          Created at
+          {{ order.created_at | date:'mediumDate' }},
+          Last Update
+          {{ order.updated_at | date:'mediumDate' }}
+        </em>
+      </small>
+
+      <section ng-static-include="'/angular/order/views/order/_order-detail.partial.html'"></section>
+
+    </div>
   </div>
 </div>
 
-<div class="box-body">
-  <small>
-    <em class="text-muted">
-      Created at
-      {{ order.created_at | date:'mediumDate' }},
-      Last Update
-      {{ order.updated_at | date:'mediumDate' }}
-    </em>
-  </small>
-
-  <h2>Approval</h2>
-  <div ng-repeat="approval in order.approvals">
-    {{ approval.name }} : {{ approval.pivot.status }}
-  </div>
-
-  <h2>Buys</h2>
-  <div ng-repeat="buy in order.buys">
-    {{ buy.buyer.company_name }} : {{ buy.pivot.volume }}t, US${{ buy.pivot.price }}
-  </div>
-
-  <h2>Sells</h2>
-  <div ng-repeat="sell in order.sells">
-    {{ sell.seller.company_name }} : {{ sell.pivot.volume }}t, US${{ sell.pivot.price }}
+<div class="col-lg-4">
+  <div class="box">
+    <div class="box-header with-border">
+      <h2>Approval</h2>
+      <div ng-repeat="approval in order.approvals">
+        {{ approval.name }} : {{ approval.pivot.status }}
+      </div>
+    </div>
+    <div class="box-body">
+      <h2>Reserved for Chat</h2>
+    </div>
   </div>
 </div>
