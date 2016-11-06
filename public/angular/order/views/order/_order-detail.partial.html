@@ -33,13 +33,31 @@
 	<tbody>
 		<tr>
 			<td>Company</td>
-			<td>{{ display.sell.seller.company_name }}</td>
-			<td>{{ display.buy.buyer.company_name }}</td>
+			<td>
+				{{ display.sell.seller.company_name }}
+				<span class="pull-right">
+					<a ng-click="alert(nego)" href="#" class="glyphicon glyphicon-pencil"></a>
+					<a ng-click="alert(nego)" href="#" class="glyphicon glyphicon-trash"></a>
+				</span>
+			</td>
+			<td>
+				{{ display.buy.buyer.company_name }}
+				<span class="pull-right">
+					<a ng-click="alert(nego)" href="#" class="glyphicon glyphicon-pencil"></a>
+					<a ng-click="alert(nego)" href="#" class="glyphicon glyphicon-trash"></a>
+				</span>
+			</td>
 		</tr>
 		<tr>
 			<td>Trx Value</td>
-			<td>{{ display.sell.pivot.volume }}t - US$ {{ display.sell.pivot.price }}</td>
-			<td>{{ display.buy.pivot.volume }}t - US$ {{ display.buy.pivot.price }}</td>
+			<td>
+				{{ display.sell.pivot.volume }}t - US$ {{ display.sell.pivot.price }}
+				<a ng-click="alert(nego)"  href="#" class="pull-right">Nego</a>
+			</td>
+			<td>
+				{{ display.buy.pivot.volume }}t - US$ {{ display.buy.pivot.price }}
+				<a ng-click="alert(nego)"  href="#" class="pull-right">Nego</a>
+			</td>
 		</tr>
 		<tr>
 			<td>Order Date</td>
