@@ -74,10 +74,10 @@ class CreateOrdersTable extends Migration
      */
     public function down()
     {
-        Schema::drop('orders');
-        Schema::drop('order_approvals');
-        Schema::drop('order_approvals');
-        Schema::drop('order_details');
         Schema::drop('order_negotiations');
+        Schema::drop('order_details');
+        Schema::drop('order_users');
+        Schema::drop('order_approvals');
+        Schema::drop('orders');
     }
 }
