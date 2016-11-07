@@ -14,21 +14,23 @@ angular.module('chat').controller('ChatController', ['$scope', '$stateParams', '
     $scope.message = '';
   };
 
-  $scope.findOneDeal = function(type, $deal) {
-    $scope.deal = Order.get({ id: $stateParams.dealId });
+  $scope.findOneDeal = function($deal) {
+    $scope.deal = Order.get({ id: $stateParams.id });
   };
 
   $scope.findDealByUser = function() {
     $scope.deals = Order.query({ action: 'user', userId: Authentication.user.id });
   };
 
-  $scope.findChatByDeal = function(type) {
-    Chat.findChatByDeal($stateParams.dealId, function(res){
+  $scope.findChatByDeal = function() {
+    console.log('asdasd');
+    Chat.findChatByDeal($stateParams.id, function(res){
       res.$loaded(function(res) {
         for (var i = 0; i < res.length; i++) {
           res[i].created_at = new Date(res[i].created_at);
         }
         $scope.chats = res;
+        console.log($scope.chats);
       });
     });
   };
@@ -40,7 +42,7 @@ angular.module('chat').controller('ChatController', ['$scope', '$stateParams', '
 
   $scope.sendMessage = function(type) {
     var message = $scope.message;
-    $scope.chat.key = Chat.sendChat($stateParams.dealId, message, Date.now());
+    $scope.chat.key = Chat.sendChat($stateParams.id, message, Date.now());
     
     $scope.initialize();
   };
