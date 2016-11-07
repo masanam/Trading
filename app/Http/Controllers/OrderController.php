@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 use App\Http\Requests;
+use App\Model\User;
 use App\Model\Order;
 use App\Model\OrderNegotiation;
 use Auth;
@@ -24,10 +26,21 @@ class OrderController extends Controller
    */
   public function index(Request $request)
   {
+    DB::enableQueryLog();
     $orders = Order::with('trader', 'approvals');
     if($request->status != '') $orders = $orders->where('status', $request->status);
-    if($request->possession == 'my') $orders = $orders->where('user_id', Auth::User()->id);
-      
+    if($request->possession == 'my') {
+      $orders = $orders->where('user_id', Auth::User()->id);
+    }
+    else if($request->possession == 'subordinates'){
+      $users = User::where('manager_id', Auth::User()->id)->get();
+      $subordinates = [];
+      foreach($users as $user){
+        array_push($subordinates, $user->id);
+      }
+      $orders = $orders->whereIn('user_id', $subordinates);
+    }
+    //var_dump(DB::getQueryLog());
     $orders = $orders->get();
     return response()->json($orders, 200);
   }
