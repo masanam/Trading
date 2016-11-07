@@ -15,7 +15,8 @@
           <label class="btn btn-default" ng-model="browse.possession" uib-btn-radio="'associated'">Associated</label>
         </div>
 
-        <div class="box-tools btn-group" ng-init="browse.status = 'p'">
+        <div class="box-tools btn-group" ng-init="browse.status = ''">
+          <label class="btn btn-default" ng-model="browse.status" uib-btn-radio="''">All</label>
           <label class="btn btn-default" ng-model="browse.status" uib-btn-radio="'p'">Pending</label>
           <label class="btn btn-default" ng-model="browse.status" uib-btn-radio="'d'">Draft</label>
           <label class="btn btn-default" ng-model="browse.status" uib-btn-radio="'o'">Open</label>
@@ -52,7 +53,11 @@
           <tr ng-repeat="order in orders">
             <td>{{ order.id }}</td>
             <td>{{ order.trader.name }}</td>
-            <td>{{ order.status }}</td>
+            <td ng-if="order.status === 'o'">Open</td>
+            <td ng-if="order.status === 'd'">Draft</td>
+            <td ng-if="order.status === 'x'">Deleted</td>
+            <td ng-if="order.status === 'p'">Pending</td>
+            <td ng-if="order.status === 'f'">Finalized</td>
             <td>{{ order.created_at | date:'d/M/yy' }}</td>
             <td>{{ order.updated_at | date:'d/M/yy' }}</td>
             <td>

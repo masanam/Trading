@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 use App\Http\Requests;
+use App\Model\User;
 use App\Model\Order;
 use App\Model\OrderNegotiation;
 use Auth;
@@ -22,9 +24,30 @@ class OrderController extends Controller
    *
    * @return \Illuminate\Http\Response
    */
-  public function index()
+  public function index(Request $request)
   {
-    $orders = Order::with('trader', 'approvals')->get();
+    DB::enableQueryLog();
+    $orders = Order::with('trader', 'approvals');
+    if($request->status != '') $orders = $orders->where('status', $request->status);
+    
+    if($request->possession == 'subordinates'){
+      $users = User::where('manager_id', Auth::User()->id)->get();
+      $subordinates = [];
+      foreach($users as $user){
+        array_push($subordinates, $user->id);
+      }
+      $orders = $orders->whereIn('user_id', $subordinates);
+    }
+    else if($request->possession == 'associated'){
+      $orders = $orders->with(['users' => function($q){
+        $q->where('user_id', Auth::User()->id)->where('order_users.role', 'associated');
+      }]);
+    }else{
+      $orders = $orders->where('user_id', Auth::User()->id);
+    }
+    
+    //var_dump(DB::getQueryLog());
+    $orders = $orders->get();
     return response()->json($orders, 200);
   }
 
@@ -107,10 +130,10 @@ class OrderController extends Controller
    */
   public function destroy($id)
   {
-    $order = Order::find($id);
+    $order = Order::with('trader', 'approvals')->find($id);
     $order->status = 'x';
     $order->save();
 
-    return response()->json([ 'status' => 'Record Deleted' ], 204);
+    return response()->json($order, 200);
   }
 }
