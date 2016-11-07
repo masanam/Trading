@@ -22,9 +22,13 @@ class OrderController extends Controller
    *
    * @return \Illuminate\Http\Response
    */
-  public function index()
+  public function index(Request $request)
   {
-    $orders = Order::with('trader', 'approvals')->get();
+    $orders = Order::with('trader', 'approvals');
+    if($request->status != '') $orders = $orders->where('status', $request->status);
+    if($request->possession == 'my') $orders = $orders->where('user_id', Auth::User()->id);
+      
+    $orders = $orders->get();
     return response()->json($orders, 200);
   }
 
