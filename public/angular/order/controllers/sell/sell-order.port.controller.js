@@ -11,6 +11,7 @@ angular.module('order').controller('SellOrderPortController', ['$scope', '$state
     //Init select port
     $scope.findAllPorts = function(){
       Order.get({ type: 'sell', id: $stateParams.order_id }, function(res){
+        $scope.concession = res.concession;
         Port.query({ type: 'seller', action: 'allMy', id:res.seller_id }, function(res){
           $scope.ports = [];
           for (var i=0; i<res.length; i++){
@@ -19,7 +20,9 @@ angular.module('order').controller('SellOrderPortController', ['$scope', '$state
           }
           $scope.ports = res;
         });
-        $scope.port.distance = parseFloat(res.concession.port_distance);
+        if ($scope.concession.port_distance) {
+          $scope.port.distance = parseFloat($scope.concession.port_distance);
+        }
         if (res.concession.port_id) {
           Port.get({ id:res.concession.port_id }, function(res){
             res.latitude = parseFloat(res.latitude);
@@ -29,6 +32,21 @@ angular.module('order').controller('SellOrderPortController', ['$scope', '$state
         }
       });
     };
+
+    //port distance = undefined if port.selected change
+    $scope.$watch('port.selected', function(nv, ov) {
+      if (ov === undefined) {
+        Order.get({ type: 'sell', id: $stateParams.order_id }, function(res){
+          $scope.concession = res.concession;
+          if ($scope.concession.port_distance) {
+            $scope.port.distance = parseFloat($scope.concession.port_distance);
+          }
+        });
+      }
+      if(ov !== nv) {
+        $scope.port.distance = undefined;
+      } 
+    });
 
     //selected port after create new
     $scope.postCreatePorts = function(){

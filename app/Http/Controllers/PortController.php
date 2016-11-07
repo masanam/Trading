@@ -34,7 +34,7 @@ class PortController extends Controller
     }
 
     public function buyerAllMyPort($buyer_id){
-        $port =  Port::leftJoin('buyer_port', 'ports.id', '=', 'buyer_port.port_id')->where('buyer_port.buyer_id', '=', $buyer_id)->orwhere('buyer_port.buyer_id', '=', null)->get();
+        $port =  Port::leftJoin('buyer_port', 'ports.id', '=', 'buyer_port.port_id')->select('buyer_port.*', 'ports.*')->where('buyer_port.buyer_id', '=', $buyer_id)->orwhere('buyer_port.buyer_id', '=', null)->get();
         return response()->json($port, 200);
     }
 

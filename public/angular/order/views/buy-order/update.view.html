@@ -20,8 +20,7 @@
           <label ng-show="error" class="alert bg-red" style="width:100%">{{error}}</label>
         </div>
         <div class="form-group">
-          <h1>Name of Company</h1>
-          <input type="text" class="form-control" ng-model="buy_order.buyer_id"/>
+          <h1>{{ buy_order.buyer.company_name }}</h1>
         </div>
         <div class="form-group">
           <label>Product Name : </label>

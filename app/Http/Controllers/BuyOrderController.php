@@ -190,6 +190,7 @@ class BuyOrderController extends Controller
         $buy_order->ready_date = date('Y-m-d',strtotime($request->ready_date));
         $buy_order->expired_date = date('Y-m-d',strtotime($request->expired_date));
 
+        $buy_order->factory_id = $request->factory_id;
         $buy_order->address = $request->address;
         $buy_order->city = $request->city;
         $buy_order->country = $request->country;
