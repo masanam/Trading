@@ -21,7 +21,7 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
 
       // Redirect after save
       order.$save(function (res) {
-        $state.go('order.view', { orderId: res.id });
+        $state.go('order.view', { id: res.id });
 
         // Clear form fields
         $scope.order = new Order();
@@ -67,8 +67,8 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
 
     // Find existing order
     $scope.findOne = function () {
-      $scope.order = Order.get({
-        orderId: $stateParams.id
+      $scope.order = Order.query({
+        id: $stateParams.id
       });
     };
   }

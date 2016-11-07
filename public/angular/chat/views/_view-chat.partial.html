@@ -6,10 +6,10 @@
     </div><!-- /.box-header -->
     <div class="box-body">
       <!-- Conversations are loaded here -->
-      <div class="direct-chat-messages" scroll-glue>
+      <span class="direct-chat-messages" ng-repeat="chat in chats" scroll-glue>
         <!-- Message. Default to the left -->
 
-        <div ng-if="chat.user_id !== user.id" class="direct-chat-msg" ng-repeat="chat in chats" scroll-glue>
+        <div ng-if="chat.user_id !== user.id" class="direct-chat-msg" scroll-glue>
           <div class="direct-chat-info clearfix">
             <span class="direct-chat-name pull-left">{{ chat.author }}</span>
             <span class="direct-chat-timestamp pull-right">{{ chat.created_at | date:'medium' }}</span>
@@ -20,7 +20,7 @@
           </div><!-- /.direct-chat-text -->
         </div><!-- /.direct-chat-msg -->
 
-        <div ng-if="chat.user_id === user.id" class="direct-chat-msg right" ng-repeat="chat in chats" scroll-glue>
+        <div ng-if="chat.user_id === user.id" class="direct-chat-msg right" scroll-glue>
           <div class="direct-chat-info clearfix">
             <span class="direct-chat-name pull-right">{{ chat.author }}</span>
             <span class="direct-chat-timestamp pull-left">{{ chat.created_at | date:'medium' }}</span>
@@ -32,7 +32,7 @@
         </div><!-- /.direct-chat-msg -->
         
       </div><!--/.direct-chat-messages-->
-    </div><!-- /.box-body -->
+    </span><!-- /.box-body -->
     <div class="box-footer">
       <form class="input-group" ng-submit="sendMessage('buy')">
         <input type="text" name="message" placeholder="Type Message ..." class="form-control" ng-model="message">
