@@ -30,7 +30,6 @@ angular.module('chat').controller('ChatController', ['$scope', '$stateParams', '
           res[i].created_at = new Date(res[i].created_at);
         }
         $scope.chats = res;
-        console.log($scope.chats);
       });
     });
   };

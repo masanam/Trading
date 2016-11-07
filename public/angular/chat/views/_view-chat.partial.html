@@ -1,15 +1,15 @@
 <section class="content" ng-controller="ChatController" ng-init="findCurrentUser(); findChatByDeal();">
   <div class="box box-primary direct-chat direct-chat-primary">
-    <div class="box-header with-border">
+    <div class="box-header box-solid  with-border">
       <h3 class="box-title">Chat ORD #{{ ("10000"+order.id).slice(-4) }} - {{ order.trader.name }}</h3>
       <div class="box-tools pull-right">
     </div><!-- /.box-header -->
-    <div class="box-body" scroll-glue="glued">
+    <div class="box-body">
       <!-- Conversations are loaded here -->
-      <div class="direct-chat-messages">
+      <div class="direct-chat-messages" scroll-glue>
         <!-- Message. Default to the left -->
 
-        <div ng-if="chat.user_id !== user.id" class="direct-chat-msg" ng-repeat="chat in chats">
+        <div ng-if="chat.user_id !== user.id" class="direct-chat-msg" ng-repeat="chat in chats" scroll-glue>
           <div class="direct-chat-info clearfix">
             <span class="direct-chat-name pull-left">{{ chat.author }}</span>
             <span class="direct-chat-timestamp pull-right">{{ chat.created_at | date:'medium' }}</span>
@@ -20,7 +20,7 @@
           </div><!-- /.direct-chat-text -->
         </div><!-- /.direct-chat-msg -->
 
-        <div ng-if="chat.user_id === user.id" class="direct-chat-msg right" ng-repeat="chat in chats">
+        <div ng-if="chat.user_id === user.id" class="direct-chat-msg right" ng-repeat="chat in chats" scroll-glue>
           <div class="direct-chat-info clearfix">
             <span class="direct-chat-name pull-right">{{ chat.author }}</span>
             <span class="direct-chat-timestamp pull-left">{{ chat.created_at | date:'medium' }}</span>
