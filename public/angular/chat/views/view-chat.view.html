@@ -1,4 +1,4 @@
-<section class="content" ng-controller="ChatController" ng-init="findCurrentUser();">
+<section class="content" ng-controller="ChatController" ng-init="findCurrentUser(); findChatByDeal(deal.type);">
   <div class="box box-danger direct-chat direct-chat-danger">
     <div class="box-header with-border">
       <h3 class="box-title">Direct Chat</h3>
@@ -12,20 +12,24 @@
     </div><!-- /.box-header -->
     <div class="box-body" scroll-glue="glued">
       <!-- Conversations are loaded here -->
-      <div class="direct-chat-messages" ng-init="findChatByDeal('buy')">
+      <div class="direct-chat-messages">
         <!-- Message. Default to the left -->
-        <div class="direct-chat-msg" ng-repeat="chat in chats">
-          <div class="direct-chat-info clearfix" ng-if="chat.user_id !== user.id">
+
+        <div ng-if="chat.user_id !== user.id" class="direct-chat-msg" ng-repeat="chat in chats">
+          <div class="direct-chat-info clearfix">
             <span class="direct-chat-name pull-left">{{ chat.author }}</span>
-            <span class="direct-chat-timestamp pull-right">{{ chat.created_at }}</span>
+            <span class="direct-chat-timestamp pull-right">{{ chat.created_at | date:'medium' }}</span>
           </div><!-- /.direct-chat-info -->
           <img class="direct-chat-img" ng-src="images/default.png" ng-src-fallback="images/default.png" alt="message user image"><!-- /.direct-chat-img -->
           <div class="direct-chat-text">
             {{ chat.message }}
           </div><!-- /.direct-chat-text -->
-          <div class="direct-chat-info clearfix" ng-if="chat.user_id === user.id">
+        </div><!-- /.direct-chat-msg -->
+
+        <div ng-if="chat.user_id === user.id" class="direct-chat-msg right" ng-repeat="chat in chats">
+          <div class="direct-chat-info clearfix">
             <span class="direct-chat-name pull-right">{{ chat.author }}</span>
-            <span class="direct-chat-timestamp pull-right">{{ chat.created_at }}</span>
+            <span class="direct-chat-timestamp pull-left">{{ chat.created_at | date:'medium' }}</span>
           </div><!-- /.direct-chat-info -->
           <img class="direct-chat-img" ng-src="images/default.png" ng-src-fallback="images/default.png" alt="message user image"><!-- /.direct-chat-img -->
           <div class="direct-chat-text">
