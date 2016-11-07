@@ -83,7 +83,7 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
     };
 
     $scope.nexToPort = function(){
-      console.log($scope.product.selected);
+      
       if ($scope.product.selected) {
         $location.path('lead/port/buyer/'+$stateParams.id);
       }else{
@@ -249,6 +249,16 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
       });
     };
 
+    $scope.addProductDetail = function () {
+      
+      var modalInstance = $uibModal.open({
+        windowClass: 'xl-modal',
+        templateUrl: './angular/lead/views/product/create-from-buyer.view.detail.html',
+        controller: 'CreateProductModalFromBuyerController',
+        scope: $scope,
+      });
+    };
+
     $scope.addFactory = function () {
       var modalInstance = $uibModal.open({
         windowClass: 'xl-modal',
@@ -294,7 +304,7 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
 ]);
 
 //controller Create Buyer Modal
-angular.module('deal').controller('BuyerModalController', function ($scope, $uibModalInstance, $timeout, $interval, Buyer, $location) {
+angular.module('buyer').controller('BuyerModalController', function ($scope, $uibModalInstance, $timeout, $interval, Buyer, $location) {
   
   $scope.create = function(createBuyer) {
     $scope.loading = true;
@@ -371,10 +381,6 @@ angular.module('buyer').controller('CreateProductModalFromBuyerController', func
   $scope.product = new Product();
   
   $scope.createProduct= function(){
-    
-    // $scope.success = $scope.error = null;
-    //$scope.product.license_expired_date = $filter('date')($scope.product.license_expired_date, 'yyyy-MM-dd');
-
     var product = $scope.product;
     product.buyer_id = $scope.buyer.id;
     product.$save(function (response) {
@@ -391,6 +397,21 @@ angular.module('buyer').controller('CreateProductModalFromBuyerController', func
           $scope.close();
         }
       }, 75);
+    }, function (response) {
+      $scope.error = response.data.message;
+    });
+    
+  };
+
+  $scope.createProductDetail= function(){
+    var product = $scope.product;
+    product.buyer_id = $scope.buyer.id;
+    product.$save(function (response) {
+      $scope.buyer.product.push($scope.product);
+      $scope.product = response;
+      $scope.success = true;
+      $scope.close();
+     
     }, function (response) {
       $scope.error = response.data.message;
     });

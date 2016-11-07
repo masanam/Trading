@@ -1,9 +1,14 @@
-<div class="content" ng-controller="ViewPortController" ng-init="findOne()">
+<div class="content" ng-controller="PortController" ng-init="findOne()">
   <!-- HEADER -->
   <div class="row submenu-header">
     <div class="submenu-header-item">
-      <button type="button" class="btn btn-primary" ng-click="backToDetail()">
+      <button type="button" class="btn btn-danger" ng-click="backToDetail()">
         <i class="glyphicon glyphicon-arrow-left"></i> Back
+      </button>
+      
+     <button type="button" class="btn btn-primary" ui-sref="lead.update-port({ id: id, portId: port.id })">
+
+              <i class="glyphicon glyphicon-pencil"></i> Update
       </button>
     </div>
   </div>

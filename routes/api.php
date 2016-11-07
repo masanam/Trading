@@ -121,31 +121,12 @@ Route::group(['middleware' => ['cors']], function() {
 
     Route::resource('order/sell', 'SellOrderController', ['except' => [ 'create', 'edit' ]]);
     Route::resource('order/buy', 'BuyOrderController', ['except' => [ 'create', 'edit' ]]);
-    Route::resource('order', 'BuySellOrderController', ['only' => [ 'index' ]]);
+    //Route::resource('order', 'BuySellOrderController', ['only' => [ 'index' ]]);
 
 
     /* 
      * DEAL API GROUP
      * Managing the deals (buy/sell) done here
      */
-    Route::get('deal/table/{status}', 'DealController@index');
-    Route::get('deal/status/{deal}/{status}', 'DealController@changeStatus');
-    Route::get('deal/user/{user}', 'DealController@findByUser');
-
-    Route::delete('buy-deal/{dealId}', 'BuyDealController@destroyByDeal');
-    Route::get('buy-deal/getByDeal/{dealId}', 'BuyDealController@getByDeal');
-    Route::get('buy-deal/getOneByDealAndOrder/{buyOrder}/{dealId}', 'BuyDealController@getOneByDealAndOrder');
-    Route::get('buy-deal/{buy_deal}/{approval}', 'BuyDealController@approval');
-
-    Route::delete('sell-deal/{dealId}', 'SellDealController@destroyByDeal');
-    Route::get('sell-deal/getByDeal/{dealId}', 'SellDealController@getByDeal');
-    Route::get('sell-deal/getOneByDealAndOrder/{sellOrder}/{dealId}', 'SellDealController@getOneByDealAndOrder');
-    Route::get('sell-deal/{sell_deal}/{approval}', 'SellDealController@approval');
-
-    Route::get('order-deal/user/{user_id}', 'BuySellDealController@orderDealByUser');
-
-    Route::resource('deal', 'DealController', ['except' => [ 'index', 'create', 'edit', 'destroy' ]]);
-    Route::resource('buy-deal', 'BuyDealController', ['except' => [ 'create', 'edit' ]]);
-    Route::resource('sell-deal', 'SellDealController', ['except' => [ 'create', 'edit' ]]);
-    Route::resource('order-deal', 'BuySellDealController@index');
+    Route::resource('order', 'OrderController');
 });

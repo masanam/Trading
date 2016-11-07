@@ -1,15 +1,40 @@
 'use strict';
 
-angular.module('port').controller('PortController', ['$scope', '$stateParams', '$uibModal', '$location', 'Port',
-  function($scope, $stateParams, $uibModal, $location, Port) {
+angular.module('port').controller('PortController', ['$scope', '$stateParams', '$uibModal', '$location', 'Port', 'MultiStepForm', 'Factory', 'Concession', '$window','$state',
+  function($scope, $stateParams, $uibModal, $location, Port, MultiStepForm, Factory, Concession, $window, $state) {
 
     $scope.init = function(){
       $scope.buyer_ports = [];
+      $scope.tempFactoryId = MultiStepForm.tempFactoryId;
+      $scope.tempConcessionId = MultiStepForm.tempConcessionId;
       $scope.buyer_port = new Port();
       $scope.ports=[];
       $scope.port={};
+      $scope.concession={};
+      $scope.factory={};
       $scope.selectedPort = {};
       $scope.new = $location.search().new;
+    };
+
+
+    $scope.findOne = function(){
+      Port.get({ id: $stateParams.portId }, function(res){
+        $scope.port = res;
+        $scope.port.longitude = parseFloat($scope.port.longitude);
+        $scope.port.latitude = parseFloat($scope.port.latitude);
+      });
+    };
+
+    $scope.backToDetail = function(){
+      $window.history.back();
+    };
+
+    $scope.backToDetailBuyer = function(){
+      $location.path('lead/buyer/'+$stateParams.id);
+    };
+
+    $scope.backToDetailSeller = function(){
+      $location.path('lead/seller/'+$stateParams.id);
     };
 
     $scope.findAllPorts = function(){
@@ -62,8 +87,30 @@ angular.module('port').controller('PortController', ['$scope', '$stateParams', '
       });
     };
 
+    $scope.update = function() {
+      $scope.loading = true;
+
+      $scope.port.$update({ id: $stateParams.portId }, function(res) {
+        $location.path('lead/port/'+$stateParams.portId);
+        $scope.loading = false;
+      });
+    };
+
+
+
     $scope.finishBuyer= function(){
       if ($scope.port.selected) {
+        
+        $scope.factory = Factory.get({ id: MultiStepForm.tempFactoryId }, function(res){
+          
+          $scope.factory = res;
+          $scope.factory.port_id = $scope.port.selected.id;
+          
+          $scope.factory.$update({ id: $scope.factory.id }, function (res){
+            MultiStepForm.tempFactoryId = undefined;
+          });
+        });
+        
         $location.path('lead/buyer/'+$stateParams.id);
       }else{
         $scope.error = 'Please Select A Port or Create New port';
@@ -72,6 +119,16 @@ angular.module('port').controller('PortController', ['$scope', '$stateParams', '
 
     $scope.finishSeller= function(){
       if ($scope.port.selected) {
+      
+        Concession.get({ id: MultiStepForm.tempConcessionId }, function(res){
+          $scope.concession = res;
+          $scope.concession.port_id = $scope.port.selected.id;
+          
+          $scope.concession.$update({ id: $scope.concession.id }, function (res){
+            MultiStepForm.tempConcessionId = undefined;
+          });
+        });
+        
         $location.path('lead/seller/'+$stateParams.id);
       }else{
         $scope.error = 'Please Select A Port or Create New port';
@@ -115,7 +172,7 @@ angular.module('port').controller('PortController', ['$scope', '$stateParams', '
 
 
 
-angular.module('port').controller('PortModalController', function ($scope, $stateParams, $uibModalInstance, $interval, Port, $location) {
+angular.module('port').controller('PortModalController', function ($scope, $stateParams, $uibModalInstance, $interval, Port, $location, MultiStepForm, Factory, Concession) {
 
   $scope.init = function(type){
     $scope.port = new Port();
@@ -168,6 +225,7 @@ angular.module('port').controller('PortModalController', function ($scope, $stat
     port.$save(function(res) {
       $scope.port = res;
       $scope.buyer_port.buyer_id = $stateParams.id;
+      
       $scope.buyer_port.port_id = res.id;
       $scope.buyer_port.$save({ type: 'buyer', action: 'store' }, function(res) {
         $scope.progress = 0;
@@ -238,9 +296,11 @@ angular.module('port').controller('PortModalController', function ($scope, $stat
       $scope.ports.push(res);
       $scope.seller_port.seller_id = $stateParams.id;
       $scope.seller_port.port_id = res.id;
+      
       $scope.seller_port.$save({ type: 'seller', action: 'store' }, function(res) {
         $scope.progress = 0;
         $scope.success = true;
+        
         var stop = $interval(function() {
           if ($scope.progress >= 0 && $scope.progress < 100) {
             $scope.progress++;

@@ -34,7 +34,7 @@ class PortController extends Controller
     }
 
     public function buyerAllMyPort($buyer_id){
-        $port =  Port::leftJoin('buyer_port', 'ports.id', '=', 'buyer_port.port_id')->where('buyer_port.buyer_id', '=', $buyer_id)->orwhere('buyer_port.buyer_id', '=', null)->get();
+        $port =  Port::leftJoin('buyer_port', 'ports.id', '=', 'buyer_port.port_id')->select('buyer_port.*', 'ports.*')->where('buyer_port.buyer_id', '=', $buyer_id)->orwhere('buyer_port.buyer_id', '=', null)->get();
         return response()->json($port, 200);
     }
 
@@ -115,9 +115,39 @@ class PortController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $port)
     {
-        //
+       $port = Port::find($port);
+
+        if (!$request) {
+            return response()->json([
+                'message' => 'Bad Request'
+            ], 400);
+        }
+
+        if (!$port) {
+            return response()->json([
+                'message' => 'Not found'
+            ] ,404);
+        }
+
+        $port->port_name = $request->port_name;
+        $port->owner = $request->owner;
+        $port->is_private = $request->is_private;
+        $port->location = $request->location;
+        $port->size = $request->size;
+        $port->river_capacity = $request->river_capacity;
+        $port->latitude = $request->latitude;
+        $port->longitude = $request->longitude;
+        $port->anchorage_distance = $request->anchorage_distance;
+        $port->has_conveyor = $request->has_conveyor;
+        $port->has_crusher = $request->has_crusher;
+        $port->has_blending = $request->has_blending;
+        $port->draft_height = $request->draft_height;
+        $port->daily_discharge_rate = $request->daily_discharge_rate;
+        $port->save();
+
+        return response()->json($port, 200);
     }
 
     /**

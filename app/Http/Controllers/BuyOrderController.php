@@ -26,7 +26,7 @@ class BuyOrderController extends Controller
     public function index()
     {
 
-        $buy_order = BuyOrder::with('Buyer')->where('order_status', 1)->orwhere('order_status', 2)->orwhere('order_status', 3)->orwhere('order_status', 4)->orwhere('order_status', 'o')->orwhere('order_status', 'l')->orwhere('order_status', 's')->get();
+        $buy_order = BuyOrder::with('Buyer','User')->where('order_status', 1)->orwhere('order_status', 2)->orwhere('order_status', 3)->orwhere('order_status', 4)->orwhere('order_status', 'o')->orwhere('order_status', 'l')->orwhere('order_status', 's')->orwhere('order_status', 'p')->get();
         return response()->json($buy_order, 200);
     }
 
@@ -152,7 +152,7 @@ class BuyOrderController extends Controller
     {
         $buy_order = BuyOrder::with('Buyer','Port','Factory')->find($id);
 
-        if($buy_order->order_status == 'o' || $buy_order->order_status == 1 || $buy_order->order_status == 2 || $buy_order->order_status == 3 || $buy_order->order_status == 4 || $buy_order->order_status == 'l') {
+        if($buy_order->order_status == 'o' || $buy_order->order_status == 1 || $buy_order->order_status == 2 || $buy_order->order_status == 3 || $buy_order->order_status == 4 || $buy_order->order_status == 'l' || $buy_order->order_status == 's' || $buy_order->order_status == 'p') {
             return response()->json($buy_order, 200);
         }else {
             return response()->json(['message' => 'deactivated record'], 404);
@@ -190,6 +190,7 @@ class BuyOrderController extends Controller
         $buy_order->ready_date = date('Y-m-d',strtotime($request->ready_date));
         $buy_order->expired_date = date('Y-m-d',strtotime($request->expired_date));
 
+        $buy_order->factory_id = $request->factory_id;
         $buy_order->address = $request->address;
         $buy_order->city = $request->city;
         $buy_order->country = $request->country;

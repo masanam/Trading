@@ -12,12 +12,8 @@ class BuyOrder extends Model
 {
     protected $table = 'buy_order';
 
-    public function Buyer() {
+    public function buyer() {
     	return $this->belongsTo('App\Model\Buyer');
-    }
-
-    public function BuyDeal() {
-    	return $this->hasMany('App\Model\BuyDeal');
     }
 
     public function BuyOrderPricing() {

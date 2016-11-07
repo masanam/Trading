@@ -34,6 +34,7 @@ class UsersTableSeeder extends Seeder
             'phone' => '+62811111112',
             'password' => bcrypt('secret'),
             'role' => 'trader',
+            'manager_id' => 1,
             'status' => 'a'
         ]);
 
@@ -46,6 +47,7 @@ class UsersTableSeeder extends Seeder
             'phone' => '+62811111113',
             'password' => bcrypt('secret'),
             'role' => 'trader',
+            'manager_id' => 2,
             'status' => 'a'
         ]);
 
@@ -94,6 +96,7 @@ class UsersTableSeeder extends Seeder
             'phone' => '+62811111234',
             'password' => bcrypt('secret'),
             'role' => 'trader',
+            'manager_id' => 3,
             'status' => 'a'
         ]);
 
@@ -106,6 +109,7 @@ class UsersTableSeeder extends Seeder
             'phone' => '+62811111234',
             'password' => bcrypt('secret'),
             'role' => 'trader',
+            'manager_id' => 7,
             'status' => 'a'
         ]);
     }

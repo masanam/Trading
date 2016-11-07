@@ -319,6 +319,16 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
         scope: $scope,
       });
     };
+
+    $scope.addProductDetail = function () {
+      
+      var modalInstance = $uibModal.open({
+        windowClass: 'xl-modal',
+        templateUrl: './angular/lead/views/product/create-from-seller.view.detail.html',
+        controller: 'CreateProductModalFromSellerController',
+        scope: $scope,
+      });
+    };
     
     $scope.deleteProduct = function(product){
       Product.delete({ id: product.id }, function (response) {
@@ -452,6 +462,27 @@ angular.module('seller').controller('CreateProductModalFromSellerController', fu
     });
     
   };
+
+
+  $scope.createProductDetail= function(){
+    
+    $scope.success = $scope.error = null;
+    //$scope.product.license_expired_date = $filter('date')($scope.product.license_expired_date, 'yyyy-MM-dd');
+
+    var product = $scope.product;
+    product.seller_id = $scope.seller.id;
+    
+    product.$save(function (response) {
+      $scope.seller.product.push($scope.product);
+      $scope.product = response;
+      $scope.success = true;
+      $uibModalInstance.close('success');
+    }, function (response) {
+      $scope.error = response.data.message;
+    });
+    
+  };
+
   
   $scope.close = function () {
     $uibModalInstance.dismiss('cancel');

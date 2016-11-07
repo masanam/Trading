@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('factory').controller('FactoryController', ['$scope', '$stateParams', '$location', '$uibModal', 'Factory',
-  function($scope, $stateParams, $location, $uibModal, Factory) {
+angular.module('factory').controller('FactoryController', ['$scope', '$stateParams', '$location', '$uibModal', 'MultiStepForm',
+  function($scope, $stateParams, $location, $uibModal, MultiStepForm) {
     $scope.factorys = [];
     $scope.factory = {};
     $scope.new = $location.search().new;
@@ -16,7 +16,14 @@ angular.module('factory').controller('FactoryController', ['$scope', '$statePara
     };
     
     $scope.nextToProduct = function(){
-      $location.path('lead/buyer/'+$stateParams.id+'/setup-product');
+      if ($scope.factory.selected) {
+        MultiStepForm.tempFactoryId = $scope.factory.selected.id;
+        
+        $location.path('lead/buyer/'+$stateParams.id+'/setup-product');
+      }else{
+        $scope.error = 'Please Select A Factory or Create New Factory';
+      }
+      
     };
     
   }
