@@ -130,10 +130,10 @@ class OrderController extends Controller
    */
   public function destroy($id)
   {
-    $order = Order::find($id);
+    $order = Order::with('trader', 'approvals')->find($id);
     $order->status = 'x';
     $order->save();
 
-    return response()->json([ 'status' => 'Record Deleted' ], 204);
+    return response()->json($order, 200);
   }
 }
