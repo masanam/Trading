@@ -21,7 +21,7 @@ angular.module('order').controller('BuyOrderController', ['$scope', '$stateParam
     $scope.initCollapse = function() {
       $scope.isCollapsed2 = true;
       $scope.isCollapsed = false;
-    }
+    };
 
     $scope.toCustomer = function(id) {
       $location.path('buy-order/create/customer/'+id);
