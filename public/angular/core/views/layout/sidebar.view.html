@@ -36,7 +36,7 @@
       <li class="treeview">
         <a ui-sref="order.list">
           <i class="ion ion-magnet" style="font-size: 20px; margin-left: -3px;"></i>
-          <span>Leads</span>
+          <span>Order Management</span>
         </a>
         <ul class="treeview-menu">
           <li><a ui-sref="order.list"><i class="ion ion-ios-paperplane"></i> Orders</a></li>
@@ -44,6 +44,18 @@
           <li><a ui-sref="buy-order.index"><i class="ion ion-log-in"></i> Sell Leads</a></li>
         </ul>
       </li>
+      <li class="treeview" ng-if="Authentication.user.role === 'manager'">
+        <a ui-sref="index.list">
+          <i class="ion ion-gear-a" style="font-size: 20px; margin-left: -3px;"></i>
+          <span>Administration</span>
+        </a>
+        <ul class="treeview-menu">
+          <li><a ui-sref="index.list"><i class="fa fa-line-chart"></i> Price Indices</a></li><!-- 
+          <li><a ui-sref="buy-order-management.index"><i class="ion ion-log-in"></i> Buy Order</a></li>
+          <li><a ui-sref="sell-order-management.index"><i class="ion ion-log-out"></i> Sell Order</a></li> -->
+        </ul>
+      </li>
+
       <!--<li class="treeview">
         <a ui-sref="deal.index">
           <i class="ion ion-pricetags" style="font-size: 20px; margin-left: -3px;"></i>
@@ -66,18 +78,7 @@
           <span>Bug Report</span>
         </a>
       </li>
-      <!--<li class="treeview" ng-if="Authentication.user.role === 'manager'">
-        <a ui-sref="index.list">
-          <i class="ion ion-gear-a" style="font-size: 20px; margin-left: -3px;"></i>
-          <span>Management</span>
-        </a>
-        <ul class="treeview-menu">
-          <li><a ui-sref="index.list"><i class="fa fa-line-chart"></i> Indices</a></li>
-          <li><a ui-sref="buy-order-management.index"><i class="ion ion-log-in"></i> Buy Order</a></li>
-          <li><a ui-sref="sell-order-management.index"><i class="ion ion-log-out"></i> Sell Order</a></li>
-        </ul>
-      </li>
-    </ul>-->
+    </ul>
   </section>
   <!-- /.sidebar -->
 </aside>
