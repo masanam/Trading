@@ -16,6 +16,11 @@ angular.module('order').config(['$stateProvider',
         templateUrl: '/angular/order/views/order/list.view.html',
         roles: ['trader', 'manager']
       })
+      .state('order.create', {
+        url: '/create',
+        templateUrl: '/angular/order/views/order/create.view.html',
+        roles: ['trader', 'manager']
+      })
       .state('order.view', {
         url: '/:id',
         templateUrl: '/angular/order/views/order/view.view.html',
