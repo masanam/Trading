@@ -28,6 +28,7 @@ class OrderController extends Controller
   {
     DB::enableQueryLog();
     $orders = Order::with('trader', 'approvals');
+
     if($request->status != '') $orders = $orders->where('status', $request->status);
     
     if($request->possession == 'subordinates'){
@@ -36,14 +37,14 @@ class OrderController extends Controller
       foreach($users as $user){
         array_push($subordinates, $user->id);
       }
-      $orders = $orders->whereIn('user_id', $subordinates);
+      $orders->whereIn('user_id', $subordinates);
     }
     else if($request->possession == 'associated'){
-      $orders = $orders->with(['users' => function($q){
-        $q->where('user_id', Auth::User()->id)->where('order_users.role', 'associated');
-      }]);
+      $orders->whereHas('users', function($query){
+        $query->where('user_id', Auth::User()->id);
+      });
     }else{
-      $orders = $orders->where('user_id', Auth::User()->id);
+      $orders->where('user_id', Auth::User()->id);
     }
     
     //var_dump(DB::getQueryLog());
