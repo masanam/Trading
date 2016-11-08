@@ -1,8 +1,8 @@
 <div class="box-header with-border">
   <h1 class="box-title" style="font-size: 25px">Index</h1>
   <div class="box-tools pull-right btn-group">
-    <button ui-sref="index.today-price" class="col-md-12 btn btn-primary">+ Add Today Price</button>
-    <button ui-sref="index.create" class="col-md-12 btn btn-primary">+ Create New</button>
+    <button ui-sref="index.today-price" class="btn btn-primary">+ Add Today Price</button>
+    <button ui-sref="index.create" class="btn btn-primary">+ Create New</button>
   </div>
 </div>
 <div class="box-body" ng-init="find()">
@@ -26,8 +26,8 @@
         <td>{{ index.id }}</td>
         <td>{{ index.index_provider }} {{ index.index_name }}</td>
         <td>{{ index.frequency }}</td>
-        <td>{{ index.created_at }}</td>
-        <td>{{ index.updated_at }}</td>
+        <td>{{ index.created_at | date:'short' }}</td>
+        <td>{{ index.updated_at | date:'short' }}</td>
         <td>
           <a ui-sref="index.view({ indexId: index.id })"><i class="glyphicon glyphicon-eye-open"></i></a>
           <a ui-sref="index.edit({ indexId: index.id })"><i class="glyphicon glyphicon-pencil"></i></a>

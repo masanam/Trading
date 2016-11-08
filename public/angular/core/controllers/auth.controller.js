@@ -13,7 +13,7 @@ angular.module('auth').controller('AuthController', ['$scope', '$state', '$urlRo
 
       Authentication.login(credentials, function(err, res){
         if(err) $scope.err = err;
-        else $state.go('lead.index', {});
+        else $state.go('dashboard.main', {});
       }, function(response){
         console.log(response);
         $scope.err = response;
