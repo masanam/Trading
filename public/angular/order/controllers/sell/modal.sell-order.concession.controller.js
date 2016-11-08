@@ -12,7 +12,6 @@ angular.module('order').controller('ConcessionModalSellOrderController',
       
       $scope.concession.$save(function (res) {
 
-        console.log(res);
         $scope.progress = 0;
         $scope.success = true;
         $scope.concession_id = res.id;

@@ -18,6 +18,11 @@ angular.module('order').controller('SellOrderController', ['$scope', '$uibModal'
       $scope.sell_order = Order.get({ type: 'sell', id: $scope.sell_orderId });
     };
 
+    $scope.initCollapse = function() {
+      $scope.isCollapsed2 = true;
+      $scope.isCollapsed = false;
+    };
+
     $scope.toSupplier = function(id) {
       $location.path('sell-order/create/supplier/'+id);
     };

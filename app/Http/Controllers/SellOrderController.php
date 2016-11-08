@@ -112,6 +112,14 @@ class SellOrderController extends Controller
         $sell_order->size_max = $request->size_max;
         $sell_order->size_reject = $request->size_reject;
         $sell_order->size_bonus = $request->size_bonus;
+        $sell_order->fe2o3_min = $request->fe2o3_min;
+        $sell_order->fe2o3_max = $request->fe2o3_max;
+        $sell_order->fe2o3_reject = $request->fe2o3_reject;
+        $sell_order->fe2o3_bonus = $request->fe2o3_bonus;
+        $sell_order->aft_min = $request->aft_min;
+        $sell_order->aft_max = $request->aft_max;
+        $sell_order->aft_reject = $request->aft_reject;
+        $sell_order->aft_bonus = $request->aft_bonus;
 
         $sell_order->volume = $request->volume;
         $sell_order->min_price = $request->min_price;
@@ -246,6 +254,14 @@ class SellOrderController extends Controller
         $sell_order->size_max = $request->size_max;
         $sell_order->size_reject = $request->size_reject;
         $sell_order->size_bonus = $request->size_bonus;
+        $sell_order->fe2o3_min = $request->fe2o3_min;
+        $sell_order->fe2o3_max = $request->fe2o3_max;
+        $sell_order->fe2o3_reject = $request->fe2o3_reject;
+        $sell_order->fe2o3_bonus = $request->fe2o3_bonus;
+        $sell_order->aft_min = $request->aft_min;
+        $sell_order->aft_max = $request->aft_max;
+        $sell_order->aft_reject = $request->aft_reject;
+        $sell_order->aft_bonus = $request->aft_bonus;
 
         $sell_order->volume = $request->volume;
         $sell_order->min_price = $request->min_price;

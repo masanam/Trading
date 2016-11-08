@@ -30,15 +30,34 @@
           <p>{{ sell_order.city }}</p>
           <label>Volume of Coal : </label>
           <p>{{ sell_order.volume }} Tones</p>
-          <label>Order Date : </label>
+          <label>Input Date : </label>
           <p class="form-inline">
             <input type="date" class="form-control" ng-model="sell_order.order_date"/>
           </p>
-          <label>Deadline : </label>
+        </div>
+        <div class="col-xs-6" style="padding-left:0">
+          <label>Country : </label>
+          <p>{{ sell_order.country }}</p>
+          <label>Asking Price : </label>
+          <div class="input-group">
+            <span class="input-group-addon">$</span>
+            <input type="text" class="form-control" ng-model="sell_order.min_price">
+          </div>
+          <label>Laycan Periode : </label>
           <p class="form-inline">
+            <input type="date" class="form-control" ng-model="sell_order.ready_date"/>
+             - 
             <input type="date" class="form-control" ng-model="sell_order.order_deadline"/>
           </p>
-          <label>Selling Term : </label>
+        </div>
+        <div class="col-xs-12" style="padding-left:0">
+          <label>Valid Until : </label>
+          <p class="form-inline">
+            <input type="date" class="form-control" ng-model="sell_order.expired_date"/>
+          </p>
+        </div>
+        <div class="col-xs-6" style="padding-left:0">
+          <label>Shipping Term : </label>
           <p class="form-inline">
             <select class="form-control" ng-model="sell_order.trading_term">
               <option value="CNF">CNF</option>
@@ -51,21 +70,6 @@
           </p>
         </div>
         <div class="col-xs-6" style="padding-left:0">
-          <label>Country : </label>
-          <p>{{ sell_order.country }}</p>
-          <label>Min Price : </label>
-          <div class="input-group">
-            <span class="input-group-addon">$</span>
-            <input type="text" class="form-control" ng-model="sell_order.min_price">
-          </div>
-          <label>Ready Date : </label>
-          <p class="form-inline">
-            <input type="date" class="form-control" ng-model="sell_order.ready_date"/>
-          </p>
-          <label>Expired Date : </label>
-          <p class="form-inline">
-            <input type="date" class="form-control" ng-model="sell_order.expired_date"/>
-          </p>
           <label>Payment Terms : </label>
           <select class="form-control" ng-model="sell_order.payment_terms">
             <option value="TT">TT</option>
@@ -110,67 +114,81 @@
     <div class="box-body">
       <div class="row">
         <div class="col-md-12 col-lg-12">
-          <table class="table" style="margin-bottom:0">
+          <table class="table table-striped table-bordered">
+            <thead>
+              <tr style="background-color: darkgray"}>
+                <th style="width:30%">Quality </th>
+                <th>Typical</th>
+                <th>Bonus</th>
+                <th>Reject</th>
+              </tr>
+            </thead>
             <tbody>
               <tr>
-                <td><h4><b>Gross Caloric ARB <div class="pull-right">:</div></b></h4></td>
-                <td><h4>{{sell_order.gcv_arb_min}} - {{sell_order.gcv_arb_max}} kcal</h4></td>
-                <td class="hidden-xs hidden-sm"><h4><b>Gross Caloric ADB <div class="pull-right">:</div></b></h4></td>
-                <td class="hidden-xs hidden-sm"><h4>{{sell_order.gcv_adb_min}} - {{sell_order.gcv_adb_max}} kcal</h4></td>
-                <td class="hidden-xs hidden-sm"><h4><b>Total Sulphur <div class="pull-right">:</div></b></h4></td>
-                <td class="hidden-xs hidden-sm"><h4>{{sell_order.ncv_min}} - {{sell_order.ncv_max}} kcal</h4></td>
-              </tr>
-              <tr class="hidden-md hidden-lg">
-                <td><h4><b>Gross Caloric ADB <div class="pull-right">:</div></b></h4></td>
-                <td><h4>{{sell_order.gcv_adb_min}} - {{sell_order.gcv_adb_max}} kcal</h4></td>
-              </tr>
-              <tr class="hidden-md hidden-lg">
-                <td><h4><b>Total Sulphur <div class="pull-right">:</div></b></h4></td>
-                <td><h4>{{sell_order.ncv_min}} - {{sell_order.ncv_max}} kcal</h4></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="col-md-6 col-lg-6">
-          <table class="table">
-            <tbody>
-              <tr>
-                <td style="width: 50%"><b>Ash <div class="pull-right">:</div></b></td>
-                <td>{{sell_order.ash_min}} - {{sell_order.ash_max}} %</td>
+                <td><b>GCV ADB </b></td>
+                <td>{{sell_order.gcv_adb_min}} - {{sell_order.gcv_adb_max}} kcal</td>
+                <td>{{sell_order.gcv_adb_bonus}}</td>
+                <td>{{sell_order.gcv_adb_reject}}</td>
               </tr>
               <tr>
-                <td><b>Total Sulphur <div class="pull-right">:</div></b></td>
-                <td>{{sell_order.ts_min}} - {{sell_order.ts_max}} %</td>
+                <td><b>GCV ARB </b></td>
+                <td>{{sell_order.gcv_arb_min}} - {{sell_order.gcv_arb_max}} kcal</td>
+                <td>{{sell_order.gcv_arb_bonus}}</td>
+                <td>{{sell_order.gcv_arb_reject}}</td>
               </tr>
               <tr>
-                <td><b>Total Moisture <div class="pull-right">:</div></b></td>
+                <td><b>NCV ARB </b></td>
+                <td>{{sell_order.ncv_min}} - {{sell_order.ncv_max}} kcal</td>
+                <td>{{sell_order.ncv_bonus}}</td>
+                <td>{{sell_order.ncv_reject}}</td>
+              </tr>
+              <tr>
+                <td><b>Total Moisture (ARB) </b></td>
                 <td>{{sell_order.tm_min}} - {{sell_order.tm_max}} %</td>
+                <td>{{sell_order.tm_bonus}}</td>
+                <td>{{sell_order.tm_reject}}</td>
               </tr>
               <tr>
-                <td><b>Inherent Moisture <div class="pull-right">:</div></b></td>
+                <td><b>Inherent Moisture (ADB) </b></td>
                 <td>{{sell_order.im_min}} - {{sell_order.im_max}} %</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="col-md-6 col-lg-6">
-          <table class="table">
-            <tbody>
-              <tr>
-                <td style="width: 50%"><b>Fixed Carbon <div class="pull-right">:</div></b></td>
-                <td>{{sell_order.fc_min}} - {{sell_order.fc_max}} %</td>
+                <td>{{sell_order.im_bonus}}</td>
+                <td>{{sell_order.im_reject}}</td>
               </tr>
               <tr>
-                <td><b>Volatile Matter <div class="pull-right">:</div></b></td>
+                <td><b>Volatile Matter (ADB) </b></td>
                 <td>{{sell_order.vm_min}} - {{sell_order.vm_max}} %</td>
+                <td>{{sell_order.vm_bonus}}</td>
+                <td>{{sell_order.vm_reject}}</td>
               </tr>
               <tr>
-                <td><b>Hardness <div class="pull-right">:</div></b></td>
-                <td>{{sell_order.hgi_min}} - {{sell_order.hgi_max}} %</td>
+                <td><b>Ash (ADB) </b></td>
+                <td>{{sell_order.ash_min}} - {{sell_order.ash_max}} %</td>
+                <td>{{sell_order.ash_bonus}}</td>
+                <td>{{sell_order.ash_reject}}</td>
               </tr>
               <tr>
-                <td><b>Size <div class="pull-right">:</div></b></td>
-                <td>{{sell_order.size_min}} - {{sell_order.size_max}} mm</td>
+                <td><b>Fixed Carbon (ADB) </b></td>
+                <td>{{sell_order.fc_min}} - {{sell_order.fc_max}} %</td>
+                <td>{{sell_order.fc_bonus}}</td>
+                <td>{{sell_order.fc_reject}}</td>
+              </tr>
+              <tr>
+                <td><b>Total Sulphur (ADB) </b></td>
+                <td>{{sell_order.ts_min}} - {{sell_order.ts_max}} %</td>
+                <td>{{sell_order.ts_bonus}}</td>
+                <td>{{sell_order.ts_reject}}</td>
+              </tr>
+              <tr>
+                <td><b>HGI </b></td>
+                <td>{{sell_order.hgi_min}} - {{sell_order.hgi_max}}</td>
+                <td>{{sell_order.hgi_bonus}}</td>
+                <td>{{sell_order.hgi_reject}}</td>
+              </tr>
+              <tr>
+                <td><b>SIZE (0-50mm)</b></td>
+                <td>{{sell_order.size_min}} - {{sell_order.size_max}} %</td>
+                <td>{{sell_order.size_bonus}}</td>
+                <td>{{sell_order.size_reject}}</td>
               </tr>
             </tbody>
           </table>
@@ -179,61 +197,6 @@
     </div>
   </div>
 
-  <div class="box box-primary box-solid">
-    <div class="box-header ">
-      <h3 class="box-title">Product Reject & Bonus</h3>
-    </div>
-    <div class="box-body">
-      <div class="row">
-        <div class="col-md-6 col-lg-6">
-          <h3 style="text-align:center;font-weight:bold;margin-top:0">Reject</h3>
-          <table class="table">
-            <tbody>
-              <tr>
-                <td style="width: 50%"><b>Gross Caloric ARB <div class="pull-right">:</div></b></td>
-                <td>{{sell_order.gcv_arb_reject}} kcal</td>
-              </tr>
-              <tr>
-                <td><b>Gross Caloric ADB <div class="pull-right">:</div></b></td>
-                <td>{{sell_order.gcv_adb_reject}} kcal</td>
-              </tr>
-              <tr>
-                <td><b>Ash <div class="pull-right">:</div></b></td>
-                <td>{{sell_order.ash_reject}} %</td>
-              </tr>
-              <tr>
-                <td><b>Total Sulphur <div class="pull-right">:</div></b></td>
-                <td>{{sell_order.ts_reject}} %</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="col-md-6 col-lg-6">
-          <h3 style="text-align:center;font-weight:bold;margin-top:0">Bonus</h3>
-          <table class="table">
-            <tbody>
-              <tr>
-                <td style="width: 50%"><b>Gross Caloric ARB <div class="pull-right">:</div></b></td>
-                <td>{{sell_order.gcv_arb_bonus}} kcal</td>
-              </tr>
-              <tr>
-                <td><b>Gross Caloric ADB <div class="pull-right">:</div></b></td>
-                <td>{{sell_order.gcv_adb_bonus}} kcal</td>
-              </tr>
-              <tr>
-                <td><b>Ash <div class="pull-right">:</div></b></td>
-                <td>{{sell_order.ash_bonus}} %</td>
-              </tr>
-              <tr>
-                <td><b>Total Sulphur <div class="pull-right">:</div></b></td>
-                <td>{{sell_order.ts_bonus}} %</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
 
 </div>
   

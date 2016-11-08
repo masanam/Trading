@@ -252,6 +252,14 @@ class BuyOrderController extends Controller
         $buy_order->size_max = $request->size_max;
         $buy_order->size_reject = $request->size_reject;
         $buy_order->size_bonus = $request->size_bonus;
+        $buy_order->fe2o3_min = $request->fe2o3_min;
+        $buy_order->fe2o3_max = $request->fe2o3_max;
+        $buy_order->fe2o3_reject = $request->fe2o3_reject;
+        $buy_order->fe2o3_bonus = $request->fe2o3_bonus;
+        $buy_order->aft_min = $request->aft_min;
+        $buy_order->aft_max = $request->aft_max;
+        $buy_order->aft_reject = $request->aft_reject;
+        $buy_order->aft_bonus = $request->aft_bonus;
 
         $buy_order->volume = $request->volume;
         $buy_order->max_price = $request->max_price;

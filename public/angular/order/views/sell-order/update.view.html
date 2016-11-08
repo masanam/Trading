@@ -35,15 +35,34 @@
           <input type="text" class="form-control" ng-model="sell_order.city"/>
           <label>Volume of Coal : </label>
           <input type="number" class="form-control" ng-model="sell_order.volume"/>
-          <label>Order Date : </label>
+          <label>Input Date : </label>
           <p class="form-inline">
             <input type="date" class="form-control" ng-model="sell_order.order_date"/>
           </p>
-          <label>Deadline : </label>
+        </div>
+        <div class="col-xs-6" style="padding-left:0">
+          <label>Country : </label>
+          <input type="text" class="form-control" ng-model="sell_order.country"/>
+          <label>Asking Price : </label>
+          <div class="input-group">
+            <span class="input-group-addon">$</span>
+            <input type="text" class="form-control" ng-model="sell_order.min_price">
+          </div>
+          <label>Laycan Periode : </label>
           <p class="form-inline">
+            <input type="date" class="form-control" ng-model="sell_order.ready_date"/>
+             - 
             <input type="date" class="form-control" ng-model="sell_order.order_deadline"/>
           </p>
-          <label>Selling Term : </label>
+        </div>
+        <div class="col-xs-12" style="padding-left:0">
+          <label>Valid Until : </label>
+          <p class="form-inline">
+            <input type="date" class="form-control" ng-model="sell_order.expired_date"/>
+          </p>
+        </div>
+        <div class="col-xs-6" style="padding-left:0">
+          <label>Shipping Term : </label>
           <p class="form-inline">
             <select class="form-control" ng-model="sell_order.trading_term">
               <option value="CNF">CNF</option>
@@ -56,21 +75,6 @@
           </p>
         </div>
         <div class="col-xs-6" style="padding-left:0">
-          <label>Country : </label>
-          <input type="text" class="form-control" ng-model="sell_order.country"/>
-          <label>Min Price : </label>
-          <div class="input-group">
-            <span class="input-group-addon">$</span>
-            <input type="text" class="form-control" ng-model="sell_order.min_price">
-          </div>
-          <label>Ready Date : </label>
-          <p class="form-inline">
-            <input type="date" class="form-control" ng-model="sell_order.ready_date"/>
-          </p>
-          <label>Expired Date : </label>
-          <p class="form-inline">
-            <input type="date" class="form-control" ng-model="sell_order.expired_date"/>
-          </p>
           <label>Payment Terms : </label>
           <select class="form-control" ng-model="sell_order.payment_terms">
             <option value="TT">TT</option>
@@ -115,178 +119,249 @@
     <div class="box-body">
       <div class="row">
         <div class="col-md-12 col-lg-12">
-          <table class="table" style="margin-bottom:0">
-            <tbody>
-              <tr>
-                <td class="hidden-xs">
-                  <h4 style="text-align:center"><b>Gross Caloric ARB</b></h4>
-                  <p class="form-inline" style="text-align:center"><input type="text" class="form-control" style="width:40%" ng-model="sell_order.gcv_arb_min"/> - <input type="text" class="form-control" style="width:40%" ng-model="sell_order.gcv_arb_max"/> kcal</p>
-                </td>
-                <td class="hidden-xs">
-                  <h4 style="text-align:center"><b>Gross Caloric ADB</b></h4>
-                  <p class="form-inline" style="text-align:center"><input type="text" class="form-control" style="width:40%" ng-model="sell_order.gcv_adb_min"/> - <input type="text" class="form-control" style="width:40%" ng-model="sell_order.gcv_adb_max"/> kcal</p>
-                </td>
-                <td class="hidden-xs">
-                  <h4 style="text-align:center"><b>Nett Calori Value</b></h4>
-                  <p class="form-inline" style="text-align:center"><input type="text" class="form-control" style="width:40%" ng-model="sell_order.ncv_min"/> - <input type="text" class="form-control" style="width:40%" ng-model="sell_order.ncv_max"/> kcal</p>
-                </td>
-                <td class="hidden-sm hidden-md hidden-lg">
-                  <h4 style="text-align:center"><b>Gross Caloric ARB</b></h4>
-                  <p class="form-inline" style="text-align:center"><input type="text" class="form-control" style="width:100%" ng-model="sell_order.gcv_arb_min"/> - <input type="text" class="form-control" style="width:100%" ng-model="sell_order.gcv_arb_max"/> kcal</p>
-                </td>
-                <td class="hidden-sm hidden-md hidden-lg">
-                  <h4 style="text-align:center"><b>Gross Caloric ADB</b></h4>
-                  <p class="form-inline" style="text-align:center"><input type="text" class="form-control" style="width:100%" ng-model="sell_order.gcv_adb_min"/> - <input type="text" class="form-control" style="width:100%" ng-model="sell_order.gcv_adb_max"/> kcal</p>
-                </td>
-                <td class="hidden-sm hidden-md hidden-lg">
-                  <h4 style="text-align:center"><b>Nett Calori Value</b></h4>
-                  <p class="form-inline" style="text-align:center"><input type="text" class="form-control" style="width:100%" ng-model="sell_order.ncv_min"/> - <input type="text" class="form-control" style="width:100%" ng-model="sell_order.ncv_max"/> kcal</p>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="col-md-6 col-lg-6">
-          <table class="table">
-            <tbody>
-              <tr>
-                <td style="width: 50%"><b>Ash <div class="pull-right">:</div></b></td>
-                <td>
-                  <p class="form-inline" style="text-align:center"><input type="text" class="form-group" style="width:40%" ng-model="sell_order.ash_min"/> - <input type="text" class="form-group" style="width:40%" ng-model="sell_order.ash_max"/> %</p>
-                </td>
-              </tr>
-              <tr>
-                <td><b>Total Sulphur <div class="pull-right">:</div></b></td>
-                <td>
-                  <p class="form-inline" style="text-align:center"><input type="text" class="form-group" style="width:40%" ng-model="sell_order.ts_min"/> - <input type="text" class="form-group" style="width:40%" ng-model="sell_order.ts_max"/> %</p>
-                </td>
-              </tr>
-              <tr>
-                <td><b>Total Moisture <div class="pull-right">:</div></b></td>
-                <td>
-                  <p class="form-inline" style="text-align:center"><input type="text" class="form-group" style="width:40%" ng-model="sell_order.tm_min"/> - <input type="text" class="form-group" style="width:40%" ng-model="sell_order.tm_max"/> %</p>
-                </td>
-              </tr>
-              <tr>
-                <td><b>Inherent Moisture <div class="pull-right">:</div></b></td>
-                <td>
-                  <p class="form-inline" style="text-align:center"><input type="text" class="form-group" style="width:40%" ng-model="sell_order.im_min"/> - <input type="text" class="form-group" style="width:40%" ng-model="sell_order.im_max"/> %</p>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="col-md-6 col-lg-6">
-          <table class="table">
-            <tbody>
-              <tr>
-                <td style="width: 50%"><b>Fixed Carbon <div class="pull-right">:</div></b></td>
-                <td>
-                  <p class="form-inline" style="text-align:center">
-                  <input type="text" class="form-group" style="width:40%" ng-model="sell_order.fc_min"/> - <input type="text" class="form-group" style="width:40%" ng-model="sell_order.fc_max"/> %
-                  </p>
-                </td>
-              </tr>
-              <tr>
-                <td><b>Volatile Matter <div class="pull-right">:</div></b></td>
-                <td>
-                  <p class="form-inline" style="text-align:center">
-                  <input type="text" class="form-group" style="width:40%" ng-model="sell_order.vm_min"/> - <input type="text" class="form-group" style="width:40%" ng-model="sell_order.vm_max"/> %
-                  </p>
-                </td>
-              </tr>
-              <tr>
-                <td><b>Hardness <div class="pull-right">:</div></b></td>
-                <td>
-                  <p class="form-inline" style="text-align:center">
-                  <input type="text" class="form-group" style="width:40%" ng-model="sell_order.hgi_min"/> - <input type="text" class="form-group" style="width:40%" ng-model="sell_order.hgi_max"/> %
-                  </p>
-                </td>
-              </tr>
-              <tr>
-                <td><b>Size <div class="pull-right">:</div></b></td>
-                <td>
-                  <p class="form-inline" style="text-align:center">
-                  <input type="text" class="form-group" style="width:35%" ng-model="sell_order.size_min"/> - <input type="text" class="form-group" style="width:35%" ng-model="sell_order.size_max"/> mm
-                  </p>
-                </td>
-              </tr>
-            </tbody>
+          <table class="table table-striped">
+            <tr align="center">
+              <th>
+                Characteristics
+              </th>
+              <th>
+                Min
+              </th>
+              <th>
+                Max
+              </th>
+              <th>
+                Bonus
+              </th>
+              <th>
+                Reject
+              </th>
+            </tr>
+            <tr>
+              <td>
+                Gross Caloric ADB
+              </td>
+              <td>
+                <input type="text" class="form-control" placeholder="kcal" ng-model="sell_order.gcv_adb_min">
+              </td>
+              <td>
+                <input type="text" class="form-control" placeholder="kcal" ng-model="sell_order.gcv_adb_max">
+              </td>
+              <td>
+                <input type="text" class="form-control" placeholder="kcal" ng-model="sell_order.gcv_adb_reject">
+              </td>
+              <td>
+                <input type="text" class="form-control" placeholder="kcal" ng-model="sell_order.gcv_adb_bonus">
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Gross Caloric ARB
+              </td>
+              <td>
+                <input type="text" class="form-control" placeholder="kcal" ng-model="sell_order.gcv_arb_min">
+              </td>
+              <td>
+                <input type="text" class="form-control" placeholder="kcal" ng-model="sell_order.gcv_arb_max">
+              </td>
+              <td>
+                <input type="text" class="form-control" placeholder="kcal" ng-model="sell_order.gcv_arb_reject">
+              </td>
+              <td>
+                <input type="text" class="form-control" placeholder="kcal" ng-model="sell_order.gcv_arb_bonus">
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Nett Caloric Value ARB
+              </td>
+              <td>
+                <input type="text" class="form-control" placeholder="kcal" ng-model="sell_order.ncv_min">
+              </td>
+              <td>
+                <input type="text" class="form-control" placeholder="kcal" ng-model="sell_order.ncv_max">
+              </td>
+              <td>
+                <input type="text" class="form-control" placeholder="kcal" ng-model="sell_order.ncv_reject">
+              </td>
+              <td>
+                <input type="text" class="form-control" placeholder="kcal" ng-model="sell_order.ncv_bonus">
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Total Moisture (ARB)
+              </td>
+              <td>
+                <input type="text" class="form-control" placeholder="%" ng-model="sell_order.tm_min">
+              </td>
+              <td>
+                <input type="text" class="form-control" placeholder="%" ng-model="sell_order.tm_max">
+              </td>
+              <td>
+                <input type="text" class="form-control" placeholder="%" ng-model="sell_order.tm_reject">
+              </td>
+              <td>
+                <input type="text" class="form-control" placeholder="%" ng-model="sell_order.tm_bonus">
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Inherent Moisture (ADB)
+              </td>
+              <td>
+                <input type="text" class="form-control" placeholder="%" ng-model="sell_order.im_min">
+              </td>
+              <td>
+                <input type="text" class="form-control" placeholder="%" ng-model="sell_order.im_max">
+              </td>
+              <td>
+                <input type="text" class="form-control" placeholder="%" ng-model="sell_order.im_reject">
+              </td>
+              <td>
+                <input type="text" class="form-control" placeholder="%" ng-model="sell_order.im_bonus">
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Volatile Matter (ADB)
+              </td>
+              <td>
+                <input type="text" class="form-control" placeholder="%" ng-model="sell_order.vm_min">
+              </td>
+              <td>
+                <input type="text" class="form-control" placeholder="%" ng-model="sell_order.vm_max">
+              </td>
+              <td>
+                <input type="text" class="form-control" placeholder="%" ng-model="sell_order.vm_reject">
+              </td>
+              <td>
+                <input type="text" class="form-control" placeholder="%" ng-model="sell_order.vm_bonus">
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Ash (ADB)
+              </td>
+              <td>
+                <input type="text" class="form-control" placeholder="%" ng-model="sell_order.ash_min">
+              </td>
+              <td>
+                <input type="text" class="form-control" placeholder="%" ng-model="sell_order.ash_max">
+              </td>
+              <td>
+                <input type="text" class="form-control" placeholder="%" ng-model="sell_order.ash_reject">
+              </td>
+              <td>
+                <input type="text" class="form-control" placeholder="%" ng-model="sell_order.ash_bonus">
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Fixed Carbon (ADB)
+              </td>
+              <td>
+                <input type="text" class="form-control" placeholder="%" ng-model="sell_order.fc_min">
+              </td>
+              <td>
+                <input type="text" class="form-control" placeholder="%" ng-model="sell_order.fc_max">
+              </td>
+              <td>
+                <input type="text" class="form-control" placeholder="%" ng-model="sell_order.fc_reject">
+              </td>
+              <td>
+                <input type="text" class="form-control" placeholder="%" ng-model="sell_order.fc_bonus">
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Total Sulphur (ADB)
+              </td>
+              <td>
+                <input type="text" class="form-control" placeholder="%" ng-model="sell_order.ts_min">
+              </td>
+              <td>
+                <input type="text" class="form-control" placeholder="%" ng-model="sell_order.ts_max">
+              </td>
+              <td>
+                <input type="text" class="form-control" placeholder="%" ng-model="sell_order.ts_reject">
+              </td>
+              <td>
+                <input type="text" class="form-control" placeholder="%" ng-model="sell_order.ts_bonus">
+              </td>
+            </tr>
+            <tr>
+              <td>
+                HGI
+              </td>
+              <td>
+                <input type="text" class="form-control" placeholder="" ng-model="sell_order.hgi_min">
+              </td>
+              <td>
+                <input type="text" class="form-control" placeholder="" ng-model="sell_order.hgi_max">
+              </td>
+              <td>
+                <input type="text" class="form-control" placeholder="" ng-model="sell_order.hgi_reject">
+              </td>
+              <td>
+                <input type="text" class="form-control" placeholder="" ng-model="sell_order.hgi_bonus">
+              </td>
+            </tr>
+            <tr>
+              <td>
+                SIZE (0-50mm)
+              </td>
+              <td>
+                <input type="text" class="form-control" placeholder="%" ng-model="sell_order.size_min">
+              </td>
+              <td>
+                <input type="text" class="form-control" placeholder="%" ng-model="sell_order.size_max">
+              </td>
+              <td>
+                <input type="text" class="form-control" placeholder="%" ng-model="sell_order.size_reject">
+              </td>
+              <td>
+                <input type="text" class="form-control" placeholder="%" ng-model="sell_order.size_bonus">
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Fe2o3
+              </td>
+              <td>
+                <input type="text" class="form-control" placeholder="%" ng-model="sell_order.fe2o3_min">
+              </td>
+              <td>
+                <input type="text" class="form-control" placeholder="%" ng-model="sell_order.fe2o3_max">
+              </td>
+              <td>
+                <input type="text" class="form-control" placeholder="%" ng-model="sell_order.fe2o3_reject">
+              </td>
+              <td>
+                <input type="text" class="form-control" placeholder="%" ng-model="sell_order.fe2o3_bonus">
+              </td>
+            </tr>
+            <tr>
+              <td>
+                AFT
+              </td>
+              <td>
+                <input type="text" class="form-control" placeholder="&#176" ng-model="sell_order.aft_min">
+              </td>
+              <td>
+                <input type="text" class="form-control" placeholder="&#176" ng-model="sell_order.aft_max">
+              </td>
+              <td>
+                <input type="text" class="form-control" placeholder="&#176" ng-model="sell_order.aft_reject">
+              </td>
+              <td>
+                <input type="text" class="form-control" placeholder="&#176" ng-model="sell_order.aft_bonus">
+              </td>
+            </tr>
           </table>
         </div>
       </div>
     </div>
   </div>
-
-  <div class="box box-primary box-solid">
-    <div class="box-header ">
-      <h3 class="box-title">Product Reject & Bonus</h3>
-    </div>
-    <div class="box-body">
-      <div class="row">
-        <div class="col-md-6 col-lg-6">
-          <h3 style="text-align:center;font-weight:bold;margin-top:0">Reject</h3>
-          <table class="table">
-            <tbody>
-              <tr>
-                <td style="width: 50%"><b>Gross Caloric ARB <div class="pull-right">:</div></b></td>
-                <td>
-                  <input type="text" class="form-inline" style="width:40%" ng-model="sell_order.gcv_arb_reject"/> kcal
-                </td>
-              </tr>
-              <tr>
-                <td><b>Gross Caloric ADB <div class="pull-right">:</div></b></td>
-                <td>
-                  <input type="text" class="form-inline" style="width:40%" ng-model="sell_order.gcv_adb_reject"/> kcal
-                </td>
-              </tr>
-              <tr>
-                <td><b>Ash <div class="pull-right">:</div></b></td>
-                <td>
-                  <input type="text" class="form-inline" style="width:40%" ng-model="sell_order.ash_reject"/> %
-                </td>
-              </tr>
-              <tr>
-                <td><b>Total Sulphur <div class="pull-right">:</div></b></td>
-                <td>
-                  <input type="text" class="form-inline" style="width:40%" ng-model="sell_order.ts_reject"/> %
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="col-md-6 col-lg-6">
-          <h3 style="text-align:center;font-weight:bold;margin-top:0">Bonus</h3>
-          <table class="table">
-            <tbody>
-              <tr>
-                <td style="width: 50%"><b>Gross Caloric ARB <div class="pull-right">:</div></b></td>
-                <td>
-                  <input type="text" class="form-inline" style="width:40%" ng-model="sell_order.gcv_arb_bonus"/> kcal
-                </td>
-              </tr>
-              <tr>
-                <td><b>Gross Caloric ADB <div class="pull-right">:</div></b></td>
-                <td>
-                  <input type="text" class="form-inline" style="width:40%" ng-model="sell_order.gcv_adb_bonus"/> kcal
-                </td>
-              </tr>
-              <tr>
-                <td><b>Ash <div class="pull-right">:</div></b></td>
-                <td>
-                  <input type="text" class="form-inline" style="width:40%" ng-model="sell_order.ash_bonus"/> %
-                </td>
-              </tr>
-              <tr>
-                <td><b>Total Sulphur <div class="pull-right">:</div></b></td>
-                <td>
-                  <input type="text" class="form-inline" style="width:40%" ng-model="sell_order.ts_bonus"/> %
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
+  
 </div>

@@ -15,13 +15,13 @@
           <tr>
             <th st-sort="id">#</th>
             <th st-sort="user.name">PIC</th>
-            <th st-sort="order_date">Start Date</th>
+            <th st-sort="order_date">Input Date</th>
             <th st-sort="seller.company_name">Company</th>
             <th st-sort="product_name">Quality</th>
             <th st-sort="volume">Quantity</th>
-            <th st-sort="order_deadline">Schedule</th>
-            <th st-sort="min_price">Price / Tones</th>
-            <th st-sort="address">Location</th>
+            <th st-sort="order_deadline">Lead Expired Date</th>
+            <th st-sort="min_price">Price / Tonnes</th>
+            <th st-sort="country">Location</th>
             <th st-sort="order_status">Status</th>
             <th></th>
           </tr>
@@ -33,11 +33,11 @@
             <td>{{ sell_order.user.name }}</td>
             <td>{{ sell_order.order_date | date : 'd MMMM yyyy' }}</td>
             <td>{{ sell_order.seller.company_name }}</td>
-            <td><a style="cursor:pointer" ui-sref="lead.view-product({ id: sell_order.product_id })">{{ sell_order.product_name }}</a></td>
-            <td>{{ sell_order.volume }}</td>
+            <td><a style="cursor:pointer" ui-sref="lead.view-product({ id: sell_order.product_id })">{{ sell_order.typical_quality }}</a></td>
+            <td>{{ sell_order.volume }} Metric Ton</td>
             <td>{{ sell_order.order_deadline | date : 'd MMMM yyyy' }}</td>
             <td>{{ sell_order.min_price | currency : $ : 2}}</td>
-            <td>{{ sell_order.address }}</td>
+            <td>{{ sell_order.country }}</td>
             <td ng-if="sell_order.order_status==='o'">Open</td>
             <td ng-if="sell_order.order_status==='s'">Staged</td>
             <td ng-if="sell_order.order_status==='l'">Lead</td>
