@@ -4,7 +4,7 @@
 			<th width=20%></th>
 			<th width=40%>
 				<span style="font-size:20pt">Buys</span>
-				<span uib-dropdown class="pull-right" ng-init="display.sell = order.sells[0]">
+				<span ng-if="order.sells.length" uib-dropdown class="pull-right" ng-init="display.sell = order.sells[0]">
 		      <button type="button" class="btn btn-default" uib-dropdown-toggle>
 		        {{display.sell.seller.company_name}} ({{ order.sells.length }}) <span class="caret"></span>
 		      </button>
@@ -17,7 +17,7 @@
 			</th>
 			<th width=40%>
 				<span style="font-size:20pt">Sells</span>
-				<span uib-dropdown class="pull-right" ng-init="display.buy = order.buys[0]">
+				<span ng-if="order.buys.length" uib-dropdown class="pull-right" ng-init="display.buy = order.buys[0]">
 		      <button type="button" class="btn btn-default" uib-dropdown-toggle>
 		        {{display.buy.buyer.company_name}} ({{ order.buys.length }})<span class="caret"></span>
 		      </button>
@@ -34,29 +34,37 @@
 		<tr>
 			<td>Company</td>
 			<td>
-				{{ display.sell.seller.company_name }}
-				<span class="pull-right">
-					<a ng-click="alert(nego)" href="#" class="glyphicon glyphicon-pencil"></a>
-					<a ng-click="alert(nego)" href="#" class="glyphicon glyphicon-trash"></a>
+				<span ng-if="display.sell">
+					{{ display.sell.seller.company_name }}
+					<span class="pull-right">
+						<a ng-click="alert(nego)" href="#" class="glyphicon glyphicon-pencil"></a>
+						<a ng-click="alert(nego)" href="#" class="glyphicon glyphicon-trash"></a>
+					</span>
 				</span>
 			</td>
 			<td>
-				{{ display.buy.buyer.company_name }}
-				<span class="pull-right">
-					<a ng-click="alert(nego)" href="#" class="glyphicon glyphicon-pencil"></a>
-					<a ng-click="alert(nego)" href="#" class="glyphicon glyphicon-trash"></a>
+				<span ng-if="display.sell">
+					{{ display.buy.buyer.company_name }}
+					<span class="pull-right">
+						<a ng-click="alert(nego)" href="#" class="glyphicon glyphicon-pencil"></a>
+						<a ng-click="alert(nego)" href="#" class="glyphicon glyphicon-trash"></a>
+					</span>
 				</span>
 			</td>
 		</tr>
 		<tr>
 			<td>Trx Value</td>
 			<td>
-				{{ display.sell.pivot.volume }}t - US$ {{ display.sell.pivot.price }}
-				<a ng-click="alert(nego)"  href="#" class="pull-right">Nego</a>
+				<span ng-if="display.sell">
+					{{ display.sell.pivot.volume }}t - US$ {{ display.sell.pivot.price }}
+					<a ng-click="alert(nego)"  href="#" class="pull-right">Nego</a>
+				</span>
 			</td>
 			<td>
-				{{ display.buy.pivot.volume }}t - US$ {{ display.buy.pivot.price }}
-				<a ng-click="alert(nego)"  href="#" class="pull-right">Nego</a>
+				<span ng-if="display.sell">
+					{{ display.buy.pivot.volume }}t - US$ {{ display.buy.pivot.price }}
+					<a ng-click="alert(nego)"  href="#" class="pull-right">Nego</a>
+				</span>
 			</td>
 		</tr>
 		<tr>
@@ -88,48 +96,64 @@
 		<tr>
 			<td>NCV</td>
 			<td>
+				<span ng-if="display.sell">
 				{{ display.sell.ncv_min }} ~ {{ display.sell.ncv_max }} kcal<br>
 				{{ display.sell.ncv_reject }} kcal reject; {{ display.sell.ncv_bonus }} kcal bonus
+				</span>
 			</td>
 			<td>
+				<span ng-if="display.sell">
 				{{ display.buy.ncv_min }} ~ {{ display.buy.ncv_max }} kcal<br>
 				{{ display.buy.ncv_reject }} kcal reject; {{ display.buy.ncv_bonus }} kcal bonus
+				</span>
 			</td>
 		</tr>
 		<tr>
 			<td>GCV (arb)</td>
 			<td>
+				<span ng-if="display.sell">
 				{{ display.sell.gcv_arb_min }} ~ {{ display.sell.gcv_arb_max }} kcal<br>
 				{{ display.sell.gcv_arb_reject }} kcal reject; {{ display.sell.gcv_arb_bonus }} kcal bonus
+				</span>
 			</td>
 			<td>
+				<span ng-if="display.sell">
 				{{ display.buy.gcv_arb_min }} ~ {{ display.buy.gcv_arb_max }} kcal<br>
 				{{ display.buy.gcv_arb_reject }} kcal reject; {{ display.buy.gcv_arb_bonus }} kcal bonus
+				</span>
 			</td>
 		</tr>
 		<tr>
 			<td>GCV (adb)</td>
 			<td>
+				<span ng-if="display.sell">
 				{{ display.sell.gcv_adb_min }} ~ {{ display.sell.gcv_adb_max }} kcal<br>
 				{{ display.sell.gcv_adb_reject }} kcal reject; {{ display.sell.gcv_adb_bonus }} kcal bonus
+				</span>
 			</td>
 			<td>
+				<span ng-if="display.sell">
 				{{ display.buy.gcv_adb_min }} ~ {{ display.buy.gcv_adb_max }} kcal<br>
 				{{ display.buy.gcv_adb_reject }} kcal reject; {{ display.buy.gcv_adb_bonus }} kcal bonus
+				</span>
 			</td>
 		</tr>
 
 		<tr>
 			<th>Summary</th>
 			<td>
+				<span ng-if="display.sell">
 				{{ 1000 }}t<br>
 				US${{ 51000 }}<br>
 				from {{ order.sells.length }} Suppliers
+				</span>
 			</td>
 			<td>
+				<span ng-if="display.sell">
 				{{ 1000 }}t<br>
 				US${{ 51000 }}<br>
 				from {{ order.buys.length }} Customers
+				</span>
 			</td>
 		</tr>
 		<tr>
