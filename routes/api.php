@@ -128,5 +128,6 @@ Route::group(['middleware' => ['cors']], function() {
      * DEAL API GROUP
      * Managing the deals (buy/sell) done here
      */
+    
     Route::resource('order', 'OrderController');
 });

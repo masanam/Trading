@@ -80,8 +80,8 @@
           <h3 class="box-title">Orders</h3>
         </div>
         <!-- /.box-header -->
-        <div class="box-body no-padding" ng-controller="OrderHistoryController" ng-init="findAvailableSell()">
-          <section ng-include="'/angular/order/views/history/table.view.html'"></section>
+        <div class="box-body no-padding" ng-controller="OrderController" ng-init="findDashboard()">
+          <section ng-include="'/angular/order/views/order/list.view.dashboard.html'"></section>
         </div>
         <!-- /.box-body -->
       </div>

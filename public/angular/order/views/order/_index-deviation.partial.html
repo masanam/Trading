@@ -1,6 +1,6 @@
 <section ng-controller="OrderIndexController">
 	<div class="box-header with-divider">
-		Indices
+		Price Comparision
 		<span uib-dropdown class="pull-right" ng-init="getIndices()">
       <button type="button" class="btn btn-default" uib-dropdown-toggle>
         {{ display.index.index_provider }} {{ display.index.index_name }} <span class="caret"></span>
@@ -16,7 +16,7 @@
 		<div class="col-xs-2 description-block border-right">
   		<p>BUY PRICE</p>
   		<h2>$ {{ display.totalSellPrice / display.totalSellVolume | number:2 }}</h2>
-  		<small class="text-muted">deviation: {{ ((display.totalSellPrice / display.totalSellVolume)-display.index.price)*100/(display.index.price) | number:2 }}%</small>
+  		<small class="text-muted">deviation: {{ ((display.totalSellPrice / display.totalSellVolume))/(display.index.price)*100 | number:2 }}%</small>
   	</div>
 		<div class="col-xs-2 description-block border-right">
   		<p>{{ display.index.index_provider }} {{ display.index.index_name }}</p>
@@ -26,7 +26,7 @@
 		<div class="col-xs-2 description-block border-right">
   		<p>SELL PRICE</p>
   		<h2>$ {{ display.totalBuyPrice / display.totalBuyVolume | number:2 }}</h2>
-  		<small class="text-muted">deviation: {{ ((display.totalBuyPrice / display.totalBuyVolume)-display.index.price)*100/(display.index.price) | number:2 }}%</small>
+  		<small class="text-muted">deviation: {{ ((display.totalBuyPrice / display.totalBuyVolume)/display.index.price)*100 | number:2 }}%</small>
   	</div>
 		<div class="col-xs-6 description-block">
   		GRAFIK MASUK SINI
