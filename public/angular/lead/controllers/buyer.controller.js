@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stateParams', '$state', '$timeout', 'Buyer', 'Order', 'Factory', 'Product', '$uibModal', 'Contact', 'User','$location',
-  function($scope, $http, $stateParams, $state, $timeout, Buyer, Order, Factory, Product, $uibModal, Contact, User, $location) {
+angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stateParams', '$state', '$timeout', 'Buyer', 'Order', 'Factory', 'Port', 'Product', '$uibModal', 'Contact', 'User','$location',
+  function($scope, $http, $stateParams, $state, $timeout, Buyer, Order, Factory, Port, Product, $uibModal, Contact, User, $location) {
     $scope.buyers = [];
     $scope.buyer = {};
     $scope.demand = {};
@@ -191,6 +191,7 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
       }
 
       $scope.buyer = Buyer.get({ id: $scope.buyerId });
+      console.log($scope.buyer);
       $scope.lastOrders = Order.query({ option: 'lastOrders' , type: 'buyer', id: $scope.buyerId });
       /*$scope.pendingOrders = Order.query({ action: 'lastOrder' });*/
 
@@ -334,7 +335,7 @@ angular.module('buyer').controller('BuyerModalController', function ($scope, $ui
 });
 
 
-angular.module('buyer').controller('CreateContactModalFormBuyerController', function ($scope, $filter, $uibModalInstance, Contact, Authentication) {
+angular.module('buyer').controller('CreateContactModalFormBuyerController', function ($scope, $filter, $uibModalInstance, Contact, Authentication, $stateParams) {
   
   $scope.initializeContact = function(){
     $scope.contact = {
@@ -354,7 +355,7 @@ angular.module('buyer').controller('CreateContactModalFormBuyerController', func
     $scope.success = $scope.error = null;
     
     $scope.contact.user_id = Authentication.user.id;
-    $scope.contact.buyer_id = $scope.buyer.id;
+    $scope.contact.buyer_id = $stateParams.id;
 
     var contact = new Contact($scope.contact);
     
@@ -362,7 +363,7 @@ angular.module('buyer').controller('CreateContactModalFormBuyerController', func
       $scope.contact = response;
       
       $scope.buyer.contact.push($scope.contact);
-      $scope.close();
+      $uibModalInstance.close('success');
       $scope.success = true;
     }, function (response) {
       $scope.error = response.data.message;

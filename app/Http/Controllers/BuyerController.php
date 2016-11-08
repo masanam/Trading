@@ -87,7 +87,7 @@ class BuyerController extends Controller
                           },'Factory' => function($q) {
                             $q->where('factory.status', 'a');
                           }])->find($id);
-        
+
         if($buyer->status == 'a') {
             return response()->json($buyer, 200);
         } else {

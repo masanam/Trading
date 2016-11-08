@@ -1,0 +1,45 @@
+<section class="content" ng-controller="ChatController" ng-init="findCurrentUser(); findChatByDeal();">
+  <div class="box box-primary direct-chat direct-chat-primary">
+    <div class="box-header box-solid  with-border">
+      <h3 class="box-title">Chat ORD #{{ ("10000"+order.id).slice(-4) }} - {{ order.trader.name }}</h3>
+      <div class="box-tools pull-right">
+    </div><!-- /.box-header -->
+    <div class="box-body">
+      <!-- Conversations are loaded here -->
+      <span class="direct-chat-messages" ng-repeat="chat in chats" scroll-glue>
+        <!-- Message. Default to the left -->
+
+        <div ng-if="chat.user_id !== user.id" class="direct-chat-msg" scroll-glue>
+          <div class="direct-chat-info clearfix">
+            <span class="direct-chat-name pull-left">{{ chat.author }}</span>
+            <span class="direct-chat-timestamp pull-right">{{ chat.created_at | date:'medium' }}</span>
+          </div><!-- /.direct-chat-info -->
+          <img class="direct-chat-img" ng-src="images/default.png" ng-src-fallback="images/default.png" alt="message user image"><!-- /.direct-chat-img -->
+          <div class="direct-chat-text">
+            {{ chat.message }}
+          </div><!-- /.direct-chat-text -->
+        </div><!-- /.direct-chat-msg -->
+
+        <div ng-if="chat.user_id === user.id" class="direct-chat-msg right" scroll-glue>
+          <div class="direct-chat-info clearfix">
+            <span class="direct-chat-name pull-right">{{ chat.author }}</span>
+            <span class="direct-chat-timestamp pull-left">{{ chat.created_at | date:'medium' }}</span>
+          </div><!-- /.direct-chat-info -->
+          <img class="direct-chat-img" ng-src="images/default.png" ng-src-fallback="images/default.png" alt="message user image"><!-- /.direct-chat-img -->
+          <div class="direct-chat-text">
+            {{ chat.message }}
+          </div><!-- /.direct-chat-text -->
+        </div><!-- /.direct-chat-msg -->
+        
+      </div><!--/.direct-chat-messages-->
+    </span><!-- /.box-body -->
+    <div class="box-footer">
+      <form class="input-group" ng-submit="sendMessage('buy')">
+        <input type="text" name="message" placeholder="Type Message ..." class="form-control" ng-model="message">
+        <span class="input-group-btn">
+          <button type="submit" class="btn btn-primary btn-flat">Send</button>
+        </span>
+      </form>
+    </div><!-- /.box-footer-->
+  </div><!--/.direct-chat -->
+</section>

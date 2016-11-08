@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
         $this->call(IndexTableSeeder::class);
         $this->call(PortTableSeeder::class);
         $this->call(FactoryTableSeeder::class);
+        $this->call(BuyerPortTableSeeder::class);
         $this->call(OrdersTableSeeder::class);
 
         Model::reguard();
