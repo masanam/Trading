@@ -6,33 +6,35 @@
     </div><!-- /.box-header -->
     <div class="box-body">
       <!-- Conversations are loaded here -->
-      <span class="direct-chat-messages" ng-repeat="chat in chats" scroll-glue>
-        <!-- Message. Default to the left -->
+      <div style="height:350px; max-height: 350px;" scroll-glue>
+        <span class="direct-chat-messages" ng-repeat="chat in chats" ng-switch="chat.user_id === user.id">
+          <!-- Message. Default to the left -->
 
-        <div ng-if="chat.user_id !== user.id" class="direct-chat-msg" scroll-glue>
-          <div class="direct-chat-info clearfix">
-            <span class="direct-chat-name pull-left">{{ chat.author }}</span>
-            <span class="direct-chat-timestamp pull-right">{{ chat.created_at | date:'medium' }}</span>
-          </div><!-- /.direct-chat-info -->
-          <img class="direct-chat-img" ng-src="images/default.png" ng-src-fallback="images/default.png" alt="message user image"><!-- /.direct-chat-img -->
-          <div class="direct-chat-text">
-            {{ chat.message }}
-          </div><!-- /.direct-chat-text -->
-        </div><!-- /.direct-chat-msg -->
+          <div ng-switch-when="true" class="direct-chat-msg right">
+            <div class="direct-chat-info clearfix">
+              <span class="direct-chat-name pull-right">{{ chat.author }}</span>
+              <span class="direct-chat-timestamp pull-left">{{ chat.created_at | date:'medium' }}</span>
+            </div><!-- /.direct-chat-info -->
+            <img class="direct-chat-img" ng-src="images/default.png" ng-src-fallback="images/default.png" alt="message user image"><!-- /.direct-chat-img -->
+            <div class="direct-chat-text">
+              {{ chat.message }}
+            </div><!-- /.direct-chat-text -->
+          </div><!-- /.direct-chat-msg -->
 
-        <div ng-if="chat.user_id === user.id" class="direct-chat-msg right" scroll-glue>
-          <div class="direct-chat-info clearfix">
-            <span class="direct-chat-name pull-right">{{ chat.author }}</span>
-            <span class="direct-chat-timestamp pull-left">{{ chat.created_at | date:'medium' }}</span>
-          </div><!-- /.direct-chat-info -->
-          <img class="direct-chat-img" ng-src="images/default.png" ng-src-fallback="images/default.png" alt="message user image"><!-- /.direct-chat-img -->
-          <div class="direct-chat-text">
-            {{ chat.message }}
-          </div><!-- /.direct-chat-text -->
-        </div><!-- /.direct-chat-msg -->
-        
-      </div><!--/.direct-chat-messages-->
-    </span><!-- /.box-body -->
+          <div ng-switch-default class="direct-chat-msg">
+            <div class="direct-chat-info clearfix">
+              <span class="direct-chat-name pull-left">{{ chat.author }}</span>
+              <span class="direct-chat-timestamp pull-right">{{ chat.created_at | date:'medium' }}</span>
+            </div><!-- /.direct-chat-info -->
+            <img class="direct-chat-img" ng-src="images/default.png" ng-src-fallback="images/default.png" alt="message user image"><!-- /.direct-chat-img -->
+            <div class="direct-chat-text">
+              {{ chat.message }}
+            </div><!-- /.direct-chat-text -->
+          </div><!-- /.direct-chat-msg -->
+          
+        </div><!--/.direct-chat-messages-->
+      </span><!-- /.box-body -->
+    </div>
     <div class="box-footer">
       <form class="input-group" ng-submit="sendMessage('buy')">
         <input type="text" name="message" placeholder="Type Message ..." class="form-control" ng-model="message">
