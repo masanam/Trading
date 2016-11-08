@@ -87,6 +87,14 @@ class CreateBuysTable extends Migration
             $table->integer('size_max')->nullable();
             $table->integer('size_reject')->nullable();
             $table->integer('size_bonus')->nullable();
+            $table->integer('fe2o3_min')->nullable(); //size/piece
+            $table->integer('fe2o3_max')->nullable();
+            $table->integer('fe2o3_reject')->nullable(); //size/piece
+            $table->integer('fe2o3_bonus')->nullable();
+            $table->integer('aft_min')->nullable(); //size/piece
+            $table->integer('aft_max')->nullable();
+            $table->integer('aft_reject')->nullable(); //size/piece
+            $table->integer('aft_bonus')->nullable();
 
             $table->integer('volume')->nullable();
             $table->integer('max_price')->nullable();

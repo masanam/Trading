@@ -72,6 +72,14 @@ angular.module('order').controller('BuyOrderProductController', ['$scope', '$sta
           $scope.order.size_max = $scope.product.selected.size_max;
           $scope.order.size_reject = $scope.product.selected.size_reject;
           $scope.order.size_bonus = $scope.product.selected.size_bonus;
+          $scope.order.fe2o3_min = $scope.product.selected.fe2o3_min;
+          $scope.order.fe2o3_max = $scope.product.selected.fe2o3_max;
+          $scope.order.fe2o3_reject = $scope.product.selected.fe2o3_reject;
+          $scope.order.fe2o3_bonus = $scope.product.selected.fe2o3_bonus;
+          $scope.order.aft_min = $scope.product.selected.aft_min;
+          $scope.order.aft_max = $scope.product.selected.aft_max;
+          $scope.order.aft_reject = $scope.product.selected.aft_reject;
+          $scope.order.aft_bonus = $scope.product.selected.aft_bonus;
           $scope.order.volume = $scope.product.selected.volume;
           $scope.order.order_status = 3;
           

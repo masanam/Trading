@@ -9,15 +9,6 @@ angular.module('order').controller('ProductModalBuyOrderController',
 
     $scope.create = function(){
       $scope.product.buyer_id = $stateParams.id;
-      $scope.volume = $scope.product.volume;
-      $scope.gcv_arb_reject = $scope.product.gcv_arb_reject;
-      $scope.gcv_arb_bonus = $scope.product.gcv_arb_bonus;
-      $scope.gcv_adb_reject = $scope.product.gcv_adb_reject;
-      $scope.gcv_adb_bonus = $scope.product.gcv_adb_bonus;
-      $scope.ash_reject = $scope.product.ash_reject;
-      $scope.ash_bonus = $scope.product.ash_bonus;
-      $scope.ts_reject = $scope.product.ts_reject;
-      $scope.ts_bonus = $scope.product.ts_bonus;
       
       $scope.product.$save(function (res) {
         $scope.progress = 0;
@@ -78,6 +69,14 @@ angular.module('order').controller('ProductModalBuyOrderController',
               $scope.order.size_max = $scope.product.size_max;
               $scope.order.size_reject = $scope.product.size_reject;
               $scope.order.size_bonus = $scope.product.size_bonus;
+              $scope.order.fe2o3_min = $scope.product.fe2o3_min;
+              $scope.order.fe2o3_max = $scope.product.fe2o3_max;
+              $scope.order.fe2o3_reject = $scope.product.fe2o3_reject;
+              $scope.order.fe2o3_bonus = $scope.product.fe2o3_bonus;
+              $scope.order.aft_min = $scope.product.aft_min;
+              $scope.order.aft_max = $scope.product.aft_max;
+              $scope.order.aft_reject = $scope.product.aft_reject;
+              $scope.order.aft_bonus = $scope.product.aft_bonus;
               $scope.order.volume = $scope.volume;
               $scope.order.order_status = 3;
 
