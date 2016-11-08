@@ -39,7 +39,7 @@
           <p>{{ sell_order.order_date | date : 'd-MMMM-yyyy' }}</p>
           <label>Deadline : </label>
           <p>{{ sell_order.order_deadline | date : 'd-MMMM-yyyy' }}</p>
-          <label>Trading Term : </label>
+          <label>Selling Term : </label>
           <p>{{ sell_order.trading_term | uppercase }}</p>
         </div>
         <div class="col-xs-6" style="padding-left:0">
@@ -96,7 +96,7 @@
                 <td><h4>{{sell_order.gcv_arb_min}} - {{sell_order.gcv_arb_max}} kcal</h4></td>
                 <td class="hidden-xs hidden-sm"><h4><b>Gross Caloric ADB <div class="pull-right">:</div></b></h4></td>
                 <td class="hidden-xs hidden-sm"><h4>{{sell_order.gcv_adb_min}} - {{sell_order.gcv_adb_max}} kcal</h4></td>
-                <td class="hidden-xs hidden-sm"><h4><b>Total Sulphur <div class="pull-right">:</div></b></h4></td>
+                <td class="hidden-xs hidden-sm"><h4><b>Nett Calori Value <div class="pull-right">:</div></b></h4></td>
                 <td class="hidden-xs hidden-sm"><h4>{{sell_order.ncv_min}} - {{sell_order.ncv_max}} kcal</h4></td>
               </tr>
               <tr class="hidden-md hidden-lg">
@@ -104,7 +104,7 @@
                 <td><h4>{{sell_order.gcv_adb_min}} - {{sell_order.gcv_adb_max}} kcal</h4></td>
               </tr>
               <tr class="hidden-md hidden-lg">
-                <td><h4><b>Total Sulphur <div class="pull-right">:</div></b></h4></td>
+                <td><h4><b>Nett Calori Value <div class="pull-right">:</div></b></h4></td>
                 <td><h4>{{sell_order.ncv_min}} - {{sell_order.ncv_max}} kcal</h4></td>
               </tr>
             </tbody>

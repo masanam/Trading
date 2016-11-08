@@ -1,7 +1,12 @@
 'use strict';
 
 angular.module('factory').controller('CustomerFactoryModalController',
-  function($scope, $stateParams, $uibModalInstance, $location, Factory) {
+  function($scope, $stateParams, $uibModalInstance, $location, Factory, Port) {
+
+    $scope.findMyPortsBuyer = function(){
+      $scope.ports = Port.query({ type: 'buyer', action: 'allMy', id: $stateParams.id });
+      console.log($scope.ports);
+    };
 
     $scope.init = function () {
       $scope.factory = new Factory();

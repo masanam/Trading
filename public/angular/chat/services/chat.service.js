@@ -20,12 +20,13 @@ angular.module('chat').factory('Chat', ['firebase', '$firebaseArray', 'Authentic
         return callback(chats);
       },
 
-      sendChat: function(dealId, message) {
+      sendChat: function(dealId, message, currentTime) {
         var chat = {
           'deal_id': dealId,
           'user_id': Authentication.user.id,
           'author': Authentication.user.name,
-          'message': message
+          'message': message,
+          'created_at': currentTime
         };
 
         var key = mainApp.database().ref('deal_chat/'+dealId).push(chat).key;
