@@ -62,7 +62,7 @@ angular.module('dashboard').controller('IndexDashboardController', ['$scope', 'I
         if($scope.indices[x].choosen) choosenIndex.push($scope.indices[x].id);
       }
 
-      Index.post({ action: 'price' },
+      Index.post({ action: 'multiple-price' },
         { indexId: choosenIndex, date_start: dateStart, date_end: dateEnd, frequency: $scope.frequency },
         function(res){
           console.log(res);
