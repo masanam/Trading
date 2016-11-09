@@ -10,8 +10,17 @@
         <a class="btn btn-default" ui-sref="order.list">
           <i class="glyphicon glyphicon-chevron-left"></i> Back
         </a>
-        <a class="btn btn-primary" ng-click="remove(order);">
-          <i class="glyphicon glyphicon-trash"></i>
+        <a class="btn btn-primary" ng-click="print(order);">
+          <i class="glyphicon glyphicon-print" title="Print"></i>
+        </a>
+        <a class="btn btn-success" ng-click="request(order);">
+          <i class="glyphicon glyphicon-send" title="Request for Approval"></i>
+        </a>
+        <a class="btn btn-success" ng-click="finalize(order);">
+          <i class="glyphicon glyphicon-floppy-saved" title="Finalize Order"></i>
+        </a>
+        <a class="btn btn-danger" ng-click="remove(order);">
+          <i class="glyphicon glyphicon-trash" title="Cancel Order"></i>
         </a>
       </div>
     </div>
