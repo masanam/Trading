@@ -1,4 +1,4 @@
-<section class="content" ng-controller="BuyOrderController">
+<section class="content" ng-controller="BuyOrderIndexController">
   <div class="box">
     <div class="box-header with-border">
       <h1 class="box-title" style="font-size: 25px">Sell Leads</h1>
@@ -7,64 +7,32 @@
       </div>
     </div>
     <div class="box-body">
-      <table ng-init="findBuyOrder()" st-table="displayedCollection" st-safe-src="buy_orders" class="table table-striped">
-        <thead>
-          <tr>
-            <th colspan="11"><input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
-          </tr>
-          <tr>
-            <th st-sort="id">#</th>
-            <th st-sort="user.name">PIC</th>
-            <th st-sort="order_date">Input Date</th>
-            <th st-sort="buyer.company_name">Company</th>
-            <th st-sort="product_name">Quality</th>
-            <th st-sort="volume">Quantity</th>
-            <th st-sort="order_deadline">Lead Expired Date</th>
-            <th st-sort="max_price">Price / Tonnes</th>
-            <th st-sort="country">Location</th>
-            <th st-sort="order_status">Status</th>
-            <th></th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr ng-repeat="buy_order in displayedCollection">
-            <td>{{ buy_order.id }}</td>
-            <td>{{ buy_order.user.name }}</td>
-            <td>{{ buy_order.order_date | date : 'd MMMM yyyy' }}</td>
-            <td>{{ buy_order.buyer.company_name }}</td>
-            <td><a style="cursor:pointer" ui-sref="lead.view-product({ id: sell_order.product_id })">{{ buy_order.typical_quality }}</a></td>
-            <td>{{ buy_order.volume }} Metric Ton</td>
-            <td>{{ buy_order.order_deadline | date : 'd MMMM yyyy' }}</td>
-            <td>{{ buy_order.max_price | currency : $ : 2}}</td>
-            <td>{{ buy_order.country }}</td>
-            <td ng-if="buy_order.order_status==='o'">Open</td>
-            <td ng-if="buy_order.order_status==='s'">Staged</td>
-            <td ng-if="buy_order.order_status==='l'">Lead</td>
-            <td ng-if="buy_order.order_status==='p'">Partial</td>
-            <td ng-if="buy_order.order_status==='0'"><a style="cursor:pointer" ng-click="toCustomer(buy_order.id)">Step Customer</a></td>
-            <td ng-if="buy_order.order_status==='1'"><a style="cursor:pointer" ng-click="toFactory(buy_order.buyer_id,buy_order.id)">Step Factory</a></td>
-            <td ng-if="buy_order.order_status==='2'"><a style="cursor:pointer" ng-click="toProduct(buy_order.buyer_id,buy_order.id,buy_order.factory_id)">Step Product</a></td>
-            <td ng-if="buy_order.order_status==='3'"><a style="cursor:pointer" ng-click="toPort(buy_order.buyer_id,buy_order.id,buy_order.factory_id)">Step Port</a></td>
-            <td ng-if="buy_order.order_status==='4'"><a style="cursor:pointer" ng-click="toSummary(buy_order.buyer_id,buy_order.id,buy_order.factory_id)">Step Summary</a></td>
-            <td>
-              <a ui-sref="buy-order.view({ id: buy_order.id })"><i class="glyphicon glyphicon-info-sign"></i></a>
-              <a ng-if="buy_order.order_status!=='s'&&buy_order.order_status!=='o'&&buy_order.order_status!=='p'" ng-click="changeOrderStatus(buy_order, 'x')" style="cursor: pointer" uib-tooltip="Delete Order"    ><i class="glyphicon glyphicon-trash"></i></a>
-            </td>
-          </tr>
-          <tr ng-if="displayedCollection.length == 0">
-            <td colspan="11" class="text-center">No data available</td>
-          </tr>
-        </tbody>
-
-        <tfoot>
-          <tr>
-            <td colspan="11" class="text-center">
-              <div st-pagination="" st-items-by-page="10" st-displayed-pages="5"></div>
-            </td>
-          </tr>
-        </tfoot>
-      </table>
+      <uib-tabset active="activeJustified" justified="true" ng-init="findDraft()">
+        <uib-tab index="0" ng-click="findDraft()">
+          <uib-tab-heading>
+            <i class='glyphicon glyphicon-fire'></i>  Draft<i class='glyphicon glyphicon-chevron-right pull-right'></i>
+          </uib-tab-heading>
+          <section ng-include="'/angular/order/views/buy-order/_table.view.html'"></section>
+        </uib-tab>
+        <uib-tab index="1" ng-click="findLead()">
+          <uib-tab-heading>
+            <i class='glyphicon glyphicon-share'></i>  Lead<i class='glyphicon glyphicon-chevron-right pull-right'></i>
+          </uib-tab-heading>
+          <section ng-include="'/angular/order/views/buy-order/_table.view.html'"></section>
+        </uib-tab>
+        <uib-tab index="2" ng-click="findVerified()">
+          <uib-tab-heading>
+            <i class='glyphicon glyphicon-earphone'></i>  Verified<i class='glyphicon glyphicon-chevron-right pull-right'></i>
+          </uib-tab-heading>
+          <section ng-include="'/angular/order/views/buy-order/_table.view.html'"></section>
+        </uib-tab>
+        <uib-tab index="3" ng-click="findStaged()">
+          <uib-tab-heading>
+            <i class='glyphicon glyphicon-magnet'></i>  Staged<i class='glyphicon glyphicon-chevron-right pull-right'></i>
+          </uib-tab-heading>
+          <section ng-include="'/angular/order/views/buy-order/_table.view.html'"></section>
+        </uib-tab>
+      </uib-tabset>
     </div>
   </div>
 </section>

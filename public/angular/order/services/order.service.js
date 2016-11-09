@@ -2,12 +2,13 @@
 
 angular.module('order').factory('Order', ['$resource',
   function ($resource) {
-    return $resource('api/order/:type/:id/:action/:order_status/:progress_status/', {
+    return $resource('api/order/:type/:id/:action/:order_status/:progress_status/:user_id', {
       type: undefined,
       id: '@id',
       action: undefined,
       order_status: undefined,
       progress_status: undefined,
+      user_id: undefined,
     }, {
       update: { method: 'PUT' }
     });

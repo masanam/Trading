@@ -41,6 +41,7 @@ class CreateSellsTable extends Migration
             $table->decimal('port_longitude', 11, 8)->nullable();
             
             $table->string('product_name')->nullable();
+            $table->string('typical_quality')->nullable();
             $table->integer('product_id')->nullable();
 
             $table->integer('gcv_arb_min')->nullable(); //gross calorific value, as received basis
@@ -102,7 +103,7 @@ class CreateSellsTable extends Migration
             $table->string('payment_terms')->nullable();
             $table->longText('commercial_term')->nullable();
             $table->longText('penalty_desc')->nullable();
-            $table->char('order_status', 1); // supplier(0), concession(1), product(2), port(3), summary(4), lead(l), open(o), staged(s), partial(p), finish(f), cancel(c), deleted(x)
+            $table->char('order_status', 1); // supplier(0), concession(1), product(2), port(3), summary(4), lead(l), staged(s), partial(p), deleted(x), verified(v)
             $table->char('progress_status', 1)->nullable();
             
             $table->timestamps();

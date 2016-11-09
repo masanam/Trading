@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('order').controller('BuyOrderController', ['$scope', '$stateParams', '$location', 'Order',
-  function($scope, $stateParams, $location, Order) {
+angular.module('order').controller('BuyOrderController', ['$scope', '$stateParams', '$location', 'Order', 'NgMap',
+  function($scope, $stateParams, $location, Order, NgMap) {
     
     $scope.findBuyOrder = function() {
       $scope.buy_orders = Order.query({ type: 'buy' });
@@ -20,32 +20,14 @@ angular.module('order').controller('BuyOrderController', ['$scope', '$stateParam
 
     $scope.initCollapse = function() {
       $scope.isCollapsed2 = true;
+      $scope.isCollapsed3 = false;
       $scope.isCollapsed = false;
     };
 
-    $scope.toCustomer = function(id) {
-      $location.path('buy-order/create/customer/'+id);
-    };
-
-    $scope.toFactory = function(buyer_id,id) {
-      $location.path('buy-order/create/factory/'+buyer_id+'/'+id);
-    };
-
-    $scope.toProduct = function(buyer_id,id,factory_id) {
-      $location.path('buy-order/create/product/'+buyer_id+'/'+id+'/'+factory_id);
-    };
-
-    $scope.toPort = function(buyer_id,id,factory_id) {
-      $location.path('buy-order/create/port/'+buyer_id+'/'+id+'/'+factory_id);
-    };
-
-    $scope.toSummary = function(buyer_id,id,factory_id) {
-      $location.path('buy-order/create/summary/'+buyer_id+'/'+id+'/'+factory_id);
-    };
-
-    $scope.changeOrderStatus = function(buy_order, order_status) {
-      $scope.buy_orders.splice($scope.buy_orders.indexOf(buy_order), 1);
-      $scope.buy_order = Order.get({ type: 'buy', id: buy_order.id, action: 'changeOrderStatus', order_status: order_status });
+    $scope.initMap = function() {
+      NgMap.getMap().then(function(map) {
+        $scope.map = map;
+      });
     };
 
     $scope.changeOrderStatusAtDetail = function(buy_order, order_status) {
