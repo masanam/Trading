@@ -1,9 +1,17 @@
 <section ng-controller="OrderDetailController">
 	<table st-table="" class="table table-bordered table-striped">
 		<thead>
+      <tr ng-if="!order.user_id || order.user_id === Authentication.user.id">
+        <td width=20%></td>
+        <td width=40%>
+          <button class="btn btn-default" ng-click="addBuy()"> + Add Buy </button>
+        </td>
+        <td width=40%>
+          <button class="btn btn-default" ng-click="addSell()"> + Add Sell </button>
+        </td>
+      </tr>
 			<tr>
-				<th width=20%></th>
-				<th width=40%>
+				<th></th><th>
 					<span style="font-size:20pt">Buys</span>
 					<span ng-if="order.sells.length" uib-dropdown class="pull-right" ng-init="display.sell = order.sells[0]">
 			      <button type="button" class="btn btn-default" uib-dropdown-toggle>
@@ -16,7 +24,7 @@
 			      </ul>
 			    </span>
 				</th>
-				<th width=40%>
+				<th>
 					<span style="font-size:20pt">Sells</span>
 					<span ng-if="order.buys.length" uib-dropdown class="pull-right" ng-init="display.buy = order.buys[0]">
 			      <button type="button" class="btn btn-default" uib-dropdown-toggle>
