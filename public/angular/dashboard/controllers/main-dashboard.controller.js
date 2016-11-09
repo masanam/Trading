@@ -10,7 +10,7 @@ angular.module('dashboard').controller('MainDashboardController', ['$scope', 'In
 
     //find list of order in dashboard
     $scope.findDashboard = function () {
-      if(Authentication.user.role == 'trader'){
+      if(Authentication.user.role === 'trader'){
         $scope.orders = Order.query({ possession: 'my', status: 'p' });
       }
     };
