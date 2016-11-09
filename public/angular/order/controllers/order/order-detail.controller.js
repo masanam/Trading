@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('order').controller('OrderDetailController', ['$scope', '$uibModal',
-  function($scope,$uibModal) {
+angular.module('order').controller('OrderDetailController', ['$scope', '$uibModal', 'Order',
+  function($scope,$uibModal, Order) {
     $scope.items = ['item1', 'item2', 'item3'];
 
     $scope.addBuy = function () {
@@ -11,10 +11,11 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
         ariaDescribedBy: 'modal-body',
         templateUrl: '/angular/order/views/order/_add-buy.modal.html',
         controller: 'AddBuyModalController',
-        size: 'lg',
+        //size: 'lg',
+        windowClass: 'xl-modal',
         resolve: {
           items: function () {
-            return $scope.items;
+            return Order.query({ type: 'sell' });
           }
         }
       });

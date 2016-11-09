@@ -7,6 +7,10 @@ angular.module('order').controller('AddBuyModalController', ['$uibModalInstance'
       item: $scope.items[0]
     };
 
+    $scope.find = function () {
+      console.log('focus here');
+    };
+
     $scope.ok = function () {
       $uibModalInstance.close($scope.selected.item);
     };
