@@ -26,7 +26,7 @@ class BuyOrderController extends Controller
     public function index()
     {
 
-        $buy_order = BuyOrder::with('Buyer','User')->where('order_status', 1)->orwhere('order_status', 2)->orwhere('order_status', 3)->orwhere('order_status', 4)->orwhere('order_status', 'o')->orwhere('order_status', 'l')->orwhere('order_status', 's')->orwhere('order_status', 'p')->get();
+        $buy_order = BuyOrder::with('Buyer','User')->where('order_status', 1)->orwhere('order_status', 2)->orwhere('order_status', 3)->orwhere('order_status', 4)->orwhere('order_status', 'v')->orwhere('order_status', 'l')->orwhere('order_status', 's')->orwhere('order_status', 'p')->get();
         return response()->json($buy_order, 200);
     }
 
@@ -70,6 +70,7 @@ class BuyOrderController extends Controller
         $buy_order->port_longitude = $request->port_longitude;
 
         $buy_order->product_name = $request->product_name;
+        $buy_order->typical_quality = $request->typical_quality;
         $buy_order->product_id = $request->product_id;
 
         $buy_order->gcv_arb_min = $request->gcv_arb_min;
@@ -152,7 +153,7 @@ class BuyOrderController extends Controller
     {
         $buy_order = BuyOrder::with('Buyer','Port','Factory')->find($id);
 
-        if($buy_order->order_status == 'o' || $buy_order->order_status == 1 || $buy_order->order_status == 2 || $buy_order->order_status == 3 || $buy_order->order_status == 4 || $buy_order->order_status == 'l' || $buy_order->order_status == 's' || $buy_order->order_status == 'p') {
+        if($buy_order->order_status == 'v' || $buy_order->order_status == 1 || $buy_order->order_status == 2 || $buy_order->order_status == 3 || $buy_order->order_status == 4 || $buy_order->order_status == 'l' || $buy_order->order_status == 's' || $buy_order->order_status == 'p') {
             return response()->json($buy_order, 200);
         }else {
             return response()->json(['message' => 'deactivated record'], 404);
@@ -206,6 +207,7 @@ class BuyOrderController extends Controller
         $buy_order->port_longitude = $request->port_longitude;
 
         $buy_order->product_name = $request->product_name;
+        $buy_order->typical_quality = $request->typical_quality;
         $buy_order->product_id = $request->product_id;
 
         $buy_order->gcv_arb_min = $request->gcv_arb_min;
@@ -310,9 +312,9 @@ class BuyOrderController extends Controller
     public function status($order_status, $progress_status = false)
     {
         if (!$progress_status) {
-            $buy_order = BuyOrder::with('Buyer')->where('order_status', $order_status)->get();
+            $buy_order = BuyOrder::with('Buyer','User')->where('order_status', $order_status)->get();
         } else {
-            $buy_order = BuyOrder::with('Buyer')->where('order_status', $order_status)->where('progress_status', 'LIKE', '%'.$progress_status.'%')->get();
+            $buy_order = BuyOrder::with('Buyer','User')->where('order_status', $order_status)->where('progress_status', 'LIKE', '%'.$progress_status.'%')->get();
         }
 
         return response()->json($buy_order, 200);
@@ -339,6 +341,18 @@ class BuyOrderController extends Controller
     public function myBuyOrders($id)
     {
         $buy_order = BuyOrder::with('Buyer')->where('order_status', 'o')->get();
+        return response()->json($buy_order, 200);
+    }
+
+    public function draft($user_id)
+    {
+        $buy_order = BuyOrder::with('Buyer','User')
+        ->where([['order_status', '1'], ['user_id', $user_id],])
+        ->orwhere([['order_status', '2'], ['user_id', $user_id],])
+        ->orwhere([['order_status', '3'], ['user_id', $user_id],])
+        ->orwhere([['order_status', '4'], ['user_id', $user_id],])
+        ->orwhere([['order_status', '0'], ['user_id', $user_id],])
+        ->get();
         return response()->json($buy_order, 200);
     }
 }
