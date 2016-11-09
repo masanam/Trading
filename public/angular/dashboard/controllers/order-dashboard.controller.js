@@ -8,8 +8,8 @@ angular.module('dashboard').controller('OrderDashboardController', ['$scope', 'I
     $scope.find = function () {
       var possession;
 
-      if( Authentication.user.role === 'manager') possession = 'subordinates';
-      else if( Authentication.user.role === 'trader') possession = 'my';
+      if(Authentication.user.role === 'manager') possession = 'subordinates';
+      else if(Authentication.user.role === 'trader') possession = 'my';
 
       $scope.orders = Order.query({ possession: possession, status: 'p' });
     };
