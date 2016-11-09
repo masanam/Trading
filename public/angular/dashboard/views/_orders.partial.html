@@ -1,4 +1,10 @@
-      
+<div class="col-xs-12" ng-controller="OrderDashboardController">
+  <div class="box box-primary" ng-if="Authentication.user.role === 'trader'" ng-init="find()">
+    <div class="box-header with-border">
+      <h3 class="box-title">Orders</h3>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body no-padding">
       <table st-table="orders" st-safe-src="orderCollection" class="table table-striped">
         <thead>
           <tr>
@@ -6,7 +12,6 @@
           </tr>
           <tr>
             <th st-sort="id">#</th>
-            <th st-sort="user_id">Trader</th>
             <th st-sort="status">Status</th>
             <th st-sort="created_at">Created At</th>
             <th st-sort="updated_at">Updated At</th>
@@ -18,7 +23,6 @@
         <tbody>
           <tr ng-repeat="order in orders">
             <td>{{ order.id }}</td>
-            <td>{{ order.trader.name }}</td>
             <td ng-if="order.status === 'o'">Open</td>
             <td ng-if="order.status === 'd'">Draft</td>
             <td ng-if="order.status === 'x'">Deleted</td>
@@ -33,7 +37,7 @@
             </td>
             <td>
               <a ui-sref="order.view({ id: order.id })"><i class="glyphicon glyphicon-eye-open"></i></a>
-              
+              <a ng-click="remove(order)"><i class="glyphicon glyphicon-trash"></i></a>
             </td>
           </tr>
           <tr ng-if="orders.length == 0">
@@ -41,3 +45,8 @@
           </tr>
         </tbody>
       </table>
+    </div>
+    <!-- /.box-body -->
+  </div>
+  <!-- /. box -->
+</div>
