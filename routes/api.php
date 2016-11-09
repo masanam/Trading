@@ -104,9 +104,11 @@ Route::group(['middleware' => ['cors']], function() {
      * Managing orders (buy/sell) done here
      */
     Route::get('order/buy/status/{order_status}/{progress_status?}', 'BuyOrderController@status', ['except' => [ 'create', 'edit' ]]);
+    Route::get('order/buy/draft/{user_id}', 'BuyOrderController@draft', ['except' => [ 'create', 'edit' ]]);
     Route::get('order/buy/{id}/changeOrderStatus/{order_status}', 'BuyOrderController@changeOrderStatus', ['except' => [ 'create', 'edit' ]]);
 
     Route::get('order/sell/status/{order_status}/{progress_status?}', 'SellOrderController@status', ['except' => [ 'create', 'edit' ]]);
+    Route::get('order/sell/draft/{user_id}', 'BuyOrderController@draft', ['except' => [ 'create', 'edit' ]]);
     Route::get('order/sell/{id}/changeOrderStatus/{order_status}', 'SellOrderController@changeOrderStatus', ['except' => [ 'create', 'edit' ]]);
 
     Route::get('order/lastOrder/{type}/{id}', 'BuySellOrderController@lastOrderByUser');

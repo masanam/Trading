@@ -22,7 +22,7 @@ class SellOrderController extends Controller
      */
     public function index()
     {
-        $sell_order = SellOrder::with('Seller','User')->where('order_status', 1)->orwhere('order_status', 2)->orwhere('order_status', 3)->orwhere('order_status', 4)->orwhere('order_status', 'o')->orwhere('order_status', 'l')->orwhere('order_status', 's')->orwhere('order_status', 'p')->get();
+        $sell_order = SellOrder::with('Seller','User')->where('order_status', 1)->orwhere('order_status', 2)->orwhere('order_status', 3)->orwhere('order_status', 4)->orwhere('order_status', 'v')->orwhere('order_status', 'l')->orwhere('order_status', 's')->orwhere('order_status', 'p')->get();
 
         return response()->json($sell_order, 200);
     }
@@ -66,6 +66,7 @@ class SellOrderController extends Controller
         $sell_order->port_longitude = $request->port_longitude;
 
         $sell_order->product_name = $request->product_name;
+        $sell_order->typical_quality = $request->typical_quality;
         $sell_order->product_id = $request->product_id;
 
         $sell_order->gcv_arb_min = $request->gcv_arb_min;
@@ -154,7 +155,7 @@ class SellOrderController extends Controller
     {
         $sell_order = SellOrder::with('Seller','Port','Concession')->find($id);
 
-        if($sell_order->order_status == 'o' || $sell_order->order_status == 1 || $sell_order->order_status == 2 || $sell_order->order_status == 3 || $sell_order->order_status == 4 || $sell_order->order_status == 'l' || $sell_order->order_status == 's' || $sell_order->order_status == 'p') {
+        if($sell_order->order_status == 'v' || $sell_order->order_status == 1 || $sell_order->order_status == 2 || $sell_order->order_status == 3 || $sell_order->order_status == 4 || $sell_order->order_status == 'l' || $sell_order->order_status == 's' || $sell_order->order_status == 'p') {
             return response()->json($sell_order, 200);
         } else {
             return response()->json(['message' => 'deactivated record'], 404);
@@ -208,6 +209,7 @@ class SellOrderController extends Controller
         $sell_order->port_longitude = $request->port_longitude;
 
         $sell_order->product_name = $request->product_name;
+        $sell_order->typical_quality = $request->typical_quality;
         $sell_order->product_id = $request->product_id;
 
         $sell_order->gcv_arb_min = $request->gcv_arb_min;
@@ -308,9 +310,9 @@ class SellOrderController extends Controller
     public function status($order_status, $progress_status = false)
     {
         if (!$progress_status) {
-            $sell_order = SellOrder::with('Seller')->where('order_status', $order_status)->get();
+            $sell_order = SellOrder::with('Seller','User')->where('order_status', $order_status)->get();
         } else {
-            $sell_order = SellOrder::with('Seller')->where('order_status', $order_status)->where('progress_status', 'LIKE', '%'.$progress_status.'%')->get();
+            $sell_order = SellOrder::with('Seller','User')->where('order_status', $order_status)->where('progress_status', 'LIKE', '%'.$progress_status.'%')->get();
         }
 
         return response()->json($sell_order, 200);
@@ -331,6 +333,18 @@ class SellOrderController extends Controller
           $sell_order->save();
         }
 
+        return response()->json($sell_order, 200);
+    }
+
+    public function draft($user_id)
+    {
+        $sell_order = SellOrder::with('Seller','User')
+        ->where([['order_status', '1'], ['user_id', $user_id],])
+        ->orwhere([['order_status', '2'], ['user_id', $user_id],])
+        ->orwhere([['order_status', '3'], ['user_id', $user_id],])
+        ->orwhere([['order_status', '4'], ['user_id', $user_id],])
+        ->orwhere([['order_status', '0'], ['user_id', $user_id],])
+        ->get();
         return response()->json($sell_order, 200);
     }
 }

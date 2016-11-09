@@ -60,7 +60,7 @@ class SellOrderTableSeeder extends Seeder
         
 
         'volume' => 5000,
-        'order_status' => 'o'
+        'order_status' => 'v'
       ]);
 
       SellOrder::create([
@@ -156,7 +156,7 @@ class SellOrderTableSeeder extends Seeder
         
 
         'volume' => 2000,
-        'order_status' => 'f'
+        'order_status' => 'v'
       ]);
 
       SellOrder::create([
@@ -252,7 +252,7 @@ class SellOrderTableSeeder extends Seeder
         
 
         'volume' => 6000,
-        'order_status' => 'f'
+        'order_status' => 'v'
       ]);
 
       SellOrder::create([
@@ -300,7 +300,7 @@ class SellOrderTableSeeder extends Seeder
         
 
         'volume' => 1500,
-        'order_status' => 'c'
+        'order_status' => 'l'
       ]);
 
       $address = array([
@@ -365,6 +365,10 @@ class SellOrderTableSeeder extends Seeder
           'size_min' => $faker->numberBetween($min = 0, $max = 75),
           'size_max' => $faker->numberBetween($min = 150, $max = 220),
           'min_price' => $faker->numberBetween($min = 1, $max = 500),
+          'product_name'=>$faker->firstName,
+          'typical_quality'=>$faker->firstName,
+          'trading_term'=>$faker->randomElement($array = array ('CNF','CIF','FAS','FOB','Franco')),
+          'payment_terms'=>'TT',
 
           'penalty_desc' => 'penalty',
           'ready_date'=>$faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
@@ -373,7 +377,7 @@ class SellOrderTableSeeder extends Seeder
 
           'volume' => $faker->numberBetween($min = 1000, $max = 2000),
           'min_price' => $faker->numberBetween($min = 100, $max = 5000),
-          'order_status' => $faker->randomElement($array = array ('l','o','s',1,2,3,4))
+          'order_status' => $faker->randomElement($array = array ('l','v','s',1,2,3,4))
         ]));
       }
     }

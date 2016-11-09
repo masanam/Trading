@@ -69,7 +69,7 @@ class BuyOrderTableSeeder extends Seeder
             'trading_term'=>'cnf',
             'payment_terms'=>'fob',
             'commercial_term'=>'',
-            'order_status' => 'o'
+            'order_status' => 'v'
       ]);
 
       BuyOrder::create([
@@ -185,7 +185,7 @@ class BuyOrderTableSeeder extends Seeder
             'port_latitude'=>'-7.1844498',
             'port_longitude'=>'112.6528737',
             'product_name'=>'',
-            'order_status' => 'f'
+            'order_status' => 'v'
       ]);
 
       BuyOrder::create([
@@ -301,7 +301,7 @@ class BuyOrderTableSeeder extends Seeder
             'commercial_term' => 'commercial_term',
 
             'volume' => 6000,
-            'order_status' => 'f',
+            'order_status' => 'v',
 
             'port_id' => $faker->numberBetween($min = 1, $max = 3)
       ]);
@@ -362,7 +362,7 @@ class BuyOrderTableSeeder extends Seeder
             'port_latitude'=>'-7.1844498',
             'port_longitude'=>'112.6528737',
             'product_name'=>'',
-            'order_status' => 'c'
+            'order_status' => 'v'
       ]);
 
       $address = array([
@@ -432,9 +432,10 @@ class BuyOrderTableSeeder extends Seeder
             'port_draft_height'=>'212133',
             'port_latitude'=>'-7.1844498',
             'port_longitude'=>'112.6528737',
-            'product_name'=>'',
-            'trading_term'=>'',
-            'payment_terms'=>'',
+            'product_name'=>$faker->firstName,
+            'typical_quality'=>$faker->firstName,
+            'trading_term'=>$faker->randomElement($array = array ('CNF','CIF','FAS','FOB','Franco')),
+            'payment_terms'=>'TT',
             'commercial_term'=>'',
 
             'penalty_desc' => 'penalty',
@@ -443,7 +444,7 @@ class BuyOrderTableSeeder extends Seeder
             'expired_date'=>$faker->dateTimeBetween($startDate = "5 days", $endDate = "10 days")->format('Y-m-d'),
 
             'volume' => $faker->numberBetween($min = 1000, $max = 2000),
-            'order_status' => $faker->randomElement($array = array ('l','o','s',1,2,3,4)),
+            'order_status' => $faker->randomElement($array = array ('l','v','s',1,2,3,4)),
             
             'port_id' => $faker->numberBetween($min = 1, $max = 3)
           ]));
