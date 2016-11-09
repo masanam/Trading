@@ -6,7 +6,7 @@ angular.module('dashboard').controller('OrderDashboardController', ['$scope', 'I
 
     //find list of order in dashboard
     $scope.find = function () {
-      $scope.orders = Order.query({ possession: 'my', status: 'o' });
+      $scope.orders = Order.query({ possession: 'my', status: 'p' });
     };
   }
 ]);
