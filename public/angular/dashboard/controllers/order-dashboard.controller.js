@@ -6,14 +6,12 @@ angular.module('dashboard').controller('OrderDashboardController', ['$scope', 'I
 
     //find list of order in dashboard
     $scope.find = function () {
-    	if( Authentication.user.role === 'manager'){
-    		$scope.orders = Order.query({ possession: 'subordinates', status: 'p' });
-    	}
+      var possession;
 
-    	if( Authentication.user.role === 'trader'){
-			$scope.orders = Order.query({ possession: 'my', status: 'p' });
-    	}
-      
+      if( Authentication.user.role === 'manager') possession = 'subordinates';
+      else if( Authentication.user.role === 'trader') possession = 'my';
+
+      $scope.orders = Order.query({ possession: possession, status: 'p' });
     };
   }
 ]);
