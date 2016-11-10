@@ -14,3 +14,14 @@ angular.module('order').factory('Order', ['$resource',
     });
   }
 ]);
+
+angular.module('order').factory('OrderUser', ['$resource',
+  function ($resource) {
+    return $resource('api/order/:orderId/user/:userId', {
+      orderId: undefined,
+      userId: undefined
+    }, {
+      update: { method: 'PUT' }
+    });
+  }
+]);

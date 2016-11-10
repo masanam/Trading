@@ -45,37 +45,43 @@
 			</tr>
 			<tr>
 				<td>Company</td>
-				<td>
-					<span ng-if="display.sell">
+				<td ng-switch="display.sell && display.sell.user_id === Authentication.user.id">
+					<span ng-switch-when="true">
 						{{ display.sell.seller.company_name }}
 						<span class="pull-right">
 							<a ng-click="alert(nego)" href="#" class="glyphicon glyphicon-pencil"></a>
 							<a ng-click="alert(nego)" href="#" class="glyphicon glyphicon-trash"></a>
 						</span>
 					</span>
+					<i style="color:green" ng-switch-default>
+						{{ display.sell.trader.name }} ({{ display.sell.trader.phone }})
+					</i>
 				</td>
-				<td>
-					<span ng-if="display.sell">
+				<td ng-switch="display.buy && display.buy.user_id === Authentication.user.id">
+					<span ng-switch-when="true">
 						{{ display.buy.buyer.company_name }}
 						<span class="pull-right">
 							<a ng-click="alert(nego)" href="#" class="glyphicon glyphicon-pencil"></a>
 							<a ng-click="alert(nego)" href="#" class="glyphicon glyphicon-trash"></a>
 						</span>
 					</span>
+					<i style="color:green" ng-switch-default>
+						{{ display.buy.trader.name }} ({{ display.buy.trader.phone }})
+					</i>
 				</td>
 			</tr>
 			<tr>
 				<td>Trx Value</td>
 				<td>
 					<span ng-if="display.sell">
-						{{ display.sell.pivot.volume | number }}t - US$ {{ display.sell.pivot.price }}
-						<a ng-click="alert(nego)"  href="#" class="pull-right">Nego</a>
+						{{ display.sell.pivot.volume }}t - US$ {{ display.sell.pivot.price }}
+						<a ng-click="alert(nego)" ng-if="display.sell.user_id === Authentication.user.id" href="#" class="pull-right">Nego</a>
 					</span>
 				</td>
 				<td>
-					<span ng-if="display.sell">
-						{{ display.buy.pivot.volume | number }}t - US$ {{ display.buy.pivot.price }}
-						<a ng-click="alert(nego)"  href="#" class="pull-right">Nego</a>
+					<span ng-if="display.buy">
+						{{ display.buy.pivot.volume }}t - US$ {{ display.buy.pivot.price }}
+						<a ng-click="alert(nego)" ng-if="display.buy.user_id === Authentication.user.id" href="#" class="pull-right">Nego</a>
 					</span>
 				</td>
 			</tr>
@@ -91,20 +97,27 @@
 			</tr>
 			<tr>
 				<td>Location</td>
-				<td>{{ display.sell.concession.city }}</td>
-				<td>{{ display.buy.factory.city }}</td>
+				<td ng-switch="display.sell.user_id === Authentication.user.id">
+					<span ng-switch-when="true">{{ display.sell.concession.city }}</span>
+					<i ng-switch-default style="color:green">-Contact {{ display.sell.trader.name }}-</i>
+				</td>
+				<td ng-switch="display.buy.user_id === Authentication.user.id">
+					<span ng-switch-when="true">{{ display.buy.factory.city }}</span>
+					<i ng-switch-default style="color:green">-Contact {{ display.sell.trader.name }}-</i>
+				</td>
 			</tr>
 
 			<tr>
 				<td>Port</td>
-				<td>{{ display.sell.port_name }}</td>
-				<td>{{ display.buy.port_name }}</td>
+				<td ng-switch="display.sell.user_id === Authentication.user.id">
+					<span ng-switch-when="true">{{ display.sell.port_name }}</span>
+					<i ng-switch-default style="color:green">-Contact {{ display.sell.trader.name }}-</i>
+				</td>
+				<td ng-switch="display.buy.user_id === Authentication.user.id">
+					<span ng-switch-when="true">{{ display.buy.port_name }}</span>
+					<i ng-switch-default style="color:green">-Contact {{ display.sell.trader.name }}-</i>
+				</td>
 			</tr>
-			<!--tr>
-				<td>City</td>
-				<td>{{ display.sell.city }}</td>
-				<td>{{ display.buy.city }}</td>
-			</tr-->
 			<tr>
 				<td>NCV</td>
 				<td>

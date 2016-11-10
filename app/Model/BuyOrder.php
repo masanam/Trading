@@ -31,4 +31,8 @@ class BuyOrder extends Model
     public function Factory() {
         return $this->hasOne('App\Model\Factory', 'id', 'factory_id');
     }
+
+    public function trader() {
+        return $this->belongsTo('App\Model\User', 'user_id');
+    }
 }
