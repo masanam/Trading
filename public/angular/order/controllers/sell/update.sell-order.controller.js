@@ -16,6 +16,8 @@ angular.module('order').controller('UpdateSellOrderController', ['$scope', '$sta
         res.order_deadline = new Date(res.order_deadline);
         res.ready_date = new Date(res.ready_date);
         res.expired_date = new Date(res.expired_date);
+        res.port_latitude = parseFloat(res.port_latitude);
+        res.port_longitude = parseFloat(res.port_longitude);
         $scope.sell_order = res;
       });
     };
@@ -29,6 +31,12 @@ angular.module('order').controller('UpdateSellOrderController', ['$scope', '$sta
     $scope.changeOrderStatus = function(sell_order, order_status) {
       $scope.sell_orders.splice($scope.sell_orders.indexOf(sell_order), 1);
       $scope.sell_order = Order.get({ type: 'sell', id: sell_order.id, action: 'changeOrderStatus', order_status: order_status });
+    };
+
+    $scope.freetext = function(payment_terms) {
+      if(payment_terms === 'other'){
+        $scope.sell_order.payment_terms = '';
+      }
     };
   }
 ]);
