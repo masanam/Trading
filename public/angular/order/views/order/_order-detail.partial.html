@@ -19,7 +19,7 @@
 			      </button>
 			      <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
 			        <li role="menuitem" ng-repeat="sell in order.sells"><a ng-click="display.sell = sell">
-					  		{{ sell.seller.company_name }} : {{ sell.pivot.volume }}t, US${{ sell.pivot.price }}
+					  		{{ sell.seller.company_name }} : {{ sell.pivot.volume | number }}mt, US${{ sell.pivot.price | number }}
 			        </a></li>
 			      </ul>
 			    </span>
@@ -32,7 +32,7 @@
 			      </button>
 			      <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
 			        <li role="menuitem" ng-repeat="buy in order.buys"><a ng-click="display.buy = buy">
-					  		{{ buy.buyer.company_name }} : {{ buy.pivot.volume }}t, US${{ buy.pivot.price }}
+					  		{{ buy.buyer.company_name }} : {{ buy.pivot.volume | number }}mt, US${{ buy.pivot.price | number }}
 			        </a></li>
 			      </ul>
 			    </span>
@@ -40,6 +40,9 @@
 			</tr>
 		</thead>
 		<tbody>
+      <tr>
+				<th colspan="3" style="text-align:center;">Order Details</th>
+			</tr>
 			<tr>
 				<td>Company</td>
 				<td ng-switch="display.sell && display.sell.user_id === Authentication.user.id">
@@ -89,17 +92,17 @@
 			</tr>
 			<tr>
 				<td>LayCan</td>
-				<td>{{ display.sell.order_deadline | date:'mediumDate' }}</td>
-				<td>{{ display.buy.order_deadline | date:'mediumDate' }}</td>
+				<td>{{ display.sell.ready_date | date:'mediumDate' }} - {{ display.sell.order_deadline | date:'mediumDate' }}</td>
+				<td>{{ display.buy.ready_date | date:'mediumDate' }} - {{ display.buy.order_deadline | date:'mediumDate' }}</td>
 			</tr>
 			<tr>
 				<td>Location</td>
 				<td ng-switch="display.sell.user_id === Authentication.user.id">
-					<span ng-switch-when="true">{{ display.sell.address }}</span>
+					<span ng-switch-when="true">{{ display.sell.concession.city }}</span>
 					<i ng-switch-default style="color:green">-Contact {{ display.sell.trader.name }}-</i>
 				</td>
 				<td ng-switch="display.buy.user_id === Authentication.user.id">
-					<span ng-switch-when="true">{{ display.buy.address }}</span>
+					<span ng-switch-when="true">{{ display.buy.factory.city }}</span>
 					<i ng-switch-default style="color:green">-Contact {{ display.sell.trader.name }}-</i>
 				</td>
 			</tr>
@@ -114,11 +117,6 @@
 					<span ng-switch-when="true">{{ display.buy.port_name }}</span>
 					<i ng-switch-default style="color:green">-Contact {{ display.sell.trader.name }}-</i>
 				</td>
-			</tr>
-			<tr>
-				<td>Province/City</td>
-				<td>{{ display.sell.city }}</td>
-				<td>{{ display.buy.city }}</td>
 			</tr>
 			<tr>
 				<td>NCV</td>
@@ -170,22 +168,22 @@
 				<th>Summary</th>
 				<td>
 					<span ng-if="display.sell">
-					{{ 1000 }}t<br>
-					US${{ 51000 }}<br>
+					{{ 1000 | number }}mt<br>
+					US${{ 51000 | number }}<br>
 					from {{ order.sells.length }} Suppliers
 					</span>
 				</td>
 				<td>
 					<span ng-if="display.sell">
-					{{ 1000 }}t<br>
-					US${{ 51000 }}<br>
+					{{ 1000 | number }}mt<br>
+					US${{ 51000 | number }}<br>
 					from {{ order.buys.length }} Customers
 					</span>
 				</td>
 			</tr>
 			<tr>
 				<td></td>
-				<td colspan=2 style="font-size:20pt; text-align:center;">Expected Margin: US${{ 2000 }}</td>
+				<td colspan=2 style="font-size:20pt; text-align:center;">Expected Margin: US${{ 2000 | number }}</td>
 			</tr>
 		</tbody>
 	</table>

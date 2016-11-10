@@ -56,7 +56,7 @@
         </div>
         <div class="col-xs-6" style="padding-left:0">
           <label>Shipping Term : </label>
-          <p>{{ buy_order.trading_term | uppercase }}</p>
+          <p>{{ buy_order.trading_term }} {{ buy_order.trading_term_detail }}</p>
         </div>
         <div class="col-xs-6" style="padding-left:0">
           <label>Payment Terms : </label>
@@ -75,7 +75,7 @@
       <span class="glyphicon glyphicon-triangle-top pull-right" ng-if="!isCollapsed3"></span> 
     </div>
     <div class="box-body" uib-collapse="isCollapsed3">
-      <ng-map zoom="4" center="Indonesia" default-style="false" style="width:100%; height:500px;">
+      <ng-map zoom="4" center="{{buy_order.port_latitude-5}}, {{buy_order.port_longitude}}" default-style="true" style="width:100%; height:500px;">
         <marker icon="{
             url: '/images/boat.png'
           }" position="{{buy_order.port_latitude}}, {{buy_order.port_longitude}}" id="port" on-click="map.showInfoWindow('port-info-window')">  
