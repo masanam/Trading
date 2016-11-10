@@ -83,13 +83,13 @@
 			</tr>
 			<tr>
 				<td>LayCan</td>
-				<td>{{ display.sell.order_deadline | date:'mediumDate' }}</td>
-				<td>{{ display.buy.order_deadline | date:'mediumDate' }}</td>
+				<td>{{ display.sell.ready_date | date:'mediumDate' }} - {{ display.sell.order_deadline | date:'mediumDate' }}</td>
+				<td>{{ display.buy.ready_date | date:'mediumDate' }} - {{ display.buy.order_deadline | date:'mediumDate' }}</td>
 			</tr>
 			<tr>
 				<td>Location</td>
-				<td>{{ display.sell.address }}</td>
-				<td>{{ display.buy.address }}</td>
+				<td>{{ display.sell.concession.city }}</td>
+				<td>{{ display.buy.factory.city }}</td>
 			</tr>
 
 			<tr>
@@ -97,11 +97,11 @@
 				<td>{{ display.sell.port_name }}</td>
 				<td>{{ display.buy.port_name }}</td>
 			</tr>
-			<tr>
+			<!--tr>
 				<td>City</td>
 				<td>{{ display.sell.city }}</td>
 				<td>{{ display.buy.city }}</td>
-			</tr>
+			</tr-->
 			<tr>
 				<td>NCV</td>
 				<td>
