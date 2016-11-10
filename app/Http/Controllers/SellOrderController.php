@@ -23,7 +23,7 @@ class SellOrderController extends Controller
      */
     public function index()
     {
-        $sell_order = SellOrder::with('Seller','User')->where('order_status', 1)->orwhere('order_status', 2)->orwhere('order_status', 3)->orwhere('order_status', 4)->orwhere('order_status', 'v')->orwhere('order_status', 'l')->orwhere('order_status', 's')->orwhere('order_status', 'p')->get();
+        $sell_order = SellOrder::with('Seller','User','trader')->where('order_status', 1)->orwhere('order_status', 2)->orwhere('order_status', 3)->orwhere('order_status', 4)->orwhere('order_status', 'v')->orwhere('order_status', 'l')->orwhere('order_status', 's')->orwhere('order_status', 'p')->get();
 
         return response()->json($sell_order, 200);
     }

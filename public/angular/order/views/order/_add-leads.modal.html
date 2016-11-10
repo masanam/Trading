@@ -1,0 +1,37 @@
+<div class="modal-header" ng-switch="lead">
+  <h3 class="modal-title" id="modal-title" ng-switch-when="buy">Add Existing Buy to Current Order</h3>
+  <h3 class="modal-title" id="modal-title" ng-switch-default>Add Existing Sell to Current Order</h3>
+  <button type="button" class="close" ng-click="cancel()" aria-label="Close">x</button>
+</div>
+
+{{lead}}
+<div class="modal-body" ng-focus="find()" id="modal-body">
+  <div class="row">
+    <div class="col-sm-3" style="max-height:500px; overflow-y:scroll;">
+      <ul class="nav nav-pills nav-stacked">
+        <li ng-repeat="item in items">
+          <a href="#" ng-click="$event.preventDefault(); selected.item = item">
+            {{ item.seller.company_name || item.buyer.company_name }} ({{ item.city }})<br>
+            exp: {{ item.order_deadline | date:'d-M-yy' }}<br>
+            LayCan: {{ item.ready_date | date:'d-M-yy' }} to {{ item.expired_date | date:'d-M-yy' }}
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-sm-9" ng-if="selected.item"
+      ng-static-include="'/angular/order/views/order/_add-leads-detail.modal.partial.html'"></div>
+  </div>
+</div>
+<div class="modal-footer" ng-switch="lead">
+  <button class="btn btn-default pull-left" type="button" ng-click="cancel()">Cancel</button>
+
+  <span ng-switch-when="buy">
+    <a class="btn btn-primary" type="button" ui-sref="sell-order.create" target="_blank">Create New Buy</a>
+    <button class="btn btn-primary" type="button" ng-click="ok()">Buy This</button>
+  </span>
+
+  <span ng-switch-default>
+    <a class="btn btn-primary" type="button" ui-sref="buy-order.create" target="_blank">Create New Sell</a>
+    <button class="btn btn-primary" type="button" ng-click="ok()">Sell This</button>
+  </span>
+</div>
