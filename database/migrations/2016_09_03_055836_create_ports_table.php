@@ -32,6 +32,24 @@ class CreatePortsTable extends Migration
             
             $table->timestamps();
         });
+
+        Schema::create('buyer_port', function (Blueprint $table) {
+            $table->integer('port_id')->unsigned();
+            $table->integer('buyer_id')->unsigned();
+            
+            $table->foreign('port_id')->references('id')->on('ports')->onDelete('cascade');
+            $table->foreign('buyer_id')->references('id')->on('buyers')->onDelete('cascade');
+            $table->primary(array('port_id', 'buyer_id'));
+        });
+
+        Schema::create('port_seller', function (Blueprint $table) {
+            $table->integer('port_id')->unsigned();
+            $table->integer('seller_id')->unsigned();
+
+            $table->foreign('port_id')->references('id')->on('ports')->onDelete('cascade');
+            $table->foreign('seller_id')->references('id')->on('sellers')->onDelete('cascade');
+            $table->primary(array('port_id', 'seller_id'));
+        });
     }
 
     /**
@@ -41,6 +59,8 @@ class CreatePortsTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('port_seller');
+        Schema::dropIfExists('buyer_port');
         Schema::dropIfExists('ports');
     }
 }

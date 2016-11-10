@@ -67,6 +67,7 @@ class OrderController extends Controller
     }
     $order = new Order($request);
     $order->user_id = Auth::User()->id;
+    $order->status = 'd';
     $order->save();
 
     return response()->json($order, 200);

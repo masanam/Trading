@@ -4,5 +4,9 @@ angular.module('order').controller('CreateOrderController', ['$scope', '$state',
   function($scope, $state, Order) {
     $scope.order = new Order();
     $scope.order.buys = $scope.order.sells = [];
+
+    $scope.submit = function () {
+      console.log($scope.order);
+    };
   }
 ]);

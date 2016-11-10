@@ -1,164 +1,174 @@
-<table st-table="" class="table table-bordered table-striped">
-	<thead>
-		<tr>
-			<th width=20%></th>
-			<th width=40%>
-				<span style="font-size:20pt">Buys</span>
-				<span ng-if="order.sells.length" uib-dropdown class="pull-right" ng-init="display.sell = order.sells[0]">
-		      <button type="button" class="btn btn-default" uib-dropdown-toggle>
-		        {{display.sell.seller.company_name}} ({{ order.sells.length }}) <span class="caret"></span>
-		      </button>
-		      <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
-		        <li role="menuitem" ng-repeat="sell in order.sells"><a ng-click="display.sell = sell">
-				  		{{ sell.seller.company_name }} : {{ sell.pivot.volume }}t, US${{ sell.pivot.price }}
-		        </a></li>
-		      </ul>
-		    </span>
-			</th>
-			<th width=40%>
-				<span style="font-size:20pt">Sells</span>
-				<span ng-if="order.buys.length" uib-dropdown class="pull-right" ng-init="display.buy = order.buys[0]">
-		      <button type="button" class="btn btn-default" uib-dropdown-toggle>
-		        {{display.buy.buyer.company_name}} ({{ order.buys.length }})<span class="caret"></span>
-		      </button>
-		      <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
-		        <li role="menuitem" ng-repeat="buy in order.buys"><a ng-click="display.buy = buy">
-				  		{{ buy.buyer.company_name }} : {{ buy.pivot.volume }}t, US${{ buy.pivot.price }}
-		        </a></li>
-		      </ul>
-		    </span>
-			</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td>Company</td>
-			<td>
-				<span ng-if="display.sell">
-					{{ display.sell.seller.company_name }}
-					<span class="pull-right">
-						<a ng-click="alert(nego)" href="#" class="glyphicon glyphicon-pencil"></a>
-						<a ng-click="alert(nego)" href="#" class="glyphicon glyphicon-trash"></a>
+<section ng-controller="OrderDetailController">
+	<table st-table="" class="table table-bordered table-striped">
+		<thead>
+      <tr ng-if="!order.user_id || order.user_id === Authentication.user.id">
+        <td width=20%></td>
+        <td width=40%>
+          <button class="btn btn-default" ng-click="addBuy()"> + Add Buy </button>
+        </td>
+        <td width=40%>
+          <button class="btn btn-default" ng-click="addSell()"> + Add Sell </button>
+        </td>
+      </tr>
+			<tr>
+				<th></th><th>
+					<span style="font-size:20pt">Buys</span>
+					<span ng-if="order.sells.length" uib-dropdown class="pull-right" ng-init="display.sell = order.sells[0]">
+			      <button type="button" class="btn btn-default" uib-dropdown-toggle>
+			        {{display.sell.seller.company_name}} ({{ order.sells.length }}) <span class="caret"></span>
+			      </button>
+			      <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+			        <li role="menuitem" ng-repeat="sell in order.sells"><a ng-click="display.sell = sell">
+					  		{{ sell.seller.company_name }} : {{ sell.pivot.volume }}t, US${{ sell.pivot.price }}
+			        </a></li>
+			      </ul>
+			    </span>
+				</th>
+				<th>
+					<span style="font-size:20pt">Sells</span>
+					<span ng-if="order.buys.length" uib-dropdown class="pull-right" ng-init="display.buy = order.buys[0]">
+			      <button type="button" class="btn btn-default" uib-dropdown-toggle>
+			        {{display.buy.buyer.company_name}} ({{ order.buys.length }})<span class="caret"></span>
+			      </button>
+			      <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+			        <li role="menuitem" ng-repeat="buy in order.buys"><a ng-click="display.buy = buy">
+					  		{{ buy.buyer.company_name }} : {{ buy.pivot.volume }}t, US${{ buy.pivot.price }}
+			        </a></li>
+			      </ul>
+			    </span>
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>Company</td>
+				<td>
+					<span ng-if="display.sell">
+						{{ display.sell.seller.company_name }}
+						<span class="pull-right">
+							<a ng-click="alert(nego)" href="#" class="glyphicon glyphicon-pencil"></a>
+							<a ng-click="alert(nego)" href="#" class="glyphicon glyphicon-trash"></a>
+						</span>
 					</span>
-				</span>
-			</td>
-			<td>
-				<span ng-if="display.sell">
-					{{ display.buy.buyer.company_name }}
-					<span class="pull-right">
-						<a ng-click="alert(nego)" href="#" class="glyphicon glyphicon-pencil"></a>
-						<a ng-click="alert(nego)" href="#" class="glyphicon glyphicon-trash"></a>
+				</td>
+				<td>
+					<span ng-if="display.sell">
+						{{ display.buy.buyer.company_name }}
+						<span class="pull-right">
+							<a ng-click="alert(nego)" href="#" class="glyphicon glyphicon-pencil"></a>
+							<a ng-click="alert(nego)" href="#" class="glyphicon glyphicon-trash"></a>
+						</span>
 					</span>
-				</span>
-			</td>
-		</tr>
-		<tr>
-			<td>Trx Value</td>
-			<td>
-				<span ng-if="display.sell">
-					{{ display.sell.pivot.volume }}t - US$ {{ display.sell.pivot.price }}
-					<a ng-click="alert(nego)"  href="#" class="pull-right">Nego</a>
-				</span>
-			</td>
-			<td>
-				<span ng-if="display.sell">
-					{{ display.buy.pivot.volume }}t - US$ {{ display.buy.pivot.price }}
-					<a ng-click="alert(nego)"  href="#" class="pull-right">Nego</a>
-				</span>
-			</td>
-		</tr>
-		<tr>
-			<td>Order Date</td>
-			<td>{{ display.sell.order_date | date:'mediumDate' }}</td>
-			<td>{{ display.buy.order_date | date:'mediumDate' }}</td>
-		</tr>
-		<tr>
-			<td>LayCan</td>
-			<td>{{ display.sell.order_deadline | date:'mediumDate' }}</td>
-			<td>{{ display.buy.order_deadline | date:'mediumDate' }}</td>
-		</tr>
-		<tr>
-			<td>Location</td>
-			<td>{{ display.sell.address }}</td>
-			<td>{{ display.buy.address }}</td>
-		</tr>
+				</td>
+			</tr>
+			<tr>
+				<td>Trx Value</td>
+				<td>
+					<span ng-if="display.sell">
+						{{ display.sell.pivot.volume }}t - US$ {{ display.sell.pivot.price }}
+						<a ng-click="alert(nego)"  href="#" class="pull-right">Nego</a>
+					</span>
+				</td>
+				<td>
+					<span ng-if="display.sell">
+						{{ display.buy.pivot.volume }}t - US$ {{ display.buy.pivot.price }}
+						<a ng-click="alert(nego)"  href="#" class="pull-right">Nego</a>
+					</span>
+				</td>
+			</tr>
+			<tr>
+				<td>Order Date</td>
+				<td>{{ display.sell.order_date | date:'mediumDate' }}</td>
+				<td>{{ display.buy.order_date | date:'mediumDate' }}</td>
+			</tr>
+			<tr>
+				<td>LayCan</td>
+				<td>{{ display.sell.order_deadline | date:'mediumDate' }}</td>
+				<td>{{ display.buy.order_deadline | date:'mediumDate' }}</td>
+			</tr>
+			<tr>
+				<td>Location</td>
+				<td>{{ display.sell.address }}</td>
+				<td>{{ display.buy.address }}</td>
+			</tr>
 
-		<tr>
-			<td>Port</td>
-			<td>{{ display.sell.port_name }}</td>
-			<td>{{ display.buy.port_name }}</td>
-		</tr>
-		<tr>
-			<td>City</td>
-			<td>{{ display.sell.city }}</td>
-			<td>{{ display.buy.city }}</td>
-		</tr>
-		<tr>
-			<td>NCV</td>
-			<td>
-				<span ng-if="display.sell">
-				{{ display.sell.ncv_min }} ~ {{ display.sell.ncv_max }} kcal<br>
-				{{ display.sell.ncv_reject }} kcal reject; {{ display.sell.ncv_bonus }} kcal bonus
-				</span>
-			</td>
-			<td>
-				<span ng-if="display.sell">
-				{{ display.buy.ncv_min }} ~ {{ display.buy.ncv_max }} kcal<br>
-				{{ display.buy.ncv_reject }} kcal reject; {{ display.buy.ncv_bonus }} kcal bonus
-				</span>
-			</td>
-		</tr>
-		<tr>
-			<td>GCV (arb)</td>
-			<td>
-				<span ng-if="display.sell">
-				{{ display.sell.gcv_arb_min }} ~ {{ display.sell.gcv_arb_max }} kcal<br>
-				{{ display.sell.gcv_arb_reject }} kcal reject; {{ display.sell.gcv_arb_bonus }} kcal bonus
-				</span>
-			</td>
-			<td>
-				<span ng-if="display.sell">
-				{{ display.buy.gcv_arb_min }} ~ {{ display.buy.gcv_arb_max }} kcal<br>
-				{{ display.buy.gcv_arb_reject }} kcal reject; {{ display.buy.gcv_arb_bonus }} kcal bonus
-				</span>
-			</td>
-		</tr>
-		<tr>
-			<td>GCV (adb)</td>
-			<td>
-				<span ng-if="display.sell">
-				{{ display.sell.gcv_adb_min }} ~ {{ display.sell.gcv_adb_max }} kcal<br>
-				{{ display.sell.gcv_adb_reject }} kcal reject; {{ display.sell.gcv_adb_bonus }} kcal bonus
-				</span>
-			</td>
-			<td>
-				<span ng-if="display.sell">
-				{{ display.buy.gcv_adb_min }} ~ {{ display.buy.gcv_adb_max }} kcal<br>
-				{{ display.buy.gcv_adb_reject }} kcal reject; {{ display.buy.gcv_adb_bonus }} kcal bonus
-				</span>
-			</td>
-		</tr>
+			<tr>
+				<td>Port</td>
+				<td>{{ display.sell.port_name }}</td>
+				<td>{{ display.buy.port_name }}</td>
+			</tr>
+			<tr>
+				<td>City</td>
+				<td>{{ display.sell.city }}</td>
+				<td>{{ display.buy.city }}</td>
+			</tr>
+			<tr>
+				<td>NCV</td>
+				<td>
+					<span ng-if="display.sell">
+					{{ display.sell.ncv_min }} ~ {{ display.sell.ncv_max }} kcal<br>
+					{{ display.sell.ncv_reject }} kcal reject; {{ display.sell.ncv_bonus }} kcal bonus
+					</span>
+				</td>
+				<td>
+					<span ng-if="display.sell">
+					{{ display.buy.ncv_min }} ~ {{ display.buy.ncv_max }} kcal<br>
+					{{ display.buy.ncv_reject }} kcal reject; {{ display.buy.ncv_bonus }} kcal bonus
+					</span>
+				</td>
+			</tr>
+			<tr>
+				<td>GCV (arb)</td>
+				<td>
+					<span ng-if="display.sell">
+					{{ display.sell.gcv_arb_min }} ~ {{ display.sell.gcv_arb_max }} kcal<br>
+					{{ display.sell.gcv_arb_reject }} kcal reject; {{ display.sell.gcv_arb_bonus }} kcal bonus
+					</span>
+				</td>
+				<td>
+					<span ng-if="display.sell">
+					{{ display.buy.gcv_arb_min }} ~ {{ display.buy.gcv_arb_max }} kcal<br>
+					{{ display.buy.gcv_arb_reject }} kcal reject; {{ display.buy.gcv_arb_bonus }} kcal bonus
+					</span>
+				</td>
+			</tr>
+			<tr>
+				<td>GCV (adb)</td>
+				<td>
+					<span ng-if="display.sell">
+					{{ display.sell.gcv_adb_min }} ~ {{ display.sell.gcv_adb_max }} kcal<br>
+					{{ display.sell.gcv_adb_reject }} kcal reject; {{ display.sell.gcv_adb_bonus }} kcal bonus
+					</span>
+				</td>
+				<td>
+					<span ng-if="display.sell">
+					{{ display.buy.gcv_adb_min }} ~ {{ display.buy.gcv_adb_max }} kcal<br>
+					{{ display.buy.gcv_adb_reject }} kcal reject; {{ display.buy.gcv_adb_bonus }} kcal bonus
+					</span>
+				</td>
+			</tr>
 
-		<tr>
-			<th>Summary</th>
-			<td>
-				<span ng-if="display.sell">
-				{{ 1000 }}t<br>
-				US${{ 51000 }}<br>
-				from {{ order.sells.length }} Suppliers
-				</span>
-			</td>
-			<td>
-				<span ng-if="display.sell">
-				{{ 1000 }}t<br>
-				US${{ 51000 }}<br>
-				from {{ order.buys.length }} Customers
-				</span>
-			</td>
-		</tr>
-		<tr>
-			<td></td>
-			<td colspan=2 style="font-size:20pt; text-align:center;">Expected Margin: US${{ 2000 }}</td>
-		</tr>
-	</tbody>
-</table>
+			<tr>
+				<th>Summary</th>
+				<td>
+					<span ng-if="display.sell">
+					{{ 1000 }}t<br>
+					US${{ 51000 }}<br>
+					from {{ order.sells.length }} Suppliers
+					</span>
+				</td>
+				<td>
+					<span ng-if="display.sell">
+					{{ 1000 }}t<br>
+					US${{ 51000 }}<br>
+					from {{ order.buys.length }} Customers
+					</span>
+				</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td colspan=2 style="font-size:20pt; text-align:center;">Expected Margin: US${{ 2000 }}</td>
+			</tr>
+		</tbody>
+	</table>
+</section>
