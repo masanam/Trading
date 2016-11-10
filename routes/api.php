@@ -103,10 +103,12 @@ Route::group(['middleware' => ['cors']], function() {
      * ORDER API GROUP
      * Managing orders (buy/sell) done here
      */
-    Route::get('order/buy/status/{order_status}/{progress_status?}', 'BuyOrderController@status', ['except' => [ 'create', 'edit' ]]);
-    Route::get('order/buy/draft/{user_id}', 'BuyOrderController@draft', ['except' => [ 'create', 'edit' ]]);
-    Route::get('order/buy/getSub', 'BuyOrderController@getSub', ['except' => [ 'create', 'edit' ]]);
-    Route::get('order/buy/{id}/changeOrderStatus/{order_status}', 'BuyOrderController@changeOrderStatus', ['except' => [ 'create', 'edit' ]]);
+    Route::get('order/{order}/user', 'OrderUserController@findUserByOrder');
+    Route::get('order/user/{user}', 'OrderUserController@findOrderByUser');
+    Route::get('order/buy/status/{order_status}/{progress_status?}', 'BuyOrderController@status');
+    Route::get('order/buy/draft/{user_id}', 'BuyOrderController@draft');
+    Route::get('order/buy/getSub', 'BuyOrderController@getSub');
+    Route::get('order/buy/{id}/changeOrderStatus/{order_status}', 'BuyOrderController@changeOrderStatus');
 
     Route::get('order/sell/status/{order_status}/{progress_status?}', 'SellOrderController@status', ['except' => [ 'create', 'edit' ]]);
     Route::get('order/sell/draft/{user_id}', 'BuyOrderController@draft', ['except' => [ 'create', 'edit' ]]);
