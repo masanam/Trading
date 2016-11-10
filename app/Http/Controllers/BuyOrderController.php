@@ -28,7 +28,7 @@ class BuyOrderController extends Controller
     public function index()
     {
 
-        $buy_order = BuyOrder::with('Buyer','User')->where('order_status', 1)->orwhere('order_status', 2)->orwhere('order_status', 3)->orwhere('order_status', 4)->orwhere('order_status', 'v')->orwhere('order_status', 'l')->orwhere('order_status', 's')->orwhere('order_status', 'p')->get();
+        $buy_order = BuyOrder::with('Buyer','User','trader')->where('order_status', 1)->orwhere('order_status', 2)->orwhere('order_status', 3)->orwhere('order_status', 4)->orwhere('order_status', 'v')->orwhere('order_status', 'l')->orwhere('order_status', 's')->orwhere('order_status', 'p')->get();
         return response()->json($buy_order, 200);
     }
 

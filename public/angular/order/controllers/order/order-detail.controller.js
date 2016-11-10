@@ -22,6 +22,7 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
       modalInstance.result.then(function (selectedItem) {
         if(!$scope.order.sells) $scope.order.sells = [];
         $scope.order.sells.push(selectedItem);
+        $scope.display.sell = selectedItem;
         console.log($scope.order.sells);
         
         //if($scope.order.id){ }
@@ -50,6 +51,7 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
       modalInstance.result.then(function (selectedItem) {
           if(!$scope.order.buys) $scope.order.buys = [];
           $scope.order.buys.push(selectedItem);
+          $scope.display.buy = selectedItem;
           console.log($scope.order.buys);
 
         //if($scope.order.id){ }
