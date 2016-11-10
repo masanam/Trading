@@ -5,7 +5,34 @@ angular.module('order').controller('OrderIndexController', ['$scope', '$statePar
     $scope.getIndices = function () {
       $scope.indices = Index.query({ action: 'single-date' }, function(){
         $scope.display.index = $scope.indices[$scope.indices.length-1];
+
+        $scope.render($scope.display.index);
       });
+    };
+
+    $scope.data = [];
+    $scope.datasetOverride = [];
+    $scope.labels = [];
+    $scope.options = [];
+
+    $scope.render = function(index){
+      $scope.display.index = index;
+      $scope.series = [];
+
+      var x,y,
+        indexSequence = 0,
+        dateStart = new Date(),
+        dateEnd = new Date();
+
+      dateStart.setDate(dateEnd.getDate()-5);
+
+      Index.post({ action: 'single-price' },
+        { indexId:[$scope.display.index.id], date_start:dateStart, date_end:dateEnd, frequency:'d' },
+        function (res){
+          $scope.series = Object.keys(res);
+          console.log(res);
+
+        });
     };
 
   	// $scope.getSingleIndex = function (index) {

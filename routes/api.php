@@ -116,7 +116,6 @@ Route::group(['middleware' => ['cors']], function() {
 
     Route::resource('order/sell', 'SellOrderController', ['except' => [ 'create', 'edit' ]]);
     Route::resource('order/buy', 'BuyOrderController', ['except' => [ 'create', 'edit' ]]);
-    //Route::resource('order', 'BuySellOrderController', ['only' => [ 'index' ]]);
 
 
     /* 
