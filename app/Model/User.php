@@ -72,4 +72,20 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public function SellOrder() {
         return $this->hasMany('SellOrder');
     }
+
+    public function Subordinates() {
+        return  $this->hasMany('App\Model\User', 'manager_id');;
+    }
+
+    public function getAllSubordinates($user = false)
+    {
+        if(!$user) $user = $this;
+        $subs = [];
+        foreach ($user->Subordinates as $sub ) {
+            $subs[] = $sub;
+            $lower = $this->getAllSubordinates($sub);
+            $subs = array_merge($subs,$lower);
+        }
+        return $subs;
+    }
 }

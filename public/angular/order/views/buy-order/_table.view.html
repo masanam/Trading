@@ -24,7 +24,7 @@
       <td>{{ buy_order.user.name }}</td>
       <td>{{ buy_order.order_date | date : 'd MMMM yyyy' }}</td>
       <td>{{ buy_order.buyer.company_name }}</td>
-      <td><a style="cursor:pointer" ui-sref="lead.view-product({ id: sell_order.product_id })">{{ buy_order.typical_quality }}</a></td>
+      <td>{{ buy_order.typical_quality }}</td>
       <td>{{ buy_order.volume }} Metric Ton</td>
       <td>{{ buy_order.order_deadline | date : 'd MMMM yyyy' }}</td>
       <td>{{ buy_order.max_price | currency : $ : 2}}</td>
