@@ -15,7 +15,11 @@ angular.module('order').controller('BuyOrderController', ['$scope', '$stateParam
         $scope.buy_orderId = $stateParams.id;
       }
 
-      $scope.buy_order = Order.get({ type: 'buy', id: $scope.buy_orderId });
+      $scope.buy_order = Order.get({ type: 'buy', id: $scope.buy_orderId }, function(res){
+        res.port_latitude = parseFloat(res.port_latitude);
+        res.port_longitude = parseFloat(res.port_longitude);
+        $scope.buy_order = res;
+      });
     };
 
     $scope.initCollapse = function() {

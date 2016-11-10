@@ -22,7 +22,7 @@
         <button type="button" class="btn btn-primary" ng-click="changeOrderStatusAtDetail(sell_order, 'x')"  ng-if="sell_order.order_status!=='o'&&sell_order.order_status!=='s'&&sell_order.order_status!=='p'&&Authentication.user.id===buy_order.user_id">
           <i class="glyphicon glyphicon-trash"></i> Delete
         </button>
-        <button type="button" class="btn btn-primary" ui-sref="sell-order.update({ id:sell_order.id })" ng-if="(sell_order.order_status==='l'||sell_order.order_status==='v')&&Authentication.user.id===buy_order.user_id">
+        <button type="button" class="btn btn-primary" ui-sref="sell-order.update({ id:sell_order.id })" ng-if="(sell_order.order_status==='l'||sell_order.order_status==='v')&&Authentication.user.id===sell_order.user_id">
           <i class="glyphicon glyphicon-arrow-right"></i> Update
         </button>
       </div>
@@ -204,6 +204,18 @@
                 <td>{{sell_order.size_min}} - {{sell_order.size_max}} %</td>
                 <td>{{sell_order.size_bonus}}</td>
                 <td>{{sell_order.size_reject}}</td>
+              </tr>
+              <tr>
+                <td><b>Fe2o3 </b></td>
+                <td>{{sell_order.fe2o3_min}} - {{sell_order.fe2o3_max}} %</td>
+                <td>{{sell_order.fe2o3_bonus}}</td>
+                <td>{{sell_order.fe2o3_reject}}</td>
+              </tr>
+              <tr>
+                <td><b>AFT</b></td>
+                <td>{{sell_order.aft_min}} - {{sell_order.aft_max}} &#176</td>
+                <td>{{sell_order.aft_bonus}}</td>
+                <td>{{sell_order.aft_reject}}</td>
               </tr>
             </tbody>
           </table>

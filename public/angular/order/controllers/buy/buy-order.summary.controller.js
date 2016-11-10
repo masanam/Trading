@@ -76,7 +76,12 @@ angular.module('order').controller('BuyOrderSummaryController', ['$scope', '$sta
       return '';
     }
 
-
+    //show freetext payment terms
+    $scope.freetext = function(payment_terms) {
+      if(payment_terms === 'other'){
+        $scope.buy_order.payment_terms = '';
+      }
+    };
 
     //back button to port
     $scope.backToPort = function(){
