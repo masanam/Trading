@@ -27,6 +27,7 @@ angular.module('order').controller('SellOrderProductController', ['$scope', '$st
           $scope.order = res;
           $scope.order.seller_id = $stateParams.id;
           $scope.order.product_name = $scope.product.selected.product_name;
+          $scope.order.typical_quality = $scope.product.selected.typical_quality;
           $scope.order.product_id = $scope.product.selected.id;
           $scope.order.gcv_arb_min = $scope.product.selected.gcv_arb_min;
           $scope.order.gcv_arb_max = $scope.product.selected.gcv_arb_max;
