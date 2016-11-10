@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('concession').controller('ConcessionController', ['$scope', '$http', '$stateParams', '$state', '$location', '$uibModal', 'Concession', '$window', 'Product','NgMap','MultiStepForm',
-  function($scope, $http, $stateParams, $state, $location, $uibModal, Concession, $window, Product, NgMap, MultiStepForm) {
+angular.module('concession').controller('ConcessionController', ['$scope', '$http', '$stateParams', '$state', '$location', '$uibModal', 'Concession', '$window', 'Product','NgMap','MultiStepForm','Port',
+  function($scope, $http, $stateParams, $state, $location, $uibModal, Concession, $window, Product, NgMap, MultiStepForm, Port) {
     $scope.concessions = [];
     $scope.concession = {};
     $scope.new = $location.search().new;
@@ -58,6 +58,7 @@ angular.module('concession').controller('ConcessionController', ['$scope', '$htt
         $scope.updatePolygonString($scope.concession.polygon);
 
       });
+      $scope.ports = Port.query();
     };
 
     $scope.goBack = function(){

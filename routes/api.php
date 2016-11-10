@@ -26,13 +26,6 @@ Route::group(['middleware' => ['cors']], function() {
     //S3 Upload file signing API
     Route::post('signing', 'AuthenticateController@signing');
 
-    //Coal Index Price API
-    /*Route::post('index/price', 'IndexController@price');
-    Route::post('index/single-price', 'IndexController@singlePrice');
-    Route::get('index/single-date', 'IndexController@singleDate');
-    Route::get('index/{id}/price', 'IndexController@indexPrice');
-    Route::resource('index', 'IndexController');*/
-
     //User Management API
     //Forgot Password API
     Route::post('user/password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
@@ -91,7 +84,7 @@ Route::group(['middleware' => ['cors']], function() {
      * index management is the API that needed by
      * Index frontend or the Dashboards
      */
-    Route::post('index/price', 'IndexController@price');
+    Route::post('index/multiple-price', 'IndexController@price');
     Route::post('index/single-price', 'IndexController@singlePrice');
     Route::post('index/single-date', 'IndexController@storeSingleDate');
 
@@ -101,19 +94,24 @@ Route::group(['middleware' => ['cors']], function() {
     Route::resource('index', 'IndexController', ['except' => [
         'create', 'edit'
     ]]);
-    /*Route::resource('index/price', 'IndexPriceController', ['except' => [
+    Route::resource('index/price', 'IndexPriceController', ['except' => [
         'create', 'edit'
-    ]]);*/
+    ]]);
 
 
     /* 
      * ORDER API GROUP
      * Managing orders (buy/sell) done here
      */
-    Route::get('order/buy/status/{order_status}/{progress_status?}', 'BuyOrderController@status', ['except' => [ 'create', 'edit' ]]);
-    Route::get('order/buy/{id}/changeOrderStatus/{order_status}', 'BuyOrderController@changeOrderStatus', ['except' => [ 'create', 'edit' ]]);
+    Route::get('order/{order}/user', 'OrderUserController@findUserByOrder');
+    Route::get('order/user/{user}', 'OrderUserController@findOrderByUser');
+    Route::get('order/buy/status/{order_status}/{progress_status?}', 'BuyOrderController@status');
+    Route::get('order/buy/draft/{user_id}', 'BuyOrderController@draft');
+    Route::get('order/buy/getSub', 'BuyOrderController@getSub');
+    Route::get('order/buy/{id}/changeOrderStatus/{order_status}', 'BuyOrderController@changeOrderStatus');
 
     Route::get('order/sell/status/{order_status}/{progress_status?}', 'SellOrderController@status', ['except' => [ 'create', 'edit' ]]);
+    Route::get('order/sell/draft/{user_id}', 'BuyOrderController@draft', ['except' => [ 'create', 'edit' ]]);
     Route::get('order/sell/{id}/changeOrderStatus/{order_status}', 'SellOrderController@changeOrderStatus', ['except' => [ 'create', 'edit' ]]);
 
     Route::get('order/lastOrder/{type}/{id}', 'BuySellOrderController@lastOrderByUser');
@@ -128,5 +126,6 @@ Route::group(['middleware' => ['cors']], function() {
      * DEAL API GROUP
      * Managing the deals (buy/sell) done here
      */
+    
     Route::resource('order', 'OrderController');
 });

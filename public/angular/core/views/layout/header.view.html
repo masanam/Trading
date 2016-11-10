@@ -37,7 +37,12 @@
         <li class="dropdown user user-menu" ng-if="Authentication.user">
           <a class="dropdown-toggle" ui-sref="user.edit">
             <img ng-src="{{ Authentication.user.image }}" ng-src-fallback="/image/default.png" class="user-image" alt="User Image">
-            <span class="hidden-xs">{{ Authentication.user.name }}</span>
+            <span class="hidden-xs">{{ Authentication.user.name }} <br> </span>
+          </a>
+        </li>
+        <li class="dropdown user user-menu" ng-if="Authentication.user">
+          <a class="dropdown-toggle">
+            <span class="hidden-xs">{{ Authentication.user.role }}</span>
           </a>
         </li>
         <li class="dropdown user user-menu" ng-if="Authentication.user">

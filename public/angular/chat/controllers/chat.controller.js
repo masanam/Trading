@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('chat').controller('ChatController', ['$scope', '$stateParams', 'Order', 'Authentication', '$location', 'Chat',
-	function($scope, $stateParams, Order, Authentication, $location, Chat) {
+angular.module('chat').controller('ChatController', ['$scope', '$stateParams', 'Order', 'OrderUser', 'Authentication', '$location', 'Chat',
+	function($scope, $stateParams, Order, OrderUser, Authentication, $location, Chat) {
   $scope.orders = [];
 
   $scope.order = {};
@@ -33,14 +33,22 @@ angular.module('chat').controller('ChatController', ['$scope', '$stateParams', '
     });
   };
 
-  $scope.findCurrentUser = function() {
+  $scope.findRelatedUsers = function() {
     // $scope.user = User.get({ action: current });
     $scope.user = Authentication.user;
+    $scope.relatedUsers = OrderUser.query({ orderId: $stateParams.id }, function() {
+      for (var i = $scope.relatedUsers.length - 1; i >= 0; i--) {
+        if($scope.relatedUsers[i].user_id === Authentication.user.id) {
+          $scope.relatedUsers.splice(i, 1);
+        }
+      }
+      console.log($scope.relatedUsers);
+    });
   };
 
-  $scope.sendMessage = function(type) {
+  $scope.sendMessage = function() {
     var message = $scope.message;
-    $scope.chat.key = Chat.sendChat($stateParams.id, message, Date.now());
+    $scope.chat.key = Chat.sendChat($stateParams.id, $scope.relatedUsers, message, Date.now());
     
     $scope.initialize();
   };

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Model\SellOrder;
 use App\Model\Seller;
 use Auth;
+use DB;
 
 use Illuminate\Http\Request;
 
@@ -22,7 +23,7 @@ class SellOrderController extends Controller
      */
     public function index()
     {
-        $sell_order = SellOrder::with('Seller','User')->where('order_status', 1)->orwhere('order_status', 2)->orwhere('order_status', 3)->orwhere('order_status', 4)->orwhere('order_status', 'o')->orwhere('order_status', 'l')->orwhere('order_status', 's')->orwhere('order_status', 'p')->get();
+        $sell_order = SellOrder::with('Seller','User')->where('order_status', 1)->orwhere('order_status', 2)->orwhere('order_status', 3)->orwhere('order_status', 4)->orwhere('order_status', 'v')->orwhere('order_status', 'l')->orwhere('order_status', 's')->orwhere('order_status', 'p')->get();
 
         return response()->json($sell_order, 200);
     }
@@ -66,6 +67,7 @@ class SellOrderController extends Controller
         $sell_order->port_longitude = $request->port_longitude;
 
         $sell_order->product_name = $request->product_name;
+        $sell_order->typical_quality = $request->typical_quality;
         $sell_order->product_id = $request->product_id;
 
         $sell_order->gcv_arb_min = $request->gcv_arb_min;
@@ -112,6 +114,14 @@ class SellOrderController extends Controller
         $sell_order->size_max = $request->size_max;
         $sell_order->size_reject = $request->size_reject;
         $sell_order->size_bonus = $request->size_bonus;
+        $sell_order->fe2o3_min = $request->fe2o3_min;
+        $sell_order->fe2o3_max = $request->fe2o3_max;
+        $sell_order->fe2o3_reject = $request->fe2o3_reject;
+        $sell_order->fe2o3_bonus = $request->fe2o3_bonus;
+        $sell_order->aft_min = $request->aft_min;
+        $sell_order->aft_max = $request->aft_max;
+        $sell_order->aft_reject = $request->aft_reject;
+        $sell_order->aft_bonus = $request->aft_bonus;
 
         $sell_order->volume = $request->volume;
         $sell_order->min_price = $request->min_price;
@@ -144,10 +154,20 @@ class SellOrderController extends Controller
      */
     public function show($id)
     {
+        $subordinates = $this->getSub();
+        foreach ($subordinates as $sub ) {
+            $lower[] = $sub->id;
+        }
+        $lower[] = Auth::User()->id;
         $sell_order = SellOrder::with('Seller','Port','Concession')->find($id);
-
-        if($sell_order->order_status == 'o' || $sell_order->order_status == 1 || $sell_order->order_status == 2 || $sell_order->order_status == 3 || $sell_order->order_status == 4 || $sell_order->order_status == 'l' || $sell_order->order_status == 's' || $sell_order->order_status == 'p') {
+        $sell_order2 = SellOrder::with('Port','Concession')->where('id',$id)->select('id', 'user_id', 'seller_id', 'order_date', 'order_deadline', 'ready_date', 'expired_date', 'concession_id', 'address', 'city', 'country', 'latitude', 'longitude', 'port_distance', 'port_id', 'port_name', 'port_status', 'port_daily_rate', 'port_draft_height', 'port_latitude', 'port_longitude', DB::raw('NULL as product_name') , 'typical_quality', 'product_id', 'gcv_arb_min', 'gcv_arb_max', 'gcv_arb_reject', 'gcv_arb_bonus', 'gcv_adb_min', 'gcv_adb_max', 'gcv_adb_reject', 'gcv_adb_bonus', 'ncv_min', 'ncv_max', 'ncv_reject', 'ncv_bonus', 'ash_min', 'ash_max', 'ash_reject', 'ash_bonus', 'ts_min', 'ts_max', 'ts_reject', 'ts_bonus', 'tm_min', 'tm_max', 'tm_reject', 'tm_bonus', 'im_min', 'im_max', 'im_reject', 'im_bonus', 'fc_min', 'fc_max', 'fc_reject', 'fc_bonus', 'vm_min', 'vm_max', 'vm_reject', 'vm_bonus', 'hgi_min', 'hgi_max', 'hgi_reject', 'hgi_bonus', 'size_min', 'size_max', 'size_reject', 'size_bonus', 'fe2o3_min', 'fe2o3_max', 'fe2o3_reject', 'fe2o3_bonus', 'aft_min', 'aft_max', 'aft_reject', 'aft_bonus', 'volume', 'min_price', 'trading_term', 'payment_terms', 'commercial_term', 'penalty_desc', 'order_status', 'progress_status', 'created_at', 'updated_at')->first();
+        //if order.user_id subordinate or self get product_name
+        if(($sell_order->order_status === 'v' || $sell_order->order_status == 1 || $sell_order->order_status == 2 || $sell_order->order_status == 3 || $sell_order->order_status == 4 || $sell_order->order_status == 'l' || $sell_order->order_status == 's' || $sell_order->order_status == 'p')&&(in_array($sell_order->user_id, $lower))) {
             return response()->json($sell_order, 200);
+        }
+        //if order.user_id not subordinate or self product_name = NULL
+        else if(($sell_order2->order_status == 'v' || $sell_order2->order_status == 1 || $sell_order2->order_status == 2 || $sell_order2->order_status == 3 || $sell_order2->order_status == 4 || $sell_order2->order_status == 'l' || $sell_order2->order_status == 's' || $sell_order2->order_status == 'p')&&(in_array($sell_order2->user_id, $lower)===false)) {
+            return response()->json($sell_order2, 200);
         } else {
             return response()->json(['message' => 'deactivated record'], 404);
         }
@@ -200,6 +220,7 @@ class SellOrderController extends Controller
         $sell_order->port_longitude = $request->port_longitude;
 
         $sell_order->product_name = $request->product_name;
+        $sell_order->typical_quality = $request->typical_quality;
         $sell_order->product_id = $request->product_id;
 
         $sell_order->gcv_arb_min = $request->gcv_arb_min;
@@ -246,6 +267,14 @@ class SellOrderController extends Controller
         $sell_order->size_max = $request->size_max;
         $sell_order->size_reject = $request->size_reject;
         $sell_order->size_bonus = $request->size_bonus;
+        $sell_order->fe2o3_min = $request->fe2o3_min;
+        $sell_order->fe2o3_max = $request->fe2o3_max;
+        $sell_order->fe2o3_reject = $request->fe2o3_reject;
+        $sell_order->fe2o3_bonus = $request->fe2o3_bonus;
+        $sell_order->aft_min = $request->aft_min;
+        $sell_order->aft_max = $request->aft_max;
+        $sell_order->aft_reject = $request->aft_reject;
+        $sell_order->aft_bonus = $request->aft_bonus;
 
         $sell_order->volume = $request->volume;
         $sell_order->min_price = $request->min_price;
@@ -292,9 +321,16 @@ class SellOrderController extends Controller
     public function status($order_status, $progress_status = false)
     {
         if (!$progress_status) {
-            $sell_order = SellOrder::with('Seller')->where('order_status', $order_status)->get();
+            $subordinates = $this->getSub();
+            foreach ($subordinates as $sub ) {
+                $lower[] = $sub->id;
+            }
+            $lower[] = Auth::User()->id;
+            $sell_order = SellOrder::with('Seller','User')->where('order_status', $order_status)->whereIn('user_id', $lower);
+            $sell_order2 = SellOrder::with('User')->where('order_status', $order_status)->whereNotIn('user_id', $lower)->select('id', 'user_id', 'seller_id', 'order_date', 'order_deadline', 'ready_date', 'expired_date', 'concession_id', 'address', 'city', 'country', 'latitude', 'longitude', 'port_distance', 'port_id', 'port_name', 'port_status', 'port_daily_rate', 'port_draft_height', 'port_latitude', 'port_longitude', DB::raw('NULL as product_name') , 'typical_quality', 'product_id', 'gcv_arb_min', 'gcv_arb_max', 'gcv_arb_reject', 'gcv_arb_bonus', 'gcv_adb_min', 'gcv_adb_max', 'gcv_adb_reject', 'gcv_adb_bonus', 'ncv_min', 'ncv_max', 'ncv_reject', 'ncv_bonus', 'ash_min', 'ash_max', 'ash_reject', 'ash_bonus', 'ts_min', 'ts_max', 'ts_reject', 'ts_bonus', 'tm_min', 'tm_max', 'tm_reject', 'tm_bonus', 'im_min', 'im_max', 'im_reject', 'im_bonus', 'fc_min', 'fc_max', 'fc_reject', 'fc_bonus', 'vm_min', 'vm_max', 'vm_reject', 'vm_bonus', 'hgi_min', 'hgi_max', 'hgi_reject', 'hgi_bonus', 'size_min', 'size_max', 'size_reject', 'size_bonus', 'fe2o3_min', 'fe2o3_max', 'fe2o3_reject', 'fe2o3_bonus', 'aft_min', 'aft_max', 'aft_reject', 'aft_bonus', 'volume', 'min_price', 'trading_term', 'payment_terms', 'commercial_term', 'penalty_desc', 'order_status', 'progress_status', 'created_at', 'updated_at');
+            $sell_order = $sell_order2->union($sell_order)->get();
         } else {
-            $sell_order = SellOrder::with('Seller')->where('order_status', $order_status)->where('progress_status', 'LIKE', '%'.$progress_status.'%')->get();
+            $sell_order = SellOrder::with('Seller','User')->where('order_status', $order_status)->where('progress_status', 'LIKE', '%'.$progress_status.'%')->get();
         }
 
         return response()->json($sell_order, 200);
@@ -316,5 +352,22 @@ class SellOrderController extends Controller
         }
 
         return response()->json($sell_order, 200);
+    }
+
+    public function draft($user_id)
+    {
+        $sell_order = SellOrder::with('Seller','User')
+        ->where([['order_status', '1'], ['user_id', $user_id],])
+        ->orwhere([['order_status', '2'], ['user_id', $user_id],])
+        ->orwhere([['order_status', '3'], ['user_id', $user_id],])
+        ->orwhere([['order_status', '4'], ['user_id', $user_id],])
+        ->orwhere([['order_status', '0'], ['user_id', $user_id],])
+        ->get();
+        return response()->json($sell_order, 200);
+    }
+
+    public function getSub(){
+        $user = Auth::User();
+        return $user->getAllSubordinates();
     }
 }

@@ -1,0 +1,58 @@
+<table ng-init="findSellOrder()" st-table="displayedCollection" st-safe-src="sell_orders" class="table table-striped">
+  <thead>
+    <tr>
+      <th colspan="10"><input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
+    </tr>
+    <tr>
+      <th st-sort="id">#</th>
+      <th st-sort="user.name">PIC</th>
+      <th st-sort="order_date">Input Date</th>
+      <th st-sort="seller.company_name">Company</th>
+      <th st-sort="product_name">Quality</th>
+      <th st-sort="volume">Quantity</th>
+      <th st-sort="order_deadline">Lead Expired Date</th>
+      <th st-sort="min_price">Price / Tonnes</th>
+      <th st-sort="city">Location</th>
+      <th st-sort="order_status">Status</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr ng-repeat="sell_order in displayedCollection">
+      <td>{{ sell_order.id }}</td>
+      <td>{{ sell_order.user.name }}</td>
+      <td>{{ sell_order.order_date | date : 'd MMMM yyyy' }}</td>
+      <td>{{ sell_order.seller.company_name }}</td>
+      <td>{{ sell_order.typical_quality }}</td>
+      <td>{{ sell_order.volume }} Metric Ton</td>
+      <td>{{ sell_order.order_deadline | date : 'd MMMM yyyy' }}</td>
+      <td>{{ sell_order.min_price | currency : $ : 2}}</td>
+      <td>{{ sell_order.city }}</td>
+      <td ng-if="sell_order.order_status==='l'">Lead</td>
+      <td ng-if="sell_order.order_status==='v'">Verified</td>
+      <td ng-if="sell_order.order_status==='s'">Staged</td>
+      <td ng-if="sell_order.order_status==='p'">Partial</td>
+      <td ng-if="sell_order.order_status==='0'"><a style="cursor:pointer" ng-click="toProduct(sell_order.id)">STEP : Supplier</a></td>
+      <td ng-if="sell_order.order_status==='1'"><a style="cursor:pointer" ng-click="toProduct(sell_order.seller_id,sell_order.id)">STEP : Concession</a></td>
+      <td ng-if="sell_order.order_status==='2'"><a style="cursor:pointer" ng-click="toProduct(sell_order.seller_id,sell_order.id,sell_order.concession_id)">STEP : Product</a></td>
+      <td ng-if="sell_order.order_status==='3'"><a style="cursor:pointer" ng-click="toPort(sell_order.seller_id,sell_order.id,sell_order.concession_id)">STEP : Port</a></td>
+      <td ng-if="sell_order.order_status==='4'"><a style="cursor:pointer" ng-click="toSummary(sell_order.seller_id,sell_order.id,sell_order.concession_id)">STEP : Summary</a></td>
+      <td>
+        <a ng-if="sell_order.order_status==='s'||sell_order.order_status==='l'||sell_order.order_status==='v'" ui-sref="sell-order.view({ id: sell_order.id })"><i class="glyphicon glyphicon-info-sign"></i></a>
+        <a ng-if="sell_order.order_status!=='s'&&sell_order.order_status!=='p'&&Authentication.user.id===sell_order.user_id" ng-click="changeOrderStatus(sell_order, 'x')" style="cursor: pointer" uib-tooltip="Delete Order"><i class="glyphicon glyphicon-trash"></i></a>
+      </td>
+    </tr>
+    <tr ng-if="displayedCollection.length == 0">
+        <td colspan="10" class="text-center">No data available</td>
+    </tr>
+  </tbody>
+
+  <tfoot>
+    <tr>
+      <td colspan="9" class="text-center">
+        <div st-pagination="" st-items-by-page="10" st-displayed-pages="5"></div>
+      </td>
+    </tr>
+  </tfoot>
+</table>

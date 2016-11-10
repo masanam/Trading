@@ -10,8 +10,17 @@
         <a class="btn btn-default" ui-sref="order.list">
           <i class="glyphicon glyphicon-chevron-left"></i> Back
         </a>
-        <a class="btn btn-primary" ng-click="remove(order);">
-          <i class="glyphicon glyphicon-trash"></i>
+        <a class="btn btn-primary" ng-click="print(order);">
+          <i class="glyphicon glyphicon-print" title="Print"></i>
+        </a>
+        <a class="btn btn-success" ng-click="request(order);">
+          <i class="glyphicon glyphicon-send" title="Request for Approval"></i>
+        </a>
+        <a class="btn btn-success" ng-click="finalize(order);">
+          <i class="glyphicon glyphicon-floppy-saved" title="Finalize Order"></i>
+        </a>
+        <a class="btn btn-danger" ng-click="remove(order);">
+          <i class="glyphicon glyphicon-trash" title="Cancel Order"></i>
         </a>
       </div>
     </div>
@@ -26,18 +35,6 @@
         </em>
       </small>
     </div>
-
-    <table class="table table-striped">
-      <tr>
-        <td width=20%></td>
-        <td width=40%>
-          <button class="btn btn-default"> + Add Buy </button>
-        </td>
-        <td width=40%>
-          <button class="btn btn-default"> + Add Sell </button>
-        </td>
-      </tr>
-    </table>
     <div class="box-body no-padding" ng-static-include="'/angular/order/views/order/_order-detail.partial.html'"></div>
   </div>
 
@@ -51,9 +48,7 @@
     <div class="box-header">Approval</div>
     <div class="box-body no-padding with-border">
       <div ng-static-include="'/angular/order/views/order/_approval.partial.html'"></div>
-    </div>
-    <div class="box-body">`
-      <!-- <div ng-static-include="'/angular/order/views/order/_chat.partial.html'"></div> -->
+      
       <div ng-static-include="'/angular/chat/views/_view-chat.partial.html'"></div>
     </div>
   </div>

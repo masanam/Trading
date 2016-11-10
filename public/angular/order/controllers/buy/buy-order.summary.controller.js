@@ -18,8 +18,6 @@ angular.module('order').controller('BuyOrderSummaryController', ['$scope', '$sta
       });
     };
 
-    
-
     $scope.today = function() {
       $scope.dt = new Date();
     };

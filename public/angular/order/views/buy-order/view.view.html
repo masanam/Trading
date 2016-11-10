@@ -1,4 +1,4 @@
-<div class="content" ng-controller="BuyOrderController" ng-init="findOne()">
+<div class="content" ng-controller="BuyOrderController" ng-init="findOne();initCollapse();initMap()">
   <!-- HEADER -->
   <div class="row-fluid" style="margin-bottom: 10px">
     <button type="button" class="btn btn-primary" ui-sref="buy-order.index">
@@ -12,15 +12,17 @@
   </div>
   
   <div class="box box-primary box-solid">
-    <div class="box-header ">
+    <div class="box-header" ng-click="isCollapsed = !isCollapsed" style="cursor: pointer">
       <h3 class="box-title">Sell Lead</h3>
+      <span class="glyphicon glyphicon-triangle-bottom pull-right" ng-if="isCollapsed"></span> 
+      <span class="glyphicon glyphicon-triangle-top pull-right" ng-if="!isCollapsed"></span> 
     </div>
-    <div class="box-body">
+    <div class="box-body" uib-collapse="isCollapsed">
       <div class="pull-right btn-group">
-        <button type="button" class="btn btn-primary" ui-sref="buy-order.update({ id:buy_order.id })" ng-if="buy_order.order_status==='l'">
+        <button type="button" class="btn btn-primary" ui-sref="buy-order.update({ id:buy_order.id })" ng-if="(buy_order.order_status==='l'||buy_order.order_status==='v')&&Authentication.user.id===buy_order.user_id">
           <i class="glyphicon glyphicon-arrow-right"></i> Update
         </button>
-        <button type="button" class="btn btn-primary" ng-click="changeOrderStatusAtDetail(buy_order, 'x')" ng-if="buy_order.order_status!=='o'&&buy_order.order_status!=='s'&&sell_order.order_status!=='p'">
+        <button type="button" class="btn btn-primary" ng-click="changeOrderStatusAtDetail(buy_order, 'x')" ng-if="buy_order.order_status!=='o'&&buy_order.order_status!=='s'&&buy_order.order_status!=='p'&&Authentication.user.id===buy_order.user_id">
           <i class="glyphicon glyphicon-trash"></i> Delete
         </button>
       </div>
@@ -28,29 +30,35 @@
         <h1>{{ buy_order.buyer.company_name }}</h1>
         <label>Product Name : </label>
         <p>{{ buy_order.product_name }}</p>
+        <label>Typical Quality : </label>
+        <p>{{ buy_order.typical_quality }}</p>
         <label>Address : </label>
         <p>{{ buy_order.address }}</p>
         <div class="col-xs-6" style="padding-left:0">
           <label>City : </label>
           <p>{{ buy_order.city }}</p>
           <label>Volume of Coal : </label>
-          <p>{{ buy_order.volume }} Tones</p>
-          <label>Order Date : </label>
-          <p>{{ buy_order.order_date | date : 'd-MMMM-yyyy' }}</p>
-          <label>Deadline : </label>
-          <p>{{ buy_order.order_deadline | date : 'd-MMMM-yyyy' }}</p>
-          <label>Buying Term : </label>
-          <p>{{ buy_order.trading_term | uppercase }}</p>
+          <p>{{ buy_order.volume }} Tonnes</p>
+          <label>Input Date : </label>
+          <p>{{ buy_order.order_date | date : 'd MMMM yyyy' }}</p>
         </div>
         <div class="col-xs-6" style="padding-left:0">
           <label>Country : </label>
           <p>{{ buy_order.country }}</p>
-          <label>Max Price : </label>
+          <label>Asking Price : </label>
           <p>$ {{ buy_order.max_price }}</p>
-          <label>Ready Date : </label>
-          <p>{{ buy_order.ready_date | date : 'd-MMMM-yyyy' }}</p>
-          <label>Expired Date : </label>
-          <p>{{ buy_order.expired_date | date : 'd-MMMM-yyyy' }}</p>
+          <label>Laycan Schedule : </label>
+          <p>{{ buy_order.ready_date | date : 'd MMMM yyyy' }}</p>
+        </div>
+        <div class="col-xs-12" style="padding-left:0">
+          <label>Valid Until : </label>
+          <p>{{ buy_order.expired_date | date : 'd MMMM yyyy' }}</p>
+        </div>
+        <div class="col-xs-6" style="padding-left:0">
+          <label>Shipping Term : </label>
+          <p>{{ buy_order.trading_term | uppercase }}</p>
+        </div>
+        <div class="col-xs-6" style="padding-left:0">
           <label>Payment Terms : </label>
           <p>{{ buy_order.payment_terms | uppercase }}</p>
         </div>
@@ -60,12 +68,42 @@
     </div>
   </div>
 
-  <div class="box box-primary box-solid" ng-if="buy_order.port_name">
-    <div class="box-header ">
+  <div class="box box-primary box-solid">
+    <div class="box-header " ng-click="isCollapsed3 = !isCollapsed3">
       <h3 class="box-title">Port</h3>
+      <span class="glyphicon glyphicon-triangle-bottom pull-right" ng-if="isCollapsed3"></span> 
+      <span class="glyphicon glyphicon-triangle-top pull-right" ng-if="!isCollapsed3"></span> 
     </div>
-    <div class="box-body">
-        <h3><b>Port Name : </b></h3>
+    <div class="box-body" uib-collapse="isCollapsed3">
+      <ng-map zoom="4" center="Indonesia" default-style="false" style="width:100%; height:500px;">
+        <marker icon="{
+            url: '/images/boat.png'
+          }" position="{{buy_order.port_latitude}}, {{buy_order.port_longitude}}" id="port" on-click="map.showInfoWindow('port-info-window')">  
+        </marker>
+        <info-window id="port-info-window" default-style="false" visible-on-marker="port" maxWidth="800px">
+          <div ng-non-bindable="" style="width:500px" class="no-gutter">
+            <h3>Port Name: {{ buy_order.port_name || 'N / A' }}</h3>
+            <hr/>
+            <section class="col-lg-12">
+              <table>
+                <tr>
+                  <td>Port Discharging Rate  </td>
+                  <td>  : {{ buy_order.port_daily_rate || 'N / A' }} Tph </td>
+                </tr>
+                <tr>
+                  <td>Port Distance from Factory </td>
+                  <td>  : {{ buy_order.port_distance || 'N / A' }} Km</td>
+                </tr>
+                <tr>
+                  <td>Port Draft Height  </td>
+                  <td>  : {{ buy_order.port_draft_height || 'N / A' }} m </td>
+                </tr>
+              </table>
+            </section>
+          </div>
+        </info-window>
+      </ng-map>
+        <!-- <h3><b>Port Name : </b></h3>
         <h4>{{ buy_order.port_name || 'N / A' }}</h4>
       <div class="col-xs-4" style="padding-left:0">
         <label>Port Discharging Rate : </label>
@@ -78,134 +116,94 @@
       <div class="col-xs-4" style="padding-left:0">
         <label>Port Draft Height : </label>
         <p>{{ buy_order.port_draft_height || 'N / A' }} m</p>
-      </div>
+      </div> -->
     </div>
   </div>
 
   <div class="box box-primary box-solid">
-    <div class="box-header ">
+    <div class="box-header" ng-click="isCollapsed2 = !isCollapsed2" style="cursor: pointer">
       <h3 class="box-title">Product Quality</h3>
+      <span class="glyphicon glyphicon-triangle-bottom pull-right" ng-if="isCollapsed2"></span> 
+      <span class="glyphicon glyphicon-triangle-top pull-right" ng-if="!isCollapsed2"></span> 
     </div>
-    <div class="box-body">
-      <div class="row">
+    <div class="box-body" uib-collapse="isCollapsed2">
+      <div class="row-fluid" style="margin:10px">
         <div class="col-md-12 col-lg-12">
-          <table class="table" style="margin-bottom:0">
+          <table class="table table-striped table-bordered">
+            <thead>
+              <tr style="background-color: darkgray"}>
+                <th style="width:30%">Quality </th>
+                <th>Typical</th>
+                <th>Bonus</th>
+                <th>Reject</th>
+              </tr>
+            </thead>
             <tbody>
               <tr>
-                <td><h4><b>Gross Caloric ARB <div class="pull-right">:</div></b></h4></td>
-                <td><h4>{{buy_order.gcv_arb_min}} - {{buy_order.gcv_arb_max}} kcal</h4></td>
-                <td class="hidden-xs hidden-sm"><h4><b>Gross Caloric ADB <div class="pull-right">:</div></b></h4></td>
-                <td class="hidden-xs hidden-sm"><h4>{{buy_order.gcv_adb_min}} - {{buy_order.gcv_adb_max}} kcal</h4></td>
-                <td class="hidden-xs hidden-sm"><h4><b>Nett Caloric Value <div class="pull-right">:</div></b></h4></td>
-                <td class="hidden-xs hidden-sm"><h4>{{buy_order.ncv_min}} - {{buy_order.ncv_max}} kcal</h4></td>
-              </tr>
-              <tr class="hidden-md hidden-lg">
-                <td><h4><b>Gross Caloric ADB <div class="pull-right">:</div></b></h4></td>
-                <td><h4>{{buy_order.gcv_adb_min}} - {{buy_order.gcv_adb_max}} kcal</h4></td>
-              </tr>
-              <tr class="hidden-md hidden-lg">
-                <td><h4><b>Nett Caloric Value <div class="pull-right">:</div></b></h4></td>
-                <td><h4>{{buy_order.ncv_min}} - {{buy_order.ncv_max}} kcal</h4></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="col-md-6 col-lg-6">
-          <table class="table">
-            <tbody>
-              <tr>
-                <td style="width: 50%"><b>Ash <div class="pull-right">:</div></b></td>
-                <td>{{buy_order.ash_min}} - {{buy_order.ash_max}} %</td>
+                <td><b>GCV ADB </b></td>
+                <td>{{buy_order.gcv_adb_min}} - {{buy_order.gcv_adb_max}} kcal</td>
+                <td>{{buy_order.gcv_adb_bonus}}</td>
+                <td>{{buy_order.gcv_adb_reject}}</td>
               </tr>
               <tr>
-                <td><b>Total Sulphur <div class="pull-right">:</div></b></td>
-                <td>{{buy_order.ts_min}} - {{buy_order.ts_max}} %</td>
+                <td><b>GCV ARB </b></td>
+                <td>{{buy_order.gcv_arb_min}} - {{buy_order.gcv_arb_max}} kcal</td>
+                <td>{{buy_order.gcv_arb_bonus}}</td>
+                <td>{{buy_order.gcv_arb_reject}}</td>
               </tr>
               <tr>
-                <td><b>Total Moisture <div class="pull-right">:</div></b></td>
+                <td><b>NCV ARB </b></td>
+                <td>{{buy_order.ncv_min}} - {{buy_order.ncv_max}} kcal</td>
+                <td>{{buy_order.ncv_bonus}}</td>
+                <td>{{buy_order.ncv_reject}}</td>
+              </tr>
+              <tr>
+                <td><b>Total Moisture (ARB) </b></td>
                 <td>{{buy_order.tm_min}} - {{buy_order.tm_max}} %</td>
+                <td>{{buy_order.tm_bonus}}</td>
+                <td>{{buy_order.tm_reject}}</td>
               </tr>
               <tr>
-                <td><b>Inherent Moisture <div class="pull-right">:</div></b></td>
+                <td><b>Inherent Moisture (ADB) </b></td>
                 <td>{{buy_order.im_min}} - {{buy_order.im_max}} %</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="col-md-6 col-lg-6">
-          <table class="table">
-            <tbody>
-              <tr>
-                <td style="width: 50%"><b>Fixed Carbon <div class="pull-right">:</div></b></td>
-                <td>{{buy_order.fc_min}} - {{buy_order.fc_max}} %</td>
+                <td>{{buy_order.im_bonus}}</td>
+                <td>{{buy_order.im_reject}}</td>
               </tr>
               <tr>
-                <td><b>Volatile Matter <div class="pull-right">:</div></b></td>
+                <td><b>Volatile Matter (ADB) </b></td>
                 <td>{{buy_order.vm_min}} - {{buy_order.vm_max}} %</td>
+                <td>{{buy_order.vm_bonus}}</td>
+                <td>{{buy_order.vm_reject}}</td>
               </tr>
               <tr>
-                <td><b>Hardness <div class="pull-right">:</div></b></td>
-                <td>{{buy_order.hgi_min}} - {{buy_order.hgi_max}} %</td>
+                <td><b>Ash (ADB) </b></td>
+                <td>{{buy_order.ash_min}} - {{buy_order.ash_max}} %</td>
+                <td>{{buy_order.ash_bonus}}</td>
+                <td>{{buy_order.ash_reject}}</td>
               </tr>
               <tr>
-                <td><b>Size <div class="pull-right">:</div></b></td>
-                <td>{{buy_order.size_min}} - {{buy_order.size_max}} mm</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="box box-primary box-solid">
-    <div class="box-header ">
-      <h3 class="box-title">Product Reject & Bonus</h3>
-    </div>
-    <div class="box-body">
-      <div class="row">
-        <div class="col-md-6 col-lg-6">
-          <h3 style="text-align:center;font-weight:bold;margin-top:0">Reject</h3>
-          <table class="table">
-            <tbody>
-              <tr>
-                <td style="width: 50%"><b>Gross Caloric ARB <div class="pull-right">:</div></b></td>
-                <td>{{buy_order.gcv_arb_reject}} kcal</td>
+                <td><b>Fixed Carbon (ADB) </b></td>
+                <td>{{buy_order.fc_min}} - {{buy_order.fc_max}} %</td>
+                <td>{{buy_order.fc_bonus}}</td>
+                <td>{{buy_order.fc_reject}}</td>
               </tr>
               <tr>
-                <td><b>Gross Caloric ADB <div class="pull-right">:</div></b></td>
-                <td>{{buy_order.gcv_adb_reject}} kcal</td>
+                <td><b>Total Sulphur (ADB) </b></td>
+                <td>{{buy_order.ts_min}} - {{buy_order.ts_max}} %</td>
+                <td>{{buy_order.ts_bonus}}</td>
+                <td>{{buy_order.ts_reject}}</td>
               </tr>
               <tr>
-                <td><b>Ash <div class="pull-right">:</div></b></td>
-                <td>{{buy_order.ash_reject}} %</td>
+                <td><b>HGI </b></td>
+                <td>{{buy_order.hgi_min}} - {{buy_order.hgi_max}}</td>
+                <td>{{buy_order.hgi_bonus}}</td>
+                <td>{{buy_order.hgi_reject}}</td>
               </tr>
               <tr>
-                <td><b>Total Sulphur <div class="pull-right">:</div></b></td>
-                <td>{{buy_order.ts_reject}} %</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="col-md-6 col-lg-6">
-          <h3 style="text-align:center;font-weight:bold;margin-top:0">Bonus</h3>
-          <table class="table">
-            <tbody>
-              <tr>
-                <td style="width: 50%"><b>Gross Caloric ARB <div class="pull-right">:</div></b></td>
-                <td>{{buy_order.gcv_arb_bonus}} kcal</td>
-              </tr>
-              <tr>
-                <td><b>Gross Caloric ADB <div class="pull-right">:</div></b></td>
-                <td>{{buy_order.gcv_adb_bonus}} kcal</td>
-              </tr>
-              <tr>
-                <td><b>Ash <div class="pull-right">:</div></b></td>
-                <td>{{buy_order.ash_bonus}} %</td>
-              </tr>
-              <tr>
-                <td><b>Total Sulphur <div class="pull-right">:</div></b></td>
-                <td>{{buy_order.ts_bonus}} %</td>
+                <td><b>SIZE (0-50mm)</b></td>
+                <td>{{buy_order.size_min}} - {{buy_order.size_max}} %</td>
+                <td>{{buy_order.size_bonus}}</td>
+                <td>{{buy_order.size_reject}}</td>
               </tr>
             </tbody>
           </table>

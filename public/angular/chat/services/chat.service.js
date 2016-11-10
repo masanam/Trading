@@ -13,14 +13,15 @@ angular.module('chat').factory('Chat', ['firebase', '$firebaseArray', 'Authentic
     var mainApp = firebase.initializeApp(config, 'webApps');
 
     return {
-      findChatByDeal: function(orderId, callback) {
+      findChatByOrder: function(orderId, callback) {
         var path_chat = 'order_chat/' + orderId;
         var ref = mainApp.database().ref(path_chat);
         var chats = $firebaseArray(ref);
         return callback(chats);
       },
 
-      sendChat: function(orderId, message, currentTime) {
+      sendChat: function(orderId, userId, message, currentTime) {
+        // sending chat
         var chat = {
           'order_id': orderId,
           'user_id': Authentication.user.id,
@@ -28,8 +29,20 @@ angular.module('chat').factory('Chat', ['firebase', '$firebaseArray', 'Authentic
           'message': message,
           'created_at': currentTime
         };
+        
+        var chat_key = mainApp.database().ref('order_chat/' + orderId).push(chat).key;
 
-        var key = mainApp.database().ref('order_chat/'+orderId).push(chat).key;
+        // sending notification
+        var notification = {
+          'url': 'order/' + orderId,
+          'notification': 'You received a new message',
+          'created_at': currentTime,
+          'isRead': true
+        };
+
+        for (var i = userId.length - 1; i >= 0; i--) {
+          var notif_key = mainApp.database().ref('notification/' + userId[i].user_id).push(notification).key;
+        }
       }
     };
   }

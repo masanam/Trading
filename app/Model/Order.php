@@ -27,10 +27,10 @@ class Order extends Model
 	}
 
     public function trader() {
-    	return $this->belongsTo(User::class, 'user_id');
+      return $this->belongsTo(User::class, 'user_id');
     }
 
     public function users() {
-    	return $this->belongsToMany(User::class, 'order_users')->withPivot('role');
+      return $this->belongsToMany(User::class, 'order_users')->withPivot('role');
     }
 }

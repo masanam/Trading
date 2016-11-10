@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class SellerPort extends Model
 {
-    protected $table = 'seller_port';
+    protected $table = 'port_seller';
 
     public function Seller() {
         return $this->hasMany('App\Model\Seller', 'id', 'seller_id');

@@ -62,6 +62,7 @@ class ProductController extends Controller
         $product->concession_id = $request->concession_id ? $request->concession_id : NULL;
         //$product->commercial_term = $request->commercial_term;
         $product->product_name = $request->product_name;
+        $product->typical_quality = $request->typical_quality;
         /*$product->ready_date = $request->ready_date;
         $product->expired_date = $request->expired_date;*/
         $product->gcv_arb_min = $request->gcv_arb_min;
@@ -106,8 +107,8 @@ class ProductController extends Controller
         $product->hgi_bonus = $request->hgi_bonus;*/
         $product->size_min = $request->size_min;
         $product->size_max = $request->size_max;
-        $product->fe203_min = $request->fe203_min;
-        $product->fe203_max = $request->fe203_max;
+        $product->fe2o3_min = $request->fe2o3_min;
+        $product->fe2o3_max = $request->fe2o3_max;
         $product->aft_min = $request->aft_min;
         $product->aft_max = $request->aft_max;
 
@@ -165,6 +166,7 @@ class ProductController extends Controller
         $product->concession_id = $request->concession_id ? $request->concession_id : NULL;
         //$product->commercial_term = $request->commercial_term;
         $product->product_name = $request->product_name;
+        $product->typical_quality = $request->typical_quality;
         /*$product->ready_date = $request->ready_date;
         $product->expired_date = $request->expired_date;*/
         $product->gcv_arb_min = $request->gcv_arb_min;
@@ -209,8 +211,8 @@ class ProductController extends Controller
         $product->hgi_bonus = $request->hgi_bonus;*/
         $product->size_min = $request->size_min;
         $product->size_max = $request->size_max;
-        $product->fe203_min = $request->fe203_min;
-        $product->fe203_max = $request->fe203_max;
+        $product->fe2o3_min = $request->fe2o3_min;
+        $product->fe2o3_max = $request->fe2o3_max;
         $product->aft_min = $request->aft_min;
         $product->aft_max = $request->aft_max;
         /*$product->size_reject = $request->size_reject;

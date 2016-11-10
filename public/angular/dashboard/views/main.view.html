@@ -74,33 +74,5 @@
     </div>
   </div>
 
-  <div class="col-xs-12">
-      <div class="box box-primary">
-        <div class="box-header with-border">
-          <h3 class="box-title">Orders</h3>
-        </div>
-        <!-- /.box-header -->
-        <div class="box-body no-padding" ng-controller="OrderHistoryController" ng-init="findAvailableSell()">
-          <section ng-include="'/angular/order/views/history/table.view.html'"></section>
-        </div>
-        <!-- /.box-body -->
-      </div>
-      <!-- /. box -->
-    </div>
-  </div>
-
-  <div class="col-xs-12">
-      <div class="box box-primary">
-        <div class="box-header with-border">
-          <h3 class="box-title">Deals</h3>
-        </div>
-        <!-- /.box-header -->
-        <div class="box-body no-padding" ng-controller="DealController" ng-init="findDeals()">
-          <section ng-include="'/angular/deal/views/table.view.html'"></section>
-        </div>
-        <!-- /.box-body -->
-      </div>
-      <!-- /. box -->
-    </div>
-  </div>
+  <div ng-static-include="'/angular/dashboard/views/_orders.partial.html'"></div>
 </section>

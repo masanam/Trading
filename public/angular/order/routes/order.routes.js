@@ -8,23 +8,23 @@ angular.module('order').config(['$stateProvider',
       .state('order', {
         url: '/order',
         abstract: true,
-        templateUrl: '/angular/order/views/order/main.layout.html'
+        templateUrl: '/angular/order/views/order/main.layout.html',
+        roles: ['trader', 'manager']
       })
       .state('order.list', {
         url: '',
-        templateUrl: '/angular/order/views/order/list.view.html'
+        templateUrl: '/angular/order/views/order/list.view.html',
+        roles: ['trader', 'manager']
+      })
+      .state('order.create', {
+        url: '/create',
+        templateUrl: '/angular/order/views/order/create.view.html',
+        roles: ['trader', 'manager']
       })
       .state('order.view', {
         url: '/:id',
-        templateUrl: '/angular/order/views/order/view.view.html'
-      })
-      .state('order.approval-list', {
-        url: '/approval-list',
-        templateUrl: '/angular/order/views/order/list.view.html'
-      })
-      .state('order.approval', {
-        url: '/approval-list/:id',
-        templateUrl: '/angular/order/views/order/view.view.html'
+        templateUrl: '/angular/order/views/order/view.view.html',
+        roles: ['trader', 'manager']
       });
 
 
