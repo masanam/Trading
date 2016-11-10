@@ -42,23 +42,29 @@
 		<tbody>
 			<tr>
 				<td>Company</td>
-				<td>
-					<span ng-if="display.sell && display.sell.user_id === Authentication.user.id">
+				<td ng-switch="display.sell && display.sell.user_id === Authentication.user.id">
+					<span ng-switch-when="true">
 						{{ display.sell.seller.company_name }}
 						<span class="pull-right">
 							<a ng-click="alert(nego)" href="#" class="glyphicon glyphicon-pencil"></a>
 							<a ng-click="alert(nego)" href="#" class="glyphicon glyphicon-trash"></a>
 						</span>
 					</span>
+					<i style="color:green" ng-switch-default>
+						{{ display.sell.trader.name }} ({{ display.sell.trader.phone }})
+					</i>
 				</td>
-				<td>
-					<span ng-if="display.buy && display.buy.user_id === Authentication.user.id">
+				<td ng-switch="display.buy && display.buy.user_id === Authentication.user.id">
+					<span ng-switch-when="true">
 						{{ display.buy.buyer.company_name }}
 						<span class="pull-right">
 							<a ng-click="alert(nego)" href="#" class="glyphicon glyphicon-pencil"></a>
 							<a ng-click="alert(nego)" href="#" class="glyphicon glyphicon-trash"></a>
 						</span>
 					</span>
+					<i style="color:green" ng-switch-default>
+						{{ display.buy.trader.name }} ({{ display.buy.trader.phone }})
+					</i>
 				</td>
 			</tr>
 			<tr>
@@ -88,14 +94,26 @@
 			</tr>
 			<tr>
 				<td>Location</td>
-				<td><span ng-if="display.buy.user_id === Authentication.user.id">{{ display.sell.address }}</span></td>
-				<td><span ng-if="display.buy.user_id === Authentication.user.id">{{ display.buy.address }}</span></td>
+				<td ng-switch="display.sell.user_id === Authentication.user.id">
+					<span ng-switch-when="true">{{ display.sell.address }}</span>
+					<i ng-switch-default style="color:green">-Contact {{ display.sell.trader.name }}-</i>
+				</td>
+				<td ng-switch="display.buy.user_id === Authentication.user.id">
+					<span ng-switch-when="true">{{ display.buy.address }}</span>
+					<i ng-switch-default style="color:green">-Contact {{ display.sell.trader.name }}-</i>
+				</td>
 			</tr>
 
 			<tr>
 				<td>Port</td>
-				<td><span ng-if="display.buy.user_id === Authentication.user.id">{{ display.sell.port_name }}</span></td>
-				<td><span ng-if="display.buy.user_id === Authentication.user.id">{{ display.buy.port_name }}</span></td>
+				<td ng-switch="display.sell.user_id === Authentication.user.id">
+					<span ng-switch-when="true">{{ display.sell.port_name }}</span>
+					<i ng-switch-default style="color:green">-Contact {{ display.sell.trader.name }}-</i>
+				</td>
+				<td ng-switch="display.buy.user_id === Authentication.user.id">
+					<span ng-switch-when="true">{{ display.buy.port_name }}</span>
+					<i ng-switch-default style="color:green">-Contact {{ display.sell.trader.name }}-</i>
+				</td>
 			</tr>
 			<tr>
 				<td>Province/City</td>
