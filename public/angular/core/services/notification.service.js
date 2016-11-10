@@ -13,27 +13,8 @@ angular.module('notification').factory('Notification', ['firebase', '$firebaseAr
     var mainApp = firebase.initializeApp(config, 'webApps');
 
     return {
-      findNotificationByUser: function() {
-        return 0;
-      },
 
-      findChatNotification: function(callback) {
-        var order = OrderUser.query({ userId: Authentication.user.id }).success(function(callback) {
-          var path_chat = 'order_chat/';
-          var ref = mainApp.database().ref(path_chat);
-          ref.on('child_added', function(snapshot) {
-            snapshot.forEach(function(childSnapshot) {
-              for(var i = 0; i < childSnapShot.length; i++) {
-                for(var j = 0; j < order.length; j++) {
-                  if(childSnapshot[i].key === ) {}
-                }
-              }
-            });
-          });
-        });
-      },
-
-      sendNotification: function(orderId, leadsUserId, managerLeadsUserId, currentTime) {
+      sendNotification: function(action, orderId, leadsUserId, managerLeadsUserId, currentTime) {
         // sending notification
         if(action === 'new_order') {
           var manager_notification = {
@@ -48,18 +29,18 @@ angular.module('notification').factory('Notification', ['firebase', '$firebaseAr
             'notification': 'Your leads have been used in an order',
             'created_at': currentTime,
             'isRead': true
-          }
+          };
 
           var manager_leads_notification = {
             'url': 'order/' + orderId,
             'notification': 'Leads of your subordinate have been used in an order',
             'created_at': currentTime,
             'isRead': true
-          }
+          };
 
-          var notif_key = mainApp.database().ref('notification/' + Authentication.user.managerId).push(manager_notification).key;
-          var notif_key = mainApp.database().ref('notification/' + leadsUserId).push(leads_notification).key;
-          var notif_key = mainApp.database().ref('notification/' + managerLeadsUserId).push(manager_leads_notification).key;
+          mainApp.database().ref('notification/' + Authentication.user.managerId).push(manager_notification);
+          mainApp.database().ref('notification/' + leadsUserId).push(leads_notification);
+          mainApp.database().ref('notification/' + managerLeadsUserId).push(manager_leads_notification);
         }
       },
 
