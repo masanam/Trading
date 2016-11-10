@@ -67,7 +67,7 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
 
     // Find existing order
     $scope.findOne = function () {
-      $scope.order = Order.query({
+      $scope.order = Order.get({
         id: $stateParams.id
       });
     };

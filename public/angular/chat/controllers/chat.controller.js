@@ -2,9 +2,9 @@
 
 angular.module('chat').controller('ChatController', ['$scope', '$stateParams', 'Order', 'Authentication', '$location', 'Chat',
 	function($scope, $stateParams, Order, Authentication, $location, Chat) {
-  $scope.deals = [];
+  $scope.orders = [];
 
-  $scope.deal = {};
+  $scope.order = {};
 
   // TESTING
   $scope.chat = {};
@@ -14,17 +14,16 @@ angular.module('chat').controller('ChatController', ['$scope', '$stateParams', '
     $scope.message = '';
   };
 
-  $scope.findOneDeal = function($deal) {
-    $scope.deal = Order.get({ id: $stateParams.id });
+  $scope.findOneOrder = function($order) {
+    $scope.order = Order.get({ id: $stateParams.id });
   };
 
-  $scope.findDealByUser = function() {
-    $scope.deals = Order.query({ action: 'user', userId: Authentication.user.id });
+  $scope.findOrderByUser = function() {
+    $scope.orders = Order.query({ action: 'user', userId: Authentication.user.id });
   };
 
-  $scope.findChatByDeal = function() {
-    console.log('asdasd');
-    Chat.findChatByDeal($stateParams.id, function(res){
+  $scope.findChatByOrder = function() {
+    Chat.findChatByOrder($stateParams.id, function(res){
       res.$loaded(function(res) {
         for (var i = 0; i < res.length; i++) {
           res[i].created_at = new Date(res[i].created_at);
