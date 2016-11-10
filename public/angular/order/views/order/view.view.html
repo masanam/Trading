@@ -4,22 +4,28 @@
       <h1 class="box-title">ORD #{{ ("10000"+order.id).slice(-4) }} - {{ order.trader.name }}</h1>
 
       <span class="badge badge-primary">
-        {{ order.status === 'o' ? 'Open' : order.status === 'f' ? 'Finalized' : 'Cancelled' }}
+        {{ order.status === 'p' ? 'Pending Approval' : order.status === 'd' ? 'Draft' : order.status === 'a' ? 'Approved' : order.status === 'f' ? 'Finalized' : 'Cancelled' }}
       </span>
       <div class="box-tools pull-right">
         <a class="btn btn-default" ui-sref="order.list">
           <i class="glyphicon glyphicon-chevron-left"></i> Back
         </a>
-        <a class="btn btn-primary" ng-click="print(order);">
+        <a class="btn btn-primary" ng-click="print(order);" ng-show="order.status === 'a' || order.status === 'f'">
           <i class="glyphicon glyphicon-print" title="Print"></i>
         </a>
-        <a class="btn btn-success" ng-click="request(order);">
+        <a class="btn btn-success" ng-click="request(order);" ng-show="order.status === 'd' && order.user_id === Authentication.user.id">
           <i class="glyphicon glyphicon-send" title="Request for Approval"></i>
         </a>
-        <a class="btn btn-success" ng-click="finalize(order);">
+        <a class="btn btn-success" ng-click="finalize(order);" ng-show="order.status === 'a' && order.user_id === Authentication.user.id">
           <i class="glyphicon glyphicon-floppy-saved" title="Finalize Order"></i>
         </a>
-        <a class="btn btn-danger" ng-click="remove(order);">
+        <a class="btn btn-success" ng-click="approve_reject('a');" ng-show="order.status === 'p' && approver === true">
+          <i class="glyphicon glyphicon-thumbs-up" title="Approve Order"></i>
+        </a>
+        <a class="btn btn-danger" ng-click="approve_reject('r');" ng-show="order.status === 'p' && approver === true">
+          <i class="glyphicon glyphicon-thumbs-down" title="Reject Order"></i>
+        </a>
+        <a class="btn btn-danger" ng-click="remove(order);" ng-show="(order.status !== 'x' || order.status === 'f') && order.user_id === Authentication.user.id">
           <i class="glyphicon glyphicon-trash" title="Cancel Order"></i>
         </a>
       </div>

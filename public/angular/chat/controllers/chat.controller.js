@@ -23,7 +23,6 @@ angular.module('chat').controller('ChatController', ['$scope', '$stateParams', '
   };
 
   $scope.findChatByDeal = function() {
-    console.log('asdasd');
     Chat.findChatByDeal($stateParams.id, function(res){
       res.$loaded(function(res) {
         for (var i = 0; i < res.length; i++) {
@@ -41,8 +40,10 @@ angular.module('chat').controller('ChatController', ['$scope', '$stateParams', '
 
   $scope.sendMessage = function(type) {
     var message = $scope.message;
-    $scope.chat.key = Chat.sendChat($stateParams.id, message, Date.now());
-    
-    $scope.initialize();
+    if(message !== ""){
+      $scope.chat.key = Chat.sendChat($stateParams.id, message, Date.now());
+      
+      $scope.initialize();
+    }
   };
 }]);
