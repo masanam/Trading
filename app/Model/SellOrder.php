@@ -31,4 +31,8 @@ class SellOrder extends Model
     public function Concession() {
         return $this->hasOne('App\Model\Concession', 'id', 'concession_id');
     }
+
+    public function trader() {
+        return $this->belongsTo('App\Model\User', 'user_id');
+    }
 }

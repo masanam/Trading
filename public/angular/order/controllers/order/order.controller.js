@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('order').controller('OrderController', ['$scope', '$stateParams', '$state', 'Order',
-  function($scope, $stateParams, $state, Order) {
+angular.module('order').controller('OrderController', ['$scope', '$stateParams', '$state', 'Order', 'Authentication',
+  function($scope, $stateParams, $state, Order, Authentication) {
     $scope.browse = {};
 
     $scope.$watchGroup(['browse.status', 'browse.possession'], function() { $scope.find(); });
@@ -30,7 +30,7 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
       });
     };
 
-    // Remove existing Article
+    // Remove existing order
     $scope.remove = function (order) {
       if (order) {
         order.$remove();
@@ -59,6 +59,67 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
         $scope.error = err.data.message;
       });
     };
+    
+    // Request for Approval 
+    $scope.request = function () {
+      $scope.error = null;
+
+      var order = $scope.order;
+      
+      order.status = 'p';
+
+      order.$update(function (res) {
+        $scope.order.status = 'p';
+        //$state.go('order.view', { orderId: res.id });
+      }, function (err) {
+        $scope.error = err.data.message;
+      });
+    };
+    
+    
+    // Finalize Order
+    $scope.finalize = function () {
+      $scope.error = null;
+
+      var order = $scope.order;
+      
+      order.status = 'f';
+
+      order.$update(function (res) {
+        $scope.order.status = 'f';
+        //$state.go('order.view', { orderId: res.id });
+      }, function (err) {
+        $scope.error = err.data.message;
+      });
+    };
+    
+    
+    // Approve Order
+    /*$scope.approve_reject = function (status) {
+      $scope.error = null;
+
+      var order = $scope.order;
+      
+      $scope.order.users.status = 'a';
+
+      order.$update(function (res) {
+        $scope.order.status = 'f';
+        //$state.go('order.view', { orderId: res.id });
+      }, function (err) {
+        $scope.error = err.data.message;
+      });
+    };*/
+    
+    $scope.checkIfApprover = function(){
+      var status = false;
+      for (var i in $scope.order.users) {
+        if($scope.order.users[i].id === Authentication.user.id && $scope.order.users[i].pivot.role === 'approver'){
+          status = true;
+        }
+      }
+      
+      $scope.approver = status;
+    };
 
     // Find list of order
     $scope.find = function () {
@@ -69,6 +130,9 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
     $scope.findOne = function () {
       $scope.order = Order.get({
         id: $stateParams.id
+      }, function(res){
+        $scope.order = res;
+        $scope.checkIfApprover();
       });
     };
   }
