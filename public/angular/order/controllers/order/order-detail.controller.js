@@ -20,7 +20,11 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
       });
 
       modalInstance.result.then(function (selectedItem) {
-        console.log(selectedItem);
+        if(!$scope.order.sells) $scope.order.sells = [];
+        $scope.order.sells.push(selectedItem);
+        console.log($scope.order.sells);
+        
+        //if($scope.order.id){ }
       }, function () {
         console.log('Modal dismissed at: ' + new Date());
       });
@@ -44,7 +48,11 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
       });
 
       modalInstance.result.then(function (selectedItem) {
-        console.log(selectedItem);
+          if(!$scope.order.buys) $scope.order.buys = [];
+          $scope.order.buys.push(selectedItem);
+          console.log($scope.order.buys);
+
+        //if($scope.order.id){ }
       }, function () {
         console.log('Modal dismissed at: ' + new Date());
       });
