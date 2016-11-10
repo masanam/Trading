@@ -123,6 +123,7 @@ class BuyOrderController extends Controller
         $buy_order->volume = $request->volume;
         $buy_order->max_price = $request->max_price;
         $buy_order->trading_term = $request->trading_term;
+        $buy_order->trading_term_detail = $request->trading_term_detail;
         $buy_order->payment_terms = $request->payment_terms;
         $buy_order->commercial_term = $request->commercial_term;
         $buy_order->penalty_desc = $request->penalty_desc;
@@ -279,6 +280,7 @@ class BuyOrderController extends Controller
         $buy_order->volume = $request->volume;
         $buy_order->max_price = $request->max_price;
         $buy_order->trading_term = $request->trading_term;
+        $buy_order->trading_term_detail = $request->trading_term_detail;
         $buy_order->payment_terms = $request->payment_terms;
         $buy_order->commercial_term = $request->commercial_term;
         $buy_order->penalty_desc = $request->penalty_desc;

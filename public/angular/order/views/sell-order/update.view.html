@@ -74,17 +74,20 @@
               <option value="FAS">FAS</option>
               <option value="FOB">FOB</option>
               <option value="Franco">Franco</option>
+              <option value="">Other</option>
             </select>
-            <input type="text" class="form-control" ng-model="sell_order.trading_term" placeholder="Other" />
+            <input type="text" class="form-control" ng-model="sell_order.trading_term_detail" placeholder="Detail" />
           </p>
         </div>
         <div class="col-xs-6" style="padding-left:0">
           <label>Payment Terms : </label>
-          <select class="form-control" ng-model="sell_order.payment_terms">
+          <select class="form-control" ng-model="sell_order.payment_terms" ng-change="freetext(sell_order.payment_terms)">
             <option value="TT">TT</option>
             <option value="LC on Sight">LC on Sight</option>
             <option value="LC on 30 days">LC on 30 days</option>
+            <option value="other">Other</option>
           </select>
+          <input type="text" class="form-control" ng-model="sell_order.payment_terms" placeholder="Payment Terms" ng-if="sell_order.payment_terms===''"/>
         </div>
         <div class="col-xs-12" style="padding-left:0">
           <label>Penalty : </label>
@@ -99,19 +102,21 @@
       <h3 class="box-title">Port</h3>
     </div>
     <div class="box-body">
-        <h3><b>Port Name : </b></h3>
-        <input type="text" class="form-control" ng-model="sell_order.port_name"/>
       <div class="col-xs-4" style="padding-left:0">
+        <label>Port Name : </label>
+        <input type="text" class="form-control" ng-model="sell_order.port_name"/>
         <label>Port Discharging Rate (Tph): </label>
         <input type="number" class="form-control" ng-model="sell_order.port_daily_rate"/>
-      </div>
-      <div class="col-xs-4" style="padding-left:0">
         <label>Port Distance (Km): </label>
         <input type="number" class="form-control" ng-model="sell_order.port_distance"/>
-      </div>
-      <div class="col-xs-4" style="padding-left:0">
         <label>Port Draft Height (M): </label>
         <input type="number" class="form-control" ng-model="sell_order.port_draft_height"/>
+      </div>
+      <div class="col-xs-8" style="padding-left:0">
+        <label>Latitude : </label>
+        <input type="number" min="-90" max="90" step="any" class="form-control" ng-model="sell_order.port_latitude"/>
+        <label>Longitude : </label>
+        <input type="number" min="-180" max="180" step="any" class="form-control" ng-model="sell_order.port_longitude"/>
       </div>
     </div>
   </div>
