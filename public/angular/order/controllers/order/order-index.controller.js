@@ -10,28 +10,36 @@ angular.module('order').controller('OrderIndexController', ['$scope', '$statePar
       });
     };
 
-    $scope.data = [];
-    $scope.datasetOverride = [];
-    $scope.labels = [];
     $scope.options = [];
 
     $scope.render = function(index){
       $scope.display.index = index;
       $scope.series = [];
+      $scope.data = [[],[],[]];
+      $scope.labels = [];
+      $scope.colors = ['#d64d4d','#e39e54','#4d7358'];
+      $scope.datasetOverride = [
+        { type:'line', tension:0, fill:false },
+        { type:'line', fill:false, pointStyle:'crossRot', pointRadius:0 },
+        { type:'line', fill:false, pointStyle:'crossRot', pointRadius:0 },
+      ];
 
       var x,y,
         indexSequence = 0,
-        dateStart = new Date(),
-        dateEnd = new Date();
+        date = new Date();
 
-      dateStart.setDate(dateEnd.getDate()-5);
+      date.setDate(date.getDate()-5);
 
-      Index.post({ action: 'single-price' },
-        { indexId:[$scope.display.index.id], date_start:dateStart, date_end:dateEnd, frequency:'d' },
+      Index.query({ submodel:'price', indexId:$scope.display.index.id, date:date, latest:'7' },
         function (res){
-          $scope.series = Object.keys(res);
-          console.log(res);
+          $scope.series = [ index.index_provider + ' ' + index.index_name, 'buy', 'sell' ];
 
+          for(x = 0; x<res.length; x++){
+            $scope.data[0][x] = res[x].price;  
+            $scope.data[1][x] = $scope.display.totalBuyPrice / $scope.display.totalBuyVolume;  
+            $scope.data[2][x] = $scope.display.totalSellPrice / $scope.display.totalSellVolume;  
+            $scope.labels[x] = res[x].date;
+          }
         });
     };
 

@@ -26,12 +26,12 @@ class IndexController extends Controller
   /**
    * Store a newly created resource in storage.
    *
-   * @param  \Illuminate\Http\Request  $request
+   * @param  \Illuminate\Http\Request  $req
    * @return \Illuminate\Http\Response
    */
-  public function store(Request $request)
+  public function store(Request $req)
   {
-    if(!$request) {
+    if(!$req) {
       return response()->json([
         'message' => 'Bad Request'
       ], 400);
@@ -39,10 +39,10 @@ class IndexController extends Controller
 
     $index = new Index();
     
-    $index->index_provider = $request->index_provider;
-    $index->index_name = $request->index_name;
-    $index->quality = $request->quality;
-    $index->frequency = substr($request->frequency, 0, 1);
+    $index->index_provider = $req->index_provider;
+    $index->index_name = $req->index_name;
+    $index->quality = $req->quality;
+    $index->frequency = substr($req->frequency, 0, 1);
 
     $index->created_at = Date('Y-m-d H:i:s');
     $index->updated_at = Date('Y-m-d H:i:s');
@@ -68,15 +68,15 @@ class IndexController extends Controller
   /**
    * Update the specified resource in storage.
    *
-   * @param  \Illuminate\Http\Request  $request
+   * @param  \Illuminate\Http\Request  $req
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function update(Request $request, $id)
+  public function update(Request $req, $id)
   {
     $index = Index::find($id);
 
-    if (!$request) {
+    if (!$req) {
       return response()->json([
         'message' => 'Bad Request'
       ], 400);
@@ -88,10 +88,10 @@ class IndexController extends Controller
       ] ,404);
     }
 
-    $index->index_provider = $request->index_provider;
-    $index->index_name = $request->index_name;
-    $index->quality = $request->quality;
-    $index->frequency = substr($request->frequency, 0, 1);
+    $index->index_provider = $req->index_provider;
+    $index->index_name = $req->index_name;
+    $index->quality = $req->quality;
+    $index->frequency = substr($req->frequency, 0, 1);
 
     $index->updated_at = Date('Y-m-d H:i:s');
     $index->save();
@@ -117,10 +117,13 @@ class IndexController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function indexPrice ($id) {
-    $indexPrice = IndexPrice::where([ 'index_id' => $id ])->orderBy('date', 'DESC')->get();
+  public function indexPrice ($id, Request $req) {
+    $query = IndexPrice::where([ 'index_id' => $id ])->orderBy('date', 'DESC');
+    
+    if($req->date) $query->where('date', '<', date('Y-m-d', strtotime($req->date)));
+    if($req->latest) $query->limit(5);
 
-    return response()->json($indexPrice, 200);
+    return response()->json($query->get(), 200);
   }
 
   /**
@@ -133,11 +136,11 @@ class IndexController extends Controller
    * @param  char(1)  $frequency
    * @return \Illuminate\Http\Response
    */
-  public function price(Request $request){
-  	$indices = $request->indexId;
-  	$date_start = $request->date_start;
-  	$date_end = $request->date_end;
-  	$frequency = $request->frequency;
+  public function price(Request $req){
+  	$indices = $req->indexId;
+  	$date_start = $req->date_start;
+  	$date_end = $req->date_end;
+  	$frequency = $req->frequency;
 
   	$indices = Index::whereIn('id', $indices)->get();
     
@@ -177,11 +180,11 @@ class IndexController extends Controller
    * @param  char(1)  $frequency
    * @return \Illuminate\Http\Response
    */
-  public function singlePrice(Request $request){
-  	$index = $request->indexId;
-  	$date_start = $request->date_start;
-  	$date_end = $request->date_end;
-  	$frequency = $request->frequency;
+  public function singlePrice(Request $req){
+  	$index = $req->indexId;
+  	$date_start = $req->date_start;
+  	$date_end = $req->date_end;
+  	$frequency = $req->frequency;
 
     $interval = date_diff(date_create($date_start), date_create($date_end));
 
@@ -245,13 +248,13 @@ class IndexController extends Controller
    * @param  bool  $envelope
    * @return \Illuminate\Http\Response
    */
-  public function singleDate(Request $request){
+  public function singleDate(Request $req){
     $query = DB::table('index_price AS ip1')
       ->select('index.id', 'index_provider', 'index_name', 'ip1.date', 'ip1.price')
       ->join('index', 'ip1.index_id', '=', 'index.id')
       ->orderBy('index.id');
 
-    if($request->date) $query->where('date', '=', date('Y-m-d', strtotime($request->date)));
+    if($req->date) $query->where('date', '=', date('Y-m-d', strtotime($req->date)));
 
     else $query->join(DB::raw('(select index_id, MAX(date) AS date FROM index_price GROUP BY index_id) as ip2'),
       function($join){
@@ -260,13 +263,13 @@ class IndexController extends Controller
       });
 
     $result = $query->get();
-    if($request->envelope) $result = [ 'indices' => $result ];
+    if($req->envelope) $result = [ 'indices' => $result ];
     
     return response()->json($result, 200);
   }
 
-  public function storeSingleDate(Request $request){
-    $date = strtotime($request->date);
+  public function storeSingleDate(Request $req){
+    $date = strtotime($req->date);
 
     $day_of_year = date('z', $date);
     $day_of_month = date('j', $date);
@@ -277,7 +280,7 @@ class IndexController extends Controller
     $date = date('Y-m-d', $date);
     $is_autogenerated = false;
 
-    foreach ($request->value as $key => $price) {
+    foreach ($req->value as $key => $price) {
       $indexPrice = IndexPrice::updateOrCreate(
         [ 'date' => $date, 'index_id' => $key ],
         [ 
@@ -293,7 +296,7 @@ class IndexController extends Controller
       );
     }
 
-    return response()->json($request,200);
+    return response()->json($req,200);
   }
 }
 
