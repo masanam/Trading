@@ -15,7 +15,11 @@ angular.module('order').controller('SellOrderController', ['$scope', '$uibModal'
         $scope.sell_orderId = $stateParams.id;
       }
 
-      $scope.sell_order = Order.get({ type: 'sell', id: $scope.sell_orderId });
+      $scope.sell_order = Order.get({ type: 'sell', id: $scope.sell_orderId }, function(res){
+        res.port_latitude = parseFloat(res.port_latitude);
+        res.port_longitude = parseFloat(res.port_longitude);
+        $scope.sell_order = res;
+      });
     };
 
     $scope.initCollapse = function() {

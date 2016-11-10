@@ -100,6 +100,7 @@ class CreateBuysTable extends Migration
             $table->integer('volume')->nullable();
             $table->integer('max_price')->nullable();
             $table->string('trading_term')->nullable();
+            $table->string('trading_term_detail')->nullable();
             $table->string('payment_terms')->nullable();
             $table->longText('commercial_term')->nullable();
             $table->longText('penalty_desc')->nullable();

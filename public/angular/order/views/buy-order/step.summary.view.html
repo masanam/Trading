@@ -23,6 +23,8 @@
         <h1>{{ buy_order.buyer.company_name }}</h1>
         <label>Product Name : </label>
         <p>{{ buy_order.product_name }}</p>
+        <label>Typical Quality : </label>
+        <p>{{ buy_order.typical_quality }}</p>
         <label>Address : </label>
         <p>{{ buy_order.address }}</p>
         <div class="col-xs-6" style="padding-left:0">
@@ -46,8 +48,9 @@
               <option value="FAS">FAS</option>
               <option value="FOB">FOB</option>
               <option value="Franco">Franco</option>
+              <option value="">Other</option>
             </select>
-            <input type="text" class="form-control" ng-model="buy_order.trading_term" placeholder="Other" />
+            <input type="text" class="form-control" ng-model="buy_order.trading_term_detail" placeholder="Detail" />
           </p>
         </div>
         <div class="col-xs-6" style="padding-left:0">
@@ -67,11 +70,13 @@
             <input type="date" class="form-control" ng-model="buy_order.expired_date"/>
           </p>
           <label>Payment Terms : </label>
-          <select class="form-control" ng-model="buy_order.payment_terms">
+          <select class="form-control" ng-model="buy_order.payment_terms" ng-change="freetext(buy_order.payment_terms)">
             <option value="TT">TT</option>
             <option value="LC on Sight">LC on Sight</option>
             <option value="LC on 30 days">LC on 30 days</option>
+            <option value="other">Other</option>
           </select>
+          <input type="text" class="form-control" ng-model="buy_order.payment_terms" placeholder="Payment Terms" ng-if="buy_order.payment_terms===''"/>
         </div>
         <div class="col-xs-12" style="padding-left:0">
           <label>Penalty : </label>

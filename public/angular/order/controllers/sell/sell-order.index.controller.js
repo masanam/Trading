@@ -19,6 +19,14 @@ angular.module('order').controller('SellOrderIndexController', ['$scope', '$loca
       $scope.sell_orders = Order.query({ type: 'sell', action: 'status', order_status: 's' });
     };
 
+    $scope.findPartial = function() {
+      $scope.sell_orders = Order.query({ type: 'sell', action: 'status', order_status: 'p' });
+    };
+
+    $scope.findAll = function() {
+      $scope.sell_orders = Order.query({ type: 'sell' });
+    };
+
     $scope.toSupplier = function(id) {
       $location.path('sell-order/create/supplier/'+id);
     };

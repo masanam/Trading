@@ -30,6 +30,8 @@
         <h1>{{ buy_order.buyer.company_name }}</h1>
         <label>Product Name : </label>
         <p>{{ buy_order.product_name }}</p>
+        <label>Typical Quality : </label>
+        <p>{{ buy_order.typical_quality }}</p>
         <label>Address : </label>
         <p>{{ buy_order.address }}</p>
         <div class="col-xs-6" style="padding-left:0">
@@ -202,6 +204,18 @@
                 <td>{{buy_order.size_min}} - {{buy_order.size_max}} %</td>
                 <td>{{buy_order.size_bonus}}</td>
                 <td>{{buy_order.size_reject}}</td>
+              </tr>
+              <tr>
+                <td><b>Fe2o3 </b></td>
+                <td>{{buy_order.fe2o3_min}} - {{buy_order.fe2o3_max}} %</td>
+                <td>{{buy_order.fe2o3_bonus}}</td>
+                <td>{{buy_order.fe2o3_reject}}</td>
+              </tr>
+              <tr>
+                <td><b>AFT</b></td>
+                <td>{{buy_order.aft_min}} - {{buy_order.aft_max}} &#176</td>
+                <td>{{buy_order.aft_bonus}}</td>
+                <td>{{buy_order.aft_reject}}</td>
               </tr>
             </tbody>
           </table>

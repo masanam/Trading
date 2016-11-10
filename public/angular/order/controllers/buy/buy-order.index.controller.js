@@ -19,6 +19,14 @@ angular.module('order').controller('BuyOrderIndexController', ['$scope', '$locat
       $scope.buy_orders = Order.query({ type: 'buy', action: 'status', order_status: 's' });
     };
 
+    $scope.findPartial = function() {
+      $scope.buy_orders = Order.query({ type: 'buy', action: 'status', order_status: 'p' });
+    };
+
+    $scope.findAll = function() {
+      $scope.buy_orders = Order.query({ type: 'buy' });
+    };
+
     $scope.toCustomer = function(id) {
       $location.path('buy-order/create/customer/'+id);
     };

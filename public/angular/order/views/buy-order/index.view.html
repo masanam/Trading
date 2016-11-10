@@ -32,6 +32,18 @@
           </uib-tab-heading>
           <section ng-include="'/angular/order/views/buy-order/_table.view.html'"></section>
         </uib-tab>
+        <uib-tab index="4" ng-click="findPartial()">
+          <uib-tab-heading>
+            <i class='glyphicon glyphicon-magnet'></i>  Partial<i class='glyphicon glyphicon-chevron-right pull-right'></i>
+          </uib-tab-heading>
+          <section ng-include="'/angular/order/views/buy-order/_table.view.html'"></section>
+        </uib-tab>
+        <uib-tab index="5" ng-click="findAll()">
+          <uib-tab-heading>
+            <i class='glyphicon glyphicon-magnet'></i>  All<i class='glyphicon glyphicon-chevron-right pull-right'></i>
+          </uib-tab-heading>
+          <section ng-include="'/angular/order/views/buy-order/_table.view.html'"></section>
+        </uib-tab>
       </uib-tabset>
     </div>
   </div>
