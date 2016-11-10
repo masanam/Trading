@@ -43,7 +43,7 @@
 			<tr>
 				<td>Company</td>
 				<td>
-					<span ng-if="display.sell">
+					<span ng-if="display.sell && display.sell.user_id === Authentication.user.id">
 						{{ display.sell.seller.company_name }}
 						<span class="pull-right">
 							<a ng-click="alert(nego)" href="#" class="glyphicon glyphicon-pencil"></a>
@@ -52,7 +52,7 @@
 					</span>
 				</td>
 				<td>
-					<span ng-if="display.sell">
+					<span ng-if="display.buy && display.buy.user_id === Authentication.user.id">
 						{{ display.buy.buyer.company_name }}
 						<span class="pull-right">
 							<a ng-click="alert(nego)" href="#" class="glyphicon glyphicon-pencil"></a>
@@ -66,13 +66,13 @@
 				<td>
 					<span ng-if="display.sell">
 						{{ display.sell.pivot.volume }}t - US$ {{ display.sell.pivot.price }}
-						<a ng-click="alert(nego)"  href="#" class="pull-right">Nego</a>
+						<a ng-click="alert(nego)" ng-if="display.sell.user_id === Authentication.user.id" href="#" class="pull-right">Nego</a>
 					</span>
 				</td>
 				<td>
-					<span ng-if="display.sell">
+					<span ng-if="display.buy">
 						{{ display.buy.pivot.volume }}t - US$ {{ display.buy.pivot.price }}
-						<a ng-click="alert(nego)"  href="#" class="pull-right">Nego</a>
+						<a ng-click="alert(nego)" ng-if="display.buy.user_id === Authentication.user.id" href="#" class="pull-right">Nego</a>
 					</span>
 				</td>
 			</tr>
@@ -88,17 +88,17 @@
 			</tr>
 			<tr>
 				<td>Location</td>
-				<td>{{ display.sell.address }}</td>
-				<td>{{ display.buy.address }}</td>
+				<td><span ng-if="display.buy.user_id === Authentication.user.id">{{ display.sell.address }}</span></td>
+				<td><span ng-if="display.buy.user_id === Authentication.user.id">{{ display.buy.address }}</span></td>
 			</tr>
 
 			<tr>
 				<td>Port</td>
-				<td>{{ display.sell.port_name }}</td>
-				<td>{{ display.buy.port_name }}</td>
+				<td><span ng-if="display.buy.user_id === Authentication.user.id">{{ display.sell.port_name }}</span></td>
+				<td><span ng-if="display.buy.user_id === Authentication.user.id">{{ display.buy.port_name }}</span></td>
 			</tr>
 			<tr>
-				<td>City</td>
+				<td>Province/City</td>
 				<td>{{ display.sell.city }}</td>
 				<td>{{ display.buy.city }}</td>
 			</tr>
