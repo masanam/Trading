@@ -1,0 +1,43 @@
+      
+      <table st-table="orders" st-safe-src="orderCollection" class="table table-striped">
+        <thead>
+          <tr>
+              <th colspan="9"><input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
+          </tr>
+          <tr>
+            <th st-sort="id">#</th>
+            <th st-sort="user_id">Trader</th>
+            <th st-sort="status">Status</th>
+            <th st-sort="created_at">Created At</th>
+            <th st-sort="updated_at">Updated At</th>
+            <th>Approval Status</th>
+            <th></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr ng-repeat="order in orders">
+            <td>{{ order.id }}</td>
+            <td>{{ order.trader.name }}</td>
+            <td ng-if="order.status === 'o'">Open</td>
+            <td ng-if="order.status === 'd'">Draft</td>
+            <td ng-if="order.status === 'x'">Deleted</td>
+            <td ng-if="order.status === 'p'">Pending</td>
+            <td ng-if="order.status === 'f'">Finalized</td>
+            <td>{{ order.created_at | date:'d/M/yy' }}</td>
+            <td>{{ order.updated_at | date:'d/M/yy' }}</td>
+            <td>
+              <div ng-repeat="app in order.approvals.slice().reverse()">
+                {{ app.name | firstWord }} [{{ app.status }}]
+              </div>
+            </td>
+            <td>
+              <a ui-sref="order.view({ id: order.id })"><i class="glyphicon glyphicon-eye-open"></i></a>
+              
+            </td>
+          </tr>
+          <tr ng-if="orders.length == 0">
+            <td colspan="6" class="text-center">No data available</td>
+          </tr>
+        </tbody>
+      </table>
