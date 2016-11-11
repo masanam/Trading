@@ -17,7 +17,9 @@ class CreateOrdersTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->char('status', 1);
-            $table->string('reason');
+            $table->string('cancel_reason')->nullable();
+            $table->string('request_reason')->nullable();
+            $table->string('finalize_reason')->nullable();
             $table->timestamps();
         });
 

@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\DB;
 
 use App\Http\Requests;
 use App\Model\User;
+use App\Model\BuyOrder;
+use App\Model\SellOrder;
 use App\Model\Order;
 use App\Model\OrderNegotiation;
 use Auth;
@@ -119,8 +121,16 @@ class OrderController extends Controller
     }
     $this->authorize('update', $order);
 
+    $order->reason = $request->reason;
     $order->status = $request->status;
     //$order->updated_at = date('Y-m-d H:i:s');
+    
+    if($order->status == 'x'){
+      $buy_ids = $order->buys()->pluck('buy_order.id'); 
+      BuyOrder::whereIn('id', $buy_ids)->update(['order_status' => 'p']);
+      $sell_ids = $order->sells()->pluck('sell_order.id'); 
+      SellOrder::whereIn('id', $sell_ids)->update(['order_status' => 'p']);
+    }
     $order->save();
 
     return response()->json($order, 200);

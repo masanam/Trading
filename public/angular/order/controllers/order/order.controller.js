@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('order').controller('OrderController', ['$scope', '$stateParams', '$state', 'Order', 'Authentication',
-  function($scope, $stateParams, $state, Order, Authentication) {
+angular.module('order').controller('OrderController', ['$scope', '$stateParams', '$state', 'Order', 'Authentication', '$uibModal',
+  function($scope, $stateParams, $state, Order, Authentication, $uibModal) {
     $scope.browse = {};
 
     $scope.$watchGroup(['browse.status', 'browse.possession'], function() { $scope.find(); });
@@ -61,38 +61,40 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
     };
     
     // Request for Approval 
-    $scope.request = function () {
+    $scope.changeStatus = function (status) {
       $scope.error = null;
-
-      var order = $scope.order;
+      $scope.reason = '';
       
-      order.status = 'p';
+      var modalInstance = $uibModal.open({
+        windowClass: 'xl-modal',
+        templateUrl: './angular/order/views/order/_reason.modal.html',
+        controller: 'OrderReasonModalController',
+        scope: $scope,
+        resolve: {
+          status: function () { return status; },
+        }
+      });
+
+      /*var order = $scope.order;
+      
+      order.status = status;
 
       order.$update(function (res) {
-        $scope.order.status = 'p';
+        $scope.order.status = status;
         //$state.go('order.view', { orderId: res.id });
       }, function (err) {
         $scope.error = err.data.message;
-      });
+      });*/
     };
     
-    
-    // Finalize Order
-    $scope.finalize = function () {
-      $scope.error = null;
-
-      var order = $scope.order;
-      
-      order.status = 'f';
-
-      order.$update(function (res) {
-        $scope.order.status = 'f';
-        //$state.go('order.view', { orderId: res.id });
-      }, function (err) {
-        $scope.error = err.data.message;
+    $scope.openReasonModal = function () {
+      var modalInstance = $uibModal.open({
+        windowClass: 'xl-modal',
+        templateUrl: './angular/order/views/order/_reason.modal.html',
+        controller: 'OrderReasonModalController',
+        scope: $scope,
       });
     };
-    
     
     // Approve Order
     /*$scope.approve_reject = function (status) {
