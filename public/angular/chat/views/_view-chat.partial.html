@@ -6,7 +6,7 @@
     </div><!-- /.box-header -->
     <div class="box-body">
       <!-- Conversations are loaded here -->
-      <div style="height:350px; max-height: 350px;" scroll-glue>
+      <div style="height:350px; max-height: 350px; overflow-y: scroll;" scroll-glue>
         <span class="direct-chat-messages" ng-repeat="chat in chats" ng-switch="chat.user_id === user.id">
           <!-- Message. Default to the left -->
 
