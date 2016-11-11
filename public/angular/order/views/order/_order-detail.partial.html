@@ -11,8 +11,9 @@
         </td>
       </tr>
 			<tr>
-				<th></th><th>
-					<span style="font-size:20pt">Buys</span>
+				<th></th>
+        <th>
+					<span style="font-size:20pt">Buy</span>
 					<span ng-if="order.sells.length" uib-dropdown class="pull-right" ng-init="display.sell = order.sells[0]">
 			      <button type="button" class="btn btn-default" uib-dropdown-toggle>
 			        {{display.sell.seller.company_name}} ({{ order.sells.length }}) <span class="caret"></span>
@@ -25,7 +26,7 @@
 			    </span>
 				</th>
 				<th>
-					<span style="font-size:20pt">Sells</span>
+					<span style="font-size:20pt">Sell</span>
 					<span ng-if="order.buys.length" uib-dropdown class="pull-right" ng-init="display.buy = order.buys[0]">
 			      <button type="button" class="btn btn-default" uib-dropdown-toggle>
 			        {{display.buy.buyer.company_name}} ({{ order.buys.length }})<span class="caret"></span>
@@ -41,8 +42,14 @@
 		</thead>
 		<tbody>
       <tr>
-				<th colspan="3" style="text-align:center;">Order Details</th>
+				<th colspan="3" style="text-align:center;">
+          <a href="#" ng-click="isCollapsed = !isCollapsed">Order Details</a>
+          <span class="glyphicon glyphicon-triangle-bottom pull-right" ng-if="isCollapsed"></span> 
+          <span class="glyphicon glyphicon-triangle-top pull-right" ng-if="!isCollapsed"></span> 
+        </th>
 			</tr>
+    </tbody>
+    <tbody uib-collapse="isCollapsed">
 			<tr>
 				<td>Company</td>
 				<td ng-switch="display.sell && display.sell.user_id === Authentication.user.id">
@@ -95,6 +102,15 @@
 				<td>{{ display.sell.ready_date | date:'mediumDate' }} - {{ display.sell.order_deadline | date:'mediumDate' }}</td>
 				<td>{{ display.buy.ready_date | date:'mediumDate' }} - {{ display.buy.order_deadline | date:'mediumDate' }}</td>
 			</tr>
+      <tr>
+				<td>Shipping Term</td>
+				<td>
+					<span>{{ display.sell.trading_term }}</span>
+				</td>
+				<td>
+					<span>{{ display.buy.trading_term }}</span>
+				</td>
+			</tr>
 			<tr>
 				<td>Location</td>
 				<td ng-switch="display.sell.user_id === Authentication.user.id">
@@ -106,7 +122,6 @@
 					<i ng-switch-default style="color:green">-Contact {{ display.buy.trader.name }}-</i>
 				</td>
 			</tr>
-
 			<tr>
 				<td>Port</td>
 				<td ng-switch="display.sell.user_id === Authentication.user.id">
@@ -118,56 +133,295 @@
 					<i ng-switch-default style="color:green">-Contact {{ display.buy.trader.name }}-</i>
 				</td>
 			</tr>
-			<tr>
-				<td>NCV</td>
-				<td>
-					<span ng-if="display.sell">
-					{{ display.sell.ncv_min }} ~ {{ display.sell.ncv_max }} kcal<br>
-					{{ display.sell.ncv_reject }} kcal reject; {{ display.sell.ncv_bonus }} kcal bonus
-					</span>
-				</td>
-				<td>
-					<span ng-if="display.sell">
-					{{ display.buy.ncv_min }} ~ {{ display.buy.ncv_max }} kcal<br>
-					{{ display.buy.ncv_reject }} kcal reject; {{ display.buy.ncv_bonus }} kcal bonus
-					</span>
-				</td>
+    </tbody>
+    <tbody>
+      <tr>
+				<th colspan="3" style="text-align:center;">
+          <a href="#" ng-click="qualityCollapsed = !qualityCollapsed">Quality</a>
+          <span class="glyphicon glyphicon-triangle-bottom pull-right" ng-if="!qualityCollapsed"></span> 
+          <span class="glyphicon glyphicon-triangle-top pull-right" ng-if="qualityCollapsed"></span> 
+        </th>
 			</tr>
-			<tr>
-				<td>GCV (arb)</td>
-				<td>
-					<span ng-if="display.sell">
-					{{ display.sell.gcv_arb_min }} ~ {{ display.sell.gcv_arb_max }} kcal<br>
-					{{ display.sell.gcv_arb_reject }} kcal reject; {{ display.sell.gcv_arb_bonus }} kcal bonus
-					</span>
-				</td>
-				<td>
-					<span ng-if="display.sell">
-					{{ display.buy.gcv_arb_min }} ~ {{ display.buy.gcv_arb_max }} kcal<br>
-					{{ display.buy.gcv_arb_reject }} kcal reject; {{ display.buy.gcv_arb_bonus }} kcal bonus
-					</span>
-				</td>
-			</tr>
-			<tr>
-				<td>GCV (adb)</td>
-				<td>
+    </tbody>
+    <tbody uib-collapse="!qualityCollapsed">
+      <tr>
+        <td><b>GCV ADB </b></td>
+        <td>
 					<span ng-if="display.sell">
 					{{ display.sell.gcv_adb_min }} ~ {{ display.sell.gcv_adb_max }} kcal<br>
 					{{ display.sell.gcv_adb_reject }} kcal reject; {{ display.sell.gcv_adb_bonus }} kcal bonus
 					</span>
 				</td>
 				<td>
-					<span ng-if="display.sell">
+					<span ng-if="display.buy">
 					{{ display.buy.gcv_adb_min }} ~ {{ display.buy.gcv_adb_max }} kcal<br>
 					{{ display.buy.gcv_adb_reject }} kcal reject; {{ display.buy.gcv_adb_bonus }} kcal bonus
 					</span>
 				</td>
+      </tr>
+      <tr>
+        <td><b>GCV ARB </b></td>
+        <td>
+					<span ng-if="display.sell">
+					{{ display.sell.gcv_arb_min }} ~ {{ display.sell.gcv_arb_max }} kcal<br>
+					{{ display.sell.gcv_arb_reject }} kcal reject; {{ display.sell.gcv_arb_bonus }} kcal bonus
+					</span>
+				</td>
+				<td>
+					<span ng-if="display.buy">
+					{{ display.buy.gcv_arb_min }} ~ {{ display.buy.gcv_arb_max }} kcal<br>
+					{{ display.buy.gcv_arb_reject }} kcal reject; {{ display.buy.gcv_arb_bonus }} kcal bonus
+					</span>
+				</td>
+      </tr>
+      <tr>
+        <td><b>NCV ARB </b></td>
+        <td>
+					<span ng-if="display.sell">
+					{{ display.sell.ncv_min }} ~ {{ display.sell.ncv_max }} kcal<br>
+					{{ display.sell.ncv_reject }} kcal reject; {{ display.sell.ncv_bonus }} kcal bonus
+					</span>
+				</td>
+				<td>
+					<span ng-if="display.buy">
+					{{ display.buy.ncv_min }} ~ {{ display.buy.ncv_max }} kcal<br>
+					{{ display.buy.ncv_reject }} kcal reject; {{ display.buy.ncv_bonus }} kcal bonus
+					</span>
+				</td>
+      </tr>
+      <tr>
+        <td><b>Total Moisture (ARB) </b></td>
+        <td>
+					<span ng-if="display.sell">
+					{{ display.sell.tm_min }} ~ {{ display.sell.tm_max }} kcal<br>
+					{{ display.sell.tm_reject }} kcal reject; {{ display.sell.tm_bonus }} kcal bonus
+					</span>
+				</td>
+				<td>
+					<span ng-if="display.buy">
+					{{ display.buy.tm_min }} ~ {{ display.buy.tm_max }} kcal<br>
+					{{ display.buy.tm_reject }} kcal reject; {{ display.buy.tm_bonus }} kcal bonus
+					</span>
+				</td>
+      </tr>
+      <tr>
+        <td><b>Inherent Moisture (ADB) </b></td>
+        <td>
+					<span ng-if="display.sell">
+					{{ display.sell.im_min }} ~ {{ display.sell.im_max }} kcal<br>
+					{{ display.sell.im_reject }} kcal reject; {{ display.sell.im_bonus }} kcal bonus
+					</span>
+				</td>
+				<td>
+					<span ng-if="display.buy">
+					{{ display.buy.im_min }} ~ {{ display.buy.im_max }} kcal<br>
+					{{ display.buy.im_reject }} kcal reject; {{ display.buy.im_bonus }} kcal bonus
+					</span>
+				</td>
+      </tr>
+      <tr>
+        <td><b>Volatile Matter (ADB) </b></td>
+        <td>
+					<span ng-if="display.sell">
+					{{ display.sell.vm_min }} ~ {{ display.sell.vm_max }} kcal<br>
+					{{ display.sell.vm_reject }} kcal reject; {{ display.sell.vm_bonus }} kcal bonus
+					</span>
+				</td>
+				<td>
+					<span ng-if="display.buy">
+					{{ display.buy.vm_min }} ~ {{ display.buy.vm_max }} kcal<br>
+					{{ display.buy.vm_reject }} kcal reject; {{ display.buy.vm_bonus }} kcal bonus
+					</span>
+				</td>>
+      </tr>
+      <tr>
+        <td><b>Ash (ADB) </b></td>
+        <td>
+					<span ng-if="display.sell">
+					{{ display.sell.ash_min }} ~ {{ display.sell.ash_max }} kcal<br>
+					{{ display.sell.ash_reject }} kcal reject; {{ display.sell.ash_bonus }} kcal bonus
+					</span>
+				</td>
+				<td>
+					<span ng-if="display.buy">
+					{{ display.buy.ash_min }} ~ {{ display.buy.ash_max }} kcal<br>
+					{{ display.buy.ash_reject }} kcal reject; {{ display.buy.ash_bonus }} kcal bonus
+					</span>
+				</td>
+      </tr>
+      <tr>
+        <td><b>Fixed Carbon (ADB) </b></td>
+        <td>
+					<span ng-if="display.sell">
+					{{ display.sell.fc_min }} ~ {{ display.sell.fc_max }} kcal<br>
+					{{ display.sell.fc_reject }} kcal reject; {{ display.sell.fc_bonus }} kcal bonus
+					</span>
+				</td>
+				<td>
+					<span ng-if="display.buy">
+					{{ display.buy.fc_min }} ~ {{ display.buy.fc_max }} kcal<br>
+					{{ display.buy.fc_reject }} kcal reject; {{ display.buy.fc_bonus }} kcal bonus
+					</span>
+				</td>
+      </tr>
+      <tr>
+        <td><b>Total Sulphur (ADB) </b></td>
+        <td>
+					<span ng-if="display.sell">
+					{{ display.sell.ts_min }} ~ {{ display.sell.ts_max }} kcal<br>
+					{{ display.sell.ts_reject }} kcal reject; {{ display.sell.ts_bonus }} kcal bonus
+					</span>
+				</td>
+				<td>
+					<span ng-if="display.buy">
+					{{ display.buy.ts_min }} ~ {{ display.buy.ts_max }} kcal<br>
+					{{ display.buy.ts_reject }} kcal reject; {{ display.buy.ts_bonus }} kcal bonus
+					</span>
+				</td>
+      </tr>
+      <tr>
+        <td><b>HGI </b></td>
+        <td>
+					<span ng-if="display.sell">
+					{{ display.sell.hgi_min }} ~ {{ display.sell.hgi_max }} kcal<br>
+					{{ display.sell.hgi_reject }} kcal reject; {{ display.sell.hgi_bonus }} kcal bonus
+					</span>
+				</td>
+				<td>
+					<span ng-if="display.buy">
+					{{ display.buy.hgi_min }} ~ {{ display.buy.hgi_max }} kcal<br>
+					{{ display.buy.hgi_reject }} kcal reject; {{ display.buy.hgi_bonus }} kcal bonus
+					</span>
+				</td>
+      </tr>
+      <tr>
+        <td><b>SIZE (0-50mm)</b></td>
+        <td>
+					<span ng-if="display.sell">
+					{{ display.sell.size_min }} ~ {{ display.sell.size_max }} kcal<br>
+					{{ display.sell.size_reject }} kcal reject; {{ display.sell.size_bonus }} kcal bonus
+					</span>
+				</td>
+				<td>
+					<span ng-if="display.buy">
+					{{ display.buy.size_min }} ~ {{ display.buy.size_max }} kcal<br>
+					{{ display.buy.size_reject }} kcal reject; {{ display.buy.size_bonus }} kcal bonus
+					</span>
+				</td>
+      </tr>
+      <tr>
+        <td><b>Fe2o3 </b></td>
+        <td>
+					<span ng-if="display.sell">
+					{{ display.sell.fe2o3_min }} ~ {{ display.sell.fe2o3_max }} kcal<br>
+					{{ display.sell.fe2o3_reject }} kcal reject; {{ display.sell.fe2o3_bonus }} kcal bonus
+					</span>
+				</td>
+				<td>
+					<span ng-if="display.buy">
+					{{ display.buy.fe2o3_min }} ~ {{ display.buy.fe2o3_max }} kcal<br>
+					{{ display.buy.fe2o3_reject }} kcal reject; {{ display.buy.fe2o3_bonus }} kcal bonus
+					</span>
+				</td>
+      </tr>
+      <tr>
+        <td><b>AFT</b></td>
+        <td>
+					<span ng-if="display.sell">
+					{{ display.sell.aft_min }} ~ {{ display.sell.aft_max }} kcal<br>
+					{{ display.sell.aft_reject }} kcal reject; {{ display.sell.aft_bonus }} kcal bonus
+					</span>
+				</td>
+				<td>
+					<span ng-if="display.buy">
+					{{ display.buy.aft_min }} ~ {{ display.buy.aft_max }} kcal<br>
+					{{ display.buy.aft_reject }} kcal reject; {{ display.buy.aft_bonus }} kcal bonus
+					</span>
+				</td>
+      </tr>
+    </tbody>
+    <tbody>
+      <tr>
+				<th colspan="3" style="text-align:center;">
+          <a href="#" ng-click="financialCollapsed = !financialCollapsed">Financial Summary</a>
+          <span class="glyphicon glyphicon-triangle-bottom pull-right" ng-if="!financialCollapsed"></span> 
+          <span class="glyphicon glyphicon-triangle-top pull-right" ng-if="financialCollapsed"></span> 
+        </th>
 			</tr>
-
+    </tbody>
+    <tbody uib-collapse="!financialCollapsed">
 			<tr>
-				<th>Summary</th>
+				<th>Coal Price / mt</th>
+				<td>
+					<span ng-if="display.buy">
+					{{ 1000 | number }}mt<br>
+					US${{ 51000 | number }}<br>
+					from {{ order.sells.length }} Suppliers
+					</span>
+				</td>
 				<td>
 					<span ng-if="display.sell">
+					{{ 1000 | number }}mt<br>
+					US${{ 51000 | number }}<br>
+					from {{ order.buys.length }} Customers
+					</span>
+				</td>
+			</tr>
+      <tr>
+				<th>Pit to Port / mt</th>
+				<td>
+					<span ng-if="display.buy">
+					{{ 1000 | number }}mt<br>
+					US${{ 51000 | number }}<br>
+					from {{ order.sells.length }} Suppliers
+					</span>
+				</td>
+				<td>
+					<span ng-if="display.sell">
+					{{ 1000 | number }}mt<br>
+					US${{ 51000 | number }}<br>
+					from {{ order.buys.length }} Customers
+					</span>
+				</td>
+			</tr>
+      <tr>
+				<th>Transhipment</th>
+				<td>
+					<span ng-if="display.buy">
+					{{ 1000 | number }}mt<br>
+					US${{ 51000 | number }}<br>
+					from {{ order.sells.length }} Suppliers
+					</span>
+				</td>
+				<td>
+					<span ng-if="display.sell">
+					{{ 1000 | number }}mt<br>
+					US${{ 51000 | number }}<br>
+					from {{ order.buys.length }} Customers
+					</span>
+				</td>
+			</tr>
+      <tr>
+				<th>Freight Cost</th>
+				<td>
+					<span ng-if="display.buy">
+					{{ 1000 | number }}mt<br>
+					US${{ 51000 | number }}<br>
+					from {{ order.sells.length }} Suppliers
+					</span>
+				</td>
+				<td>
+					<span ng-if="display.sell">
+					{{ 1000 | number }}mt<br>
+					US${{ 51000 | number }}<br>
+					from {{ order.buys.length }} Customers
+					</span>
+				</td>
+			</tr>
+      <tr>
+				<th>Port to Factory / mt</th>
+				<td>
+					<span ng-if="display.buy">
 					{{ 1000 | number }}mt<br>
 					US${{ 51000 | number }}<br>
 					from {{ order.sells.length }} Suppliers
