@@ -24,16 +24,16 @@
           <i class="glyphicon glyphicon-chevron-left"></i> Back
         </a>
         <a class="btn btn-primary" ng-click="print(order);" ng-if="included === true" ng-show="(order.status === 'a' || order.status === 'f') && (order.user_id === Authentication.user.id || approver === true)">
-          <i class="glyphicon glyphicon-print" title="Print"></i>
+          <i class="glyphicon glyphicon-print" title="Print"></i> Print
         </a>
         <a class="btn btn-success" ng-click="request(order);" ng-if="included === true" ng-show="order.status === 'd' && order.user_id === Authentication.user.id">
-          <i class="glyphicon glyphicon-send" title="Request for Approval"></i>
+          <i class="glyphicon glyphicon-send" title="Request for Approval"></i> Request Approval
         </a>
         <a class="btn btn-success" ng-click="finalize(order);" ng-if="included === true" ng-show="order.status === 'a' && order.user_id === Authentication.user.id">
-          <i class="glyphicon glyphicon-floppy-saved" title="Finalize Order"></i>
+          <i class="glyphicon glyphicon-floppy-saved" title="Finalize Order"></i> Finalize Order
         </a>
         <a class="btn btn-danger" ng-click="remove(order);" ng-if="included === true" ng-show="(order.status !== 'x' || order.status === 'f') && order.user_id === Authentication.user.id">
-          <i class="glyphicon glyphicon-trash" title="Cancel Order"></i>
+          <i class="glyphicon glyphicon-trash" title="Cancel Order"></i> Cancel Order
         </a>
       </div>
     </div>
