@@ -101,7 +101,7 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
       $scope.error = null;
 
       Order.get({ id: $scope.order.id, action: 'approve', status : status }, function (res) {
-        //$scope.order.status = 'f';
+        $scope.order = res;
       }, function (err) {
         $scope.error = err.data.message;
       });

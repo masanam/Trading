@@ -156,12 +156,11 @@ class OrderController extends Controller
       $q->where('user_id', Auth::user()->id);
     }])->find($id);
     
-    if(!empty($order->approvals()->pluck('order_approvals.user_id'))){
-      $order_approval = OrderApproval::where('user_id', Auth::user()->id)->where('order_id', $id)->get();
-      
-      var_dump($order_approval);
+    if($order->approvals->count() > 0){
+      $order_approval = OrderApproval::where('user_id', Auth::user()->id)->where('order_id', $id)->first();
       $order_approval->status = $request->status;
       $order_approval->save();
+      
     }else{
       $order_approval = new OrderApproval();
       $order_approval->order_id = $id;
@@ -169,17 +168,17 @@ class OrderController extends Controller
       $order_approval->status = $request->status;
       $order_approval->save();
       
-      $order = Order::with('approvals')->find($id);
     }
-    /*var_dump($request);
-    var_dump($order);*/
     
-    /*foreach($buy_ids as $id){
-      $id = 
-    }*/
+    if(!Auth::user()->manager_id && $request->status == 'a'){
+      $order->status = 'a';
+      $order->save();
+    }else{
+      $order->status = 'p';
+      $order->save();
+    }
     
-    /*$order->approvals()->status = 'x';
-    $order->save();*/
+    $order = Order::with('approvals')->find($id);
 
     return response()->json($order, 200);
   }
