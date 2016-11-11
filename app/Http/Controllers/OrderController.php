@@ -169,8 +169,8 @@ class OrderController extends Controller
     ];
 
     if($req->buy) $order->buys()->attach([ $req->buy => $details ]);
-    if($req->buy) $order->sells()->attach([ $req->sell => $details ]);
+    if($req->sell) $order->sells()->attach([ $req->sell => $details ]);
 
-    return $order;
+    return response()->json($order, 200);
   }
 }
