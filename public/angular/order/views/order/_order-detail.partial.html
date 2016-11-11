@@ -81,13 +81,13 @@
 				<td>Trx Value</td>
 				<td>
 					<span ng-if="display.sell">
-						{{ display.sell.pivot.volume }}t - US$ {{ display.sell.pivot.price }}
+						{{ display.sell.pivot.volume | number }}mt - US$ {{ display.sell.pivot.price | number }}
 						<a ng-click="alert(nego)" ng-if="display.sell.user_id === Authentication.user.id" href="#" class="pull-right">Nego</a>
 					</span>
 				</td>
 				<td>
 					<span ng-if="display.buy">
-						{{ display.buy.pivot.volume }}t - US$ {{ display.buy.pivot.price }}
+						{{ display.buy.pivot.volume | number }}mt - US$ {{ display.buy.pivot.price | number }}
 						<a ng-click="alert(nego)" ng-if="display.buy.user_id === Authentication.user.id" href="#" class="pull-right">Nego</a>
 					</span>
 				</td>
