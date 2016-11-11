@@ -1,11 +1,20 @@
 'use strict';
 
 angular.module('factory').controller('FactoryModalController',
-  function($scope, $stateParams, $uibModalInstance, $location, $interval, Factory, MultiStepForm) {
+  function($scope, $stateParams, $uibModalInstance, $location, $interval, Factory, NgMap, MultiStepForm) {
 
     $scope.init = function () {
       $scope.factory = new Factory();
     };
+    
+    var map;
+    $scope.$on('mapInitialized', function(evt, evtMap) {
+      map = evtMap;
+      $scope.markerMove = function(e) {
+        $scope.factory.latitude = e.latLng.lat();
+        $scope.factory.longitude = e.latLng.lng();
+      };
+    });
 
     $scope.create = function(){
       $scope.factory.buyer_id = $stateParams.id;
