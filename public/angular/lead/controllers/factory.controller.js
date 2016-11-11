@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('factory').controller('FactoryController', ['$scope', '$stateParams', '$location', '$uibModal', 'MultiStepForm',
-  function($scope, $stateParams, $location, $uibModal, MultiStepForm) {
+angular.module('factory').controller('FactoryController', ['$scope', '$stateParams', '$location', '$uibModal', 'MultiStepForm','NgMap','$state',
+  function($scope, $stateParams, $location, $uibModal, MultiStepForm,NgMap ,$state) {
     $scope.factorys = [];
     $scope.factory = {};
     $scope.new = $location.search().new;
@@ -23,8 +23,17 @@ angular.module('factory').controller('FactoryController', ['$scope', '$statePara
       }else{
         $scope.error = 'Please Select A Factory or Create New Factory';
       }
-      
     };
-    
+
+
+    var map;
+    $scope.$on('mapInitialized', function(evt, evtMap) {
+      map = evtMap;
+      $scope.markerMove = function(e) {
+         $scope.factory.latitude = $scope.map.markers[0].getPosition().lat();
+         $scope.factory.longitude = $scope.map.markers[0].getPosition().lng();
+      };
+    });
+
   }
 ]);
