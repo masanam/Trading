@@ -74,7 +74,11 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     public function Subordinates() {
-        return  $this->hasMany('App\Model\User', 'manager_id');;
+        return  $this->hasMany('App\Model\User', 'manager_id');
+    }
+
+    public function Manager() {
+        return  $this->belongsTo('App\Model\User', 'manager_id');
     }
 
     public function getAllSubordinates($user = false)
@@ -87,5 +91,18 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             $subs = array_merge($subs,$lower);
         }
         return $subs;
+    }
+
+    public function getAllManagers($user = false)
+    {
+        if(!$user) $user = $this;
+        $sups = [];
+        if($user->Manager){
+            $sups[] = $user->Manager;
+            $upper = $this->getAllManagers($user->Manager);
+
+            $sups = array_merge($sups,$upper);
+        }
+        return $sups;
     }
 }

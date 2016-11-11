@@ -48,7 +48,7 @@
           <label>Asking Price : </label>
           <p>$ {{ buy_order.max_price }}</p>
           <label>Laycan Schedule : </label>
-          <p>{{ buy_order.ready_date | date : 'd MMMM yyyy' }}</p>
+          <p>{{ buy_order.ready_date | date : 'd MMMM yyyy' }} - {{ buy_order.order_deadline | date : 'd MMMM yyyy' }}</p>
         </div>
         <div class="col-xs-12" style="padding-left:0">
           <label>Valid Until : </label>
@@ -60,7 +60,7 @@
         </div>
         <div class="col-xs-6" style="padding-left:0">
           <label>Payment Terms : </label>
-          <p>{{ buy_order.payment_terms | uppercase }}</p>
+          <p>{{ buy_order.payment_terms }}</p>
         </div>
         <label>Penalty : </label>
         <p>{{ buy_order.penalty_desc }}</p>
