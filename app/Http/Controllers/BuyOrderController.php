@@ -340,8 +340,8 @@ class BuyOrderController extends Controller
                 $lower[] = $sub->id;
             }
             $lower[] = Auth::User()->id;
-            $buy_order = BuyOrder::with('Buyer','User')->where('order_status', $order_status)->whereIn('user_id', $lower);
-            $buy_order2 = BuyOrder::with('User')->where('order_status', $order_status)->whereNotIn('user_id', $lower)->select('id', 'user_id', 'buyer_id', 'order_date', 'order_deadline', 'ready_date', 'expired_date', 'factory_id', 'address', 'city', 'country', 'latitude', 'longitude', 'port_distance', 'port_id', 'port_name', 'port_status', 'port_daily_rate', 'port_draft_height', 'port_latitude', 'port_longitude', DB::raw('NULL as product_name') , 'typical_quality', 'product_id', 'gcv_arb_min', 'gcv_arb_max', 'gcv_arb_reject', 'gcv_arb_bonus', 'gcv_adb_min', 'gcv_adb_max', 'gcv_adb_reject', 'gcv_adb_bonus', 'ncv_min', 'ncv_max', 'ncv_reject', 'ncv_bonus', 'ash_min', 'ash_max', 'ash_reject', 'ash_bonus', 'ts_min', 'ts_max', 'ts_reject', 'ts_bonus', 'tm_min', 'tm_max', 'tm_reject', 'tm_bonus', 'im_min', 'im_max', 'im_reject', 'im_bonus', 'fc_min', 'fc_max', 'fc_reject', 'fc_bonus', 'vm_min', 'vm_max', 'vm_reject', 'vm_bonus', 'hgi_min', 'hgi_max', 'hgi_reject', 'hgi_bonus', 'size_min', 'size_max', 'size_reject', 'size_bonus', 'fe2o3_min', 'fe2o3_max', 'fe2o3_reject', 'fe2o3_bonus', 'aft_min', 'aft_max', 'aft_reject', 'aft_bonus', 'volume', 'max_price', 'trading_term', 'trading_term_detail', 'payment_terms', 'commercial_term', 'penalty_desc', 'order_status', 'progress_status', 'created_at', 'updated_at');
+            $buy_order = BuyOrder::join('users', 'buy_order.user_id', '=', 'users.id')->join('buyers', 'buy_order.buyer_id', '=', 'buyers.id')->where('order_status', $order_status)->whereIn('buy_order.user_id', $lower)->select('buy_order.id', 'buy_order.user_id', 'order_date', 'order_deadline', 'expired_date', 'buy_order.address', 'buy_order.city', 'buy_order.country', DB::raw('NULL as product_name') , 'typical_quality', 'volume', 'max_price', 'order_status', 'users.name', 'company_name');
+            $buy_order2 = BuyOrder::join('users', 'buy_order.user_id', '=', 'users.id')->where('order_status', $order_status)->whereNotIn('user_id', $lower)->select('buy_order.id', 'user_id', 'order_date', 'order_deadline', 'expired_date', 'address', 'city', 'country', DB::raw('NULL as product_name') , 'typical_quality', 'volume', 'max_price', 'order_status', 'users.name', DB::raw('NULL as company_name'));
             // foreach ($buy_order2 as $buy) {
             //     $buy->buyer = [];
             // }
@@ -392,6 +392,11 @@ class BuyOrderController extends Controller
     public function getSub(){
         $user = Auth::User();
         return $user->getAllSubordinates();
+    }
+
+    public function getManager(){
+        $user = Auth::User();
+        return $user->getAllManagers();
     }
 
 

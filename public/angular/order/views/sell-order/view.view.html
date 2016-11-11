@@ -48,7 +48,7 @@
           <label>Asking Price : </label>
           <p>$ {{ sell_order.min_price }}</p>
           <label>Laycan Schedule : </label>
-          <p>{{ sell_order.ready_date | date : 'd MMMM yyyy' }}</p>
+          <p>{{ sell_order.ready_date | date : 'd MMMM yyyy' }} - {{ sell_order.order_deadline | date : 'd MMMM yyyy' }}</p>
         </div>
         <div class="col-xs-12" style="padding-left:0">
           <label>Valid Until : </label>
@@ -56,11 +56,11 @@
         </div>  
         <div class="col-xs-6" style="padding-left:0">
           <label>Shipping Term : </label>
-          <p>{{ sell_order.trading_term }} {{ buy_order.trading_term_detail }}</p>
+          <p>{{ sell_order.trading_term }} {{ sell_order.trading_term_detail }}</p>
         </div>
         <div class="col-xs-6" style="padding-left:0">
           <label>Payment Terms : </label>
-          <p>{{ sell_order.payment_terms | uppercase }}</p>
+          <p>{{ sell_order.payment_terms }}</p>
         </div>
         <label>Penalty : </label>
         <p>{{ sell_order.penalty_desc }}</p>

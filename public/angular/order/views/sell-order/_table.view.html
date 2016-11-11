@@ -5,9 +5,9 @@
     </tr>
     <tr>
       <th st-sort="id">#</th>
-      <th st-sort="user.name">PIC</th>
+      <th st-sort="name">PIC</th>
       <th st-sort="order_date">Input Date</th>
-      <th st-sort="seller.company_name">Company</th>
+      <th st-sort="company_name">Company</th>
       <th st-sort="product_name">Quality</th>
       <th st-sort="volume">Quantity</th>
       <th st-sort="order_deadline">Lead Expired Date</th>
@@ -21,9 +21,9 @@
   <tbody>
     <tr ng-repeat="sell_order in displayedCollection">
       <td>{{ sell_order.id }}</td>
-      <td>{{ sell_order.user.name }}</td>
+      <td>{{ sell_order.name }}</td>
       <td>{{ sell_order.order_date | date : 'd MMMM yyyy' }}</td>
-      <td>{{ sell_order.seller.company_name }}</td>
+      <td>{{ sell_order.company_name }}</td>
       <td>{{ sell_order.typical_quality }}</td>
       <td>{{ sell_order.volume }} Metric Ton</td>
       <td>{{ sell_order.order_deadline | date : 'd MMMM yyyy' }}</td>

@@ -81,13 +81,16 @@
         </div>
         <div class="col-xs-6" style="padding-left:0">
           <label>Payment Terms : </label>
-          <select class="form-control" ng-model="sell_order.payment_terms" ng-change="freetext(sell_order.payment_terms)">
-            <option value="TT">TT</option>
-            <option value="LC on Sight">LC on Sight</option>
-            <option value="LC on 30 days">LC on 30 days</option>
-            <option value="other">Other</option>
-          </select>
-          <input type="text" class="form-control" ng-model="sell_order.payment_terms" placeholder="Payment Terms" ng-if="sell_order.payment_terms===''"/>
+          <p class="form-inline">
+            <select class="form-control" ng-model="sell_order.payment_terms" ng-hide="freetext">
+              <option value="TT">TT</option>
+              <option value="LC on Sight">LC on Sight</option>
+              <option value="LC on 30 days">LC on 30 days</option>
+            </select>
+            <input type="text" class="form-control" ng-model="sell_order.payment_terms" placeholder="Payment Terms" ng-show="freetext"/>
+            <label class="btn btn-success" ng-model="freetext" uib-btn-radio="false" ng-show="freetext" ng-click="sell_order.payment_terms=''">Select</label>
+            <label class="btn btn-success" ng-model="freetext" uib-btn-radio="true" ng-hide="freetext" ng-click="sell_order.payment_terms=''">Freetext</label>
+          </p>
         </div>
         <div class="col-xs-12" style="padding-left:0">
           <label>Penalty : </label>

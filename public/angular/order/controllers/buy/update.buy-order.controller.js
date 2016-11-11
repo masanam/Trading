@@ -5,6 +5,7 @@ angular.module('order').controller('UpdateBuyOrderController', ['$scope', '$stat
    
     $scope.findOne = function(id) {
 
+      $scope.freetext = false;
       if(id !== undefined){
         $scope.buy_orderId = id;
       } else {
@@ -32,11 +33,6 @@ angular.module('order').controller('UpdateBuyOrderController', ['$scope', '$stat
       $scope.buy_orders.splice($scope.buy_orders.indexOf(buy_order), 1);
       $scope.buy_order = Order.get({ type: 'buy', id: buy_order.id, action: 'changeOrderStatus', order_status: order_status });
     };
-
-    $scope.freetext = function(payment_terms) {
-      if(payment_terms === 'other'){
-        $scope.buy_order.payment_terms = '';
-      }
-    };
+    
   }
 ]);
