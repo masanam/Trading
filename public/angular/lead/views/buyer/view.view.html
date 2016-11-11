@@ -280,16 +280,16 @@
               </thead>
               <tbody>
                 <tr ng-repeat="port in ports">
-                  <td>{{ port.port.port_name }}</td>
-                  <td>{{ port.port.location }}</td>
-                  <td ng-show="port.port.is_private===1">Private</td>
-                  <td ng-show="port.port.is_private===0">Public</td>
-                  <td>{{ port.port.size }}</td>
+                  <td>{{ port.port_name }}</td>
+                  <td>{{ port.location }}</td>
+                  <td ng-show="port.is_private===1">Private</td>
+                  <td ng-show="port.is_private===0">Public</td>
+                  <td>{{ port.size }}</td>
                   <td><span class="pull-right">
                     
                     <!--<button type="button" ng-click="viewProduct({ id: product.id })" class="btn btn-info"><i class="glyphicon glyphicon-eye-open"></i></button>-->
                     <a ui-sref="lead.view-port({ id: id, portId: port.port.id })"><i class="glyphicon glyphicon-eye-open"></i></a>
-                    <a ng-click="delete(port.port, 'x', 'buyer')" style="cursor:pointer"><i class="glyphicon glyphicon-remove"></i></a>
+                    <a ng-click="delete(port, 'buyer')" style="cursor:pointer"><i class="glyphicon glyphicon-remove"></i></a>
                   </span></td>
                 </tr>
               </tbody>

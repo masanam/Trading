@@ -35,8 +35,8 @@
           <td>{{ seller.phone }}</td>
           <td><a href="{{seller.web}}">{{ seller.web }}</a></td>
           <td>
-            <span ng-if="seller.sell_order">{{ seller.sell_order[0].order_date | convertToDate | date : 'd MMMM yy' }}</span>
-            <span ng-if="!seller.sell_order">N/A</span>
+            <span ng-if="seller.sell_order[0]">{{ seller.sell_order[0].order_date | convertToDate | date : 'd MMMM yyyy' }}</span>
+            <span ng-if="!seller.sell_order[0]">N/A</span>
           </td>
           <!--td>
             <a ui-sref="seller.update({ id: seller.id })"><i class="glyphicon glyphicon-pencil"></i></a>

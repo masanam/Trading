@@ -97,9 +97,9 @@
   <label>Port Location</label>
   <div class="input-group col-md-12" style="margin-bottom: 5px;">
     <span class="input-group-addon" style="width: 200px;">Port Name</span>
-    <span ng-if="createConcession" class="input-group-addon bg-red">You can add the Port Related to this Factory in the next page.</span>
+    <span ng-if="!createConcession" class="input-group-addon bg-red">You can add the Port Related to this Concession in the next page.</span>
     <!--input type="text" class="form-control" id="port_name" ng-model="factory.port_name" required-->
-    <select ng-if="!createConcession" ng-model="concession.port_id" class="form-control" ng-options='port.id as port.port_name for port in ports'>
+    <select ng-if="createConcession" ng-model="concession.port_id" class="form-control" ng-options='port.id as port.port_name for port in ports'>
       <!--option ng-repeat="port in ports" value="{{port.id}}">{{port.port_name}}</option-->
     </select>
     <span class="input-group-addon" style="width: 200px;">Distance (km)</span>

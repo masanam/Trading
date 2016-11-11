@@ -34,24 +34,24 @@ class PortController extends Controller
     }
 
     public function buyerAllMyPort($buyer_id){
-        $port =  Port::leftJoin('buyer_port', 'ports.id', '=', 'buyer_port.port_id')->select('buyer_port.*', 'ports.*')->where('buyer_port.buyer_id', '=', $buyer_id)->orwhere('buyer_port.buyer_id', '=', null)->orwhere('ports.is_private', '=', 0)->get();
+        $port =  Port::leftJoin('buyer_port', 'ports.id', '=', 'buyer_port.port_id')->select('buyer_port.*', 'ports.*')->where('buyer_port.buyer_id', '=', $buyer_id)->orwhere('ports.is_private', '=', 0)->get();
         return response()->json($port, 200);
     }
 
     public function sellerAllMyPort($seller_id){
-        $port =  Port::leftJoin('port_seller', 'ports.id', '=', 'port_seller.port_id')->where('port_seller.seller_id', '=', $seller_id)->orwhere('port_seller.seller_id', '=', null)->orwhere('ports.is_private', '=', 0)->get();
+        $port =  Port::leftJoin('port_seller', 'ports.id', '=', 'port_seller.port_id')->where('port_seller.seller_id', '=', $seller_id)->orwhere('ports.is_private', '=', 0)->get();
         return response()->json($port, 200);
     }
 
     public function buyerMyPort($buyer_id)
     {
-        $port = BuyerPort::with('Port')->where('buyer_id', '=', $buyer_id)->where('status', '=', 'a')->get();
+        $port =  Port::join('buyer_port', 'ports.id', '=', 'buyer_port.port_id')->where('buyer_id', '=', $buyer_id)->where('status', '=', 'a')->get();
         return response()->json($port, 200);
     }
 
     public function sellerMyPort($seller_id)
     {
-        $port = SellerPort::with('Port')->where('seller_id', '=', $seller_id)->where('status', '=', 'a')->get();
+        $port = Port::leftJoin('port_seller', 'ports.id', '=', 'port_seller.port_id')->where('seller_id', '=', $seller_id)->where('status', '=', 'a')->get();
         return response()->json($port, 200);
     }
 
@@ -84,6 +84,7 @@ class PortController extends Controller
         $port->has_blending = $request->has_blending;
         $port->draft_height = $request->draft_height;
         $port->daily_discharge_rate = $request->daily_discharge_rate;
+        $port->status = 'a';
         $port->save();
 
         return response()->json($port, 200);
@@ -145,6 +146,7 @@ class PortController extends Controller
         $port->has_blending = $request->has_blending;
         $port->draft_height = $request->draft_height;
         $port->daily_discharge_rate = $request->daily_discharge_rate;
+        $port->status = $request->status;
         $port->save();
 
         return response()->json($port, 200);
@@ -172,8 +174,6 @@ class PortController extends Controller
         $buyer_port = new BuyerPort();
         $buyer_port->buyer_id = $request->buyer_id;
         $buyer_port->port_id = $request->port_id;
-        $buyer_port->distance = $request->distance;
-        $buyer_port->status = 'a';
         $buyer_port->save();
 
         return response()->json($buyer_port, 200);
@@ -190,11 +190,41 @@ class PortController extends Controller
         $seller_port = new SellerPort();
         $seller_port->seller_id = $request->seller_id;
         $seller_port->port_id = $request->port_id;
-        $seller_port->distance = $request->distance;
-        $seller_port->status = 'a';
         $seller_port->save();
 
         return response()->json($seller_port, 200);
+    }
+
+    public function attachBuyerPort($buyer_id, $port_id)
+    {
+        $port = Port::find($port_id);
+        $port->buyers()->attach($buyer_id);
+
+        return response()->json($port, 200);
+    }
+
+    public function detachBuyerPort($buyer_id, $port_id)
+    {
+        $port = Port::find($port_id);
+        $port->buyers()->detach($buyer_id);
+
+        return response()->json($port, 200);
+    }
+
+    public function attachSellerPort($seller_id, $port_id)
+    {
+        $port = Port::find($port_id);
+        $port->sellers()->attach($seller_id);
+
+        return response()->json($port, 200);
+    }
+
+    public function detachSellerPort($seller_id, $port_id)
+    {
+        $port = Port::find($port_id);
+        $port->sellers()->detach($seller_id);
+
+        return response()->json($port, 200);
     }
 
     public function changePortStatusBuyer($buyer_id, $port_id, $status)

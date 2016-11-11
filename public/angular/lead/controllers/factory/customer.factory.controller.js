@@ -5,7 +5,6 @@ angular.module('factory').controller('CustomerFactoryModalController',
 
     $scope.findMyPortsBuyer = function(){
       $scope.ports = Port.query({ type: 'buyer', action: 'allMy', id: $stateParams.id });
-      console.log($scope.ports);
     };
 
     $scope.init = function () {

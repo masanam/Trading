@@ -162,9 +162,9 @@ angular.module('port').controller('PortController', ['$scope', '$stateParams', '
     };
 
     //Delete a Buyer port at Detail Buyer
-    $scope.delete = function(port, status, type){
+    $scope.delete = function(port, type){
       $scope.ports.splice($scope.ports.indexOf(port), 1);
-      $scope.port = Port.get({ type:type, action: 'status', id: $stateParams.id, portId:port.id , status: status });
+      Port.query({ type:type, action: 'detachPort', id: $stateParams.id, portId:port.id });
     };
 
   }
@@ -265,14 +265,10 @@ angular.module('port').controller('PortModalController', function ($scope, $stat
       size: $scope.port.size
     });
     port.$save(function(res) {
-      $scope.buyer_port.buyer_id = $stateParams.id;
-      $scope.buyer_port.port_id = res.id;
-      $scope.buyer_port.$save({ type: 'buyer', action: 'store' }, function(res) {
-        $scope.success = true;
-        $scope.findMyPortsBuyer();
-        $uibModalInstance.close('success');
-      
-      });
+      Port.query({ type:'buyer', action: 'attachPort', id: $stateParams.id, portId:res.id });
+      $scope.success = true;
+      $scope.findMyPortsBuyer();
+      $uibModalInstance.close('success');
     });
   };
 
@@ -333,14 +329,10 @@ angular.module('port').controller('PortModalController', function ($scope, $stat
       size: $scope.port.size
     });
     port.$save(function(res) {
-      $scope.seller_port.seller_id = $stateParams.id;
-      $scope.seller_port.port_id = res.id;
-      $scope.seller_port.$save({ type: 'seller', action: 'store' }, function(res) {
-        $scope.success = true;
-        $scope.findMyPortsSeller();
-        $uibModalInstance.close('success');
-       
-      });
+      Port.query({ type:'seller', action: 'attachPort', id: $stateParams.id, portId:res.id });
+      $scope.success = true;
+      $scope.findMyPortsSeller();
+      $uibModalInstance.close('success');
     });
   };
 

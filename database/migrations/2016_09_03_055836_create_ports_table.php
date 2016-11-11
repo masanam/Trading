@@ -29,6 +29,7 @@ class CreatePortsTable extends Migration
             $table->boolean('has_blending');
             $table->integer('draft_height')->unsigned();
             $table->integer('daily_discharge_rate')->unsigned()->nullable();
+            $table->char('status', 1)->nullable();
             
             $table->timestamps();
         });

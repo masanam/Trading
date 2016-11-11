@@ -28,11 +28,11 @@
       </div>
       <div class="form-group row-fluid">
         <h1>{{ buy_order.buyer.company_name }}</h1>
-        <label>Product Name : </label>
+        <label ng-show="buy_order.product_name">Product Name : </label>
         <p>{{ buy_order.product_name }}</p>
         <label>Typical Quality : </label>
         <p>{{ buy_order.typical_quality }}</p>
-        <label>Address : </label>
+        <label ng-show="buy_order.address">Address : </label>
         <p>{{ buy_order.address }}</p>
         <div class="col-xs-6" style="padding-left:0">
           <label>City : </label>
@@ -206,7 +206,7 @@
                 <td>{{buy_order.size_reject}}</td>
               </tr>
               <tr>
-                <td><b>Fe2o3 </b></td>
+                <td><b>Fe2O3 </b></td>
                 <td>{{buy_order.fe2o3_min}} - {{buy_order.fe2o3_max}} %</td>
                 <td>{{buy_order.fe2o3_bonus}}</td>
                 <td>{{buy_order.fe2o3_reject}}</td>

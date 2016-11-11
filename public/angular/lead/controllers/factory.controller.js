@@ -30,8 +30,8 @@ angular.module('factory').controller('FactoryController', ['$scope', '$statePara
     $scope.$on('mapInitialized', function(evt, evtMap) {
       map = evtMap;
       $scope.markerMove = function(e) {
-         $scope.factory.latitude = $scope.map.markers[0].getPosition().lat();
-         $scope.factory.longitude = $scope.map.markers[0].getPosition().lng();
+        $scope.factory.latitude = $scope.map.markers[0].getPosition().lat();
+        $scope.factory.longitude = $scope.map.markers[0].getPosition().lng();
       };
     });
 

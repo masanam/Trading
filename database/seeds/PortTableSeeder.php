@@ -45,7 +45,8 @@ class PortTableSeeder extends Seeder
           'has_conveyor' => $port['has_conveyor'],
           'has_crusher' => $port['has_crusher'],
           'has_blending' => $port['has_blending'],
-          'draft_height' => $port['draft_height']
+          'draft_height' => $port['draft_height'],
+          'status' => 'a'
         ]);
         if(isset($port['seller'])) $model->sellers()->attach($port['seller']);
         if(isset($port['buyer'])) $model->buyers()->attach($port['buyer']);
