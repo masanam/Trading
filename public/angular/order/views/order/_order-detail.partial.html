@@ -354,15 +354,58 @@
 				<th>Coal Price / mt</th>
 				<td>
 					<span ng-if="display.buy">
-					{{ 1000 | number }}mt<br>
-					US${{ 51000 | number }}<br>
+					<h4>US${{ 47 | number }}</h4>
 					from {{ order.sells.length }} Suppliers
 					</span>
 				</td>
 				<td>
 					<span ng-if="display.sell">
-					{{ 1000 | number }}mt<br>
-					US${{ 51000 | number }}<br>
+					<h4>US${{ 51 | number }}</h4>
+					from {{ order.buys.length }} Customers
+					</span>
+				</td>
+			</tr>
+      <tr>
+				<th>Insurance / mt</th>
+				<td>
+					<span ng-if="display.buy">
+					<h4>US${{ 1 | number }}</h4>
+					from {{ order.sells.length }} Suppliers
+					</span>
+				</td>
+				<td>
+					<span ng-if="display.sell">
+					<h4>US${{ 1 | number }}</h4>
+					from {{ order.buys.length }} Customers
+					</span>
+				</td>
+			</tr>
+      <tr>
+				<th>Interest / mt</th>
+				<td>
+					<span ng-if="display.buy">
+					<h4>US${{ 1 | number }}</h4>
+					from {{ order.sells.length }} Suppliers
+					</span>
+				</td>
+				<td>
+					<span ng-if="display.sell">
+					<h4>US${{ 1 | number }}</h4>
+					from {{ order.buys.length }} Customers
+					</span>
+				</td>
+			</tr>
+      <tr>
+				<th>Surveyor / mt</th>
+				<td>
+					<span ng-if="display.buy">
+					<h4>US${{ 1 | number }}</h4>
+					from {{ order.sells.length }} Suppliers
+					</span>
+				</td>
+				<td>
+					<span ng-if="display.sell">
+					<h4>US${{ 1 | number }}</h4>
 					from {{ order.buys.length }} Customers
 					</span>
 				</td>
@@ -371,49 +414,43 @@
 				<th>Pit to Port / mt</th>
 				<td>
 					<span ng-if="display.buy">
-					{{ 1000 | number }}mt<br>
-					US${{ 51000 | number }}<br>
+					<h4>US${{ 5 | number }}</h4>
 					from {{ order.sells.length }} Suppliers
 					</span>
 				</td>
 				<td>
 					<span ng-if="display.sell">
-					{{ 1000 | number }}mt<br>
-					US${{ 51000 | number }}<br>
+					<h4>US${{ 2 | number }}</h4>
 					from {{ order.buys.length }} Customers
 					</span>
 				</td>
 			</tr>
       <tr>
-				<th>Transhipment</th>
+				<th>Transhipment / mt</th>
 				<td>
 					<span ng-if="display.buy">
-					{{ 1000 | number }}mt<br>
-					US${{ 51000 | number }}<br>
+					<h4>US${{ 1 | number }}</h4>
 					from {{ order.sells.length }} Suppliers
 					</span>
 				</td>
 				<td>
 					<span ng-if="display.sell">
-					{{ 1000 | number }}mt<br>
-					US${{ 51000 | number }}<br>
+					<h4>US${{ 0 | number }}</h4>
 					from {{ order.buys.length }} Customers
 					</span>
 				</td>
 			</tr>
       <tr>
-				<th>Freight Cost</th>
+				<th>Freight Cost / mt</th>
 				<td>
 					<span ng-if="display.buy">
-					{{ 1000 | number }}mt<br>
-					US${{ 51000 | number }}<br>
+					<h4>US${{ 2 | number }}</h4>
 					from {{ order.sells.length }} Suppliers
 					</span>
 				</td>
 				<td>
 					<span ng-if="display.sell">
-					{{ 1000 | number }}mt<br>
-					US${{ 51000 | number }}<br>
+					<h4>US${{ 1 | number }}</h4>
 					from {{ order.buys.length }} Customers
 					</span>
 				</td>
@@ -422,22 +459,34 @@
 				<th>Port to Factory / mt</th>
 				<td>
 					<span ng-if="display.buy">
-					{{ 1000 | number }}mt<br>
-					US${{ 51000 | number }}<br>
+					<h4>US${{ 1 | number }}</h4>
 					from {{ order.sells.length }} Suppliers
 					</span>
 				</td>
 				<td>
 					<span ng-if="display.sell">
-					{{ 1000 | number }}mt<br>
-					US${{ 51000 | number }}<br>
+					<h4>US${{ 2 | number }}</h4>
+					from {{ order.buys.length }} Customers
+					</span>
+				</td>
+			</tr>
+      <tr>
+				<th>Others / mt</th>
+				<td>
+					<span ng-if="display.buy">
+					<h4>US${{ 1 | number }}</h4>
+					from {{ order.sells.length }} Suppliers
+					</span>
+				</td>
+				<td>
+					<span ng-if="display.sell">
+					<h4>US${{ 1 | number }}</h4>
 					from {{ order.buys.length }} Customers
 					</span>
 				</td>
 			</tr>
 			<tr>
-				<td></td>
-				<td colspan=2 style="font-size:20pt; text-align:center;">Expected Margin: US${{ 2000 | number }}</td>
+				<td colspan=3 style="text-align:center;"><h3>Expected Margin / mt: US${{ 4 | number }}</h3></td>
 			</tr>
 		</tbody>
 	</table>
