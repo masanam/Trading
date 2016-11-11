@@ -29,6 +29,7 @@ angular.module('chat').factory('Chat', ['firebase', '$firebaseArray', 'Authentic
           'message': message,
           'created_at': currentTime
         };
+        //console.log(chat);
         
         var chat_key = mainApp.database().ref('order_chat/' + orderId).push(chat).key;
 

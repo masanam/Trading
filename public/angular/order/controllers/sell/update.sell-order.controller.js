@@ -5,6 +5,7 @@ angular.module('order').controller('UpdateSellOrderController', ['$scope', '$sta
    
     $scope.findOne = function(id) {
 
+      $scope.freetext = false;
       if(id !== undefined){
         $scope.sell_orderId = id;
       } else {
@@ -32,11 +33,6 @@ angular.module('order').controller('UpdateSellOrderController', ['$scope', '$sta
       $scope.sell_orders.splice($scope.sell_orders.indexOf(sell_order), 1);
       $scope.sell_order = Order.get({ type: 'sell', id: sell_order.id, action: 'changeOrderStatus', order_status: order_status });
     };
-
-    $scope.freetext = function(payment_terms) {
-      if(payment_terms === 'other'){
-        $scope.sell_order.payment_terms = '';
-      }
-    };
+    
   }
 ]);

@@ -1,9 +1,9 @@
 'use strict';
 
-angular.module('factory').controller('FactoryController', ['$scope', '$stateParams', '$location', '$uibModal', 'MultiStepForm',
-  function($scope, $stateParams, $location, $uibModal, MultiStepForm) {
+angular.module('factory').controller('FactoryController', ['$scope', '$stateParams', '$location', '$uibModal', 'MultiStepForm','NgMap','$state', 'Factory',
+  function($scope, $stateParams, $location, $uibModal, MultiStepForm, NgMap, $state, Factory) {
     $scope.factorys = [];
-    $scope.factory = {};
+    $scope.factory = new Factory();
     $scope.new = $location.search().new;
 
     $scope.openModal = function () {
@@ -23,7 +23,6 @@ angular.module('factory').controller('FactoryController', ['$scope', '$statePara
       }else{
         $scope.error = 'Please Select A Factory or Create New Factory';
       }
-      
     };
     
   }

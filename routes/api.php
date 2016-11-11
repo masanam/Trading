@@ -108,6 +108,7 @@ Route::group(['middleware' => ['cors']], function() {
     Route::get('order/buy/status/{order_status}/{progress_status?}', 'BuyOrderController@status');
     Route::get('order/buy/draft/{user_id}', 'BuyOrderController@draft');
     Route::get('order/buy/getSub', 'BuyOrderController@getSub');
+    Route::get('order/buy/getManager', 'BuyOrderController@getManager');
     Route::get('order/buy/{id}/changeOrderStatus/{order_status}', 'BuyOrderController@changeOrderStatus');
 
     Route::get('order/sell/status/{order_status}/{progress_status?}', 'SellOrderController@status', ['except' => [ 'create', 'edit' ]]);

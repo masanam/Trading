@@ -42,14 +42,14 @@ angular.module('chat').controller('ChatController', ['$scope', '$stateParams', '
           $scope.relatedUsers.splice(i, 1);
         }
       }
-      console.log($scope.relatedUsers);
+      //console.log($scope.relatedUsers);
     });
   };
 
   $scope.sendMessage = function() {
     var message = $scope.message;
     if(message !== ""){
-      $scope.chat.key = Chat.sendChat($stateParams.id, message, Date.now());
+      $scope.chat.key = Chat.sendChat($stateParams.id, Authentication.user.id, message, Date.now());
       
       $scope.initialize();
     }
