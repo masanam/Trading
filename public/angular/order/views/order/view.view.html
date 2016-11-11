@@ -1,3 +1,14 @@
+<div class="col-lg-12" ng-if="included === true && approver === true" style="bg-warning">
+  <div class="box">
+    This order is waiting for your approval.
+    <a class="btn btn-success" ng-click="approve_reject('a');">
+      <i class="glyphicon glyphicon-thumbs-up" title="Approve Order"></i> Approve Order
+    </a>
+    <a class="btn btn-danger" ng-click="approve_reject('r');">
+      <i class="glyphicon glyphicon-thumbs-down" title="Reject Order"></i> Reject Order
+    </a>
+  </div>
+</div>
 <div class="col-lg-8">
   <div class="box">
     <div class="box-header with-border" ng-init="findOne()">
@@ -10,22 +21,16 @@
         <a class="btn btn-default" ui-sref="order.list">
           <i class="glyphicon glyphicon-chevron-left"></i> Back
         </a>
-        <a class="btn btn-primary" ng-click="print(order);" ng-show="order.status === 'a' || order.status === 'f'">
+        <a class="btn btn-primary" ng-click="print(order);" ng-if="included === true" ng-show="order.status === 'a' || order.status === 'f'">
           <i class="glyphicon glyphicon-print" title="Print"></i>
         </a>
-        <a class="btn btn-success" ng-click="request(order);" ng-show="order.status === 'd' && order.user_id === Authentication.user.id">
+        <a class="btn btn-success" ng-click="request(order);" ng-if="included === true" ng-show="order.status === 'd' && order.user_id === Authentication.user.id">
           <i class="glyphicon glyphicon-send" title="Request for Approval"></i>
         </a>
-        <a class="btn btn-success" ng-click="finalize(order);" ng-show="order.status === 'a' && order.user_id === Authentication.user.id">
+        <a class="btn btn-success" ng-click="finalize(order);" ng-if="included === true" ng-show="order.status === 'a' && order.user_id === Authentication.user.id">
           <i class="glyphicon glyphicon-floppy-saved" title="Finalize Order"></i>
         </a>
-        <a class="btn btn-success" ng-click="approve_reject('a');" ng-show="order.status === 'p' && approver === true">
-          <i class="glyphicon glyphicon-thumbs-up" title="Approve Order"></i>
-        </a>
-        <a class="btn btn-danger" ng-click="approve_reject('r');" ng-show="order.status === 'p' && approver === true">
-          <i class="glyphicon glyphicon-thumbs-down" title="Reject Order"></i>
-        </a>
-        <a class="btn btn-danger" ng-click="remove(order);" ng-show="(order.status !== 'x' || order.status === 'f') && order.user_id === Authentication.user.id">
+        <a class="btn btn-danger" ng-click="remove(order);" ng-if="included === true" ng-show="(order.status !== 'x' || order.status === 'f') && order.user_id === Authentication.user.id">
           <i class="glyphicon glyphicon-trash" title="Cancel Order"></i>
         </a>
       </div>
@@ -49,7 +54,7 @@
   </div>
 </div>
 
-<div class="col-lg-4">
+<div class="col-lg-4" ng-if="included === true">
   <div class="box">
     <div class="box-header">Approval</div>
     <div class="box-body no-padding with-border">

@@ -110,15 +110,22 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
       });
     };*/
     
-    $scope.checkIfApprover = function(){
-      var status = false;
+    $scope.checkOrderUsers = function(){
+      $scope.included = false;
+      $scope.approver = false;
+      $scope.associated = false;
       for (var i in $scope.order.users) {
-        if($scope.order.users[i].id === Authentication.user.id && $scope.order.users[i].pivot.role === 'approver'){
+        if($scope.order.users[i].id === Authentication.user.id){
           status = true;
+          if($scope.order.users[i].pivot.role === 'approver'){
+            $scope.approver = true;
+          }
+          else if($scope.order.users[i].pivot.role === 'associated'){
+            $scope.associated = true;
+          }
+          $scope.included = true;
         }
       }
-      
-      $scope.approver = status;
     };
 
     // Find list of order
@@ -132,7 +139,7 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
         id: $stateParams.id
       }, function(res){
         $scope.order = res;
-        $scope.checkIfApprover();
+        $scope.checkOrderUsers();
       });
     };
   }
