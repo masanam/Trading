@@ -119,9 +119,16 @@ class OrderController extends Controller
         'message' => 'Not found'
       ] ,404);
     }
+    if ($order->user_id != Auth::user()->id) {
+      return response()->json([
+        'message' => 'You are not authorized to edit this order!'
+      ] ,403);
+    }
     $this->authorize('update', $order);
 
-    $order->reason = $request->reason;
+    $order->finalize_reason = $request->finalize_reason;
+    $order->cancel_reason = $request->cancel_reason;
+    $order->request_reason = $request->request_reason;
     $order->status = $request->status;
     //$order->updated_at = date('Y-m-d H:i:s');
     
