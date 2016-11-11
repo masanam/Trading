@@ -17,22 +17,22 @@ class OrdersTableSeeder extends Seeder
     $array = [
       [
         'order' => [ 'id' => 1, 'user_id' => 7, 'status' => 'p', ],
-        'buy' => [ 1 => [ 'volume' => 500, 'price' => 25000 ], 4 => [ 'volume' => 500, 'price' => 26000 ] ],
-        'sell' => [ 1 => [ 'volume' => 1000, 'price' => 53000 ] ],
+        'buy' => [ 1 => [ 'volume' => 500, 'price' => 25000, 'trading_term' => 'FOB MV', 'payment_term' => 'TT' ], 4 => [ 'volume' => 500, 'price' => 26000, 'trading_term' => 'FOB MV', 'payment_term' => 'TT' ] ],
+        'sell' => [ 1 => [ 'volume' => 1000, 'price' => 53000, 'trading_term' => 'FOB MV', 'payment_term' => 'TT' ] ],
         'user' => [ 1 => [ 'role' => 'approver' ], 8 => [ 'role' => 'associated' ], 7 => [ 'role' => 'admin' ] ],
         'approval' => [ 1 => [ 'status' => 'a' ], 2 => [ 'status' => 'a' ] ]
       ],
       [
         'order' => [ 'id' => 2, 'user_id' => 8, 'status' => 'p'],
-        'buy' => [ 2 => [ 'volume' => 1100, 'price' => 59000 ] ],
-        'sell' => [ 2 => [ 'volume' => 1100, 'price' => 61000 ] ],
+        'buy' => [ 2 => [ 'volume' => 1100, 'price' => 59000, 'trading_term' => 'FOB MV', 'payment_term' => 'TT' ] ],
+        'sell' => [ 2 => [ 'volume' => 1100, 'price' => 61000, 'trading_term' => 'FOB MV', 'payment_term' => 'TT' ] ],
         'user' => [ 1 => [ 'role' => 'approver' ], 7 => [ 'role' => 'associated' ], 8 => [ 'role' => 'admin' ] ],
         'approval' => [ 2 => [ 'status' => 'a' ] ]
       ],
       [
         'order' => [ 'id' => 3, 'user_id' => 7, 'status' => 'f'],
-        'buy' => [ 3 => [ 'volume' => 1000, 'price' => 38000 ] ],
-        'sell' => [ 3 => [ 'volume' => 1000, 'price' => 45000 ] ],
+        'buy' => [ 3 => [ 'volume' => 1000, 'price' => 38000, 'trading_term' => 'FOB MV', 'payment_term' => 'TT' ] ],
+        'sell' => [ 3 => [ 'volume' => 1000, 'price' => 45000, 'trading_term' => 'FOB MV', 'payment_term' => 'TT' ] ],
         'user' => [ 1 => [ 'role' => 'approver' ], 8 => [ 'role' => 'associated' ], 7 => [ 'role' => 'admin' ] ],
         'approval' => [ 2 => [ 'status' => 'a' ] ]
       ],

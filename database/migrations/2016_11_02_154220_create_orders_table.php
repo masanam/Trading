@@ -50,6 +50,8 @@ class CreateOrdersTable extends Migration
             $table->string('orderable_type');
             $table->integer('price');
             $table->integer('volume');
+            $table->integer('trading_term');
+            $table->integer('payment_term');
             $table->timestamps();
 
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
