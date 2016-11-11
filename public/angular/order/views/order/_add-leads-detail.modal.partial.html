@@ -1,0 +1,104 @@
+<h3>{{ selected.item.seller.company_name || selected.item.buyer.company_name }}</h3>
+
+<div class="row">
+  <div class="col-sm-6">
+    <table class="table table-striped">
+      <tr>
+        <td width="30%"><label>Product Name</label></td>
+        <td width="70%">{{ selected.item.product_name || 'N/A' }}</td>
+      </tr>
+      <tr>
+        <td><label>Volume</label></td>
+        <td>{{ selected.item.volume }}</td>
+      </tr>
+      <tr>
+        <td><label>Price</label></td>
+        <td>{{ selected.item.price }}</td>
+      </tr>
+      <tr>
+        <td><label>Address</label></td>
+        <td>{{ selected.item.address }}</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="col-sm-6">
+    <table class="table table-striped">
+      <tr>
+        <td width="30%"><label>Trader</label></td>
+        <td width="70%">{{ selected.item.trader.name }} ({{ selected.item.trader.phone }})</td>
+      </tr>
+      <tr>
+        <td><label>Order Date</label></td>
+        <td>{{ selected.item.order_date }}</td>
+      </tr>
+      <tr>
+        <td><label>Deadline</label></td>
+        <td>{{ selected.item.order_deadline }}</td>
+      </tr>
+      <tr>
+        <td><label>Penalty</label></td>
+        <td>{{ selected.item.penalty_desc }}</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-6">
+    <table class="table table-bordered">
+      <tbody>
+        <tr>
+          <td><b>Gross Caloric ARB <div class="pull-right">:</div></b></td>
+          <td>{{selected.item.gcv_arb_min}} - {{selected.item.gcv_arb_max}} kcal</td>
+        </tr>
+        <tr>
+          <td><b>Gross Caloric ADB <div class="pull-right">:</div></b></td>
+          <td>{{selected.item.gcv_adb_min}} - {{selected.item.gcv_adb_max}} kcal</td>
+        </tr>
+        <tr>
+          <td><b>Nett Caloric <div class="pull-right">:</div></b></td>
+          <td>{{selected.item.ncv_min}} - {{selected.item.ncv_max}} kcal</td>
+        </tr>
+        <tr>
+          <td><b>Ash <div class="pull-right">:</div></b></td>
+          <td>{{selected.item.ash_min}} - {{selected.item.ash_max}} %</td>
+        </tr>
+        <tr>
+          <td><b>Total Sulphur <div class="pull-right">:</div></b></td>
+          <td>{{selected.item.ts_min}} - {{selected.item.ts_max}} %</td>
+        </tr>
+        <tr>
+          <td><b>Size <div class="pull-right">:</div></b></td>
+          <td>{{selected.item.size_min}} - {{selected.item.size_max}} mm</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-sm-6">
+    <table class="table table-bordered">
+      <tbody>
+        <tr>
+          <td><b>Total Moisture <div class="pull-right">:</div></b></td>
+          <td>{{selected.item.tm_min}} - {{selected.item.tm_max}} %</td>
+        </tr>
+        <tr>
+          <td><b>Inherent Moisture <div class="pull-right">:</div></b></td>
+          <td>{{selected.item.im_min}} - {{selected.item.im_max}} %</td>
+        </tr>
+        <tr>
+          <td><b>Fixed Carbon <div class="pull-right">:</div></b></td>
+          <td>{{selected.item.fc_min}} - {{selected.item.fc_max}} %</td>
+        </tr>
+        <tr>
+          <td><b>Volatile Matter <div class="pull-right">:</div></b></td>
+          <td>{{selected.item.vm_min}} - {{selected.item.vm_max}} %</td>
+        </tr>
+        <tr>
+          <td><b>Hardness <div class="pull-right">:</div></b></td>
+          <td>{{selected.item.hgi_min}} - {{selected.item.hgi_max}} %</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
