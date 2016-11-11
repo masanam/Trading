@@ -116,7 +116,6 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
       $scope.associated = false;
       for (var i in $scope.order.users) {
         if($scope.order.users[i].id === Authentication.user.id){
-          status = true;
           if($scope.order.users[i].pivot.role === 'approver'){
             $scope.approver = true;
           }
