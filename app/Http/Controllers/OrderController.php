@@ -157,4 +157,20 @@ class OrderController extends Controller
 
     return response()->json($order, 200);
   }
+
+  public function stage(Request $req, $id)
+  {
+    $order = Order::with('trader', 'users', 'sells', 'sells.seller', 'buys', 'buys.buyer', 'buys.trader', 'approvals', 'buys.Factory', 'sells.Concession', 'sells.trader')->find($id);
+    $details = [
+      'volume' => $req->volume,
+      'price' => $req->price,
+      'trading_term' => $req->trading_term,
+      'payment_term' => $req->payment_term
+    ];
+
+    if($req->buy) $order->buys()->attach([ $req->buy => $details ]);
+    if($req->buy) $order->sells()->attach([ $req->sell => $details ]);
+
+    return $order;
+  }
 }

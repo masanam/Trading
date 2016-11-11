@@ -127,5 +127,6 @@ Route::group(['middleware' => ['cors']], function() {
      * Managing the deals (buy/sell) done here
      */
     
+    Route::post('order/{id}/stage', 'OrderController@stage');
     Route::resource('order', 'OrderController');
 });
