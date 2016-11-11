@@ -10,6 +10,7 @@ use App\Model\User;
 use App\Model\BuyOrder;
 use App\Model\SellOrder;
 use App\Model\Order;
+use App\Model\OrderApproval;
 use App\Model\OrderNegotiation;
 use Auth;
 
@@ -139,6 +140,45 @@ class OrderController extends Controller
       SellOrder::whereIn('id', $sell_ids)->update(['order_status' => 'p']);
     }
     $order->save();
+
+    return response()->json($order, 200);
+  }
+  
+  /**
+   * Remove the specified resource from storage.
+   *
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
+  public function approve($id, Request $request)
+  {
+    $order = Order::with(['approvals' => function($q){
+      $q->where('user_id', Auth::user()->id);
+    }])->find($id);
+    
+    if($order->approvals->count() > 0){
+      $order_approval = OrderApproval::where('user_id', Auth::user()->id)->where('order_id', $id)->first();
+      $order_approval->status = $request->status;
+      $order_approval->save();
+      
+    }else{
+      $order_approval = new OrderApproval();
+      $order_approval->order_id = $id;
+      $order_approval->user_id = Auth::user()->id;
+      $order_approval->status = $request->status;
+      $order_approval->save();
+      
+    }
+    
+    if(!Auth::user()->manager_id && $request->status == 'a'){
+      $order->status = 'a';
+      $order->save();
+    }else{
+      $order->status = 'p';
+      $order->save();
+    }
+    
+    $order = Order::with('approvals')->find($id);
 
     return response()->json($order, 200);
   }
