@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\DB;
 
 use App\Http\Requests;
 use App\Model\User;
+use App\Model\BuyOrder;
+use App\Model\SellOrder;
 use App\Model\Order;
 use App\Model\OrderNegotiation;
 use Auth;
@@ -117,10 +119,25 @@ class OrderController extends Controller
         'message' => 'Not found'
       ] ,404);
     }
+    if ($order->user_id != Auth::user()->id) {
+      return response()->json([
+        'message' => 'You are not authorized to edit this order!'
+      ] ,403);
+    }
     $this->authorize('update', $order);
 
+    $order->finalize_reason = $request->finalize_reason;
+    $order->cancel_reason = $request->cancel_reason;
+    $order->request_reason = $request->request_reason;
     $order->status = $request->status;
     //$order->updated_at = date('Y-m-d H:i:s');
+    
+    if($order->status == 'x'){
+      $buy_ids = $order->buys()->pluck('buy_order.id'); 
+      BuyOrder::whereIn('id', $buy_ids)->update(['order_status' => 'p']);
+      $sell_ids = $order->sells()->pluck('sell_order.id'); 
+      SellOrder::whereIn('id', $sell_ids)->update(['order_status' => 'p']);
+    }
     $order->save();
 
     return response()->json($order, 200);
