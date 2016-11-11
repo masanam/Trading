@@ -23,7 +23,7 @@
         <a class="btn btn-default" ui-sref="order.list">
           <i class="glyphicon glyphicon-chevron-left"></i> Back
         </a>
-        <a class="btn btn-primary" ng-click="print(order);" ng-if="included === true" ng-show="order.status === 'a' || order.status === 'f'">
+        <a class="btn btn-primary" ng-click="print(order);" ng-if="included === true" ng-show="(order.status === 'a' || order.status === 'f') && (order.user_id === Authentication.user.id || approver === true)">
           <i class="glyphicon glyphicon-print" title="Print"></i>
         </a>
         <a class="btn btn-success" ng-click="request(order);" ng-if="included === true" ng-show="order.status === 'd' && order.user_id === Authentication.user.id">
