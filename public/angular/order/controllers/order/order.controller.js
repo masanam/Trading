@@ -97,20 +97,15 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
     };
     
     // Approve Order
-    /*$scope.approve_reject = function (status) {
+    $scope.approve_reject = function (status) {
       $scope.error = null;
 
-      var order = $scope.order;
-      
-      $scope.order.users.status = 'a';
-
-      order.$update(function (res) {
-        $scope.order.status = 'f';
-        //$state.go('order.view', { orderId: res.id });
+      Order.get({ id: $scope.order.id, action: 'approve', status : status }, function (res) {
+        //$scope.order.status = 'f';
       }, function (err) {
         $scope.error = err.data.message;
       });
-    };*/
+    };
     
     $scope.checkOrderUsers = function(){
       $scope.included = false;
