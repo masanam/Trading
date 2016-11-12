@@ -53,5 +53,6 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
         console.log('Modal dismissed at: ' + new Date());
       });
     };
+    
   }
 ]);

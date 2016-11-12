@@ -9,6 +9,7 @@ use App\Http\Requests;
 use App\Model\User;
 use App\Model\BuyOrder;
 use App\Model\SellOrder;
+use App\Model\OrderUser;
 use App\Model\Order;
 use App\Model\OrderApproval;
 use App\Model\OrderNegotiation;
@@ -99,6 +100,30 @@ class OrderController extends Controller
 
     return response()->json($order, 200);
   }
+  
+  private function add_user_to_order($order = NULL, $user_id = '', $order_id='', $role=''){
+    if($order->users->count() == 0){
+      $order_user = new OrderUser();
+      $order_user->order_id = $order_id;
+      $order_user->user_id = $user_id;
+      $order_user->role = $role;
+      $order_user->save();
+    }
+  }
+  
+  private function add_approval_to_order($order = NULL, $user_id = '', $order_id='', $status=''){
+    if($order->approvals->count() > 0){
+      $order_approval = OrderApproval::where('user_id', $user_id)->where('order_id', $order_id)->first();
+      $order_approval->status = 'p';
+      $order_approval->save();
+    }else{
+      $order_approval = new OrderApproval();
+      $order_approval->order_id = $order_id;
+      $order_approval->user_id = $user_id;
+      $order_approval->status = $status;
+      $order_approval->save();
+    }
+  }
 
   /**
    * edit the specified resource.
@@ -131,6 +156,7 @@ class OrderController extends Controller
     $order->cancel_reason = $request->cancel_reason;
     $order->request_reason = $request->request_reason;
     $order->status = $request->status;
+    $order->save();
     //$order->updated_at = date('Y-m-d H:i:s');
     
     if($order->status == 'x'){
@@ -139,7 +165,16 @@ class OrderController extends Controller
       $sell_ids = $order->sells()->pluck('sell_order.id'); 
       SellOrder::whereIn('id', $sell_ids)->update(['order_status' => 'p']);
     }
-    $order->save();
+    else if($order->status == 'p'){
+      $order = Order::with(['approvals' => function($q){
+        $q->where('user_id', Auth::user()->manager_id);
+      }, 'users' => function($q){
+        $q->where('user_id', Auth::user()->manager_id);
+      }])->find($id);
+            
+      $this->add_user_to_order($order, Auth::user()->manager_id, $id, 'approver');
+      $this->add_approval_to_order($order, Auth::user()->manager_id, $id, 'p');
+    }
 
     return response()->json($order, 200);
   }
@@ -160,25 +195,25 @@ class OrderController extends Controller
       $order_approval = OrderApproval::where('user_id', Auth::user()->id)->where('order_id', $id)->first();
       $order_approval->status = $request->status;
       $order_approval->save();
-      
     }else{
-      $order_approval = new OrderApproval();
-      $order_approval->order_id = $id;
-      $order_approval->user_id = Auth::user()->id;
-      $order_approval->status = $request->status;
-      $order_approval->save();
-      
+      $this->add_approval_to_order(Auth::user()->manager_id, $id, $request->status);
     }
     
-    if(!Auth::user()->manager_id && $request->status == 'a'){
-      $order->status = 'a';
-      $order->save();
-    }else{
-      $order->status = 'p';
-      $order->save();
+    //print_r($order);
+    
+    if($request->status == 'a'){
+      if(!Auth::user()->manager_id){
+        $order->status = 'a';
+        $order->save();
+      }else{
+        $this->add_user_to_order(Auth::user()->manager_id, $id, 'approver');
+        $this->add_approval_to_order(Auth::user()->manager_id, $id, 'p');
+        $order->status = 'p';
+        $order->save();
+      }
     }
     
-    $order = Order::with('approvals')->find($id);
+    $order = Order::with('trader', 'users', 'sells', 'sells.seller', 'buys', 'buys.buyer', 'buys.trader', 'approvals', 'buys.Factory', 'sells.Concession', 'sells.trader')->find($id);
 
     return response()->json($order, 200);
   }

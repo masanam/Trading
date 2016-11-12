@@ -1,7 +1,7 @@
 <section ng-controller="OrderDetailController">
 	<table st-table="" class="table table-bordered table-striped">
 		<thead>
-      <tr ng-if="!order.user_id || order.user_id === Authentication.user.id">
+      <tr ng-if="!order.user_id || order.user_id === Authentication.user.id"  class="no-print">
         <td width=20%></td>
         <td width=40%>
           <button class="btn btn-default" ng-click="addBuy()"> + Add Buy </button>

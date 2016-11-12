@@ -60,7 +60,7 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
       });
     };
     
-    // Request for Approval 
+    // Request for Approval, Cancel Order, Finalize
     $scope.changeStatus = function (status) {
       $scope.error = null;
       $scope.reason = '';
@@ -110,11 +110,17 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
     $scope.checkOrderUsers = function(){
       $scope.included = false;
       $scope.approver = false;
+      $scope.approving = false;
       $scope.associated = false;
       for (var i in $scope.order.users) {
         if($scope.order.users[i].id === Authentication.user.id){
           if($scope.order.users[i].pivot.role === 'approver'){
             $scope.approver = true;
+            for (var j in $scope.order.approvals) {
+              if($scope.order.approvals[j].status === 'a' && $scope.order.approvals[j].user_id === Authentication.user.id){
+                $scope.approving = true;
+              }
+            }
           }
           else if($scope.order.users[i].pivot.role === 'associated'){
             $scope.associated = true;
@@ -122,6 +128,23 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
           $scope.included = true;
         }
       }
+    };
+    
+    $scope.print = function(){
+      $scope.orderCollapsed = false;
+      $scope.financialCollapsed = true;
+      $scope.qualityCollapsed = true;
+      var docHead = document.head.outerHTML;
+      var orderContent = document.getElementById('order-detail').outerHTML;
+      var approvalContent = document.getElementById('order-approval').outerHTML;
+      var winAttr = "location=yes, statusbar=no, menubar=no, titlebar=no, toolbar=no,dependent=no, width=865, height=600, resizable=yes, screenX=200, screenY=200, personalbar=no, scrollbars=yes";
+
+      var newWin = window.open("", "_blank", winAttr);
+      var writeDoc = newWin.document;
+      writeDoc.open();
+      writeDoc.writeln('<!doctype html><html>' + docHead + '<body onLoad="window.print()">' + orderContent + approvalContent + '</body></html>');
+      writeDoc.close();
+      newWin.focus();
     };
 
     // Find list of order
