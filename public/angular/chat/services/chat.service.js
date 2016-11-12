@@ -1,16 +1,9 @@
 'use strict';
 
-angular.module('chat').factory('Chat', ['firebase', '$firebaseArray', 'Authentication',
-  function (firebase, $firebaseArray, Authentication) {
+angular.module('chat').factory('Chat', ['Authentication', 'FirebaseService',
+  function (Authentication, FirebaseService) {
     var sell_chats = [];
-    var config = {
-      apiKey: 'AIzaSyACILHAOiy4G9TtCgs0szgZBZokr4cduuo',
-      authDomain: 'coal-trade.firebaseapp.com',
-      databaseURL: 'https://coal-trade.firebaseio.com',
-      storageBucket: 'coal-trade.appspot.com',
-      messagingSenderId: '407921708335'
-    };
-    var mainApp = firebase.initializeApp(config, 'webApps');
+    var mainApp = FirebaseService.mainApp;
 
     return {
       findChatByOrder: function(orderId, callback) {
@@ -20,14 +13,14 @@ angular.module('chat').factory('Chat', ['firebase', '$firebaseArray', 'Authentic
         return callback(chats);
       },
 
-      sendChat: function(orderId, userId, message, currentTime) {
+      sendChat: function(orderId, userId, message) {
         // sending chat
         var chat = {
           'order_id': orderId,
           'user_id': Authentication.user.id,
           'author': Authentication.user.name,
           'message': message,
-          'created_at': currentTime
+          'created_at': Date.now()
         };
         //console.log(chat);
         
@@ -37,7 +30,7 @@ angular.module('chat').factory('Chat', ['firebase', '$firebaseArray', 'Authentic
         var notification = {
           'url': 'order/' + orderId,
           'notification': 'You received a new message',
-          'created_at': currentTime,
+          'created_at': Date.now(),
           'isRead': true
         };
 

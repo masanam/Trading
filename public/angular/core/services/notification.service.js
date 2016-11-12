@@ -1,40 +1,73 @@
 'use strict';
 
-angular.module('notification').factory('Notification', ['firebase', '$firebaseArray', 'Authentication', 'OrderUser', 
-  function (firebase, $firebaseArray, Authentication, OrderUser) {
-    var chats = [];
-    var config = {
-      apiKey: 'AIzaSyACILHAOiy4G9TtCgs0szgZBZokr4cduuo',
-      authDomain: 'coal-trade.firebaseapp.com',
-      databaseURL: 'https://coal-trade.firebaseio.com',
-      storageBucket: 'coal-trade.appspot.com',
-      messagingSenderId: '407921708335'
-    };
-    var mainApp = firebase.initializeApp(config, 'webApps');
+angular.module('notification').factory('Notification', ['Authentication', 'FirebaseService',
+  function (Authentication, FirebaseService) {
+    var user_notification = {};
+    var manager_notification = {};
+    var leads_notification = {};
+    var manager_leads_notification = {};
+    var mainApp = FirebaseService.mainApp;
 
     return {
-
-      sendNotification: function(action, orderId, leadsUserId, managerLeadsUserId, currentTime) {
+      sendNotification: function(action, order, leadsUserId, managerLeadsUserId) {
         // sending notification
-        if(action === 'new_order') {
-          var manager_notification = {
-            'url': 'order/' + orderId,
+        if(action === 'request_approval') {
+          manager_notification = {
+            'url': 'order/' + order.id,
             'notification': 'You have an order waiting for your approval',
-            'created_at': currentTime,
+            'created_at': Date.now(),
             'isRead': true
           };
 
-          var leads_notification = {
-            'url': 'order/' + orderId,
+          mainApp.database().ref('notification/' + Authentication.user.manager_id).push(manager_notification);
+        }
+        if(action === 'a') {
+          user_notification = {
+            'url': 'order/' + order.id,
+            'notification': 'Your order has been approved',
+            'created_at': Date.now(),
+            'isRead': true
+          };
+
+          manager_notification = {
+            'url': 'order/' + order.id,
+            'notification': 'You have an order waiting for your approval',
+            'created_at': Date.now(),
+            'isRead': true
+          };
+
+          mainApp.database().ref('notification/' + order.user_id).push(user_notification);
+          mainApp.database().ref('notification/' + Authentication.user.manager_id).push(manager_notification);
+        }
+        if(action === 'r') {
+          user_notification = {
+            'url': 'order/' + order.id,
+            'notification': 'Your order has been rejected',
+            'created_at': Date.now(),
+            'isRead': true
+          };
+
+          mainApp.database().ref('notification/' + order.user_id).push(user_notification);
+        }
+        if(action === 'new_order') {
+          manager_notification = {
+            'url': 'order/' + order.id,
+            'notification': 'You have an order waiting for your approval',
+            'created_at': Date.now(),
+            'isRead': true
+          };
+
+          leads_notification = {
+            'url': 'order/' + order.id,
             'notification': 'Your leads have been used in an order',
-            'created_at': currentTime,
+            'created_at': Date.now(),
             'isRead': true
           };
 
-          var manager_leads_notification = {
-            'url': 'order/' + orderId,
+          manager_leads_notification = {
+            'url': 'order/' + order.id,
             'notification': 'Leads of your subordinate have been used in an order',
-            'created_at': currentTime,
+            'created_at': Date.now(),
             'isRead': true
           };
 
