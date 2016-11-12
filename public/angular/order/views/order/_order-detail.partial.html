@@ -42,8 +42,8 @@
 		</thead>
 		<tbody>
       <tr>
-				<th colspan="3" style="text-align:center; background: #d2d6de">
-          <a href="#" ng-click="isCollapsed = !isCollapsed">
+				<th colspan="3" style="text-align:center; background: #efefef;">
+          <a ng-href="" ng-click="isCollapsed = !isCollapsed">
             Order Details
             <span class="glyphicon glyphicon-triangle-bottom pull-right" ng-if="isCollapsed"></span> 
             <span class="glyphicon glyphicon-triangle-top pull-right" ng-if="!isCollapsed"></span> 
@@ -58,8 +58,8 @@
 					<span ng-switch-when="true">
 						{{ display.sell.seller.company_name }}
 						<span class="pull-right">
-							<a ng-click="alert(nego)" href="#" class="glyphicon glyphicon-pencil"></a>
-							<a ng-click="alert(nego)" href="#" class="glyphicon glyphicon-trash"></a>
+							<a ng-click="alert(nego)" class="glyphicon glyphicon-pencil"></a>
+							<a ng-click="alert(nego)" class="glyphicon glyphicon-trash"></a>
 						</span>
 					</span>
 					<i style="color:green" ng-switch-default>
@@ -70,8 +70,8 @@
 					<span ng-switch-when="true">
 						{{ display.buy.buyer.company_name }}
 						<span class="pull-right">
-							<a ng-click="alert(nego)" href="#" class="glyphicon glyphicon-pencil"></a>
-							<a ng-click="alert(nego)" href="#" class="glyphicon glyphicon-trash"></a>
+							<a ng-click="alert(nego)" class="glyphicon glyphicon-pencil"></a>
+							<a ng-click="alert(nego)" class="glyphicon glyphicon-trash"></a>
 						</span>
 					</span>
 					<i style="color:green" ng-switch-default>
@@ -84,13 +84,13 @@
 				<td>
 					<span ng-if="display.sell">
 						{{ display.sell.pivot.volume | number }}mt - US$ {{ display.sell.pivot.price | number }}
-						<a ng-click="alert(nego)" ng-if="display.sell.user_id === Authentication.user.id" href="#" class="pull-right">Nego</a>
+						<a ng-click="alert(nego)" ng-if="display.sell.user_id === Authentication.user.id" class="pull-right">Nego</a>
 					</span>
 				</td>
 				<td>
 					<span ng-if="display.buy">
 						{{ display.buy.pivot.volume | number }}mt - US$ {{ display.buy.pivot.price | number }}
-						<a ng-click="alert(nego)" ng-if="display.buy.user_id === Authentication.user.id" href="#" class="pull-right">Nego</a>
+						<a ng-click="alert(nego)" ng-if="display.buy.user_id === Authentication.user.id" class="pull-right">Nego</a>
 					</span>
 				</td>
 			</tr>
@@ -138,8 +138,8 @@
     </tbody>
     <tbody>
       <tr>
-				<th colspan="3" style="text-align:center; background: #d2d6de">
-          <a href="#" ng-click="qualityCollapsed = !qualityCollapsed">
+				<th colspan="3" style="text-align:center; background: #efefef;">
+          <a ng-href="" ng-click="qualityCollapsed = !qualityCollapsed">
             Quality
             <span class="glyphicon glyphicon-triangle-bottom pull-right" ng-if="!qualityCollapsed"></span> 
             <span class="glyphicon glyphicon-triangle-top pull-right" ng-if="qualityCollapsed"></span> 
@@ -346,8 +346,8 @@
     </tbody>
     <tbody>
       <tr>
-				<th colspan="3" style="text-align:center; background: #d2d6de">
-          <a href="#" ng-click="financialCollapsed = !financialCollapsed">
+				<th colspan="3" style="text-align:center; background: #efefef;">
+          <a ng-href="" ng-click="financialCollapsed = !financialCollapsed">
             Financial Summary
             <span class="glyphicon glyphicon-triangle-bottom pull-right" ng-if="!financialCollapsed"></span> 
             <span class="glyphicon glyphicon-triangle-top pull-right" ng-if="financialCollapsed"></span> 

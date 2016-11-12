@@ -289,6 +289,12 @@ ul.nav-wizard.nav-wizard-backnav .active ~ li a:focus {
   border: white 3px solid;
 }
 
+[ng-click],
+[data-ng-click],
+[x-ng-click] {
+    cursor: pointer;
+}
+
 /*.panel-body
 {
     overflow-y: scroll;
