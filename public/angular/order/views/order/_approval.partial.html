@@ -3,10 +3,19 @@
 		<tr><th>Name</th><th>Status</th><th>Updated</th></tr>
 	</thead>
 	<tbody>
+    <style>
+      .img-user img {
+        object-fit: cover;
+        height: 30px;
+      }
+      .img-user img[class] { width: 30px }
+    </style>
 		<tr ng-repeat="approval in order.approvals">
 			<td>
-				<div class="img-circle div-img-circle small" style="background-image:url({{approval.image}}); float:left; margin:2px;"></div>
-				{{ approval.name }}
+        <div class="img-user">
+          <img src="{{approval.image}}" class="img-circle div-img-circle small" style="float:left; margin:2px;" />
+          {{ approval.name }}
+        </div>
 			</td>
 			<td>
 				{{ approval.pivot.status === 'a' ? 'Accepted' : approval.pivot.status === 'r' ? 'Rejected' : 'Pending' }}
