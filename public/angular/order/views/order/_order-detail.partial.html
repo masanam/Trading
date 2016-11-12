@@ -4,10 +4,12 @@
       <tr ng-if="!order.user_id || order.user_id === Authentication.user.id"  class="no-print">
         <td width=20%></td>
         <td width=40%>
-          <button class="btn btn-default" ng-click="addBuy()" > + Add Buy </button>
+          <button class="btn btn-default" ng-click="addBuy()" ng-disabled="order.buys.length > 1"> + Add Buy </button>
+          <button class="btn btn-default pull-right" ng-click="addOwnProduct()"
+          	ng-disabled="order.buys.length != 1"> + Add BIB Product </button>
         </td>
         <td width=40%>
-          <button class="btn btn-default" ng-click="addSell()" > + Add Sell </button>
+          <button class="btn btn-default" ng-click="addSell()" ng-disabled="order.sells.length > 1"> + Add Sell </button>
         </td>
       </tr>
 			<tr>

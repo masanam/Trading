@@ -10,6 +10,15 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
       console.log('blur');
     });
 
+    $scope.addOwnProduct = function () {
+      //compare buy and sell
+
+      //if sell < buy, error message
+
+      //if sell > buy, do it
+
+    };
+
     $scope.addBuy = function () {
       var modalInstance = $uibModal.open({
         animation: true,

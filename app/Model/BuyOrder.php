@@ -36,7 +36,11 @@ class BuyOrder extends Model
         return $this->belongsTo('App\Model\User', 'user_id');
     }
 
-    public function OrderDetail() {
-        return $this->hasMany('App\Model\OrderDetail', 'orderable_id', 'id')->where('orderable_type','App\Model\BuyOrder');
+    public function orders() {
+        return $this->morphToMany(Order::class, 'orderable', 'order_details')
+            ->withPivot('id', 'price', 'volume', 'payment_term', 'trading_term');
     }
+
+    
+
 }
