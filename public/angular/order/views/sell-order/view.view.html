@@ -19,6 +19,12 @@
     </div>
     <div class="box-body" uib-collapse="isCollapsed">
       <div class="pull-right btn-group">
+        <button type="button" class="btn btn-primary" ng-click="changeOrderStatusAtDetail(sell_order, 'l')" ng-if="(sell_order.order_status==='v')&&Authentication.user.id===sell_order.user_id">
+          <i class="glyphicon glyphicon-arrow-right"></i> lead
+        </button>
+        <button type="button" class="btn btn-primary" ng-click="changeOrderStatusAtDetail(sell_order, 'v')" ng-if="(sell_order.order_status==='l')&&Authentication.user.id===sell_order.user_id">
+          <i class="glyphicon glyphicon-arrow-right"></i> Verified
+        </button>
         <button type="button" class="btn btn-primary" ui-sref="sell-order.update({ id:sell_order.id })" ng-if="(sell_order.order_status==='l'||sell_order.order_status==='v')&&Authentication.user.id===sell_order.user_id">
           <i class="glyphicon glyphicon-arrow-right"></i> Update
         </button>
@@ -28,17 +34,17 @@
       </div>
       <div class="form-group row-fluid">
         <h1>{{ sell_order.seller.company_name }}</h1>
-        <label>Product Name : </label>
+        <label ng-show="sell_order.product_name">Product Name : </label>
         <p>{{ sell_order.product_name }}</p>
         <label>Typical Quality : </label>
         <p>{{ sell_order.typical_quality }}</p>
-        <label>Address : </label>
+        <label ng-show="sell_order.address">Address : </label>
         <p>{{ sell_order.address }}</p>
         <div class="col-xs-6" style="padding-left:0">
           <label>City : </label>
           <p>{{ sell_order.city }}</p>
           <label>Volume of Coal : </label>
-          <p>{{ sell_order.volume }} Tonnes</p>
+          <p>{{ sell_order.volume }} mt, available {{ sell_order.volume - sum }} mt</p>
           <label>Input Date : </label>
           <p>{{ sell_order.order_date | date : 'd MMMM yyyy' }}</p>
         </div>        
@@ -206,7 +212,7 @@
                 <td>{{sell_order.size_reject}}</td>
               </tr>
               <tr>
-                <td><b>Fe2o3 </b></td>
+                <td><b>Fe2O3 </b></td>
                 <td>{{sell_order.fe2o3_min}} - {{sell_order.fe2o3_max}} %</td>
                 <td>{{sell_order.fe2o3_bonus}}</td>
                 <td>{{sell_order.fe2o3_reject}}</td>

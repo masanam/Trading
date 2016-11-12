@@ -52,6 +52,10 @@ Route::group(['middleware' => ['cors']], function() {
     Route::get('port/seller/allMy/{seller_id}', 'PortController@sellerAllMyPort');
     Route::get('port/buyer/my/{buyer_id}', 'PortController@buyerMyPort');
     Route::get('port/seller/my/{seller_id}', 'PortController@sellerMyPort');
+    Route::get('port/buyer/attachPort/{buyer_id}/{port_id}', 'PortController@attachBuyerPort');
+    Route::get('port/buyer/detachPort/{buyer_id}/{port_id}', 'PortController@detachBuyerPort');
+    Route::get('port/seller/attachPort/{seller_id}/{port_id}', 'PortController@attachSellerPort');
+    Route::get('port/seller/detachPort/{seller_id}/{port_id}', 'PortController@detachSellerPort');
     Route::get('port/buyer/status/{buyer_id}/{port_id}/{status}', 'PortController@changePortStatusBuyer');
     Route::get('port/seller/status/{seller_id}/{port_id}/{status}', 'PortController@changePortStatusSeller');
     Route::get('port/{id}/concession', 'PortController@connectedConcessions');

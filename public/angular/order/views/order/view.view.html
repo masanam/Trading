@@ -1,5 +1,5 @@
-<div class="col-lg-12" ng-if="included === true && approver === true">
-  <div class="callout callout-warning" ng-if="order.status === 'p'">
+<div class="col-lg-12 ng-print" ng-if="included === true && approver === true">
+  <div class="callout callout-warning" ng-if="order.status === 'p' && approving === false">
     <h4>
       This order is waiting for your approval.
       <a class="btn btn-success" ng-click="approve_reject('a');">
@@ -10,7 +10,7 @@
       </a>
     </h4>
   </div>
-  <div class="callout callout-warning" ng-if="order.status === 'a'">
+  <div class="callout callout-warning" ng-if="approving === true">
     <h4>
       Do you want to undo your approval?
       <a class="btn btn-danger" ng-click="approve_reject('r');">
@@ -19,7 +19,21 @@
     </h4>
   </div>
 </div>
-<div class="col-lg-8">
+<div class="col-lg-8" id="order-detail">
+  <style>
+    @media print
+    {    
+        .no-print, .no-print *
+        {
+            display: none !important;
+        }
+        .collapse {
+            display: block !important;
+            height: auto !important;
+            with: auto !important;
+        }
+    }
+  </style>
   <div class="box">
     <div class="box-header with-border" ng-init="findOne()">
       <h1 class="box-title">ORD #{{ ("10000"+order.id).slice(-4) }} - {{ order.trader.name }}</h1>
@@ -27,7 +41,7 @@
       <span class="badge badge-primary">
         {{ order.status === 'p' ? 'Pending Approval' : order.status === 'd' ? 'Draft' : order.status === 'a' ? 'Approved' : order.status === 'f' ? 'Finalized' : 'Cancelled' }}
       </span>
-      <div class="box-tools pull-right">
+      <div class="box-tools pull-right no-print">
         <a class="btn btn-default" ui-sref="order.list">
           <i class="glyphicon glyphicon-chevron-left"></i> Back
         </a>
@@ -46,14 +60,14 @@
       </div>
     </div>
 
-    <div class="box-header">
-      <h4 class="box-title" ng-if="order.request_reason">Request for Approval Notes : {{ order.request_reason }}</h4>
+    <div class="box-header" ng-if="order.request_reason">
+      <h4 class="box-title">Request for Approval Notes : {{ order.request_reason }}</h4>
     </div>
-    <div class="box-header">
-      <h4 class="box-title" ng-if="order.cancel_reason">Cancel Notes : {{ order.cancel_reason }}</h4>
+    <div class="box-header" ng-if="order.cancel_reason">
+      <h4 class="box-title">Cancel Notes : {{ order.cancel_reason }}</h4>
     </div>
-    <div class="box-header">
-      <h4 class="box-title" ng-if="order.finalize_reason">Finalize Notes : {{ order.finalize_reason }}</h4>
+    <div class="box-header" ng-if="order.finalize_reason">
+      <h4 class="box-title">Finalize Notes : {{ order.finalize_reason }}</h4>
     </div>
     <div class="box-header">
       <small>
@@ -68,18 +82,17 @@
     <div class="box-body no-padding" ng-static-include="'/angular/order/views/order/_order-detail.partial.html'"></div>
   </div>
 
-  <div class="box">
+  <div class="box" id="order-deviation">
     <div class="box-body" ng-static-include="'/angular/order/views/order/_index-deviation.partial.html'"></div>
   </div>
 </div>
 
-<div class="col-lg-4" ng-if="included === true">
+<div class="col-lg-4" ng-if="included === true" id="order-approval">
   <div class="box">
     <div class="box-header">Approval</div>
     <div class="box-body no-padding with-border">
       <div ng-static-include="'/angular/order/views/order/_approval.partial.html'"></div>
-      
-      <div ng-static-include="'/angular/chat/views/_view-chat.partial.html'"></div>
+      <div class="no-print" ng-static-include="'/angular/chat/views/_view-chat.partial.html'"></div>
     </div>
   </div>
 </div>

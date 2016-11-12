@@ -35,4 +35,8 @@ class SellOrder extends Model
     public function trader() {
         return $this->belongsTo('App\Model\User', 'user_id');
     }
+
+    public function OrderDetail() {
+        return $this->hasMany('App\Model\OrderDetail', 'orderable_id', 'id')->where('orderable_type','App\Model\SellOrder');
+    }
 }

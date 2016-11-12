@@ -221,7 +221,7 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
 
       $scope.seller = Seller.get({ id: $scope.sellerId });
 
-      $scope.lastOrders = Order.query({ option: 'lastOrders' , type: 'seller', id: $scope.sellerId });
+      $scope.lastOrders = Order.query({ action: 'lastOrders' , type: 'seller', id: $scope.sellerId });
       
       //$scope.products = Product.query({ option: 'seller' , sellerId: id });
 
@@ -258,9 +258,9 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
     $scope.addConcession = function () {
       var modalInstance = $uibModal.open({
         windowClass: 'xl-modal',
-        templateUrl: './angular/lead/views/concession/create-from-seller.view.html',
+        templateUrl: './angular/lead/views/concession/create.from-detail.buyer.view.html',
         controller: 'CreateConcessionModalController',
-        scope: $scope,
+        scope: $scope
       });
     };
     
@@ -489,7 +489,7 @@ angular.module('seller').controller('CreateProductModalFromSellerController', fu
   };
 });
 
-angular.module('seller').controller('CreateConcessionModalController', function ($scope, $filter, $uibModalInstance, Concession, Authentication, NgMap) {
+angular.module('seller').controller('CreateConcessionModalController', function ($scope, $filter, $uibModalInstance, $stateParams, Concession, Port, Authentication, NgMap) {
   
   $scope.concession = new Concession();
   
@@ -566,6 +566,10 @@ angular.module('seller').controller('CreateConcessionModalController', function 
     output += ']';
     return output;
   }
+
+  $scope.findMyPortsSeller = function(){
+    $scope.ports = Port.query({ type: 'seller', action: 'allMy', id: $stateParams.id });
+  };
   
   $scope.createConcession = function(){
     
@@ -591,6 +595,10 @@ angular.module('seller').controller('CreateConcessionModalController', function 
       $scope.error = response.data.message;
     });
     
+  };
+
+  $scope.createFromDetail = function(){
+
   };
   
   $scope.close = function () {

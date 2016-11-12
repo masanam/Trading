@@ -19,6 +19,12 @@
     </div>
     <div class="box-body" uib-collapse="isCollapsed">
       <div class="pull-right btn-group">
+        <button type="button" class="btn btn-primary" ng-click="changeOrderStatusAtDetail(buy_order, 'l')" ng-if="(buy_order.order_status==='v')&&Authentication.user.id===buy_order.user_id">
+          <i class="glyphicon glyphicon-arrow-right"></i> lead
+        </button>
+        <button type="button" class="btn btn-primary" ng-click="changeOrderStatusAtDetail(buy_order, 'v')" ng-if="(buy_order.order_status==='l')&&Authentication.user.id===buy_order.user_id">
+          <i class="glyphicon glyphicon-arrow-right"></i> Verified
+        </button>
         <button type="button" class="btn btn-primary" ui-sref="buy-order.update({ id:buy_order.id })" ng-if="(buy_order.order_status==='l'||buy_order.order_status==='v')&&Authentication.user.id===buy_order.user_id">
           <i class="glyphicon glyphicon-arrow-right"></i> Update
         </button>
@@ -28,17 +34,17 @@
       </div>
       <div class="form-group row-fluid">
         <h1>{{ buy_order.buyer.company_name }}</h1>
-        <label>Product Name : </label>
+        <label ng-show="buy_order.product_name">Product Name : </label>
         <p>{{ buy_order.product_name }}</p>
         <label>Typical Quality : </label>
         <p>{{ buy_order.typical_quality }}</p>
-        <label>Address : </label>
+        <label ng-show="buy_order.address">Address : </label>
         <p>{{ buy_order.address }}</p>
         <div class="col-xs-6" style="padding-left:0">
           <label>City : </label>
           <p>{{ buy_order.city }}</p>
           <label>Volume of Coal : </label>
-          <p>{{ buy_order.volume }} Tonnes</p>
+          <p>{{ buy_order.volume }} mt, available {{ buy_order.volume - sum }} mt</p>
           <label>Input Date : </label>
           <p>{{ buy_order.order_date | date : 'd MMMM yyyy' }}</p>
         </div>
@@ -206,7 +212,7 @@
                 <td>{{buy_order.size_reject}}</td>
               </tr>
               <tr>
-                <td><b>Fe2o3 </b></td>
+                <td><b>Fe2O3 </b></td>
                 <td>{{buy_order.fe2o3_min}} - {{buy_order.fe2o3_max}} %</td>
                 <td>{{buy_order.fe2o3_bonus}}</td>
                 <td>{{buy_order.fe2o3_reject}}</td>

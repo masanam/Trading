@@ -18,6 +18,10 @@ angular.module('order').controller('BuyOrderController', ['$scope', '$stateParam
       $scope.buy_order = Order.get({ type: 'buy', id: $scope.buy_orderId }, function(res){
         res.port_latitude = parseFloat(res.port_latitude);
         res.port_longitude = parseFloat(res.port_longitude);
+        $scope.sum = 0;
+        for (var i = res.order_detail.length - 1; i >= 0; i--) {
+          $scope.sum = $scope.sum + res.order_detail[i].volume;
+        }
         $scope.buy_order = res;
       });
     };

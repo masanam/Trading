@@ -2,6 +2,8 @@
 
 angular.module('order').controller('OrderDetailController', ['$scope', '$uibModal', 'Order',
   function($scope,$uibModal, Order) {
+    console.log('order detail', $scope.order);
+
     $scope.addBuy = function () {
       var modalInstance = $uibModal.open({
         animation: true,
@@ -73,5 +75,6 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
         console.log('Modal dismissed at: ' + new Date());
       });
     };
+    
   }
 ]);

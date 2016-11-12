@@ -33,8 +33,8 @@
             <td>{{ buyer.phone }}</td>
             <td>{{ buyer.email }}</td>
             <td>
-              <span ng-if="buyer.buy_order">{{ buyer.buy_order[0].order_date | convertToDate | date : 'd MMMM yy' }}</span>
-              <span ng-if="!buyer.buy_order">N/A</span>
+              <span ng-if="buyer.buy_order[0]">{{ buyer.buy_order[0].order_date | convertToDate | date : 'd MMMM yyyy' }}</span>
+              <span ng-if="!buyer.buy_order[0]">N/A</span>
             </td>
             <td>
               <a ui-sref="lead.view-buyer({ id: buyer.id })"><i class="glyphicon glyphicon-info-sign"></i></a>

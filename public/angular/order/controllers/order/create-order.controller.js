@@ -5,7 +5,7 @@ angular.module('order').controller('CreateOrderController', ['$scope', '$state',
   	$scope.init = function (){
 	    $scope.order = new Order();
 	    $scope.order.buys = $scope.order.sells = [];
-	    console.log($scope.order);
+	    console.log('create order', $scope.order);
 	  };
 
     $scope.submit = function () {

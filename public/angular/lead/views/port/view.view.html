@@ -49,10 +49,10 @@
           <div class="row-fluid" style="margin: 10px">
 
             <table class="table table-striped">
-              <tr><td><b>Size</b></td><td>: {{ port.size }}</td></tr>
+              <tr><td style="width:50%"><b>Size</b></td><td>: {{ port.size }} Ha</td></tr>
               <tr><td><b>Latitude</b></td><td>: {{ port.latitude }}</td></tr>
               <tr><td><b>Longitude</b></td><td>: {{ port.longitude }}</td></tr>
-              <tr><td><b>Anchorage Distance (m)</b></td><td>: {{ port.anchorage_distance }}</td></tr>
+              <tr><td><b>Anchorage Distance </b></td><td>: {{ port.anchorage_distance }} M</td></tr>
               <tr><td><b>Port Facility</b></td>
                 <td>: 
                   <span class='badge badger-danger' ng-show="port.has_conveyor===1">Conveyor</span> 
@@ -61,7 +61,7 @@
                 </td>
               </tr>
               <tr><td><b>Draft Height (NM or Hours)</b></td><td>: {{ port.draft_height }}</td></tr>
-              <tr><td><b>Daily Discharge Rate (mtpd)</b></td><td>: {{ port.daily_discharge_rate }}</td></tr>
+              <tr><td><b>Daily Discharge Rate </b></td><td>: {{ port.daily_discharge_rate || '-'}} Mtpd</td></tr>
 
             </table>
 
