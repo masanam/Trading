@@ -73,6 +73,13 @@ class OrderController extends Controller
     $order->status = 'd';
     $order->save();
 
+    foreach($request->buys as $buy){
+      $order->buys()->attach([ $buy->id => $buy->pivot ]);
+    }
+    foreach($request->sells as $sell){
+      $order->sells()->attach([ $sell->id => $sell->pivot ]);
+    }
+
     return response()->json($order, 200);
   }
 
