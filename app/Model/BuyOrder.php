@@ -37,6 +37,6 @@ class BuyOrder extends Model
     }
 
     public function OrderDetail() {
-        return $this->belongsTo('App\Model\OrderDetail', 'id', 'orderable_id')->where('orderable_type','App\Model\BuyOrder');
+        return $this->hasMany('App\Model\OrderDetail', 'orderable_id', 'id')->where('orderable_type','App\Model\BuyOrder');
     }
 }

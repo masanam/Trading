@@ -44,7 +44,7 @@
           <label>City : </label>
           <p>{{ sell_order.city }}</p>
           <label>Volume of Coal : </label>
-          <p>{{ sell_order.volume }} mt, available {{ sell_order.volume - sell_order.order_detail.volume }} mt</p>
+          <p>{{ sell_order.volume }} mt, available {{ sell_order.volume - sum }} mt</p>
           <label>Input Date : </label>
           <p>{{ sell_order.order_date | date : 'd MMMM yyyy' }}</p>
         </div>        
