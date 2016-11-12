@@ -34,17 +34,17 @@
       </div>
       <div class="form-group row-fluid">
         <h1>{{ sell_order.seller.company_name }}</h1>
-        <label>Product Name : </label>
+        <label ng-show="sell_order.product_name">Product Name : </label>
         <p>{{ sell_order.product_name }}</p>
         <label>Typical Quality : </label>
         <p>{{ sell_order.typical_quality }}</p>
-        <label>Address : </label>
+        <label ng-show="sell_order.address">Address : </label>
         <p>{{ sell_order.address }}</p>
         <div class="col-xs-6" style="padding-left:0">
           <label>City : </label>
           <p>{{ sell_order.city }}</p>
           <label>Volume of Coal : </label>
-          <p>{{ sell_order.volume }} Tonnes</p>
+          <p>{{ sell_order.volume }} mt, available {{ sell_order.volume - sell_order.order_detail.volume }} mt</p>
           <label>Input Date : </label>
           <p>{{ sell_order.order_date | date : 'd MMMM yyyy' }}</p>
         </div>        
