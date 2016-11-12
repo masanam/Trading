@@ -9,7 +9,6 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
         ariaDescribedBy: 'modal-body',
         templateUrl: '/angular/order/views/order/_add-leads.modal.html',
         controller: 'AddLeadsModalController',
-        //size: 'lg',
         windowClass: 'xl-modal',
         resolve: {
           items: function () {
@@ -21,11 +20,19 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
 
       modalInstance.result.then(function (selectedItem) {
         if(!$scope.order.sells) $scope.order.sells = [];
-        $scope.order.sells.push(selectedItem);
-        $scope.display.sell = selectedItem;
-        console.log($scope.order.sells);
         
-        //if($scope.order.id){ }
+        if($scope.order.id){
+          $scope.order.post(
+            { id:$scope.order.id, action: 'stage' },
+            { sell:selectedItem.id, volume:selectedItem.pivot.volume, price:selectedItem.pivot.price, trading_term:selectedItem.pivot.trading_term, payment_term:selectedItem.pivot.payment_term },
+            function (res){
+              $scope.order = res;
+              $scope.display.sell = selectedItem;
+            });
+        } else {
+          $scope.order.sells.push(selectedItem);
+          $scope.display.sell = selectedItem;
+        }
       }, function () {
         console.log('Modal dismissed at: ' + new Date());
       });
@@ -38,7 +45,6 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
         ariaDescribedBy: 'modal-body',
         templateUrl: '/angular/order/views/order/_add-leads.modal.html',
         controller: 'AddLeadsModalController',
-        //size: 'lg',
         windowClass: 'xl-modal',
         resolve: {
           items: function () {
@@ -50,11 +56,19 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
 
       modalInstance.result.then(function (selectedItem) {
         if(!$scope.order.buys) $scope.order.buys = [];
-        $scope.order.buys.push(selectedItem);
-        $scope.display.buy = selectedItem;
-        console.log($scope.order.buys);
-
-        //if($scope.order.id){ }
+        
+        if($scope.order.id){
+          $scope.order.post(
+            { id:$scope.order.id, action: 'stage' },
+            { buy:selectedItem.id, volume:selectedItem.pivot.volume, price:selectedItem.pivot.price, trading_term:selectedItem.pivot.trading_term, payment_term:selectedItem.pivot.payment_term },
+            function (res){
+              $scope.order = res;
+              $scope.display.buy = selectedItem;
+            });
+        } else {
+          $scope.order.buys.push(selectedItem);
+          $scope.display.buy = selectedItem;
+        }
       }, function () {
         console.log('Modal dismissed at: ' + new Date());
       });
