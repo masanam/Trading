@@ -19,6 +19,12 @@
     </div>
     <div class="box-body" uib-collapse="isCollapsed">
       <div class="pull-right btn-group">
+        <button type="button" class="btn btn-primary" ng-click="changeOrderStatusAtDetail(buy_order, 'l')" ng-if="(buy_order.order_status==='v')&&Authentication.user.id===buy_order.user_id">
+          <i class="glyphicon glyphicon-arrow-right"></i> lead
+        </button>
+        <button type="button" class="btn btn-primary" ng-click="changeOrderStatusAtDetail(buy_order, 'v')" ng-if="(buy_order.order_status==='l')&&Authentication.user.id===buy_order.user_id">
+          <i class="glyphicon glyphicon-arrow-right"></i> Verified
+        </button>
         <button type="button" class="btn btn-primary" ui-sref="buy-order.update({ id:buy_order.id })" ng-if="(buy_order.order_status==='l'||buy_order.order_status==='v')&&Authentication.user.id===buy_order.user_id">
           <i class="glyphicon glyphicon-arrow-right"></i> Update
         </button>

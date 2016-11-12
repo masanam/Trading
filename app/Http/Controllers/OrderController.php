@@ -36,12 +36,11 @@ class OrderController extends Controller
     if($request->status != '') $orders = $orders->where('status', $request->status);
     
     if($request->possession == 'subordinates'){
-      $users = User::where('manager_id', Auth::User()->id)->get();
-      $subordinates = [];
-      foreach($users as $user){
-        array_push($subordinates, $user->id);
+      $subordinates = $this->getSub();
+      foreach ($subordinates as $sub ) {
+          $lower[] = $sub->id;
       }
-      $orders->whereIn('user_id', $subordinates);
+      $orders = $orders->whereIn('user_id', $lower);
     }
     else if($request->possession == 'associated'){
       $orders->whereHas('users', function($query){
@@ -231,5 +230,10 @@ class OrderController extends Controller
     $order->save();
 
     return response()->json($order, 200);
+  }
+
+  public function getSub(){
+    $user = Auth::User();
+    return $user->getAllSubordinates();
   }
 }
