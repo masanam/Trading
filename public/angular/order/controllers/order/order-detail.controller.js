@@ -2,6 +2,23 @@
 
 angular.module('order').controller('OrderDetailController', ['$scope', '$uibModal', 'Order',
   function($scope,$uibModal, Order) {
+    $scope.$on('windowFocus', function(){
+      console.log('focus');
+    });
+
+    $scope.$on('windowBlur', function(){
+      console.log('blur');
+    });
+
+    $scope.addOwnProduct = function () {
+      //compare buy and sell
+
+      //if sell < buy, error message
+
+      //if sell > buy, do it
+
+    };
+
     $scope.addBuy = function () {
       var modalInstance = $uibModal.open({
         animation: true,
@@ -22,7 +39,7 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
         if(!$scope.order.sells) $scope.order.sells = [];
         
         if($scope.order.id){
-          $scope.order.post(
+          Order.post(
             { id:$scope.order.id, action: 'stage' },
             { sell:selectedItem.id, volume:selectedItem.pivot.volume, price:selectedItem.pivot.price, trading_term:selectedItem.pivot.trading_term, payment_term:selectedItem.pivot.payment_term },
             function (res){
@@ -59,7 +76,7 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
         if(!$scope.order.buys) $scope.order.buys = [];
         
         if($scope.order.id){
-          $scope.order.post(
+          Order.post(
             { id:$scope.order.id, action: 'stage' },
             { buy:selectedItem.id, volume:selectedItem.pivot.volume, price:selectedItem.pivot.price, trading_term:selectedItem.pivot.trading_term, payment_term:selectedItem.pivot.payment_term },
             function (res){

@@ -19,8 +19,8 @@ angular.module('order').controller('BuyOrderController', ['$scope', '$stateParam
         res.port_latitude = parseFloat(res.port_latitude);
         res.port_longitude = parseFloat(res.port_longitude);
         $scope.sum = 0;
-        for (var i = res.order_detail.length - 1; i >= 0; i--) {
-          $scope.sum = $scope.sum + res.order_detail[i].volume;
+        for (var i = res.orders.length - 1; i >= 0; i--) {
+          $scope.sum = $scope.sum + res.orders[i].volume;
         }
         $scope.buy_order = res;
       });

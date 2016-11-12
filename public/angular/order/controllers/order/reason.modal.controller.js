@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('order').controller('OrderReasonModalController', ['$uibModalInstance', '$scope', 'Order', 'status',
-  function($uibModalInstance, $scope, Order, status) {
+angular.module('order').controller('OrderReasonModalController', ['$uibModalInstance', '$scope', 'Order', 'status', 'Notification',
+  function($uibModalInstance, $scope, Order, status, Notification) {
     $scope.status = status;
 
     $scope.ok = function () {
@@ -18,6 +18,7 @@ angular.module('order').controller('OrderReasonModalController', ['$uibModalInst
           if($scope.status === 'x') $scope.order.cancel_reason = $scope.reason;
           else if($scope.status === 'f') $scope.order.finalize_reason = $scope.reason;
           else if($scope.status === 'p') $scope.order.request_reason = $scope.reason;
+          Notification.sendNotification('request_approval', $scope.order, false, false);
           $uibModalInstance.dismiss('success');
         }, function (err) {
           $scope.error = err.data.message;

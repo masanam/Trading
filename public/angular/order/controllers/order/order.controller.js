@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('order').controller('OrderController', ['$scope', '$stateParams', '$state', 'Order', 'Authentication', '$uibModal',
-  function($scope, $stateParams, $state, Order, Authentication, $uibModal) {
+angular.module('order').controller('OrderController', ['$scope', '$stateParams', '$state', 'Order', 'Authentication', 'Notification', '$uibModal',
+  function($scope, $stateParams, $state, Order, Authentication, Notification, $uibModal) {
     $scope.browse = {};
 
     $scope.$watchGroup(['browse.status', 'browse.possession'], function() { $scope.find(); });
@@ -102,6 +102,7 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
 
       Order.get({ id: $scope.order.id, action: 'approve', status : status }, function (res) {
         $scope.order = res;
+        Notification.sendNotification(status, $scope.order, false, false);
       }, function (err) {
         $scope.error = err.data.message;
       });

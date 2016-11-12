@@ -10,7 +10,8 @@ angular.module('order').factory('Order', ['$resource',
       progress_status: undefined,
       user_id: undefined,
     }, {
-      update: { method: 'PUT' }
+      update: { method: 'PUT' },
+      post: { method: 'POST' },
     });
   }
 ]);
