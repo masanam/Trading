@@ -11,8 +11,8 @@ angular.module('map').controller('MapController', ['$scope', '$http', '$statePar
     $scope.product = undefined;
     
     $scope.customIcon = {
-      "scaledSize": [32, 32],
-      "url": "http://www.cliparthut.com/clip-arts/823/arrowhead-clip-art-823528.png"
+      scaledSize: [32, 32],
+      url: 'http://www.cliparthut.com/clip-arts/823/arrowhead-clip-art-823528.png'
     };
     
     NgMap.getMap().then(function(map) {

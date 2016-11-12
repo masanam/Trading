@@ -41,12 +41,12 @@ angular.module(ApplicationConfiguration.applicationModuleName).config(['$locatio
         var value = input[key];
         var match;
         // Check for string properties which look like dates.
-        if (typeof value === "string" && (match = value.match(dateRegex))) {
+        if (typeof value === 'string' && (match = value.match(dateRegex))) {
           var milliseconds = Date.parse(match[0]);
           if (!isNaN(milliseconds)) {
             input[key] = new Date(milliseconds);
           }
-        } else if (typeof value === "object") {
+        } else if (typeof value === 'object') {
             // Recurse into object
           convertDateStringsToDates(value);
         }
