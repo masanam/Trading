@@ -41,12 +41,12 @@ angular.module(ApplicationConfiguration.applicationModuleName).config(['$locatio
         var value = input[key];
         var match;
         // Check for string properties which look like dates.
-        if (typeof value === "string" && (match = value.match(dateRegex))) {
+        if (typeof value === 'string' && (match = value.match(dateRegex))) {
           var milliseconds = Date.parse(match[0]);
           if (!isNaN(milliseconds)) {
             input[key] = new Date(milliseconds);
           }
-        } else if (typeof value === "object") {
+        } else if (typeof value === 'object') {
             // Recurse into object
           convertDateStringsToDates(value);
         }
@@ -76,7 +76,7 @@ angular.module(ApplicationConfiguration.applicationModuleName).config(['$urlRout
 
 
 //initialize application authentication & authorization before starting
-angular.module(ApplicationConfiguration.applicationModuleName).run(function ($rootScope, $state, $http, $uibModalStack, Authentication) {
+angular.module(ApplicationConfiguration.applicationModuleName).run(function ($rootScope, $state, $http, $uibModalStack, $window, Authentication) {
   //Load authorization event listener once all authentication done 
   Authentication.authenticate(function(user){
     // Always check authentication before changing state
@@ -109,6 +109,15 @@ angular.module(ApplicationConfiguration.applicationModuleName).run(function ($ro
       storePreviousState(fromState, fromParams);
       $uibModalStack.dismissAll();
     });
+
+        // Blur events can be double-fired, so we'll filter those out with prevEvent tracking
+    $window.onfocus = function (event) {
+      $rootScope.$broadcast('windowFocus', event);
+    };
+
+    $window.onblur = function (event) {
+      $rootScope.$broadcast('windowBlur', event);
+    };
   });
 
   // Store previous state

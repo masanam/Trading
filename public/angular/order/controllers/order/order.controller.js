@@ -138,12 +138,12 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
       var docHead = document.head.outerHTML;
       var orderContent = document.getElementById('order-detail').outerHTML;
       var approvalContent = document.getElementById('order-approval').outerHTML;
-      var canvas = document.getElementById("line");
+      var canvas = document.getElementById('line');
       var graph = canvas.toDataURL();
 
-      var winAttr = "location=yes, statusbar=no, menubar=no, titlebar=no, toolbar=no,dependent=no, width=865, height=600, resizable=yes, screenX=200, screenY=200, personalbar=no, scrollbars=yes";
+      var winAttr = 'location=yes, statusbar=no, menubar=no, titlebar=no, toolbar=no,dependent=no, width=865, height=600, resizable=yes, screenX=200, screenY=200, personalbar=no, scrollbars=yes';
 
-      var newWin = window.open("", "_blank", winAttr);
+      var newWin = window.open('', '_blank', winAttr);
       var writeDoc = newWin.document;
       writeDoc.open();
       writeDoc.writeln('<!doctype html><html>' + docHead + '<body onLoad="window.print();">' + orderContent + approvalContent + '</body></html>');
