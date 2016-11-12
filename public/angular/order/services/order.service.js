@@ -25,3 +25,14 @@ angular.module('order').factory('OrderUser', ['$resource',
     });
   }
 ]);
+
+angular.module('order').factory('Term', function (){
+  return {
+    trading : [
+      'FOT', 'FOB BARGE', 'FOB MV', 'CNF', 'CIF', 'FRANCO'
+    ],
+    payment : [
+      'PIA', 'NET7', 'NET30', 'EOM', 'COD', 'CND', 'CBS'
+    ]
+  };
+});

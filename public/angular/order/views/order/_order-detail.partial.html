@@ -1,4 +1,4 @@
-<section ng-controller="OrderDetailController">
+<section ng-controller="OrderDetailController" ng-init="init()">
 	<table st-table="" class="table table-bordered table-striped">
 		<thead>
       <tr ng-if="!order.user_id || order.user_id === Authentication.user.id"  class="no-print">
@@ -236,7 +236,7 @@
 					{{ display.buy.vm_min }} ~ {{ display.buy.vm_max }} kcal<br>
 					{{ display.buy.vm_reject }} kcal reject; {{ display.buy.vm_bonus }} kcal bonus
 					</span>
-				</td>>
+				</td>
       </tr>
       <tr>
         <td><b>Ash (ADB) </b></td>

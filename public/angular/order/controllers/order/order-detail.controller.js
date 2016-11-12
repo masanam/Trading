@@ -2,8 +2,6 @@
 
 angular.module('order').controller('OrderDetailController', ['$scope', '$uibModal', 'Order',
   function($scope,$uibModal, Order) {
-    console.log('order detail', $scope.order);
-
     $scope.addBuy = function () {
       var modalInstance = $uibModal.open({
         animation: true,
@@ -34,6 +32,7 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
         } else {
           $scope.order.sells.push(selectedItem);
           $scope.display.sell = selectedItem;
+          console.log('sell');
         }
       }, function () {
         console.log('Modal dismissed at: ' + new Date());
@@ -70,6 +69,7 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
         } else {
           $scope.order.buys.push(selectedItem);
           $scope.display.buy = selectedItem;
+          console.log('buy');
         }
       }, function () {
         console.log('Modal dismissed at: ' + new Date());
