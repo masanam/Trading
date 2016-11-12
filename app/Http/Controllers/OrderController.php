@@ -249,8 +249,18 @@ class OrderController extends Controller
       'payment_term' => $req->payment_term
     ];
 
-    if($req->buy) $order->buys()->attach([ $req->buy => $details ]);
-    if($req->sell) $order->sells()->attach([ $req->sell => $details ]);
+    if($req->buy){
+      if(count($order->sells) > 1)
+        return response()->json([ 'message' => 'Can\'t add more Sell on Multiple Buys' ], 400);
+      
+      $order->buys()->attach([ $req->buy => $details ]);
+    }
+    if($req->sell){
+      if(count($order->buys) > 1)
+        return response()->json([ 'message' => 'Can\'t add more Buy on Multiple Sells' ], 400);
+
+      $order->sells()->attach([ $req->sell => $details ]);
+    }
 
     return response()->json($order, 200);
   }
