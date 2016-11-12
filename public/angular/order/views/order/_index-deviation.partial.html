@@ -28,7 +28,7 @@
   		<h3>$ {{ display.totalBuyPrice / display.totalBuyVolume | number:2 }}</h3>
   		<small class="text-muted">deviation: {{ ((display.totalBuyPrice / display.totalBuyVolume)/display.index.price)*100 | number:2 }}%</small>
   	</div>
-		<div class="col-xs-6 description-block" id="line-chart">
+		<div class="col-xs-6 description-block" id="lineChart">
       <canvas id="line" class="chart chart-line" chart-data="data" chart-dataset-override="datasetOverride"
         chart-labels="labels" chart-series="series" chart-colors="colors" style="min-height:200px;">
       </canvas> 
