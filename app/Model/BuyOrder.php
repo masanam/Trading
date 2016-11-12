@@ -41,6 +41,10 @@ class BuyOrder extends Model
             ->withPivot('id', 'price', 'volume', 'payment_term', 'trading_term');
     }
 
-    
-
+    public function reconcile() {
+        $volume = $this->orders->sum('pivot.volume');
+        if($this->volume >= $volume) $this->order_status = 's';
+        else $this->order_status = 'p';
+        $this->save();
+    }    
 }

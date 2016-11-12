@@ -75,9 +75,11 @@ class OrderController extends Controller
 
     foreach($request->buys as $buy){
       $order->buys()->attach([ $buy->id => $buy->pivot ]);
+      BuyOrder::find($buy->id)->reconcile();
     }
     foreach($request->sells as $sell){
       $order->sells()->attach([ $sell->id => $sell->pivot ]);
+      SellOrder::find($sell->id)->reconcile();
     }
 
     return response()->json($order, 200);
@@ -254,12 +256,14 @@ class OrderController extends Controller
         return response()->json([ 'message' => 'Can\'t add more Sell on Multiple Buys' ], 400);
       
       $order->buys()->attach([ $req->buy => $details ]);
+      BuyOrder::find($req->buy)->reconcile();
     }
     if($req->sell){
       if(count($order->buys) > 1)
         return response()->json([ 'message' => 'Can\'t add more Buy on Multiple Sells' ], 400);
 
       $order->sells()->attach([ $req->sell => $details ]);
+      SellOrder::find($req->sell)->reconcile();
     }
 
     return response()->json($order, 200);

@@ -43,6 +43,9 @@ class SellOrder extends Model
     }
 
     public function reconcile() {
-        $orders = $this->orders->sum('pivot.price');
+        $volume = $this->orders->sum('pivot.volume');
+        if($this->volume >= $volume) $this->order_status = 's';
+        else $this->order_status = 'p';
+        $this->save();
     }
 }
