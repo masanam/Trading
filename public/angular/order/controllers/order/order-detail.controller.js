@@ -2,6 +2,14 @@
 
 angular.module('order').controller('OrderDetailController', ['$scope', '$uibModal', 'Order',
   function($scope,$uibModal, Order) {
+    $scope.$on('windowFocus', function(){
+      console.log('focus');
+    });
+
+    $scope.$on('windowBlur', function(){
+      console.log('blur');
+    });
+
     $scope.addBuy = function () {
       var modalInstance = $uibModal.open({
         animation: true,

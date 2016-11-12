@@ -76,7 +76,7 @@ angular.module(ApplicationConfiguration.applicationModuleName).config(['$urlRout
 
 
 //initialize application authentication & authorization before starting
-angular.module(ApplicationConfiguration.applicationModuleName).run(function ($rootScope, $state, $http, $uibModalStack, Authentication) {
+angular.module(ApplicationConfiguration.applicationModuleName).run(function ($rootScope, $state, $http, $uibModalStack, $window, Authentication) {
   //Load authorization event listener once all authentication done 
   Authentication.authenticate(function(user){
     // Always check authentication before changing state
@@ -109,6 +109,15 @@ angular.module(ApplicationConfiguration.applicationModuleName).run(function ($ro
       storePreviousState(fromState, fromParams);
       $uibModalStack.dismissAll();
     });
+
+        // Blur events can be double-fired, so we'll filter those out with prevEvent tracking
+    $window.onfocus = function (event) {
+      $rootScope.$broadcast('windowFocus', event);
+    };
+
+    $window.onblur = function (event) {
+      $rootScope.$broadcast('windowBlur', event);
+    };
   });
 
   // Store previous state
