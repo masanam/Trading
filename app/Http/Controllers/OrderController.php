@@ -120,9 +120,10 @@ class OrderController extends Controller
   }
   
   private function add_approval_to_order($order = NULL, $user_id = '', $order_id='', $status=''){
+    //var_dump($order->approvals->count());
     if($order->approvals->count() > 0){
       $order_approval = OrderApproval::where('user_id', $user_id)->where('order_id', $order_id)->first();
-      $order_approval->status = 'p';
+      $order_approval->status = $status;
       $order_approval->save();
     }else{
       $order_approval = new OrderApproval();
@@ -196,16 +197,12 @@ class OrderController extends Controller
   public function approve($id, Request $request)
   {
     $order = Order::with(['approvals' => function($q){
-      $q->where('user_id', Auth::user()->id);
-    }])->find($id);
+        $q->where('user_id', Auth::user()->id);
+      }, 'users' => function($q){
+        $q->where('user_id', Auth::user()->id);
+      }])->find($id);
     
-    if($order->approvals->count() > 0){
-      $order_approval = OrderApproval::where('user_id', Auth::user()->id)->where('order_id', $id)->first();
-      $order_approval->status = $request->status;
-      $order_approval->save();
-    }else{
-      $this->add_approval_to_order($order, Auth::user()->manager_id, $id, $request->status);
-    }
+    $this->add_approval_to_order($order, Auth::user()->id, $id, $request->status);
     
     //print_r($order);
     
@@ -214,6 +211,12 @@ class OrderController extends Controller
         $order->status = 'a';
         $order->save();
       }else{
+        $order = Order::with(['approvals' => function($q){
+          $q->where('user_id', Auth::manager()->id);
+        }, 'users' => function($q){
+          $q->where('user_id', Auth::manager()->id);
+        }])->find($id);
+      
         $this->add_user_to_order($order, Auth::user()->manager_id, $id, 'approver');
         $this->add_approval_to_order($order, Auth::user()->manager_id, $id, 'p');
         $order->status = 'p';
