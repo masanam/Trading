@@ -2,6 +2,7 @@
 
 angular.module('notification').controller('NotificationController', ['$scope', '$stateParams', 'Order', 'Authentication', '$location', 'Notification',
 	function($scope, $stateParams, Order, Authentication, $location, Notification) {
+  $scope.unread_notifications = 0;
   $scope.notifications = [];
   $scope.notification = {};
 
@@ -12,8 +13,17 @@ angular.module('notification').controller('NotificationController', ['$scope', '
           res[i].created_at = new Date(res[i].created_at);
         }
         $scope.notifications = res;
-        console.log($scope.notifications);
       });
+    });
+
+    Notification.findUnreadNotifications(Authentication.user.id, function(res) {
+      $scope.unread_notifications = res;
+    });
+  };
+
+  $scope.readNotification = function(notifId) {
+    Notification.readNotification(Authentication.user.id, notifId, function(res) {
+      console.log(res);
     });
   };
 }]);

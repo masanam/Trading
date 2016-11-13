@@ -36,17 +36,23 @@
         </li>-->
         <li class="dropdown notifications-menu" uib-dropdown>
           <a class="dropdown-toggle" data-toggle="dropdown" uib-dropdown-toggle>
-            <i class="fa fa-bell-o"></i>
-            <span class="label label-warning">{{ notifications.length }}</span>
+            <i class="fa fa-bell"></i>
+            <span class="label label-danger">{{ unread_notifications }}</span>
           </a>
           <ul class="dropdown-menu" uib-dropdown-menu>
-            <li class="header">You have {{ notifications.length }} unread notifications</li>
-            <li ng-repeat="notif in notifications">
+            <li ng-repeat="notif in notifications" ng-click="readNotification(notif.$id)">
               <!-- inner menu: contains the actual data -->
-              <ul class="menu">
+              <ul class="menu" ng-if="!notif.isRead">
+                <li style="background-color: #F0F8FF;">
+                  <a ng-href="{{ notif.url }}" style="white-space:normal;">
+                    <i class="fa fa-exclamation-triangle" style="color: red;"></i>{{ notif.notification }}
+                  </a>
+                </li>
+              </ul>
+              <ul class="menu" ng-if="notif.isRead">
                 <li>
-                  <a ng-href="{{ notif.url }}">
-                    {{ notif.notification }}
+                  <a ng-href="{{ notif.url }}" style="white-space:normal;">
+                    <i class="fa fa-exclamation-triangle" style="color: red;"></i>{{ notif.notification }}
                   </a>
                 </li>
               </ul>
