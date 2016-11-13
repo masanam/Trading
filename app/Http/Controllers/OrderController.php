@@ -76,10 +76,28 @@ class OrderController extends Controller
     foreach($request->buys as $buy){
       $order->buys()->attach([ $buy->id => $buy->pivot ]);
       BuyOrder::find($buy->id)->reconcile();
+
+      $order_detail_id = $order->buys->find($req->buy)->pivot->id;
+      OrderNegotiation::create([
+        'order_detail_id' => $order_detail_id,
+        'notes' => 'Initial Deal',
+        'volume' => $req->volume,
+        'price' => $req->price,
+        'user_id' => Auth::user()->id,
+      ]);
     }
     foreach($request->sells as $sell){
       $order->sells()->attach([ $sell->id => $sell->pivot ]);
       SellOrder::find($sell->id)->reconcile();
+
+      $order_detail_id = $order->sells->find($req->sell)->pivot->id;
+      OrderNegotiation::create([
+        'order_detail_id' => $order_detail_id,
+        'notes' => 'Initial Deal',
+        'volume' => $req->volume,
+        'price' => $req->price,
+        'user_id' => Auth::user()->id,
+      ]);
     }
 
     return response()->json($order, 200);
@@ -276,13 +294,14 @@ class OrderController extends Controller
 
     // if notes is here, it's a negotiation
     // Add new log of the nagotiation
-    OrderNegotiation::create([
+    $negotiation  = new OrderNegotiation([
       'order_detail_id' => $order_detail_id,
       'notes' => $notes,
       'volume' => $req->volume,
       'price' => $req->price,
       'user_id' => Auth::user()->id,
     ]);
+    $negotiation->save();
     return $this->show($id);
   }
 
