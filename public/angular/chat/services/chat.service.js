@@ -31,7 +31,7 @@ angular.module('chat').factory('Chat', ['Authentication', 'FirebaseService', '$f
           'url': 'order/' + orderId,
           'notification': 'You received a new message',
           'created_at': Date.now(),
-          'isRead': true
+          'isRead': false
         };
 
         for (var i = userId.length - 1; i >= 0; i--) {
