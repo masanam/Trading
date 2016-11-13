@@ -29,7 +29,7 @@ angular.module('chat').factory('Chat', ['Authentication', 'FirebaseService', '$f
         // sending notification
         var notification = {
           'url': 'order/' + orderId,
-          'notification': 'You received a new message',
+          'notification': Authentication.user.name + ' : "' + message + '"',
           'created_at': Date.now(),
           'isRead': false
         };

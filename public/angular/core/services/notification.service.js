@@ -34,7 +34,7 @@ angular.module('notification').factory('Notification', ['Authentication', 'Fireb
         if(action === 'request_approval') {
           manager_notification = {
             'url': 'order/' + order.id,
-            'notification': 'You have an order waiting for your approval',
+            'notification': 'ORD #' + ("10000"+order.id).slice(-4) + ' is waiting for your approval',
             'created_at': Date.now(),
             'isRead': false
           };
@@ -44,14 +44,14 @@ angular.module('notification').factory('Notification', ['Authentication', 'Fireb
         if(action === 'a') {
           user_notification = {
             'url': 'order/' + order.id,
-            'notification': 'Your order has been approved',
+            'notification': 'ORD #' + ("10000"+order.id).slice(-4) + ' is approved',
             'created_at': Date.now(),
             'isRead': false
           };
 
           manager_notification = {
             'url': 'order/' + order.id,
-            'notification': 'You have an order waiting for your approval',
+            'notification': 'ORD #' + ("10000"+order.id).slice(-4) + ' is waiting for your approval',
             'created_at': Date.now(),
             'isRead': false
           };
@@ -62,7 +62,7 @@ angular.module('notification').factory('Notification', ['Authentication', 'Fireb
         if(action === 'r') {
           user_notification = {
             'url': 'order/' + order.id,
-            'notification': 'Your order has been rejected',
+            'notification': 'ORD #' + ("10000"+order.id).slice(-4) + ' is rejected',
             'created_at': Date.now(),
             'isRead': false
           };
@@ -72,21 +72,47 @@ angular.module('notification').factory('Notification', ['Authentication', 'Fireb
         if(action === 'new_order') {
           manager_notification = {
             'url': 'order/' + order.id,
-            'notification': 'You have an order waiting for your approval',
+            'notification': 'ORD #' + ("10000"+order.id).slice(-4) + ' is waiting for your approval',
             'created_at': Date.now(),
             'isRead': false
           };
 
           leads_notification = {
             'url': 'order/' + order.id,
-            'notification': 'Your leads have been used in an order',
+            'notification': 'ORD #' + ("10000"+order.id).slice(-4) + ' used your leads',
             'created_at': Date.now(),
             'isRead': false
           };
 
           manager_leads_notification = {
             'url': 'order/' + order.id,
-            'notification': 'Leads of your subordinate have been used in an order',
+            'notification': 'ORD #' + ("10000"+order.id).slice(-4) + ' used your leads',
+            'created_at': Date.now(),
+            'isRead': false
+          };
+
+          mainApp.database().ref('notification/' + Authentication.user.managerId).push(manager_notification);
+          mainApp.database().ref('notification/' + leadsUserId).push(leads_notification);
+          mainApp.database().ref('notification/' + managerLeadsUserId).push(manager_leads_notification);
+        }
+        if(action === 'cancel_order') {
+          manager_notification = {
+            'url': 'order/' + order.id,
+            'notification': 'ORD #' + ("10000"+order.id).slice(-4) + ' is cancelled',
+            'created_at': Date.now(),
+            'isRead': false
+          };
+
+          leads_notification = {
+            'url': 'order/' + order.id,
+            'notification': 'ORD #' + ("10000"+order.id).slice(-4) + ' is cancelled',
+            'created_at': Date.now(),
+            'isRead': false
+          };
+
+          manager_leads_notification = {
+            'url': 'order/' + order.id,
+            'notification': 'ORD #' + ("10000"+order.id).slice(-4) + ' is cancelled',
             'created_at': Date.now(),
             'isRead': false
           };
