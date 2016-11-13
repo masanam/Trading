@@ -6,14 +6,26 @@ angular.module('notification').factory('Notification', ['Authentication', 'Fireb
     var manager_notification = {};
     var leads_notification = {};
     var manager_leads_notification = {};
+    var unread_notifs = [];
+    var path_notif = '';
     var mainApp = FirebaseService.mainApp;
 
     return {
       findNotifications: function(userId, callback) {
-        var path_notif = 'notification/' + userId;
+        path_notif = 'notification/' + userId;
         var ref = mainApp.database().ref(path_notif);
         var notifs = $firebaseArray(ref);
         return callback(notifs);
+      },
+
+      findUnreadNotifications: function(userId, callback) {
+        var path_unread_notif = 'notification/' + userId;
+        var unread_ref = mainApp.database().ref(path_unread_notif)
+              .orderByChild('isRead')
+              .equalTo(false)
+              .on('value', function(snapshot) {
+                return callback(snapshot.numChildren());
+              });
       },
 
       sendNotification: function(action, order, leadsUserId, managerLeadsUserId) {
@@ -82,6 +94,16 @@ angular.module('notification').factory('Notification', ['Authentication', 'Fireb
           mainApp.database().ref('notification/' + leadsUserId).push(leads_notification);
           mainApp.database().ref('notification/' + managerLeadsUserId).push(manager_leads_notification);
         }
+      },
+
+      readNotification: function(userId, notifId) {
+        var path_read_notif = 'notification/' + userId;
+        var read_ref = mainApp.database().ref(path_read_notif);
+
+        var read = {
+          'isRead' : true
+        };
+        read_ref.child(notifId).update(read);
       }
     };
   }
