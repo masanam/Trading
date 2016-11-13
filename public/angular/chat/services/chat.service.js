@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('chat').factory('Chat', ['Authentication', 'FirebaseService',
-  function (Authentication, FirebaseService) {
+angular.module('chat').factory('Chat', ['Authentication', 'FirebaseService', '$firebaseArray',
+  function (Authentication, FirebaseService, $firebaseArray) {
     var sell_chats = [];
     var mainApp = FirebaseService.mainApp;
 
