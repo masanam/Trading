@@ -6,8 +6,8 @@ angular.module('notification').controller('NotificationController', ['$scope', '
   $scope.notifications = [];
   $scope.notification = {};
 
-  $scope.findLimitedNotificationsByUser = function() {
-    Notification.findNotifications(Authentication.user.id, true, function(res){
+  $scope.findNotificationsByUser = function() {
+    Notification.findNotifications(Authentication.user.id, function(res){
       res.$loaded(function(res) {
         for (var i = 0; i < res.length; i++) {
           res[i].created_at = new Date(res[i].created_at);

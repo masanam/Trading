@@ -9,7 +9,7 @@
   </a>
 
   <!-- Header Navbar: style can be found in header.less -->
-  <nav class="navbar navbar-static-top" ng-init="findLimitedNotificationsByUser()">
+  <nav class="navbar navbar-static-top" ng-init="findNotificationsByUser()">
     <!-- Sidebar toggle button-->
     <a href="#" class="sidebar-toggle" ng-click="openSidebar()" role="button" ng-if="Authentication.user">
       <span class="sr-only">Toggle navigation</span>
@@ -40,16 +40,18 @@
             <span class="label label-danger">{{ unread_notifications }}</span>
           </a>
           <ul class="dropdown-menu" uib-dropdown-menu>
-            <li ng-repeat="notif in notifications.slice().reverse()" ng-click="readNotification(notif.$id)">
+            <li ng-repeat="notif in notifications.slice().reverse() | limitTo:8" ng-click="readNotification(notif.$id)">
               <!-- inner menu: contains the actual data -->
               <ul class="menu" ng-if="!notif.isRead">
                 <li style="background-color: #F0F8FF;" ng-if="notif.notification.indexOf('ORD') < 0">
                   <a ng-href="{{ notif.url }}" style="white-space:normal;">
+                    <span class="pull-right"> {{ notif.created_at | date:'medium' }} </span>
                     <i class="fa fa-comment" style="color: gray;"></i>{{ notif.notification }}
                   </a>
                 </li>
                 <li style="background-color: #F0F8FF;" ng-if="notif.notification.indexOf('ORD') >= 0">
                   <a ng-href="{{ notif.url }}" style="white-space:normal;">
+                    <span class="pull-right"> {{ notif.created_at | date:'medium' }} </span>
                     <i class="fa fa-exclamation-triangle" style="color: red;"></i>{{ notif.notification }}
                   </a>
                 </li>
@@ -57,11 +59,13 @@
               <ul class="menu" ng-if="notif.isRead">
                 <li ng-if="notif.notification.indexOf('ORD') < 0">
                   <a ng-href="{{ notif.url }}" style="white-space:normal;">
+                    <span class="pull-right"> {{ notif.created_at | date:'medium' }} </span>
                     <i class="fa fa-comment" style="color: gray;"></i>{{ notif.notification }}
                   </a>
                 </li>
                 <li ng-if="notif.notification.indexOf('ORD') >= 0">
                   <a ng-href="{{ notif.url }}" style="white-space:normal;">
+                    <span class="pull-right"> {{ notif.created_at | date:'medium' }} </span>
                     <i class="fa fa-exclamation-triangle" style="color: red;"></i>{{ notif.notification }}
                   </a>
                 </li>
