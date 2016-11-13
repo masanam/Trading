@@ -49,10 +49,8 @@ class OrdersTableSeeder extends Seeder
     OrderNegotiation::create([
       'order_detail_id' => 1,
       'user_id' => 1,
-      'old_volume' => 900,
-      'old_price' => 51000,
-      'new_volume' => 1000,
-      'new_price' => 51000,
+      'volume' => 900,
+      'price' => 51000,
       'notes' => 'Negotiated, we\'ll get more',
     ]);
   }

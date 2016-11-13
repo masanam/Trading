@@ -220,10 +220,8 @@ class OrderController extends Controller
         $order->save();
       }
     }
-    
-    $order = Order::with('trader', 'users', 'sells', 'sells.seller', 'buys', 'buys.buyer', 'buys.trader', 'approvals', 'buys.Factory', 'sells.Concession', 'sells.trader')->find($id);
 
-    return response()->json($order, 200);
+    return $this->show($id);
   }
 
   /**
@@ -250,6 +248,9 @@ class OrderController extends Controller
       'trading_term' => $req->trading_term,
       'payment_term' => $req->payment_term
     ];
+    if(!$req->notes) $notes = 'Initial Deal';
+    else $notes = $req->notes;
+
     $this->authorize('update', $order);
 
     if($req->buy){
@@ -259,6 +260,7 @@ class OrderController extends Controller
       $order->buys()->sync([ $req->buy => $details ], false);
 
       $buy = BuyOrder::find($req->buy)->reconcile();
+
       $order_detail_id = $order->buys->find($req->buy)->pivot->id;
     }
     if($req->sell){
@@ -268,24 +270,19 @@ class OrderController extends Controller
       $order->sells()->sync([ $req->sell => $details ], false);
 
       $sell = SellOrder::find($req->sell)->reconcile();
+
       $order_detail_id = $order->sells->find($req->sell)->pivot->id;
     }
 
     // if notes is here, it's a negotiation
     // Add new log of the nagotiation
-    if($req->buy){
-      OrderNegotiation::create([
-        'order_detail_id' => $order_detail_id,
-        'notes' => $req->notes,
-        'volume' => $req->volume,
-        'price' => $req->price,
-        'trading_term' => $req->trading_term,
-        'payment_term' => $req->payment_term
-      ]);
-    }
-
-    $order = Order::with('trader', 'users', 'sells', 'sells.seller', 'buys', 'buys.buyer', 'buys.trader', 'approvals', 'buys.Factory', 'sells.Concession', 'sells.trader')->find($id);
-
+    OrderNegotiation::create([
+      'order_detail_id' => $order_detail_id,
+      'notes' => $notes,
+      'volume' => $req->volume,
+      'price' => $req->price,
+      'user_id' => Auth::user()->id,
+    ]);
     return $this->show($id);
   }
 
