@@ -63,10 +63,8 @@ class CreateOrdersTable extends Migration
         Schema::create('order_negotiations', function (Blueprint $table) {
             $table->integer('order_detail_id')->unsigned();
             $table->integer('user_id')->unsigned();
-            $table->integer('old_volume');
-            $table->integer('old_price');
-            $table->integer('new_volume');
-            $table->integer('new_price');
+            $table->integer('volume');
+            $table->integer('price');
             $table->text('notes');
             $table->timestamps();
 

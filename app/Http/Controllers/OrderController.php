@@ -243,7 +243,7 @@ class OrderController extends Controller
 
   public function stage(Request $req, $id)
   {
-    $order = Order::with('trader', 'users', 'sells', 'sells.seller', 'buys', 'buys.buyer', 'buys.trader', 'approvals', 'buys.Factory', 'sells.Concession', 'sells.trader')->find($id);
+    $order = Order::with('sells', 'buys')->find($id);
     $details = [
       'volume' => $req->volume,
       'price' => $req->price,
@@ -255,19 +255,22 @@ class OrderController extends Controller
       if(count($order->sells) > 1)
         return response()->json([ 'message' => 'Can\'t add more Sell on Multiple Buys' ], 400);
       
-      $order->buys()->attach([ $req->buy => $details ]);
+      $order->buys()->sync([ $req->buy => $details ], false);
       BuyOrder::find($req->buy)->reconcile();
     }
     if($req->sell){
       if(count($order->buys) > 1)
         return response()->json([ 'message' => 'Can\'t add more Buy on Multiple Sells' ], 400);
 
-      $order->sells()->attach([ $req->sell => $details ]);
+      $order->sells()->sync([ $req->sell => $details ], false);
       SellOrder::find($req->sell)->reconcile();
     }
 
+    //Reload the model because of Laravel Bug. Sync does not update current record
+
     return response()->json($order, 200);
   }
+
 
   public function getSub(){
     $user = Auth::User();
