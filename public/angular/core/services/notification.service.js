@@ -11,9 +11,10 @@ angular.module('notification').factory('Notification', ['Authentication', 'Fireb
     var mainApp = FirebaseService.mainApp;
 
     return {
-      findNotifications: function(userId, callback) {
+      findNotifications: function(userId, isLimit, callback) {
         path_notif = 'notification/' + userId;
         var ref = mainApp.database().ref(path_notif);
+        if(isLimit) ref.limitToLast(8);
         var notifs = $firebaseArray(ref);
         return callback(notifs);
       },
