@@ -250,27 +250,44 @@ class OrderController extends Controller
       'trading_term' => $req->trading_term,
       'payment_term' => $req->payment_term
     ];
+    $this->authorize('update', $order);
 
     if($req->buy){
       if(count($order->sells) > 1)
         return response()->json([ 'message' => 'Can\'t add more Sell on Multiple Buys' ], 400);
       
       $order->buys()->sync([ $req->buy => $details ], false);
-      BuyOrder::find($req->buy)->reconcile();
+
+      $buy = BuyOrder::find($req->buy)->reconcile();
+      $order_detail_id = $order->buys->find($req->buy)->pivot->id;
     }
     if($req->sell){
       if(count($order->buys) > 1)
         return response()->json([ 'message' => 'Can\'t add more Buy on Multiple Sells' ], 400);
-
+      
       $order->sells()->sync([ $req->sell => $details ], false);
-      SellOrder::find($req->sell)->reconcile();
+
+      $sell = SellOrder::find($req->sell)->reconcile();
+      $order_detail_id = $order->sells->find($req->sell)->pivot->id;
     }
 
-    //Reload the model because of Laravel Bug. Sync does not update current record
+    // if notes is here, it's a negotiation
+    // Add new log of the nagotiation
+    if($req->buy){
+      OrderNegotiation::create([
+        'order_detail_id' => $order_detail_id,
+        'notes' => $req->notes,
+        'volume' => $req->volume,
+        'price' => $req->price,
+        'trading_term' => $req->trading_term,
+        'payment_term' => $req->payment_term
+      ]);
+    }
 
-    return response()->json($order, 200);
+    $order = Order::with('trader', 'users', 'sells', 'sells.seller', 'buys', 'buys.buyer', 'buys.trader', 'approvals', 'buys.Factory', 'sells.Concession', 'sells.trader')->find($id);
+
+    return $this->show($id);
   }
-
 
   public function getSub(){
     $user = Auth::User();
