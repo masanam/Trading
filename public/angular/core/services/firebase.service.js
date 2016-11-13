@@ -12,7 +12,7 @@ angular.module('firebaseService').factory('FirebaseService', ['firebase', '$fire
     var mainApp = firebase.initializeApp(config, 'webApps');
 
     return {
-      mainApp: mainApp;
+      mainApp: mainApp
     };
   }
 ]);
