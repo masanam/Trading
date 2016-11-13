@@ -45,13 +45,13 @@
               <ul class="menu" ng-if="!notif.isRead">
                 <li style="background-color: #F0F8FF;" ng-if="notif.notification.indexOf('ORD') < 0">
                   <a ng-href="{{ notif.url }}" style="white-space:normal;">
-                    <span class="pull-right"> {{ notif.created_at | date:'medium' }} </span>
+                    <small class="pull-right text-muted"> {{ notif.created_at | date:'medium' }} </small><br>
                     <i class="fa fa-comment" style="color: gray;"></i>{{ notif.notification }}
                   </a>
                 </li>
                 <li style="background-color: #F0F8FF;" ng-if="notif.notification.indexOf('ORD') >= 0">
                   <a ng-href="{{ notif.url }}" style="white-space:normal;">
-                    <span class="pull-right"> {{ notif.created_at | date:'medium' }} </span>
+                    <small class="pull-right text-muted"> {{ notif.created_at | date:'medium' }} </small><br>
                     <i class="fa fa-exclamation-triangle" style="color: red;"></i>{{ notif.notification }}
                   </a>
                 </li>
@@ -59,13 +59,13 @@
               <ul class="menu" ng-if="notif.isRead">
                 <li ng-if="notif.notification.indexOf('ORD') < 0">
                   <a ng-href="{{ notif.url }}" style="white-space:normal;">
-                    <span class="pull-right"> {{ notif.created_at | date:'medium' }} </span>
+                    <small class="pull-right text-muted"> {{ notif.created_at | date:'medium' }} </small><br>
                     <i class="fa fa-comment" style="color: gray;"></i>{{ notif.notification }}
                   </a>
                 </li>
                 <li ng-if="notif.notification.indexOf('ORD') >= 0">
                   <a ng-href="{{ notif.url }}" style="white-space:normal;">
-                    <span class="pull-right"> {{ notif.created_at | date:'medium' }} </span>
+                    <small class="pull-right text-muted"> {{ notif.created_at | date:'medium' }} </small><br>
                     <i class="fa fa-exclamation-triangle" style="color: red;"></i>{{ notif.notification }}
                   </a>
                 </li>
