@@ -17,6 +17,10 @@ angular.module('index').config(['$stateProvider', '$urlRouterProvider',
         url: '/',
         templateUrl: '/angular/core/views/index/home.view.html'
       })
+      .state('notification', {
+        url: '/notification',
+        templateUrl: '/angular/core/views/user/notification.view.html'
+      })
       .state('analytics', {
         url: '/analytics',
         templateUrl: '/angular/core/views/index/analytics.view.html'
