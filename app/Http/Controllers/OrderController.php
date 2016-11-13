@@ -76,10 +76,28 @@ class OrderController extends Controller
     foreach($request->buys as $buy){
       $order->buys()->attach([ $buy->id => $buy->pivot ]);
       BuyOrder::find($buy->id)->reconcile();
+
+      $order_detail_id = $order->buys->find($req->buy)->pivot->id;
+      OrderNegotiation::create([
+        'order_detail_id' => $order_detail_id,
+        'notes' => 'Initial Deal',
+        'volume' => $req->volume,
+        'price' => $req->price,
+        'user_id' => Auth::user()->id,
+      ]);
     }
     foreach($request->sells as $sell){
       $order->sells()->attach([ $sell->id => $sell->pivot ]);
       SellOrder::find($sell->id)->reconcile();
+
+      $order_detail_id = $order->sells->find($req->sell)->pivot->id;
+      OrderNegotiation::create([
+        'order_detail_id' => $order_detail_id,
+        'notes' => 'Initial Deal',
+        'volume' => $req->volume,
+        'price' => $req->price,
+        'user_id' => Auth::user()->id,
+      ]);
     }
 
     return response()->json($order, 200);
@@ -223,10 +241,8 @@ class OrderController extends Controller
         $order->save();
       }
     }
-    
-    $order = Order::with('trader', 'users', 'sells', 'sells.seller', 'buys', 'buys.buyer', 'buys.trader', 'approvals', 'buys.Factory', 'sells.Concession', 'sells.trader')->find($id);
 
-    return response()->json($order, 200);
+    return $this->show($id);
   }
 
   /**
@@ -246,30 +262,50 @@ class OrderController extends Controller
 
   public function stage(Request $req, $id)
   {
-    $order = Order::with('trader', 'users', 'sells', 'sells.seller', 'buys', 'buys.buyer', 'buys.trader', 'approvals', 'buys.Factory', 'sells.Concession', 'sells.trader')->find($id);
+    $order = Order::with('sells', 'buys')->find($id);
     $details = [
       'volume' => $req->volume,
       'price' => $req->price,
       'trading_term' => $req->trading_term,
       'payment_term' => $req->payment_term
     ];
+    if(!$req->notes) $notes = 'Initial Deal';
+    else $notes = $req->notes;
+
+    $this->authorize('update', $order);
 
     if($req->buy){
       if(count($order->sells) > 1)
         return response()->json([ 'message' => 'Can\'t add more Sell on Multiple Buys' ], 400);
       
-      $order->buys()->attach([ $req->buy => $details ]);
-      BuyOrder::find($req->buy)->reconcile();
+      $order->buys()->sync([ $req->buy => $details ], false);
+
+      $buy = BuyOrder::find($req->buy)->reconcile();
+
+      $order_detail_id = $order->buys->find($req->buy)->pivot->id;
     }
     if($req->sell){
       if(count($order->buys) > 1)
         return response()->json([ 'message' => 'Can\'t add more Buy on Multiple Sells' ], 400);
+      
+      $order->sells()->sync([ $req->sell => $details ], false);
 
-      $order->sells()->attach([ $req->sell => $details ]);
-      SellOrder::find($req->sell)->reconcile();
+      $sell = SellOrder::find($req->sell)->reconcile();
+
+      $order_detail_id = $order->sells->find($req->sell)->pivot->id;
     }
 
-    return response()->json($order, 200);
+    // if notes is here, it's a negotiation
+    // Add new log of the nagotiation
+    $negotiation  = new OrderNegotiation([
+      'order_detail_id' => $order_detail_id,
+      'notes' => $notes,
+      'volume' => $req->volume,
+      'price' => $req->price,
+      'user_id' => Auth::user()->id,
+    ]);
+    $negotiation->save();
+    return $this->show($id);
   }
 
   public function getSub(){

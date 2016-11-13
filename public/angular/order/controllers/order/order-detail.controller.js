@@ -43,7 +43,7 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
             { id:$scope.order.id, action: 'stage' },
             { sell:selectedItem.id, volume:selectedItem.pivot.volume, price:selectedItem.pivot.price, trading_term:selectedItem.pivot.trading_term, payment_term:selectedItem.pivot.payment_term },
             function (res){
-              $scope.order = res;
+              $scope.order.sells = res.sells;
               $scope.display.sell = selectedItem;
             });
         } else {
@@ -80,7 +80,8 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
             { id:$scope.order.id, action: 'stage' },
             { buy:selectedItem.id, volume:selectedItem.pivot.volume, price:selectedItem.pivot.price, trading_term:selectedItem.pivot.trading_term, payment_term:selectedItem.pivot.payment_term },
             function (res){
-              $scope.order = res;
+              $scope.order.buys = res.buys;
+              console.log(res.buys);
               $scope.display.buy = selectedItem;
             });
         } else {
