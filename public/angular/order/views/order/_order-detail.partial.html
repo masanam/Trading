@@ -53,7 +53,7 @@
         </th>
 			</tr>
     </tbody>
-    <tbody uib-collapse="isCollapsed">
+    <tbody id="detail-section" uib-collapse="isCollapsed">
 			<tr>
 				<td>Company</td>
 				<td ng-switch="display.sell && display.sell.user_id === Authentication.user.id || !display.sell">
@@ -149,7 +149,7 @@
         </th>
 			</tr>
     </tbody>
-    <tbody uib-collapse="!qualityCollapsed">
+    <tbody id="quality-section" uib-collapse="!qualityCollapsed">
       <tr>
         <td><b>GCV ADB </b></td>
         <td>
@@ -357,7 +357,7 @@
         </th>
 			</tr>
     </tbody>
-    <tbody uib-collapse="!financialCollapsed">
+    <tbody id="financial-section" uib-collapse="!financialCollapsed">
 			<tr>
 				<th>Coal Price / mt</th>
 				<td>

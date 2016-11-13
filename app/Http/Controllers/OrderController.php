@@ -204,7 +204,7 @@ class OrderController extends Controller
       $order_approval->status = $request->status;
       $order_approval->save();
     }else{
-      $this->add_approval_to_order(Auth::user()->manager_id, $id, $request->status);
+      $this->add_approval_to_order($order, Auth::user()->manager_id, $id, $request->status);
     }
     
     //print_r($order);
@@ -214,8 +214,8 @@ class OrderController extends Controller
         $order->status = 'a';
         $order->save();
       }else{
-        $this->add_user_to_order(Auth::user()->manager_id, $id, 'approver');
-        $this->add_approval_to_order(Auth::user()->manager_id, $id, 'p');
+        $this->add_user_to_order($order, Auth::user()->manager_id, $id, 'approver');
+        $this->add_approval_to_order($order, Auth::user()->manager_id, $id, 'p');
         $order->status = 'p';
         $order->save();
       }

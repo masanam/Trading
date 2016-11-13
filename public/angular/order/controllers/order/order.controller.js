@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('order').controller('OrderController', ['$scope', '$stateParams', '$state', 'Order', 'Authentication', '$uibModal',
-  function($scope, $stateParams, $state, Order, Authentication, $uibModal) {
+angular.module('order').controller('OrderController', ['$scope', '$stateParams', '$state', 'Order', 'Authentication', 'Notification', '$uibModal',
+  function($scope, $stateParams, $state, Order, Authentication, Notification, $uibModal) {
     $scope.browse = {};
 
     $scope.$watchGroup(['browse.status', 'browse.possession'], function() { $scope.find(); });
@@ -102,6 +102,7 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
 
       Order.get({ id: $scope.order.id, action: 'approve', status : status }, function (res) {
         $scope.order = res;
+        Notification.sendNotification(status, $scope.order, false, false);
       }, function (err) {
         $scope.error = err.data.message;
       });
@@ -134,21 +135,27 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
       $scope.orderCollapsed = false;
       $scope.financialCollapsed = true;
       $scope.qualityCollapsed = true;
-      var docHead = document.head.outerHTML;
-      var orderContent = document.getElementById('order-detail').outerHTML;
-      var approvalContent = document.getElementById('order-approval').outerHTML;
-      var canvas = document.getElementById('line');
-      var graph = canvas.toDataURL();
+      
+      setTimeout(function(){
+        var docHead = document.head.outerHTML;
+        var orderContent = document.getElementById('order-detail').outerHTML;
+        var approvalContent = document.getElementById('order-approval').outerHTML;
+        var canvas = document.getElementById("line");
+        var graph = canvas.toDataURL();
 
-      var winAttr = 'location=yes, statusbar=no, menubar=no, titlebar=no, toolbar=no,dependent=no, width=865, height=600, resizable=yes, screenX=200, screenY=200, personalbar=no, scrollbars=yes';
+        var winAttr = "location=yes, statusbar=no, menubar=no, titlebar=no, toolbar=no,dependent=no, width=865, height=600, resizable=yes, screenX=200, screenY=200, personalbar=no, scrollbars=yes";
 
-      var newWin = window.open('', '_blank', winAttr);
-      var writeDoc = newWin.document;
-      writeDoc.open();
-      writeDoc.writeln('<!doctype html><html>' + docHead + '<body onLoad="window.print();">' + orderContent + approvalContent + '</body></html>');
-      writeDoc.getElementById('lineChart').innerHTML = '<img src="'+graph+'" />';
-      writeDoc.close();
-      newWin.focus();
+        var newWin = window.open("", "_blank", winAttr);
+        var writeDoc = newWin.document;
+        writeDoc.open();
+        writeDoc.writeln('<!doctype html><html>' + docHead + '<body>' + orderContent + approvalContent + '</body></html>');
+        writeDoc.close();
+        newWin.onload = function() {
+          writeDoc.getElementById('lineChart').innerHTML = '<img src="'+graph+'" />';
+          newWin.print();
+        };
+        newWin.focus();
+      }, 1000);
     };
 
     // Find list of order
