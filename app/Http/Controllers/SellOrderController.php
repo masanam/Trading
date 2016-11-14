@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Model\SellOrder;
 use App\Model\Seller;
+use App\Model\OrderDetail;
 use Auth;
 use DB;
 
@@ -329,14 +330,39 @@ class SellOrderController extends Controller
                 $lower[] = $sub->id;
             }
             $lower[] = Auth::User()->id;
-            $sell_order = SellOrder::join('users', 'sell_order.user_id', '=', 'users.id')->join('sellers', 'sell_order.seller_id', '=', 'sellers.id')->where('order_status', $order_status)->whereIn('sell_order.user_id', $lower)->select('sell_order.id', 'sell_order.user_id', 'order_date', 'order_deadline', 'expired_date', 'sell_order.address', 'sell_order.city', 'sell_order.country', DB::raw('NULL as product_name') , 'typical_quality', 'volume', 'min_price', 'order_status', 'users.name', 'company_name');
-            $sell_order2 = SellOrder::join('users', 'sell_order.user_id', '=', 'users.id')->where('order_status', $order_status)->whereNotIn('user_id', $lower)->select('sell_order.id', 'user_id', 'order_date', 'order_deadline', 'expired_date', 'address', 'city', 'country', DB::raw('NULL as product_name') , 'typical_quality', 'volume', 'min_price', 'order_status', 'users.name', DB::raw('NULL as company_name'));
+            $sell_order = SellOrder::join('users', 'sell_order.user_id', '=', 'users.id')
+            ->join('sellers', 'sell_order.seller_id', '=', 'sellers.id')
+            ->join('order_details', function ($join) {
+                $join->on('orderable_id', '=', 'sell_order.id')
+                     ->where('orderable_type', '=', 'App/Model/SellOrder');
+            })
+            ->where('order_status', $order_status)
+            ->whereIn('sell_order.user_id', $lower)
+            ->groupBy('order_details.orderable_id')
+            ->select('sell_order.id', 'sell_order.user_id', 'order_date', 'order_deadline',
+                'expired_date', 'sell_order.address', 'sell_order.city', 'sell_order.country',
+                DB::raw('NULL as product_name') ,
+                DB::raw('sell_order.volume - SUM(order_details.volume) as sum') ,
+                'typical_quality', 'sell_order.volume', 'min_price', 'order_status', 'users.name', 'company_name');
+            $sell_order2 = SellOrder::join('users', 'sell_order.user_id', '=', 'users.id')
+            ->join('order_details', function ($join) {
+                $join->on('orderable_id', '=', 'sell_order.id')
+                     ->where('orderable_type', '=', 'App/Model/SellOrder');
+            })
+            ->where('order_status', $order_status)
+            ->whereNotIn('user_id', $lower)
+            ->groupBy('order_details.orderable_id')
+            ->select('sell_order.id', 'user_id', 'order_date', 'order_deadline', 'expired_date', 'address', 'city', 'country', 
+                DB::raw('NULL as product_name') ,
+                DB::raw('sell_order.volume - SUM(order_details.volume) as sum') ,
+                'typical_quality', 'sell_order.volume', 'min_price', 'order_status', 'users.name', DB::raw('NULL as company_name'));
             $sell_order = $sell_order2->union($sell_order)->get();
+            // $sell_order->order_detail = $sell_order->;
         } else {
             $sell_order = SellOrder::with('Seller','User')->where('order_status', $order_status)->where('progress_status', 'LIKE', '%'.$progress_status.'%')->get();
         }
 
-        return response()->json($sell_order, 200);
+        return response()->json($sell_order->get(), 200);
     }
 
     public function changeOrderStatus($id, $order_status)
@@ -372,5 +398,17 @@ class SellOrderController extends Controller
     public function getSub(){
         $user = Auth::User();
         return $user->getAllSubordinates();
+    }
+
+    public function getSum($order_id)
+    {
+        $sell_order = OrderDetail::where('orderable_id',$order_id)->where('orderable_type', 'App\Model\SellOrder')->get();
+
+        $sum = 0;
+        foreach ($sell_order as $order) {
+            $sum = $sum + $order->volume;
+        }
+
+        return response()->json($sum, 200);
     }
 }
