@@ -2,14 +2,71 @@
 
 angular.module('order').controller('OrderDetailController', ['$scope', '$uibModal', 'Order',
   function($scope,$uibModal, Order) {
-
     $scope.addOwnProduct = function () {
-      //compare buy and sell
+      Order.get(
+        { id:$scope.order.id, action: 'stage' },
+        function (res){
+          $scope.order.sells = res.sells;
+          $scope.display.sell = res;
+        }, function (err){
+          alert(err.data.message);
+        });
+    };
 
-      //if sell < buy, error message
+    $scope.removeBuy = function () {
+      Order.get({
+        id:$scope.order.id, action: 'unstage',
+        buy_id:$scope.display.buy.id
+      }, function (res){
+        delete $scope.display.buy;
+        $scope.order = res;
+      });
+    };
 
-      //if sell > buy, do it
+    $scope.removeSell = function () {
+      Order.get({
+        id:$scope.order.id, action: 'unstage',
+        sell_id:$scope.display.sell.id
+      }, function (res){
+        delete $scope.display.sell;
+        $scope.order = res;
+      });
+    };
 
+    $scope.negoBuy = function () {
+      var modalInstance = $uibModal.open({
+        animation: true,
+        ariaLabelledBy: 'modal-title',
+        ariaDescribedBy: 'modal-body',
+        templateUrl: '/angular/order/views/order/_negotiate.modal.html',
+        controller: 'NegotiateModalController',
+        windowClass: 'xl-modal',
+        resolve: {
+          lead: function () {
+            return {
+              price: display.sell,
+              type: 'sell'
+            }; 
+          }
+        }
+      });
+
+      modalInstance.result.then(function (selectedItem) {
+        if($scope.order.id){
+          Order.post(
+            { id:$scope.order.id, action: 'stage' },
+            { sell:selectedItem.id, volume:selectedItem.pivot.volume, price:selectedItem.pivot.price, trading_term:selectedItem.pivot.trading_term, payment_term:selectedItem.pivot.payment_term },
+            function (res){
+              $scope.order.sells = res.sells;
+              $scope.display.sell = selectedItem;
+            });
+        } else {
+          $scope.order.sells.push(selectedItem);
+          $scope.display.sell = selectedItem;
+        }
+      }, function () {
+        console.log('Modal dismissed at: ' + new Date());
+      });
     };
 
     $scope.addBuy = function () {

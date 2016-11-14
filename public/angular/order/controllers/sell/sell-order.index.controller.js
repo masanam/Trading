@@ -2,13 +2,24 @@
 
 angular.module('order').controller('SellOrderIndexController', ['$scope', '$location', 'Order',
   function($scope, $location, Order) {
+
+    $scope.init = function(){
+      // $scope.sum = 0;
+      // for (var i = res.order_detail.length - 1; i >= 0; i--) {
+      //   $scope.sum = $scope.sum + res.order_detail[i].volume;
+      // }
+    };
     
     $scope.findDraft = function() {
       $scope.sell_orders = Order.query({ type: 'sell', action: 'draft', user_id: $scope.Authentication.user.id });
     };
 
     $scope.findLead = function() {
-      $scope.sell_orders = Order.query({ type: 'sell', action: 'status', order_status: 'l' });
+      $scope.sell_orders = Order.query({ type: 'sell', action: 'status', order_status: 'l' }, function(res){
+        // for (var i = res.order_detail.length - 1; i >= 0; i--) {
+        //   $scope.sum = $scope.sum + res.order_detail[i].volume;
+        // }
+      });
     };
 
     $scope.findVerified = function() {

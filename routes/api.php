@@ -116,7 +116,7 @@ Route::group(['middleware' => ['cors']], function() {
     Route::get('order/buy/{id}/changeOrderStatus/{order_status}', 'BuyOrderController@changeOrderStatus');
 
     Route::get('order/sell/status/{order_status}/{progress_status?}', 'SellOrderController@status', ['except' => [ 'create', 'edit' ]]);
-    Route::get('order/sell/draft/{user_id}', 'BuyOrderController@draft', ['except' => [ 'create', 'edit' ]]);
+    Route::get('order/sell/draft/{user_id}', 'SellOrderController@draft', ['except' => [ 'create', 'edit' ]]);
     Route::get('order/sell/{id}/changeOrderStatus/{order_status}', 'SellOrderController@changeOrderStatus', ['except' => [ 'create', 'edit' ]]);
 
     Route::get('order/lastOrder/{type}/{id}', 'BuySellOrderController@lastOrderByUser');
@@ -133,7 +133,8 @@ Route::group(['middleware' => ['cors']], function() {
      */
     
     Route::post('order/{id}/stage', 'OrderController@stage');
-    Route::post('order/{id}/negotiate', 'OrderController@negotiate');
+    Route::get('order/{id}/stage', 'OrderController@stageOwn');
+    Route::get('order/{id}/unstage', 'OrderController@unstage');
     Route::get('order/{id}/approve', 'OrderController@approve');
     Route::resource('order', 'OrderController');
 });

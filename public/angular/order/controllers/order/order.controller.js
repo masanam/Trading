@@ -12,24 +12,6 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
     $scope.display.totalSellPrice = 39000;
     $scope.display.totalSellVolume = 1000;
 
-    // Create new Article
-    $scope.create = function (isValid) {
-      $scope.error = null;
-
-      // Create new Article object
-      var order = new Order($scope.order);
-
-      // Redirect after save
-      order.$save(function (res) {
-        $state.go('order.view', { id: res.id });
-
-        // Clear form fields
-        $scope.order = new Order();
-      }, function (err) {
-        $scope.error = err;
-      });
-    };
-
     // Remove existing order
     $scope.remove = function (order) {
       if (order) {
@@ -74,17 +56,6 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
           status: function () { return status; },
         }
       });
-
-      /*var order = $scope.order;
-      
-      order.status = status;
-
-      order.$update(function (res) {
-        $scope.order.status = status;
-        //$state.go('order.view', { orderId: res.id });
-      }, function (err) {
-        $scope.error = err.data.message;
-      });*/
     };
     
     $scope.openReasonModal = function () {
