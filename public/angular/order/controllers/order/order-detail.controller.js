@@ -44,7 +44,7 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
         resolve: {
           lead: function () {
             return {
-              price: display.sell,
+              price: $scope.display.sell,
               type: 'sell'
             }; 
           }
