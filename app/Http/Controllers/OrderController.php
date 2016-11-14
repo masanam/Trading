@@ -182,6 +182,14 @@ class OrderController extends Controller
     $order->finalize_reason = $request->finalize_reason;
     $order->cancel_reason = $request->cancel_reason;
     $order->request_reason = $request->request_reason;
+    $order->interest_cost = $request->interest_cost;
+    $order->others_cost = $request->others_cost;
+    $order->surveyor_cost = $request->surveyor_cost;
+    $order->insurance_cost = $request->insurance_cost;
+    $order->pit_to_port = $request->pit_to_port;
+    $order->port_to_factory = $request->port_to_factory;
+    $order->freight_cost = $request->freight_cost;
+    $order->transhipment = $request->transhipment;
     $order->status = $request->status;
     $order->save();
     //$order->updated_at = date('Y-m-d H:i:s');
