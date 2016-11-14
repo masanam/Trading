@@ -1,41 +1,119 @@
 'use strict';
 
-angular.module('notification').factory('Notification', ['firebase', '$firebaseArray', 'Authentication', 'OrderUser', 
-  function (firebase, $firebaseArray, Authentication, OrderUser) {
-    var chats = [];
-    var config = {
-      apiKey: 'AIzaSyACILHAOiy4G9TtCgs0szgZBZokr4cduuo',
-      authDomain: 'coal-trade.firebaseapp.com',
-      databaseURL: 'https://coal-trade.firebaseio.com',
-      storageBucket: 'coal-trade.appspot.com',
-      messagingSenderId: '407921708335'
-    };
-    var mainApp = firebase.initializeApp(config, 'webApps');
+angular.module('notification').factory('Notification', ['Authentication', 'FirebaseService', '$firebaseArray',
+  function (Authentication, FirebaseService, $firebaseArray) {
+    var user_notification = {};
+    var manager_notification = {};
+    var leads_notification = {};
+    var manager_leads_notification = {};
+    var unread_notifs = [];
+    var path_notif = '';
+    var mainApp = FirebaseService.mainApp;
 
     return {
+      findNotifications: function(userId, callback) {
+        path_notif = 'notification/' + userId;
+        var ref = mainApp.database().ref(path_notif);
+        var notifs = $firebaseArray(ref);
+        return callback(notifs);
+      },
 
-      sendNotification: function(action, orderId, leadsUserId, managerLeadsUserId, currentTime) {
+      findUnreadNotifications: function(userId, callback) {
+        var path_unread_notif = 'notification/' + userId;
+        var unread_ref = mainApp.database().ref(path_unread_notif)
+              .orderByChild('isRead')
+              .equalTo(false)
+              .on('value', function(snapshot) {
+                return callback(snapshot.numChildren());
+              });
+      },
+
+      sendNotification: function(action, order, leadsUserId, managerLeadsUserId) {
         // sending notification
+        if(action === 'request_approval') {
+          manager_notification = {
+            'url': 'order/' + order.id,
+            'notification': 'ORD #' + ("10000"+order.id).slice(-4) + ' is waiting for your approval',
+            'created_at': Date.now(),
+            'isRead': false
+          };
+
+          mainApp.database().ref('notification/' + Authentication.user.manager_id).push(manager_notification);
+        }
+        if(action === 'a') {
+          user_notification = {
+            'url': 'order/' + order.id,
+            'notification': 'ORD #' + ("10000"+order.id).slice(-4) + ' is approved',
+            'created_at': Date.now(),
+            'isRead': false
+          };
+
+          manager_notification = {
+            'url': 'order/' + order.id,
+            'notification': 'ORD #' + ("10000"+order.id).slice(-4) + ' is waiting for your approval',
+            'created_at': Date.now(),
+            'isRead': false
+          };
+
+          mainApp.database().ref('notification/' + order.user_id).push(user_notification);
+          mainApp.database().ref('notification/' + Authentication.user.manager_id).push(manager_notification);
+        }
+        if(action === 'r') {
+          user_notification = {
+            'url': 'order/' + order.id,
+            'notification': 'ORD #' + ("10000"+order.id).slice(-4) + ' is rejected',
+            'created_at': Date.now(),
+            'isRead': false
+          };
+
+          mainApp.database().ref('notification/' + order.user_id).push(user_notification);
+        }
         if(action === 'new_order') {
-          var manager_notification = {
-            'url': 'order/' + orderId,
-            'notification': 'You have an order waiting for your approval',
-            'created_at': currentTime,
-            'isRead': true
+          manager_notification = {
+            'url': 'order/' + order.id,
+            'notification': 'ORD #' + ("10000"+order.id).slice(-4) + ' is waiting for your approval',
+            'created_at': Date.now(),
+            'isRead': false
           };
 
-          var leads_notification = {
-            'url': 'order/' + orderId,
-            'notification': 'Your leads have been used in an order',
-            'created_at': currentTime,
-            'isRead': true
+          leads_notification = {
+            'url': 'order/' + order.id,
+            'notification': 'ORD #' + ("10000"+order.id).slice(-4) + ' used your leads',
+            'created_at': Date.now(),
+            'isRead': false
           };
 
-          var manager_leads_notification = {
-            'url': 'order/' + orderId,
-            'notification': 'Leads of your subordinate have been used in an order',
-            'created_at': currentTime,
-            'isRead': true
+          manager_leads_notification = {
+            'url': 'order/' + order.id,
+            'notification': 'ORD #' + ("10000"+order.id).slice(-4) + ' used your leads',
+            'created_at': Date.now(),
+            'isRead': false
+          };
+
+          mainApp.database().ref('notification/' + Authentication.user.managerId).push(manager_notification);
+          mainApp.database().ref('notification/' + leadsUserId).push(leads_notification);
+          mainApp.database().ref('notification/' + managerLeadsUserId).push(manager_leads_notification);
+        }
+        if(action === 'cancel_order') {
+          manager_notification = {
+            'url': 'order/' + order.id,
+            'notification': 'ORD #' + ("10000"+order.id).slice(-4) + ' is cancelled',
+            'created_at': Date.now(),
+            'isRead': false
+          };
+
+          leads_notification = {
+            'url': 'order/' + order.id,
+            'notification': 'ORD #' + ("10000"+order.id).slice(-4) + ' is cancelled',
+            'created_at': Date.now(),
+            'isRead': false
+          };
+
+          manager_leads_notification = {
+            'url': 'order/' + order.id,
+            'notification': 'ORD #' + ("10000"+order.id).slice(-4) + ' is cancelled',
+            'created_at': Date.now(),
+            'isRead': false
           };
 
           mainApp.database().ref('notification/' + Authentication.user.managerId).push(manager_notification);
@@ -44,18 +122,14 @@ angular.module('notification').factory('Notification', ['firebase', '$firebaseAr
         }
       },
 
-      sendOrderNotification: function(orderId, leadsId, managerId, associatedUserId, currentTime, callback) {
-        var order_notification = {
-          'order_id': orderId,
-          'leads_id' : leadsId,
-          'user_id': Authentication.user.id,
-          'manager_id': managerId,
-          'associated_leads_owner_id': associatedUserId,
-          'created_at': currentTime
-        };
+      readNotification: function(userId, notifId) {
+        var path_read_notif = 'notification/' + userId;
+        var read_ref = mainApp.database().ref(path_read_notif);
 
-        var key = mainApp.database().ref('order_notification/' + Authentication.user.id).push(order_notification).key;
-        return callback(key);
+        var read = {
+          'isRead' : true
+        };
+        read_ref.child(notifId).update(read);
       }
     };
   }

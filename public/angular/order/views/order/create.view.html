@@ -1,4 +1,4 @@
-<div class="col-lg-12" ng-controller="CreateOrderController">
+<div class="col-lg-12" ng-controller="CreateOrderController" ng-init="init()">
   <div class="box">
     <div class="box-header with-border">
     	<h1 class="box-title">Create Orders</h1>
@@ -9,7 +9,7 @@
     </div>
 
     <div class="box-body">
-	    <div class="box-body no-padding" ng-static-include="'/angular/order/views/order/_order-detail.partial.html'"></div>
+	    <div class="box-body no-padding" ng-include="'/angular/order/views/order/_order-detail.partial.html'"></div>
     </div>
   </div>
 </div>

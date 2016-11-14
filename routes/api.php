@@ -122,7 +122,6 @@ Route::group(['middleware' => ['cors']], function() {
     Route::get('order/lastOrder/{type}/{id}', 'BuySellOrderController@lastOrderByUser');
     Route::get('order/lastOrders/{type}/{id}', 'BuySellOrderController@lastOrderForDetail');
     
-    Route::get('order/{id}/approve', 'OrderController@approve');
 
     Route::resource('order/sell', 'SellOrderController', ['except' => [ 'create', 'edit' ]]);
     Route::resource('order/buy', 'BuyOrderController', ['except' => [ 'create', 'edit' ]]);
@@ -133,5 +132,8 @@ Route::group(['middleware' => ['cors']], function() {
      * Managing the deals (buy/sell) done here
      */
     
+    Route::post('order/{id}/stage', 'OrderController@stage');
+    Route::post('order/{id}/negotiate', 'OrderController@negotiate');
+    Route::get('order/{id}/approve', 'OrderController@approve');
     Route::resource('order', 'OrderController');
 });

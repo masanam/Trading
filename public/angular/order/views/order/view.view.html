@@ -27,15 +27,10 @@
         {
             display: none !important;
         }
-        .collapse {
-            display: block !important;
-            height: auto !important;
-            with: auto !important;
-        }
     }
   </style>
   <div class="box">
-    <div class="box-header with-border" ng-init="findOne()">
+    <div class="box-header with-border" ng-init="findOne();">
       <h1 class="box-title">ORD #{{ ("10000"+order.id).slice(-4) }} - {{ order.trader.name }}</h1>
 
       <span class="badge badge-primary">

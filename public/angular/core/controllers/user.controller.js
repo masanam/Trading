@@ -37,12 +37,12 @@ angular.module('user').controller('UserController', ['$scope', '$http', '$stateP
         $scope.user.$update({ id: $scope.user.id }, function(response) {
           //$state.go('user.index');
           $scope.loading = false;
-          $scope.success = "Your profile has been updated successfully";
+          $scope.success = 'Your profile has been updated successfully';
           $scope.error = undefined;
         });
       } else {
         $scope.success = undefined;
-        $scope.error = "Password does not match!";
+        $scope.error = 'Password does not match!';
       }
       
     };

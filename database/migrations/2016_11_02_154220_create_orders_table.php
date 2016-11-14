@@ -32,6 +32,7 @@ class CreateOrdersTable extends Migration
 
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unique(['order_id', 'user_id']);
         });
 
         Schema::create('order_users', function (Blueprint $table) {
@@ -41,6 +42,7 @@ class CreateOrdersTable extends Migration
 
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unique(['order_id', 'user_id']);
         });
 
         Schema::create('order_details', function (Blueprint $table) {
@@ -50,18 +52,19 @@ class CreateOrdersTable extends Migration
             $table->string('orderable_type');
             $table->integer('price');
             $table->integer('volume');
+            $table->string('trading_term');
+            $table->string('payment_term');
             $table->timestamps();
 
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
+            $table->unique(['order_id', 'orderable_id', 'orderable_type']);
         });
 
         Schema::create('order_negotiations', function (Blueprint $table) {
             $table->integer('order_detail_id')->unsigned();
             $table->integer('user_id')->unsigned();
-            $table->integer('old_volume');
-            $table->integer('old_price');
-            $table->integer('new_volume');
-            $table->integer('new_price');
+            $table->integer('volume');
+            $table->integer('price');
             $table->text('notes');
             $table->timestamps();
 

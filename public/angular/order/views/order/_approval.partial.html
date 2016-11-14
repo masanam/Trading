@@ -13,7 +13,8 @@
 		<tr ng-repeat="approval in order.approvals">
 			<td>
         <div class="img-user">
-          <img src="{{approval.image}}" class="img-circle div-img-circle small" style="float:left; margin:2px;" />
+          <img ng-src="{{approval.image}}" ng-fallback-src="./images/default.png"
+          	class="img-circle div-img-circle small" style="float:left; margin:2px;" />
           {{ approval.name }}
         </div>
 			</td>

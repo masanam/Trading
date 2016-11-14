@@ -1,4 +1,4 @@
-<header class="main-header">
+<header class="main-header" ng-controller="NotificationController">
 
   <!-- Logo -->
   <a ui-sref="home" class="logo">
@@ -9,7 +9,7 @@
   </a>
 
   <!-- Header Navbar: style can be found in header.less -->
-  <nav class="navbar navbar-static-top">
+  <nav class="navbar navbar-static-top" ng-init="findNotificationsByUser()">
     <!-- Sidebar toggle button-->
     <a href="#" class="sidebar-toggle" ng-click="openSidebar()" role="button" ng-if="Authentication.user">
       <span class="sr-only">Toggle navigation</span>
@@ -34,6 +34,46 @@
             <span class="hidden-xs"><i class="ion ion-ios-chatboxes" style="font-size:18px;"></i></span>
           </a>
         </li>-->
+        <li class="dropdown notifications-menu" uib-dropdown ng-if="Authentication.user">
+          <a class="dropdown-toggle" data-toggle="dropdown" uib-dropdown-toggle>
+            <i class="fa fa-bell"></i>
+            <span class="label label-danger" ng-if="unread_notifications">{{ unread_notifications }}</span>
+          </a>
+          <ul class="dropdown-menu" uib-dropdown-menu>
+            <li ng-repeat="notif in notifications.slice().reverse() | limitTo:8" ng-click="readNotification(notif.$id)">
+              <!-- inner menu: contains the actual data -->
+              <ul class="menu" ng-if="!notif.isRead">
+                <li style="background-color: #F0F8FF;" ng-if="notif.notification.indexOf('ORD') < 0">
+                  <a ng-href="{{ notif.url }}" style="white-space:normal;">
+                    <small class="pull-right text-muted"> {{ notif.created_at | date:'medium' }} </small><br>
+                    <i class="fa fa-comment" style="color: gray;"></i>{{ notif.notification }}
+                  </a>
+                </li>
+                <li style="background-color: #F0F8FF;" ng-if="notif.notification.indexOf('ORD') >= 0">
+                  <a ng-href="{{ notif.url }}" style="white-space:normal;">
+                    <small class="pull-right text-muted"> {{ notif.created_at | date:'medium' }} </small><br>
+                    <i class="fa fa-user" style="color: red;"></i>{{ notif.notification }}
+                  </a>
+                </li>
+              </ul>
+              <ul class="menu" ng-if="notif.isRead">
+                <li ng-if="notif.notification.indexOf('ORD') < 0">
+                  <a ng-href="{{ notif.url }}" style="white-space:normal;">
+                    <small class="pull-right text-muted"> {{ notif.created_at | date:'medium' }} </small><br>
+                    <i class="fa fa-comment" style="color: gray;"></i>{{ notif.notification }}
+                  </a>
+                </li>
+                <li ng-if="notif.notification.indexOf('ORD') >= 0">
+                  <a ng-href="{{ notif.url }}" style="white-space:normal;">
+                    <small class="pull-right text-muted"> {{ notif.created_at | date:'medium' }} </small><br>
+                    <i class="fa fa-user" style="color: red;"></i>{{ notif.notification }}
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="footer"><a ui-sref="notification">View all</a></li>
+          </ul>
+        </li>
         <li class="dropdown user user-menu" ng-if="Authentication.user">
           <a class="dropdown-toggle" ui-sref="user.edit">
             <img ng-src="{{ Authentication.user.image }}" ng-src-fallback="/image/default.png" class="user-image" alt="User Image">

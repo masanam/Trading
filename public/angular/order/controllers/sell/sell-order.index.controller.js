@@ -8,7 +8,7 @@ angular.module('order').controller('SellOrderIndexController', ['$scope', '$loca
       // for (var i = res.order_detail.length - 1; i >= 0; i--) {
       //   $scope.sum = $scope.sum + res.order_detail[i].volume;
       // }
-    }
+    };
     
     $scope.findDraft = function() {
       $scope.sell_orders = Order.query({ type: 'sell', action: 'draft', user_id: $scope.Authentication.user.id });

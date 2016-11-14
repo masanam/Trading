@@ -18,10 +18,6 @@ angular.module('order').controller('SellOrderController', ['$scope', '$uibModal'
       $scope.sell_order = Order.get({ type: 'sell', id: $scope.sell_orderId }, function(res){
         res.port_latitude = parseFloat(res.port_latitude);
         res.port_longitude = parseFloat(res.port_longitude);
-        // Order.get({ type: 'sell', action: 'getSum', id: $scope.sell_orderId }, function(res){
-        //   console.log(res);
-        //   $scope.sum = res;
-        // });
         $scope.sell_order = res;
       });
     };

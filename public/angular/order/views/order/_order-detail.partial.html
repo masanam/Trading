@@ -1,13 +1,15 @@
-<section ng-controller="OrderDetailController">
+<section ng-controller="OrderDetailController" ng-init="init()">
 	<table st-table="" class="table table-bordered table-striped">
 		<thead>
       <tr ng-if="!order.user_id || order.user_id === Authentication.user.id"  class="no-print">
         <td width=20%></td>
         <td width=40%>
-          <button class="btn btn-default" ng-click="addBuy()"> + Add Buy </button>
+          <button class="btn btn-default" ng-click="addBuy()" ng-disabled="order.buys.length > 1"> + Add Buy </button>
+          <button class="btn btn-default pull-right" ng-click="addOwnProduct()"
+          	ng-disabled="order.buys.length != 1"> + Add BIB Product </button>
         </td>
         <td width=40%>
-          <button class="btn btn-default" ng-click="addSell()"> + Add Sell </button>
+          <button class="btn btn-default" ng-click="addSell()" ng-disabled="order.sells.length > 1"> + Add Sell </button>
         </td>
       </tr>
 			<tr>
@@ -42,8 +44,8 @@
 		</thead>
 		<tbody>
       <tr>
-				<th colspan="3" style="text-align:center; background: #d2d6de">
-          <a href="#" ng-click="isCollapsed = !isCollapsed">
+				<th colspan="3" style="text-align:center; background: #efefef;">
+          <a ng-href="" ng-click="isCollapsed = !isCollapsed">
             Order Details
             <span class="glyphicon glyphicon-triangle-bottom pull-right" ng-if="isCollapsed"></span> 
             <span class="glyphicon glyphicon-triangle-top pull-right" ng-if="!isCollapsed"></span> 
@@ -51,27 +53,27 @@
         </th>
 			</tr>
     </tbody>
-    <tbody uib-collapse="isCollapsed">
+    <tbody id="detail-section" uib-collapse="isCollapsed">
 			<tr>
 				<td>Company</td>
-				<td ng-switch="display.sell && display.sell.user_id === Authentication.user.id">
+				<td ng-switch="display.sell && display.sell.user_id === Authentication.user.id || !display.sell">
 					<span ng-switch-when="true">
 						{{ display.sell.seller.company_name }}
 						<span class="pull-right">
-							<a ng-click="alert(nego)" href="#" class="glyphicon glyphicon-pencil"></a>
-							<a ng-click="alert(nego)" href="#" class="glyphicon glyphicon-trash"></a>
+							<a ng-click="alert(nego)" class="glyphicon glyphicon-pencil"></a>
+							<a ng-click="alert(nego)" class="glyphicon glyphicon-trash"></a>
 						</span>
 					</span>
 					<i style="color:green" ng-switch-default>
 						{{ display.sell.trader.name }} ({{ display.sell.trader.phone }})
 					</i>
 				</td>
-				<td ng-switch="display.buy && display.buy.user_id === Authentication.user.id">
+				<td ng-switch="display.buy && display.buy.user_id === Authentication.user.id || !display.buy">
 					<span ng-switch-when="true">
 						{{ display.buy.buyer.company_name }}
 						<span class="pull-right">
-							<a ng-click="alert(nego)" href="#" class="glyphicon glyphicon-pencil"></a>
-							<a ng-click="alert(nego)" href="#" class="glyphicon glyphicon-trash"></a>
+							<a ng-click="alert(nego)" class="glyphicon glyphicon-pencil"></a>
+							<a ng-click="alert(nego)" class="glyphicon glyphicon-trash"></a>
 						</span>
 					</span>
 					<i style="color:green" ng-switch-default>
@@ -84,13 +86,13 @@
 				<td>
 					<span ng-if="display.sell">
 						{{ display.sell.pivot.volume | number }}mt - US$ {{ display.sell.pivot.price | number }}
-						<a ng-click="alert(nego)" ng-if="display.sell.user_id === Authentication.user.id" href="#" class="pull-right">Nego</a>
+						<a ng-click="alert(nego)" ng-if="display.sell.user_id === Authentication.user.id" class="pull-right">Nego</a>
 					</span>
 				</td>
 				<td>
 					<span ng-if="display.buy">
 						{{ display.buy.pivot.volume | number }}mt - US$ {{ display.buy.pivot.price | number }}
-						<a ng-click="alert(nego)" ng-if="display.buy.user_id === Authentication.user.id" href="#" class="pull-right">Nego</a>
+						<a ng-click="alert(nego)" ng-if="display.buy.user_id === Authentication.user.id" class="pull-right">Nego</a>
 					</span>
 				</td>
 			</tr>
@@ -115,22 +117,22 @@
 			</tr>
 			<tr>
 				<td>Location</td>
-				<td ng-switch="display.sell.user_id === Authentication.user.id">
+				<td ng-switch="display.sell.user_id === Authentication.user.id || !display.sell">
 					<span ng-switch-when="true">{{ display.sell.concession.city }}</span>
 					<i ng-switch-default style="color:green">-Contact {{ display.sell.trader.name }}-</i>
 				</td>
-				<td ng-switch="display.buy.user_id === Authentication.user.id">
+				<td ng-switch="display.buy.user_id === Authentication.user.id || !display.buy">
 					<span ng-switch-when="true">{{ display.buy.factory.city }}</span>
 					<i ng-switch-default style="color:green">-Contact {{ display.buy.trader.name }}-</i>
 				</td>
 			</tr>
 			<tr>
 				<td>Port</td>
-				<td ng-switch="display.sell.user_id === Authentication.user.id">
+				<td ng-switch="display.sell.user_id === Authentication.user.id || !display.sell">
 					<span ng-switch-when="true">{{ display.sell.port_name }}</span>
 					<i ng-switch-default style="color:green">-Contact {{ display.sell.trader.name }}-</i>
 				</td>
-				<td ng-switch="display.buy.user_id === Authentication.user.id">
+				<td ng-switch="display.buy.user_id === Authentication.user.id || !display.buy">
 					<span ng-switch-when="true">{{ display.buy.port_name }}</span>
 					<i ng-switch-default style="color:green">-Contact {{ display.buy.trader.name }}-</i>
 				</td>
@@ -138,8 +140,8 @@
     </tbody>
     <tbody>
       <tr>
-				<th colspan="3" style="text-align:center; background: #d2d6de">
-          <a href="#" ng-click="qualityCollapsed = !qualityCollapsed">
+				<th colspan="3" style="text-align:center; background: #efefef;">
+          <a ng-href="" ng-click="qualityCollapsed = !qualityCollapsed">
             Quality
             <span class="glyphicon glyphicon-triangle-bottom pull-right" ng-if="!qualityCollapsed"></span> 
             <span class="glyphicon glyphicon-triangle-top pull-right" ng-if="qualityCollapsed"></span> 
@@ -147,7 +149,7 @@
         </th>
 			</tr>
     </tbody>
-    <tbody uib-collapse="!qualityCollapsed">
+    <tbody id="quality-section" uib-collapse="!qualityCollapsed">
       <tr>
         <td><b>GCV ADB </b></td>
         <td>
@@ -236,7 +238,7 @@
 					{{ display.buy.vm_min }} ~ {{ display.buy.vm_max }} kcal<br>
 					{{ display.buy.vm_reject }} kcal reject; {{ display.buy.vm_bonus }} kcal bonus
 					</span>
-				</td>>
+				</td>
       </tr>
       <tr>
         <td><b>Ash (ADB) </b></td>
@@ -346,8 +348,8 @@
     </tbody>
     <tbody>
       <tr>
-				<th colspan="3" style="text-align:center; background: #d2d6de">
-          <a href="#" ng-click="financialCollapsed = !financialCollapsed">
+				<th colspan="3" style="text-align:center; background: #efefef;">
+          <a ng-href="" ng-click="financialCollapsed = !financialCollapsed">
             Financial Summary
             <span class="glyphicon glyphicon-triangle-bottom pull-right" ng-if="!financialCollapsed"></span> 
             <span class="glyphicon glyphicon-triangle-top pull-right" ng-if="financialCollapsed"></span> 
@@ -355,7 +357,7 @@
         </th>
 			</tr>
     </tbody>
-    <tbody uib-collapse="!financialCollapsed">
+    <tbody id="financial-section" uib-collapse="!financialCollapsed">
 			<tr>
 				<th>Coal Price / mt</th>
 				<td>

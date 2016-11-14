@@ -10,7 +10,8 @@ angular.module('order').factory('Order', ['$resource',
       progress_status: undefined,
       user_id: undefined,
     }, {
-      update: { method: 'PUT' }
+      update: { method: 'PUT' },
+      post: { method: 'POST' },
     });
   }
 ]);
@@ -25,3 +26,14 @@ angular.module('order').factory('OrderUser', ['$resource',
     });
   }
 ]);
+
+angular.module('order').factory('Term', function (){
+  return {
+    trading : [
+      'FOT', 'FOB BARGE', 'FOB MV', 'CNF', 'CIF', 'FRANCO'
+    ],
+    payment : [
+      'PIA', 'NET7', 'NET30', 'EOM', 'COD', 'CND', 'CBS'
+    ]
+  };
+});

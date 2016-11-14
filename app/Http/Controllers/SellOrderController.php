@@ -162,8 +162,8 @@ class SellOrderController extends Controller
             $lower[] = $sub->id;
         }
         $lower[] = Auth::User()->id;
-        $sell_order = SellOrder::with('Seller','Port','Concession','OrderDetail')->find($id);
-        $sell_order2 = SellOrder::with('Port','Concession','OrderDetail')->where('id',$id)->select('id', 'user_id', 'seller_id', 'order_date', 'order_deadline', 'ready_date', 'expired_date', 'concession_id', 'city', 'country', 'latitude', 'longitude', 'port_distance', 'port_id', 'port_name', 'port_status', 'port_daily_rate', 'port_draft_height', 'port_latitude', 'port_longitude', DB::raw('NULL as product_name') , 'typical_quality', 'product_id', 'gcv_arb_min', 'gcv_arb_max', 'gcv_arb_reject', 'gcv_arb_bonus', 'gcv_adb_min', 'gcv_adb_max', 'gcv_adb_reject', 'gcv_adb_bonus', 'ncv_min', 'ncv_max', 'ncv_reject', 'ncv_bonus', 'ash_min', 'ash_max', 'ash_reject', 'ash_bonus', 'ts_min', 'ts_max', 'ts_reject', 'ts_bonus', 'tm_min', 'tm_max', 'tm_reject', 'tm_bonus', 'im_min', 'im_max', 'im_reject', 'im_bonus', 'fc_min', 'fc_max', 'fc_reject', 'fc_bonus', 'vm_min', 'vm_max', 'vm_reject', 'vm_bonus', 'hgi_min', 'hgi_max', 'hgi_reject', 'hgi_bonus', 'size_min', 'size_max', 'size_reject', 'size_bonus', 'fe2o3_min', 'fe2o3_max', 'fe2o3_reject', 'fe2o3_bonus', 'aft_min', 'aft_max', 'aft_reject', 'aft_bonus', 'volume', 'min_price', 'trading_term', 'trading_term_detail','payment_terms', 'commercial_term', 'penalty_desc', 'order_status', 'progress_status', 'created_at', 'updated_at')->first();
+        $sell_order = SellOrder::with('Seller','Port','Concession', 'orders')->find($id);
+        $sell_order2 = SellOrder::with('Port','Concession', 'orders')->where('id',$id)->select('id', 'user_id', 'seller_id', 'order_date', 'order_deadline', 'ready_date', 'expired_date', 'concession_id', 'city', 'country', 'latitude', 'longitude', 'port_distance', 'port_id', 'port_name', 'port_status', 'port_daily_rate', 'port_draft_height', 'port_latitude', 'port_longitude', DB::raw('NULL as product_name') , 'typical_quality', 'product_id', 'gcv_arb_min', 'gcv_arb_max', 'gcv_arb_reject', 'gcv_arb_bonus', 'gcv_adb_min', 'gcv_adb_max', 'gcv_adb_reject', 'gcv_adb_bonus', 'ncv_min', 'ncv_max', 'ncv_reject', 'ncv_bonus', 'ash_min', 'ash_max', 'ash_reject', 'ash_bonus', 'ts_min', 'ts_max', 'ts_reject', 'ts_bonus', 'tm_min', 'tm_max', 'tm_reject', 'tm_bonus', 'im_min', 'im_max', 'im_reject', 'im_bonus', 'fc_min', 'fc_max', 'fc_reject', 'fc_bonus', 'vm_min', 'vm_max', 'vm_reject', 'vm_bonus', 'hgi_min', 'hgi_max', 'hgi_reject', 'hgi_bonus', 'size_min', 'size_max', 'size_reject', 'size_bonus', 'fe2o3_min', 'fe2o3_max', 'fe2o3_reject', 'fe2o3_bonus', 'aft_min', 'aft_max', 'aft_reject', 'aft_bonus', 'volume', 'min_price', 'trading_term', 'trading_term_detail','payment_terms', 'commercial_term', 'penalty_desc', 'order_status', 'progress_status', 'created_at', 'updated_at')->first();
         //if order.user_id subordinate or self get product_name
         if(($sell_order->order_status === 'v' || $sell_order->order_status == 1 || $sell_order->order_status == 2 || $sell_order->order_status == 3 || $sell_order->order_status == 4 || $sell_order->order_status == 'l' || $sell_order->order_status == 's' || $sell_order->order_status == 'p')&&(in_array($sell_order->user_id, $lower))) {
             return response()->json($sell_order, 200);
@@ -334,12 +334,11 @@ class SellOrderController extends Controller
             ->join('sellers', 'sell_order.seller_id', '=', 'sellers.id')
             ->join('order_details', function ($join) {
                 $join->on('orderable_id', '=', 'sell_order.id')
-                     ->where('orderable_type', '=', 'App/Model/SellOrder')
-                     ->groupBy('volume');
+                     ->where('orderable_type', '=', 'App/Model/SellOrder');
             })
             ->where('order_status', $order_status)
             ->whereIn('sell_order.user_id', $lower)
-            ->groupBy('sell_order.id')
+            ->groupBy('order_details.orderable_id')
             ->select('sell_order.id', 'sell_order.user_id', 'order_date', 'order_deadline',
                 'expired_date', 'sell_order.address', 'sell_order.city', 'sell_order.country',
                 DB::raw('NULL as product_name') ,
@@ -348,12 +347,11 @@ class SellOrderController extends Controller
             $sell_order2 = SellOrder::join('users', 'sell_order.user_id', '=', 'users.id')
             ->join('order_details', function ($join) {
                 $join->on('orderable_id', '=', 'sell_order.id')
-                     ->where('orderable_type', '=', 'App/Model/SellOrder')
-                     ->groupBy('volume');
+                     ->where('orderable_type', '=', 'App/Model/SellOrder');
             })
             ->where('order_status', $order_status)
             ->whereNotIn('user_id', $lower)
-            ->groupBy('sell_order.id')
+            ->groupBy('order_details.orderable_id')
             ->select('sell_order.id', 'user_id', 'order_date', 'order_deadline', 'expired_date', 'address', 'city', 'country', 
                 DB::raw('NULL as product_name') ,
                 DB::raw('sell_order.volume - SUM(order_details.volume) as sum') ,

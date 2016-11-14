@@ -73,6 +73,33 @@ class OrderController extends Controller
     $order->status = 'd';
     $order->save();
 
+    foreach($request->buys as $buy){
+      $order->buys()->attach([ $buy->id => $buy->pivot ]);
+      BuyOrder::find($buy->id)->reconcile();
+
+      $order_detail_id = $order->buys->find($req->buy)->pivot->id;
+      OrderNegotiation::create([
+        'order_detail_id' => $order_detail_id,
+        'notes' => 'Initial Deal',
+        'volume' => $req->volume,
+        'price' => $req->price,
+        'user_id' => Auth::user()->id,
+      ]);
+    }
+    foreach($request->sells as $sell){
+      $order->sells()->attach([ $sell->id => $sell->pivot ]);
+      SellOrder::find($sell->id)->reconcile();
+
+      $order_detail_id = $order->sells->find($req->sell)->pivot->id;
+      OrderNegotiation::create([
+        'order_detail_id' => $order_detail_id,
+        'notes' => 'Initial Deal',
+        'volume' => $req->volume,
+        'price' => $req->price,
+        'user_id' => Auth::user()->id,
+      ]);
+    }
+
     return response()->json($order, 200);
   }
 
@@ -111,9 +138,10 @@ class OrderController extends Controller
   }
   
   private function add_approval_to_order($order = NULL, $user_id = '', $order_id='', $status=''){
+    //var_dump($order->approvals->count());
     if($order->approvals->count() > 0){
       $order_approval = OrderApproval::where('user_id', $user_id)->where('order_id', $order_id)->first();
-      $order_approval->status = 'p';
+      $order_approval->status = $status;
       $order_approval->save();
     }else{
       $order_approval = new OrderApproval();
@@ -187,16 +215,12 @@ class OrderController extends Controller
   public function approve($id, Request $request)
   {
     $order = Order::with(['approvals' => function($q){
-      $q->where('user_id', Auth::user()->id);
-    }])->find($id);
+        $q->where('user_id', Auth::user()->id);
+      }, 'users' => function($q){
+        $q->where('user_id', Auth::user()->id);
+      }])->find($id);
     
-    if($order->approvals->count() > 0){
-      $order_approval = OrderApproval::where('user_id', Auth::user()->id)->where('order_id', $id)->first();
-      $order_approval->status = $request->status;
-      $order_approval->save();
-    }else{
-      $this->add_approval_to_order(Auth::user()->manager_id, $id, $request->status);
-    }
+    $this->add_approval_to_order($order, Auth::user()->id, $id, $request->status);
     
     //print_r($order);
     
@@ -205,16 +229,20 @@ class OrderController extends Controller
         $order->status = 'a';
         $order->save();
       }else{
-        $this->add_user_to_order(Auth::user()->manager_id, $id, 'approver');
-        $this->add_approval_to_order(Auth::user()->manager_id, $id, 'p');
+        $order = Order::with(['approvals' => function($q){
+          $q->where('user_id', Auth::manager()->id);
+        }, 'users' => function($q){
+          $q->where('user_id', Auth::manager()->id);
+        }])->find($id);
+      
+        $this->add_user_to_order($order, Auth::user()->manager_id, $id, 'approver');
+        $this->add_approval_to_order($order, Auth::user()->manager_id, $id, 'p');
         $order->status = 'p';
         $order->save();
       }
     }
-    
-    $order = Order::with('trader', 'users', 'sells', 'sells.seller', 'buys', 'buys.buyer', 'buys.trader', 'approvals', 'buys.Factory', 'sells.Concession', 'sells.trader')->find($id);
 
-    return response()->json($order, 200);
+    return $this->show($id);
   }
 
   /**
@@ -230,6 +258,54 @@ class OrderController extends Controller
     $order->save();
 
     return response()->json($order, 200);
+  }
+
+  public function stage(Request $req, $id)
+  {
+    $order = Order::with('sells', 'buys')->find($id);
+    $details = [
+      'volume' => $req->volume,
+      'price' => $req->price,
+      'trading_term' => $req->trading_term,
+      'payment_term' => $req->payment_term
+    ];
+    if(!$req->notes) $notes = 'Initial Deal';
+    else $notes = $req->notes;
+
+    $this->authorize('update', $order);
+
+    if($req->buy){
+      if(count($order->sells) > 1)
+        return response()->json([ 'message' => 'Can\'t add more Sell on Multiple Buys' ], 400);
+      
+      $order->buys()->sync([ $req->buy => $details ], false);
+
+      $buy = BuyOrder::find($req->buy)->reconcile();
+
+      $order_detail_id = $order->buys->find($req->buy)->pivot->id;
+    }
+    if($req->sell){
+      if(count($order->buys) > 1)
+        return response()->json([ 'message' => 'Can\'t add more Buy on Multiple Sells' ], 400);
+      
+      $order->sells()->sync([ $req->sell => $details ], false);
+
+      $sell = SellOrder::find($req->sell)->reconcile();
+
+      $order_detail_id = $order->sells->find($req->sell)->pivot->id;
+    }
+
+    // if notes is here, it's a negotiation
+    // Add new log of the nagotiation
+    $negotiation  = new OrderNegotiation([
+      'order_detail_id' => $order_detail_id,
+      'notes' => $notes,
+      'volume' => $req->volume,
+      'price' => $req->price,
+      'user_id' => Auth::user()->id,
+    ]);
+    $negotiation->save();
+    return $this->show($id);
   }
 
   public function getSub(){
