@@ -28,21 +28,21 @@ class OrderController extends Controller
    *
    * @return \Illuminate\Http\Response
    */
-  public function index(Request $request)
+  public function index(Request $req)
   {
     DB::enableQueryLog();
     $orders = Order::with('trader', 'approvals');
 
-    if($request->status != '') $orders = $orders->where('status', $request->status);
+    if($req->status != '') $orders = $orders->where('status', $req->status);
     
-    if($request->possession == 'subordinates'){
+    if($req->possession == 'subordinates'){
       $subordinates = $this->getSub();
       foreach ($subordinates as $sub ) {
           $lower[] = $sub->id;
       }
       $orders = $orders->whereIn('user_id', $lower);
     }
-    else if($request->possession == 'associated'){
+    else if($req->possession == 'associated'){
       $orders->whereHas('users', function($query){
         $query->where('user_id', Auth::User()->id);
       });
@@ -58,47 +58,51 @@ class OrderController extends Controller
   /**
    * Store a newly created resource in storage.
    *
-   * @param  \Illuminate\Http\Request  $request
+   * @param  \Illuminate\Http\Request  $req
    * @return \Illuminate\Http\Response
    */
-  public function store(Request $request)
+  public function store(Request $req)
   {
-    if(!$request) {
+    if(!$req) {
       return response()->json([
         'message' => 'Bad Request'
       ], 400);
     }
-    $order = new Order($request);
+    $order = new Order($req->except(['buys', 'sells']));
     $order->user_id = Auth::User()->id;
     $order->status = 'd';
     $order->save();
 
-    foreach($request->buys as $buy){
-      $order->buys()->attach([ $buy->id => $buy->pivot ]);
-      BuyOrder::find($buy->id)->reconcile();
+    if(count($req->buys) > 0)
+      foreach($req->buys as $buy){
+        $order->buys()->attach([
+          $buy['id'] => $buy['pivot'] 
+        ]);
+        BuyOrder::find($buy['id'])->reconcile();
 
-      $order_detail_id = $order->buys->find($req->buy)->pivot->id;
-      OrderNegotiation::create([
-        'order_detail_id' => $order_detail_id,
-        'notes' => 'Initial Deal',
-        'volume' => $req->volume,
-        'price' => $req->price,
-        'user_id' => Auth::user()->id,
-      ]);
-    }
-    foreach($request->sells as $sell){
-      $order->sells()->attach([ $sell->id => $sell->pivot ]);
-      SellOrder::find($sell->id)->reconcile();
+        $order_detail = $order->buys->find($buy['id']);
+        OrderNegotiation::create([
+          'order_detail_id' => $order_detail->id,
+          'notes' => 'Initial Deal',
+          'volume' => $order_detail->pivot->volume,
+          'price' => $order_detail->pivot->price,
+          'user_id' => Auth::user()->id,
+        ]);
+      }
+    if(count($req->sells) > 0)
+      foreach($req->sells as $sell){
+        $order->sells()->attach([ $sell['id'] => $sell['pivot'] ]);
+        SellOrder::find($sell['id'])->reconcile();
 
-      $order_detail_id = $order->sells->find($req->sell)->pivot->id;
-      OrderNegotiation::create([
-        'order_detail_id' => $order_detail_id,
-        'notes' => 'Initial Deal',
-        'volume' => $req->volume,
-        'price' => $req->price,
-        'user_id' => Auth::user()->id,
-      ]);
-    }
+        $order_detail = $order->sells->find($sell['id'])->pivot->id;
+        OrderNegotiation::create([
+          'order_detail_id' => $order_detail->id,
+          'notes' => 'Initial Deal',
+          'volume' => $order_detail->pivot->volume,
+          'price' => $order_detail->pivot->price,
+          'user_id' => Auth::user()->id,
+        ]);
+      }
 
     return response()->json($order, 200);
   }
@@ -158,11 +162,11 @@ class OrderController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function update(Request $request, $id)
+  public function update(Request $req, $id)
   {
     $order = Order::find($id);
 
-    if(!$request) {
+    if(!$req) {
       return response()->json([
         'message' => 'Bad Request'
       ], 400);
@@ -179,10 +183,10 @@ class OrderController extends Controller
     }
     $this->authorize('update', $order);
 
-    $order->finalize_reason = $request->finalize_reason;
-    $order->cancel_reason = $request->cancel_reason;
-    $order->request_reason = $request->request_reason;
-    $order->status = $request->status;
+    $order->finalize_reason = $req->finalize_reason;
+    $order->cancel_reason = $req->cancel_reason;
+    $order->request_reason = $req->request_reason;
+    $order->status = $req->status;
     $order->save();
     //$order->updated_at = date('Y-m-d H:i:s');
     
@@ -212,7 +216,7 @@ class OrderController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function approve($id, Request $request)
+  public function approve($id, Request $req)
   {
     $order = Order::with(['approvals' => function($q){
         $q->where('user_id', Auth::user()->id);
@@ -220,11 +224,11 @@ class OrderController extends Controller
         $q->where('user_id', Auth::user()->id);
       }])->find($id);
     
-    $this->add_approval_to_order($order, Auth::user()->id, $id, $request->status);
+    $this->add_approval_to_order($order, Auth::user()->id, $id, $req->status);
     
     //print_r($order);
     
-    if($request->status == 'a'){
+    if($req->status == 'a'){
       if(!Auth::user()->manager_id){
         $order->status = 'a';
         $order->save();
