@@ -3,12 +3,12 @@
 angular.module('order').controller('OrderDetailController', ['$scope', '$uibModal', 'Order',
   function($scope,$uibModal, Order) {
     $scope.addOwnProduct = function () {
-      //compare buy and sell
-
-      //if sell < buy, error message
-
-      //if sell > buy, do it
-
+      Order.get(
+        { id:$scope.order.id, action: 'stage' }
+        function (res){
+          $scope.order.sells = res.sells;
+          $scope.display.sell = selectedItem;
+        });
     };
 
     $scope.removeBuy = function () {

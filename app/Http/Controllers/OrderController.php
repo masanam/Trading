@@ -313,8 +313,54 @@ class OrderController extends Controller
   }
 
   public function unstage(Request $req, $id){
-    if(isset($req->buy_id)) Order::find($id)->buys()->detach($req->buy_id);
-    if(isset($req->sell_id)) Order::find($id)->sells()->detach($req->sell_id);
+    $order = Order::find($id);
+    $this->authorize('view', $order);
+    if(isset($req->buy_id)) $order->buys()->detach($req->buy_id);
+    if(isset($req->sell_id)) $order->sells()->detach($req->sell_id);
+
+    return $this->show($id);
+  }
+
+  public function stageOwn($id){
+    $order = Order::with('sells', 'buys')->find($id);
+    $this->authorize('update', $order);
+
+    if(count($order->sells) && count($order->buys)>1)
+      return response()->json([ 'message'=> 'Multiple Buy & Sell can\'t add more'], 400);
+
+    //cari selisih volume
+    $sell_volume = $order->sells->sum('pivot.volume');
+    $buy_volume = $order->buys->sum('pivot.volume');
+
+    $volume = $buy_volume - $sell_volume;
+
+    $sell = SellOrder::create([
+      'user_id' => Auth::user()->id,
+      'seller_id' => 1, //ganti sesuai siapa penjual default
+      'city' => 'JKT',
+      'country' => 'ID',
+      'commercial_term' => '',
+
+      'address' => 'Jl. Kapten Darmo Sugondo No.56, Sidorukun, Kec. Gresik, Kabupaten Gresik, Jawa Timur',
+      'latitude' => '-7.1844498' ,
+      'longitude' => '112.6528737' ,
+
+      'order_date' => date('Y-m-d'),
+      'order_deadline' => date('Y-m-d'),
+      'penalty_desc' => 'penalty',
+      'ready_date'=> date('Y-m-d'),
+      'expired_date'=> date('Y-m-d'),
+      
+      'volume' => $volume,
+      'order_status' => 'v'
+    ]);
+
+    $sell->orders()->attach([ $id => [
+      'volume' => $volume, 
+      'price' => 0,
+      'trading_term' => 'FOB MV',
+      'payment_term' => 'NET30',
+    ]]);
 
     return $this->show($id);
   }
