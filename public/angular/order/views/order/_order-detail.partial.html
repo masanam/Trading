@@ -60,8 +60,7 @@
 					<span ng-switch-when="true">
 						{{ display.sell.seller.company_name }}
 						<span class="pull-right">
-							<a ng-click="alert(nego)" class="glyphicon glyphicon-pencil"></a>
-							<a ng-click="alert(nego)" class="glyphicon glyphicon-trash"></a>
+							<a ng-click="removeSell()" class="glyphicon glyphicon-trash"></a>
 						</span>
 					</span>
 					<i style="color:green" ng-switch-default>
@@ -72,8 +71,7 @@
 					<span ng-switch-when="true">
 						{{ display.buy.buyer.company_name }}
 						<span class="pull-right">
-							<a ng-click="alert(nego)" class="glyphicon glyphicon-pencil"></a>
-							<a ng-click="alert(nego)" class="glyphicon glyphicon-trash"></a>
+							<a ng-click="removeBuy()" class="glyphicon glyphicon-trash"></a>
 						</span>
 					</span>
 					<i style="color:green" ng-switch-default>
