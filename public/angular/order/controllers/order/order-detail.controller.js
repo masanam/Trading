@@ -4,19 +4,21 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
   function($scope,$uibModal, Order) {
     $scope.addOwnProduct = function () {
       Order.get(
-        { id:$scope.order.id, action: 'stage' }
+        { id:$scope.order.id, action: 'stage' },
         function (res){
           $scope.order.sells = res.sells;
-          $scope.display.sell = selectedItem;
+          $scope.display.sell = res;
+        }, function (err){
+          alert(err.data.message);
         });
     };
 
     $scope.removeBuy = function () {
       Order.get({
         id:$scope.order.id, action: 'unstage',
-        buy_id:display.buy.id
+        buy_id:$scope.display.buy.id
       }, function (res){
-        delete display.buy;
+        delete $scope.display.buy;
         $scope.order = res;
       });
     };
@@ -24,9 +26,9 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
     $scope.removeSell = function () {
       Order.get({
         id:$scope.order.id, action: 'unstage',
-        sell_id:display.sell.id
+        sell_id:$scope.display.sell.id
       }, function (res){
-        delete display.sell;
+        delete $scope.display.sell;
         $scope.order = res;
       });
     };

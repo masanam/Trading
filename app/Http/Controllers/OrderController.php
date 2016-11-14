@@ -334,6 +334,9 @@ class OrderController extends Controller
 
     $volume = $buy_volume - $sell_volume;
 
+    if($volume <= 0)
+      return response()->json([ 'message'=> 'Sourcing is more than Market'], 400);
+
     $sell = SellOrder::create([
       'user_id' => Auth::user()->id,
       'seller_id' => 1, //ganti sesuai siapa penjual default
