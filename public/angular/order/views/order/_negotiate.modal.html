@@ -1,0 +1,23 @@
+<form ng-submit="ok()">
+  <div class="modal-header" ng-switch="lead.type">
+    <h3 class="modal-title" id="modal-title" ng-switch-when="buy">Negotiate Buy Price</h3>
+    <h3 class="modal-title" id="modal-title" ng-switch-default>Negotiate Sell Price</h3>
+    <button type="button" class="close" ng-click="cancel()" aria-label="Close">x</button>
+  </div>
+
+  <div class="modal-body" ng-focus="find()" id="modal-body">
+	  <div class="row">
+	    <div class="col-sm-6 form-group">
+	      <input ng-model="selected.item.pivot.volume" class="form-control" placeholder="Volume (MT)" required>
+	    </div>
+	    <div class="col-sm-6 form-group">
+	      <input ng-model="selected.item.pivot.price" class="form-control" placeholder="Price (USD)" required>
+	    </div>
+	  </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-default pull-left" type="button" ng-click="cancel()">Cancel</button>
+
+    <button class="btn btn-primary" type="submit">Update Price</button>
+  </div>
+</form>
