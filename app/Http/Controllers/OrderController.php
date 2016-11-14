@@ -312,6 +312,13 @@ class OrderController extends Controller
     return $this->show($id);
   }
 
+  public function unstage(Request $req, $id){
+    if(isset($req->buy_id)) Order::find($id)->buys()->detach($req->buy_id);
+    if(isset($req->sell_id)) Order::find($id)->sells()->detach($req->sell_id);
+
+    return response()->json([$id, $buy_id, $sell_id], 200);
+  }
+
   public function getSub(){
     $user = Auth::User();
     return $user->getAllSubordinates();
