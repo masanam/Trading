@@ -11,6 +11,26 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
 
     };
 
+    $scope.removeBuy = function () {
+      Order.get({
+        id:$scope.order.id, action: 'unstage',
+        buy_id:display.buy.id
+      }, function (res){
+        delete display.buy;
+        $scope.order = res;
+      });
+    };
+
+    $scope.removeSell = function () {
+      Order.get({
+        id:$scope.order.id, action: 'unstage',
+        sell_id:display.sell.id
+      }, function (res){
+        delete display.sell;
+        $scope.order = res;
+      });
+    };
+
     $scope.addBuy = function () {
       var modalInstance = $uibModal.open({
         animation: true,

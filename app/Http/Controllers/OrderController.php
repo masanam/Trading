@@ -316,7 +316,7 @@ class OrderController extends Controller
     if(isset($req->buy_id)) Order::find($id)->buys()->detach($req->buy_id);
     if(isset($req->sell_id)) Order::find($id)->sells()->detach($req->sell_id);
 
-    return response()->json([$id, $buy_id, $sell_id], 200);
+    return $this->show($id);
   }
 
   public function getSub(){
