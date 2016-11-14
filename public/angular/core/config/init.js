@@ -9,6 +9,7 @@ ApplicationConfiguration.registerModule('dashboard');
 ApplicationConfiguration.registerModule('map');
 ApplicationConfiguration.registerModule('firebaseService');
 ApplicationConfiguration.registerModule('notification');
+ApplicationConfiguration.registerModule('operation');
 
 // Coalpedia
 ApplicationConfiguration.registerModule('lead');
