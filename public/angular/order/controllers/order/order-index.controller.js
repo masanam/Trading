@@ -36,10 +36,12 @@ angular.module('order').controller('OrderIndexController', ['$scope', '$statePar
 
           for(x = 0; x<res.length; x++){
             $scope.data[0][x] = res[x].price;  
-            $scope.data[1][x] = $scope.display.totalBuyPrice / $scope.display.totalBuyVolume;  
-            $scope.data[2][x] = $scope.display.totalSellPrice / $scope.display.totalSellVolume;  
+            $scope.data[1][x] = ($scope.display.sell.min_price + $scope.order.pit_to_port + $scope.order.transhipment);
+            $scope.data[2][x] = ($scope.display.buy.max_price - $scope.order.port_to_factory - $scope.order.freight_cost);
             $scope.labels[x] = res[x].date;
           }
+          
+          var mid = res.length/2;
         });
     };
 

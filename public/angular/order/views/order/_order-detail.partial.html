@@ -79,7 +79,7 @@
 					</i>
 				</td>
 			</tr>
-			<tr>
+			<!--tr>
 				<td>Trx Value</td>
 				<td>
 					<span ng-if="display.sell">
@@ -93,9 +93,9 @@
 						<a ng-click="alert(nego)" ng-if="display.buy.user_id === Authentication.user.id" class="pull-right">Nego</a>
 					</span>
 				</td>
-			</tr>
+			</tr-->
 			<tr>
-				<td>Order Date</td>
+				<td>Input Date</td>
 				<td>{{ display.sell.order_date | date:'mediumDate' }}</td>
 				<td>{{ display.buy.order_date | date:'mediumDate' }}</td>
 			</tr>
@@ -193,7 +193,7 @@
 					</span>
 				</td>
       </tr>
-      <tr>
+      <tr ng-show="display.sell.tm_min !== 0 || display.buy.tm_min !== 0 || display.sell.tm_max !== 0 || display.buy.tm_max !== 0">
         <td><b>Total Moisture (ARB) </b></td>
         <td>
 					<span ng-if="display.sell">
@@ -208,7 +208,7 @@
 					</span>
 				</td>
       </tr>
-      <tr>
+      <tr ng-show="display.sell.im_min !== 0 || display.buy.im_min !== 0 || display.sell.im_max !== 0 || display.buy.im_max !== 0">
         <td><b>Inherent Moisture (ADB) </b></td>
         <td>
 					<span ng-if="display.sell">
@@ -223,7 +223,7 @@
 					</span>
 				</td>
       </tr>
-      <tr>
+      <tr ng-show="display.sell.vm_min !== 0 || display.buy.vm_min !== 0 || display.sell.vm_max !== 0 || display.buy.vm_max !== 0">
         <td><b>Volatile Matter (ADB) </b></td>
         <td>
 					<span ng-if="display.sell">
@@ -238,7 +238,7 @@
 					</span>
 				</td>
       </tr>
-      <tr>
+      <tr ng-show="display.sell.ash_min !== 0 || display.buy.ash_min !== 0 || display.sell.ash_max !== 0 || display.buy.ash_max !== 0">
         <td><b>Ash (ADB) </b></td>
         <td>
 					<span ng-if="display.sell">
@@ -253,7 +253,7 @@
 					</span>
 				</td>
       </tr>
-      <tr>
+      <tr ng-show="display.sell.fc_min !== 0 || display.buy.fc_min !== 0">
         <td><b>Fixed Carbon (ADB) </b></td>
         <td>
 					<span ng-if="display.sell">
@@ -268,7 +268,7 @@
 					</span>
 				</td>
       </tr>
-      <tr>
+      <tr ng-show="display.sell.ts_min !== 0 || display.buy.ts_min !== 0 || display.sell.ts_max !== 0 || display.buy.ts_max !== 0">
         <td><b>Total Sulphur (ADB) </b></td>
         <td>
 					<span ng-if="display.sell">
@@ -283,7 +283,7 @@
 					</span>
 				</td>
       </tr>
-      <tr>
+      <tr ng-show="display.sell.hgi_min !== 0 || display.buy.hgi_min !== 0 || display.sell.hgi_max !== 0 || display.buy.hgi_max !== 0">
         <td><b>HGI </b></td>
         <td>
 					<span ng-if="display.sell">
@@ -298,7 +298,7 @@
 					</span>
 				</td>
       </tr>
-      <tr>
+      <tr ng-show="display.sell.size_min !== 0 || display.buy.size_min !== 0 || display.sell.size_max !== 0 || display.buy.size_max !== 0">
         <td><b>SIZE (0-50mm)</b></td>
         <td>
 					<span ng-if="display.sell">
@@ -313,8 +313,8 @@
 					</span>
 				</td>
       </tr>
-      <tr>
-        <td><b>Fe2o3 </b></td>
+      <tr ng-show="display.sell.fe2o3_min !== 0 || display.buy.fe2o3_min !== 0 || display.sell.fe2o3_max !== 0 || display.buy.fe2o3_max !== 0">
+        <td><b>Fe2O3 </b></td>
         <td>
 					<span ng-if="display.sell">
 					{{ display.sell.fe2o3_min }} ~ {{ display.sell.fe2o3_max }} kcal<br>
@@ -328,7 +328,7 @@
 					</span>
 				</td>
       </tr>
-      <tr>
+      <tr ng-show="display.sell.aft_min !== 0 || display.buy.aft_min !== 0 || display.sell.aft_max !== 0 || display.buy.aft_max !== 0">
         <td><b>AFT</b></td>
         <td>
 					<span ng-if="display.sell">
@@ -358,68 +358,46 @@
     <tbody id="financial-section" uib-collapse="!financialCollapsed">
 			<tr>
 				<th></th>
+        <th></th>
         <th>
           <button class="btn btn-default" ng-click="addCostModal()"> Update </button>
         </th>
       </tr>
       <tr>
-				<th>Coal Price / mt</th>
+				<th>Total Price / mt</th>
 				<td>
-					<span ng-if="display.buy">
-					<h4>US${{ 47 | number }}</h4>
+					<span ng-if="display.sell">
+					<h4>US${{ display.sell.min_price | number }}</h4>
 					from {{ order.sells.length }} Suppliers
 					</span>
 				</td>
-				<td>
-					<span ng-if="display.sell">
-					<h4>US${{ order._cost | number }}</h4>
+        <td>
+					<span ng-if="display.buy">
+					<h4>US${{ display.buy.max_price | number }}</h4>
 					from {{ order.buys.length }} Customers
 					</span>
 				</td>
 			</tr>
-      <tr>
-				<th>Insurance / mt</th>
-				<td colspan="2">
-					<span>
-					<h4>US${{ order.insurance_cost | number }}</h4>
-					from {{ order.sells.length }} Suppliers
-					</span>
-				</td>
-			</tr>
-      <tr>
-				<th>Interest / mt</th>
-				<td colspan="2">
-					<span>
-					<h4>US${{ order.interest_cost | number }}</h4>
-					from {{ order.sells.length }} Suppliers
-					</span>
-				</td>
-			</tr>
-      <tr>
-				<th>Surveyor / mt</th>
-				<td colspan="2">
-					<span>
-					<h4>US${{ order.surveyor_cost | number }}</h4>
-					from {{ order.sells.length }} Suppliers
-					</span>
-				</td>
-			</tr>
-      <tr>
+      <tr ng-show="order.pit_to_port !== NULL">
 				<th>Pit to Port / mt</th>
-				<td colspan="2">
+				<td>
 					<span>
 					<h4>US${{ order.pit_to_port | number }}</h4>
-					from {{ order.sells.length }} Suppliers
 					</span>
 				</td>
+        <td>
+          &nbsp;
+				</td>
 			</tr>
-      <tr>
+      <tr ng-show="order.transhipment !== NULL">
 				<th>Transhipment / mt</th>
 				<td colspan="2">
-					<span ng-if="display.buy">
+					<span>
 					<h4>US${{ order.transhipment | number }}</h4>
-					from {{ order.sells.length }} Suppliers
 					</span>
+				</td>
+        <td>
+          &nbsp;
 				</td>
 			</tr>
       <tr>
@@ -427,7 +405,6 @@
 				<td colspan="2">
 					<span>
 					<h4>US${{ order.freight_cost | number }}</h4>
-					from {{ order.buys.length }} Customers
 					</span>
 				</td>
 			</tr>
@@ -436,7 +413,30 @@
 				<td colspan="2">
 					<span>
 					<h4>US${{ order.port_to_factory | number }}</h4>
-					from {{ order.sells.length }} Suppliers
+					</span>
+				</td>
+			</tr>
+      <tr>
+				<th>Insurance / mt</th>
+				<td colspan="2">
+					<span>
+					<h4>US${{ order.insurance_cost | number }}</h4>
+					</span>
+				</td>
+			</tr>
+      <tr>
+				<th>Interest / mt</th>
+				<td colspan="2">
+					<span>
+					<h4>US${{ order.interest_cost | number }}</h4>
+					</span>
+				</td>
+			</tr>
+      <tr>
+				<th>Surveyor / mt</th>
+				<td colspan="2">
+					<span>
+					<h4>US${{ order.surveyor_cost | number }}</h4>
 					</span>
 				</td>
 			</tr>
@@ -445,27 +445,27 @@
 				<td colspan="2">
 					<span>
 					<h4>US${{ order.others_cost | number }}</h4>
-					from {{ order.buys.length }} Customers
 					</span>
 				</td>
 			</tr>
       <tr>
-				<th>Total Price</th>
+				<th>Coal Price</th>
 				<td>
-					<span ng-if="display.buy">
-					<h3>US${{ 60 | number }}</h3>
+					<span ng-if="display.sell">
+					<h3>US${{ (display.sell.min_price + order.pit_to_port + order.transhipment) | number }}</h3>
 					from {{ order.sells.length }} Suppliers
 					</span>
 				</td>
-				<td>
-					<span ng-if="display.sell">
-					<h3>US${{ 64 | number }}</h3>
+        <td>
+					<span ng-if="display.buy">
+					<h3>US${{ (display.buy.max_price - order.port_to_factory - order.freight_cost) | number }}</h3>
 					from {{ order.buys.length }} Customers
 					</span>
 				</td>
 			</tr>
 			<tr>
-				<td colspan=3 style="text-align:center;"><h3>Expected Margin / mt: US${{ 4 | number }}</h3></td>
+				<td ng-if="(display.buy.max_price - order.port_to_factory - order.freight_cost) - (display.sell.min_price + order.pit_to_port + order.transhipment) > 0" colspan=3 style="text-align:center; "><h3 style="color: green">Expected Margin / mt: US${{ (display.buy.max_price - order.port_to_factory - order.freight_cost) - (display.sell.min_price + order.pit_to_port + order.transhipment) | number }}</h3></td>
+				<td ng-if="(display.buy.max_price - order.port_to_factory - order.freight_cost) - (display.sell.min_price + order.pit_to_port + order.transhipment) < 0" colspan=3 style="text-align:center; "><h3 style="color: red">Expected Margin / mt: US${{ (display.buy.max_price - order.port_to_factory - order.freight_cost) - (display.sell.min_price + order.pit_to_port + order.transhipment) | number }}</h3></td>
 			</tr>
 		</tbody>
 	</table>
