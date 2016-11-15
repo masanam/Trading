@@ -50,8 +50,28 @@ class OrdersTableSeeder extends Seeder
       'order_detail_id' => 1,
       'user_id' => 1,
       'volume' => 900,
-      'price' => 51000,
+      'price' => 50,
+      'trading_term' => 'FOB MV',
+      'payment_term' => 'TT',
       'notes' => 'Negotiated, we\'ll get more',
+    ]);
+    OrderNegotiation::create([
+      'order_detail_id' => 3,
+      'user_id' => 1,
+      'volume' => 500,
+      'price' => 50,
+      'trading_term' => 'FOB MV',
+      'payment_term' => 'NET30',
+      'notes' => 'Initial Deal',
+    ]);
+    OrderNegotiation::create([
+      'order_detail_id' => 3,
+      'user_id' => 1,
+      'volume' => 500,
+      'price' => 49,
+      'trading_term' => 'FOB MV',
+      'payment_term' => 'TT',
+      'notes' => 'Price decreased by 1, they agreed, but need to wire as fast as possible',
     ]);
   }
 }
