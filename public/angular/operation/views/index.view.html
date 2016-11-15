@@ -1,9 +1,11 @@
 <section class="content">
   <div class="box box-primary">
-    <div class="box-header box-solid  with-border">
-      <h3 class="box-title">Operation</h3>
-      <div class="box-tools pull-right">
-    </div><!-- /.box-header -->
+    <div class="box-header with-border">
+        <h1 class="box-title" style="font-size: 25px">Operation </h1>
+        <div class="box-tools pull-right">
+         
+        </div>
+    </div>
 
     <div class="box-body">
   
@@ -11,6 +13,7 @@
           <thead>
             <tr>
               <th st-sort="orderid">OrderID</th>
+              <th st-sort="preshipment">Start Date</th>
               <th st-sort="preshipment">Pre-shipment</th>
               <th st-sort="shipment">Shipment</th>
               <th st-sort="postshipment">Post-shipment</th>
@@ -21,12 +24,14 @@
             <tr>
               <td>0001</td>
               <td></td>
+              <td></td>
               <td><a ui-sref="operation.view-shipment({ id: '1' })"><i class="fa fa-ship" aria-hidden="true"></i></a></td>
               <td></td>
             </tr>
 
             <tr>
               <td>0002</td>
+              <td></td>
               <td><a ui-sref="operation.view-preship({ id: '2' })"><i class="fa fa-ship" aria-hidden="true"></i></a></td>
               <td></td>
               <td></td>
@@ -36,11 +41,13 @@
               <td>0003</td>
               <td></td>
               <td></td>
+              <td></td>
               <td><a ui-sref="operation.view-postshipment({ id: '3' })"><i class="fa fa-ship" aria-hidden="true"></i></a></td>
             </tr>
 
             <tr>
               <td>0004</td>
+              <td></td>
               <td><a ui-sref="operation.view-shipment({ id: '4' })"><i class="fa fa-ship" aria-hidden="true"></i></a></td>
               <td></td>
               <td></td>
