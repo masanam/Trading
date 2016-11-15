@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Model\BuyOrder;
 use App\Model\SellOrder;
+use App\Model\OrderDetail;
 use App\Model\Buyer;
 use App\Model\User;
 use Auth;
@@ -73,17 +74,29 @@ class BuyOrderController extends Controller
     *   SHOW ALL LEADS THAT ARE APPROVED IN AN ORDER BUT DIDN'T HAVE ANY MATCH
     */
     public function showApprovedLeads() {
+        $i = 0;
         $buy_order = [];
-        $query = BuyOrder::with('Buyer','User','trader', 'orders', 'orders.buys')->get();
+        $query = BuyOrder::with('orders', 'orders.buys', 'orders.sells')->get();
 
         // dd($query);
 
         foreach($query as $q) {
-            if(count(array_pluck($q->orders, 'orders.id')) < 2 && count(array_pluck($q->orders, 'orders.id')) > 0) {
-                if(count(array_pluck($q->orders->buys, 'buys.id')) < 2 && count(array_pluck($q->orders->buys, 'buys.id')) > 0 && count(array_pluck($q->orders->sells, 'sells.id')) < 1) {
-                    array_push($buy_order, $q);
+            echo $q->id . ' > ';
+            if(count($q->orders) == 1) {
+                // var_dump('q = ' + count($q->orders));
+                foreach($q->orders as $o) {
+                    echo $o->id;
+                    // var_dump('o = ' + count($o->sells));
+                    if(count($o->buys) == 1 && count($o->sells) == 0) {
+                        // dd($o->sells);
+                        // dd('ads');
+                        $buy_order[] = $q;
+                        continue;
+                    }
                 }
+                continue;
             }
+            echo '<br>';
         }
 
         return response()->json($buy_order, 200);
