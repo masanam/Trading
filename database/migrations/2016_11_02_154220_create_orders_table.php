@@ -65,6 +65,8 @@ class CreateOrdersTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->integer('volume');
             $table->integer('price');
+            $table->string('trading_term');
+            $table->string('payment_term');
             $table->text('notes');
             $table->timestamps();
 

@@ -44,28 +44,53 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
         resolve: {
           lead: function () {
             return {
-              price: $scope.display.sell,
+              item: $scope.display.sell,
               type: 'sell'
             }; 
           }
         }
       });
 
-      modalInstance.result.then(function (selectedItem) {
-        if($scope.order.id){
-          Order.post(
-            { id:$scope.order.id, action: 'stage' },
-            { sell:selectedItem.id, volume:selectedItem.pivot.volume, price:selectedItem.pivot.price, trading_term:selectedItem.pivot.trading_term, payment_term:selectedItem.pivot.payment_term },
-            function (res){
-              $scope.order.sells = res.sells;
-              $scope.display.sell = selectedItem;
-              //$scope.display.totalBuyPrice = parseFloat($scope.display.buy.max_price)+$scope.order.pit_to_port+$scope.order.transhipment;
-            });
-        } else {
-          $scope.order.sells.push(selectedItem);
-          $scope.display.sell = selectedItem;
-          //$scope.display.totalBuyPrice = parseFloat($scope.display.buy.max_price)+$scope.order.pit_to_port+$scope.order.transhipment;
+      modalInstance.result.then(function (negotiation) {
+        Order.post(
+          { id:$scope.order.id, action: 'stage' },
+          { sell:negotiation.id, volume:negotiation.volume, price:negotiation.price, trading_term:negotiation.trading_term, payment_term:negotiation.payment_term, notes:negotiation.notes },
+          function (res){
+            $scope.order.sells = res.sells;
+            $scope.display.sell.pivot = negotiation;
+          });
+      }, function () {
+        console.log('Modal dismissed at: ' + new Date());
+      });
+    };
+
+    $scope.negoSell = function () {
+      var modalInstance = $uibModal.open({
+        animation: true,
+        ariaLabelledBy: 'modal-title',
+        ariaDescribedBy: 'modal-body',
+        templateUrl: '/angular/order/views/order/_negotiate.modal.html',
+        controller: 'NegotiateModalController',
+        windowClass: 'xl-modal',
+        resolve: {
+          lead: function () {
+            return {
+              item: $scope.display.buy,
+              type: 'buy'
+            }; 
+          }
+>>>>>>> e0b8a825e1c1af62370aea7d9fadbbf891ad44fb
         }
+      });
+
+      modalInstance.result.then(function (negotiation) {
+        Order.post(
+          { id:$scope.order.id, action: 'stage' },
+          { buy:negotiation.id, volume:negotiation.volume, price:negotiation.price, trading_term:negotiation.trading_term, payment_term:negotiation.payment_term, notes:negotiation.notes },
+          function (res){
+            $scope.order.buys = res.buys;
+            $scope.display.buy.pivot = negotiation;
+          });
       }, function () {
         console.log('Modal dismissed at: ' + new Date());
       });
@@ -81,7 +106,11 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
         windowClass: 'xl-modal',
         resolve: {
           items: function () {
-            return Order.query({ type: 'sell' });
+            if($scope.order.buys.length===0){
+              return Order.query({ type: 'sell', order: true });
+            }else{
+              return Order.query({ type: 'sell', order: true, order_id: $scope.order.buys[0].id });
+            }
           },
           lead: function () { return 'buy'; }
         }
@@ -119,7 +148,11 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
         windowClass: 'xl-modal',
         resolve: {
           items: function () {
-            return Order.query({ type: 'buy' });
+            if($scope.order.sells.length===0){
+              return Order.query({ type: 'buy', order: true });
+            }else{
+              return Order.query({ type: 'buy', order: true, order_id: $scope.order.sells[0].id });
+            }
           },
           lead: function () { return 'sell'; }
         }
