@@ -44,25 +44,25 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
         resolve: {
           lead: function () {
             return {
-              price: display.sell,
+              item: $scope.display.sell,
               type: 'sell'
             }; 
           }
         }
       });
 
-      modalInstance.result.then(function (selectedItem) {
+      modalInstance.result.then(function (negotiation) {
         if($scope.order.id){
           Order.post(
             { id:$scope.order.id, action: 'stage' },
-            { sell:selectedItem.id, volume:selectedItem.pivot.volume, price:selectedItem.pivot.price, trading_term:selectedItem.pivot.trading_term, payment_term:selectedItem.pivot.payment_term },
+            { sell:negotiation.id, volume:negotiation.volume, price:negotiation.price, trading_term:negotiation.trading_term, payment_term:negotiation.payment_term },
             function (res){
               $scope.order.sells = res.sells;
-              $scope.display.sell = selectedItem;
+              $scope.display.sell = negotiation;
             });
         } else {
-          $scope.order.sells.push(selectedItem);
-          $scope.display.sell = selectedItem;
+          $scope.order.sells.push(negotiation);
+          $scope.display.sell = negotiation;
         }
       }, function () {
         console.log('Modal dismissed at: ' + new Date());

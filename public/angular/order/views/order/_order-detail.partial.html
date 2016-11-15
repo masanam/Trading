@@ -84,13 +84,13 @@
 				<td>
 					<span ng-if="display.sell">
 						{{ display.sell.pivot.volume | number }}mt - US$ {{ display.sell.pivot.price | number }}
-						<a ng-click="alert(nego)" ng-if="display.sell.user_id === Authentication.user.id" class="pull-right">Nego</a>
+						<a ng-click="negoSell()" ng-if="display.sell.user_id === Authentication.user.id" class="pull-right">Nego</a>
 					</span>
 				</td>
 				<td>
 					<span ng-if="display.buy">
 						{{ display.buy.pivot.volume | number }}mt - US$ {{ display.buy.pivot.price | number }}
-						<a ng-click="alert(nego)" ng-if="display.buy.user_id === Authentication.user.id" class="pull-right">Nego</a>
+						<a ng-click="negoBuy()" ng-if="display.buy.user_id === Authentication.user.id" class="pull-right">Nego</a>
 					</span>
 				</td>
 			</tr>

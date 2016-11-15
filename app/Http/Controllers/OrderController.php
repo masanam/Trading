@@ -86,6 +86,8 @@ class OrderController extends Controller
           'notes' => 'Initial Deal',
           'volume' => $order_detail->pivot->volume,
           'price' => $order_detail->pivot->price,
+          'trading_term' => $req->trading_term,
+          'payment_term' => $req->payment_term,
           'user_id' => Auth::user()->id,
         ]);
       }
@@ -100,6 +102,8 @@ class OrderController extends Controller
           'notes' => 'Initial Deal',
           'volume' => $order_detail->pivot->volume,
           'price' => $order_detail->pivot->price,
+          'trading_term' => $req->trading_term,
+          'payment_term' => $req->payment_term,
           'user_id' => Auth::user()->id,
         ]);
       }
@@ -306,6 +310,8 @@ class OrderController extends Controller
       'notes' => $notes,
       'volume' => $req->volume,
       'price' => $req->price,
+      'trading_term' => $req->trading_term,
+      'payment_term' => $req->payment_term,
       'user_id' => Auth::user()->id,
     ]);
     $negotiation->save();
