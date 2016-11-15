@@ -1,4 +1,4 @@
-<section class="content">
+<section class="content" ng-controller="OperationController">
   <div class="box box-primary">
     <div class="box-header with-border">
         <h1 class="box-title" style="font-size: 25px">Pre-Shipment </h1>
@@ -22,16 +22,22 @@
           </thead>
           <tbody>
             <tr>
-              <td>CONTRACT</td>
-              <td><input id="status" type="checkbox" aria-label="Slave input"></td>
+              <td><a href='#' ng-click="ContractCollapsed = !ContractCollapsed">Contract</a></br>
+              <span uib-collapse="!ContractCollapsed">Buying <input id="buying" type="checkbox" aria-label="Slave input" ng-model="buying.value1"></span>
+              <span uib-collapse="!ContractCollapsed">Selling <input id="selling" type="checkbox" ng-model="selling.value2" aria-label="Slave input"></span>
+              </td>
+              <td><input id="buysell" type="checkbox" ng-checked="buying.value1==true && selling.value2==true "  aria-label="Slave input"></td>
               <td></td>
               <td></td>
               <td></td>
             </tr>
 
             <tr>
-              <td>LC</td>
-              <td><input id="status" type="checkbox" aria-label="Slave input"></td>
+              <td><a href='#' ng-click="isCollapsed = !isCollapsed">LC</a></br>
+              <span uib-collapse="!isCollapsed">To Supplier <input id="supplier" ng-model="supplier.value3" type="checkbox" aria-label="Slave input"></span>
+              <span uib-collapse="!isCollapsed">To Costumer <input id="costumer" type="checkbox" ng-model="costumer.value4" aria-label="Slave input"></span>
+              </td>
+              <td><input id="suppliercostumer" type="checkbox" ng-checked="supplier.value3==true && costumer.value4==true " aria-label="Slave input"></td>
               <td></td>
               <td></td>
               <td></td>
@@ -39,7 +45,7 @@
 
             <tr>
               <td>SAP</td>
-              <td><input id="status" type="checkbox" aria-label="Slave input"></td>
+              <td><input id="sap" type="checkbox" aria-label="Slave input"></td>
               <td></td>
               <td></td>
               <td></td>
@@ -47,7 +53,7 @@
 
             <tr>
               <td>SI</td>
-              <td><input id="status" type="checkbox" aria-label="Slave input"></td>
+              <td><input id="si" type="checkbox" aria-label="Slave input"></td>
               <td></td>
               <td></td>
               <td></td>
@@ -55,7 +61,7 @@
 
             <tr>
               <td>Sales MOM</td>
-              <td><input id="status" type="checkbox" aria-label="Slave input"></td>
+              <td><input id="salsesmom" type="checkbox" aria-label="Slave input"></td>
               <td></td>
               <td></td>
               <td></td>
