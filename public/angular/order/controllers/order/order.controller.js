@@ -12,24 +12,6 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
     $scope.display.totalSellPrice = 39000;
     $scope.display.totalSellVolume = 1000;
 
-    // Create new Article
-    $scope.create = function (isValid) {
-      $scope.error = null;
-
-      // Create new Article object
-      var order = new Order($scope.order);
-
-      // Redirect after save
-      order.$save(function (res) {
-        $state.go('order.view', { id: res.id });
-
-        // Clear form fields
-        $scope.order = new Order();
-      }, function (err) {
-        $scope.error = err;
-      });
-    };
-
     // Remove existing order
     $scope.remove = function (order) {
       if (order) {
@@ -74,17 +56,6 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
           status: function () { return status; },
         }
       });
-
-      /*var order = $scope.order;
-      
-      order.status = status;
-
-      order.$update(function (res) {
-        $scope.order.status = status;
-        //$state.go('order.view', { orderId: res.id });
-      }, function (err) {
-        $scope.error = err.data.message;
-      });*/
     };
     
     $scope.openReasonModal = function () {
@@ -92,6 +63,15 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
         windowClass: 'xl-modal',
         templateUrl: './angular/order/views/order/_reason.modal.html',
         controller: 'OrderReasonModalController',
+        scope: $scope,
+      });
+    };
+    
+    $scope.addCostModal = function () {
+      var modalInstance = $uibModal.open({
+        windowClass: 'xl-modal',
+        templateUrl: './angular/order/views/order/_add-cost.modal.html',
+        controller: 'AddCostModalController',
         scope: $scope,
       });
     };
@@ -169,6 +149,14 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
         id: $stateParams.id
       }, function(res){
         $scope.order = res;
+        $scope.order.others_cost = parseFloat($scope.order.others_cost);
+        $scope.order.insurance_cost = parseFloat($scope.order.insurance_cost);
+        $scope.order.interest_cost = parseFloat($scope.order.interest_cost);
+        $scope.order.surveyor_cost = parseFloat($scope.order.surveyor_cost);
+        $scope.order.port_to_factory = parseFloat($scope.order.port_to_factory);
+        $scope.order.transhipment = parseFloat($scope.order.transhipment);
+        $scope.order.freight_cost = parseFloat($scope.order.freight_cost);
+        $scope.order.pit_to_port = parseFloat($scope.order.pit_to_port);
         $scope.checkOrderUsers();
       });
     };

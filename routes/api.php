@@ -133,7 +133,8 @@ Route::group(['middleware' => ['cors']], function() {
      */
     
     Route::post('order/{id}/stage', 'OrderController@stage');
-    Route::post('order/{id}/negotiate', 'OrderController@negotiate');
+    Route::get('order/{id}/stage', 'OrderController@stageOwn');
+    Route::get('order/{id}/unstage', 'OrderController@unstage');
     Route::get('order/{id}/approve', 'OrderController@approve');
     Route::resource('order', 'OrderController');
 });
