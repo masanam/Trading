@@ -14,15 +14,16 @@
       </tr>
 			<tr>
 				<th></th>
-        <th>
+        		<th>
 					<span style="font-size:20pt">Buy</span>
 					<span ng-if="order.sells.length" uib-dropdown class="pull-right" ng-init="display.sell = order.sells[0]">
 			      <button type="button" class="btn btn-default" uib-dropdown-toggle>
 			        {{display.sell.seller.company_name}} ({{ order.sells.length }}) <span class="caret"></span>
 			      </button>
 			      <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
-			        <li role="menuitem" ng-repeat="sell in order.sells"><a ng-click="display.sell = sell">
-					  		{{ sell.seller.company_name }} : {{ sell.pivot.volume | number }}mt, US${{ sell.pivot.price | number }}
+			        <li role="menuitem" ng-repeat="sell in order.sells">
+			        <a ng-click="display.sell = sell">
+				  		{{ sell.seller.company_name }} : {{ sell.pivot.volume | number }}mt, US${{ sell.pivot.price | number }}
 			        </a></li>
 			      </ul>
 			    </span>
@@ -35,7 +36,7 @@
 			      </button>
 			      <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
 			        <li role="menuitem" ng-repeat="buy in order.buys"><a ng-click="display.buy = buy">
-					  		{{ buy.buyer.company_name }} : {{ buy.pivot.volume | number }}mt, US${{ buy.pivot.price | number }}
+				  		{{ buy.buyer.company_name }} : {{ buy.pivot.volume | number }}mt, US${{ buy.pivot.price | number }}
 			        </a></li>
 			      </ul>
 			    </span>
@@ -101,7 +102,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td>Order Date</td>
+				<td>Input Date</td>
 				<td>{{ display.sell.order_date | date:'mediumDate' }}</td>
 				<td>{{ display.buy.order_date | date:'mediumDate' }}</td>
 			</tr>
@@ -363,6 +364,12 @@
     </tbody>
     <tbody id="financial-section" uib-collapse="!financialCollapsed">
 			<tr>
+				<th></th>
+        <th>
+          <button class="btn btn-default" ng-click="addCostModal()"> Update </button>
+        </th>
+      </tr>
+      <tr>
 				<th>Coal Price / mt</th>
 				<td>
 					<span ng-if="display.buy">
@@ -372,127 +379,79 @@
 				</td>
 				<td>
 					<span ng-if="display.sell">
-					<h4>US${{ 51 | number }}</h4>
+					<h4>US${{ order._cost | number }}</h4>
 					from {{ order.buys.length }} Customers
 					</span>
 				</td>
 			</tr>
       <tr>
 				<th>Insurance / mt</th>
-				<td>
-					<span ng-if="display.buy">
-					<h4>US${{ 1 | number }}</h4>
+				<td colspan="2">
+					<span>
+					<h4>US${{ order.insurance_cost | number }}</h4>
 					from {{ order.sells.length }} Suppliers
-					</span>
-				</td>
-				<td>
-					<span ng-if="display.sell">
-					<h4>US${{ 1 | number }}</h4>
-					from {{ order.buys.length }} Customers
 					</span>
 				</td>
 			</tr>
       <tr>
 				<th>Interest / mt</th>
-				<td>
-					<span ng-if="display.buy">
-					<h4>US${{ 1 | number }}</h4>
+				<td colspan="2">
+					<span>
+					<h4>US${{ order.interest_cost | number }}</h4>
 					from {{ order.sells.length }} Suppliers
-					</span>
-				</td>
-				<td>
-					<span ng-if="display.sell">
-					<h4>US${{ 1 | number }}</h4>
-					from {{ order.buys.length }} Customers
 					</span>
 				</td>
 			</tr>
       <tr>
 				<th>Surveyor / mt</th>
-				<td>
-					<span ng-if="display.buy">
-					<h4>US${{ 1 | number }}</h4>
+				<td colspan="2">
+					<span>
+					<h4>US${{ order.surveyor_cost | number }}</h4>
 					from {{ order.sells.length }} Suppliers
-					</span>
-				</td>
-				<td>
-					<span ng-if="display.sell">
-					<h4>US${{ 1 | number }}</h4>
-					from {{ order.buys.length }} Customers
 					</span>
 				</td>
 			</tr>
       <tr>
 				<th>Pit to Port / mt</th>
-				<td>
-					<span ng-if="display.buy">
-					<h4>US${{ 5 | number }}</h4>
+				<td colspan="2">
+					<span>
+					<h4>US${{ order.pit_to_port | number }}</h4>
 					from {{ order.sells.length }} Suppliers
-					</span>
-				</td>
-				<td>
-					<span ng-if="display.sell">
-					<h4>US${{ 2 | number }}</h4>
-					from {{ order.buys.length }} Customers
 					</span>
 				</td>
 			</tr>
       <tr>
 				<th>Transhipment / mt</th>
-				<td>
+				<td colspan="2">
 					<span ng-if="display.buy">
-					<h4>US${{ 1 | number }}</h4>
+					<h4>US${{ order.transhipment | number }}</h4>
 					from {{ order.sells.length }} Suppliers
-					</span>
-				</td>
-				<td>
-					<span ng-if="display.sell">
-					<h4>US${{ 0 | number }}</h4>
-					from {{ order.buys.length }} Customers
 					</span>
 				</td>
 			</tr>
       <tr>
 				<th>Freight Cost / mt</th>
-				<td>
-					<span ng-if="display.buy">
-					<h4>US${{ 2 | number }}</h4>
-					from {{ order.sells.length }} Suppliers
-					</span>
-				</td>
-				<td>
-					<span ng-if="display.sell">
-					<h4>US${{ 1 | number }}</h4>
+				<td colspan="2">
+					<span>
+					<h4>US${{ order.freight_cost | number }}</h4>
 					from {{ order.buys.length }} Customers
 					</span>
 				</td>
 			</tr>
       <tr>
 				<th>Port to Factory / mt</th>
-				<td>
-					<span ng-if="display.buy">
-					<h4>US${{ 1 | number }}</h4>
+				<td colspan="2">
+					<span>
+					<h4>US${{ order.port_to_factory | number }}</h4>
 					from {{ order.sells.length }} Suppliers
-					</span>
-				</td>
-				<td>
-					<span ng-if="display.sell">
-					<h4>US${{ 2 | number }}</h4>
-					from {{ order.buys.length }} Customers
 					</span>
 				</td>
 			</tr>
       <tr>
 				<th>Others / mt</th>
-				<td>
-					<span ng-if="display.buy">
-					<h4>US${{ 1 | number }}</h4>
-					from {{ order.sells.length }} Suppliers
-					</span>
-				</td>
-				<td>
-					<span ng-if="display.sell">
-					<h4>US${{ 1 | number }}</h4>
+				<td colspan="2">
+					<span>
+					<h4>US${{ order.others_cost | number }}</h4>
 					from {{ order.buys.length }} Customers
 					</span>
 				</td>

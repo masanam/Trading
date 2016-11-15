@@ -187,6 +187,14 @@ class OrderController extends Controller
     }
     $this->authorize('update', $order);
 
+    $order->interest_cost = $request->interest_cost;
+    $order->others_cost = $request->others_cost;
+    $order->surveyor_cost = $request->surveyor_cost;
+    $order->insurance_cost = $request->insurance_cost;
+    $order->pit_to_port = $request->pit_to_port;
+    $order->port_to_factory = $request->port_to_factory;
+    $order->freight_cost = $request->freight_cost;
+    $order->transhipment = $request->transhipment;
     $order->finalize_reason = $req->finalize_reason;
     $order->cancel_reason = $req->cancel_reason;
     $order->request_reason = $req->request_reason;

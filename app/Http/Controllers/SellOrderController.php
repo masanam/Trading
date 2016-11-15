@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Model\SellOrder;
+use App\Model\BuyOrder;
 use App\Model\Seller;
 use App\Model\OrderDetail;
 use Auth;
@@ -22,11 +23,46 @@ class SellOrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $user_id = Auth::User()->id;
-        $sell_order = SellOrder::with('Seller','User','trader')->where([['order_status', '1'], ['user_id', $user_id],])->orwhere([['order_status', '2'], ['user_id', $user_id],])->orwhere([['order_status', '3'], ['user_id', $user_id],])->orwhere([['order_status', '4'], ['user_id', $user_id],])->orwhere('order_status', 'v')->orwhere('order_status', 'l')->orwhere('order_status', 's')->orwhere('order_status', 'p')->get();
-
+        if($request->order&&$request->order_id!==null){
+            $user_id = Auth::User()->id;
+            $buy_order = BuyOrder::find($request->order_id)->first();
+            $sell_order = SellOrder::with('Seller','User','trader')
+            ->where([['order_status', 'v'],[DB::raw('DATEDIFF(ready_date,"'.$buy_order->ready_date.'")'),'>=',-7],[DB::raw('DATEDIFF(order_deadline,"'.$buy_order->order_deadline.'")'),'<=',7]])
+            ->orwhere([['order_status', 'l'],[DB::raw('DATEDIFF(ready_date,"'.$buy_order->ready_date.'")'),'>=',-7],[DB::raw('DATEDIFF(order_deadline,"'.$buy_order->order_deadline.'")'),'<=',7]])
+            ->orwhere([['order_status', 'p'],[DB::raw('DATEDIFF(ready_date,"'.$buy_order->ready_date.'")'),'>=',-7],[DB::raw('DATEDIFF(order_deadline,"'.$buy_order->order_deadline.'")'),'<=',7]])
+            ->select('sell_order.*', 
+                DB::raw('ABS(sell_order.gcv_adb_min-'.$buy_order->gcv_adb_min.') as gcv_adb_min_diff'), 
+                DB::raw('ABS(sell_order.gcv_adb_max-'.$buy_order->gcv_adb_max.') as gcv_adb_max_diff'),
+                DB::raw('ABS(sell_order.gcv_arb_min-'.$buy_order->gcv_arb_min.') as gcv_arb_min_diff'), 
+                DB::raw('ABS(sell_order.gcv_arb_max-'.$buy_order->gcv_arb_max.') as gcv_arb_max_diff'), 
+                DB::raw('ABS(sell_order.ncv_min-'.$buy_order->ncv_min.') as ncv_min_diff'), 
+                DB::raw('ABS(sell_order.ncv_max-'.$buy_order->ncv_max.') as ncv_max_diff'), 
+                DB::raw('ABS(sell_order.volume-'.$buy_order->volume.') as volume_diff'),
+                DB::raw('DATEDIFF(ready_date,"'.$buy_order->ready_date.'") as ready_date_diff'),
+                DB::raw('DATEDIFF(order_deadline,"'.$buy_order->order_deadline.'") as order_deadline_diff'))
+            ->orderBy('gcv_adb_min_diff','asc')
+            ->orderBy('gcv_adb_max_diff','asc')
+            ->orderBy('gcv_arb_min_diff','asc')
+            ->orderBy('gcv_arb_max_diff','asc')
+            ->orderBy('ncv_min_diff','asc')
+            ->orderBy('ncv_max_diff','asc')
+            ->orderBy('volume_diff','asc')
+            ->orderBy('ready_date_diff','asc')
+            ->orderBy('order_deadline_diff','asc')
+            ->orderBy('min_price','asc')
+            ->get();
+        }
+        else if(!$request->order){
+            $user_id = Auth::User()->id;
+            $sell_order = SellOrder::with('Seller','User','trader')->where([['order_status', '1'], ['user_id', $user_id],])->orwhere([['order_status', '2'], ['user_id', $user_id],])->orwhere([['order_status', '3'], ['user_id', $user_id],])->orwhere([['order_status', '4'], ['user_id', $user_id],])->orwhere('order_status', 'v')->orwhere('order_status', 'l')->orwhere('order_status', 's')->orwhere('order_status', 'p')->get();
+        }
+        else if($request->order){
+            $user_id = Auth::User()->id;
+            $sell_order = SellOrder::with('Seller','User','trader')->where([['order_status', '1'], ['user_id', $user_id],])->orwhere([['order_status', '2'], ['user_id', $user_id],])->orwhere([['order_status', '3'], ['user_id', $user_id],])->orwhere([['order_status', '4'], ['user_id', $user_id],])->orwhere('order_status', 'v')->orwhere('order_status', 'l')->orwhere('order_status', 's')->orwhere('order_status', 'p')->get();
+        }
+        
         return response()->json($sell_order, 200);
     }
 

@@ -67,6 +67,15 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
       });
     };
     
+    $scope.addCostModal = function () {
+      var modalInstance = $uibModal.open({
+        windowClass: 'xl-modal',
+        templateUrl: './angular/order/views/order/_add-cost.modal.html',
+        controller: 'AddCostModalController',
+        scope: $scope,
+      });
+    };
+    
     // Approve Order
     $scope.approve_reject = function (status) {
       $scope.error = null;
@@ -140,6 +149,14 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
         id: $stateParams.id
       }, function(res){
         $scope.order = res;
+        $scope.order.others_cost = parseFloat($scope.order.others_cost);
+        $scope.order.insurance_cost = parseFloat($scope.order.insurance_cost);
+        $scope.order.interest_cost = parseFloat($scope.order.interest_cost);
+        $scope.order.surveyor_cost = parseFloat($scope.order.surveyor_cost);
+        $scope.order.port_to_factory = parseFloat($scope.order.port_to_factory);
+        $scope.order.transhipment = parseFloat($scope.order.transhipment);
+        $scope.order.freight_cost = parseFloat($scope.order.freight_cost);
+        $scope.order.pit_to_port = parseFloat($scope.order.pit_to_port);
         $scope.checkOrderUsers();
       });
     };

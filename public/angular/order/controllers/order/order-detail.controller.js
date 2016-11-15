@@ -105,7 +105,11 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
         windowClass: 'xl-modal',
         resolve: {
           items: function () {
-            return Order.query({ type: 'sell' });
+            if($scope.order.buys.length===0){
+              return Order.query({ type: 'sell', order: true });
+            }else{
+              return Order.query({ type: 'sell', order: true, order_id: $scope.order.buys[0].id });
+            }
           },
           lead: function () { return 'buy'; }
         }
@@ -142,7 +146,11 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
         windowClass: 'xl-modal',
         resolve: {
           items: function () {
-            return Order.query({ type: 'buy' });
+            if($scope.order.sells.length===0){
+              return Order.query({ type: 'buy', order: true });
+            }else{
+              return Order.query({ type: 'buy', order: true, order_id: $scope.order.sells[0].id });
+            }
           },
           lead: function () { return 'sell'; }
         }
