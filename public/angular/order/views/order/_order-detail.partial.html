@@ -14,15 +14,16 @@
       </tr>
 			<tr>
 				<th></th>
-        <th>
+        		<th>
 					<span style="font-size:20pt">Buy</span>
 					<span ng-if="order.sells.length" uib-dropdown class="pull-right" ng-init="display.sell = order.sells[0]">
 			      <button type="button" class="btn btn-default" uib-dropdown-toggle>
 			        {{display.sell.seller.company_name}} ({{ order.sells.length }}) <span class="caret"></span>
 			      </button>
 			      <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
-			        <li role="menuitem" ng-repeat="sell in order.sells"><a ng-click="display.sell = sell">
-					  		{{ sell.seller.company_name }} : {{ sell.pivot.volume | number }}mt, US${{ sell.pivot.price | number }}
+			        <li role="menuitem" ng-repeat="sell in order.sells">
+			        <a ng-click="display.sell = sell">
+				  		{{ sell.seller.company_name }} : {{ sell.pivot.volume | number }}mt, US${{ sell.pivot.price | number }}
 			        </a></li>
 			      </ul>
 			    </span>
@@ -35,7 +36,7 @@
 			      </button>
 			      <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
 			        <li role="menuitem" ng-repeat="buy in order.buys"><a ng-click="display.buy = buy">
-					  		{{ buy.buyer.company_name }} : {{ buy.pivot.volume | number }}mt, US${{ buy.pivot.price | number }}
+				  		{{ buy.buyer.company_name }} : {{ buy.pivot.volume | number }}mt, US${{ buy.pivot.price | number }}
 			        </a></li>
 			      </ul>
 			    </span>
@@ -97,7 +98,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td>Order Date</td>
+				<td>Input Date</td>
 				<td>{{ display.sell.order_date | date:'mediumDate' }}</td>
 				<td>{{ display.buy.order_date | date:'mediumDate' }}</td>
 			</tr>
