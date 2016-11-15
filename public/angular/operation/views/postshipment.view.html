@@ -22,7 +22,7 @@
           </thead>
           <tbody>
             <tr>
-              <td>LOA</td>
+              <td>COA</td>
               <td><input id="status" type="checkbox" aria-label="Slave input"></td>
               <td></td>
               <td></td>
@@ -30,17 +30,21 @@
             </tr>
 
             <tr>
-              <td>Documentation</td>
-              <td><input id="status" type="checkbox" aria-label="Slave input"></td>
+              <td> 
+              <a href='#' ng-click="docCollapsed = !docCollapsed">Documention </a><br><span uib-collapse="!docCollapsed">Bill of lading <input id="billoflading" ng-model="bill.value" type="checkbox" aria-label="Slave input"></span>
+              <span uib-collapse="!docCollapsed">COO <input id="coo" type="checkbox" ng-model="coo.value" aria-label="Slave input"></span>
+              <span uib-collapse="!docCollapsed">PEB <input id="peb" type="checkbox" ng-model="peb.value" aria-label="Slave input"></span>
+              </td>
+              <td><input id="documention" ng-checked="bill.value==true && coo.value==true && peb.value==true" type="checkbox" aria-label="Slave input"></td>
               <td></td>
               <td></td>
               <td></td>
             </tr>
 
             <tr>
-              <td><a href='#' ng-click="isCollapsed = !isCollapsed">Invoice</a><br><span uib-collapse="!isCollapsed">Supplier <input id="supplier" ng-model="supplier.value3" type="checkbox" aria-label="Slave input"></span>
-              <span uib-collapse="!isCollapsed">Costumer <input id="costumer" type="checkbox" ng-model="costumer.value4" aria-label="Slave input"></span></td>
-              <td><input id="status" type="checkbox" ng-checked="supplier.value3==true && costumer.value4==true" aria-label="Slave input">
+              <td><a href='#' ng-click="isCollapsed = !isCollapsed">Invoice</a><br><span uib-collapse="!isCollapsed">From Supplier <input id="supplier" ng-model="supplier.value" type="checkbox" aria-label="Slave input"></span>
+              <span uib-collapse="!isCollapsed">To Costumer <input id="costumer" type="checkbox" ng-model="costumer.value" aria-label="Slave input"></span></td>
+              <td><input id="invoice" type="checkbox" ng-checked="supplier.value==true && costumer.value==true" aria-label="Slave input">
               </td>
               <td></td>
               <td></td>

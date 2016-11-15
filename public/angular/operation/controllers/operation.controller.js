@@ -4,19 +4,19 @@ angular.module('operation').controller('OperationController', ['$scope', '$state
 	function($scope, $stateParams, Order, OrderUser, Authentication, $location, Chat) {
 
   $scope.buying = {
-    value1 : false
+    value : false
   };
 
   $scope.selling = {
-    value2 : false
+    value : false
   };
 
   $scope.supplier = {
-    value3 : false
+    value : false
   };
 
   $scope.costumer = {
-    value4 : false
+    value : false
   };
 
 }]);

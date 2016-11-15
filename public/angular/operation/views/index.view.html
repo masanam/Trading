@@ -8,68 +8,70 @@
     </div>
 
     <div class="box-body">
-  
-    <table st-table="displayedCollection" st-safe-src="productions" class="table table-striped">
-          <thead>
-            <tr>
-              <th st-sort="orderid">OrderID</th>
-              <th st-sort="preshipment">Start Date</th>
-              <th st-sort="preshipment">Pre-shipment</th>
-              <th st-sort="shipment">Shipment</th>
-              <th st-sort="postshipment">Post-shipment</th>
-            </tr>
+              
+              <div class="row">
+              <div  class="col-md-2" ><i class="fa fa-start " aria-hidden="true"></i> OrderID</div>
+              <div class="col-md-2" ><i class="fa fa-clock-o" aria-hidden="true"></i> Start Date</div>
+              <div class="col-md-2" >Pre-shipment</div>
+              <div class="col-md-2" >Shipment</div>
+              <div class="col-md-2" >Post-shipment</div>
+              <div class="col-md-2" >FINISH</div>
+              </div>
 
-          </thead>
-          <tbody>
-            <tr>
-              <td>0001</td>
-              <td></td>
-              <td></td>
-              <td><a ui-sref="operation.view-shipment({ id: '1' })"><i class="fa fa-ship" aria-hidden="true"></i></a></td>
-              <td></td>
-            </tr>
+              <div class="row">
+              </br>
+              <div  class="col-md-2" >0001</div>
+              <div class="col-md-2" >11/11/2016</div>
+              <div class="progress col-md-4" >
+                <div class="progress-bar progress-bar-primary progress-bar-striped" role="progressbar" aria-valuenow="100" aria-valuemin="100" aria-valuemax="100" style="width: 100%">
+                  <span class="sr-only"></span>
+                </div>
+              </div>
+              
+              <div class='col-md-2'><a ui-sref="operation.view-postshipment({ id: '1' })"><i class="fa fa-ship " aria-hidden="true"></i></a></div>
+              </div>
 
-            <tr>
-              <td>0002</td>
-              <td></td>
-              <td><a ui-sref="operation.view-preship({ id: '2' })"><i class="fa fa-ship" aria-hidden="true"></i></a></td>
-              <td></td>
-              <td></td>
-            </tr>
+              <div class="row">
+              </br>
+              <div  class="col-md-2" >0002</div>
+              <div class="col-md-2" >12/11/2016</div>
+              <div class="progress col-md-2" >
+                <div class="progress-bar progress-bar-danger
+               progress-bar-striped" role="progressbar" aria-valuenow="100" aria-valuemin="100" aria-valuemax="100" style="width: 100%">
+                  <span class="sr-only"></span>
+                </div>
+              </div>
+              
+              <div class='col-md-2'><a ui-sref="operation.view-shipment({ id: '1' })"><i class="fa fa-ship " aria-hidden="true"></i></a></div>
+              </div>
 
-            <tr>
-              <td>0003</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td><a ui-sref="operation.view-postshipment({ id: '3' })"><i class="fa fa-ship" aria-hidden="true"></i></a></td>
-            </tr>
+              <div class="row">
+              </br>
+              <div  class="col-md-2" >0003</div>
+              <div class="col-md-2" >11/11/2016</div>
+              <div class='col-md-2'><a ui-sref="operation.view-preship({ id: '1' })"><i class="fa fa-ship" aria-hidden="true"></i></a></div>
+              </div>
 
-            <tr>
-              <td>0004</td>
-              <td></td>
-              <td><a ui-sref="operation.view-shipment({ id: '4' })"><i class="fa fa-ship" aria-hidden="true"></i></a></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <!--<tr ng-if="displayedCollection.length == 0">
-              <td colspan="6" class="text-center">No data available</td>
-            </tr>-->
 
-          </tbody>
+              <div class="row">
+              </br>
+              <div  class="col-md-2" >0004</div>
+              <div class="col-md-2" >13/11/2016</div>
+              <div class="progress col-md-6" >
+                <div class="progress-bar progress-bar-green progress-bar-striped" role="progressbar" aria-valuenow="100" aria-valuemin="100" aria-valuemax="100" style="width: 100%">
+                  <span class="sr-only"></span>
+                </div>
+              </div>
+              
+              <div class='col-md-2'><a href="#"><i class="fa fa-ship " aria-hidden="true"></i></a></div>
+              </div>
 
-          <tfoot>
-            <tr>
-              <td colspan="6" class="text-center">
-                <div st-pagination="" st-items-by-page="10" st-displayed-pages="7"></div>
-              </td>
-            </tr>
-          </tfoot>
-        </table>
+
+          
      
     </div>
     <div class="box-footer">
-      
+
     </div><!-- /.box-footer-->
   </div><!--/.direct-chat -->
 </section>
