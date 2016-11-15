@@ -44,26 +44,52 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
         resolve: {
           lead: function () {
             return {
-              price: $scope.display.sell,
+              item: $scope.display.sell,
               type: 'sell'
             }; 
           }
         }
       });
 
-      modalInstance.result.then(function (selectedItem) {
-        if($scope.order.id){
-          Order.post(
-            { id:$scope.order.id, action: 'stage' },
-            { sell:selectedItem.id, volume:selectedItem.pivot.volume, price:selectedItem.pivot.price, trading_term:selectedItem.pivot.trading_term, payment_term:selectedItem.pivot.payment_term },
-            function (res){
-              $scope.order.sells = res.sells;
-              $scope.display.sell = selectedItem;
-            });
-        } else {
-          $scope.order.sells.push(selectedItem);
-          $scope.display.sell = selectedItem;
+      modalInstance.result.then(function (negotiation) {
+        Order.post(
+          { id:$scope.order.id, action: 'stage' },
+          { sell:negotiation.id, volume:negotiation.volume, price:negotiation.price, trading_term:negotiation.trading_term, payment_term:negotiation.payment_term, notes:negotiation.notes },
+          function (res){
+            $scope.order.sells = res.sells;
+            $scope.display.sell.pivot = negotiation;
+          });
+      }, function () {
+        console.log('Modal dismissed at: ' + new Date());
+      });
+    };
+
+    $scope.negoSell = function () {
+      var modalInstance = $uibModal.open({
+        animation: true,
+        ariaLabelledBy: 'modal-title',
+        ariaDescribedBy: 'modal-body',
+        templateUrl: '/angular/order/views/order/_negotiate.modal.html',
+        controller: 'NegotiateModalController',
+        windowClass: 'xl-modal',
+        resolve: {
+          lead: function () {
+            return {
+              item: $scope.display.buy,
+              type: 'buy'
+            }; 
+          }
         }
+      });
+
+      modalInstance.result.then(function (negotiation) {
+        Order.post(
+          { id:$scope.order.id, action: 'stage' },
+          { buy:negotiation.id, volume:negotiation.volume, price:negotiation.price, trading_term:negotiation.trading_term, payment_term:negotiation.payment_term, notes:negotiation.notes },
+          function (res){
+            $scope.order.buys = res.buys;
+            $scope.display.buy.pivot = negotiation;
+          });
       }, function () {
         console.log('Modal dismissed at: ' + new Date());
       });

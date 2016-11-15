@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Model\SellOrder;
 use App\Model\BuyOrder;
 use App\Model\Seller;
+use App\Model\Product;
 use App\Model\OrderDetail;
 use Auth;
 use DB;
@@ -27,11 +28,23 @@ class SellOrderController extends Controller
     {
         if($request->order&&$request->order_id!==null){
             $user_id = Auth::User()->id;
-            $buy_order = BuyOrder::find($request->order_id)->first();
+            $buy_order = BuyOrder::where('id',$request->order_id)->first();
             $sell_order = SellOrder::with('Seller','User','trader')
-            ->where([['order_status', 'v'],[DB::raw('DATEDIFF(ready_date,"'.$buy_order->ready_date.'")'),'>=',-7],[DB::raw('DATEDIFF(order_deadline,"'.$buy_order->order_deadline.'")'),'<=',7]])
-            ->orwhere([['order_status', 'l'],[DB::raw('DATEDIFF(ready_date,"'.$buy_order->ready_date.'")'),'>=',-7],[DB::raw('DATEDIFF(order_deadline,"'.$buy_order->order_deadline.'")'),'<=',7]])
-            ->orwhere([['order_status', 'p'],[DB::raw('DATEDIFF(ready_date,"'.$buy_order->ready_date.'")'),'>=',-7],[DB::raw('DATEDIFF(order_deadline,"'.$buy_order->order_deadline.'")'),'<=',7]])
+            ->where([
+                ['order_status', 'v'],
+                [DB::raw('DATEDIFF(ready_date,"'.$buy_order->ready_date.'")'),'>=',-7],
+                [DB::raw('DATEDIFF(order_deadline,"'.$buy_order->order_deadline.'")'),'<=',7]
+            ])
+            ->orwhere([
+                ['order_status', 'l'],
+                [DB::raw('DATEDIFF(ready_date,"'.$buy_order->ready_date.'")'),'>=',-7],
+                [DB::raw('DATEDIFF(order_deadline,"'.$buy_order->order_deadline.'")'),'<=',7]
+            ])
+            ->orwhere([
+                ['order_status', 'p'],
+                [DB::raw('DATEDIFF(ready_date,"'.$buy_order->ready_date.'")'),'>=',-7],
+                [DB::raw('DATEDIFF(order_deadline,"'.$buy_order->order_deadline.'")'),'<=',7]
+            ])
             ->select('sell_order.*', 
                 DB::raw('ABS(sell_order.gcv_adb_min-'.$buy_order->gcv_adb_min.') as gcv_adb_min_diff'), 
                 DB::raw('ABS(sell_order.gcv_adb_max-'.$buy_order->gcv_adb_max.') as gcv_adb_max_diff'),
@@ -52,6 +65,27 @@ class SellOrderController extends Controller
             ->orderBy('ready_date_diff','asc')
             ->orderBy('order_deadline_diff','asc')
             ->orderBy('min_price','asc')
+            ->limit($request->limit)
+            ->get();
+        }
+        else if($request->supplier&&$request->order_id!==null){
+            $buy_order = BuyOrder::where('id',$request->order_id)->first();
+            $sell_order = Product::with('Seller')
+            ->where('buyer_id',null)
+            ->select('products.*', 
+                DB::raw('ABS(products.gcv_adb_min-'.$buy_order->gcv_adb_min.') as gcv_adb_min_diff'), 
+                DB::raw('ABS(products.gcv_adb_max-'.$buy_order->gcv_adb_max.') as gcv_adb_max_diff'),
+                DB::raw('ABS(products.gcv_arb_min-'.$buy_order->gcv_arb_min.') as gcv_arb_min_diff'), 
+                DB::raw('ABS(products.gcv_arb_max-'.$buy_order->gcv_arb_max.') as gcv_arb_max_diff'), 
+                DB::raw('ABS(products.ncv_min-'.$buy_order->ncv_min.') as ncv_min_diff'), 
+                DB::raw('ABS(products.ncv_max-'.$buy_order->ncv_max.') as ncv_max_diff'))
+            ->orderBy('gcv_adb_min_diff','asc')
+            ->orderBy('gcv_adb_max_diff','asc')
+            ->orderBy('gcv_arb_min_diff','asc')
+            ->orderBy('gcv_arb_max_diff','asc')
+            ->orderBy('ncv_min_diff','asc')
+            ->orderBy('ncv_max_diff','asc')
+            ->limit($request->limit)
             ->get();
         }
         else if(!$request->order){
@@ -369,7 +403,7 @@ class SellOrderController extends Controller
             $sell_order = SellOrder::leftJoin('users', 'sell_order.user_id', '=', 'users.id')
                 ->leftJoin('sellers', 'sell_order.seller_id', 'sellers.id')
                 ->leftJoin('order_details', function ($join) {
-                    $join->on('orderable_id', 'sell_order.id')
+                    $join->on('order_details.orderable_id', 'sell_order.id')
                          ->where('orderable_type', '=', 'App/Model/SellOrder');
                 })
                 ->where('order_status', $order_status)
@@ -379,10 +413,11 @@ class SellOrderController extends Controller
                     'expired_date', 'sell_order.address', 'sell_order.city', 'sell_order.country',
                     DB::raw('NULL as product_name') ,
                     DB::raw('sell_order.volume - SUM(order_details.volume) as sum') ,
+                    DB::raw('order_details.volume as SUM2'),
                     'typical_quality', 'sell_order.volume', 'min_price', 'order_status', 'users.name', 'company_name');
             $sell_order2 = SellOrder::leftJoin('users', 'sell_order.user_id', '=', 'users.id')
                 ->leftJoin('order_details', function ($join) {
-                    $join->on('orderable_id', 'sell_order.id')
+                    $join->on('order_details.orderable_id', 'sell_order.id')
                          ->where('orderable_type', 'App/Model/SellOrder');
                 })
                 ->where('order_status', $order_status)
@@ -391,6 +426,7 @@ class SellOrderController extends Controller
                 ->select('sell_order.id', 'user_id', 'order_date', 'order_deadline', 'expired_date', 'address', 'city', 'country', 
                     DB::raw('NULL as product_name') ,
                     DB::raw('sell_order.volume - SUM(order_details.volume) as sum') ,
+                    DB::raw('order_details.volume as SUM2'),
                     'typical_quality', 'sell_order.volume', 'min_price', 'order_status', 'users.name', DB::raw('NULL as company_name'));
 
             $sell_order = $sell_order2->union($sell_order)->get();
