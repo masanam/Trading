@@ -76,13 +76,13 @@ class BuyOrderController extends Controller
         $buy_order = [];
         $query = BuyOrder::with('Buyer','User','trader', 'orders', 'orders.buys')->get();
 
-        dd($query);
+        // dd($query);
 
         foreach($query as $q) {
-            if(count(array_pluck($q, 'orders.id')) < 2 && count(array_pluck($q, 'orders.id')) > 0) {
-                // if(count(array_pluck($q->orders, 'buys.id')) < 2 && count(array_pluck($q->orders, 'buys.id')) > 0 && count(array_pluck($q->orders, 'sells.id')) < 1) {
+            if(count(array_pluck($q->orders, 'orders.id')) < 2 && count(array_pluck($q->orders, 'orders.id')) > 0) {
+                if(count(array_pluck($q->orders->buys, 'buys.id')) < 2 && count(array_pluck($q->orders->buys, 'buys.id')) > 0 && count(array_pluck($q->orders->sells, 'sells.id')) < 1) {
                     array_push($buy_order, $q);
-                // }
+                }
             }
         }
 
