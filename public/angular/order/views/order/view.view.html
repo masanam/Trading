@@ -49,7 +49,7 @@
         <a class="btn btn-success" ng-click="changeStatus('f');" ng-if="included === true" ng-show="order.status === 'a' && order.user_id === Authentication.user.id">
           <i class="glyphicon glyphicon-floppy-saved" title="Finalize Order"></i> Finalize Order
         </a>
-        <a class="btn btn-danger" ng-click="changeStatus('x');" ng-if="included === true" ng-show="(order.status !== 'x' || order.status === 'f') && order.user_id === Authentication.user.id">
+        <a class="btn btn-danger" ng-click="changeStatus('x');" ng-if="included === true" ng-show="(order.status !== 'x' && order.status !== 'f') && order.user_id === Authentication.user.id">
           <i class="glyphicon glyphicon-trash" title="Cancel Order"></i> Cancel Order
         </a>
       </div>

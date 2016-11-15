@@ -79,7 +79,6 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
               type: 'buy'
             }; 
           }
->>>>>>> e0b8a825e1c1af62370aea7d9fadbbf891ad44fb
         }
       });
 

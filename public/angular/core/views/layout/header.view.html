@@ -83,7 +83,7 @@
         </li>
         <li class="dropdown user user-menu" ng-if="Authentication.user">
           <a class="dropdown-toggle">
-            <span class="hidden-xs">{{ Authentication.user.role }}</span>
+            <span class="hidden-xs role-header" ng-bind="Authentication.user.role"></span>
           </a>
         </li>
         <li class="dropdown user user-menu" ng-if="Authentication.user">
