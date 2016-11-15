@@ -69,6 +69,26 @@ class BuyOrderController extends Controller
         return response()->json($buy_order, 200);
     }
 
+    /*
+    *   SHOW ALL LEADS THAT ARE APPROVED IN AN ORDER BUT DIDN'T HAVE ANY MATCH
+    */
+    public function showApprovedLeads() {
+        $buy_order = [];
+        $query = BuyOrder::with('Buyer','User','trader', 'orders', 'orders.buys')->get();
+
+        dd($query);
+
+        foreach($query as $q) {
+            if(count(array_pluck($q, 'orders.id')) < 2 && count(array_pluck($q, 'orders.id')) > 0) {
+                // if(count(array_pluck($q->orders, 'buys.id')) < 2 && count(array_pluck($q->orders, 'buys.id')) > 0 && count(array_pluck($q->orders, 'sells.id')) < 1) {
+                    array_push($buy_order, $q);
+                // }
+            }
+        }
+
+        return response()->json($buy_order, 200);
+    }
+
     /**
      * Store a newly created resource in storage.
      *

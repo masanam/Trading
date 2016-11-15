@@ -36,12 +36,18 @@ class OrdersTableSeeder extends Seeder
         'user' => [ 1 => [ 'role' => 'approver' ], 8 => [ 'role' => 'associated' ], 7 => [ 'role' => 'admin' ] ],
         'approval' => [ 2 => [ 'status' => 'a' ] ]
       ],
+      [
+        'order' => [ 'id' => 4, 'user_id' => 7, 'status' => 'f'],
+        'buy' => [ 3 => [ 'volume' => 1000, 'price' => 38000, 'trading_term' => 'FOB MV', 'payment_term' => 'TT' ] ],
+        'user' => [ 1 => [ 'role' => 'approver' ], 8 => [ 'role' => 'associated' ], 7 => [ 'role' => 'admin' ] ],
+        'approval' => [ 2 => [ 'status' => 'a' ] ]
+      ],
     ];
 
     foreach($array as $object){
       $order = Order::create($object['order']);
       $order->buys()->attach($object['buy']);
-      $order->sells()->attach($object['sell']);
+      if(isset($object['sell'])) $order->sells()->attach($object['sell']);
       $order->users()->attach($object['user']);
       $order->approvals()->attach($object['approval']);
     }
