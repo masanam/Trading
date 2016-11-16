@@ -33,7 +33,7 @@ class BuyOrderController extends Controller
         if($request->order&&$request->order_id!==null){
             $user_id = Auth::User()->id;
             $sell_order = SellOrder::where('id',$request->order_id)->first();
-            $buy_order = BuyOrder::with('Buyer','User','trader')
+            $buy_order = BuyOrder::with('Buyer','User','trader','used')
             ->where([['order_status', 'v'],
                 [DB::raw('DATEDIFF(ready_date,"'.$sell_order->ready_date.'")'),'>=',-7],
                 [DB::raw('DATEDIFF(order_deadline,"'.$sell_order->order_deadline.'")'),'<=',7]])

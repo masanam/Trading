@@ -29,7 +29,7 @@ class SellOrderController extends Controller
         if($request->order&&$request->order_id!==null){
             $user_id = Auth::User()->id;
             $buy_order = BuyOrder::where('id',$request->order_id)->first();
-            $sell_order = SellOrder::with('Seller','User','trader')
+            $sell_order = SellOrder::with('Seller','User','trader','used')
                 ->where([
                     ['order_status', 'v'],
                     [DB::raw('DATEDIFF(ready_date,"'.$buy_order->ready_date.'")'),'>=',-7],
@@ -45,7 +45,7 @@ class SellOrderController extends Controller
                     [DB::raw('DATEDIFF(ready_date,"'.$buy_order->ready_date.'")'),'>=',-7],
                     [DB::raw('DATEDIFF(order_deadline,"'.$buy_order->order_deadline.'")'),'<=',7]
                 ])
-                ->select('sell_order.*', 
+                ->select('sell_order.*',  
                     DB::raw('ABS(sell_order.gcv_adb_min-'.$buy_order->gcv_adb_min.') as gcv_adb_min_diff'), 
                     DB::raw('ABS(sell_order.gcv_adb_max-'.$buy_order->gcv_adb_max.') as gcv_adb_max_diff'),
                     DB::raw('ABS(sell_order.gcv_arb_min-'.$buy_order->gcv_arb_min.') as gcv_arb_min_diff'), 
@@ -72,7 +72,7 @@ class SellOrderController extends Controller
             $buy_order = BuyOrder::where('id',$request->order_id)->first();
             $sell_order = Product::with('Seller')
                 ->where('buyer_id',null)
-                ->select('products.*', 
+                ->select('products.*',  
                     DB::raw('ABS(products.gcv_adb_min-'.$buy_order->gcv_adb_min.') as gcv_adb_min_diff'), 
                     DB::raw('ABS(products.gcv_adb_max-'.$buy_order->gcv_adb_max.') as gcv_adb_max_diff'),
                     DB::raw('ABS(products.gcv_arb_min-'.$buy_order->gcv_arb_min.') as gcv_arb_min_diff'), 

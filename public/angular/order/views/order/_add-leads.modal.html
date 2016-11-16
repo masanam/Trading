@@ -11,7 +11,7 @@
         <ul class="nav nav-pills nav-stacked">
           <li ng-repeat="item in items">
             <a href="#" ng-click="$event.preventDefault(); selected.item = item">
-              {{ item.seller.company_name || item.buyer.company_name }} ({{ item.city }}) <span ng-if="item.gcv_adb_min_diff<=150&&item.gcv_adb_max_diff<=150&&item.gcv_arb_min_diff<=150&&item.gcv_arb_max_diff<=150&&item.ncv_min_diff<=150&&item.ncv_max_diff<=150&&item.volume_diff<=item.volume*0.1">recomended</span><br>
+              {{ item.seller.company_name || item.buyer.company_name }} ({{ item.city }}) <span ng-if="item.gcv_adb_min_diff<=150&&item.gcv_adb_max_diff<=150&&item.gcv_arb_min_diff<=150&&item.gcv_arb_max_diff<=150&&item.ncv_min_diff<=150&&item.ncv_max_diff<=150&&item.volume_diff<=item.volume*0.1" style="color:green;">recomended</span><br>
               exp: {{ item.expired_date | date:'d-M-yy' }}<br>
               LayCan: {{ item.ready_date | date:'d-M-yy' }} to {{ item.order_deadline | date:'d-M-yy' }}
             </a>
