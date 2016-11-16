@@ -37,6 +37,18 @@ angular.module('order').controller('SellOrderProductController', ['$scope', '$st
 
     //button next to port page and update order
     $scope.nextToPort = function(){
+      if (!($scope.product.selected.gcv_arb_min&&$scope.product.selected.gcv_arb_max)) {
+        $scope.error = 'Please fill Min & Max GCV Arb !';
+        return;
+      }
+      if (!($scope.product.selected.gcv_adb_min&&$scope.product.selected.gcv_adb_max)) {
+        $scope.error = 'Please fill Min & Max GCV Adb !';
+        return;
+      }
+      if (!($scope.product.selected.ncv_min&&$scope.product.selected.ncv_max)) {
+        $scope.error = 'Please fill Min & Max NCV !';
+        return;
+      }
       if($scope.product.selected.volume) {
         if (($scope.product.selected.gcv_arb_reject&&$scope.product.selected.gcv_arb_bonus)||
           ($scope.product.selected.gcv_adb_reject&&$scope.product.selected.gcv_adb_bonus)||
