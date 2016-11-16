@@ -13,7 +13,7 @@ class PortTableSeeder extends Seeder
     public function run()
     {
       $ports = [
-        ['seller' => 1, 'port_name' => 'Jetty Indexim', 'owner' => 'Indexim', 'is_private' => 1, 'location' => 'Kaliorang', 'size' => 0, 'river_capacity' => 0, 'latitude' => 0.8827427, 'longitude' => 117.81001, 'anchorage_distance' => 0, 'has_conveyor' => 0, 'has_crusher' => 0, 'has_blending' => 1, 'draft_height' => 222222, 'daily_discharge_rate'=>11111],
+        ['seller' => 1, 'port_name' => 'Jetty Indexim', 'owner' => 'Indexim', 'is_private' => 1, 'location' => 'Kaliorang', 'size' => 0, 'river_capacity' => 0, 'latitude' => 0.8827427, 'longitude' => 117.81001, 'anchorage_distance' => 0, 'has_conveyor' => 0, 'has_crusher' => 0, 'has_blending' => 1, 'draft_height' => 222222],
         ['seller' => 2, 'port_name' => 'Berau Coal, PT', 'owner' => 'Kalimantan Timur', 'is_private' => 1, 'location' => 'Sungai Segah', 'size' => 0, 'river_capacity' => 0, 'latitude' => 2.156904, 'longitude' => 117.4911258, 'anchorage_distance' => 0, 'has_conveyor' => 0, 'has_crusher' => 0, 'has_blending' => 0, 'draft_height' => 0],
         ['seller' => [3,4], 'port_name' => 'Jetty MAS', 'owner' => 'MAS', 'is_private' => 1, 'location' => 'Sungai Segah', 'size' => 0, 'river_capacity' => 0, 'latitude' => 2.156904, 'longitude' => 117.4911258, 'anchorage_distance' => 0, 'has_conveyor' => 0, 'has_crusher' => 0, 'has_blending' => 1, 'draft_height' => 0],
         ['seller' => 5, 'port_name' => 'Jetty BBE', 'owner' => 'BBE', 'is_private' => 1, 'location' => 'Kalimantan Timur', 'size' => 0, 'river_capacity' => 0, 'latitude' => 2.056904, 'longitude' => 118.4911258, 'anchorage_distance' => 0, 'has_conveyor' => 0, 'has_crusher' => 0, 'has_blending' => 1, 'draft_height' => 0],
@@ -31,6 +31,8 @@ class PortTableSeeder extends Seeder
         ['buyer'=>[2,3], 'seller' => 27, 'port_name' => 'Nial', 'owner' => 'PT. dummy', 'is_private' => 1, 'location' => 'tanah bumbu', 'size' => 1000, 'river_capacity' => 10, 'latitude' => 1.8, 'longitude' => 116.6, 'anchorage_distance' => 123, 'has_conveyor' => 1, 'has_crusher' => 1, 'has_blending' => 1, 'draft_height' => 15],
       ];
       
+      $faker = Faker\Factory::create(); 
+
       foreach($ports as $port){
         $model = Port::create([
           'port_name' => $port['port_name'],
@@ -46,6 +48,7 @@ class PortTableSeeder extends Seeder
           'has_crusher' => $port['has_crusher'],
           'has_blending' => $port['has_blending'],
           'draft_height' => $port['draft_height'],
+          'daily_discharge_rate' => $faker->numberBetween($min = 1, $max = 55),
           'status' => 'a'
         ]);
         if(isset($port['seller'])) $model->sellers()->attach($port['seller']);

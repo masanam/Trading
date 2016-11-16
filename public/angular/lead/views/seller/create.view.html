@@ -21,7 +21,7 @@
           <label for="id">Supplier Name :</label>
           <ui-select ng-model="seller.selected" style="min-width: 300px;" title="Choose Supplier Name" append-to-body="true">
             <ui-select-match placeholder="Supplier Name">{{ seller.selected.company_name }}</ui-select-match>
-            <ui-select-choices repeat="seller in sellers | propsFilter: {company_name: $select.search}">
+            <ui-select-choices repeat="seller in sellers | propsFilter: {company_name: $select.search} | orderBy:'company_name'">
               <div ng-bind-html="company_name | highlight: $select.search"></div>
               <small>
                 {{seller.company_name}}
