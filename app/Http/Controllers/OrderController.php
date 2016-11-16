@@ -34,7 +34,7 @@ class OrderController extends Controller
     $orders = Order::with('trader', 'approvals');
 
     if($req->status != '') $orders = $orders->where('status', $req->status);
-    
+
     if($req->possession == 'subordinates'){
       $subordinates = $this->getSub();
       foreach ($subordinates as $sub ) {
@@ -44,12 +44,12 @@ class OrderController extends Controller
     }
     else if($req->possession == 'associated'){
       $orders->whereHas('users', function($query){
-        $query->where('user_id', Auth::User()->id);
+        $query->where('user_id', Auth::user()->id);
       });
     }else{
-      $orders->where('user_id', Auth::User()->id);
+      $orders->where('user_id', Auth::user()->id);
     }
-    
+
     //var_dump(DB::getQueryLog());
     $orders = $orders->get();
     return response()->json($orders, 200);
@@ -76,7 +76,7 @@ class OrderController extends Controller
     if(count($req->buys) > 0)
       foreach($req->buys as $buy){
         $order->buys()->attach([
-          $buy['id'] => $buy['pivot'] 
+          $buy['id'] => $buy['pivot']
         ]);
         BuyOrder::find($buy['id'])->reconcile();
 
@@ -130,7 +130,7 @@ class OrderController extends Controller
 
     return response()->json($order, 200);
   }
-  
+
   private function add_user_to_order($order = NULL, $user_id = '', $order_id='', $role=''){
     if($order->users->count() == 0){
       $order_user = new OrderUser();
@@ -140,7 +140,7 @@ class OrderController extends Controller
       $order_user->save();
     }
   }
-  
+
   private function add_approval_to_order($order = NULL, $user_id = '', $order_id='', $status=''){
     //var_dump($order->approvals->count());
     if($order->approvals->count() > 0){
@@ -197,11 +197,11 @@ class OrderController extends Controller
     $order->status = $req->status;
     $order->save();
     //$order->updated_at = date('Y-m-d H:i:s');
-    
+
     if($order->status == 'x'){
-      $buy_ids = $order->buys()->pluck('buy_order.id'); 
+      $buy_ids = $order->buys()->pluck('buy_order.id');
       BuyOrder::whereIn('id', $buy_ids)->update(['order_status' => 'p']);
-      $sell_ids = $order->sells()->pluck('sell_order.id'); 
+      $sell_ids = $order->sells()->pluck('sell_order.id');
       SellOrder::whereIn('id', $sell_ids)->update(['order_status' => 'p']);
     }
     else if($order->status == 'p'){
@@ -210,14 +210,14 @@ class OrderController extends Controller
       }, 'users' => function($q){
         $q->where('user_id', Auth::user()->manager_id);
       }])->find($id);
-            
+
       $this->add_user_to_order($order, Auth::user()->manager_id, $id, 'approver');
       $this->add_approval_to_order($order, Auth::user()->manager_id, $id, 'p');
     }
 
     return response()->json($order, 200);
   }
-  
+
   /**
    * Remove the specified resource from storage.
    *
@@ -231,11 +231,11 @@ class OrderController extends Controller
       }, 'users' => function($q){
         $q->where('user_id', Auth::user()->id);
       }])->find($id);
-    
+
     $this->add_approval_to_order($order, Auth::user()->id, $id, $req->status);
-    
+
     //print_r($order);
-    
+
     if($req->status == 'a'){
       if(!Auth::user()->manager_id){
         $order->status = 'a';
@@ -246,7 +246,7 @@ class OrderController extends Controller
         }, 'users' => function($q){
           $q->where('user_id', Auth::manager()->id);
         }])->find($id);
-      
+
         $this->add_user_to_order($order, Auth::user()->manager_id, $id, 'approver');
         $this->add_approval_to_order($order, Auth::user()->manager_id, $id, 'p');
         $order->status = 'p';
@@ -255,6 +255,32 @@ class OrderController extends Controller
     }
 
     return $this->show($id);
+  }
+
+  public function funnel()
+  {
+    $get=Order::orderBy('status')->select('status')->where('status','!=','c')
+                              ->get();
+    $d=0;
+    $p=0;
+    $f=0;
+    $e=0;
+    foreach ($get as $count) {
+      if ($count->status=='d') {
+        $d=$d+1;
+      }
+      elseif ($count->status=='p') {
+        $p=$p+1;
+      }
+      elseif ($count->status=='e') {
+        $e=$e+1;
+      }
+      elseif ($count->status=='e') {
+        $f=$f+1;
+      }
+      $count=[$d,$p,$e,$f];
+    }
+    return response()->json($count,200);
   }
 
   /**
@@ -289,7 +315,7 @@ class OrderController extends Controller
     if($req->buy){
       if(count($order->sells) > 1)
         return response()->json([ 'message' => 'Can\'t add more Sell on Multiple Buys' ], 400);
-      
+
       $order->buys()->sync([ $req->buy => $details ], false);
 
       $buy = BuyOrder::find($req->buy)->reconcile();
@@ -299,7 +325,7 @@ class OrderController extends Controller
     if($req->sell){
       if(count($order->buys) > 1)
         return response()->json([ 'message' => 'Can\'t add more Buy on Multiple Sells' ], 400);
-      
+
       $order->sells()->sync([ $req->sell => $details ], false);
 
       $sell = SellOrder::find($req->sell)->reconcile();
@@ -361,13 +387,13 @@ class OrderController extends Controller
       'penalty_desc' => 'penalty',
       'ready_date'=> date('Y-m-d'),
       'expired_date'=> date('Y-m-d'),
-      
+
       'volume' => $volume,
       'order_status' => 'v'
     ]);
 
     $sell->orders()->attach([ $id => [
-      'volume' => $volume, 
+      'volume' => $volume,
       'price' => 0,
       'trading_term' => 'FOB MV',
       'payment_term' => 'NET30',

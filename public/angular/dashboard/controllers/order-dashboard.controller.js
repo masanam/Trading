@@ -10,8 +10,13 @@ angular.module('dashboard').controller('OrderDashboardController', ['$scope', 'I
 
       if(Authentication.user.role === 'manager') possession = 'subordinates';
       else if(Authentication.user.role === 'trader') possession = 'my';
-
       $scope.orders = Order.query({ possession: possession, status: 'p' });
+    };
+
+    $scope.funnel=function () {
+      $scope.labels = ['Draft', 'Pending', 'Approve', 'Finalized'];
+      $scope.series = ['Series A', 'Series B'];
+      $scope.data = Order.query({ action:'funnel' });
     };
   }
 ]);
