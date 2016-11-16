@@ -20,6 +20,14 @@ class CreateOrdersTable extends Migration
             $table->string('cancel_reason')->nullable();
             $table->string('request_reason')->nullable();
             $table->string('finalize_reason')->nullable();
+            $table->decimal('insurance_cost', 15, 3)->nullable();
+            $table->decimal('interest_cost', 15, 3)->nullable();
+            $table->decimal('surveyor_cost', 15, 3)->nullable();
+            $table->decimal('others_cost', 15, 3)->nullable();
+            $table->decimal('pit_to_port', 15, 3)->nullable();
+            $table->decimal('transhipment', 15, 3)->nullable();
+            $table->decimal('freight_cost', 15, 3)->nullable();
+            $table->decimal('port_to_factory', 15, 3)->nullable();
             $table->timestamps();
         });
 

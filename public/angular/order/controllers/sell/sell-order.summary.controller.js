@@ -130,6 +130,7 @@ angular.module('order').controller('SellOrderSummaryController', ['$scope', '$st
         $scope.order.expired_date = $scope.sell_order.expired_date;
         $scope.order.min_price = $scope.sell_order.min_price;
         $scope.order.trading_term = $scope.sell_order.trading_term;
+        $scope.order.trading_term_detail = $scope.sell_order.trading_term_detail;
         $scope.order.payment_terms = $scope.sell_order.payment_terms;
         $scope.order.penalty_desc = $scope.sell_order.penalty;
         

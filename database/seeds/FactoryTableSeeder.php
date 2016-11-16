@@ -24,8 +24,8 @@ class FactoryTableSeeder extends Seeder
         'country'=>'INA',
         'latitude' => '-7.1844498' ,
         'longitude' => '112.6528737' ,
-        'size' => $faker->numberBetween($min = 1, $max = 2000),
-        'consumption' => $faker->numberBetween($min = 1, $max = 2000),
+        'size' => $faker->numberBetween($min = 100, $max = 2000),
+        'consumption' => $faker->numberBetween($min = 100, $max = 2000),
         'port_id'=>'1',
         'port_distance'=>200,
         'status' => 'a'
