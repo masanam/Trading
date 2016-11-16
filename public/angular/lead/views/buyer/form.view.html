@@ -94,19 +94,15 @@
   <label for="headquarter_location">Preferred Buying Term:</label>
   <!--<input name="preferred_payment_term" type="text" class="form-control" id="preferred_payment_term" ng-model="buyer.preferred_payment_term" required>-->
   <select name="preferred_payment_term" id="preferred_payment_term" class="form-control"
-      ng-model="buyer.preferred_payment_term">
+      ng-model="buyer.preferred_payment_term" ng-change="freetext()">
       <option ng-repeat="option in data.availableOptions" value="{{option.id}}">{{option.name}}</option>
   </select>
-
+  <input type="text" class="form-control" ng-model="buyer.preferred_payment_term" placeholder="Payment Terms" ng-if="buyer.freetext===true"/>
 </div>
 
 <div class="form-group">
   <label for="description">Description:</label>
   <textarea name="description" class="form-control" id="description" ng-model="buyer.description" required></textarea>
-</div>
-
-<div class="form-group">
-  <label ng-show="error" class="alert alert-danger">{{error}}</label>
 </div>
 
 <button type="submit" class="btn btn-default">Submit</button>

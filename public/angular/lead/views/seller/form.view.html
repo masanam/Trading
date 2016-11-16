@@ -85,9 +85,10 @@
 <div class="form-group">
   <label for="headquarter_location">Preferred Payment Term*:</label>
   <select name="preferred_payment_term" id="preferred_payment_term" class="form-control"
-      ng-model="seller.preferred_payment_term">
-      <option ng-repeat="option in data.availableOptions" value="{{option.id}}">{{option.name}}</option>
+    ng-model="seller.preferred_payment_term" ng-change="freetext()">
+    <option ng-repeat="option in data.availableOptions" value="{{option.id}}">{{option.name}}</option>
   </select>
+  <input type="text" class="form-control" ng-model="seller.preferred_payment_term" placeholder="Payment Terms" ng-if="seller.freetext===true"/>
 </div>
 
 <div class="form-group">

@@ -36,7 +36,8 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
       availableOptions: [
         { id: 'TT', name: 'TT' },
         { id: 'LC on Sight f', name: 'LC on Sight' },
-        { id: 'LC on 30 days', name: 'LC on 30 days' }
+        { id: 'LC on 30 days', name: 'LC on 30 days' },
+        { id: 'other', name: 'Other' }
       ],
  
     };
@@ -305,7 +306,17 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
 
 //controller Create Buyer Modal
 angular.module('buyer').controller('BuyerModalController', function ($scope, $uibModalInstance, $timeout, $interval, Buyer, $location) {
-  
+    
+  //show freetext payment term
+  $scope.freetext = function() {
+    if($scope.buyer.preferred_payment_term === 'other'){
+      $scope.buyer.preferred_payment_term = '';
+      $scope.seller.freetext = true;
+    }else{
+      $scope.seller.freetext = false;
+    }
+  };
+
   $scope.create = function(createBuyer) {
     $scope.loading = true;
     var buyer = new Buyer($scope.buyer);
