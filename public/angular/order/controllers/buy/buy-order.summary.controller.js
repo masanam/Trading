@@ -6,7 +6,13 @@ angular.module('order').controller('BuyOrderSummaryController', ['$scope', '$sta
     $scope.buy_order = {};
     $scope.order_id = $stateParams.order_id;
     $scope.factory_id = $stateParams.factory_id;
+    $scope.date = new Date();
 
+    $scope.initMap = function() {
+      NgMap.getMap().then(function(map) {
+        $scope.map = map;
+      });
+    };
 
     //Init select summary
     $scope.findSummary = function(){
@@ -77,9 +83,12 @@ angular.module('order').controller('BuyOrderSummaryController', ['$scope', '$sta
     }
 
     //show freetext payment terms
-    $scope.freetext = function(payment_terms) {
-      if(payment_terms === 'other'){
+    $scope.freetext = function() {
+      if($scope.buy_order.payment_terms === 'other'){
         $scope.buy_order.payment_terms = '';
+        $scope.buy_order.freetext = true;
+      }else{
+        $scope.buy_order.freetext = false;
       }
     };
 

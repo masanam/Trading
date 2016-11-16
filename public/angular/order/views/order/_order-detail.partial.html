@@ -4,12 +4,12 @@
       <tr ng-if="!order.user_id || order.user_id === Authentication.user.id"  class="no-print">
         <td width=20%></td>
         <td width=40%>
-          <button ng-show="order.status !== 'x' && order.status !== 'f'" class="btn btn-default" ng-click="addBuy()" ng-disabled="order.buys.length > 1"> + Add Buy </button>
-          <button ng-show="order.status !== 'x' && order.status !== 'f'" class="btn btn-default pull-right" ng-click="addOwnProduct()"
+          <button ng-show="order.status !== 'x' && order.status !== 'a' && order.status !== 'f'" class="btn btn-default" ng-click="addBuy()" ng-disabled="order.buys.length > 1"> + Add Buy </button>
+          <button ng-show="order.status !== 'x' && order.status !== 'a' && order.status !== 'f'" class="btn btn-default pull-right" ng-click="addOwnProduct()"
           	ng-disabled="order.buys.length != 1"> + Add BIB Product </button>
         </td>
         <td width=40%>
-          <button ng-show="order.status !== 'x' && order.status !== 'f'" class="btn btn-default" ng-click="addSell()" ng-disabled="order.sells.length > 1"> + Add Sell </button>
+          <button ng-show="order.status !== 'x' && order.status !== 'f' && order.status !== 'a'" class="btn btn-default" ng-click="addSell()" ng-disabled="order.sells.length > 1"> + Add Sell </button>
         </td>
       </tr>
 			<tr>
@@ -61,7 +61,8 @@
 					<span ng-switch-when="true">
 						{{ display.sell.seller.company_name }}
 						<span class="pull-right">
-							<a ng-click="removeSell()" class="glyphicon glyphicon-trash"></a>
+							<a ng-if="order.id" ng-click="removeSell()" class="glyphicon glyphicon-trash"></a>
+							<a ng-if="!order.id" ng-click="removeSellFront()" class="glyphicon glyphicon-trash"></a>
 						</span>
 					</span>
 					<i style="color:green" ng-switch-default>
@@ -72,7 +73,8 @@
 					<span ng-switch-when="true">
 						{{ display.buy.buyer.company_name }}
 						<span class="pull-right">
-							<a ng-click="removeBuy()" class="glyphicon glyphicon-trash"></a>
+							<a ng-if="order.id" ng-click="removeBuy()" class="glyphicon glyphicon-trash"></a>
+							<a ng-if="!order.id" ng-click="removeBuyFront()" class="glyphicon glyphicon-trash"></a>
 						</span>
 					</span>
 					<i style="color:green" ng-switch-default>
@@ -374,18 +376,18 @@
 				<th>Total Price / mt</th>
 				<td>
 					<span ng-if="display.sell">
-					<h4>US${{ display.sell.min_price | number }}</h4>
+					<h4>US${{ display.sell.pivot.price | number }}</h4>
 					from {{ order.sells.length }} Suppliers
 					</span>
 				</td>
         <td>
 					<span ng-if="display.buy">
-					<h4>US${{ display.buy.max_price | number }}</h4>
+					<h4>US${{ display.buy.pivot.price | number }}</h4>
 					from {{ order.buys.length }} Customers
 					</span>
 				</td>
 			</tr>
-      <tr ng-show="order.pit_to_port !== NULL">
+      <tr ng-show="order.pit_to_port">
 				<th>Pit to Port / mt</th>
 				<td>
 					<span>
@@ -396,7 +398,7 @@
           &nbsp;
 				</td>
 			</tr>
-      <tr ng-show="order.transhipment !== NULL">
+      <tr ng-show="order.transhipment">
 				<th>Transhipment / mt</th>
 				<td colspan="2">
 					<span>
@@ -407,7 +409,7 @@
           &nbsp;
 				</td>
 			</tr>
-      <tr>
+      <tr ng-show="order.freight_cost">
 				<th>Freight Cost / mt</th>
 				<td colspan="2">
 					<span>
@@ -415,7 +417,7 @@
 					</span>
 				</td>
 			</tr>
-      <tr>
+      <tr ng-show="order.port_to_factory">
 				<th>Port to Factory / mt</th>
 				<td colspan="2">
 					<span>
@@ -423,7 +425,7 @@
 					</span>
 				</td>
 			</tr>
-      <tr>
+      <tr ng-show="order.insurance_cost">
 				<th>Insurance / mt</th>
 				<td colspan="2">
 					<span>
@@ -431,7 +433,7 @@
 					</span>
 				</td>
 			</tr>
-      <tr>
+      <tr ng-show="order.interest_cost">
 				<th>Interest / mt</th>
 				<td colspan="2">
 					<span>
@@ -439,7 +441,7 @@
 					</span>
 				</td>
 			</tr>
-      <tr>
+      <tr ng-show="order.surveyor_cost">
 				<th>Surveyor / mt</th>
 				<td colspan="2">
 					<span>
@@ -447,7 +449,7 @@
 					</span>
 				</td>
 			</tr>
-      <tr>
+      <tr ng-show="order.others_cost">
 				<th>Others / mt</th>
 				<td colspan="2">
 					<span>
@@ -459,20 +461,20 @@
 				<th>Coal Price</th>
 				<td>
 					<span ng-if="display.sell">
-					<h3>US${{ (display.sell.min_price + order.pit_to_port + order.transhipment) | number }}</h3>
+					<h3>US${{ (display.sell.pivot.price + order.pit_to_port + order.transhipment) | number }}</h3>
 					from {{ order.sells.length }} Suppliers
 					</span>
 				</td>
         <td>
 					<span ng-if="display.buy">
-					<h3>US${{ (display.buy.max_price - order.port_to_factory - order.freight_cost) | number }}</h3>
+					<h3>US${{ (display.buy.pivot.price - order.port_to_factory - order.freight_cost) | number }}</h3>
 					from {{ order.buys.length }} Customers
 					</span>
 				</td>
 			</tr>
-			<tr>
-				<td ng-if="(display.buy.max_price - order.port_to_factory - order.freight_cost) - (display.sell.min_price + order.pit_to_port + order.transhipment) > 0" colspan=3 style="text-align:center; "><h3 style="color: green">Expected Margin / mt: US${{ (display.buy.max_price - order.port_to_factory - order.freight_cost) - (display.sell.min_price + order.pit_to_port + order.transhipment) | number }}</h3></td>
-				<td ng-if="(display.buy.max_price - order.port_to_factory - order.freight_cost) - (display.sell.min_price + order.pit_to_port + order.transhipment) < 0" colspan=3 style="text-align:center; "><h3 style="color: red">Expected Margin / mt: US${{ (display.buy.max_price - order.port_to_factory - order.freight_cost) - (display.sell.min_price + order.pit_to_port + order.transhipment) | number }}</h3></td>
+			<tr ng-if="display.buy && display.sell">
+				<td ng-if="(display.buy.pivot.price - order.port_to_factory - order.freight_cost) - (display.sell.pivot.price + order.pit_to_port + order.transhipment) > 0" colspan=3 style="text-align:center; "><h3 style="color: green">Expected Margin / mt: US${{ (display.buy.pivot.price - order.port_to_factory - order.freight_cost) - (display.sell.pivot.price + order.pit_to_port + order.transhipment) | number }}</h3></td>
+				<td ng-if="(display.buy.pivot.price - order.port_to_factory - order.freight_cost) - (display.sell.pivot.price + order.pit_to_port + order.transhipment) < 0" colspan=3 style="text-align:center; "><h3 style="color: red">Expected Margin / mt: US${{ (display.buy.pivot.price - order.port_to_factory - order.freight_cost) - (display.sell.pivot.price + order.pit_to_port + order.transhipment) | number }}</h3></td>
 			</tr>
 		</tbody>
 	</table>

@@ -6,7 +6,13 @@ angular.module('order').controller('SellOrderSummaryController', ['$scope', '$st
     $scope.sell_order = {};
     $scope.order_id = $stateParams.order_id;
     $scope.concession_id = $stateParams.concession_id;
+    $scope.date = new Date();
 
+    $scope.initMap = function() {
+      NgMap.getMap().then(function(map) {
+        $scope.map = map;
+      });
+    };
 
     //Init select summary
     $scope.findSummary = function(){
@@ -17,8 +23,6 @@ angular.module('order').controller('SellOrderSummaryController', ['$scope', '$st
         $scope.sell_order.expired_date = new Date();
       });
     };
-
-    
 
     $scope.today = function() {
       $scope.dt = new Date();
@@ -79,9 +83,12 @@ angular.module('order').controller('SellOrderSummaryController', ['$scope', '$st
     }
 
     //show freetext payment terms
-    $scope.freetext = function(payment_terms) {
-      if(payment_terms === 'other'){
+    $scope.freetext = function() {
+      if($scope.sell_order.payment_terms === 'other'){
         $scope.sell_order.payment_terms = '';
+        $scope.sell_order.freetext = true;
+      }else{
+        $scope.sell_order.freetext = false;
       }
     };
 

@@ -94,7 +94,7 @@ class SellOrderController extends Controller
         }
         else if($request->order){
             $user_id = Auth::User()->id;
-            $sell_order = SellOrder::with('Seller','User','trader')->where([['order_status', '1'], ['user_id', $user_id],])->orwhere([['order_status', '2'], ['user_id', $user_id],])->orwhere([['order_status', '3'], ['user_id', $user_id],])->orwhere([['order_status', '4'], ['user_id', $user_id],])->orwhere('order_status', 'v')->orwhere('order_status', 'l')->orwhere('order_status', 's')->orwhere('order_status', 'p')->get();
+            $sell_order = SellOrder::with('Seller','User','trader')->where('order_status', 'v')->orwhere('order_status', 'l')->orwhere('order_status', 'p')->get();
         }
         
         return response()->json($sell_order, 200);

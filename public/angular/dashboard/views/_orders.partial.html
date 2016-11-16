@@ -20,7 +20,11 @@
           </tr>
         </thead>
 
-        <tbody>
+        <tbody ng-init="funnel()">
+          <div class="col-md-4 col-sm-8">
+          <canvas class="chart chart-horizontal-bar" chart-data="data" chart-labels="labels"
+                  chart-options="options" chart-series="series" chart-click="onClick"></canvas>
+          </div>
           <tr ng-repeat="order in orders">
             <td>{{ order.id }}</td>
             <td ng-if="order.status === 'o'">Open</td>
