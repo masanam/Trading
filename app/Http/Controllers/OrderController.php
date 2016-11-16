@@ -143,11 +143,13 @@ class OrderController extends Controller
 
     // lazyloading semua negotiation log
     foreach($order->sells as &$sell){
-      if($sell->user_id !== Auth::user()->id) $sell->seller = $sell->location = $sell->port_name = $sell->address = '-hidden value-';
+      if($sell->user_id !== Auth::user()->id && Auth::user()->role !== 'manager')
+        $sell->seller = $sell->location = $sell->port_name = $sell->address = '-hidden value-';
       $sell->pivot->negotiations = OrderNegotiation::where('order_detail_id', '=', $sell->pivot->id)->get();
     }
     foreach($order->buys as &$buy){
-      if($buy->user_id !== Auth::user()->id) $buy->buyer = $buy->location = $buy->port_name = $buy->address = '-hidden value-';
+      if($buy->user_id !== Auth::user()->id && Auth::user()->role !== 'manager')
+        $buy->buyer = $buy->location = $buy->port_name = $buy->address = '-hidden value-';
       $buy->pivot->negotiations = OrderNegotiation::where('order_detail_id', '=', $buy->pivot->id)->get();
     }
 
