@@ -87,7 +87,7 @@
 				<td>
 					<span ng-if="display.sell">
 						{{ display.sell.pivot.volume | number }}mt - US$ {{ display.sell.pivot.price | number }}
-						<a ng-if="display.sell.user_id === Authentication.user.id && order.id" 
+						<a ng-if="order.id" ng-if="display.sell.user_id === Authentication.user.id && order.id" 
 							ng-click="negoSell()" class="pull-right">
 							Nego
 						</a>
@@ -96,7 +96,7 @@
 				<td>
 					<span ng-if="display.buy">
 						{{ display.buy.pivot.volume | number }}mt - US$ {{ display.buy.pivot.price | number }}
-						<a ng-if="display.buy.user_id === Authentication.user.id && order.id" 
+						<a ng-if="order.id" ng-if="display.buy.user_id === Authentication.user.id && order.id" 
 							ng-click="negoBuy()" class="pull-right">
 							Nego
 						</a>
@@ -116,10 +116,19 @@
       <tr>
 				<td>Shipping Term</td>
 				<td>
-					<span>{{ display.sell.pivot.trading_term }}</span> - <span>{{ display.sell.trading_term_detail }}</span>
+					<span>{{ display.sell.pivot.trading_term || 'N/A' }}</span> - <span>{{ display.sell.trading_term_detail || 'N/A' }}</span>
 				</td>
 				<td>
-					<span>{{ display.buy.pivot.trading_term }}</span> - <span>{{ display.buy.trading_term_detail }}</span>
+					<span>{{ display.buy.pivot.trading_term || 'N/A' }}</span> - <span>{{ display.buy.trading_term_detail || 'N/A' }}</span>
+				</td>
+			</tr>
+      <tr>
+				<td>Payment Term</td>
+				<td>
+					<span>{{ display.sell.pivot.payment_term }}</span>
+				</td>
+				<td>
+					<span>{{ display.buy.pivot.payment_term }}</span>
 				</td>
 			</tr>
 			<tr>
@@ -369,7 +378,7 @@
 				<th></th>
         <th></th>
         <th>
-          <button class="btn btn-default" ng-click="addCostModal()"> Update </button>
+          <button ng-if="order.id" class="btn btn-default" ng-click="addCostModal()"> Update </button>
         </th>
       </tr>
       <tr>
