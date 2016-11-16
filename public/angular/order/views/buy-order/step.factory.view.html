@@ -71,6 +71,14 @@
           <span class="input-group-addon" style="width: 200px;">Longitude</span>
           <input type="number" min="-180" max="180" step="any" class="form-control" placeholder="Longitude" ng-model="factory.selected.longitude" required>
         </div>
+        <div class="form-group">
+        <div class="row" style="background:#eee; padding: 10px; margin-left:10px;">
+        <ng-map zoom="2" center="Indonesia" default-style="false" style="width:100%; height:500px;">
+          <marker draggable="true" on-mouseup="markerMove()" position="{{factory.latitude}}, {{factory.longitude}}" id="mark{{factory.id}}" ></marker>
+        </ng-map>
+        </div>
+        </div>
+        
       </div>
 
       <div class="form-group">

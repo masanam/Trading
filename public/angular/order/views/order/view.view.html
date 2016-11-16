@@ -34,22 +34,22 @@
       <h1 class="box-title">ORD #{{ ("10000"+order.id).slice(-4) }} - {{ order.trader.name }}</h1>
 
       <span class="badge badge-primary">
-        {{ order.status === 'p' ? 'Pending Approval' : order.status === 'd' ? 'Draft' : order.status === 'a' ? 'Approved' : order.status === 'f' ? 'Finalized' : 'Cancelled' }}
+        {{ order.status === 'c' ? 'Combined' : order.status === 'p' ? 'Pending Approval' : order.status === 'd' ? 'Draft' : order.status === 'a' ? 'Approved' : order.status === 'f' ? 'Finalized' : 'Cancelled' }}
       </span>
       <div class="box-tools pull-right no-print">
         <a class="btn btn-default" ui-sref="order.list">
           <i class="glyphicon glyphicon-chevron-left"></i> Back
         </a>
-        <a class="btn btn-primary" ng-click="print(order);" ng-if="included === true" ng-show="(order.status === 'a' || order.status === 'f') && (order.user_id === Authentication.user.id || approver === true)">
+        <a class="btn btn-primary" ng-click="print(order);" ng-show="(order.status === 'a' || order.status === 'f') && (order.user_id === Authentication.user.id || approver === true)">
           <i class="glyphicon glyphicon-print" title="Print"></i> Print
         </a>
-        <a class="btn btn-success" ng-click="changeStatus('p');" ng-if="included === true" ng-show="order.status === 'd' && order.user_id === Authentication.user.id">
+        <a class="btn btn-success" ng-click="changeStatus('p');" ng-show="order.status === 'd' && order.user_id === Authentication.user.id">
           <i class="glyphicon glyphicon-send" title="Request for Approval"></i> Request Approval
         </a>
-        <a class="btn btn-success" ng-click="changeStatus('f');" ng-if="included === true" ng-show="order.status === 'a' && order.user_id === Authentication.user.id">
+        <a class="btn btn-success" ng-click="changeStatus('f');" ng-show="order.status === 'a' && order.user_id === Authentication.user.id">
           <i class="glyphicon glyphicon-floppy-saved" title="Finalize Order"></i> Finalize Order
         </a>
-        <a class="btn btn-danger" ng-click="changeStatus('x');" ng-if="included === true" ng-show="(order.status !== 'x' && order.status !== 'f') && order.user_id === Authentication.user.id">
+        <a class="btn btn-danger" ng-click="changeStatus('x');" ng-show="(order.status !== 'x' && order.status !== 'f') && order.user_id === Authentication.user.id">
           <i class="glyphicon glyphicon-trash" title="Cancel Order"></i> Cancel Order
         </a>
       </div>
@@ -82,7 +82,7 @@
   </div>
 </div>
 
-<div class="col-lg-4" ng-if="included === true" id="order-approval">
+<div class="col-lg-4" ng-if="included === true || order.user_id === Authentication.user.id" id="order-approval">
   <div class="box">
     <div class="box-header">Approval</div>
     <div class="box-body no-padding with-border">

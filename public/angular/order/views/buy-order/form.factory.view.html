@@ -29,6 +29,14 @@
 </div>
 
 <div class="form-group">
+  <div class="row" style="background:#eee; padding: 10px; margin-left:10px;">
+    <ng-map zoom="2" center="Indonesia" default-style="false" style="width:100%; height:500px;">
+      <marker draggable="true" on-mouseup="markerMove()" position="{{factory.latitude}}, {{factory.longitude}}" id="mark{{factory.id}}" ></marker>
+    </ng-map>
+  </div>
+</div>
+
+<div class="form-group">
   <label for="consumption">Consumption:</label>
   <input type="number" min="0" step="any" class="form-control" id="consumption" ng-model="factory.consumption">
 </div>
