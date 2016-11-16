@@ -33,6 +33,8 @@ angular.module('order').controller('OrderIndexController', ['$scope', '$statePar
       Index.query({ submodel:'price', indexId:$scope.display.index.id, date:date, latest:'7' },
         function (res){
           $scope.series = [ index.index_provider + ' ' + index.index_name, 'buy', 'sell' ];
+          
+          var mid = Math.round(res.length/2);
 
           for(x = 0; x<res.length; x++){
             $scope.data[0][x] = res[x].price;  
@@ -58,8 +60,6 @@ angular.module('order').controller('OrderIndexController', ['$scope', '$statePar
             }
             $scope.labels[x] = res[x].date;
           }
-          
-          var mid = res.length/2;
         });
     };
 

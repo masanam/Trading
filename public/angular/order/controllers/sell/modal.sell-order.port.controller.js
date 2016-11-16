@@ -52,6 +52,16 @@ angular.module('order').controller('PortModalSellOrderController',
       
     };
 
+    var map;
+    $scope.$on('mapInitialized', function(evt, evtMap) {
+      map = evtMap;
+      $scope.markerMove = function(e) {
+        console.log("hahahahah69");
+        $scope.port.latitude = e.latLng.lat();
+        $scope.port.longitude = e.latLng.lng();
+      };
+    });
+
     $scope.close = function () {
       $uibModalInstance.dismiss('cancel');
     };

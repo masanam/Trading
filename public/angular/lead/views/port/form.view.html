@@ -39,6 +39,14 @@
 </div>
 
 <div class="form-group">
+  <div class="row" style="background:#eee; padding: 10px; margin-left:10px;">
+    <ng-map zoom="2" center="Indonesia" default-style="false" style="width:100%; height:500px;">
+      <marker draggable="true" on-mouseup="markerMove()" position="{{port.latitude}}, {{port.longitude}}" id="mark{{port.id}}" ></marker>
+    </ng-map>
+  </div>
+</div>
+
+<div class="form-group">
   <label for="web">Port Facility* :</label>
   <div class="input-group" style="margin-bottom: 5px;">
     <div class="btn-group">

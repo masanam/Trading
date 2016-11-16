@@ -12,15 +12,15 @@ class ContactTableSeeder extends Seeder
      */
     public function run()
     {
-        Contact::create([
-          'id' => 1,
-          'name' => 'Fuganto Widjaja',
-          'buyer_id' => 1,
-          'seller_id' => 0,
-          'user_id' => 1,
-          'email' => 'fu@gems.com',
-          'phone' => '+62811111111',
-          'status' => 'a'
-        ]);
+        // Contact::create([
+        //   'id' => 1,
+        //   'name' => 'Fuganto Widjaja',
+        //   'buyer_id' => 1,
+        //   'seller_id' => 0,
+        //   'user_id' => 1,
+        //   'email' => 'fu@gems.com',
+        //   'phone' => '+62811111111',
+        //   'status' => 'a'
+        // ]);
     }
 }

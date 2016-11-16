@@ -5,21 +5,25 @@
     </div>
     <!-- /.box-header -->
     <div class="box-body no-padding">
-      <table st-table="orders" st-safe-src="orderCollection" class="table table-striped">
-        <thead>
-          <tr>
-              <th colspan="9"><input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
-          </tr>
-          <tr>
-            <th st-sort="id">#</th>
-            <th st-sort="status">Status</th>
-            <th st-sort="created_at">Created At</th>
-            <th st-sort="updated_at">Updated At</th>
-            <th>Approval Status</th>
-            <th></th>
-          </tr>
-        </thead>
-
+      <div class="col-md-4 col-sm-12" ng-init="funnel()">
+        <canvas class="chart chart-horizontal-bar" chart-data="data" chart-labels="labels"
+          chart-options="options" chart-series="series" chart-click="onClick"></canvas>
+      </div>
+      <div class="col-md-8 col-sm-12">
+        <table st-table="orders" st-safe-src="orderCollection" class="table table-striped">
+          <thead>
+            <tr>
+                <th colspan="9"><input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
+            </tr>
+            <tr>
+              <th st-sort="id">#</th>
+              <th st-sort="status">Status</th>
+              <th st-sort="created_at">Created At</th>
+              <th st-sort="updated_at">Updated At</th>
+              <th>Approval Status</th>
+              <th></th>
+            </tr>
+          </thead>
         <tbody ng-init="funnel();total()">
           <div class="col-md-4 col-sm-8">
           <canvas class="chart chart-horizontal-bar" chart-data="data" chart-labels="labels"
