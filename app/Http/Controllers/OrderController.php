@@ -259,9 +259,9 @@ class OrderController extends Controller
         $order->save();
       }else{
         $order = Order::with(['approvals' => function($q){
-          $q->where('user_id', Auth::manager()->id);
+          $q->where('user_id', Auth::user()->manager_id);
         }, 'users' => function($q){
-          $q->where('user_id', Auth::manager()->id);
+          $q->where('user_id', Auth::user()->manager_id);
         }])->find($id);
       
         $this->add_user_to_order($order, Auth::user()->manager_id, $id, 'approver');

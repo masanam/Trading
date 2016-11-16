@@ -374,18 +374,18 @@
 				<th>Total Price / mt</th>
 				<td>
 					<span ng-if="display.sell">
-					<h4>US${{ display.sell.min_price | number }}</h4>
+					<h4>US${{ display.sell.pivot.price | number }}</h4>
 					from {{ order.sells.length }} Suppliers
 					</span>
 				</td>
         <td>
 					<span ng-if="display.buy">
-					<h4>US${{ display.buy.max_price | number }}</h4>
+					<h4>US${{ display.buy.pivot.price | number }}</h4>
 					from {{ order.buys.length }} Customers
 					</span>
 				</td>
 			</tr>
-      <tr ng-show="order.pit_to_port !== NULL">
+      <tr ng-show="order.pit_to_port">
 				<th>Pit to Port / mt</th>
 				<td>
 					<span>
@@ -396,7 +396,7 @@
           &nbsp;
 				</td>
 			</tr>
-      <tr ng-show="order.transhipment !== NULL">
+      <tr ng-show="order.transhipment">
 				<th>Transhipment / mt</th>
 				<td colspan="2">
 					<span>
@@ -407,7 +407,7 @@
           &nbsp;
 				</td>
 			</tr>
-      <tr>
+      <tr ng-show="order.freight_cost">
 				<th>Freight Cost / mt</th>
 				<td colspan="2">
 					<span>
@@ -415,7 +415,7 @@
 					</span>
 				</td>
 			</tr>
-      <tr>
+      <tr ng-show="order.port_to_factory">
 				<th>Port to Factory / mt</th>
 				<td colspan="2">
 					<span>
@@ -423,7 +423,7 @@
 					</span>
 				</td>
 			</tr>
-      <tr>
+      <tr ng-show="order.insurance_cost">
 				<th>Insurance / mt</th>
 				<td colspan="2">
 					<span>
@@ -431,7 +431,7 @@
 					</span>
 				</td>
 			</tr>
-      <tr>
+      <tr ng-show="order.interest_cost">
 				<th>Interest / mt</th>
 				<td colspan="2">
 					<span>
@@ -439,7 +439,7 @@
 					</span>
 				</td>
 			</tr>
-      <tr>
+      <tr ng-show="order.surveyor_cost">
 				<th>Surveyor / mt</th>
 				<td colspan="2">
 					<span>
@@ -447,7 +447,7 @@
 					</span>
 				</td>
 			</tr>
-      <tr>
+      <tr ng-show="order.others_cost">
 				<th>Others / mt</th>
 				<td colspan="2">
 					<span>
@@ -459,20 +459,20 @@
 				<th>Coal Price</th>
 				<td>
 					<span ng-if="display.sell">
-					<h3>US${{ (display.sell.min_price + order.pit_to_port + order.transhipment) | number }}</h3>
+					<h3>US${{ (display.sell.pivot.price + order.pit_to_port + order.transhipment) | number }}</h3>
 					from {{ order.sells.length }} Suppliers
 					</span>
 				</td>
         <td>
 					<span ng-if="display.buy">
-					<h3>US${{ (display.buy.max_price - order.port_to_factory - order.freight_cost) | number }}</h3>
+					<h3>US${{ (display.buy.pivot.price - order.port_to_factory - order.freight_cost) | number }}</h3>
 					from {{ order.buys.length }} Customers
 					</span>
 				</td>
 			</tr>
-			<tr>
-				<td ng-if="(display.buy.max_price - order.port_to_factory - order.freight_cost) - (display.sell.min_price + order.pit_to_port + order.transhipment) > 0" colspan=3 style="text-align:center; "><h3 style="color: green">Expected Margin / mt: US${{ (display.buy.max_price - order.port_to_factory - order.freight_cost) - (display.sell.min_price + order.pit_to_port + order.transhipment) | number }}</h3></td>
-				<td ng-if="(display.buy.max_price - order.port_to_factory - order.freight_cost) - (display.sell.min_price + order.pit_to_port + order.transhipment) < 0" colspan=3 style="text-align:center; "><h3 style="color: red">Expected Margin / mt: US${{ (display.buy.max_price - order.port_to_factory - order.freight_cost) - (display.sell.min_price + order.pit_to_port + order.transhipment) | number }}</h3></td>
+			<tr ng-if="display.buy && display.sell">
+				<td ng-if="(display.buy.pivot.price - order.port_to_factory - order.freight_cost) - (display.sell.pivot.price + order.pit_to_port + order.transhipment) > 0" colspan=3 style="text-align:center; "><h3 style="color: green">Expected Margin / mt: US${{ (display.buy.pivot.price - order.port_to_factory - order.freight_cost) - (display.sell.pivot.price + order.pit_to_port + order.transhipment) | number }}</h3></td>
+				<td ng-if="(display.buy.pivot.price - order.port_to_factory - order.freight_cost) - (display.sell.pivot.price + order.pit_to_port + order.transhipment) < 0" colspan=3 style="text-align:center; "><h3 style="color: red">Expected Margin / mt: US${{ (display.buy.pivot.price - order.port_to_factory - order.freight_cost) - (display.sell.pivot.price + order.pit_to_port + order.transhipment) | number }}</h3></td>
 			</tr>
 		</tbody>
 	</table>

@@ -8,7 +8,7 @@ angular.module('order').controller('AddCostModalController', ['$uibModalInstance
       var order = $scope.order;
 
       order.$update(function (res) {
-        $scope.order = res;
+        $scope.findOne();
         
         //Notification.sendNotification('request_approval', $scope.order, false, false);
         $uibModalInstance.dismiss('success');

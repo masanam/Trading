@@ -125,12 +125,26 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
             function (res){
               $scope.order.sells = res.sells;
               $scope.display.sell = selectedItem;
-              $scope.display.totalSellPrice = parseFloat($scope.display.sell.min_price)-$scope.order.port_to_factory-$scope.order.freight_cost;
+              var sell_price = parseFloat($scope.display.sell.pivot.price);
+              if(parseFloat($scope.order.pit_to_port)){
+                sell_price += parseFloat($scope.order.pit_to_port);
+              }
+              if(parseFloat($scope.order.transhipment)){
+                sell_price += parseFloat($scope.order.transhipment);
+              }
+              $scope.display.totalSellPrice = sell_price;
             });
         } else {
           $scope.order.sells.push(selectedItem);
           $scope.display.sell = selectedItem;
-          $scope.display.totalSellPrice = parseFloat($scope.display.sell.min_price)-$scope.order.port_to_factory-$scope.order.freight_cost;
+          var sell_price = parseFloat($scope.display.sell.pivot.price);
+          if(parseFloat($scope.order.pit_to_port)){
+            sell_price += parseFloat($scope.order.pit_to_port);
+          }
+          if(parseFloat($scope.order.transhipment)){
+            sell_price += parseFloat($scope.order.transhipment);
+          }
+          $scope.display.totalSellPrice = sell_price;
         }
       }, function () {
         console.log('Modal dismissed at: ' + new Date());
@@ -166,14 +180,27 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
             { buy:selectedItem.id, volume:selectedItem.pivot.volume, price:selectedItem.pivot.price, trading_term:selectedItem.pivot.trading_term, payment_term:selectedItem.pivot.payment_term },
             function (res){
               $scope.order.buys = res.buys;
-              console.log(res.buys);
               $scope.display.buy = selectedItem;
-              $scope.display.totalBuyPrice = parseFloat($scope.display.buy.max_price)+$scope.order.pit_to_port+$scope.order.transhipment;
+              var buy_price = parseFloat($scope.display.buy.pivot.price);
+              if(parseFloat($scope.order.port_to_factory)){
+                buy_price -= parseFloat($scope.order.port_to_factory);
+              }
+              if(parseFloat($scope.order.freight_cost)){
+                buy_price -= parseFloat($scope.order.freight_cost);
+              }
+              $scope.display.totalBuyPrice = buy_price;
             });
         } else {
           $scope.order.buys.push(selectedItem);
           $scope.display.buy = selectedItem;
-          $scope.display.totalBuyPrice = parseFloat($scope.display.buy.max_price)+$scope.order.pit_to_port+$scope.order.transhipment;
+          var buy_price = parseFloat($scope.display.buy.pivot.price);
+          if(parseFloat($scope.order.port_to_factory)){
+            buy_price -= parseFloat($scope.order.port_to_factory);
+          }
+          if(parseFloat($scope.order.freight_cost)){
+            buy_price -= parseFloat($scope.order.freight_cost);
+          }
+          $scope.display.totalBuyPrice = buy_price;
         }
       }, function () {
         console.log('Modal dismissed at: ' + new Date());
