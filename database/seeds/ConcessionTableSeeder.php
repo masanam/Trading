@@ -39,7 +39,7 @@ class ConcessionTableSeeder extends Seeder
                 'port_distance' => NULL,
                 'license_type' => NULL,
                 'license_expiry_date' => NULL,
-                'status' => NULL
+                'status' => 'a'
             ],
             [
                 'id' => 2,
@@ -67,7 +67,7 @@ class ConcessionTableSeeder extends Seeder
                 'port_distance' => NULL,
                 'license_type' => NULL,
                 'license_expiry_date' => NULL,
-                'status' => NULL
+                'status' => 'a'
             ],
             [
                 'id' => 3,
@@ -95,7 +95,7 @@ class ConcessionTableSeeder extends Seeder
                 'port_distance' => NULL,
                 'license_type' => NULL,
                 'license_expiry_date' => NULL,
-                'status' => NULL
+                'status' => 'a'
             ],
             [
                 'id' => 4,
@@ -123,7 +123,7 @@ class ConcessionTableSeeder extends Seeder
                 'port_distance' => NULL,
                 'license_type' => NULL,
                 'license_expiry_date' => NULL,
-                'status' => NULL
+                'status' => 'a'
             ],
             [
                 'id' => 5,
@@ -151,40 +151,38 @@ class ConcessionTableSeeder extends Seeder
                 'port_distance' => NULL,
                 'license_type' => NULL,
                 'license_expiry_date' => NULL,
-                'status' => NULL
+                'status' => 'a'
             ],
         ];
         
         foreach($concessions as $concession)
             Concession::create([
-                'id' => $concession->id
-                'concession_name' => $concession->concession_name
-                'seller_id' => $concession->seller_id
-                'owner' => $concession->owner
-                'address' => $concession->address
-                'city' => $concession->city
-                'country' => $concession->country
-                'latitude' => $concession->latitude
-                'longitude' => $concession->longitude
-                'polygon' => $concession->polygon
-                'size' => $concession->size
-                'stripping_ratio' => $concession->stripping_ratio
-                'resource' => $concession->resource
-                'reserves' => $concession->reserves
-                'contracted_volume' => $concession->contracted_volume
-                'remaining_volume' => $concession->remaining_volume
-                'annual_production' => $concession->annual_production
-                'hauling_road_name' => $concession->hauling_road_name
-                'stockpile_capacity' => $concession->stockpile_capacity
-                'stockpile_coverage' => $concession->stockpile_coverage
-                'stockpile_distance' => $concession->stockpile_distance
-                'port_id' => $concession->port_id
-                'port_distance' => $concession->port_distance
-                'license_type' => $concession->license_type
-                'license_expiry_date' => $concession->license_expiry_date
-                'status' => $concession->status
-                'created_at' => $concession->created_at
-                'updated_at' => $concession->updated_at
+                'id' => $concession['id'],
+                'concession_name' => $concession['concession_name'],
+                'seller_id' => $concession['seller_id'],
+                'owner' => $concession['owner'],
+                'address' => $concession['address'],
+                'city' => $concession['city'],
+                'country' => $concession['country'],
+                'latitude' => $concession['latitude'],
+                'longitude' => $concession['longitude'],
+                'polygon' => $concession['polygon'],
+                'size' => $concession['size'],
+                'stripping_ratio' => $concession['stripping_ratio'],
+                'resource' => $concession['resource'],
+                'reserves' => $concession['reserves'],
+                'contracted_volume' => $concession['contracted_volume'],
+                'remaining_volume' => $concession['remaining_volume'],
+                'annual_production' => $concession['annual_production'],
+                'hauling_road_name' => $concession['hauling_road_name'],
+                'stockpile_capacity' => $concession['stockpile_capacity'],
+                'stockpile_coverage' => $concession['stockpile_coverage'],
+                'stockpile_distance' => $concession['stockpile_distance'],
+                'port_id' => $concession['port_id'],
+                'port_distance' => $concession['port_distance'],
+                'license_type' => $concession['license_type'],
+                'license_expiry_date' => $concession['license_expiry_date'],
+                'status' => $concession['status']
             ]);
 
 
@@ -213,7 +211,7 @@ class ConcessionTableSeeder extends Seeder
         //     // 'river_capacity' => '' ,
         //     'license_type' => 'IUP' ,
         //     'license_expiry_date' => '2022-04-05' ,
-        //     'status' => 'a'
+        //     'status' => 'a''
         // ]);
         
         // Concession::create([
@@ -241,7 +239,7 @@ class ConcessionTableSeeder extends Seeder
         //     // 'river_capacity' => '' ,
         //     'license_type' => 'IUP' ,
         //     'license_expiry_date' => '2022-04-05' ,
-        //     'status' => 'a'
+        //     'status' => 'a''
         // ]);
 
         // Concession::create([
@@ -269,7 +267,7 @@ class ConcessionTableSeeder extends Seeder
         //     // 'river_capacity' => '' ,
         //     'license_type' => 'IUP' ,
         //     'license_expiry_date' => '2022-04-05' ,
-        //     'status' => 'a'
+        //     'status' => 'a''
         // ]);
         
         
