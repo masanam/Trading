@@ -449,7 +449,9 @@ class BuyOrderController extends Controller
                 })
                 ->where('order_status', $order_status)
                 ->whereIn('buy_order.user_id', $lower)
-                ->select('buy_order.id', 'buy_order.user_id', 'order_date', 'order_deadline', 'expired_date', 'buy_order.address', 'buy_order.city', 'buy_order.country', DB::raw('NULL as product_name') , 
+                ->select('buy_order.id', 'buy_order.user_id', 'order_date', 'order_deadline', 'expired_date',
+                    'buy_order.address', 'buy_order.city', 'buy_order.country',
+                    DB::raw('buy_order.product_name as product_name') , 
                     DB::raw('SUM(order_details.volume) as used_volume'),
                     'typical_quality', 'buy_order.volume', 'max_price', 'order_status', 'users.name', 'company_name');
             
@@ -460,9 +462,12 @@ class BuyOrderController extends Controller
                 })
                 ->where('order_status', $order_status)
                 ->whereNotIn('user_id', $lower)
-                ->select('buy_order.id', 'user_id', 'order_date', 'order_deadline', 'expired_date', 'address', 'city', 'country', DB::raw('NULL as product_name') , 'typical_quality', 'buy_order.volume', 'max_price', 'order_status', 
+                ->select('buy_order.id', 'buy_order.user_id', 'order_date', 'order_deadline', 'expired_date',
+                    'buy_order.address', 'buy_order.city', 'buy_order.country',
+                    DB::raw('NULL as product_name'), 
                     DB::raw('SUM(order_details.volume) as used_volume'),
-                    'users.name', DB::raw('NULL as company_name'));
+                    'typical_quality', 'buy_order.volume', 'max_price', 'order_status', 'users.name',
+                    DB::raw('NULL as company_name'));
             // foreach ($buy_order2 as $buy) {
             //     $buy->buyer = [];
             // }
