@@ -7,10 +7,6 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
     $scope.$watchGroup(['browse.status', 'browse.possession'], function() { $scope.find(); });
 
     $scope.display = {};
-    $scope.display.totalBuyPrice = 51000;
-    $scope.display.totalBuyVolume = 1000;
-    $scope.display.totalSellPrice = 39000;
-    $scope.display.totalSellVolume = 1000;
 
     // Remove existing order
     $scope.remove = function (order) {

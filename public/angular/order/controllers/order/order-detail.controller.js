@@ -125,11 +125,12 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
             function (res){
               $scope.order.sells = res.sells;
               $scope.display.sell = selectedItem;
+              $scope.display.totalSellPrice = parseFloat($scope.display.sell.min_price)-$scope.order.port_to_factory-$scope.order.freight_cost;
             });
         } else {
           $scope.order.sells.push(selectedItem);
           $scope.display.sell = selectedItem;
-          console.log('sell');
+          $scope.display.totalSellPrice = parseFloat($scope.display.sell.min_price)-$scope.order.port_to_factory-$scope.order.freight_cost;
         }
       }, function () {
         console.log('Modal dismissed at: ' + new Date());
@@ -167,11 +168,12 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
               $scope.order.buys = res.buys;
               console.log(res.buys);
               $scope.display.buy = selectedItem;
+              $scope.display.totalBuyPrice = parseFloat($scope.display.buy.max_price)+$scope.order.pit_to_port+$scope.order.transhipment;
             });
         } else {
           $scope.order.buys.push(selectedItem);
           $scope.display.buy = selectedItem;
-          console.log('buy');
+          $scope.display.totalBuyPrice = parseFloat($scope.display.buy.max_price)+$scope.order.pit_to_port+$scope.order.transhipment;
         }
       }, function () {
         console.log('Modal dismissed at: ' + new Date());

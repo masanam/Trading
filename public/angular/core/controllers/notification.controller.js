@@ -26,4 +26,5 @@ angular.module('notification').controller('NotificationController', ['$scope', '
       console.log(res);
     });
   };
+  
 }]);

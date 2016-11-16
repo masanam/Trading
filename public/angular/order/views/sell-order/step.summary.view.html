@@ -44,6 +44,12 @@
           <div class="input-group">
             <span class="input-group-addon">$</span>
             <input type="text" class="form-control" ng-model="sell_order.min_price">
+            <p class="form-inline">
+              <select class="form-control" ng-model="sell_order.price_type">
+                <option value="Coal Only">Coal Only</option>
+                <option value="All In">All In</option>
+              </select>
+            </p>
           </div>
           <label>Laycan Periode : </label>
           <p class="form-inline">
@@ -65,6 +71,7 @@
               <option value="CNF">CNF</option>
               <option value="CIF">CIF</option>
               <option value="FAS">FAS</option>
+              <option value="FOT">FOT</option>
               <option value="FOB">FOB</option>
               <option value="Franco">Franco</option>
               <option value="">Other</option>

@@ -27,9 +27,7 @@ angular.module('order').controller('BuyOrderController', ['$scope', '$stateParam
       });
       Order.query({ type: 'sell', order: true, order_id: $scope.buy_orderId, limit:5 }, function(res){
         for (var i = 0; i < res.length; i++) {
-          if(res[i].gcv_adb_min_diff <= 150 && res[i].gcv_adb_max_diff <= 150 
-            && res[i].gcv_arb_min_diff <= 150 && res[i].gcv_arb_max_diff <= 150
-            && res[i].ncv_min_diff <= 150 && res[i].ncv_max_diff <= 150){
+          if(res[i].gcv_adb_min_diff <= 150 && res[i].gcv_adb_max_diff <= 150 && res[i].gcv_arb_min_diff <= 150 && res[i].gcv_arb_max_diff <= 150 && res[i].ncv_min_diff <= 150 && res[i].ncv_max_diff <= 150){
             $scope.recomended[i] = res[i];
           }
         }
@@ -41,9 +39,7 @@ angular.module('order').controller('BuyOrderController', ['$scope', '$stateParam
       $scope.recomended = [];
       Order.query({ type: 'sell', order: true, order_id: $scope.buy_orderId, limit:5 }, function(res){
         for (var i = 0; i < res.length; i++) {
-          if(res[i].gcv_adb_min_diff <= 150 && res[i].gcv_adb_max_diff <= 150 
-            && res[i].gcv_arb_min_diff <= 150 && res[i].gcv_arb_max_diff <= 150
-            && res[i].ncv_min_diff <= 150 && res[i].ncv_max_diff <= 150){
+          if(res[i].gcv_adb_min_diff <= 150 && res[i].gcv_adb_max_diff <= 150 && res[i].gcv_arb_min_diff <= 150 && res[i].gcv_arb_max_diff <= 150 && res[i].ncv_min_diff <= 150 && res[i].ncv_max_diff <= 150){
             $scope.recomended[i] = res[i];
           }
         }
@@ -55,9 +51,7 @@ angular.module('order').controller('BuyOrderController', ['$scope', '$stateParam
       $scope.recomended = [];
       Order.query({ type: 'sell', supplier: true, order_id: $scope.buy_orderId, limit:5 }, function(res){
         for (var i = 0; i < res.length; i++) {
-          if(res[i].gcv_adb_min_diff <= 150 && res[i].gcv_adb_max_diff <= 150 
-            && res[i].gcv_arb_min_diff <= 150 && res[i].gcv_arb_max_diff <= 150
-            && res[i].ncv_min_diff <= 150 && res[i].ncv_max_diff <= 150){
+          if(res[i].gcv_adb_min_diff <= 150 && res[i].gcv_adb_max_diff <= 150 && res[i].gcv_arb_min_diff <= 150 && res[i].gcv_arb_max_diff <= 150 && res[i].ncv_min_diff <= 150 && res[i].ncv_max_diff <= 150){
             $scope.recomended[i] = res[i];
           }
         }
