@@ -33,7 +33,7 @@ angular.module('order').factory('Term', function (){
       'FOT', 'FOB BARGE', 'FOB MV', 'CNF', 'CIF', 'FRANCO'
     ],
     payment : [
-      'PIA', 'NET7', 'NET30', 'EOM', 'COD', 'CND', 'CBS'
+      'TT', 'LC', 'LC USANCE'
     ]
   };
 });
