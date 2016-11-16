@@ -7,6 +7,16 @@ angular.module('factory').controller('CustomerFactoryModalController',
       $scope.ports = Port.query({ type: 'buyer', action: 'allMy', id: $stateParams.id });
     };
 
+    var map;
+    $scope.$on('mapInitialized', function(evt, evtMap) {
+      map = evtMap;
+      $scope.markerMove = function(e) {
+        $scope.factory.latitude = e.latLng.lat();
+        $scope.factory.longitude = e.latLng.lng();
+      };
+    });
+
+
     $scope.init = function () {
       $scope.factory = new Factory();
     };
