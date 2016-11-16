@@ -9,7 +9,8 @@
       <th st-sort="order_date">Input Date</th>
       <th st-sort="company_name">Company</th>
       <th st-sort="product_name">Quality</th>
-      <th st-sort="volume">Quantity</th>
+      <th st-sort="volume">Qty</th>
+      <th st-sort="volume">Qty Remaining</th>
       <th st-sort="order_deadline">Lead Expired Date</th>
       <th st-sort="max_price">Price / Tonnes</th>
       <th st-sort="city">Location</th>
@@ -25,7 +26,8 @@
       <td>{{ buy_order.order_date | date : 'd MMMM yyyy' }}</td>
       <td>{{ buy_order.company_name }}</td>
       <td>{{ buy_order.typical_quality }}</td>
-      <td>{{ buy_order.volume }} Metric Ton</td>
+      <td>{{ buy_order.volume }} mt</td>
+      <td>{{ buy_order.volume - buy_order.used_volume }} mt</td>
       <td>{{ buy_order.order_deadline | date : 'd MMMM yyyy' }}</td>
       <td>{{ buy_order.max_price | currency : $ : 2}}</td>
       <td>{{ buy_order.city }}</td>
