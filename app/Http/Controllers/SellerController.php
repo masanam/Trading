@@ -25,7 +25,7 @@ class SellerController extends Controller
      */
     public function index(Request $request)
     {
-        $seller = Seller::with('SellOrder')->where('status', 'a');
+        $seller = Seller::with('SellOrder', 'User')->where('status', 'a');
         if ($request->q) $seller->where('company_name', 'LIKE', '%'.$request->q.'%');
         $seller = $seller->get();
 
@@ -63,6 +63,7 @@ class SellerController extends Controller
         $seller->industry = $request->industry;
         $seller->total_annual_sales = $request->total_annual_sales;
         $seller->preferred_trading_term = $request->preferred_trading_term;
+        $seller->preferred_trading_term_detail = $request->preferred_trading_term_detail;
         $seller->preferred_payment_term = $request->preferred_payment_term; 
         $seller->purchasing_countries = $request->purchasing_countries;
         $seller->description = $request->description;
@@ -146,6 +147,7 @@ class SellerController extends Controller
         $seller->industry = $request->industry;
         $seller->total_annual_sales = $request->total_annual_sales;
         $seller->preferred_trading_term = $request->preferred_trading_term;
+        $seller->preferred_trading_term_detail = $request->preferred_trading_term_detail;
         $seller->preferred_payment_term = $request->preferred_payment_term; 
         $seller->purchasing_countries = $request->purchasing_countries;
         $seller->description = $request->description;

@@ -76,7 +76,7 @@
       <label class="btn btn-default" ng-model="seller.preferred_trading_term" uib-btn-radio="'FOB'">FOB</label>
       <label class="btn btn-default" ng-model="seller.preferred_trading_term" uib-btn-radio="'Franco'">Franco</label>
       <div class="input-group" style="margin-bottom: 5px;">
-        <input name="preferred_trading_term" type="text" class="form-control" id="total_annual_sales" ng-model="seller.preferred_trading_term" placeholder="Input Other Term">
+        <input name="preferred_trading_term_detail" type="text" class="form-control" id="total_annual_sales" ng-model="seller.preferred_trading_term_detail" placeholder="Detail">
       </div>
     </div>
   </div>
@@ -85,9 +85,10 @@
 <div class="form-group">
   <label for="headquarter_location">Preferred Payment Term*:</label>
   <select name="preferred_payment_term" id="preferred_payment_term" class="form-control"
-      ng-model="seller.preferred_payment_term">
-      <option ng-repeat="option in data.availableOptions" value="{{option.id}}">{{option.name}}</option>
+    ng-model="seller.preferred_payment_term" ng-change="freetext()">
+    <option ng-repeat="option in data.availableOptions" value="{{option.id}}">{{option.name}}</option>
   </select>
+  <input type="text" class="form-control" ng-model="seller.preferred_payment_term" placeholder="Payment Terms" ng-if="seller.freetext===true"/>
 </div>
 
 <div class="form-group">
@@ -98,10 +99,6 @@
 <div class="form-group">
   <label for="description">Description:</label>
   <textarea name="description" class="form-control" id="description" ng-model="seller.description"></textarea>
-</div>
-
-<div class="form-group">
-  <label ng-show="error" class="alert alert-danger">{{error}}</label>
 </div>
 
 <button type="submit" class="btn btn-default">Submit</button>

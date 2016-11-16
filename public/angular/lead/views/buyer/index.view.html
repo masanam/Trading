@@ -22,7 +22,8 @@
               <th st-sort="company_name">Company</th>
               <th st-sort="phone">Phone</th>
               <th st-sort="email">Email</th>
-              <th st-sort="buy_order[0].order_date">Last Buy Order Date</th>
+              <th st-sort="user.name">Creator</th>
+              <!--th st-sort="buy_order[0].order_date">Last Buy Order Date</th-->
               <th st-sort=""></th>
           </tr>
         </thead>
@@ -32,10 +33,11 @@
             <td>{{ buyer.company_name }}</td>
             <td>{{ buyer.phone }}</td>
             <td>{{ buyer.email }}</td>
-            <td>
+            <td>{{ buyer.user.name }}</td>
+            <!--td>
               <span ng-if="buyer.buy_order[0]">{{ buyer.buy_order[0].order_date | convertToDate | date : 'd MMMM yyyy' }}</span>
               <span ng-if="!buyer.buy_order[0]">N/A</span>
-            </td>
+            </td-->
             <td>
               <a ui-sref="lead.view-buyer({ id: buyer.id })"><i class="glyphicon glyphicon-info-sign"></i></a>
               <a ui-sref="lead.update-buyer({ id: buyer.id })"><i class="glyphicon glyphicon-pencil"></i></a>

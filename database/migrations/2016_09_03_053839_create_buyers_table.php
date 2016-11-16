@@ -30,6 +30,7 @@ class CreateBuyersTable extends Migration
             $table->string('industry'); //cement, powerplant, pulp paper, general
             $table->integer('annual_demand');
             $table->string('preferred_trading_term');
+            $table->string('preferred_trading_term_detail')->nullable();
             $table->string('preferred_payment_term');
             $table->text('description');
             $table->string('contact_person')->nullable();

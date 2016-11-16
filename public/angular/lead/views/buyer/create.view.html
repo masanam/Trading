@@ -34,7 +34,7 @@
               <label for="id">Name of Company :</label>
               <ui-select ng-model="buyer.selected" style="min-width: 300px;" title="Choose a person" append-to-body="true">
                 <ui-select-match placeholder="Name Of Company">{{ buyer.selected.company_name }}</ui-select-match>
-                <ui-select-choices repeat="buyer in buyers | propsFilter: {company_name: $select.search}">
+                <ui-select-choices repeat="buyer in buyers | propsFilter: {company_name: $select.search} | orderBy:'company_name'">
                   <div ng-bind-html="company_name | highlight: $select.search"></div>
                   <small>
                     {{buyer.company_name}}
@@ -99,7 +99,7 @@
                   <b>Annual Demand</b> <a class="pull-right">{{buyer.selected.annual_demand}} <span class='badge'>Million Ton</span></a> 
                 </li>
                 <li class="list-group-item">
-                  <b>Trading Term</b> <a class="pull-right">{{buyer.selected.preferred_trading_term}}</a>
+                  <b>Shipping Term</b> <a class="pull-right">{{buyer.selected.preferred_trading_term}} {{buyer.selected.preferred_trading_term_detail}}</a>
                 </li>
                 <li class="list-group-item">
                   <b>Payment Term</b> <a class="pull-right">{{buyer.selected.preferred_payment_term}}</a>

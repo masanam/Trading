@@ -128,6 +128,7 @@ angular.module('order').controller('BuyOrderSummaryController', ['$scope', '$sta
         $scope.order.expired_date = $scope.buy_order.expired_date;
         $scope.order.max_price = $scope.buy_order.max_price;
         $scope.order.trading_term = $scope.buy_order.trading_term;
+        $scope.order.trading_term_detail = $scope.buy_order.trading_term_detail;
         $scope.order.payment_terms = $scope.buy_order.payment_terms;
         $scope.order.penalty_desc = $scope.buy_order.penalty;
         

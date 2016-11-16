@@ -21,7 +21,7 @@ class UsersTableSeeder extends Seeder
             'email' => 'fu@gems.com',
             'phone' => '+62811111111',
             'password' => bcrypt('secret'),
-            'role' => 'trader',
+            'role' => 'manager',
             'status' => 'a'
         ]);
 
@@ -33,7 +33,7 @@ class UsersTableSeeder extends Seeder
             'email' => 'mosu@gems.com',
             'phone' => '+62811111112',
             'password' => bcrypt('secret'),
-            'role' => 'trader',
+            'role' => 'manager',
             'manager_id' => 1,
             'status' => 'a'
         ]);
@@ -46,7 +46,7 @@ class UsersTableSeeder extends Seeder
             'email' => 'albertsantos@gems.com',
             'phone' => '+62811111113',
             'password' => bcrypt('secret'),
-            'role' => 'trader',
+            'role' => 'manager',
             'manager_id' => 2,
             'status' => 'a'
         ]);
@@ -95,7 +95,7 @@ class UsersTableSeeder extends Seeder
             'email' => 'gio@gems.com',
             'phone' => '+62811111234',
             'password' => bcrypt('secret'),
-            'role' => 'trader',
+            'role' => 'manager',
             'manager_id' => 3,
             'status' => 'a'
         ]);
