@@ -11,6 +11,15 @@ angular.module('order').controller('PortModalBuyOrderController',
       $scope.port.has_crusher = 0;
     };
 
+    var map;
+    $scope.$on('mapInitialized', function(evt, evtMap) {
+      map = evtMap;
+      $scope.markerMove = function(e) {
+        $scope.port.latitude = parseFloat(e.latLng.lat());
+        $scope.port.longitude = parseFloat(e.latLng.lng());
+      };
+    });
+
     $scope.create = function(){
       $scope.port.buyer_id = $stateParams.id;
       $scope.distance = $scope.port.distance;
