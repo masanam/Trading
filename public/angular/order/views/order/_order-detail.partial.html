@@ -83,7 +83,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td>Trx Value</td>
+				<td>Volume (mt) - Price (USD)</td>
 				<td>
 					<span ng-if="display.sell">
 						{{ display.sell.pivot.volume | number }}mt - US$ {{ display.sell.pivot.price | number }}
@@ -378,7 +378,7 @@
 				<th></th>
         <th></th>
         <th>
-          <button ng-if="order.id" class="btn btn-default" ng-click="addCostModal()"> Update </button>
+          <button class="btn btn-default" ng-click="addCostModal()"> Update Additional Cost </button>
         </th>
       </tr>
       <tr>
