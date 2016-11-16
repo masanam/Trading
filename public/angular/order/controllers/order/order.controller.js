@@ -69,6 +69,7 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
 
       Order.get({ id: $scope.order.id, action: 'approve', status : status }, function (res) {
         $scope.order = res;
+        if(status === 'r') $scope.approving = false;
         Notification.sendNotification(status, $scope.order, false, false);
       }, function (err) {
         $scope.error = err.data.message;
@@ -85,7 +86,7 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
           if($scope.order.users[i].pivot.role === 'approver'){
             $scope.approver = true;
             for (var j in $scope.order.approvals) {
-              if($scope.order.approvals[j].status === 'a' && $scope.order.approvals[j].user_id === Authentication.user.id){
+              if($scope.order.approvals[j].pivot.status === 'a' && $scope.order.approvals[j].id === Authentication.user.id){
                 $scope.approving = true;
               }
             }

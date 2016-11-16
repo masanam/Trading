@@ -14,7 +14,7 @@ angular.module('order').controller('OrderReasonModalController', ['$uibModalInst
         else if($scope.status === 'p') order.request_reason = $scope.reason;
 
         order.$update(function (res) {
-          $scope.order.status = res.status;
+          $scope.order = res;
           if($scope.status === 'x') $scope.order.cancel_reason = $scope.reason;
           else if($scope.status === 'f') $scope.order.finalize_reason = $scope.reason;
           else if($scope.status === 'p') $scope.order.request_reason = $scope.reason;

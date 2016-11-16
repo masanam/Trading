@@ -396,7 +396,7 @@
 					</span>
 				</td>
 			</tr>
-      <tr ng-show="order.pit_to_port">
+      <tr ng-show="order.pit_to_port !== '' || order.pit_to_port !== 0 || order.pit_to_port !== undefined">
 				<th>Pit to Port / mt</th>
 				<td>
 					<span>
