@@ -457,10 +457,10 @@ class SellOrderController extends Controller
                 ->select(
                     'sell_order.id', 'user_id', 'order_date', 'order_deadline',
                     'expired_date', 'address','city', 'country', 
-                    DB::raw('NULL as product_name') ,
-                    DB::raw('NULL as company_name'),
+                    DB::raw('NULL as product_name'),
                     DB::raw('SUM(order_details.volume) as used_volume'),
-                    'typical_quality', 'sell_order.volume', 'min_price', 'order_status', 'users.name'
+                    'typical_quality', 'sell_order.volume', 'min_price', 'order_status', 'users.name',
+                    DB::raw('NULL as company_name')
                 );
 
             $sell_order = $sell_order2->union($sell_order)->get();
