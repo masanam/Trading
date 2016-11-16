@@ -14,7 +14,7 @@ use Illuminate\Http\Request;
 */
 
 Route::group(['middleware' => ['cors']], function() {
-    /* 
+    /*
      * USER API GROUP
      * this API contains ALL the things needed by coalpedia to manage
      * all their data: contact, buyer, seller, vendor
@@ -32,7 +32,7 @@ Route::group(['middleware' => ['cors']], function() {
     Route::get('user/current', 'UserController@currentUser');
     Route::resource('user', 'UserController', ['except' => [ 'create', 'edit' ]]);
 
-    /* 
+    /*
      * COALPEDIA API GROUP
      * this API contains ALL the things needed by coalpedia to manage
      * all their data: contact, buyer, seller, vendor
@@ -83,7 +83,7 @@ Route::group(['middleware' => ['cors']], function() {
     ]]);
 
 
-    /* 
+    /*
      * INDEX API GROUP
      * index management is the API that needed by
      * Index frontend or the Dashboards
@@ -103,7 +103,7 @@ Route::group(['middleware' => ['cors']], function() {
     ]]);
 
 
-    /* 
+    /*
      * ORDER API GROUP
      * Managing orders (buy/sell) done here
      */
@@ -121,17 +121,18 @@ Route::group(['middleware' => ['cors']], function() {
 
     Route::get('order/lastOrder/{type}/{id}', 'BuySellOrderController@lastOrderByUser');
     Route::get('order/lastOrders/{type}/{id}', 'BuySellOrderController@lastOrderForDetail');
-    
+
 
     Route::resource('order/sell', 'SellOrderController', ['except' => [ 'create', 'edit' ]]);
     Route::resource('order/buy', 'BuyOrderController', ['except' => [ 'create', 'edit' ]]);
 
 
-    /* 
+    /*
      * DEAL API GROUP
      * Managing the deals (buy/sell) done here
      */
-    
+
+    Route::get('order/funnel','OrderController@funnel');
     Route::post('order/{id}/stage', 'OrderController@stage');
     Route::get('order/{id}/stage', 'OrderController@stageOwn');
     Route::get('order/{id}/unstage', 'OrderController@unstage');
