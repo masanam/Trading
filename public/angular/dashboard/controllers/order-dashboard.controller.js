@@ -14,9 +14,30 @@ angular.module('dashboard').controller('OrderDashboardController', ['$scope', 'I
     };
 
     $scope.funnel=function () {
-      $scope.labels = ['Draft', 'Pending', 'Approve', 'Finalized'];
-      $scope.series = ['Series A', 'Series B'];
-      $scope.data = Order.query({ action:'funnel' });
+      var order_funnel = Order.get({ action:'funnel' }, function(res){
+        console.log(res);
+        $scope.labels = ['Leads', 'Pending', 'Approve', 'Finalized'];
+        $scope.series = ['Buy', 'Sell', 'Order'];
+        $scope.data= [
+          [res['lead-buy'],0,0,0],
+          [res['lead-sell'],0,0,0],
+          [0,res['pending'],res['approve'],res['finalized']]
+        ];
+        $scope.onClick = function (point,evt) {
+          console.log(point,evt);
+        };
+        $scope.type = 'StackedBar';
+        $scope.options = {
+          scales: {
+            xAxes: [{
+              stacked: true,
+            }],
+            yAxes: [{
+              stacked: true
+            }]
+          }
+        };
+      });
     };
   }
 ]);

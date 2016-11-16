@@ -97,7 +97,7 @@ class OrderController extends Controller
         ]);
       }
     }
-      
+
     if(count($req->sells) > 0) {
       foreach($req->sells as $sell){
         $sell_order = SellOrder::with('orders', 'orders.sells', 'orders.buys')->find($sell['id']);
@@ -120,7 +120,7 @@ class OrderController extends Controller
         ]);
       }
     }
-    
+
     return response()->json($order, 200);
   }
 
@@ -276,26 +276,23 @@ class OrderController extends Controller
 
   public function funnel()
   {
-    $get=Order::orderBy('status')->select('status')->where('status','!=','c')
-                              ->get();
-    $d=0;
-    $p=0;
-    $f=0;
-    $e=0;
+    $get=Order::orderBy('status')->select('status')->where('status','!=','c')->get();
+    $getLeadsell=SellOrder::orderBy('order_status')->select('order_status')->where('order_status','=','v')->orWhere('order_status','=','l')->count();
+    $getLeadbuy=BuyOrder::orderBy('order_status')->select('order_status')->where('order_status','=','v')->orWhere('order_status','=','l')->count();
+    $pending=0;
+    $Finalized=0;
+    $approved=0;
     foreach ($get as $count) {
-      if ($count->status=='d') {
-        $d=$d+1;
-      }
-      elseif ($count->status=='p') {
-        $p=$p+1;
+    if ($count->status=='p') {
+        $pending=$pending+1;
       }
       elseif ($count->status=='e') {
-        $e=$e+1;
+        $approved=$approved+1;
       }
       elseif ($count->status=='e') {
-        $f=$f+1;
+        $Finalized=$Finalized+1;
       }
-      $count=[$d,$p,$e,$f];
+      $count=['lead-sell'=>$getLeadsell,'lead-buy'=>$getLeadbuy,'pending'=>$pending,'approved'=>$approved,'finalized'=>$Finalized];
     }
     return response()->json($count,200);
   }
