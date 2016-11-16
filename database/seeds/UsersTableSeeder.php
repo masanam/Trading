@@ -114,14 +114,15 @@ class UsersTableSeeder extends Seeder
 
         foreach($users as $user){
             User::create([
-                'name' => $user->name,
-                'title' => $user->title,
-                'image' => $user->image,
-                'email' => $user->email,
-                'phone' => $user->phone,
-                'password' => $user->password,
-                'role' => $user->role,
-                'status' => $user->status 
+                'id' => $user['id'],
+                'name' => $user['name'],
+                'title' => $user['title'],
+                'image' => $user['image'],
+                'email' => $user['email'],
+                'phone' => $user['phone'],
+                'password' => $user['password'],
+                'role' => $user['role'],
+                'status' => $user['status'] 
             ]);
         }
     }
