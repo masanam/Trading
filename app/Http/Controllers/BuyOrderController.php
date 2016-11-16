@@ -93,6 +93,7 @@ class BuyOrderController extends Controller
         else if($request->order){
             $user_id = Auth::User()->id;
             $buy_order = BuyOrder::with('Buyer','User','trader')->where([['order_status', '1'], ['user_id', $user_id],])->orwhere([['order_status', '2'], ['user_id', $user_id],])->orwhere([['order_status', '3'], ['user_id', $user_id],])->orwhere([['order_status', '4'], ['user_id', $user_id],])->orwhere('order_status', 'v')->orwhere('order_status', 'l')->orwhere('order_status', 's')->orwhere('order_status', 'p')->get();
+            array_merge($buy_order, $this->showApprovedLeads());
         }
 
         return response()->json($buy_order, 200);
@@ -104,7 +105,7 @@ class BuyOrderController extends Controller
     public function showApprovedLeads() {
         $i = 0;
         $buy_order = [];
-        $query = BuyOrder::with('orders', 'orders.buys', 'orders.sells')->get();
+        $query = BuyOrder::with('Buyer','User','trader', 'orders', 'orders.buys', 'orders.sells')->get();
 
         // dd($query);
 
@@ -127,7 +128,7 @@ class BuyOrderController extends Controller
             echo '<br>';
         }
 
-        return response()->json($buy_order, 200);
+        return $buy_order;
     }
 
     /**

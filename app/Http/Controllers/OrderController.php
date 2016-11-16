@@ -73,8 +73,13 @@ class OrderController extends Controller
     $order->status = 'd';
     $order->save();
 
-    if(count($req->buys) > 0)
+    if(count($req->buys) > 0){
       foreach($req->buys as $buy){
+        $buy_order = SellOrder::with('orders', 'orders.sells', 'orders.buys')->find($buy['id']);
+        if($buy_order->orders) {
+          $buy_order->orders->status = 'c';
+        }
+
         $order->buys()->attach([
           $buy['id'] => $buy['pivot'] 
         ]);
@@ -91,12 +96,19 @@ class OrderController extends Controller
           'user_id' => Auth::user()->id,
         ]);
       }
-    if(count($req->sells) > 0)
+    }
+      
+    if(count($req->sells) > 0) {
       foreach($req->sells as $sell){
+        $sell_order = SellOrder::with('orders', 'orders.sells', 'orders.buys')->find($sell['id']);
+        if($sell_order->orders) {
+          $sell_order->orders->status = 'c';
+        }
+
         $order->sells()->attach([ $sell['id'] => $sell['pivot'] ]);
         SellOrder::find($sell['id'])->reconcile();
 
-        $order_detail = $order->sells->find($sell['id'])->pivot->id;
+        $order_detail = $order->sells->find($sell['id']);
         OrderNegotiation::create([
           'order_detail_id' => $order_detail->id,
           'notes' => 'Initial Deal',
@@ -107,7 +119,8 @@ class OrderController extends Controller
           'user_id' => Auth::user()->id,
         ]);
       }
-
+    }
+    
     return response()->json($order, 200);
   }
 
