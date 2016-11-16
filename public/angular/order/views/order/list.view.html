@@ -9,25 +9,31 @@
     </div>
     <div class="box-body no-padding" ng-init="find();">
       <div class="box-body">
+        <div class="col-md-4">
         <div class="box-tools btn-group" ng-init="browse.possession = 'my'">
           <label class="btn btn-default" ng-model="browse.possession" uib-btn-radio="'my'">My Orders</label>
           <label class="btn btn-default" ng-model="browse.possession" uib-btn-radio="'subordinates'">Subordinates</label>
           <label class="btn btn-default" ng-model="browse.possession" uib-btn-radio="'associated'">Associated</label>
         </div>
-
+        </div>
+       
+        <div class="col-md-8">
         <div class="box-tools btn-group" ng-init="browse.status = 'p'">
           <label class="btn btn-default" ng-model="browse.status" uib-btn-radio="'d'">Draft</label>
           <label class="btn btn-default" ng-model="browse.status" uib-btn-radio="'p'">Pending</label>
           <label class="btn btn-default" ng-model="browse.status" uib-btn-radio="'a'">Approved</label>
           <label class="btn btn-default" ng-model="browse.status" uib-btn-radio="'f'">Finalized</label>
           <label class="btn btn-default" ng-model="browse.status" uib-btn-radio="'x'">Deleted</label>
-        </div>
-
+        <div class="col-md-2"></div>
+        <div class="col-md-2"></div>
+        <div class="col-md-2"></div>
+        <div class="col-md-2"></div>
         <div class="box-tools pull-right">
           <span class="btn-group">
             <button ui-sref="sell-order.create" class="btn btn-primary">+ Create buy lead</button>
             <button ui-sref="buy-order.create" class="btn btn-primary">+ Create sell lead</button>
           </span>
+        </div>
         </div>
       </div>
       
@@ -39,7 +45,7 @@
           <tr>
             <th st-sort="id">#</th>
             <th st-sort="user_id">Trader</th>
-            <th st-sort="status">Status</th>
+           <!-- st-sort="status">Status</th>-->
             <th st-sort="created_at">Created At</th>
             <th st-sort="updated_at">Updated At</th>
             <th>Approval Status</th>
@@ -51,11 +57,11 @@
           <tr ng-repeat="order in orders">
             <td>{{ order.id }}</td>
             <td>{{ order.trader.name }}</td>
-            <td ng-if="order.status === 'o'">Open</td>
+            <!--<td ng-if="order.status === 'o'">Open</td>
             <td ng-if="order.status === 'd'">Draft</td>
             <td ng-if="order.status === 'x'">Deleted</td>
             <td ng-if="order.status === 'p'">Pending</td>
-            <td ng-if="order.status === 'f'">Finalized</td>
+            <td ng-if="order.status === 'f'">Finalized</td>-->
             <td>{{ order.created_at | date:'d/M/yy' }}</td>
             <td>{{ order.updated_at | date:'d/M/yy' }}</td>
             <td>
