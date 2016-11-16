@@ -77,8 +77,10 @@ class OrderController extends Controller
       foreach($req->buys as $buy){
         $buy_order = SellOrder::with('orders', 'orders.sells', 'orders.buys')->find($buy['id']);
         if($buy_order->orders) {
-          $buy_order->orders->status = 'c';
-          var_dump('hahaha');
+          foreach($buy_order->orders as $o){
+            $o->status = 'c';
+            $o->save();
+          }
         }
 
         $order->buys()->attach([
@@ -103,8 +105,10 @@ class OrderController extends Controller
       foreach($req->sells as $sell){
         $sell_order = SellOrder::with('orders', 'orders.sells', 'orders.buys')->find($sell['id']);
         if($sell_order->orders) {
-          $sell_order->orders->status = 'c';
-          var_dump('hahaha');
+          foreach($sell_order->orders as $o){
+            $o->status = 'c';
+            $o->save();
+          }
         }
 
         $order->sells()->attach([ $sell['id'] => $sell['pivot'] ]);

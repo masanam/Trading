@@ -93,7 +93,12 @@ class BuyOrderController extends Controller
         else if($request->order){
             $user_id = Auth::User()->id;
             $buy_order = BuyOrder::with('Buyer','User','trader')->where('order_status', 'v')->orwhere('order_status', 'l')->orwhere('order_status', 'p')->get();
-            array_merge($buy_order, $this->showApprovedLeads());
+            $arrays = [];
+            foreach($buy_order as $object)
+            {
+                $arrays[] =  (array) $object;
+            }
+            array_merge($arrays, $this->showApprovedLeads());
         }
 
         return response()->json($buy_order, 200);
@@ -110,11 +115,9 @@ class BuyOrderController extends Controller
         // dd($query);
 
         foreach($query as $q) {
-            echo $q->id . ' > ';
             if(count($q->orders) == 1) {
                 // var_dump('q = ' + count($q->orders));
                 foreach($q->orders as $o) {
-                    echo $o->id;
                     // var_dump('o = ' + count($o->sells));
                     if(count($o->buys) == 1 && count($o->sells) == 0) {
                         // dd($o->sells);
@@ -125,7 +128,6 @@ class BuyOrderController extends Controller
                 }
                 continue;
             }
-            echo '<br>';
         }
 
         return $buy_order;

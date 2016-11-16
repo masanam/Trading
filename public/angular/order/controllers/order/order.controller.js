@@ -145,14 +145,14 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
         id: $stateParams.id
       }, function(res){
         $scope.order = res;
-        $scope.order.others_cost = parseFloat($scope.order.others_cost);
-        $scope.order.insurance_cost = parseFloat($scope.order.insurance_cost);
-        $scope.order.interest_cost = parseFloat($scope.order.interest_cost);
-        $scope.order.surveyor_cost = parseFloat($scope.order.surveyor_cost);
-        $scope.order.port_to_factory = parseFloat($scope.order.port_to_factory);
-        $scope.order.transhipment = parseFloat($scope.order.transhipment);
-        $scope.order.freight_cost = parseFloat($scope.order.freight_cost);
-        $scope.order.pit_to_port = parseFloat($scope.order.pit_to_port);
+        $scope.order.others_cost = parseFloat($scope.order.others_cost) || 0;
+        $scope.order.insurance_cost = parseFloat($scope.order.insurance_cost) || 0;
+        $scope.order.interest_cost = parseFloat($scope.order.interest_cost) || 0;
+        $scope.order.surveyor_cost = parseFloat($scope.order.surveyor_cost) || 0;
+        $scope.order.port_to_factory = parseFloat($scope.order.port_to_factory) || 0;
+        $scope.order.transhipment = parseFloat($scope.order.transhipment) || 0;
+        $scope.order.freight_cost = parseFloat($scope.order.freight_cost) || 0;
+        $scope.order.pit_to_port = parseFloat($scope.order.pit_to_port) || 0;
         $scope.checkOrderUsers();
       });
     };
