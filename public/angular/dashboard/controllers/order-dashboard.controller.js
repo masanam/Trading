@@ -19,8 +19,8 @@ angular.module('dashboard').controller('OrderDashboardController', ['$scope', 'I
         $scope.labels = ['Leads', 'Pending', 'Approve', 'Finalized'];
         $scope.series = ['Buy', 'Sell', 'Order'];
         $scope.data= [
-          [res['lead-buy'],0,0,0],
           [res['lead-sell'],0,0,0],
+          [res['lead-buy'],0,0,0],
           [0,res.pending,res.approve,res.finalized]
         ];
         $scope.onClick = function (point,evt) {
