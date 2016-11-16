@@ -29,7 +29,7 @@ class SellOrderController extends Controller
         if($request->order&&$request->order_id!==null){
             $user_id = Auth::User()->id;
             $buy_order = BuyOrder::where('id',$request->order_id)->first();
-            $sell_order = SellOrder::with('Seller','User','trader','used')
+            $sell_order = SellOrder::with('Seller','User','trader')
                 ->where([
                     ['order_status', 'v'],
                     [DB::raw('DATEDIFF(ready_date,"'.$buy_order->ready_date.'")'),'>=',-7],
@@ -70,7 +70,7 @@ class SellOrderController extends Controller
         }
         else if($request->supplier&&$request->order_id!==null){
             $buy_order = BuyOrder::where('id',$request->order_id)->first();
-            $sell_order = Product::with('Seller','used')
+            $sell_order = Product::with('Seller')
                 ->where('buyer_id',null)
                 ->select('products.*', 
                     DB::raw('ABS(products.gcv_adb_min-'.$buy_order->gcv_adb_min.') as gcv_adb_min_diff'), 
@@ -262,7 +262,7 @@ class SellOrderController extends Controller
         }
         $all_access[] = Auth::User()->id;
 
-        $sell_order = SellOrder::with('Seller','Port','Concession', 'orders', 'used')
+        $sell_order = SellOrder::with('Seller','Port','Concession', 'orders')
             ->find($id);
 
         if($sell_order->order_status == 'x')
@@ -457,10 +457,10 @@ class SellOrderController extends Controller
                 ->select(
                     'sell_order.id', 'user_id', 'order_date', 'order_deadline',
                     'expired_date', 'address','city', 'country', 
-                    DB::raw('NULL as product_name') ,
-                    DB::raw('NULL as company_name'),
+                    DB::raw('NULL as product_name'),
                     DB::raw('SUM(order_details.volume) as used_volume'),
-                    'typical_quality', 'sell_order.volume', 'min_price', 'order_status', 'users.name'
+                    'typical_quality', 'sell_order.volume', 'min_price', 'order_status', 'users.name',
+                    DB::raw('NULL as company_name')
                 );
 
             $sell_order = $sell_order2->union($sell_order)->get();

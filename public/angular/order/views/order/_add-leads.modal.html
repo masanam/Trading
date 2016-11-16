@@ -21,10 +21,10 @@
       <div class="col-sm-9" ng-if="selected.item">
         <div class="row">
           <div class="col-sm-6 form-group" ng-init="selected.item.pivot.volume = selected.item.volume-selected.item.used_volume">
-            <input ng-model="selected.item.pivot.volume" class="form-control" placeholder="Volume (MT)" required>
+            <input type="number" ng-model="selected.item.pivot.volume" class="form-control" placeholder="Volume (MT)" required>
           </div>
           <div class="col-sm-6 form-group" ng-init="selected.item.pivot.price = ( selected.item.max_price || selected.item.min_price )">
-            <input ng-model="selected.item.pivot.price" class="form-control" placeholder="Price (USD)" required>
+            <input type="number" ng-model="selected.item.pivot.price" class="form-control" placeholder="Price (USD)" required>
           </div>
         </div>
         <div class="row">
