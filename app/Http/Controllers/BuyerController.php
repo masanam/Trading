@@ -25,7 +25,7 @@ class BuyerController extends Controller
      */
     public function index(Request $request)
     {
-        $buyer = Buyer::with('BuyOrder')->where('status', 'a');
+        $buyer = Buyer::with('BuyOrder', 'User')->where('status', 'a');
         if ($request->q) $buyer->where('company_name', 'LIKE', '%'.$request->q.'%');
         $buyer = $buyer->get();
         return response()->json($buyer, 200);

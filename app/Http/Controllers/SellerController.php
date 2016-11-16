@@ -25,7 +25,7 @@ class SellerController extends Controller
      */
     public function index(Request $request)
     {
-        $seller = Seller::with('SellOrder')->where('status', 'a');
+        $seller = Seller::with('SellOrder', 'User')->where('status', 'a');
         if ($request->q) $seller->where('company_name', 'LIKE', '%'.$request->q.'%');
         $seller = $seller->get();
 
