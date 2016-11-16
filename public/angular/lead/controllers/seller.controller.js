@@ -13,12 +13,12 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
       availableOptions: [
         { id: 'TT', name: 'TT' },
         { id: 'LC on Sight f', name: 'LC on Sight' },
-        { id: 'LC on 30 days', name: 'LC on 30 days' }
+        { id: 'LC on 30 days', name: 'LC on 30 days' },
+        { id: 'other', name: 'Other' }
       ],
     };
 
     $scope.nextToConcession= function(){
-      console.log($scope.seller.selected);
       if ($scope.seller.selected) {
         $location.path('lead/seller/setup-concession-seller/'+$scope.seller.selected.id);
       }else{
@@ -43,7 +43,6 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
     };
 
     $scope.nexToPort= function(){
-      console.log($scope.product.selected);
       if ($scope.product.selected) {
         $location.path('lead/port/seller/'+$stateParams.id);
       }else{
@@ -361,6 +360,17 @@ angular.module('seller').controller('CreateSellerModalController', function ($sc
       description: undefined,
       
     };
+  };
+
+
+  //show freetext payment term
+  $scope.freetext = function() {
+    if($scope.seller.preferred_payment_term === 'other'){
+      $scope.seller.preferred_payment_term = '';
+      $scope.seller.freetext = true;
+    }else{
+      $scope.seller.freetext = false;
+    }
   };
 
   $scope.createSeller = function () {

@@ -30,6 +30,7 @@ class CreateSellersTable extends Migration
             $table->string('industry');
             $table->integer('total_annual_sales');
             $table->string('preferred_trading_term');
+            $table->string('preferred_trading_term_detail')->nullable();
             $table->string('preferred_payment_term');
             $table->string('purchasing_countries');
             $table->text('description')->nullable();

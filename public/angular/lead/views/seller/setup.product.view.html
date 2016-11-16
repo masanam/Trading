@@ -89,11 +89,11 @@
                     <tr>
                       <td class="bg-yellow">
                         Ash:
-                        <span class="pull-right">{{ product.selected.ash_min }} ~ {{ product.selected.ncv_max }} kcal</span>
+                        <span class="pull-right">{{ product.selected.ash_min }} ~ {{ product.selected.ash_max }} kcal</span>
                       </td>
                       <td class="bg-yellow">
                         Total Sulphur :
-                        <span class="pull-right">{{ product.selected.ncv_min }} ~ {{ product.selected.ncv_max }} kcal</span>
+                        <span class="pull-right">{{ product.selected.ts_min }} ~ {{ product.selected.ts_max }} kcal</span>
                       </td>
                     </tr>
                     <tr>
@@ -124,6 +124,16 @@
                       <td class="bg-green">
                         Size :
                         <span class="pull-right">{{ product.selected.size_min }} ~ {{ product.selected.size_max }} kcal</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="bg-green">
+                        Fe2O3 :
+                        <span class="pull-right">{{ product.selected.fe2o3_min }} ~ {{ product.selected.fe2o3_max }} %</span>
+                      </td>
+                      <td class="bg-green">
+                        AFT:
+                        <span class="pull-right">{{ product.selected.aft_min }} ~ {{ product.selected.aft_max }} &#176</span>
                       </td>
                     </tr>
                   </tbody>

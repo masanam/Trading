@@ -36,8 +36,26 @@ angular.module('order').controller('OrderIndexController', ['$scope', '$statePar
 
           for(x = 0; x<res.length; x++){
             $scope.data[0][x] = res[x].price;  
-            $scope.data[1][x] = ($scope.display.sell.min_price + $scope.order.pit_to_port + $scope.order.transhipment);
-            $scope.data[2][x] = ($scope.display.buy.max_price - $scope.order.port_to_factory - $scope.order.freight_cost);
+            if($scope.display.sell){
+              var sell_price = parseFloat($scope.display.sell.pivot.price);
+              if(parseFloat($scope.order.pit_to_port)){
+                sell_price += parseFloat($scope.order.pit_to_port);
+              }
+              if(parseFloat($scope.order.transhipment)){
+                sell_price += parseFloat($scope.order.transhipment);
+              }
+              $scope.data[1][x] = sell_price;
+            }
+            if($scope.display.buy){
+              var buy_price = parseFloat($scope.display.buy.pivot.price);
+              if(parseFloat($scope.order.port_to_factory)){
+                buy_price -= parseFloat($scope.order.port_to_factory);
+              }
+              if(parseFloat($scope.order.freight_cost)){
+                buy_price -= parseFloat($scope.order.freight_cost);
+              }
+              $scope.data[2][x] = buy_price;
+            }
             $scope.labels[x] = res[x].date;
           }
           

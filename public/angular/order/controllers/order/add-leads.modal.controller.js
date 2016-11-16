@@ -11,14 +11,6 @@ angular.module('order').controller('AddLeadsModalController', ['$uibModalInstanc
     $scope.tradingTerm = Term.trading;
     $scope.paymentTerm = Term.payment;
 
-    $scope.$on('windowFocus', function(){
-      console.log('focus');
-    });
-
-    $scope.$on('windowBlur', function(){
-      console.log('blur');
-    });
-
     $scope.ok = function () {
       $uibModalInstance.close($scope.selected.item);
     };

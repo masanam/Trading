@@ -61,6 +61,7 @@ class BuyerController extends Controller
         $buyer->industry = $request->industry;
         $buyer->annual_demand = $request->annual_demand;
         $buyer->preferred_trading_term = $request->preferred_trading_term;
+        $buyer->preferred_trading_term_detail = $request->preferred_trading_term_detail;
         $buyer->preferred_payment_term = $request->preferred_payment_term; 
         $buyer->description = $request->description;
         $buyer->status = 'a';
@@ -133,6 +134,7 @@ class BuyerController extends Controller
         $buyer->industry = $request->industry;
         $buyer->annual_demand = $request->annual_demand;
         $buyer->preferred_trading_term = $request->preferred_trading_term;
+        $buyer->preferred_trading_term_detail = $request->preferred_trading_term_detail;
         $buyer->preferred_payment_term = $request->preferred_payment_term; 
         $buyer->description = $request->description;
         $buyer->status = $request->status;

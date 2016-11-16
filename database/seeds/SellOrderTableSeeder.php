@@ -28,7 +28,9 @@ class SellOrderTableSeeder extends Seeder
         'longitude' => '112.6528737' ,
 
         'order_date' => $faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
+        'ready_date' => $faker->dateTimeBetween($startDate = "now", $endDate = "2 days")->format('Y-m-d'),
         'order_deadline' => $faker->dateTimeBetween($startDate = "5 days", $endDate = "10 days")->format('Y-m-d'),
+        'expired_date' => $faker->dateTimeBetween($startDate = "10 days", $endDate = "13 days")->format('Y-m-d'),
 
         'tm_min' => 12,
         'tm_max' => 18,
@@ -51,13 +53,10 @@ class SellOrderTableSeeder extends Seeder
         'hgi_min' => 35,
         'hgi_max' => 40,
         'size_min' => 0,
-        'size_max' => 50,
-        'min_price' => 5000,
+        'size_max' => 5,
+        'min_price' => 210,
 
         'penalty_desc' => 'penalty',
-        'ready_date'=>$faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
-        'expired_date'=>$faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
-        
 
         'volume' => 5000,
         'order_status' => 'v'
@@ -76,7 +75,9 @@ class SellOrderTableSeeder extends Seeder
         'longitude' => '112.6528737' ,
 
         'order_date' => $faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
+        'ready_date' => $faker->dateTimeBetween($startDate = "now", $endDate = "2 days")->format('Y-m-d'),
         'order_deadline' => $faker->dateTimeBetween($startDate = "5 days", $endDate = "10 days")->format('Y-m-d'),
+        'expired_date' => $faker->dateTimeBetween($startDate = "10 days", $endDate = "13 days")->format('Y-m-d'),
 
         'tm_min' => 6,
         'tm_max' => 11,
@@ -99,14 +100,11 @@ class SellOrderTableSeeder extends Seeder
         'hgi_min' => 45,
         'hgi_max' => 50,
         'size_min' => 0,
-        'size_max' => 200,
+        'size_max' => 20,
         'min_price' => 5000,
 
         'penalty_desc' => 'penalty',
-        'ready_date'=>$faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
-        'expired_date'=>$faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
         
-
         'volume' => 3000,
         'order_status' => 's'
       ]);
@@ -124,7 +122,9 @@ class SellOrderTableSeeder extends Seeder
         'longitude' => '112.6528737' ,
 
         'order_date' => $faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
+        'ready_date' => $faker->dateTimeBetween($startDate = "now", $endDate = "2 days")->format('Y-m-d'),
         'order_deadline' => $faker->dateTimeBetween($startDate = "5 days", $endDate = "10 days")->format('Y-m-d'),
+        'expired_date' => $faker->dateTimeBetween($startDate = "10 days", $endDate = "13 days")->format('Y-m-d'),
 
         'tm_min' => 5,
         'tm_max' => 8,
@@ -147,13 +147,10 @@ class SellOrderTableSeeder extends Seeder
         'hgi_min' => 45,
         'hgi_max' => 50,
         'size_min' => 0,
-        'size_max' => 150,
-        'min_price' => 5000,
+        'size_max' => 15,
+        'min_price' => 150,
 
         'penalty_desc' => 'penalty',
-        'ready_date'=>$faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
-        'expired_date'=>$faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
-        
 
         'volume' => 2000,
         'order_status' => 'v'
@@ -172,7 +169,9 @@ class SellOrderTableSeeder extends Seeder
         'longitude' => '105.965' ,
 
         'order_date' => $faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
+        'ready_date' => $faker->dateTimeBetween($startDate = "now", $endDate = "2 days")->format('Y-m-d'),
         'order_deadline' => $faker->dateTimeBetween($startDate = "5 days", $endDate = "10 days")->format('Y-m-d'),
+        'expired_date' => $faker->dateTimeBetween($startDate = "10 days", $endDate = "13 days")->format('Y-m-d'),
 
         'tm_min' => 6,
         'tm_max' => 10,
@@ -195,13 +194,10 @@ class SellOrderTableSeeder extends Seeder
         'hgi_min' => 50,
         'hgi_max' => 60,
         'size_min' => 0,
-        'size_max' => 50,
+        'size_max' => 5,
         'min_price' => 5000,
 
         'penalty_desc' => 'penalty',
-        'ready_date'=>$faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
-        'expired_date'=>$faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
-        
 
         'volume' => 4500,
         'order_status' => 's'
@@ -220,7 +216,9 @@ class SellOrderTableSeeder extends Seeder
         'longitude' => '106.7861946' ,
 
         'order_date' => $faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
+        'ready_date' => $faker->dateTimeBetween($startDate = "now", $endDate = "2 days")->format('Y-m-d'),
         'order_deadline' => $faker->dateTimeBetween($startDate = "5 days", $endDate = "10 days")->format('Y-m-d'),
+        'expired_date' => $faker->dateTimeBetween($startDate = "10 days", $endDate = "13 days")->format('Y-m-d'),
 
         'tm_min' => 7,
         'tm_max' => 11,
@@ -243,13 +241,10 @@ class SellOrderTableSeeder extends Seeder
         'hgi_min' => 45,
         'hgi_max' => 50,
         'size_min' => 0,
-        'size_max' => 100,
-        'min_price' => 5000,
+        'size_max' => 10,
+        'min_price' => 180,
 
         'penalty_desc' => 'penalty',
-        'ready_date'=>$faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
-        'expired_date'=>$faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
-        
 
         'volume' => 6000,
         'order_status' => 'v'
@@ -268,7 +263,9 @@ class SellOrderTableSeeder extends Seeder
         'longitude' => '106.7861946' ,
 
         'order_date' => $faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
+        'ready_date' => $faker->dateTimeBetween($startDate = "now", $endDate = "2 days")->format('Y-m-d'),
         'order_deadline' => $faker->dateTimeBetween($startDate = "5 days", $endDate = "10 days")->format('Y-m-d'),
+        'expired_date' => $faker->dateTimeBetween($startDate = "10 days", $endDate = "13 days")->format('Y-m-d'),
 
         'tm_min' => 5,
         'tm_max' => 10,
@@ -291,13 +288,10 @@ class SellOrderTableSeeder extends Seeder
         'hgi_min' => 50,
         'hgi_max' => 60,
         'size_min' => 0,
-        'size_max' => 150,
-        'min_price' => 5000,
+        'size_max' => 15,
+        'min_price' => 130,
 
         'penalty_desc' => 'penalty',
-        'ready_date'=>$faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
-        'expired_date'=>$faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
-        
 
         'volume' => 1500,
         'order_status' => 'l'
@@ -331,8 +325,8 @@ class SellOrderTableSeeder extends Seeder
       
       foreach ($address as $address) {
         SellOrder::create(array_merge($address, [
-          'user_id' => $faker->numberBetween($min = 1, $max = 3) ,
-          'seller_id' => $faker->numberBetween($min = 1, $max = 3) ,
+          'user_id' => $faker->numberBetween($min = 1, $max = 7) ,
+          'seller_id' => $faker->numberBetween($min = 1, $max = 25) ,
 
           'city' => 'JKT',
           'country' => 'ID',
@@ -340,44 +334,44 @@ class SellOrderTableSeeder extends Seeder
 
 
           'order_date' => $faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
+          'ready_date' => $faker->dateTimeBetween($startDate = "now", $endDate = "2 days")->format('Y-m-d'),
           'order_deadline' => $faker->dateTimeBetween($startDate = "5 days", $endDate = "10 days")->format('Y-m-d'),
+          'expired_date' => $faker->dateTimeBetween($startDate = "10 days", $endDate = "13 days")->format('Y-m-d'),
 
-          'tm_min' => $faker->numberBetween($min = 1, $max = 5) ,
-          'tm_max' => $faker->numberBetween($min = 6, $max = 10),
-          'im_min' => $faker->numberBetween($min = 1, $max = 5) ,
-          'im_max' => $faker->numberBetween($min = 6, $max = 10),
+          'tm_min' => $faker->numberBetween($min = 1, $max = 25) ,
+          'tm_max' => $faker->numberBetween($min = 26, $max = 40),
+          'im_min' => $faker->numberBetween($min = 10, $max = 25) ,
+          'im_max' => $faker->numberBetween($min = 26, $max = 40),
           'ash_min' => $faker->randomFloat($nbMaxDecimals = 2, $min = 10, $max = 15),
           'ash_max' => $faker->randomFloat($nbMaxDecimals = 2, $min = 15, $max = 25),
           'fc_min' => $faker->numberBetween($min = 0, $max = 22),
           'fc_max' => $faker->numberBetween($min = 23, $max = 44),
           'vm_min' => $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 15),
           'vm_max' => $faker->randomFloat($nbMaxDecimals = 2, $min = 20, $max = 45),
-          'ts_min' => $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 1),
-          'ts_max' => $faker->randomFloat($nbMaxDecimals = 2, $min = 1.1, $max = 2),
-          'ncv_min' => $faker->numberBetween($min = 0, $max = 3),
-          'ncv_max' => $faker->numberBetween($min = 4, $max = 6),
-          'gcv_arb_min' => $faker->numberBetween($min = 0, $max = 50),
-          'gcv_arb_max' => $faker->numberBetween($min = 100, $max = 250),
-          'gcv_adb_min' => $faker->numberBetween($min = 0, $max = 50),
-          'gcv_adb_max' => $faker->numberBetween($min = 110, $max = 250),
+          'ts_min' => $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 10),
+          'ts_max' => $faker->randomFloat($nbMaxDecimals = 2, $min = 10.1, $max = 20),
+          'ncv_min' => $faker->numberBetween($min = 5000, $max = 5300),
+          'ncv_max' => $faker->numberBetween($min = 5300, $max = 5500),
+          'gcv_arb_min' => $faker->numberBetween($min = 5000, $max = 5500),
+          'gcv_arb_max' => $faker->numberBetween($min = 5501, $max = 6000),
+          'gcv_adb_min' => $faker->numberBetween($min = 5300, $max = 5500),
+          'gcv_adb_max' => $faker->numberBetween($min = 5501, $max = 5700),
           'hgi_min' => $faker->numberBetween($min = 0, $max = 50),
-          'hgi_max' => $faker->numberBetween($min = 60, $max = 100),
-          'size_min' => $faker->numberBetween($min = 0, $max = 75),
-          'size_max' => $faker->numberBetween($min = 150, $max = 220),
-          'min_price' => $faker->numberBetween($min = 1, $max = 500),
+          'hgi_max' => $faker->numberBetween($min = 51, $max = 70),
+          'size_min' => $faker->numberBetween($min = 0, $max = 20),
+          'size_max' => $faker->numberBetween($min = 20, $max = 50),
+          'min_price' => $faker->numberBetween($min = 1, $max = 200),
           'product_name'=>$faker->firstName,
-          'typical_quality'=>$faker->firstName,
+          'typical_quality'=> 'Coal',
           'trading_term'=>$faker->randomElement($array = array ('CNF','CIF','FAS','FOB','Franco')),
-          'payment_terms'=>'TT',
+          'trading_term_detail'=> $faker->randomElement($array = array ('MV','Barge')),
+          'payment_terms'=>$faker->randomElement($array = array ('TT','LC on Sight')),
 
           'penalty_desc' => 'penalty',
-          'ready_date'=>$faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
-          'expired_date'=>$faker->dateTimeBetween($startDate = "-2 days", $endDate = "now")->format('Y-m-d'),
           
 
-          'volume' => $faker->numberBetween($min = 1000, $max = 2000),
-          'min_price' => $faker->numberBetween($min = 100, $max = 5000),
-          'order_status' => $faker->randomElement($array = array ('l','v','s',1,2,3,4))
+          'volume' => $faker->numberBetween($min = 1000, $max = 5000),
+          'order_status' => $faker->randomElement($array = array ('l','v','s'))
         ]));
       }
     }
