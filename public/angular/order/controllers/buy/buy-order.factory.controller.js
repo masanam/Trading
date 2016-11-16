@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('order').controller('BuyOrderFactoryController', ['$scope', '$stateParams', '$location', '$uibModal', 'Factory', 'Order',
-  function($scope, $stateParams, $location, $uibModal, Factory, Order) {
+angular.module('order').controller('BuyOrderFactoryController', ['$scope', '$stateParams', '$location', '$uibModal', 'Factory', 'Order','NgMap',
+  function($scope, $stateParams, $location, $uibModal, Factory, Order, NgMap) {
 
     $scope.factory = {};
     $scope.order_id = $stateParams.order_id;
@@ -14,6 +14,15 @@ angular.module('order').controller('BuyOrderFactoryController', ['$scope', '$sta
         }
       });
     };
+
+    var map;
+    $scope.$on('mapInitialized', function(evt, evtMap) {
+      map = evtMap;
+      $scope.markerMove = function(e) {
+        $scope.factory.latitude = e.latLng.lat();
+        $scope.factory.longitude = e.latLng.lng();
+      };
+    });
 
     //button next to product page
     $scope.nextToProduct = function(){
