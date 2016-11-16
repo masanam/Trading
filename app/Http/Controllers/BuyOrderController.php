@@ -93,8 +93,12 @@ class BuyOrderController extends Controller
         else if($request->order){
             $user_id = Auth::User()->id;
             $buy_order = BuyOrder::with('Buyer','User','trader')->where('order_status', 'v')->orwhere('order_status', 'l')->orwhere('order_status', 'p')->get();
-            var_dump($buy_order);die;
-            array_merge($buy_order, $this->showApprovedLeads());
+            $arrays = [];
+            foreach($buy_order as $object)
+            {
+                $arrays[] =  (array) $object;
+            }
+            array_merge($arrays, $this->showApprovedLeads());
         }
 
         return response()->json($buy_order, 200);
