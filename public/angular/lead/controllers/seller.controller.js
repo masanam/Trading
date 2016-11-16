@@ -18,7 +18,6 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
     };
 
     $scope.nextToConcession= function(){
-      console.log($scope.seller.selected);
       if ($scope.seller.selected) {
         $location.path('lead/seller/setup-concession-seller/'+$scope.seller.selected.id);
       }else{
@@ -43,7 +42,6 @@ angular.module('seller').controller('SellerController', ['$scope', '$http', '$st
     };
 
     $scope.nexToPort= function(){
-      console.log($scope.product.selected);
       if ($scope.product.selected) {
         $location.path('lead/port/seller/'+$stateParams.id);
       }else{
