@@ -7,14 +7,7 @@ angular.module('order').controller('SellOrderPortController', ['$scope', '$state
     $scope.order_id = $stateParams.order_id;
     $scope.concession_id = $stateParams.concession_id;
 
-    var map;
-    $scope.$on('mapInitialized', function(evt, evtMap) {
-      map = evtMap;
-      $scope.markerMove = function(e) {
-        $scope.port.latitude = e.latLng.lat();
-        $scope.port.longitude = e.latLng.lng();
-      };
-    });
+
 
 
     //Init select port

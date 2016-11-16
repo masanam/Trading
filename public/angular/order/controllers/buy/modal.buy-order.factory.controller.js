@@ -7,6 +7,15 @@ angular.module('order').controller('FactoryModalBuyOrderController',
       $scope.factory = new Factory();
     };
 
+    var map;
+    $scope.$on('mapInitialized', function(evt, evtMap) {
+      map = evtMap;
+      $scope.markerMove = function(e) {
+        $scope.factory.latitude = e.latLng.lat();
+        $scope.factory.longitude = e.latLng.lng();
+      };
+    });
+
     $scope.create = function(){
       $scope.factory.buyer_id = $stateParams.id;
       
