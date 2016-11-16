@@ -238,7 +238,7 @@ class OrderController extends Controller
       $this->add_approval_to_order($order, Auth::user()->manager_id, $id, 'p');
     }
 
-    return response()->json($order, 200);
+    return $this->show($id);
   }
 
   /**
