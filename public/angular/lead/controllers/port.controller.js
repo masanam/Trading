@@ -15,7 +15,15 @@ angular.module('port').controller('PortController', ['$scope', '$stateParams', '
       $scope.selectedPort = {};
       $scope.new = $location.search().new;
     };
-
+    
+    var map;
+    $scope.$on('mapInitialized', function(evt, evtMap) {
+      map = evtMap;
+      $scope.markerMove = function(e) {
+        $scope.port.latitude = parseFloat(e.latLng.lat());
+        $scope.port.longitude = parseFloat(e.latLng.lng());
+      };
+    });
 
     $scope.findOne = function(){
       Port.get({ id: $stateParams.portId }, function(res){
@@ -183,6 +191,15 @@ angular.module('port').controller('PortModalController', function ($scope, $stat
     $scope.port.has_crusher = 0;
     $scope.type = type;
   };
+  
+  var map;
+  $scope.$on('mapInitialized', function(evt, evtMap) {
+    map = evtMap;
+    $scope.markerMove = function(e) {
+      $scope.port.latitude = parseFloat(e.latLng.lat());
+      $scope.port.longitude = parseFloat(e.latLng.lng());
+    };
+  });
 
   /*$scope.findAllPorts = function(){
     $scope.ports = Port.query();

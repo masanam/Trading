@@ -192,7 +192,6 @@ angular.module('buyer').controller('BuyerController', ['$scope', '$http', '$stat
       }
 
       $scope.buyer = Buyer.get({ id: $scope.buyerId });
-      console.log($scope.buyer);
       $scope.lastOrders = Order.query({ action: 'lastOrders' , type: 'buyer', id: $scope.buyerId });
       /*$scope.pendingOrders = Order.query({ action: 'lastOrder' });*/
 
