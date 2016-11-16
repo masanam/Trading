@@ -80,7 +80,7 @@
                 <i class='glyphicon glyphicon-fire'></i> Lead<i class='glyphicon glyphicon-chevron-right pull-right'></i>
               </uib-tab-heading>
               <table class="table table-striped">
-                <tr>
+                <tr ng-if="recomended.length > 0">
                   <td width="10%"><label>Id</label></td>
                   <td width="40%"><label>Company Name</label></td>
                   <td width="45%"><label>Laycan Period</label></td>
@@ -92,6 +92,9 @@
                   <td>{{ rec.ready_date | date : 'd MMMM yyyy' }} - {{ rec.order_deadline | date : 'd MMMM yyyy' }}</td>
                   <td><i class="glyphicon glyphicon-info-sign" ng-click="showInfo(rec.id)" style="cursor:pointer" uib-tooltip="Show Info"></i></td>
                 </tr>
+                <tr ng-if="recomended.length == 0">
+                  <td colspan="4" class="text-center">Not Available</td>
+                </tr>
               </table>
             </uib-tab>
             <uib-tab index="1" ng-click="findRecomendedCustomer()">
@@ -99,13 +102,16 @@
                 <i class='glyphicon glyphicon-share'></i> Customer<i class='glyphicon glyphicon-chevron-right pull-right'></i>
               </uib-tab-heading>
               <table class="table table-striped">
-                <tr>
+                <tr ng-if="recomended.length > 0">
                   <td width="50%"><label>Typical Quality</label></td>
                   <td width="50%"><label>Company Name</label></td>
                 </tr>
                 <tr ng-repeat="rec in recomended">
                   <td>{{ rec.typical_quality }}</td>
                   <td>{{ rec.buyer.company_name | date : 'd MMMM yyyy' }}</td>
+                </tr>
+                <tr ng-if="recomended.length == 0">
+                  <td colspan="2" class="text-center">Not Available</td>
                 </tr>
               </table>
             </uib-tab>

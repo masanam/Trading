@@ -46,56 +46,56 @@ class CreateBuysTable extends Migration
 
             $table->integer('gcv_arb_min')->nullable(); //gross calorific value, as received basis
             $table->integer('gcv_arb_max')->nullable();
-            $table->integer('gcv_arb_reject')->nullable();
-            $table->integer('gcv_arb_bonus')->nullable();
+            $table->string('gcv_arb_reject')->nullable();
+            $table->string('gcv_arb_bonus')->nullable();
             $table->integer('gcv_adb_min')->nullable(); //gross calorific value, air dried basis
             $table->integer('gcv_adb_max')->nullable();
-            $table->integer('gcv_adb_reject')->nullable();
-            $table->integer('gcv_adb_bonus')->nullable();
+            $table->string('gcv_adb_reject')->nullable();
+            $table->string('gcv_adb_bonus')->nullable();
             $table->integer('ncv_min')->nullable(); //nett calorific value
             $table->integer('ncv_max')->nullable();
-            $table->integer('ncv_reject')->nullable();
-            $table->integer('ncv_bonus')->nullable();
+            $table->string('ncv_reject')->nullable();
+            $table->string('ncv_bonus')->nullable();
             $table->decimal('ash_min', 5,2)->nullable(); //ash
             $table->decimal('ash_max', 5,2)->nullable();
-            $table->decimal('ash_reject', 5,2)->nullable();
-            $table->decimal('ash_bonus', 5,2)->nullable();
+            $table->string('ash_reject')->nullable();
+            $table->string('ash_bonus')->nullable();
             $table->decimal('ts_min', 5,2)->nullable(); //total solid
             $table->decimal('ts_max', 5,2)->nullable();
-            $table->decimal('ts_reject', 5,2)->nullable();
-            $table->decimal('ts_bonus', 5,2)->nullable();
+            $table->string('ts_reject')->nullable();
+            $table->string('ts_bonus')->nullable();
             $table->decimal('tm_min', 5,2)->nullable(); //total moisture
             $table->decimal('tm_max', 5,2)->nullable();
-            $table->decimal('tm_reject', 5,2)->nullable();
-            $table->decimal('tm_bonus', 5,2)->nullable();
+            $table->string('tm_reject')->nullable();
+            $table->string('tm_bonus')->nullable();
             $table->decimal('im_min', 5,2)->nullable(); //inherent moisture
             $table->decimal('im_max', 5,2)->nullable();
-            $table->decimal('im_reject', 5,2)->nullable();
-            $table->decimal('im_bonus', 5,2)->nullable();
+            $table->string('im_reject')->nullable();
+            $table->string('im_bonus')->nullable();
             $table->decimal('fc_min', 5,2)->nullable(); //Fixed Carbon
             $table->decimal('fc_max', 5,2)->nullable();
-            $table->decimal('fc_reject', 5,2)->nullable();
-            $table->decimal('fc_bonus', 5,2)->nullable();
+            $table->string('fc_reject')->nullable();
+            $table->string('fc_bonus')->nullable();
             $table->decimal('vm_min', 5,2)->nullable(); //volatile matter
             $table->decimal('vm_max', 5,2)->nullable();
-            $table->decimal('vm_reject', 5,2)->nullable();
-            $table->decimal('vm_bonus', 5,2)->nullable();
+            $table->string('vm_reject')->nullable();
+            $table->string('vm_bonus')->nullable();
             $table->integer('hgi_min')->nullable(); //hardness
             $table->integer('hgi_max')->nullable();
-            $table->integer('hgi_reject')->nullable();
-            $table->integer('hgi_bonus')->nullable();
+            $table->string('hgi_reject')->nullable();
+            $table->string('hgi_bonus')->nullable();
             $table->integer('size_min')->nullable(); //size/piece
             $table->integer('size_max')->nullable();
-            $table->integer('size_reject')->nullable();
-            $table->integer('size_bonus')->nullable();
+            $table->string('size_reject')->nullable();
+            $table->string('size_bonus')->nullable();
             $table->integer('fe2o3_min')->nullable(); //size/piece
             $table->integer('fe2o3_max')->nullable();
-            $table->integer('fe2o3_reject')->nullable(); //size/piece
-            $table->integer('fe2o3_bonus')->nullable();
+            $table->string('fe2o3_reject')->nullable(); //size/piece
+            $table->string('fe2o3_bonus')->nullable();
             $table->integer('aft_min')->nullable(); //size/piece
             $table->integer('aft_max')->nullable();
-            $table->integer('aft_reject')->nullable(); //size/piece
-            $table->integer('aft_bonus')->nullable();
+            $table->string('aft_reject')->nullable(); //size/piece
+            $table->string('aft_bonus')->nullable();
 
             $table->integer('volume')->nullable();
             $table->integer('max_price')->nullable();

@@ -50,12 +50,12 @@
 
         <div class="form-group">
           <label for="owner">Owner of Port:</label>
-          <input name="owner" type="text" class="form-control" id="owner" ng-model="port.selected.owner" required>
+          <input name="owner" type="text" class="form-control" id="owner" ng-model="port.selected.owner" required disabled>
         </div>
 
         <div class="form-group">
           <label for="location">Location:</label>
-          <input name="location" type="text" class="form-control" id="location" ng-model="port.selected.location" required>
+          <input name="location" type="text" class="form-control" id="location" ng-model="port.selected.location" required disabled>
         </div>
 
         <div class="form-group">
@@ -70,7 +70,7 @@
 
         <div class="form-group">
           <label for="size">Size of Port (Ha):</label>
-          <input name="size" type="number" class="form-control" min="0" id="size" ng-model="port.selected.size" required>
+          <input name="size" type="number" class="form-control" min="0" id="size" ng-model="port.selected.size" required disabled>
         </div>
 
         <div class="form-group">
@@ -87,9 +87,9 @@
           <label for="web">Port Facility* :</label>
           <div class="input-group" style="margin-bottom: 5px;">
             <div class="btn-group">
-              <label class="btn btn-default" ng-model="port.selected.has_conveyor" uib-btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0">Conveyor</label>
-              <label class="btn btn-default" ng-model="port.selected.has_crusher" uib-btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0">Crusher</label>
-              <label class="btn btn-default" ng-model="port.selected.has_blending" uib-btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0">Blending</label>
+              <span class='badge badger-danger' ng-show="port.selected.has_conveyor===1">Conveyor</span> 
+              <span class='badge badger-danger' ng-show="port.selected.has_crusher===1">Crusher</span> 
+              <span class='badge badger-danger' ng-show="port.selected.has_blending===1">Blending</span>
             </div>
           </div>
         </div>
@@ -101,7 +101,7 @@
 
         <div class="form-group">
           <label for="anchorage_distance">Distance from port to anchorage (NM or Hours ):</label>
-          <input name="anchorage_distance" type="number" min="0" class="form-control" id="anchorage_distance" ng-model="port.selected.anchorage_distance" required>
+          <input name="anchorage_distance" type="number" min="0" class="form-control" id="anchorage_distance" ng-model="port.selected.anchorage_distance" required disabled>
         </div>
 
         <div class="form-group">

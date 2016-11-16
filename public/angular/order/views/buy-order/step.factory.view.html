@@ -45,12 +45,12 @@
 
       <div class="form-group">
         <label for="factory_name">Name of Factory*:</label>
-        <input type="text" class="form-control" id="factory_name" ng-model="factory.selected.factory_name" required>
+        <input type="text" class="form-control" id="factory_name" ng-model="factory.selected.factory_name" required disabled>
       </div>
 
       <div class="form-group">
         <label for="reserves">Owner*:</label>
-        <input type="text" class="form-control" id="owner" ng-model="factory.selected.owner" required>
+        <input type="text" class="form-control" id="owner" ng-model="factory.selected.owner" required disabled>
       </div>
 
       <div class="form-group">
@@ -75,16 +75,12 @@
 
       <div class="form-group">
         <label for="consumption">Consumption:</label>
-        <input type="number" min="0" step="any" class="form-control" id="consumption" ng-model="factory.selected.consumption">
+        <input type="number" min="0" step="any" class="form-control" id="consumption" ng-model="factory.selected.consumption" disabled>
       </div>
 
       <div class="form-group">
         <label for="size">Size of Factory (Ha):</label>
-        <input type="number" min="0" class="form-control" id="size" ng-model="factory.selected.size">
-      </div>
-
-      <div class="form-group">
-        <label ng-show="error" class="alert alert-danger">{{error}}</label>
+        <input type="number" min="0" class="form-control" id="size" ng-model="factory.selected.size" disabled>
       </div>
 
     </div>
