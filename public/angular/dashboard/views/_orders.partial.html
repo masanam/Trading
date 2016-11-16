@@ -10,6 +10,28 @@
           chart-options="options" chart-series="series" chart-click="onClick"></canvas>
       </div>
       <div class="col-md-8 col-sm-12">
+        <div class="col-md-4 col-sm-12">
+          <h3>Total Leads Sell</h3>
+          <h3>{{funnel["lead-sell"]}}</h3>
+        </div>
+        <div class="col-md-4 col-sm-12">
+          <h3>Total Leads Buy</h3>
+          <h3>{{funnel["lead-buy"]}}</h3>
+        </div>
+        <div class="col-md-4 col-sm-12">
+          <h3>Total Pending</h3>
+          <h3>{{funnel["pending"]}}</h3>
+        </div>
+        <div class="col-md-4 col-sm-12">
+          <h3>Total Approved</h3>
+          <h3>{{funnel["approved"]}}</h3>
+        </div>
+        <div class="col-md-4 col-sm-12">
+          <h3>Total finalized</h3>
+          <h3>{{funnel["finalized"]}}</h3>
+        </div>
+      </div>
+      <div class="col-sm-12">
         <table st-table="orders" st-safe-src="orderCollection" class="table table-striped">
           <thead>
             <tr>
@@ -24,34 +46,31 @@
               <th></th>
             </tr>
           </thead>
-
-          <tbody>
-            <tr ng-repeat="order in orders">
-              <td>{{ order.id }}</td>
-              <td ng-if="order.status === 'o'">Open</td>
-              <td ng-if="order.status === 'd'">Draft</td>
-              <td ng-if="order.status === 'x'">Deleted</td>
-              <td ng-if="order.status === 'p'">Pending</td>
-              <td ng-if="order.status === 'f'">Finalized</td>
-              <td>{{ order.created_at | date:'d/M/yy' }}</td>
-              <td>{{ order.updated_at | date:'d/M/yy' }}</td>
-              <td>
-                <div ng-repeat="app in order.approvals.slice().reverse()">
-                  {{ app.name | firstWord }} [{{ app.status }}]
-                </div>
-              </td>
-              <td>
-                <a ui-sref="order.view({ id: order.id })"><i class="glyphicon glyphicon-eye-open"></i></a>
-                <a ng-click="remove(order)"><i class="glyphicon glyphicon-trash"></i></a>
-              </td>
-            </tr>
-            <tr ng-if="orders.length == 0">
-              <td colspan="6" class="text-center">No data available</td>
-            </tr>
-          </tbody>
-        </table>
-
-      </div>
+        <tbody>
+          <tr ng-repeat="order in orders">
+            <td>{{ order.id }}</td>
+            <td ng-if="order.status === 'o'">Open</td>
+            <td ng-if="order.status === 'd'">Draft</td>
+            <td ng-if="order.status === 'x'">Deleted</td>
+            <td ng-if="order.status === 'p'">Pending</td>
+            <td ng-if="order.status === 'f'">Finalized</td>
+            <td>{{ order.created_at | date:'d/M/yy' }}</td>
+            <td>{{ order.updated_at | date:'d/M/yy' }}</td>
+            <td>
+              <div ng-repeat="app in order.approvals.slice().reverse()">
+                {{ app.name | firstWord }} [{{ app.status }}]
+              </div>
+            </td>
+            <td>
+              <a ui-sref="order.view({ id: order.id })"><i class="glyphicon glyphicon-eye-open"></i></a>
+              <a ng-click="remove(order)"><i class="glyphicon glyphicon-trash"></i></a>
+            </td>
+          </tr>
+          <tr ng-if="orders.length == 0">
+            <td colspan="6" class="text-center">No data available</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
     <!-- /.box-body -->
   </div>

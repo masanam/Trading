@@ -464,7 +464,6 @@ class SellOrderController extends Controller
                 );
 
             $sell_order = $sell_order2->union($sell_order)->get();
-            // $sell_order->order_detail = $sell_order->;
         } else {
             $sell_order = SellOrder::with('Seller','User')->where('order_status', $order_status)->where('progress_status', 'LIKE', '%'.$progress_status.'%')->get();
         }

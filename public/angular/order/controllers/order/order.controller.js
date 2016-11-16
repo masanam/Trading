@@ -63,15 +63,6 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
       });
     };
     
-    $scope.addCostModal = function () {
-      var modalInstance = $uibModal.open({
-        windowClass: 'xl-modal',
-        templateUrl: './angular/order/views/order/_add-cost.modal.html',
-        controller: 'AddCostModalController',
-        scope: $scope,
-      });
-    };
-    
     // Approve Order
     $scope.approve_reject = function (status) {
       $scope.error = null;
@@ -154,6 +145,24 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
         $scope.order.freight_cost = parseFloat($scope.order.freight_cost) || 0;
         $scope.order.pit_to_port = parseFloat($scope.order.pit_to_port) || 0;
         $scope.checkOrderUsers();
+      });
+    };
+
+    $scope.addCostModal = function () {
+      var modalInstance = $uibModal.open({
+        windowClass: 'xl-modal',
+        templateUrl: './angular/order/views/order/_add-cost.modal.html',
+        controller: 'AddCostModalController',
+        scope: $scope,
+      });
+
+      modalInstance.result.then(function(res){
+        //if existing order, directly upload
+        $scope.order.$update(function (res) {
+          $scope.order = res;
+        }, function (err) {
+          $scope.error = err.data.message;
+        });
       });
     };
   }

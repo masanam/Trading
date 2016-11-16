@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('order').controller('CreateOrderController', ['$scope', '$state', 'Order',
-  function($scope, $state, Order) {
+angular.module('order').controller('CreateOrderController', ['$scope', '$state', '$uibModal', 'Order',
+  function($scope, $state, $uibModal, Order) {
     $scope.init = function (){
       $scope.order = {};
       $scope.order.buys = [];
@@ -24,6 +24,21 @@ angular.module('order').controller('CreateOrderController', ['$scope', '$state',
         $scope.order = new Order();
       }, function (err) {
         $scope.error = err;
+      });
+    };
+
+
+    $scope.addCostModal = function () {
+      var modalInstance = $uibModal.open({
+        windowClass: 'xl-modal',
+        templateUrl: './angular/order/views/order/_add-cost.modal.html',
+        controller: 'AddCostModalController',
+        scope: $scope,
+      });
+
+      modalInstance.result.then(function(res){
+        //if existing order, directly upload
+        $scope.order = res;
       });
     };
   }
