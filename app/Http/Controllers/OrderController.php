@@ -78,6 +78,7 @@ class OrderController extends Controller
         $buy_order = SellOrder::with('orders', 'orders.sells', 'orders.buys')->find($buy['id']);
         if($buy_order->orders) {
           $buy_order->orders->status = 'c';
+          var_dump('hahaha');
         }
 
         $order->buys()->attach([
@@ -103,6 +104,7 @@ class OrderController extends Controller
         $sell_order = SellOrder::with('orders', 'orders.sells', 'orders.buys')->find($sell['id']);
         if($sell_order->orders) {
           $sell_order->orders->status = 'c';
+          var_dump('hahaha');
         }
 
         $order->sells()->attach([ $sell['id'] => $sell['pivot'] ]);

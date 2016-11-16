@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('order').controller('BuyOrderSummaryController', ['$scope', '$stateParams', '$location', '$uibModal', 'Port', 'Factory', 'Order',
-  function($scope, $stateParams, $location, $uibModal, Port, Factory, Order) {
+angular.module('order').controller('BuyOrderSummaryController', ['$scope', '$stateParams', '$location', '$uibModal', 'Port', 'Factory', 'Order', 'NgMap',
+  function($scope, $stateParams, $location, $uibModal, Port, Factory, Order, NgMap) {
 
     $scope.buy_order = {};
     $scope.order_id = $stateParams.order_id;
