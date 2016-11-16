@@ -5,7 +5,7 @@
       <i class="glyphicon glyphicon-arrow-left"></i> Back
     </button>
     <div class="pull-right">
-      <button type="button" class="btn btn-primary" ui-sref="buy-order.index">
+      <button type="button" class="btn btn-primary" ui-sref="order.create">
         <i class="glyphicon glyphicon-arrow-right"></i> Start Deal
       </button>
     </div>
@@ -33,43 +33,84 @@
         </button>
       </div>
       <div class="form-group row-fluid">
-        <h1>{{ buy_order.buyer.company_name }}</h1>
-        <label ng-show="buy_order.product_name">Product Name : </label>
-        <p>{{ buy_order.product_name }}</p>
-        <label>Typical Quality : </label>
-        <p>{{ buy_order.typical_quality }}</p>
-        <label ng-show="buy_order.address">Address : </label>
-        <p>{{ buy_order.address }}</p>
-        <div class="col-xs-6" style="padding-left:0">
-          <label>City : </label>
-          <p>{{ buy_order.city }}</p>
-          <label>Volume of Coal : </label>
-          <p>{{ buy_order.volume }} mt, available {{ buy_order.volume - sum }} mt</p>
-          <label>Input Date : </label>
-          <p>{{ buy_order.order_date | date : 'd MMMM yyyy' }}</p>
+        <div class="col-md-8" style="padding-left:0">
+          <h1>{{ buy_order.buyer.company_name }}</h1>
+          <label ng-show="buy_order.product_name">Product Name : </label>
+          <p>{{ buy_order.product_name }}</p>
+          <label>Typical Quality : </label>
+          <p>{{ buy_order.typical_quality }}</p>
+          <label ng-show="buy_order.address">Address : </label>
+          <p>{{ buy_order.address }}</p>
+          <div class="col-xs-6" style="padding-left:0">
+            <label>City : </label>
+            <p>{{ buy_order.city }}</p>
+            <label>Volume of Coal : </label>
+            <p>{{ buy_order.volume }} mt, available {{ buy_order.volume - sum }} mt</p>
+            <label>Input Date : </label>
+            <p>{{ buy_order.order_date | date : 'd MMMM yyyy' }}</p>
+          </div>
+          <div class="col-xs-6" style="padding-left:0">
+            <label>Country : </label>
+            <p>{{ buy_order.country }}</p>
+            <label>Asking Price : </label>
+            <p>$ {{ buy_order.max_price }}</p>
+            <label>Laycan Schedule : </label>
+            <p>{{ buy_order.ready_date | date : 'd MMMM yyyy' }} - {{ buy_order.order_deadline | date : 'd MMMM yyyy' }}</p>
+          </div>
+          <div class="col-xs-12" style="padding-left:0">
+            <label>Valid Until : </label>
+            <p>{{ buy_order.expired_date | date : 'd MMMM yyyy' }}</p>
+          </div>
+          <div class="col-xs-6" style="padding-left:0">
+            <label>Shipping Term : </label>
+            <p>{{ buy_order.trading_term }} {{ buy_order.trading_term_detail }}</p>
+          </div>
+          <div class="col-xs-6" style="padding-left:0">
+            <label>Payment Terms : </label>
+            <p>{{ buy_order.payment_terms }}</p>
+          </div>
+          <label>Penalty : </label>
+          <p>{{ buy_order.penalty_desc }}</p>
         </div>
-        <div class="col-xs-6" style="padding-left:0">
-          <label>Country : </label>
-          <p>{{ buy_order.country }}</p>
-          <label>Asking Price : </label>
-          <p>$ {{ buy_order.max_price }}</p>
-          <label>Laycan Schedule : </label>
-          <p>{{ buy_order.ready_date | date : 'd MMMM yyyy' }} - {{ buy_order.order_deadline | date : 'd MMMM yyyy' }}</p>
+         <div class="col-md-4" style="padding-left:0">
+          <h3>Recommended Leads</h3>
+          <uib-tabset active="activeJustified" justified="true">
+            <uib-tab index="0" ng-click="findRecomendedLead()">
+              <uib-tab-heading>
+                <i class='glyphicon glyphicon-fire'></i> Lead<i class='glyphicon glyphicon-chevron-right pull-right'></i>
+              </uib-tab-heading>
+              <table class="table table-striped">
+                <tr>
+                  <td width="10%"><label>Id</label></td>
+                  <td width="40%"><label>Company Name</label></td>
+                  <td width="45%"><label>Laycan Period</label></td>
+                  <td width="5%"></td>
+                </tr>
+                <tr ng-repeat="rec in recomended">
+                  <td>{{ rec.id }}</td>
+                  <td>{{ rec.seller.company_name | date : 'd MMMM yyyy' }}</td>
+                  <td>{{ rec.ready_date | date : 'd MMMM yyyy' }} - {{ rec.order_deadline | date : 'd MMMM yyyy' }}</td>
+                  <td><i class="glyphicon glyphicon-info-sign" ng-click="showInfo(rec.id)" style="cursor:pointer" uib-tooltip="Show Info"></i></td>
+                </tr>
+              </table>
+            </uib-tab>
+            <uib-tab index="1" ng-click="findRecomendedCustomer()">
+              <uib-tab-heading>
+                <i class='glyphicon glyphicon-share'></i> Supplier<i class='glyphicon glyphicon-chevron-right pull-right'></i>
+              </uib-tab-heading>
+              <table class="table table-striped">
+                <tr>
+                  <td width="50%"><label>Typical Quality</label></td>
+                  <td width="50%"><label>Company Name</label></td>
+                </tr>
+                <tr ng-repeat="rec in recomended">
+                  <td>{{ rec.typical_quality }}</td>
+                  <td>{{ rec.seller.company_name | date : 'd MMMM yyyy' }}</td>
+                </tr>
+              </table>
+            </uib-tab>
+          </uib-tabset>
         </div>
-        <div class="col-xs-12" style="padding-left:0">
-          <label>Valid Until : </label>
-          <p>{{ buy_order.expired_date | date : 'd MMMM yyyy' }}</p>
-        </div>
-        <div class="col-xs-6" style="padding-left:0">
-          <label>Shipping Term : </label>
-          <p>{{ buy_order.trading_term }} {{ buy_order.trading_term_detail }}</p>
-        </div>
-        <div class="col-xs-6" style="padding-left:0">
-          <label>Payment Terms : </label>
-          <p>{{ buy_order.payment_terms }}</p>
-        </div>
-        <label>Penalty : </label>
-        <p>{{ buy_order.penalty_desc }}</p>
       </div>
     </div>
   </div>

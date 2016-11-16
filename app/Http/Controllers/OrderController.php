@@ -73,8 +73,13 @@ class OrderController extends Controller
     $order->status = 'd';
     $order->save();
 
-    if(count($req->buys) > 0)
+    if(count($req->buys) > 0){
       foreach($req->buys as $buy){
+        $buy_order = SellOrder::with('orders', 'orders.sells', 'orders.buys')->find($buy['id']);
+        if($buy_order->orders) {
+          $buy_order->orders->status = 'c';
+        }
+
         $order->buys()->attach([
           $buy['id'] => $buy['pivot']
         ]);
@@ -86,24 +91,36 @@ class OrderController extends Controller
           'notes' => 'Initial Deal',
           'volume' => $order_detail->pivot->volume,
           'price' => $order_detail->pivot->price,
+          'trading_term' => $req->trading_term,
+          'payment_term' => $req->payment_term,
           'user_id' => Auth::user()->id,
         ]);
       }
-    if(count($req->sells) > 0)
+    }
+      
+    if(count($req->sells) > 0) {
       foreach($req->sells as $sell){
+        $sell_order = SellOrder::with('orders', 'orders.sells', 'orders.buys')->find($sell['id']);
+        if($sell_order->orders) {
+          $sell_order->orders->status = 'c';
+        }
+
         $order->sells()->attach([ $sell['id'] => $sell['pivot'] ]);
         SellOrder::find($sell['id'])->reconcile();
 
-        $order_detail = $order->sells->find($sell['id'])->pivot->id;
+        $order_detail = $order->sells->find($sell['id']);
         OrderNegotiation::create([
           'order_detail_id' => $order_detail->id,
           'notes' => 'Initial Deal',
           'volume' => $order_detail->pivot->volume,
           'price' => $order_detail->pivot->price,
+          'trading_term' => $req->trading_term,
+          'payment_term' => $req->payment_term,
           'user_id' => Auth::user()->id,
         ]);
       }
-
+    }
+    
     return response()->json($order, 200);
   }
 
@@ -183,14 +200,14 @@ class OrderController extends Controller
     }
     $this->authorize('update', $order);
 
-    $order->interest_cost = $request->interest_cost;
-    $order->others_cost = $request->others_cost;
-    $order->surveyor_cost = $request->surveyor_cost;
-    $order->insurance_cost = $request->insurance_cost;
-    $order->pit_to_port = $request->pit_to_port;
-    $order->port_to_factory = $request->port_to_factory;
-    $order->freight_cost = $request->freight_cost;
-    $order->transhipment = $request->transhipment;
+    $order->interest_cost = $req->interest_cost;
+    $order->others_cost = $req->others_cost;
+    $order->surveyor_cost = $req->surveyor_cost;
+    $order->insurance_cost = $req->insurance_cost;
+    $order->pit_to_port = $req->pit_to_port;
+    $order->port_to_factory = $req->port_to_factory;
+    $order->freight_cost = $req->freight_cost;
+    $order->transhipment = $req->transhipment;
     $order->finalize_reason = $req->finalize_reason;
     $order->cancel_reason = $req->cancel_reason;
     $order->request_reason = $req->request_reason;
@@ -340,6 +357,8 @@ class OrderController extends Controller
       'notes' => $notes,
       'volume' => $req->volume,
       'price' => $req->price,
+      'trading_term' => $req->trading_term,
+      'payment_term' => $req->payment_term,
       'user_id' => Auth::user()->id,
     ]);
     $negotiation->save();

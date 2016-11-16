@@ -32,21 +32,22 @@
           <p>{{ buy_order.city }}</p>
           <label>Volume of Coal : </label>
           <p>{{ buy_order.volume }} Tones</p>
-          <label>Order Date : </label>
+          <label>Input Date : </label>
           <p class="form-inline">
             <input type="date" class="form-control" ng-model="buy_order.order_date"/>
           </p>
-          <label>Deadline : </label>
+          <label>Valid Until : </label>
           <p class="form-inline">
-            <input type="date" class="form-control" ng-model="buy_order.order_deadline"/>
+            <input type="date" class="form-control" ng-model="buy_order.expired_date"/>
           </p>
-          <label>Buying Term : </label>
+          <label>Shipping Term : </label>
           <p class="form-inline">
             <select class="form-control" ng-model="buy_order.trading_term">
               <option value="CNF">CNF</option>
               <option value="CIF">CIF</option>
               <option value="FAS">FAS</option>
               <option value="FOB">FOB</option>
+              <option value="FOT">FOT</option>
               <option value="Franco">Franco</option>
               <option value="">Other</option>
             </select>
@@ -56,18 +57,21 @@
         <div class="col-xs-6" style="padding-left:0">
           <label>Country : </label>
           <p>{{ buy_order.country }}</p>
-          <label>Max Price : </label>
+          <label>Asking Price : </label>
           <div class="input-group">
             <span class="input-group-addon">$</span>
             <input type="text" class="form-control" ng-model="buy_order.max_price">
+            <p class="form-inline">
+              <select class="form-control" ng-model="buy_order.price_type">
+                <option value="Coal Only">Coal Only</option>
+                <option value="All In">All In</option>
+              </select>
+            </p>
           </div>
-          <label>Ready Date : </label>
+          <label>Laycan Schedule : </label>
           <p class="form-inline">
-            <input type="date" class="form-control" ng-model="buy_order.ready_date"/>
-          </p>
-          <label>Expired Date : </label>
-          <p class="form-inline">
-            <input type="date" class="form-control" ng-model="buy_order.expired_date"/>
+            <input type="date" class="form-control" ng-model="buy_order.ready_date"/> - 
+            <input type="date" class="form-control" ng-model="buy_order.order_deadline"/>
           </p>
           <label>Payment Terms : </label>
           <select class="form-control" ng-model="buy_order.payment_terms" ng-change="freetext(buy_order.payment_terms)">

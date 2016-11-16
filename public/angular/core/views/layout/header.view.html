@@ -9,7 +9,7 @@
   </a>
 
   <!-- Header Navbar: style can be found in header.less -->
-  <nav class="navbar navbar-static-top" ng-init="findNotificationsByUser()">
+  <nav class="navbar navbar-static-top">
     <!-- Sidebar toggle button-->
     <a href="#" class="sidebar-toggle" ng-click="openSidebar()" role="button" ng-if="Authentication.user">
       <span class="sr-only">Toggle navigation</span>
@@ -34,7 +34,7 @@
             <span class="hidden-xs"><i class="ion ion-ios-chatboxes" style="font-size:18px;"></i></span>
           </a>
         </li>-->
-        <li class="dropdown notifications-menu" uib-dropdown ng-if="Authentication.user">
+        <li class="dropdown notifications-menu" uib-dropdown ng-if="Authentication.user" ng-init="findNotificationsByUser()">
           <a class="dropdown-toggle" data-toggle="dropdown" uib-dropdown-toggle>
             <i class="fa fa-bell"></i>
             <span class="label label-danger" ng-if="unread_notifications">{{ unread_notifications }}</span>
@@ -71,7 +71,8 @@
                 </li>
               </ul>
             </li>
-            <li class="footer"><a ui-sref="notification">View all</a></li>
+            <li ng-if="!notifications.length" class="footer"><a>There is no notification !</a></li>
+            <li ng-if="notifications.length" class="footer"><a ui-sref="notification">View all</a></li>
           </ul>
         </li>
         <li class="dropdown user user-menu" ng-if="Authentication.user">
@@ -82,7 +83,7 @@
         </li>
         <li class="dropdown user user-menu" ng-if="Authentication.user">
           <a class="dropdown-toggle">
-            <span class="hidden-xs">{{ Authentication.user.role }}</span>
+            <span class="hidden-xs role-header" ng-bind="Authentication.user.role"></span>
           </a>
         </li>
         <li class="dropdown user user-menu" ng-if="Authentication.user">

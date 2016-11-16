@@ -12,11 +12,11 @@ class Product extends Model
     protected $table = 'products';
 
     public function Buyer() {
-    	return $this->belongsTo('Buyer');
+    	return $this->belongsTo('App\Model\Buyer','buyer_id','id');
     }
 
     public function Seller() {
-    	return $this->belongsTo('Seller');
+    	return $this->belongsTo('App\Model\Seller','seller_id','id');
     }
     
     public function Concession() {
