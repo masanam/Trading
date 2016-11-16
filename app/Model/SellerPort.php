@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class SellerPort extends Model
 {
+    public $timestamps = false;
     protected $table = 'port_seller';
 
     public function Seller() {
