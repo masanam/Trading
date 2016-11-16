@@ -32,6 +32,16 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
         $scope.order = res;
       });
     };
+    
+    $scope.removeSellFront = function () {
+      $scope.order.sells.splice($scope.display.sell, 1);
+      delete $scope.display.sell;
+    };
+    
+    $scope.removeBuyFront = function () {
+      $scope.order.buys.splice($scope.display.buy, 1);
+      delete $scope.display.buy;
+    };
 
     $scope.negoBuy = function () {
       var modalInstance = $uibModal.open({

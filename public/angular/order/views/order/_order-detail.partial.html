@@ -4,12 +4,12 @@
       <tr ng-if="!order.user_id || order.user_id === Authentication.user.id"  class="no-print">
         <td width=20%></td>
         <td width=40%>
-          <button ng-show="order.status !== 'x' && order.status !== 'f'" class="btn btn-default" ng-click="addBuy()" ng-disabled="order.buys.length > 1"> + Add Buy </button>
-          <button ng-show="order.status !== 'x' && order.status !== 'f'" class="btn btn-default pull-right" ng-click="addOwnProduct()"
+          <button ng-show="order.status !== 'x' && order.status !== 'a' && order.status !== 'f'" class="btn btn-default" ng-click="addBuy()" ng-disabled="order.buys.length > 1"> + Add Buy </button>
+          <button ng-show="order.status !== 'x' && order.status !== 'a' && order.status !== 'f'" class="btn btn-default pull-right" ng-click="addOwnProduct()"
           	ng-disabled="order.buys.length != 1"> + Add BIB Product </button>
         </td>
         <td width=40%>
-          <button ng-show="order.status !== 'x' && order.status !== 'f'" class="btn btn-default" ng-click="addSell()" ng-disabled="order.sells.length > 1"> + Add Sell </button>
+          <button ng-show="order.status !== 'x' && order.status !== 'f' && order.status !== 'a'" class="btn btn-default" ng-click="addSell()" ng-disabled="order.sells.length > 1"> + Add Sell </button>
         </td>
       </tr>
 			<tr>
@@ -61,7 +61,8 @@
 					<span ng-switch-when="true">
 						{{ display.sell.seller.company_name }}
 						<span class="pull-right">
-							<a ng-click="removeSell()" class="glyphicon glyphicon-trash"></a>
+							<a ng-if="order.id" ng-click="removeSell()" class="glyphicon glyphicon-trash"></a>
+							<a ng-if="!order.id" ng-click="removeSellFront()" class="glyphicon glyphicon-trash"></a>
 						</span>
 					</span>
 					<i style="color:green" ng-switch-default>
@@ -72,7 +73,8 @@
 					<span ng-switch-when="true">
 						{{ display.buy.buyer.company_name }}
 						<span class="pull-right">
-							<a ng-click="removeBuy()" class="glyphicon glyphicon-trash"></a>
+							<a ng-if="order.id" ng-click="removeBuy()" class="glyphicon glyphicon-trash"></a>
+							<a ng-if="!order.id" ng-click="removeBuyFront()" class="glyphicon glyphicon-trash"></a>
 						</span>
 					</span>
 					<i style="color:green" ng-switch-default>
