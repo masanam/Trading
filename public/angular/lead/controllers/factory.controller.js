@@ -14,7 +14,7 @@ angular.module('factory').controller('FactoryController', ['$scope', '$statePara
         scope: $scope
       });
     };
-    
+
     $scope.nextToProduct = function(){
       if ($scope.factory.selected) {
         MultiStepForm.tempFactoryId = $scope.factory.selected.id;
