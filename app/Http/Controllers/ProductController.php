@@ -213,6 +213,7 @@ class ProductController extends Controller
         $product->size_max = $request->size_max;
         $product->fe2o3_min = $request->fe2o3_min;
         $product->fe2o3_max = $request->fe2o3_max;
+
         $product->aft_min = $request->aft_min;
         $product->aft_max = $request->aft_max;
         /*$product->size_reject = $request->size_reject;

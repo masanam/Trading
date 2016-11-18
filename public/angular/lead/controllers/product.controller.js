@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('product').controller('ProductController', ['$scope', '$state', '$http', '$stateParams', '$q', '$uibModal', 'Product', 'Concession','Seller','Buyer', '$window',
-  function($scope, $state, $http, $stateParams, $q, $uibModal, Product, Concession,Seller,Buyer, $window) {
+angular.module('product').controller('ProductController', ['$scope', '$state', '$http', '$stateParams', '$q', '$uibModal', 'Product', 'Concession','Seller','Buyer', '$window','$location',
+  function($scope, $state, $http, $stateParams, $q, $uibModal, Product, Concession,Seller,Buyer, $window, $location) {
     $scope.formOpen = false;
 
     $scope.find = function() {
@@ -10,9 +10,27 @@ angular.module('product').controller('ProductController', ['$scope', '$state', '
     };
 
     $scope.findOne = function () {
-      $scope.product = Product.get({ id: $stateParams.id });
+      Product.get({ id: $stateParams.id }, function(res){
+        res.ash_min = parseFloat(res.ash_min);
+        res.ash_max = parseFloat(res.ash_max);
+        res.ts_min = parseFloat(res.ts_min);
+        res.ts_max = parseFloat(res.ts_max);
+        res.tm_min = parseFloat(res.tm_min);
+        res.tm_max = parseFloat(res.tm_max);
+        res.im_min = parseFloat(res.im_min);
+        res.im_max = parseFloat(res.im_max);
+        res.fc_min = parseFloat(res.fc_min);
+        res.fc_max = parseFloat(res.fc_max);
+        res.vm_min = parseFloat(res.vm_min);
+        res.vm_max = parseFloat(res.vm_max);
+        $scope.product = res;
+      });
     };
 
+
+    $scope.backToDetail = function(){
+      $window.history.back();
+    };
 
     $scope.initializeEmptyForm = function () {
       $scope.product = {};
@@ -87,9 +105,8 @@ angular.module('product').controller('ProductController', ['$scope', '$state', '
 
     $scope.update = function (){
       $scope.loading = true;
-
-      $scope.product.$update({ id: $scope.product.id }, function(response) {
-        $state.go('product.index');
+      $scope.product.$update({ id: $stateParams.id }, function(response) {
+        $location.path('lead/product/'+$stateParams.id);
         $scope.loading = false;
       });
     };

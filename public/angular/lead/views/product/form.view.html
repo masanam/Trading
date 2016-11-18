@@ -39,14 +39,14 @@
       </select>
     </div-->
 
-    <div class="form-group" ng-if="!buyer && !seller && !concession" ng-init="findAllBuyers()">
+    <div class="form-group" ng-if="!buyer && !seller && !concession && !updateProduct" ng-init="findAllBuyers()">
       <label for="buyer">Buyer:</label>
       <select class="form-control col-md-12" id="buyer" ng-model="product.buyer_id">
         <option ng-repeat="buyer in buyers" value="{{ buyer.id }}">{{ buyer.company_name }}</option>
       </select>
     </div>
 
-    <div class="form-group" ng-if="!buyer && !seller && !concession" ng-init="findAllSellers()">
+    <div class="form-group" ng-if="!buyer && !seller && !concession && !updateProduct" ng-init="findAllSellers()">
       <label for="seller">Seller:</label>
       <select class="form-control col-md-12" id="seller" ng-model="product.seller_id">
         <option value=""></option>
@@ -204,10 +204,10 @@
             Fe 2o3
           </td>
           <td>
-            <input type="number" step="any" class="form-control" placeholder="%" ng-model="product.fe203_min">
+            <input type="number" step="any" class="form-control" placeholder="%" ng-model="product.fe2o3_min">
           </td>
           <td>
-            <input type="number" step="any" class="form-control" placeholder="%" ng-model="product.fe203_max">
+            <input type="number" step="any" class="form-control" placeholder="%" ng-model="product.fe2o3_min">
           </td>
         </tr>
         <tr>
@@ -226,8 +226,7 @@
   </div>
 
   <div class="form-group pull-right">
-    <button class="btn btn-success" type="submit">Create</button>
-    <button class="btn btn-default" type="reset">Reset</button>
+    <button class="btn btn-success" type="submit">Submit</button>
     
   </div>
 </div>
