@@ -75,7 +75,7 @@ class OrderController extends Controller
 
     if(count($req->buys) > 0){
       foreach($req->buys as $buy){
-        $buy_order = SellOrder::with('orders', 'orders.sells', 'orders.buys')->find($buy['id']);
+        $buy_order = BuyOrder::with('orders', 'orders.sells', 'orders.buys')->find($buy['id']);
         if($buy_order->orders) {
           foreach($buy_order->orders as $o){
             $o->status = 'c';
