@@ -53,7 +53,7 @@
         </div>
         <div class="box-body">
           <div class="row-fluid" style="margin: 10px;">
-
+            <div class="table-responsive">
             <table class="table table-striped">
               <tr><td>Country:</td><td>{{ buyer.country }}</td></tr>
               <tr><td>Address:</td><td>{{ buyer.address }}</td></tr>
@@ -72,7 +72,7 @@
               <tr ng-if="buyer.status == 'x'"><td>Status:</td> <td>Deactivated</td></tr>
 
             </table>
-
+            </div>
             <!--ng-map center="{{buyer.longitude}}, {{buyer.latitude}}">
               <marker center="{{buyer.longitude}}, {{buyer.latitude}}"></marker>
             </ng-map-->
@@ -114,6 +114,7 @@
         </div>
         <div class="box-body">
           <div class="row" style="margin: 10px;">
+          <div class="table-responsive">
             <table class="table table-striped">
               <thead>
                 <tr>
@@ -137,6 +138,7 @@
                 </tr>
               </tbody>
             </table>
+            </div>
           </div>
         </div>
       </div>
@@ -149,7 +151,7 @@
         </div>
         <div class="box-body">
           <div class="row" style="margin: 10px;">
-          
+          <div class="table-responsive">
             <table class="table table-striped">
               <thead>
                 <tr>
@@ -176,7 +178,7 @@
                 </tr>
               </tbody>
             </table>
-
+            </div>
             <ul class="list-group">
               <li class="list-group-item" ng-repeat="concession in seller.concession">
                 {{ concession.concession_name }}
@@ -268,6 +270,7 @@
         </div>
         <div class="box-body">
           <div class="row" style="margin: 10px;">
+          <div class="table-responsive">
             <table class="table table-striped" ng-init="findMyPortsBuyer()">
               <thead>
                 <tr>
@@ -294,6 +297,7 @@
                 </tr>
               </tbody>
             </table>
+            </div>
           </div>
         </div>
       </div>
