@@ -51,7 +51,7 @@ angular.module('order').controller('PortModalBuyOrderController',
         // });
         $scope.buyer_port.$save({ type: 'buyer', action: 'store' }, function(res) {
           $scope.postCreatePorts();
-          $uibModalInstance.close('success');\
+          $uibModalInstance.close('success');
         });
       });
       
