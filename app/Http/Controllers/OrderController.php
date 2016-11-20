@@ -21,10 +21,10 @@ class OrderController extends Controller
 {
   public function __construct(Order $order)
   {
-    $this->middleware('jwt.auth');
+    $this->middleware('jwt.auth', [ 'except' => ['approveNow', 'rejectNow'] ]);
     $this->order = $order;
   }
-  
+
   private function add_user_to_order($order = NULL, $user_id = '', $order_id='', $role=''){
     if($order->users->count() == 0){
       $order_user = new OrderUser();
@@ -33,6 +33,11 @@ class OrderController extends Controller
       $order_user->role = $role;
       $order_user->save();
     }
+  }
+
+  private function send_approval_mail($order, $user_id){
+    $user = User::findOrFail($user_id);
+    Mail::to($user->email)->send(new ApprovalRequest($order));
   }
 
   private function add_approval_to_order($order = NULL, $user_id = '', $order_id='', $status=''){
@@ -47,7 +52,30 @@ class OrderController extends Controller
       $order_approval->user_id = $user_id;
       $order_approval->status = $status;
       $order_approval->save();
+
+      send_approval_mail($order, $user_id);
     }
+  }
+
+  public function testMail($id){
+    $order = Order::findOrFail($id);
+    $this->send_approval_mail($order, 4);
+
+    return response()->json([ 'message' => 'Sent!' ], 200);
+  }
+
+  public function approveNow($id){
+    $order = Order::findOrFail($id);
+    $order->approvals()->sync([1 => [ 'status' => 'a' ]], false);
+
+    return 'You Have Succesfuly Approved this Order';
+  }
+
+  public function rejectNow($id){
+    $order = Order::findOrFail($id);
+    $order->approvals()->sync([1 => [ 'status' => 'r' ]], false);
+
+    return 'You Have Succesfuly Rejected this Order';
   }
 
   /**
@@ -428,12 +456,6 @@ class OrderController extends Controller
     return $this->show($id);
   }
 
-  public function testMail($id){
-    $order = Order::findOrFail($id);
-    Mail::to('giovanny.sientoro@borneo-indobara.com')->send(new ApprovalRequest($order));
-
-    return response()->json([ 'message' => 'Sent!' ], 200);
-  }
 
   public function getSub(){
     $user = Auth::User();

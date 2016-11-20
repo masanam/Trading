@@ -126,6 +126,9 @@ Route::group(['middleware' => ['cors']], function() {
     Route::resource('order/sell', 'SellOrderController', ['except' => [ 'create', 'edit' ]]);
     Route::resource('order/buy', 'BuyOrderController', ['except' => [ 'create', 'edit' ]]);
 
+    //DUmmy api, just for show
+    Route::get('order/{id}/approve-now', 'OrderController@approveNow');
+    Route::get('order/{id}/reject-now', 'OrderController@rejectNow');
 
     /*
      * DEAL API GROUP
