@@ -20,9 +20,11 @@ return [
     ],
 
     'ses' => [
-        'key' => 'AKIAJFNN2RRNX3XEF7VQ', // || env('SES_KEY'),
-        'secret' => 'B1vE1I7Z4I1KQ4OEqLD/qHYKxXmwC', // || env('SES_SECRET'),
-        'region' => 'us-east-1',
+        //'key' => 'AKIAJFNN2RRNX3XEF7VQ', // || env('SES_KEY'),
+        //'secret' => 'B1vE1I7Z4I1KQ4OEqLD/qHYKxXmwC', // || env('SES_SECRET'),
+        'key' => 'AKIAJRG2I4ERK35XSJJA',
+        'secret' => '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',
+        'region' => 'us-east-1'
     ],
 
     'sparkpost' => [

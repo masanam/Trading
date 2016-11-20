@@ -133,6 +133,7 @@ Route::group(['middleware' => ['cors']], function() {
      */
     Route::get('order/ordersum','OrderController@ordersum');
     Route::get('order/funnel','OrderController@funnel');
+    Route::get('order/{id}/test-mail', 'OrderController@testMail');
     Route::post('order/{id}/stage', 'OrderController@stage');
     Route::get('order/{id}/stage', 'OrderController@stageOwn');
     Route::get('order/{id}/unstage', 'OrderController@unstage');

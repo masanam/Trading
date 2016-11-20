@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
-use App\Http\Requests;
 use App\Model\User;
 use App\Model\BuyOrder;
 use App\Model\SellOrder;
@@ -13,6 +13,8 @@ use App\Model\OrderUser;
 use App\Model\Order;
 use App\Model\OrderApproval;
 use App\Model\OrderNegotiation;
+use App\Mail\ApprovalRequest;
+
 use Auth;
 
 class OrderController extends Controller
@@ -21,6 +23,31 @@ class OrderController extends Controller
   {
     $this->middleware('jwt.auth');
     $this->order = $order;
+  }
+  
+  private function add_user_to_order($order = NULL, $user_id = '', $order_id='', $role=''){
+    if($order->users->count() == 0){
+      $order_user = new OrderUser();
+      $order_user->order_id = $order_id;
+      $order_user->user_id = $user_id;
+      $order_user->role = $role;
+      $order_user->save();
+    }
+  }
+
+  private function add_approval_to_order($order = NULL, $user_id = '', $order_id='', $status=''){
+    //var_dump($order->approvals->count());
+    if($order->approvals->count() > 0){
+      $order_approval = OrderApproval::where('user_id', $user_id)->where('order_id', $order_id)->first();
+      $order_approval->status = $status;
+      $order_approval->save();
+    }else{
+      $order_approval = new OrderApproval();
+      $order_approval->order_id = $order_id;
+      $order_approval->user_id = $user_id;
+      $order_approval->status = $status;
+      $order_approval->save();
+    }
   }
 
   /**
@@ -154,31 +181,6 @@ class OrderController extends Controller
     }
 
     return response()->json($order, 200);
-  }
-
-  private function add_user_to_order($order = NULL, $user_id = '', $order_id='', $role=''){
-    if($order->users->count() == 0){
-      $order_user = new OrderUser();
-      $order_user->order_id = $order_id;
-      $order_user->user_id = $user_id;
-      $order_user->role = $role;
-      $order_user->save();
-    }
-  }
-
-  private function add_approval_to_order($order = NULL, $user_id = '', $order_id='', $status=''){
-    //var_dump($order->approvals->count());
-    if($order->approvals->count() > 0){
-      $order_approval = OrderApproval::where('user_id', $user_id)->where('order_id', $order_id)->first();
-      $order_approval->status = $status;
-      $order_approval->save();
-    }else{
-      $order_approval = new OrderApproval();
-      $order_approval->order_id = $order_id;
-      $order_approval->user_id = $user_id;
-      $order_approval->status = $status;
-      $order_approval->save();
-    }
   }
 
   /**
@@ -424,6 +426,13 @@ class OrderController extends Controller
     ]]);
 
     return $this->show($id);
+  }
+
+  public function testMail($id){
+    $order = Order::findOrFail($id);
+    Mail::to('giovanny.sientoro@borneo-indobara.com')->send(new ApprovalRequest($order));
+
+    return response()->json([ 'message' => 'Sent!' ], 200);
   }
 
   public function getSub(){
