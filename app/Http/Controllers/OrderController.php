@@ -145,7 +145,7 @@ class OrderController extends Controller
 
         $order_detail = $order->buys->find($buy['id']);
         OrderNegotiation::create([
-          'order_detail_id' => $order_detail->id,
+          'order_detail_id' => $order_detail->pivot->id,
           'notes' => 'Initial Deal',
           'volume' => $order_detail->pivot->volume,
           'price' => $order_detail->pivot->price,
@@ -171,7 +171,7 @@ class OrderController extends Controller
 
         $order_detail = $order->sells->find($sell['id']);
         OrderNegotiation::create([
-          'order_detail_id' => $order_detail->id,
+          'order_detail_id' => $order_detail->pivot->id,
           'notes' => 'Initial Deal',
           'volume' => $order_detail->pivot->volume,
           'price' => $order_detail->pivot->price,
