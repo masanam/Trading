@@ -10,7 +10,10 @@ angular.module('user').factory('Authentication', ['$http', '$auth',
     auth.authenticate = function (callback){
       if($auth.isAuthenticated() && !auth.user) {
         $http.get('/api/authenticate/user').success(function(res){
+          console.log(res);
           auth.user = res.user;
+          auth.subordinates = res.subordinates;
+          auth.managers = res.managers;
 
           return callback(undefined, auth.user);
         }).error(function(err){

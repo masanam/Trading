@@ -58,7 +58,7 @@
     <tbody id="detail-section" uib-collapse="isCollapsed">
 			<tr>
 				<td>Company</td>
-				<td ng-switch="display.sell && display.sell.user_id === Authentication.user.id || !display.sell">
+				<td ng-switch="display.sell && (display.sell.user_id === Authentication.user.id || checkSubordinates(display.sell.user_id)) || !display.sell">
 					<span ng-switch-when="true">
 						{{ display.sell.seller.company_name }}
 						<span class="pull-right">
