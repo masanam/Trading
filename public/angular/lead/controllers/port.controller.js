@@ -169,7 +169,7 @@ angular.module('port').controller('PortController', ['$scope', '$stateParams', '
       $location.path('lead/seller/'+$stateParams.id+'/setup-product');
     };
 
-    //Delete a Buyer port at Detail Buyer
+    //Delete a Buyer/Seller port at Detail Buyer
     $scope.delete = function(port, type){
       $scope.ports.splice($scope.ports.indexOf(port), 1);
       Port.query({ type:type, action: 'detachPort', id: $stateParams.id, portId:port.id });

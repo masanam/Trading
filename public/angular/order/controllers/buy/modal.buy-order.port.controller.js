@@ -50,18 +50,8 @@ angular.module('order').controller('PortModalBuyOrderController',
         //   $scope.factory.$update({ id: $scope.factory_id });
         // });
         $scope.buyer_port.$save({ type: 'buyer', action: 'store' }, function(res) {
-          $scope.progress = 0;
-          $scope.success = true;
-          var stop = $interval(function() {
-            if ($scope.progress >= 0 && $scope.progress < 100) {
-              $scope.progress++;
-              $scope.selected = $scope.port.port_name ;
-            } else {
-              $interval.cancel(stop);
-              $scope.postCreatePorts();
-              $uibModalInstance.close('success');
-            }
-          }, 75);
+          $scope.postCreatePorts();
+          $uibModalInstance.close('success');
         });
       });
       

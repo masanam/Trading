@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Model\Port;
 use App\Model\BuyerPort;
 use App\Model\SellerPort;
+use App\Model\Factory;
 use App\Model\Concession;
 use Auth;
 
@@ -207,6 +208,12 @@ class PortController extends Controller
     {
         $port = Port::find($port_id);
         $port->buyers()->detach($buyer_id);
+        $factory = Factory::where('port_id',$port_id)->get();
+        foreach ($factory as $item ) {
+            $item->port_id = null;
+            $item->port_distance = null;
+            $item->save();
+        }
 
         return response()->json($port, 200);
     }
@@ -223,6 +230,12 @@ class PortController extends Controller
     {
         $port = Port::find($port_id);
         $port->sellers()->detach($seller_id);
+        $concession = Concession::where('port_id',$port_id)->get();
+        foreach ($concession as $item ) {
+            $item->port_id = null;
+            $item->port_distance = null;
+            $item->save();
+        }
 
         return response()->json($port, 200);
     }
