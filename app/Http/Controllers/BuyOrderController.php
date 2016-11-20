@@ -88,11 +88,11 @@ class BuyOrderController extends Controller
         }
         else if(!$request->order){
             $user_id = Auth::User()->id;
-            $buy_order = BuyOrder::with('Buyer','User','trader')->where([['order_status', '1'], ['user_id', $user_id],])->orwhere([['order_status', '2'], ['user_id', $user_id],])->orwhere([['order_status', '3'], ['user_id', $user_id],])->orwhere([['order_status', '4'], ['user_id', $user_id],])->orwhere('order_status', 'v')->orwhere('order_status', 'l')->orwhere('order_status', 's')->orwhere('order_status', 'p')->get();
+            $buy_order = BuyOrder::with('Buyer','User','trader','used')->where([['order_status', '1'], ['user_id', $user_id],])->orwhere([['order_status', '2'], ['user_id', $user_id],])->orwhere([['order_status', '3'], ['user_id', $user_id],])->orwhere([['order_status', '4'], ['user_id', $user_id],])->orwhere('order_status', 'v')->orwhere('order_status', 'l')->orwhere('order_status', 's')->orwhere('order_status', 'p')->get();
         }
         else if($request->order){
             $user_id = Auth::User()->id;
-            $buy_order = BuyOrder::with('Buyer','User','trader')->where('order_status', 'v')->orwhere('order_status', 'l')->orwhere('order_status', 'p')->get();
+            $buy_order = BuyOrder::with('Buyer','User','trader','used')->where('order_status', 'v')->orwhere('order_status', 'l')->orwhere('order_status', 'p')->get();
             $arrays = [];
             foreach($buy_order as $object)
             {
@@ -447,6 +447,10 @@ class BuyOrderController extends Controller
                     $join->on('order_details.orderable_id', 'buy_order.id')
                          ->where('orderable_type', '=', 'App\Model\BuyOrder');
                 })
+                ->leftJoin('orders', function ($join) {
+                    $join->on('order_details.order_id', 'orders.id')
+                         ->whereIn('orders.status', ['a', 'p', 'f']);
+                })
                 ->where('order_status', $order_status)
                 ->whereIn('buy_order.user_id', $lower)
                 ->select('buy_order.id', 'buy_order.user_id', 'order_date', 'order_deadline', 'expired_date',
@@ -460,8 +464,12 @@ class BuyOrderController extends Controller
                     $join->on('order_details.orderable_id', 'buy_order.id')
                          ->where('orderable_type', '=', 'App\Model\BuyOrder');
                 })
+                ->leftJoin('orders', function ($join) {
+                    $join->on('order_details.order_id', 'orders.id')
+                         ->whereIn('orders.status', ['a', 'p', 'f']);
+                })
                 ->where('order_status', $order_status)
-                ->whereNotIn('user_id', $lower)
+                ->whereNotIn('buy_order.user_id', $lower)
                 ->select('buy_order.id', 'buy_order.user_id', 'order_date', 'order_deadline', 'expired_date',
                     'buy_order.address', 'buy_order.city', 'buy_order.country',
                     DB::raw('NULL as product_name'), 

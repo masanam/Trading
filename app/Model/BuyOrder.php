@@ -43,7 +43,7 @@ class BuyOrder extends Model
 
     public function used() {
         return $this->morphToMany(Order::class, 'orderable', 'order_details')
-            ->selectRaw('sum(order_details.volume) as volume');
+            ->selectRaw('sum(order_details.volume) as volume')->whereIn('orders.status', ['a', 'f', 'p'])->groupBy('orderable_id', 'orderable_type');
     }
 
     public function reconcile() {
