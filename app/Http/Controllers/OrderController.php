@@ -53,7 +53,7 @@ class OrderController extends Controller
       $order_approval->status = $status;
       $order_approval->save();
 
-      send_approval_mail($order, $user_id);
+      $this->send_approval_mail($order, $user_id);
     }
   }
 
