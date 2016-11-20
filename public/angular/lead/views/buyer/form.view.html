@@ -6,26 +6,26 @@
 <div class="form-group">
   <label for="buyer_name">Customer Category:</label>
   <div class="btn-group">
-        <label class="btn btn-default" ng-model="buyer.is_trader" uib-btn-radio="0" >End User</label>
-        <label class="btn btn-default" ng-model="buyer.is_trader" uib-btn-radio="1">Trader</label>
+    <label class="btn btn-default" ng-model="buyer.is_trader" uib-btn-radio="0" >End User</label>
+    <label class="btn btn-default" ng-model="buyer.is_trader" uib-btn-radio="1">Trader</label>
   </div>
 </div>
 
 <div class="form-group">
   <label for="buyer_name">Customer Status:</label>
   <div class="btn-group">
-        <label class="btn btn-default" ng-model="buyer.is_affiliated" uib-btn-radio="0">Non- Affiliated</label>
-        <label class="btn btn-default" ng-model="buyer.is_affiliated" uib-btn-radio="1">Affiliated</label>
+    <label class="btn btn-default" ng-model="buyer.is_affiliated" uib-btn-radio="0">Non- Affiliated</label>
+    <label class="btn btn-default" ng-model="buyer.is_affiliated" uib-btn-radio="1">Affiliated</label>
   </div>
 </div>
 
 <div class="form-group">
   <label for="headquarter_location">Main business of Customer:</label>
   <div class="btn-group">
-        <label class="btn btn-default" ng-model="buyer.industry" uib-btn-radio="'Cements Industry'">Cements Industry</label>
-        <label class="btn btn-default" ng-model="buyer.industry" uib-btn-radio="'Pulp & Paper'">Pulp & Paper</label>
-        <label class="btn btn-default" ng-model="buyer.industry" uib-btn-radio="'Power Plants'">Power Plants</label>
-        <label class="btn btn-default" ng-model="buyer.industry" uib-btn-radio="'General Industry'">General Industry</label>
+    <label class="btn btn-default" ng-model="buyer.industry" uib-btn-radio="'Cements Industry'">Cements Industry</label>
+    <label class="btn btn-default" ng-model="buyer.industry" uib-btn-radio="'Pulp & Paper'">Pulp & Paper</label>
+    <label class="btn btn-default" ng-model="buyer.industry" uib-btn-radio="'Power Plants'">Power Plants</label>
+    <label class="btn btn-default" ng-model="buyer.industry" uib-btn-radio="'General Industry'">General Industry</label>
   </div>
 </div>
 
@@ -60,13 +60,13 @@
 </div>
 
 <!--<div class="form-group">
-  <label for="latitude">Latitude:</label>
-  <input name="latitude" type="text" class="form-control" id="latitude" ng-model="buyer.latitude">
+<label for="latitude">Latitude:</label>
+<input name="latitude" type="text" class="form-control" id="latitude" ng-model="buyer.latitude">
 </div>
 
 <div class="form-group">
-  <label for="longitude">Longitude:</label>
-  <input name="longitude" type="text" class="form-control" id="longitude" ng-model="buyer.longitude">
+<label for="longitude">Longitude:</label>
+<input name="longitude" type="text" class="form-control" id="longitude" ng-model="buyer.longitude">
 </div>-->
 
 
@@ -78,14 +78,14 @@
 <div class="form-group">
   <label for="preferred_trading_term">Preferred Trading Term:</label>
   <div class="btn-group">
-        <label class="btn btn-default" ng-model="buyer.preferred_trading_term" uib-btn-radio="'CNF'">CNF</label>
-        <label class="btn btn-default" ng-model="buyer.preferred_trading_term" uib-btn-radio="'CIF'">CIF</label>
-        <label class="btn btn-default" ng-model="buyer.preferred_trading_term" uib-btn-radio="'FAS'">FAS</label>
-        <label class="btn btn-default" ng-model="buyer.preferred_trading_term" uib-btn-radio="'FOB'">FOB</label>
-        <label class="btn btn-default" ng-model="buyer.preferred_trading_term" uib-btn-radio="'Franco'">Franco</label>
-        <div class="input-group" style="margin-bottom: 5px;">
-          <input name="preferred_trading_term_detail" type="text" class="form-control" id="total_annual_sales" ng-model="buyer.preferred_trading_term_detail" placeholder="Detail">
-        </div>
+    <label class="btn btn-default" ng-model="buyer.preferred_trading_term" uib-btn-radio="'CNF'">CNF</label>
+    <label class="btn btn-default" ng-model="buyer.preferred_trading_term" uib-btn-radio="'CIF'">CIF</label>
+    <label class="btn btn-default" ng-model="buyer.preferred_trading_term" uib-btn-radio="'FAS'">FAS</label>
+    <label class="btn btn-default" ng-model="buyer.preferred_trading_term" uib-btn-radio="'FOB'">FOB</label>
+    <label class="btn btn-default" ng-model="buyer.preferred_trading_term" uib-btn-radio="'Franco'">Franco</label>
+    <div class="input-group" style="margin-bottom: 5px;">
+      <input name="preferred_trading_term_detail" type="text" class="form-control" id="total_annual_sales" ng-model="buyer.preferred_trading_term_detail" placeholder="Detail">
+    </div>
   </div>
 </div>
 
@@ -94,10 +94,10 @@
   <label for="headquarter_location">Preferred Buying Term:</label>
   <!--<input name="preferred_payment_term" type="text" class="form-control" id="preferred_payment_term" ng-model="buyer.preferred_payment_term" required>-->
   <select name="preferred_payment_term" id="preferred_payment_term" class="form-control"
-      ng-model="buyer.preferred_payment_term" ng-change="freetext()">
-      <option ng-repeat="option in data.availableOptions" value="{{option.id}}">{{option.name}}</option>
-  </select>
-  <input type="text" class="form-control" ng-model="buyer.preferred_payment_term" placeholder="Payment Terms" ng-if="buyer.freetext===true"/>
+  ng-model="buyer.preferred_payment_term" ng-change="freetext()">
+  <option ng-repeat="option in data.availableOptions" value="{{option.id}}">{{option.name}}</option>
+</select>
+<input type="text" class="form-control" ng-model="buyer.preferred_payment_term" placeholder="Payment Terms" ng-if="buyer.freetext===true"/>
 </div>
 
 <div class="form-group">

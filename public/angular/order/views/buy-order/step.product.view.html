@@ -1,4 +1,5 @@
-<div class="box box-info" ng-controller="BuyOrderProductController">
+<section class="content" ng-controller="BuyOrderProductController">
+<div class="box box-info" >
   <div class="box-header with-border">
     <h3 class="box-title" style="font-size: 25px">Sell Lead Products</h3>
     <div class="box-tools pull-right">
@@ -11,8 +12,8 @@
     <div class="form-group">
       <label ng-show="error" class="alert bg-red" style="width:100%">{{error}}</label>
     </div>
-    <div class="row" style="margin: 10px;">
-
+    <div class="row" >
+    <div class="col-md-12">
       <div class="select-box" ng-init="findMyProducts()">
         <label for="id">Product Name:</label>
         <ui-select ng-model="product.selected" style="min-width: 300px;" title="Choose a product" append-to-body="true">
@@ -29,6 +30,7 @@
 
       </div>
       <br>
+      </div>
     </div>
     <div class="text-center col-md-4 col-md-offset-4">
       OR
@@ -52,6 +54,7 @@
         </div>
         <div class="form-group">
           <h2>Coal Quality</h2>
+          <div class="table-responsive">
           <table class="table table-striped">
             <tr align="center">
               <th>
@@ -292,6 +295,7 @@
               </td>
             </tr>
           </table>
+          </div>
           
           <label>Volume of Coal :</label>
           <input type="number" class="form-control" placeholder="Tonnes" ng-model="product.selected.volume" required>
@@ -301,3 +305,4 @@
     </div>  
   </div>
 </div>
+</section>

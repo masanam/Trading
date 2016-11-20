@@ -1,4 +1,5 @@
 <section ng-controller="OrderDetailController" ng-init="init()">
+<div class="table-responsive">
 	<table st-table="" class="table table-bordered table-striped">
 		<thead>
       <tr ng-if="!order.user_id || order.user_id === Authentication.user.id"  class="no-print">
@@ -487,4 +488,5 @@
 			</tr>
 		</tbody>
 	</table>
+	</div>
 </section>

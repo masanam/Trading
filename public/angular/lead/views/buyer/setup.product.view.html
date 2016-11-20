@@ -9,11 +9,14 @@
       <h3 class="box-title" style="font-size: 25px">Products Collections</h3>
       <div class="box-tools pull-right">
        <button type="button" ng-click="backToFactory()" class="btn btn-danger"><i class="glyphicon glyphicon-arrow-left"></i> Back</button>
-        
+
         <button type="button" ng-click="nexToPort()" class="btn btn-success">Next <i class="glyphicon glyphicon-arrow-right"></i> </button>
       </div>
     </div>
     <div class="box-body">
+      <div>
+          <div class="col-sm-12"><uib-progressbar class="progress-striped active" max="200" value="150">Products Collections</uib-progressbar></div>
+      </div>
       <div class="form-group">
         <label ng-show="error" class="alert bg-red" style="width:100%">{{error}}</label>
       </div>
@@ -44,7 +47,7 @@
       <button type="button" class="btn btn-primary btn-block" ng-click="addProduct()">
           <b>+</b> Add New Product
       </button>
-      <br>    
+      <br>
 
       <div class="box box-primary" ng-show="product.selected">
         <div class="box-body box-profile">
@@ -143,10 +146,10 @@
             </table>
           </div>
 
-         
+
         </div>
         <!-- /.box-body -->
-      </div>  
+      </div>
     </div>
   </div>
 </div>
