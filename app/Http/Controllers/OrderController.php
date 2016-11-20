@@ -207,6 +207,10 @@ class OrderController extends Controller
         $buy->buyer = $buy->location = $buy->port_name = $buy->address = '-hidden value-';
       $buy->pivot->negotiations = OrderNegotiation::where('order_detail_id', '=', $buy->pivot->id)->get();
     }
+    
+    //$user = User::findOrFail(Auth::user()->id); // Or an different ID
+    //dd($user->Subordinates);
+    //dd(Auth::user()->Subordinates);
 
     return response()->json($order, 200);
   }

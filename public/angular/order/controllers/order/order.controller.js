@@ -99,6 +99,13 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
       }
     };
     
+    $scope.checkSubordinates = function(user_id){
+      for (var i in Authentication.subordinates){
+        if (Authentication.subordinates[i].id === user_id) return true;
+      }
+      return false;
+    };
+    
     $scope.print = function(){
       $scope.orderCollapsed = false;
       $scope.financialCollapsed = true;

@@ -47,7 +47,6 @@ class AuthenticateController extends Controller
             // something went wrong
             return response()->json(['error' => 'could_not_create_token'], 500);
         }
-
         $user = Auth::user();
 
         event(new Login($user, false));
@@ -106,9 +105,13 @@ class AuthenticateController extends Controller
             return response()->json(['token_absent'], $e->getStatusCode());
  
         }
+        
+        $user = Auth::user();
+        $subordinates = Auth::user()->getAllSubordinates();
+        $managers = Auth::user()->getAllManagers();
  
         // the token is valid and we have found the user via the sub claim
-        return response()->json(compact('user'), 200);
+        return response()->json(compact('user', $user, 'subordinates', $subordinates, 'managers', $managers), 200);
     }
 
     public function signing(Request $request)
