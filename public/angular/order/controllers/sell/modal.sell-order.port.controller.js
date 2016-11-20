@@ -35,18 +35,8 @@ angular.module('order').controller('PortModalSellOrderController',
         $scope.seller_port.seller_id = $stateParams.id;
         $scope.seller_port.port_id = res.id;
         $scope.seller_port.$save({ type: 'seller', action: 'store' }, function(res) {
-          $scope.progress = 0;
-          $scope.success = true;
-          var stop = $interval(function() {
-            if ($scope.progress >= 0 && $scope.progress < 100) {
-              $scope.progress++;
-              $scope.selected = $scope.port.port_name ;
-            } else {
-              $interval.cancel(stop);
-              $scope.postCreatePorts();
-              $uibModalInstance.close('success');
-            }
-          }, 75);
+          $scope.postCreatePorts();
+          $uibModalInstance.close('success');
         });
       });
       
@@ -56,7 +46,6 @@ angular.module('order').controller('PortModalSellOrderController',
     $scope.$on('mapInitialized', function(evt, evtMap) {
       map = evtMap;
       $scope.markerMove = function(e) {
-        console.log("hahahahah69");
         $scope.port.latitude = e.latLng.lat();
         $scope.port.longitude = e.latLng.lng();
       };
