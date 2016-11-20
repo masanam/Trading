@@ -9,8 +9,6 @@
         <td width="70%">{{ selected.item.product_name || 'N/A' }}</td>
       </tr>
       <tr>
-        {{selected.item.id}}
-        {{selected.item.used}}
         <td><label>Volume / Available</label></td>
         <td>{{ selected.item.volume }} / {{ (selected.item.volume-selected.item.used[0].volume) }}</td>
       </tr>

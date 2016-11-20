@@ -435,7 +435,7 @@ class SellOrderController extends Controller
                     $join->on('order_details.orderable_id', 'sell_order.id')
                          ->where('orderable_type', '=', 'App\Model\SellOrder');
                 })
-                ->leftJoin('orders', function ($join) {
+                ->join('orders', function ($join) {
                     $join->on('order_details.order_id', 'orders.id')
                          ->whereIn('orders.status', ['a', 'p', 'f']);
                 })
@@ -455,7 +455,7 @@ class SellOrderController extends Controller
                     $join->on('order_details.orderable_id', 'sell_order.id')
                          ->where('orderable_type', 'App\Model\SellOrder');
                 })
-                ->leftJoin('orders', function ($join) {
+                ->join('orders', function ($join) {
                     $join->on('order_details.order_id', 'orders.id')
                          ->whereIn('orders.status', ['a', 'p', 'f']);
                 })
@@ -471,8 +471,7 @@ class SellOrderController extends Controller
                     DB::raw('NULL as company_name')
                 );
 
-            $sell_order = $sell_order2->union($sell_order)->toSql();
-            var_dump($sell_order);die;
+            $sell_order = $sell_order2->union($sell_order)->get();
         } else {
             $sell_order = SellOrder::with('Seller','User')->where('order_status', $order_status)->where('progress_status', 'LIKE', '%'.$progress_status.'%')->get();
         }
