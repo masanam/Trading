@@ -67,7 +67,7 @@
 						</span>
 					</span>
 					<i style="color:green" ng-switch-default>
-						{{ display.sell.trader.name }} ({{ display.sell.trader.phone }})
+						-Contact {{ display.sell.trader.name }} ({{ display.sell.trader.phone }})
 					</i>
 				</td>
 				<td ng-switch="display.buy && display.buy.user_id === Authentication.user.id || !display.buy">
@@ -79,7 +79,7 @@
 						</span>
 					</span>
 					<i style="color:green" ng-switch-default>
-						{{ display.buy.trader.name }} ({{ display.buy.trader.phone }})
+						-Contact {{ display.buy.trader.name }} ({{ display.buy.trader.phone }})
 					</i>
 				</td>
 			</tr>
