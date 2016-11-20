@@ -29,8 +29,7 @@
         width: 100%; }
         table td {
           font-family: sans-serif;
-          font-size: 14px;
-          vertical-align: top; }
+          font-size: 14px; }
       /* -------------------------------------
           BODY & CONTAINER
       ------------------------------------- */
@@ -143,9 +142,20 @@
         background-color: #3498db;
         border-color: #3498db;
         color: #ffffff; }
+      .btn-danger a {
+        background-color: #c12e2a;
+        border-color: #b92c28;
+        color: #ffffff; }
       /* -------------------------------------
           OTHER STYLES THAT MIGHT BE USEFUL
       ------------------------------------- */
+      
+      .table-bordered th,
+      .table-bordered td {
+        border: 1px solid #eee !important;
+        padding: 5px;
+        vertical-align: middle; 
+      }
       .last {
         margin-bottom: 0; }
       .first {
@@ -246,9 +256,6 @@
         <td>&nbsp;</td>
         <td class="container">
           <div class="content">
-
-            <!-- START CENTERED WHITE CONTAINER -->
-            <span class="preheader">This is preheader text. Some clients will show this text as a preview.</span>
             <table class="main">
 
               <!-- START MAIN CONTENT AREA -->
@@ -258,15 +265,114 @@
                     <tr>
                       <td>
                         <p>Hi there,</p>
-                        <p>Sometimes you just want to send a simple HTML email with a simple design and clear call to action. This is it.</p>
-                        <table border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
+                        <p>An order is waiting for you approval.</p>
+                        <table border="0" cellpadding="0" cellspacing="0">
                           <tbody>
+                            <tr style="padding:10px 0;"><td>
+                              <table class="table-bordered" border="0" cellpadding="0" cellspacing="0">
+                                <tbody>
+                                  <tr>
+                                    <td align="left">ORD-{{ str_pad($order->id, 4, '0', STR_PAD_LEFT) }}</td>
+                                    <td align="center">{{ $order->trader->name }}</td>
+                                    <td align="right">{{ date('Y-m-d', strtotime($order->created_at)) }}</td>
+                                  </tr>
+                                  <tr>
+                                    <td colspan=3>
+                                      Reason: {{ $order->request_reason }}
+                                    </td>
+                                  </tr>
+                                  <tr align="center">  
+                                    <td style="font-size:36pt">
+                                      {{ $order->sells[0]->typical_quality }}
+                                    </td>
+                                    <td>
+                                      <p style="font-size:12pt">GC NEWC</p>
+                                      <p style="font-size:24pt">$ 62.89</p>
+                                    </td>
+                                    <td>
+                                      <p style="font-size:12pt">LayCan Period</p>
+                                      {{ $order->sells[0]->ready_date }}<br>
+                                      {{ $order->sells[0]->expired_date }}
+                                    </td>
+                                  </tr>
+                                  <tr align="center">
+                                    <td>
+                                      <p style="font-size:12pt">BUY</p>
+                                      <p style="font-size:24pt">$ {{ $order->sells[0]->pivot->price }}</p>
+                                      <small>{{ round(($order->sells[0]->pivot->price-62.89)*100 / (62.89), 2) }} %</small>
+                                    </td>
+                                    <td>
+                                      <p style="font-size:12pt">MARGIN</p>
+                                      <p style="font-size:24pt">$ {{ $order->buys[0]->pivot->price - $order->sells[0]->pivot->price }}</p>
+                                    </td>
+                                    <td>
+                                      <p style="font-size:12pt">SELL</p>
+                                      <p style="font-size:24pt">$ {{ $order->buys[0]->pivot->price }}</p>
+                                      <small>{{ round(($order->buys[0]->pivot->price-62.89)*100 / (62.89), 2) }} %</small>
+                                    </td>
+                                  </tr>
+                                  
+                                  <tr>
+                                    <td colspan=3>
+                                      <table border="0" cellpadding="0" cellspacing="0" class="table-bordered">
+                                        @foreach ($order->sells as $sell)
+                                        <tr>
+                                          <td class="btn-danger">BUY</td>
+
+                                            <p>{{ $sell->seller->company_name }}</p>
+                                            <small>{{ $sell->trader->name }}</small>
+                                          </td>
+
+                                          <td>
+                                            <p>{{ $sell->pivot->trading_term }}</p>
+                                            <p>{{ $sell->pivot->payment_term }}</p>
+                                          </td>
+
+                                          <td>$ {{ $sell->pivot->price }}</p>
+                                          <td>{{ $sell->pivot->volume }} mt</p>
+                                          </td>
+                                        </tr>
+                                        @endforeach
+
+                                        @foreach ($order->buys as $buy)
+                                        <tr>
+                                          <td class="btn-primary">SELL<td>
+
+                                            <p>{{ $buy->buyer->company_name }}</p>
+                                            <small>{{ $buy->trader->name }}</small>
+                                          </td>
+
+                                          <td>
+                                            <p>{{ $buy->pivot->trading_term }}</p>
+                                            <p>{{ $buy->pivot->payment_term }}</p>
+                                          </td>
+
+                                          <td>$ {{ $buy->pivot->price }}</p>
+                                          <td>{{ $buy->pivot->volume }} mt</p>
+                                          </td>
+                                        </tr>
+                                        @endforeach
+                                      </table>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </td></tr>
                             <tr>
-                              <td align="left">
+                              <td colspan="3" align="left">
                                 <table border="0" cellpadding="0" cellspacing="0">
                                   <tbody>
                                     <tr>
-                                      <td> <a href="http://htmlemail.io" target="_blank">Call To Action</a> </td>
+                                      <td class="btn btn-danger">
+                                        <a href="http://coaltrade.volantech.io/api/order/{{ $order->id }}/reject-now">
+                                          Reject
+                                        </a>
+                                      </td>
+                                      <td class="btn btn-primary">
+                                        <a href="http://coaltrade.volantech.io/api/order/{{ $order->id }}/approve-now">
+                                          Approve
+                                        </a>
+                                      </td>
                                     </tr>
                                   </tbody>
                                 </table>
@@ -274,8 +380,6 @@
                             </tr>
                           </tbody>
                         </table>
-                        <p>This is a really simple email template. Its sole purpose is to get the recipient to click the button with no distractions.</p>
-                        <p>Good luck! Hope it works.</p>
                       </td>
                     </tr>
                   </table>
@@ -290,16 +394,22 @@
               <table border="0" cellpadding="0" cellspacing="0">
                 <tr>
                   <td class="content-block">
-                    <span class="apple-link">Company Inc, 3 Abbey Road, San Francisco CA 94102</span>
-                    <br> Don't like these emails? <a href="http://i.imgur.com/CScmqnj.gif">Unsubscribe</a>.
+                    <span class="apple-link">Sinarmas Mining</span>
                   </td>
                 </tr>
                 <tr>
                   <td class="content-block powered-by">
-                    Powered by <a href="http://htmlemail.io">HTMLemail</a>.
+                    Powered by <a href="http://volantech.io">volantech</a>.
+                  </td>
+                </tr>
+                <tr>
+                  <td class="content-block powered-by">
+                    This email and any files transmitted with it are confidential and intended solely for the use of the individual or entity to whom they are addressed. If you have received this email in error please notify the system manager. Please note that any views or opinions presented in this email are solely those of the author and do not necessarily represent those of the company. Finally, the recipient should check this email and any attachments for the presence of viruses. The company accepts no liability for any damage caused by any virus transmitted by this email.
                   </td>
                 </tr>
               </table>
+
+
             </div>
 
             <!-- END FOOTER -->
