@@ -324,6 +324,7 @@ class OrderController extends Controller
     $pending=0;
     $Finalized=0;
     $approved=0;
+    $sum=['lead-sell'=>0,'lead-buy'=>0,'pending'=>0,'approved'=>0,'finalized'=>0];
     foreach ($get as $count) {
     if ($count->status=='p') {
         $pending=$pending+1;
@@ -334,9 +335,9 @@ class OrderController extends Controller
       elseif ($count->status=='e') {
         $Finalized=$Finalized+1;
       }
-      $count=['lead-sell'=>$getLeadsell,'lead-buy'=>$getLeadbuy,'pending'=>$pending,'approved'=>$approved,'finalized'=>$Finalized];
+      $sum=['lead-sell'=>$getLeadsell,'lead-buy'=>$getLeadbuy,'pending'=>$pending,'approved'=>$approved,'finalized'=>$Finalized];
     }
-    return response()->json($count,200);
+    return response()->json($sum,200);
   }
 
   /**
