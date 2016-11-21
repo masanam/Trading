@@ -444,7 +444,7 @@ class SellOrderController extends Controller
                     $join->on('order_details.orderable_id', 'sell_order.id')
                          ->where('orderable_type', '=', 'App\Model\SellOrder');
                 })
-                ->join('orders', function ($join) {
+                ->leftJoin('orders', function ($join) {
                     $join->on('order_details.order_id', 'orders.id')
                          ->whereIn('orders.status', ['a', 'p', 'f']);
                 })

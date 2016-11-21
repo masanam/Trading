@@ -37,7 +37,7 @@ class OrderController extends Controller
 
   private function send_approval_mail($order, $user_id){
     $user = User::findOrFail($user_id);
-    Mail::to($user->email)->send(new ApprovalRequest($order));
+    Mail::to('martin@volantech.io')->send(new ApprovalRequest($order));
   }
 
   private function add_approval_to_order($order = NULL, $user_id = '', $order_id='', $status=''){
@@ -46,6 +46,8 @@ class OrderController extends Controller
       $order_approval = OrderApproval::where('user_id', $user_id)->where('order_id', $order_id)->first();
       $order_approval->status = $status;
       $order_approval->save();
+      
+      $this->send_approval_mail($order, $user_id);
     }else{
       $order_approval = new OrderApproval();
       $order_approval->order_id = $order_id;
