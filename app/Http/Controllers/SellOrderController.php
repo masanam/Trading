@@ -454,10 +454,10 @@ class SellOrderController extends Controller
                     'sell_order.id', 'sell_order.user_id', 'order_date', 'order_deadline',
                     'expired_date', 'sell_order.address', 'sell_order.city', 'sell_order.country',
                     DB::raw('NULL as product_name') ,
-                    DB::raw('SUM(order_details.volume) as used_volume'),
+                    DB::raw('IFNULL(SUM(order_details.volume),0) as used_volume'),
                     'typical_quality', 'sell_order.volume', 'min_price', 'order_status', 'users.name', 'company_name'
                 )
-                ->groupBy('sell_order.id');
+                ->groupBy('sell_order.id', 'orders.id');
 
             $sell_order2 = SellOrder::leftJoin('users', 'sell_order.user_id', '=', 'users.id')
                 ->leftJoin('order_details', function ($join) {
@@ -470,7 +470,6 @@ class SellOrderController extends Controller
                 })
                 ->where('order_status', $order_status)
                 ->whereNotIn('sell_order.user_id', $lower)
-                ->groupBy('sell_order.id')
                 ->select(
                     'sell_order.id', 'sell_order.user_id', 'order_date', 'order_deadline',
                     'expired_date', 'address','city', 'country', 
@@ -478,7 +477,7 @@ class SellOrderController extends Controller
                     DB::raw('SUM(order_details.volume) as used_volume'),
                     'typical_quality', 'sell_order.volume', 'min_price', 'order_status', 'users.name',
                     DB::raw('NULL as company_name')
-                );
+                )->groupBy('sell_order.id', 'orders.id');
 
             $sell_order = $sell_order2->union($sell_order)->get();
         } else {

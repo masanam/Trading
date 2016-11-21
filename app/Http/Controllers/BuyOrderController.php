@@ -453,10 +453,11 @@ class BuyOrderController extends Controller
                 })
                 ->where('order_status', $order_status)
                 ->whereIn('buy_order.user_id', $lower)
+                ->groupBy('buy_order.id')
                 ->select('buy_order.id', 'buy_order.user_id', 'order_date', 'order_deadline', 'expired_date',
                     'buy_order.address', 'buy_order.city', 'buy_order.country',
                     DB::raw('buy_order.product_name as product_name') , 
-                    DB::raw('SUM(order_details.volume) as used_volume'),
+                    DB::raw('IFNULL(SUM(order_details.volume),0) as used_volume'),
                     'typical_quality', 'buy_order.volume', 'max_price', 'order_status', 'users.name', 'company_name');
             
             $buy_order2 = BuyOrder::leftJoin('users', 'buy_order.user_id', '=', 'users.id')
@@ -470,6 +471,7 @@ class BuyOrderController extends Controller
                 })
                 ->where('order_status', $order_status)
                 ->whereNotIn('buy_order.user_id', $lower)
+                ->groupBy('buy_order.id')
                 ->select('buy_order.id', 'buy_order.user_id', 'order_date', 'order_deadline', 'expired_date',
                     'buy_order.address', 'buy_order.city', 'buy_order.country',
                     DB::raw('NULL as product_name'), 

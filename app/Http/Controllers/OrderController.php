@@ -37,7 +37,7 @@ class OrderController extends Controller
 
   private function send_approval_mail($order, $user_id){
     $user = User::findOrFail($user_id);
-    Mail::to('martin@volantech.io')->send(new ApprovalRequest($order));
+    Mail::to($user->email)->send(new ApprovalRequest($order));
   }
 
   private function add_approval_to_order($order = NULL, $user_id = '', $order_id='', $status=''){
