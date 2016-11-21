@@ -2,7 +2,7 @@
   <button type="button" class="close" ng-click="close()">&times;</button>
   <h4 class="modal-title">Create Port</h4>
 </div>
-<div class="modal-body" ng-init="init('seller')">
+<div class="modal-body" ng-init="init('seller'); updatePort = true;">
   <form role="form" ng-submit="savePortSeller()" ng-show="!success">
   	<div ng-include="'/angular/lead/views/port/form.view.html'"></div>
   </form>
