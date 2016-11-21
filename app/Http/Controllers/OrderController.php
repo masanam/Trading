@@ -320,7 +320,7 @@ class OrderController extends Controller
 
   public function funnel()
   {
-    $get=Order::orderBy('status')->select('status')->where('status','!=','c')->get();
+    $get=Order::orderBy('status')->select('status')->where('status','!=','c')->where('status','!=','x')->where('status','!=','d')->get();
     $getLeadsell=SellOrder::orderBy('order_status')->select('order_status')->where('order_status','=','v')->orWhere('order_status','=','l')->count();
     $getLeadbuy=BuyOrder::orderBy('order_status')->select('order_status')->where('order_status','=','v')->orWhere('order_status','=','l')->count();
     $pending=0;
@@ -337,8 +337,8 @@ class OrderController extends Controller
       elseif ($count->status=='e') {
         $Finalized=$Finalized+1;
       }
-      $sum=['lead-sell'=>$getLeadsell,'lead-buy'=>$getLeadbuy,'pending'=>$pending,'approved'=>$approved,'finalized'=>$Finalized];
     }
+    $sum=['lead-sell'=>$getLeadsell,'lead-buy'=>$getLeadbuy,'pending'=>$pending,'approved'=>$approved,'finalized'=>$Finalized];
     return response()->json($sum,200);
   }
 
