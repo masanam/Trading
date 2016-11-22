@@ -23,7 +23,7 @@ class CreatePortsTable extends Migration
             $table->integer('river_capacity')->nullable();
             $table->decimal('latitude', 10, 8);
             $table->decimal('longitude', 11, 8);
-            $table->integer('anchorage_distance')->unsigned();
+            $table->integer('anchorage_distance')->nullable();
             $table->boolean('has_conveyor');
             $table->boolean('has_crusher');
             $table->boolean('has_blending');

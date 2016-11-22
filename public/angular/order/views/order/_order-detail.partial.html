@@ -61,26 +61,26 @@
 				<td ng-switch="display.sell && (display.sell.user_id === Authentication.user.id || checkSubordinates(display.sell.user_id)) || !display.sell">
 					<span ng-switch-when="true">
 						{{ display.sell.seller.company_name }}
-						<span class="pull-right">
-							<a ng-if="order.id" ng-click="removeSell()" class="glyphicon glyphicon-trash"></a>
-							<a ng-if="!order.id" ng-click="removeSellFront()" class="glyphicon glyphicon-trash"></a>
-						</span>
 					</span>
 					<i style="color:green" ng-switch-default>
 						-Contact {{ display.sell.trader.name }} ({{ display.sell.trader.phone }})
 					</i>
+          <span class="pull-right">
+            <a ng-if="order.id" ng-click="removeSell()" class="glyphicon glyphicon-trash"></a>
+            <a ng-if="!order.id" ng-click="removeSellFront()" class="glyphicon glyphicon-trash"></a>
+          </span>
 				</td>
 				<td ng-switch="display.buy && (display.buy.user_id === Authentication.user.id || checkSubordinates(display.buy.user_id)) || !display.buy">
 					<span ng-switch-when="true">
 						{{ display.buy.buyer.company_name }}
-						<span class="pull-right">
-							<a ng-if="order.id" ng-click="removeBuy()" class="glyphicon glyphicon-trash"></a>
-							<a ng-if="!order.id" ng-click="removeBuyFront()" class="glyphicon glyphicon-trash"></a>
-						</span>
 					</span>
 					<i style="color:green" ng-switch-default>
 						-Contact {{ display.buy.trader.name }} ({{ display.buy.trader.phone }})
 					</i>
+          <span class="pull-right">
+            <a ng-if="order.id" ng-click="removeBuy()" class="glyphicon glyphicon-trash"></a>
+            <a ng-if="!order.id" ng-click="removeBuyFront()" class="glyphicon glyphicon-trash"></a>
+          </span>
 				</td>
 			</tr>
 			<tr>

@@ -2,7 +2,7 @@
   <button type="button" class="close" ng-click="close()">&times;</button>
   <h4 class="modal-title">Select Available Port</h4>
 </div>
-<div class="modal-body" ng-init="init('seller')">
+<div class="modal-body" ng-init="init('seller'); updatePort = true;">
   <form role="form" ng-submit="saveAvailableSeller()">
 
     <div ng-include="'/angular/lead/views/port/available/available.form.view.html'"></div>
