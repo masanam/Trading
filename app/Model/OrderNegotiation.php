@@ -13,6 +13,14 @@ class OrderNegotiation extends Model
 			'notes',
 			'volume',
 			'price',
-			'user_id'
+			'user_id',
+			'insurance_cost',
+			'interest_cost',
+			'surveyor_cost',
+			'others_cost',
+			'pit_to_port',
+			'transhipment',
+			'freight_cost',
+			'port_to_factory'
     ];
 }

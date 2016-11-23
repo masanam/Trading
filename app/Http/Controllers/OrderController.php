@@ -46,6 +46,8 @@ class OrderController extends Controller
       $order_approval = OrderApproval::where('user_id', $user_id)->where('order_id', $order_id)->first();
       $order_approval->status = $status;
       $order_approval->save();
+      
+      $this->send_approval_mail($order, $user_id);
     }else{
       $order_approval = new OrderApproval();
       $order_approval->order_id = $order_id;
@@ -123,7 +125,7 @@ class OrderController extends Controller
         'message' => 'Bad Request'
       ], 400);
     }
-    $order = new Order($req->except(['buys', 'sells']));
+    $order = new Order($req->except(['buys', 'sells', 'additional', 'index']));
     $order->user_id = Auth::User()->id;
     $order->status = 'd';
     $order->save();
@@ -141,7 +143,7 @@ class OrderController extends Controller
         $order->buys()->attach([
           $buy['id'] => $buy['pivot']
         ]);
-        BuyOrder::find($buy['id'])->reconcile();
+        // BuyOrder::find($buy['id'])->reconcile();
 
         $order_detail = $order->buys->find($buy['id']);
         OrderNegotiation::create([
@@ -151,6 +153,14 @@ class OrderController extends Controller
           'price' => $order_detail->pivot->price,
           'trading_term' => $req->trading_term,
           'payment_term' => $req->payment_term,
+          'insurance_cost' => $buy['additional']['insurance_cost'],
+          'interest_cost' => $buy['additional']['interest_cost'],
+          'surveyor_cost' => $buy['additional']['surveyor_cost'],
+          'others_cost' => $buy['additional']['others_cost'],
+          'pit_to_port' => $buy['additional']['pit_to_port'],
+          'transhipment' => $buy['additional']['transhipment'],
+          'freight_cost' => $buy['additional']['freight_cost'],
+          'port_to_factory' => $buy['additional']['port_to_factory'],
           'user_id' => Auth::user()->id,
         ]);
       }
@@ -167,7 +177,7 @@ class OrderController extends Controller
         }
 
         $order->sells()->attach([ $sell['id'] => $sell['pivot'] ]);
-        SellOrder::find($sell['id'])->reconcile();
+        // SellOrder::find($sell['id'])->reconcile();
 
         $order_detail = $order->sells->find($sell['id']);
         OrderNegotiation::create([
@@ -177,6 +187,14 @@ class OrderController extends Controller
           'price' => $order_detail->pivot->price,
           'trading_term' => $req->trading_term,
           'payment_term' => $req->payment_term,
+          'insurance_cost' => $sell['additional']['insurance_cost'],
+          'interest_cost' => $sell['additional']['interest_cost'],
+          'surveyor_cost' => $sell['additional']['surveyor_cost'],
+          'others_cost' => $sell['additional']['others_cost'],
+          'pit_to_port' => $sell['additional']['pit_to_port'],
+          'transhipment' => $sell['additional']['transhipment'],
+          'freight_cost' => $sell['additional']['freight_cost'],
+          'port_to_factory' => $sell['additional']['port_to_factory'],
           'user_id' => Auth::user()->id,
         ]);
       }
@@ -241,18 +259,17 @@ class OrderController extends Controller
       ] ,403);
     }
     $this->authorize('update', $order);
+    if(count($order->buys) > 0){
+      foreach($order->buys as $buy){
+        BuyOrder::find($buy['id'])->reconcile();
+      }
+    }
+    if(count($req->sells) > 0) {
+      foreach($req->sells as $sell){
+        SellOrder::find($sell['id'])->reconcile();
+      }
+    }
 
-    $order->interest_cost = $req->interest_cost;
-    $order->others_cost = $req->others_cost;
-    $order->surveyor_cost = $req->surveyor_cost;
-    $order->insurance_cost = $req->insurance_cost;
-    $order->pit_to_port = $req->pit_to_port;
-    $order->port_to_factory = $req->port_to_factory;
-    $order->freight_cost = $req->freight_cost;
-    $order->transhipment = $req->transhipment;
-    $order->finalize_reason = $req->finalize_reason;
-    $order->cancel_reason = $req->cancel_reason;
-    $order->request_reason = $req->request_reason;
     $order->status = $req->status;
     $order->save();
     //$order->updated_at = date('Y-m-d H:i:s');
@@ -318,12 +335,13 @@ class OrderController extends Controller
 
   public function funnel()
   {
-    $get=Order::orderBy('status')->select('status')->where('status','!=','c')->get();
+    $get=Order::orderBy('status')->select('status')->where('status','!=','c')->where('status','!=','x')->where('status','!=','d')->get();
     $getLeadsell=SellOrder::orderBy('order_status')->select('order_status')->where('order_status','=','v')->orWhere('order_status','=','l')->count();
     $getLeadbuy=BuyOrder::orderBy('order_status')->select('order_status')->where('order_status','=','v')->orWhere('order_status','=','l')->count();
     $pending=0;
     $Finalized=0;
     $approved=0;
+    $sum=['lead-sell'=>0,'lead-buy'=>0,'pending'=>0,'approved'=>0,'finalized'=>0];
     foreach ($get as $count) {
     if ($count->status=='p') {
         $pending=$pending+1;
@@ -334,9 +352,9 @@ class OrderController extends Controller
       elseif ($count->status=='e') {
         $Finalized=$Finalized+1;
       }
-      $count=['lead-sell'=>$getLeadsell,'lead-buy'=>$getLeadbuy,'pending'=>$pending,'approved'=>$approved,'finalized'=>$Finalized];
     }
-    return response()->json($count,200);
+    $sum=['lead-sell'=>$getLeadsell,'lead-buy'=>$getLeadbuy,'pending'=>$pending,'approved'=>$approved,'finalized'=>$Finalized];
+    return response()->json($sum,200);
   }
 
   /**
@@ -375,7 +393,7 @@ class OrderController extends Controller
       $order->buys()->sync([ $req->buy => $details ], false);
 
       $buy = BuyOrder::find($req->buy)->reconcile();
-
+  
       $order_detail_id = $order->buys->find($req->buy)->pivot->id;
     }
     if($req->sell){

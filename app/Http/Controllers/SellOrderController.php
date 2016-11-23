@@ -90,7 +90,7 @@ class SellOrderController extends Controller
         }
         else if(!$request->order){
             $user_id = Auth::User()->id;
-            $sell_order = SellOrder::with('Seller','User','trader','used')
+            $sell_order = SellOrder::with('Seller','User','trader','used','isAvailable')
                 ->where([['order_status', '1'], ['user_id', $user_id],])
                 ->orwhere([['order_status', '2'], ['user_id', $user_id],])
                 ->orwhere([['order_status', '3'], ['user_id', $user_id],])
@@ -444,7 +444,7 @@ class SellOrderController extends Controller
                     $join->on('order_details.orderable_id', 'sell_order.id')
                          ->where('orderable_type', '=', 'App\Model\SellOrder');
                 })
-                ->join('orders', function ($join) {
+                ->leftJoin('orders', function ($join) {
                     $join->on('order_details.order_id', 'orders.id')
                          ->whereIn('orders.status', ['a', 'p', 'f']);
                 })
@@ -454,10 +454,10 @@ class SellOrderController extends Controller
                     'sell_order.id', 'sell_order.user_id', 'order_date', 'order_deadline',
                     'expired_date', 'sell_order.address', 'sell_order.city', 'sell_order.country',
                     DB::raw('NULL as product_name') ,
-                    DB::raw('SUM(order_details.volume) as used_volume'),
+                    DB::raw('IFNULL(SUM(order_details.volume),0) as used_volume'),
                     'typical_quality', 'sell_order.volume', 'min_price', 'order_status', 'users.name', 'company_name'
                 )
-                ->groupBy('sell_order.id');
+                ->groupBy('sell_order.id', 'orders.id');
 
             $sell_order2 = SellOrder::leftJoin('users', 'sell_order.user_id', '=', 'users.id')
                 ->leftJoin('order_details', function ($join) {
@@ -470,7 +470,6 @@ class SellOrderController extends Controller
                 })
                 ->where('order_status', $order_status)
                 ->whereNotIn('sell_order.user_id', $lower)
-                ->groupBy('sell_order.id')
                 ->select(
                     'sell_order.id', 'sell_order.user_id', 'order_date', 'order_deadline',
                     'expired_date', 'address','city', 'country', 
@@ -478,7 +477,7 @@ class SellOrderController extends Controller
                     DB::raw('SUM(order_details.volume) as used_volume'),
                     'typical_quality', 'sell_order.volume', 'min_price', 'order_status', 'users.name',
                     DB::raw('NULL as company_name')
-                );
+                )->groupBy('sell_order.id', 'orders.id');
 
             $sell_order = $sell_order2->union($sell_order)->get();
         } else {

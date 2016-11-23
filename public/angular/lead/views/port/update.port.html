@@ -9,7 +9,7 @@
           </div>
         </div>
         <div class="box-body">
-        <section ng-init="findOne()" >
+        <section ng-init="findOne(); updatePort = true;" >
           <form role="form" ng-submit="update()" ng-show="!success">
             <div ng-include="'/angular/lead/views/port/form.view.html'"></div>
           </form> 

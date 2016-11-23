@@ -28,18 +28,6 @@ angular.module('order').controller('CreateOrderController', ['$scope', '$state',
     };
 
 
-    $scope.addCostModal = function () {
-      var modalInstance = $uibModal.open({
-        windowClass: 'xl-modal',
-        templateUrl: './angular/order/views/order/_add-cost.modal.html',
-        controller: 'AddCostModalController',
-        scope: $scope,
-      });
-
-      modalInstance.result.then(function(res){
-        //if existing order, directly upload
-        $scope.order = res;
-      });
-    };
+    
   }
 ]);

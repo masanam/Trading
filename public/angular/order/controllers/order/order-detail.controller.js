@@ -2,6 +2,48 @@
 
 angular.module('order').controller('OrderDetailController', ['$scope', '$uibModal', 'Order',
   function($scope,$uibModal, Order) {
+
+    $scope.init = function () {
+      $scope.totalPriceBuy = 0;
+      $scope.totalVolumeBuy = 0;
+      $scope.totalSelfBuy = 0;
+      $scope.totalSelfAdditionalBuy = 0;
+      $scope.totalPriceSell = 0;
+      $scope.totalVolumeSell = 0;
+      $scope.totalSelfSell = 0;
+      $scope.totalSelfAdditionalSell = 0;
+      $scope.calculateTotal();
+    };
+
+    $scope.calculateTotal = function(){
+      for (var i = 0; i < $scope.order.sells.length; i++) {
+        $scope.totalPriceBuy += $scope.order.sells[i].pivot.price;
+        $scope.totalVolumeBuy += $scope.order.sells[i].pivot.volume;
+        if ($scope.order.sells[i].additional !== undefined) {
+          $scope.totalSelfBuy += (($scope.order.sells[i].pivot.price + $scope.order.sells[i].additional.freight_cost + 
+            $scope.order.sells[i].additional.port_to_factory) * $scope.order.sells[i].pivot.volume);
+          $scope.totalSelfAdditionalBuy += ($scope.order.sells[i].additional.freight_cost + 
+            $scope.order.sells[i].additional.port_to_factory) * $scope.order.sells[i].pivot.volume;
+        }else{
+          $scope.totalSelfBuy += (($scope.order.sells[i].pivot.price) * $scope.order.sells[i].pivot.volume);
+          $scope.totalSelfAdditionalBuy += $scope.order.sells[i].pivot.volume;
+        }
+      }
+      for (var i = 0; i < $scope.order.buys.length; i++) {
+        $scope.totalPriceSell += $scope.order.buys[i].pivot.price;
+        $scope.totalVolumeSell += $scope.order.buys[i].pivot.volume;
+        if ($scope.order.buys[i].additional !== undefined) {
+          $scope.totalSelfSell += (($scope.order.buys[i].pivot.price + $scope.order.buys[i].additional.freight_cost + 
+            $scope.order.buys[i].additional.port_to_factory) * $scope.order.buys[i].pivot.volume);
+          $scope.totalSelfAdditionalSell += ($scope.order.buys[i].additional.freight_cost + 
+            $scope.order.buys[i].additional.port_to_factory) * $scope.order.buys[i].pivot.volume;
+        }else{
+          $scope.totalSelfSell += (($scope.order.buys[i].pivot.price) * $scope.order.buys[i].pivot.volume);
+          $scope.totalSelfAdditionalSell += $scope.order.buys[i].pivot.volume;
+        }
+      }
+    };
+    
     $scope.addOwnProduct = function () {
       Order.get(
         { id:$scope.order.id, action: 'stage' },
@@ -135,26 +177,14 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
             function (res){
               $scope.order.sells = res.sells;
               $scope.display.sell = selectedItem;
-              var sell_price = parseFloat($scope.display.sell.pivot.price);
-              if(parseFloat($scope.order.pit_to_port)){
-                sell_price += parseFloat($scope.order.pit_to_port);
-              }
-              if(parseFloat($scope.order.transhipment)){
-                sell_price += parseFloat($scope.order.transhipment);
-              }
-              $scope.display.totalSellPrice = sell_price;
+              $scope.display.sell.index = $scope.order.sells.length-1;
+              $scope.calculateTotal();
             });
         } else {
           $scope.order.sells.push(selectedItem);
           $scope.display.sell = selectedItem;
-          var sell_price = parseFloat($scope.display.sell.pivot.price);
-          if(parseFloat($scope.order.pit_to_port)){
-            sell_price += parseFloat($scope.order.pit_to_port);
-          }
-          if(parseFloat($scope.order.transhipment)){
-            sell_price += parseFloat($scope.order.transhipment);
-          }
-          $scope.display.totalSellPrice = sell_price;
+          $scope.display.sell.index = $scope.order.sells.length-1;
+          $scope.calculateTotal();
         }
       }, function () {
         console.log('Modal dismissed at: ' + new Date());
@@ -191,30 +221,145 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
             function (res){
               $scope.order.buys = res.buys;
               $scope.display.buy = selectedItem;
-              var buy_price = parseFloat($scope.display.buy.pivot.price);
-              if(parseFloat($scope.order.port_to_factory)){
-                buy_price -= parseFloat($scope.order.port_to_factory);
-              }
-              if(parseFloat($scope.order.freight_cost)){
-                buy_price -= parseFloat($scope.order.freight_cost);
-              }
-              $scope.display.totalBuyPrice = buy_price;
+              $scope.display.buy.index = $scope.order.buys.length-1;
+              $scope.calculateTotal();
             });
         } else {
           $scope.order.buys.push(selectedItem);
           $scope.display.buy = selectedItem;
-          var buy_price = parseFloat($scope.display.buy.pivot.price);
-          if(parseFloat($scope.order.port_to_factory)){
-            buy_price -= parseFloat($scope.order.port_to_factory);
-          }
-          if(parseFloat($scope.order.freight_cost)){
-            buy_price -= parseFloat($scope.order.freight_cost);
-          }
-          $scope.display.totalBuyPrice = buy_price;
+          $scope.display.buy.index = $scope.order.buys.length-1;
+          $scope.calculateTotal();
         }
       }, function () {
         console.log('Modal dismissed at: ' + new Date());
       });
     };
+
+    $scope.addCostModalBuys = function () {
+
+      $scope.order.additional = 'buy';
+      $scope.order.index = $scope.display.sell.index;
+      var modalInstance = $uibModal.open({
+        windowClass: 'xl-modal',
+        templateUrl: './angular/order/views/order/_add-cost.modal.html',
+        controller: 'AddCostModalController',
+        scope: $scope,
+      });
+
+      modalInstance.result.then(function(res){
+        //if existing order, directly upload
+        $scope.order.sells[$scope.order.index].additional = res;
+        $scope.totalPriceBuy = 0;
+        $scope.totalVolumeBuy = 0;
+        $scope.totalSelfBuy = 0;
+        $scope.totalSelfAdditionalBuy = 0;
+        for (var i = 0; i < $scope.order.sells.length; i++) {
+          $scope.totalPriceBuy += $scope.order.sells[i].pivot.price;
+          $scope.totalVolumeBuy += $scope.order.sells[i].pivot.volume;
+          if ($scope.order.sells[i].additional !== undefined) {
+            $scope.totalSelfBuy += (($scope.order.sells[i].pivot.price + $scope.order.sells[i].additional.freight_cost + 
+              $scope.order.sells[i].additional.port_to_factory) * $scope.order.sells[i].pivot.volume);
+            $scope.totalSelfAdditionalBuy += ($scope.order.sells[i].additional.freight_cost + 
+              $scope.order.sells[i].additional.port_to_factory) * $scope.order.sells[i].pivot.volume;
+          }
+        }
+      });
+    };
+
+    $scope.addCostModalSells = function () {
+      $scope.order.additional = 'sell';
+      $scope.order.index = $scope.display.buy.index;
+      var modalInstance = $uibModal.open({
+        windowClass: 'xl-modal',
+        templateUrl: './angular/order/views/order/_add-cost.modal.html',
+        controller: 'AddCostModalController',
+        scope: $scope,
+      });
+
+      modalInstance.result.then(function(res){
+        //if existing order, directly upload
+        $scope.order.buys[$scope.order.index].additional = res;
+        $scope.totalPriceSell = 0;
+        $scope.totalVolumeSell = 0;
+        $scope.totalSelfSell = 0;
+        $scope.totalSelfAdditionalSell = 0;
+        for (var i = 0; i < $scope.order.buys.length; i++) {
+          $scope.totalPriceSell += $scope.order.buys[i].pivot.price;
+          $scope.totalVolumeSell += $scope.order.buys[i].pivot.volume;
+          if ($scope.order.buys[i].additional !== undefined) {
+            $scope.totalSelfSell += (($scope.order.buys[i].pivot.price + $scope.order.buys[i].additional.freight_cost + 
+              $scope.order.buys[i].additional.port_to_factory) * $scope.order.buys[i].pivot.volume);
+            $scope.totalSelfAdditionalSell += ($scope.order.buys[i].additional.freight_cost + 
+              $scope.order.buys[i].additional.port_to_factory) * $scope.order.buys[i].pivot.volume;
+          }
+        }
+        
+      });
+    };
+
+    // $scope.totalPriceBuy = function(){
+    //   var total = 0;
+    //   for (var i = 0; i < $scope.order.sells.length; i++) {
+    //     total = total + $scope.order.sells[i].pivot.price;
+    //   }
+    //   return total;
+    // };
+
+    // $scope.totalPitBuy = function(){
+    //   var total = 0;
+    //   for (var i = 0; i < $scope.order.sells.length; i++) {
+    //     if ($scope.order.sells[i].additional !== undefined) {
+    //       total = total + $scope.order.sells[i].additional.pit_to_port;
+    //     }
+    //   }
+    //   return total;
+    // };
+
+    // $scope.totalTranshipmentBuy = function(){
+    //   var total = 0;
+    //   for (var i = 0; i < $scope.order.sells.length; i++) {
+    //     if ($scope.order.sells[i].additional !== undefined) {
+    //       total = total + $scope.order.sells[i].additional.transhipment;
+    //     }
+    //   }
+    //   return total;
+    // };
+
+    // $scope.totalVolumeBuy = function(){
+    //   var total = 0;
+    //   for (var i = 0; i < $scope.order.sells.length; i++) {
+    //     total = total + $scope.order.sells[i].pivot.volume;
+    //   }
+    //   return total;
+    // };
+
+    // $scope.totalPriceSell = function(){
+    //   var total = 0;
+    //   for (var i = 0; i < $scope.order.buys.length; i++) {
+    //     total = total + $scope.order.buys[i].pivot.price;
+    //   }
+    //   return total;
+    // };
+
+    // $scope.totalPitSell = function(){
+    //   var total = 0;
+    //   for (var i = 0; i < $scope.order.buys.length; i++) {
+    //     if ($scope.order.buys[i].additional !== undefined) {
+    //       total = total + $scope.order.buys[i].additional.pit_to_port;
+    //     }
+    //   }
+    //   return total;
+    // };
+
+    // $scope.totalTranshipmentSell = function(){
+    //   var total = 0;
+    //   for (var i = 0; i < $scope.order.buys.length; i++) {
+    //     if ($scope.order.buys[i].additional !== undefined) {
+    //       total = total + $scope.order.buys[i].additional.transhipment;
+    //     }
+    //   }
+    //   return total;
+    // };
+
   }
 ]);
