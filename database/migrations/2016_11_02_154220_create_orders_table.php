@@ -76,6 +76,14 @@ class CreateOrdersTable extends Migration
             $table->string('trading_term');
             $table->string('payment_term');
             $table->text('notes');
+            $table->decimal('insurance_cost', 15, 3)->nullable();
+            $table->decimal('interest_cost', 15, 3)->nullable();
+            $table->decimal('surveyor_cost', 15, 3)->nullable();
+            $table->decimal('others_cost', 15, 3)->nullable();
+            $table->decimal('pit_to_port', 15, 3)->nullable();
+            $table->decimal('transhipment', 15, 3)->nullable();
+            $table->decimal('freight_cost', 15, 3)->nullable();
+            $table->decimal('port_to_factory', 15, 3)->nullable();
             $table->timestamps();
 
             $table->foreign('order_detail_id')->references('id')->on('order_details')->onDelete('cascade');

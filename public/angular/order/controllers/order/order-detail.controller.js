@@ -2,6 +2,10 @@
 
 angular.module('order').controller('OrderDetailController', ['$scope', '$uibModal', 'Order',
   function($scope,$uibModal, Order) {
+
+    $scope.init = function () {
+    };
+    
     $scope.addOwnProduct = function () {
       Order.get(
         { id:$scope.order.id, action: 'stage' },
@@ -135,6 +139,7 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
             function (res){
               $scope.order.sells = res.sells;
               $scope.display.sell = selectedItem;
+              $scope.display.sell.index = $scope.order.sells.length-1;
               var sell_price = parseFloat($scope.display.sell.pivot.price);
               if(parseFloat($scope.order.pit_to_port)){
                 sell_price += parseFloat($scope.order.pit_to_port);
@@ -147,6 +152,7 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
         } else {
           $scope.order.sells.push(selectedItem);
           $scope.display.sell = selectedItem;
+          $scope.display.sell.index = $scope.order.sells.length-1;
           var sell_price = parseFloat($scope.display.sell.pivot.price);
           if(parseFloat($scope.order.pit_to_port)){
             sell_price += parseFloat($scope.order.pit_to_port);
@@ -191,6 +197,7 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
             function (res){
               $scope.order.buys = res.buys;
               $scope.display.buy = selectedItem;
+              $scope.display.buy.index = $scope.order.buys.length-1;
               var buy_price = parseFloat($scope.display.buy.pivot.price);
               if(parseFloat($scope.order.port_to_factory)){
                 buy_price -= parseFloat($scope.order.port_to_factory);
@@ -203,6 +210,7 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
         } else {
           $scope.order.buys.push(selectedItem);
           $scope.display.buy = selectedItem;
+          $scope.display.buy.index = $scope.order.buys.length-1;
           var buy_price = parseFloat($scope.display.buy.pivot.price);
           if(parseFloat($scope.order.port_to_factory)){
             buy_price -= parseFloat($scope.order.port_to_factory);
@@ -216,5 +224,70 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
         console.log('Modal dismissed at: ' + new Date());
       });
     };
+
+    // $scope.totalPriceBuy = function(){
+    //   var total = 0;
+    //   for (var i = 0; i < $scope.order.sells.length; i++) {
+    //     total = total + $scope.order.sells[i].pivot.price;
+    //   }
+    //   return total;
+    // };
+
+    // $scope.totalPitBuy = function(){
+    //   var total = 0;
+    //   for (var i = 0; i < $scope.order.sells.length; i++) {
+    //     if ($scope.order.sells[i].additional !== undefined) {
+    //       total = total + $scope.order.sells[i].additional.pit_to_port;
+    //     }
+    //   }
+    //   return total;
+    // };
+
+    // $scope.totalTranshipmentBuy = function(){
+    //   var total = 0;
+    //   for (var i = 0; i < $scope.order.sells.length; i++) {
+    //     if ($scope.order.sells[i].additional !== undefined) {
+    //       total = total + $scope.order.sells[i].additional.transhipment;
+    //     }
+    //   }
+    //   return total;
+    // };
+
+    // $scope.totalVolumeBuy = function(){
+    //   var total = 0;
+    //   for (var i = 0; i < $scope.order.sells.length; i++) {
+    //     total = total + $scope.order.sells[i].pivot.volume;
+    //   }
+    //   return total;
+    // };
+
+    // $scope.totalPriceSell = function(){
+    //   var total = 0;
+    //   for (var i = 0; i < $scope.order.buys.length; i++) {
+    //     total = total + $scope.order.buys[i].pivot.price;
+    //   }
+    //   return total;
+    // };
+
+    // $scope.totalPitSell = function(){
+    //   var total = 0;
+    //   for (var i = 0; i < $scope.order.buys.length; i++) {
+    //     if ($scope.order.buys[i].additional !== undefined) {
+    //       total = total + $scope.order.buys[i].additional.pit_to_port;
+    //     }
+    //   }
+    //   return total;
+    // };
+
+    // $scope.totalTranshipmentSell = function(){
+    //   var total = 0;
+    //   for (var i = 0; i < $scope.order.buys.length; i++) {
+    //     if ($scope.order.buys[i].additional !== undefined) {
+    //       total = total + $scope.order.buys[i].additional.transhipment;
+    //     }
+    //   }
+    //   return total;
+    // };
+
   }
 ]);
