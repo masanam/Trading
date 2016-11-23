@@ -117,66 +117,60 @@ class BuyerController extends Controller
       return response()->json([
         'message' => 'Not found'
         ] ,404);
-      }
-
-      $buyer->user_id = $request->user_id;
-      $buyer->company_name = $request->company_name;
-      $buyer->is_trader = $request->is_trader;
-      $buyer->is_affiliated = $request->is_affiliated;
-      $buyer->phone = $request->phone;
-      $buyer->email = $request->email;
-      $buyer->web = $request->web;
-      $buyer->address = $request->address;
-      $buyer->city = $request->city;
-      $buyer->country = $request->country;
-      $buyer->latitude = $request->latitude;
-      $buyer->longitude = $request->longitude;
-      $buyer->industry = $request->industry;
-      $buyer->annual_demand = $request->annual_demand;
-      $buyer->preferred_trading_term = $request->preferred_trading_term;
-      $buyer->preferred_trading_term_detail = $request->preferred_trading_term_detail;
-      $buyer->preferred_payment_term = $request->preferred_payment_term;
-      $buyer->description = $request->description;
-      $buyer->status = $request->status;
-      $buyer->save();
-
-      event(new InputEditCoalpedia(Auth::user(), $buyer->id, 'buyers', 'update'));
-
-      return response()->json($buyer, 200);
     }
 
-    /**
-    * Remove the specified resource from storage.
-    *
-    * @param  int  $id
-    * @return \Illuminate\Http\Response
-    */
-    public function destroy($buyer)
-    {
-      $buyer = Buyer::find($buyer);
+    $buyer->user_id = $request->user_id;
+    $buyer->company_name = $request->company_name;
+    $buyer->is_trader = $request->is_trader;
+    $buyer->is_affiliated = $request->is_affiliated;
+    $buyer->phone = $request->phone;
+    $buyer->email = $request->email;
+    $buyer->web = $request->web;
+    $buyer->address = $request->address;
+    $buyer->city = $request->city;
+    $buyer->country = $request->country;
+    $buyer->latitude = $request->latitude;
+    $buyer->longitude = $request->longitude;
+    $buyer->industry = $request->industry;
+    $buyer->annual_demand = $request->annual_demand;
+    $buyer->preferred_trading_term = $request->preferred_trading_term;
+    $buyer->preferred_trading_term_detail = $request->preferred_trading_term_detail;
+    $buyer->preferred_payment_term = $request->preferred_payment_term;
+    $buyer->description = $request->description;
+    $buyer->status = $request->status;
+    $buyer->save();
 
-      if (!$buyer) {
-        return response()->json([
-          'message' => 'Not found'
-          ] ,404);
-        }
+    event(new InputEditCoalpedia(Auth::user(), $buyer->id, 'buyers', 'update'));
 
-        $buyer->status = 'x';
-        $buyer->save();
+    return response()->json($buyer, 200);
+  }
 
-        return response()->json($buyer, 200);
-      }
+  /**
+  * Remove the specified resource from storage.
+  *
+  * @param  int  $id
+  * @return \Illuminate\Http\Response
+  */
+  public function destroy($buyer)
+  {
+    $buyer = Buyer::find($buyer);
 
-      public function getBuyerByName($name) {
-        $buyer = Buyer::where('company_name', 'like', '%'.$name.'%')->get();
-
-        return response()->json($buyer, 200);
-      }
-
-      public function getTotalBuyer() {
-        $total = Buyer::count();
-        $status = array('count' => $total);
-        return response()->json($status,200);
-      }
-
+    if (!$buyer) {
+      return response()->json([
+        'message' => 'Not found'
+        ] ,404);
     }
+
+    $buyer->status = 'x';
+    $buyer->save();
+
+    return response()->json($buyer, 200);
+  }
+
+  public function getTotalBuyer() {
+    $total = Buyer::count();
+    $status = array('count' => $total);
+    return response()->json($status,200);
+  }
+
+}

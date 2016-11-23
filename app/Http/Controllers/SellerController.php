@@ -182,12 +182,6 @@ class SellerController extends Controller
         return response()->json($seller, 200);
     }
 
-    public function getSellerByName($name) {
-        $seller = Seller::wherewhere('company_name', 'like', '%'.$name.'%')->get();
-
-        return response()->json($seller, 200);
-    }
-
     public function getTotalSeller() {
         $total = Seller::count();
         $status = array('count' => $total);        
