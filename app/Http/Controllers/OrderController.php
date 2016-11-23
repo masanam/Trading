@@ -143,8 +143,7 @@ class OrderController extends Controller
         $order->buys()->attach([
           $buy['id'] => $buy['pivot']
         ]);
-        BuyOrder::find($buy['id'])->reconcile();
-        var_dump($buy['additional']['insurance_cost']);
+        // BuyOrder::find($buy['id'])->reconcile();
 
         $order_detail = $order->buys->find($buy['id']);
         OrderNegotiation::create([
@@ -178,7 +177,7 @@ class OrderController extends Controller
         }
 
         $order->sells()->attach([ $sell['id'] => $sell['pivot'] ]);
-        SellOrder::find($sell['id'])->reconcile();
+        // SellOrder::find($sell['id'])->reconcile();
 
         $order_detail = $order->sells->find($sell['id']);
         OrderNegotiation::create([
@@ -260,18 +259,17 @@ class OrderController extends Controller
       ] ,403);
     }
     $this->authorize('update', $order);
+    if(count($order->buys) > 0){
+      foreach($order->buys as $buy){
+        BuyOrder::find($buy['id'])->reconcile();
+      }
+    }
+    if(count($req->sells) > 0) {
+      foreach($req->sells as $sell){
+        SellOrder::find($sell['id'])->reconcile();
+      }
+    }
 
-    $order->interest_cost = $req->interest_cost;
-    $order->others_cost = $req->others_cost;
-    $order->surveyor_cost = $req->surveyor_cost;
-    $order->insurance_cost = $req->insurance_cost;
-    $order->pit_to_port = $req->pit_to_port;
-    $order->port_to_factory = $req->port_to_factory;
-    $order->freight_cost = $req->freight_cost;
-    $order->transhipment = $req->transhipment;
-    $order->finalize_reason = $req->finalize_reason;
-    $order->cancel_reason = $req->cancel_reason;
-    $order->request_reason = $req->request_reason;
     $order->status = $req->status;
     $order->save();
     //$order->updated_at = date('Y-m-d H:i:s');
@@ -395,7 +393,7 @@ class OrderController extends Controller
       $order->buys()->sync([ $req->buy => $details ], false);
 
       $buy = BuyOrder::find($req->buy)->reconcile();
-
+  
       $order_detail_id = $order->buys->find($req->buy)->pivot->id;
     }
     if($req->sell){

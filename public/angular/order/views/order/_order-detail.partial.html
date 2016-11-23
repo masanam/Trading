@@ -507,20 +507,21 @@
 				<th>Coal Price</th>
 				<td>
 					<span ng-if="display.sell">
-					<h3>US${{ (totalPriceBuy + totalPitBuy + totalPitSell + totalTranshipmentBuy + totalTranshipmentSell) * totalVolumeBuy / totalVolumeBuy | number }}</h3>
+					<h3>US${{ (totalSelfBuy + totalSelfAdditionalSell) / totalVolumeBuy | number }}</h3>
 					from {{ order.sells.length }} Suppliers
 					</span>
 				</td>
         <td>
 					<span ng-if="display.buy">
-					<h3>US${{ totalSelfSell / totalVolumeSell | number }}</h3>
+					<h3>US${{ (totalSelfSell + totalSelfAdditionalBuy) / totalVolumeSell | number }}</h3>
 					from {{ order.buys.length }} Customers
 					</span>
 				</td>
 			</tr>
 			<tr ng-if="display.buy && display.sell">
-				<td ng-if="(display.buy.pivot.price - order.port_to_factory - order.freight_cost) - (display.sell.pivot.price + order.pit_to_port + order.transhipment) > 0" colspan=3 style="text-align:center; "><h3 style="color: green">Expected Margin / mt: US${{ (display.buy.pivot.price - order.port_to_factory - order.freight_cost) - (display.sell.pivot.price + order.pit_to_port + order.transhipment) | number }}</h3></td>
-				<td ng-if="(display.buy.pivot.price - order.port_to_factory - order.freight_cost) - (display.sell.pivot.price + order.pit_to_port + order.transhipment) < 0" colspan=3 style="text-align:center; "><h3 style="color: red">Expected Margin / mt: US${{ (display.buy.pivot.price - order.port_to_factory - order.freight_cost) - (display.sell.pivot.price + order.pit_to_port + order.transhipment) | number }}</h3></td>
+				<td ng-if="(((totalSelfSell + totalSelfAdditionalBuy) / totalVolumeSell) - ((totalSelfBuy + totalSelfAdditionalSell) / totalVolumeBuy)) >= 0" colspan=3 style="text-align:center; "><h3 style="color: green">Expected Margin / mt: US${{ ((totalSelfSell + totalSelfAdditionalBuy) / totalVolumeSell) - 
+        ((totalSelfBuy + totalSelfAdditionalSell) / totalVolumeBuy) | number }}</h3></td>
+				<td ng-if="(((totalSelfSell + totalSelfAdditionalBuy) / totalVolumeSell) - ((totalSelfBuy + totalSelfAdditionalSell) / totalVolumeBuy)) < 0" colspan=3 style="text-align:center; "><h3 style="color: red">Expected Margin / mt: US${{ ((totalSelfBuy + totalSelfAdditionalSell) / totalVolumeBuy) - ((totalSelfSell + totalSelfAdditionalBuy) / totalVolumeSell) | number }}</h3></td>
 			</tr>
 		</tbody>
 	</table>
