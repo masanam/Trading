@@ -34,61 +34,70 @@ class BuyOrderController extends Controller
             $user_id = Auth::User()->id;
             $sell_order = SellOrder::where('id',$request->order_id)->first();
             $buy_order = BuyOrder::with('Buyer','User','trader','used')
-            ->where([['order_status', 'v'],
-                [DB::raw('DATEDIFF(ready_date,"'.$sell_order->ready_date.'")'),'>=',-7],
-                [DB::raw('DATEDIFF(order_deadline,"'.$sell_order->order_deadline.'")'),'<=',7]])
-            ->orwhere([['order_status', 'l'],
-                [DB::raw('DATEDIFF(ready_date,"'.$sell_order->ready_date.'")'),'>=',-7],
-                [DB::raw('DATEDIFF(order_deadline,"'.$sell_order->order_deadline.'")'),'<=',7]])
-            ->orwhere([['order_status', 'p'],
-                [DB::raw('DATEDIFF(ready_date,"'.$sell_order->ready_date.'")'),'>=',-7],
-                [DB::raw('DATEDIFF(order_deadline,"'.$sell_order->order_deadline.'")'),'<=',7]])
-            ->select('buy_order.*', 
-                DB::raw('ABS(buy_order.gcv_adb_min-'.$sell_order->gcv_adb_min.') as gcv_adb_min_diff'), 
-                DB::raw('ABS(buy_order.gcv_adb_max-'.$sell_order->gcv_adb_max.') as gcv_adb_max_diff'),
-                DB::raw('ABS(buy_order.gcv_arb_min-'.$sell_order->gcv_arb_min.') as gcv_arb_min_diff'), 
-                DB::raw('ABS(buy_order.gcv_arb_max-'.$sell_order->gcv_arb_max.') as gcv_arb_max_diff'), 
-                DB::raw('ABS(buy_order.ncv_min-'.$sell_order->ncv_min.') as ncv_min_diff'), 
-                DB::raw('ABS(buy_order.ncv_max-'.$sell_order->ncv_max.') as ncv_max_diff'), 
-                DB::raw('ABS(buy_order.volume-'.$sell_order->volume.') as volume_diff'),
-                DB::raw('DATEDIFF(ready_date,"'.$sell_order->ready_date.'") as ready_date_diff'),
-                DB::raw('DATEDIFF(order_deadline,"'.$sell_order->order_deadline.'") as order_deadline_diff'))
-            ->orderBy('gcv_adb_min_diff','asc')
-            ->orderBy('gcv_adb_max_diff','asc')
-            ->orderBy('gcv_arb_min_diff','asc')
-            ->orderBy('gcv_arb_max_diff','asc')
-            ->orderBy('ncv_min_diff','asc')
-            ->orderBy('ncv_max_diff','asc')
-            ->orderBy('volume_diff','asc')
-            ->orderBy('ready_date_diff','asc')
-            ->orderBy('order_deadline_diff','asc')
-            ->orderBy('max_price','desc')
-            ->limit($request->limit)
-            ->get();
+                ->where([['order_status', 'v'],
+                    [DB::raw('DATEDIFF(ready_date,"'.$sell_order->ready_date.'")'),'>=',-7],
+                    [DB::raw('DATEDIFF(order_deadline,"'.$sell_order->order_deadline.'")'),'<=',7]])
+                ->orwhere([['order_status', 'l'],
+                    [DB::raw('DATEDIFF(ready_date,"'.$sell_order->ready_date.'")'),'>=',-7],
+                    [DB::raw('DATEDIFF(order_deadline,"'.$sell_order->order_deadline.'")'),'<=',7]])
+                ->orwhere([['order_status', 'p'],
+                    [DB::raw('DATEDIFF(ready_date,"'.$sell_order->ready_date.'")'),'>=',-7],
+                    [DB::raw('DATEDIFF(order_deadline,"'.$sell_order->order_deadline.'")'),'<=',7]])
+                ->select('buy_order.*', 
+                    DB::raw('ABS(buy_order.gcv_adb_min-'.$sell_order->gcv_adb_min.') as gcv_adb_min_diff'), 
+                    DB::raw('ABS(buy_order.gcv_adb_max-'.$sell_order->gcv_adb_max.') as gcv_adb_max_diff'),
+                    DB::raw('ABS(buy_order.gcv_arb_min-'.$sell_order->gcv_arb_min.') as gcv_arb_min_diff'), 
+                    DB::raw('ABS(buy_order.gcv_arb_max-'.$sell_order->gcv_arb_max.') as gcv_arb_max_diff'), 
+                    DB::raw('ABS(buy_order.ncv_min-'.$sell_order->ncv_min.') as ncv_min_diff'), 
+                    DB::raw('ABS(buy_order.ncv_max-'.$sell_order->ncv_max.') as ncv_max_diff'), 
+                    DB::raw('ABS(buy_order.volume-'.$sell_order->volume.') as volume_diff'),
+                    DB::raw('DATEDIFF(ready_date,"'.$sell_order->ready_date.'") as ready_date_diff'),
+                    DB::raw('DATEDIFF(order_deadline,"'.$sell_order->order_deadline.'") as order_deadline_diff'))
+                ->orderBy('gcv_adb_min_diff','asc')
+                ->orderBy('gcv_adb_max_diff','asc')
+                ->orderBy('gcv_arb_min_diff','asc')
+                ->orderBy('gcv_arb_max_diff','asc')
+                ->orderBy('ncv_min_diff','asc')
+                ->orderBy('ncv_max_diff','asc')
+                ->orderBy('volume_diff','asc')
+                ->orderBy('ready_date_diff','asc')
+                ->orderBy('order_deadline_diff','asc')
+                ->orderBy('max_price','desc')
+                ->limit($request->limit)
+                ->get();
         }
         else if($request->customer&&$request->order_id!==null){
             $sell_order = SellOrder::where('id',$request->order_id)->first();
             $buy_order = Product::with('Buyer')
-            ->where('seller_id',null)
-            ->select('products.*', 
-                DB::raw('ABS(products.gcv_adb_min-'.$sell_order->gcv_adb_min.') as gcv_adb_min_diff'), 
-                DB::raw('ABS(products.gcv_adb_max-'.$sell_order->gcv_adb_max.') as gcv_adb_max_diff'),
-                DB::raw('ABS(products.gcv_arb_min-'.$sell_order->gcv_arb_min.') as gcv_arb_min_diff'), 
-                DB::raw('ABS(products.gcv_arb_max-'.$sell_order->gcv_arb_max.') as gcv_arb_max_diff'), 
-                DB::raw('ABS(products.ncv_min-'.$sell_order->ncv_min.') as ncv_min_diff'), 
-                DB::raw('ABS(products.ncv_max-'.$sell_order->ncv_max.') as ncv_max_diff'))
-            ->orderBy('gcv_adb_min_diff','asc')
-            ->orderBy('gcv_adb_max_diff','asc')
-            ->orderBy('gcv_arb_min_diff','asc')
-            ->orderBy('gcv_arb_max_diff','asc')
-            ->orderBy('ncv_min_diff','asc')
-            ->orderBy('ncv_max_diff','asc')
-            ->limit($request->limit)
-            ->get();
+                ->where('seller_id',null)
+                ->select('products.*', 
+                    DB::raw('ABS(products.gcv_adb_min-'.$sell_order->gcv_adb_min.') as gcv_adb_min_diff'), 
+                    DB::raw('ABS(products.gcv_adb_max-'.$sell_order->gcv_adb_max.') as gcv_adb_max_diff'),
+                    DB::raw('ABS(products.gcv_arb_min-'.$sell_order->gcv_arb_min.') as gcv_arb_min_diff'), 
+                    DB::raw('ABS(products.gcv_arb_max-'.$sell_order->gcv_arb_max.') as gcv_arb_max_diff'), 
+                    DB::raw('ABS(products.ncv_min-'.$sell_order->ncv_min.') as ncv_min_diff'), 
+                    DB::raw('ABS(products.ncv_max-'.$sell_order->ncv_max.') as ncv_max_diff'))
+                ->orderBy('gcv_adb_min_diff','asc')
+                ->orderBy('gcv_adb_max_diff','asc')
+                ->orderBy('gcv_arb_min_diff','asc')
+                ->orderBy('gcv_arb_max_diff','asc')
+                ->orderBy('ncv_min_diff','asc')
+                ->orderBy('ncv_max_diff','asc')
+                ->limit($request->limit)
+                ->get();
         }
         else if(!$request->order){
             $user_id = Auth::User()->id;
-            $buy_order = BuyOrder::with('Buyer','User','trader','used')->where([['order_status', '1'], ['user_id', $user_id],])->orwhere([['order_status', '2'], ['user_id', $user_id],])->orwhere([['order_status', '3'], ['user_id', $user_id],])->orwhere([['order_status', '4'], ['user_id', $user_id],])->orwhere('order_status', 'v')->orwhere('order_status', 'l')->orwhere('order_status', 's')->orwhere('order_status', 'p')->get();
+            $buy_order = BuyOrder::with('Buyer','User','trader','used')
+                ->where([['order_status', '1'], ['user_id', $user_id],])
+                ->orwhere([['order_status', '2'], ['user_id', $user_id],])
+                ->orwhere([['order_status', '3'], ['user_id', $user_id],])
+                ->orwhere([['order_status', '4'], ['user_id', $user_id],])
+                ->orwhere('order_status', 'v')
+                ->orwhere('order_status', 'l')
+                ->orwhere('order_status', 's')
+                ->orwhere('order_status', 'p')
+                ->get();
         }
         else if($request->order){
             $user_id = Auth::User()->id;
