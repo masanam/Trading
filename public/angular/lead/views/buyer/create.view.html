@@ -6,17 +6,25 @@
     <section ng-include="'./angular/lead/views/search-bar.view.html'"></section>
     <div class="box box-info">
       <div class="box-header with-border">
-        <h1 class="box-title" style="font-size: 25px">Create Customer</h1>
+        <h1 class="box-title hidden-sm hidden-xs" style="font-size: 25px">Create Customer</h1>
+        <h4 class="box-title hidden-lg hidden-md">Create Customer</h4>
         <div class="box-tools pull-right">
-          <button type="button" class="btn btn-danger" ui-sref="lead.buyer">
+          <button type="button" class="btn btn-danger hidden-xs" ui-sref="lead.buyer">
             <i class="glyphicon glyphicon-arrow-left"></i> Back
           </button>
-          <button type="button" class="btn btn-success" ng-click="nextToFactory()">
+          <button type="button" class="btn btn-success hidden-xs" ng-click="nextToFactory()">
             <i class="glyphicon glyphicon-arrow-right"></i> Next
           </button>
         </div>
       </div>
       <div class="box-body">
+          <div>
+          <button type="button" class="btn btn-danger hidden-sm hidden-md hidden-lg" ui-sref="lead.buyer"><i class="glyphicon glyphicon-arrow-left"></i> Back
+          </button>
+          <button type="button" class="btn btn-success hidden-sm hidden-md hidden-lg" ng-click="nextToFactory()"><i class="glyphicon glyphicon-arrow-right"></i> Next
+          </button>
+          </div>
+          </br>
         <section>
           <form role="form">
             <!-- <div class="form-group" ng-init="findAllBuyers()">
@@ -34,7 +42,7 @@
         </div>
         <div class="select-box" ng-init="findAllBuyers()">
           <label for="id">Name of Company :</label>
-          <ui-select ng-model="buyer.selected" style="min-width: 300px;" title="Choose a person" append-to-body="true">
+          <ui-select ng-model="buyer.selected" style="min-width: 30px;" title="Choose a person" append-to-body="true">
             <ui-select-match placeholder="Name Of Company">{{ buyer.selected.company_name }}</ui-select-match>
             <ui-select-choices repeat="buyer in buyers | propsFilter: {company_name: $select.search} | orderBy:'company_name'">
               <div ng-bind-html="company_name | highlight: $select.search"></div>
