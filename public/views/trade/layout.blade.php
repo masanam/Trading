@@ -26,7 +26,7 @@
   <![endif]-->
 </head>
 <body class="hold-transition skin-blue login-page fixed sidebar-mini" ng-app="coaltrade"
-    ng-class="collapse ? 'sidebar-collapse' : ''" ng-controller="LayoutController" ng-init="collapse = true">
+    ng-class="collapse ? 'sidebar-collapse' : 'sidebar-open'" ng-controller="LayoutController" ng-init="collapse = true">
   <div class="wrapper" style="min-height: 100vh;">
     <div ng-static-include="'./angular/core/views/layout/header.view.html'" ng-controller="AuthController"></div>
     <div ng-static-include="'./angular/core/views/layout/sidebar.view.html'" ng-controller="AuthController" ng-show="Authentication.user"></div>
