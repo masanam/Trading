@@ -2,7 +2,7 @@
 <div class="box box-info">
   <div class="box-header with-border">
     <h1 class="box-title" style="font-size: 25px">Sell Lead Factory</h1>
-    <div class="box-tools pull-right">
+    <div class="box-tools pull-right" style="position:relative">
       <button type="button" class="btn btn-primary" ui-sref="buy-order.step-customer({ order_id:order_id })">
         <i class="glyphicon glyphicon-arrow-left"></i> Back
       </button>
@@ -18,7 +18,7 @@
     </div>
     <div class="select-box" ng-controller="SelectFactoryController" ng-init="findMyFactorys()">
       <label for="id">Name of Factory :</label>
-      <ui-select ng-model="factory.selected" style="min-width: 300px;" title="Choose a Factory" append-to-body="true">
+      <ui-select ng-model="factory.selected" style="display:inline" title="Choose a Factory" append-to-body="true">
         <ui-select-match placeholder="Name Of Factory">{{ factory.selected.factory_name }}</ui-select-match>
         <ui-select-choices repeat="factory in factorys | propsFilter: {factory_name: $select.search}">
           <div ng-bind-html="factory_name | highlight: $select.search"></div>
@@ -60,24 +60,40 @@
       </div>
 
       <div class="form-group">
-        <div class="input-group col-md-12" style="margin-bottom: 5px;">
+        <div class="input-group col-md-12 hidden-xs" style="margin-bottom: 5px;">
           <span class="input-group-addon" style="width: 200px;">City*</span>
           <input type="text" class="form-control" placeholder="City" ng-model="factory.selected.city" required>
           <span class="input-group-addon" style="width: 200px;">Country*</span>
           <input type="text" class="form-control" placeholder="Country" ng-model="factory.selected.country" required>
         </div>
-        <div class="input-group col-md-12" style="margin-bottom: 5px;">
+        <div class="input-group col-md-12 hidden-xs" style="margin-bottom: 5px;">
           <span class="input-group-addon" style="width: 200px;">Latitude</span>
           <input type="number" min="-90" max="90" step="any" class="form-control" placeholder="Latitude" ng-model="factory.selected.latitude" required>
           <span class="input-group-addon" style="width: 200px;">Longitude</span>
           <input type="number" min="-180" max="180" step="any" class="form-control" placeholder="Longitude" ng-model="factory.selected.longitude" required>
         </div>
-        <div class="form-group">
-        <div class="row" style="background:#eee; padding: 10px; margin-left:10px;">
-        <ng-map zoom="2" center="Indonesia" default-style="false" style="width:100%; height:500px;">
-          <marker draggable="true" on-mouseup="markerMove()" position="{{factory.latitude}}, {{factory.longitude}}" id="mark{{factory.id}}" ></marker>
-        </ng-map>
+        <div class="form-group visible-xs">
+          <div class="input-group" style="width:100%">
+            <span class="input-group-addon" style="width:35%">City*</span>
+            <input type="text" class="form-control" placeholder="City" ng-model="factory.selected.city" required>
+          </div>
+          <div class="input-group" style="width:100%">
+            <span class="input-group-addon" style="width:35%">Country*</span>
+            <input type="text" class="form-control" placeholder="Country" ng-model="factory.selected.country" required>
+          </div>
+          <div class="input-group" style="width:100%">
+            <span class="input-group-addon" style="width:35%">Latitude*</span>
+            <input type="number" min="-90" max="90" step="any" class="form-control" placeholder="Latitude" ng-model="factory.selected.latitude" required>
+          </div>
+          <div class="input-group" style="width:100%">
+            <span class="input-group-addon" style="width:35%">Longitude*</span>
+            <input type="number" min="-180" max="180" step="any" class="form-control" placeholder="Longitude" ng-model="factory.selected.longitude" required>
+          </div>
         </div>
+        <div class="form-group">
+          <ng-map zoom="2" center="Indonesia" default-style="false" style="width:100%; height:500px;">
+            <marker draggable="true" on-mouseup="markerMove()" position="{{factory.latitude}}, {{factory.longitude}}" id="mark{{factory.id}}" ></marker>
+          </ng-map>
         </div>
         
       </div>

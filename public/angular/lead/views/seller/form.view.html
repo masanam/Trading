@@ -3,18 +3,28 @@
   <input name="company_name" type="text" class="form-control" id="company_name" ng-model="seller.company_name" required>
 </div>
 
-<div class="form-group col-xs-6">
-  <label for="contact">Supplier category</label>
-  <div class="btn-group">
+<div class="form-group col-xs-6" style="padding-left:5px;padding-left:5px">
+  <label for="contact">Supplier Category</label>
+  <br>
+  <div class="btn-group hidden-xs">
+    <label class="btn btn-default" ng-model="seller.is_trader" uib-btn-radio="1" required>Trader</label>
+    <label class="btn btn-default" ng-model="seller.is_trader" uib-btn-radio="0" required>Miner</label>
+  </div>
+  <div class="btn-group-vertical visible-xs">
     <label class="btn btn-default" ng-model="seller.is_trader" uib-btn-radio="1" required>Trader</label>
     <label class="btn btn-default" ng-model="seller.is_trader" uib-btn-radio="0" required>Miner</label>
   </div>
   
 </div>
 
-<div class="form-group col-xs-6">
-  <label for="contact">Supplier Status</label>
-  <div class="btn-group">
+<div class="form-group col-xs-6" style="padding-left:5px">
+  <label for="contact" style="margin-left:5px">Supplier Status</label>
+  <br>
+  <div class="btn-group hidden-xs">
+    <label class="btn btn-default" ng-model="seller.is_affiliated" uib-btn-radio="1" required>Affiliated</label>
+    <label class="btn btn-default" ng-model="seller.is_affiliated" uib-btn-radio="0" required>Non- Affiliated</label>
+  </div>
+  <div class="btn-group-vertical visible-xs">
     <label class="btn btn-default" ng-model="seller.is_affiliated" uib-btn-radio="1" required>Affiliated</label>
     <label class="btn btn-default" ng-model="seller.is_affiliated" uib-btn-radio="0" required>Non- Affiliated</label>
   </div>
@@ -69,13 +79,23 @@
 <div class="form-group">
   <label for="headquarter_location">Selling Terms*:</label>
   <div class="form-group">
-    <div class="btn-group">
+    <div class="btn-group hidden-xs">
       <label class="btn btn-default" ng-model="seller.preferred_trading_term" uib-btn-radio="'CNF'">CNF</label>
       <label class="btn btn-default" ng-model="seller.preferred_trading_term" uib-btn-radio="'CIF'">CIF</label>
       <label class="btn btn-default" ng-model="seller.preferred_trading_term" uib-btn-radio="'FAS'">FAS</label>
       <label class="btn btn-default" ng-model="seller.preferred_trading_term" uib-btn-radio="'FOB'">FOB</label>
       <label class="btn btn-default" ng-model="seller.preferred_trading_term" uib-btn-radio="'Franco'">Franco</label>
       <div class="input-group" style="margin-bottom: 5px;">
+        <input name="preferred_trading_term_detail" type="text" class="form-control" id="total_annual_sales" ng-model="seller.preferred_trading_term_detail" placeholder="Detail">
+      </div>
+    </div>
+    <div class="btn-group-vertical visible-xs">
+      <label class="btn btn-default" ng-model="seller.preferred_trading_term" uib-btn-radio="'CNF'">CNF</label>
+      <label class="btn btn-default" ng-model="seller.preferred_trading_term" uib-btn-radio="'CIF'">CIF</label>
+      <label class="btn btn-default" ng-model="seller.preferred_trading_term" uib-btn-radio="'FAS'">FAS</label>
+      <label class="btn btn-default" ng-model="seller.preferred_trading_term" uib-btn-radio="'FOB'">FOB</label>
+      <label class="btn btn-default" ng-model="seller.preferred_trading_term" uib-btn-radio="'Franco'">Franco</label>
+      <div class="input-group" style="margin-bottom: 5px;display: inline;">
         <input name="preferred_trading_term_detail" type="text" class="form-control" id="total_annual_sales" ng-model="seller.preferred_trading_term_detail" placeholder="Detail">
       </div>
     </div>

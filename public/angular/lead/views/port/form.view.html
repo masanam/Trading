@@ -28,12 +28,23 @@
   <input name="size" type="number" class="form-control" min="0" id="size" ng-model="port.size" required>
 </div>
 
-<div class="form-group">
+<div class="form-group hidden-xs">
   <label for="contact">Port Coordinates*:</label>
   <div class="input-group" style="margin-bottom: 5px;">
     <span class="input-group-addon" style="width: 200px;">Latitude</span>
     <input type="number" class="form-control" placeholder="Latitude" ng-model="port.latitude" min="-90" max="90" step="any" required>
     <span class="input-group-addon">Longitude</span>
+    <input type="number" class="form-control" placeholder="Longitude" ng-model="port.longitude" min="-180" max="180" step="any" required>
+  </div>
+</div>
+<div class="form-group visible-xs">
+  <label for="contact">Port Coordinates*:</label>
+  <div class="input-group" style="width:100%">
+    <span class="input-group-addon" style="width:40%">Latitude*</span>
+    <input type="number" class="form-control" placeholder="Latitude" ng-model="port.latitude" min="-90" max="90" step="any" required>
+  </div>
+  <div class="input-group" style="width:100%">
+    <span class="input-group-addon" style="width:40%">Longitude*</span>
     <input type="number" class="form-control" placeholder="Longitude" ng-model="port.longitude" min="-180" max="180" step="any" required>
   </div>
 </div>

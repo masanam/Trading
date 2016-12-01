@@ -2,7 +2,7 @@
 <div class="box box-info">
   <div class="box-header with-border">
     <h3 class="box-title" style="font-size: 25px">Buy Lead Products</h3>
-    <div class="box-tools pull-right">
+    <div class="box-tools pull-right" style="position:relative">
      <button type="button" ng-click="backToConcession()" class="btn btn-danger"><i class="glyphicon glyphicon-arrow-left"></i> Back</button>
       
       <button type="button" ng-click="nextToPort()" class="btn btn-success">Next <i class="glyphicon glyphicon-arrow-right"></i> </button>
@@ -16,7 +16,7 @@
 
       <div class="select-box" ng-init="findMyProducts()">
         <label for="id">Product Name:</label>
-        <ui-select ng-model="product.selected" style="min-width: 300px;" title="Choose a product" append-to-body="true">
+        <ui-select ng-model="product.selected" style="display:inline" title="Choose a product" append-to-body="true">
           <ui-select-match placeholder="Product Name">{{ product.selected.product_name }}</ui-select-match>
 
           <ui-select-choices repeat="product in products | propsFilter: {product_name: $select.search}">
@@ -53,21 +53,22 @@
         </div>
         <div class="form-group">
           <h2>Coal Quality</h2>
+          <div class="table-responsive">
           <table class="table table-striped">
             <tr align="center">
               <th>
                 Characteristics
               </th>
-              <th>
+              <th style="min-width:120px">
                 Min
               </th>
-              <th>
+              <th style="min-width:120px">
                 Max
               </th>
-              <th>
+              <th style="min-width:120px">
                 Bonus
               </th>
-              <th>
+              <th style="min-width:120px">
                 Reject
               </th>
             </tr>
@@ -309,6 +310,7 @@
               
             </tr>
           </table>
+          </div>
           
           <label>Volume of Coal :</label>
           <input type="number" class="form-control" placeholder="Tonnes" ng-model="product.selected.volume" required>

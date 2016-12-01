@@ -13,7 +13,7 @@
   <input type="text" class="form-control" id="address" ng-model="factory.address" required>
 </div>
 
-<div class="form-group">
+<div class="form-group hidden-xs">
   <div class="input-group col-md-12" style="margin-bottom: 5px;">
     <span class="input-group-addon" style="width: 200px;">City*</span>
     <input type="text" class="form-control" placeholder="City" ng-model="factory.city" required>
@@ -27,13 +27,29 @@
     <input type="number" min="-180" max="180" step="any" class="form-control" placeholder="Longitude" ng-model="factory.longitude" required>
   </div>
 </div>
+<div class="form-group visible-xs">
+  <div class="input-group" style="width:100%">
+    <span class="input-group-addon" style="width:35%">City*</span>
+    <input type="text" class="form-control" placeholder="City" ng-model="factory.city" required>
+  </div>
+  <div class="input-group" style="width:100%">
+    <span class="input-group-addon" style="width:35%">Country*</span>
+    <input type="text" class="form-control" placeholder="Country" ng-model="factory.country" required>
+  </div>
+  <div class="input-group" style="width:100%">
+    <span class="input-group-addon" style="width:35%">Latitude*</span>
+    <input type="number" min="-90" max="90" step="any" class="form-control" placeholder="Latitude" ng-model="factory.latitude" required>
+  </div>
+  <div class="input-group" style="width:100%">
+    <span class="input-group-addon" style="width:35%">Longitude*</span>
+    <input type="number" min="-180" max="180" step="any" class="form-control" placeholder="Longitude" ng-model="factory.longitude" required>
+  </div>
+</div>
 
 <div class="form-group">
-  <div class="row" style="background:#eee; padding: 10px; margin-left:10px;">
-    <ng-map zoom="2" center="Indonesia" default-style="false" style="width:100%; height:500px;">
-      <marker draggable="true" on-mouseup="markerMove()" position="{{factory.latitude}}, {{factory.longitude}}" id="mark{{factory.id}}" ></marker>
-    </ng-map>
-  </div>
+  <ng-map zoom="2" center="Indonesia" default-style="false" style="width:100%; height:500px;">
+    <marker draggable="true" on-mouseup="markerMove()" position="{{factory.latitude}}, {{factory.longitude}}" id="mark{{factory.id}}" ></marker>
+  </ng-map>
 </div>
 
 <div class="form-group">
