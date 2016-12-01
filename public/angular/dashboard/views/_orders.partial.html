@@ -9,28 +9,46 @@
         <canvas class="chart chart-horizontal-bar" chart-data="data" chart-labels="labels"
           chart-options="options" chart-series="series" chart-click="onClick"></canvas>
       </div>
-      <div class="col-md-8 col-sm-12">
-        <div class="col-md-4 col-sm-12">
-          <h3>Total Leads Sell</h3>
-          <h3>{{funnel["lead-sell"]}}</h3>
+      <div class="hidden-xs hidden-sm col-lg-8 col-md-8 ">
+        <div class="col-lg-6 col-md-6">
+          <h3>Total Leads Sell <span class="badge label-primary">{{funnel["lead-sell"]}}</span></h3>
+         
         </div>
-        <div class="col-md-4 col-sm-12">
-          <h3>Total Leads Buy</h3>
-          <h3>{{funnel["lead-buy"]}}</h3>
+        <div class="col-lg-6 col-md-6">
+          <h3>Total Leads Buy <span class="badge label-primary">{{funnel["lead-buy"]}}</span></h3>
+          
         </div>
-        <div class="col-md-4 col-sm-12">
-          <h3>Total Pending</h3>
-          <h3>{{funnel["pending"]}}</h3>
+        <div class="col-lg-6 col-md-6">
+          <h3>Total Pending <span class="badge label-primary">{{funnel["pending"]}}</span></h3>
         </div>
-        <div class="col-md-4 col-sm-12">
-          <h3>Total Approved</h3>
-          <h3>{{funnel["approved"]}}</h3>
+        <div class="col-lg-6 col-md-6">
+          <h3>Total Approved <span class="badge label-primary">{{funnel["approved"]}}</span></h3>
         </div>
-        <div class="col-md-4 col-sm-12">
-          <h3>Total finalized</h3>
-          <h3>{{funnel["finalized"]}}</h3>
+        <div class="col-lg-6 col-md-6">
+          <h3>Total finalized <span class="badge label-primary">{{funnel["finalized"]}}</span></h3>
         </div>
       </div>
+
+      <div class="hidden-lg hidden-md col-xs-12 col-sm-12 ">
+        <div class="col-xs-12 col-sm-6">
+          <h4>Total Leads Sell <span class="badge label-primary">{{funnel["lead-sell"]}}</span></h4>
+         
+        </div>
+        <div class="col-xs-12 col-sm-6">
+          <h4>Total Leads Buy <span class="badge label-primary">{{funnel["lead-buy"]}}</span></h4>
+          
+        </div>
+        <div class="col-xs-12 col-sm-6">
+          <h4>Total Pending <span class="badge label-primary">{{funnel["pending"]}}</span></h4>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+          <h4>Total Approved <span class="badge label-primary">{{funnel["approved"]}}</span></h4>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+          <h4>Total finalized <span class="badge label-primary">{{funnel["finalized"]}}</span></h4>
+        </div>
+      </div>
+
       <div class="col-sm-12">
       <div class="table-responsive">
         <table st-table="orders" st-safe-src="orderCollection" class="table table-striped">

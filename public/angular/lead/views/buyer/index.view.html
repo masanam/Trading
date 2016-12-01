@@ -8,10 +8,12 @@
     <div class="box-header with-border">
       <h1 class="box-title" style="font-size: 25px">Customer</h1>
       <div class="box-tools pull-right">
-        <button ui-sref="lead.create-buyer" class="btn btn-primary">+ Create New </button>
+        <button  ui-sref="lead.create-buyer" class="btn btn-primary hidden-sm hidden-xs">+ Create New </button>
       </div>
     </div>
+   
     <div class="box-body">
+     <button  ui-sref="lead.create-buyer" class="btn btn-primary hidden-lg hidden-md">+ Create New </button>
     <div class="table-responsive">
       <table st-table="displayedCollection" st-safe-src="buyers" class="table table-striped" ng-init="find()">
         <thead>
