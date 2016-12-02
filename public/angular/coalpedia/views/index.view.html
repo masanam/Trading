@@ -1,0 +1,139 @@
+<section class="content" ng-controller="CoalpediaController">
+      <!-- Small boxes (Stat box) -->
+      <div class="row" ng-init="total()">
+  
+
+        <div class="col-xs-3 col-lg-3 hidden-xs hidden-sm">
+          <!-- small box -->
+          <div class="small-box bg-red">
+            <div class="inner">
+              <h4>{{ total.buyer }} Records</h4>
+
+              <p>CUSTOMERS</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-building"></i>
+            </div>
+            <a ui-sref="lead.buyer" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+
+          <div class="small-box bg-aqua">
+            <div class="inner">
+              <h4>{{ total.seller }} Records </h4>
+
+              <p>SUPPLIERS</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-industry"></i>
+            </div>
+             <a ui-sref="lead.seller" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+
+          <div class="small-box bg-teal">
+            <div class="inner">
+              <h4>{{ total.vendor }} Records</h4>
+
+              <p>VENDORS</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-ship"></i>
+            </div>
+             <a ui-sref="lead.vendor" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+
+        </div>
+
+
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+          <div class="box box-info">
+            <div class="box-header">
+              <i class="fa fa-globe"></i>
+
+              <h3 class="box-title">COALPEDIA</h3>
+              <!-- tools box -->
+              <div class="pull-right box-tools">
+                
+              </div>
+              <!-- /. tools -->
+            </div>
+            <div class="box-body" style="text-align:center;">
+              <img src="/images/globe.jpg" class="center-block img-responsive" style="height:270px;">
+              </br>
+
+              <form ng-submit="search()">
+                <div class="input-group input-group-sm">
+                  <input type="text" class="col-md-12 form-control" ng-model="keyword">
+                  <span class="input-group-btn">
+                    <button type="btn" type="submit" class="btn btn-info btn-flat">Search</button>
+                  </span>
+                </div>
+              </form>
+
+              </br>
+
+              <div class="btn-group">
+                <label class="btn btn-sm btn-default" ng-model="searchType" uib-btn-radio="'buyer'">
+                  Customer
+                </label>
+                <label class="btn btn-sm btn-default" ng-model="searchType" uib-btn-radio="'seller'">
+                  Supplier
+                </label>
+                <label class="btn btn-sm btn-default" ng-model="searchType" uib-btn-radio="'vendor'">
+                  Vendors
+                </label>
+                <label class="btn btn-sm btn-default" ng-model="searchType" uib-btn-radio="'concession'">
+                  Concessions
+                </label>
+                <!--label class="btn btn-sm btn-default" ng-model="searchType" uib-btn-radio="'product'">
+                  Products
+                </label>
+                <label class="btn btn-sm btn-default" ng-model="searchType" uib-btn-radio="'contact'">
+                  Contacts
+                </label-->
+              </div>
+            </div>
+    
+        </div>      
+      </div>
+
+      <div class="col-xs-3 col-lg-3 hidden-sm hidden-xs">
+        <div class="small-box bg-maroon">
+          <div class="inner">
+            <h4>Index Price</h4>
+
+            <p>Coalpedia</p>
+          </div>
+          <div class="icon">
+            <i class="fa fa-line-chart"></i>
+          </div>
+          <a ui-sref="dashboard.index" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+
+        <div class="small-box bg-blue">
+          <div class="inner">
+            <h4>Map</h4>
+
+            <p>Coalpedia</p>
+          </div>
+          <div class="icon">
+            <i class="fa fa-map"></i>
+          </div>
+          <a ui-sref="map.index" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+
+        <div class="small-box bg-olive">
+          <div class="inner"> 
+            <h4>{{ total.concession }} Records</h4>
+
+            <p>CONCESSION</p>
+          </div>
+          <div class="icon">
+            <i class="fa fa-gears"></i>
+          </div>
+           <a ui-sref="lead.concession" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+    </div>
+    
+     
+</section>      

@@ -1,0 +1,14 @@
+<section ng-controller="CoalpediaController" class="content">
+  <div class="col-lg-2">
+    <section ng-include="'./angular/coalpedia/views/_side-menu.partial.html'"></section>
+  </div>
+  <div class="col-lg-10">
+  	<div class="box">
+  		<div class="box-body">
+    		<section ng-include="'./angular/coalpedia/views/_search-bar.partial.html'"></section>
+    	</div>
+    </div>
+
+    <ui-view></ui-view>
+  </div>
+</section>

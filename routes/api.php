@@ -37,8 +37,7 @@ Route::group(['middleware' => ['cors']], function() {
      * this API contains ALL the things needed by coalpedia to manage
      * all their data: contact, buyer, seller, vendor
      */
-    Route::get('buyer/total', 'BuyerController@getTotalBuyer');
-    Route::get('seller/total', 'SellerController@getTotalSeller');
+    Route::get('coalpedia/total', 'CoalpediaController@count');
 
     Route::resource('contact', 'ContactController', ['except' => [ 'create', 'edit' ]]);
     Route::resource('buyer', 'BuyerController', ['except' => [ 'create', 'edit' ]]);
@@ -46,6 +45,18 @@ Route::group(['middleware' => ['cors']], function() {
     Route::resource('vendor', 'VendorController', ['except' => [ 'create', 'edit' ]]);
 
     //Port Management API
+    // /api/port POST, GET
+    // /api/port/:id PUT, GET, DEL
+
+    // /api/port/:id/concession GET
+
+    // /api/buyer/:id/port POST, GET
+    // /api/seller/:id/port POST, GET
+    // /api/concession/:id/port GET
+    // /api/buyer/:id/port/:port_id PUT, GET, DEL --> cuma attach dan detach dari data doang
+    // /api/seller/:id/port/:port_id PUT, GET, DEL --> cuma attach dan detach dari data doang
+
+
     Route::post('port/buyer/store', 'PortController@storeBuyerPort');
     Route::post('port/seller/store', 'PortController@storeSellerPort');
     Route::get('port/buyer/allMy/{buyer_id}', 'PortController@buyerAllMyPort');

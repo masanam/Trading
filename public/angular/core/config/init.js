@@ -12,6 +12,7 @@ ApplicationConfiguration.registerModule('notification');
 ApplicationConfiguration.registerModule('operation');
 
 // Coalpedia
+ApplicationConfiguration.registerModule('coalpedia');
 ApplicationConfiguration.registerModule('lead');
 ApplicationConfiguration.registerModule('buyer');
 ApplicationConfiguration.registerModule('factory');

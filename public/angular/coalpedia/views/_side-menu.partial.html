@@ -1,0 +1,73 @@
+<section ng-init="total()" class="visible-lg">
+  <!-- small box -->
+  <div class="small-box bg-red">
+    <div class="inner">
+      <h4>{{ total.buyer }} Records</h4>
+
+      <p>Customer</p>
+    </div>
+    <div class="icon">
+      <i class="fa fa-building"></i>
+    </div>
+    <a ui-sref="buyer.list" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+  </div>
+
+  <div class="small-box bg-aqua">
+    <div class="inner">
+      <h4>{{ total.seller }} Records </h4>
+
+      <p>Supplier</p>
+    </div>
+    <div class="icon">
+      <i class="fa fa-industry"></i>
+    </div>
+     <a ui-sref="seller.list" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+  </div>
+
+  <div class="small-box bg-aqua">
+    <div class="inner">
+      <h4>{{ total.vendor }} Records</h4>
+
+      <p>VENDORS</p>
+    </div>
+    <div class="icon">
+      <i class="fa fa-ship"></i>
+    </div>
+     <a ui-sref="vendor.list" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+  </div>
+
+  <div class="small-box bg-maroon">
+    <div class="inner">
+      <h4>{{ totalConcession.count }} Records</h4>
+      <p>CONCESSION</p>
+    </div>
+    <div class="icon">
+      <i class="ion ion-pie-graph"></i>
+    </div>
+    <a ui-sref="concession.list" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+  </div>
+    
+  <div class="small-box bg-green">
+    <div class="inner">
+      <h4>Map</h4>
+
+      <p>Coalpedia</p>
+    </div>
+    <div class="icon">
+      <i class="fa fa-map"></i>
+    </div>
+    <a ui-sref="map.index" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+  </div>
+
+  <div class="small-box bg-yellow">
+    <div class="inner">
+      <h4>Index Price</h4>
+
+      <p>Coalpedia</p>
+    </div>
+    <div class="icon">
+      <i class="fa fa-line-chart"></i>
+    </div>
+    <a ui-sref="dashboard.index" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+  </div>
+</section>
