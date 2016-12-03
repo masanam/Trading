@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\Buyer;
-use App\Model\Seller;
-use App\Model\Vendor;
+use App\Model\Company;
 use App\Model\Concession;
 
 use Illuminate\Http\Request;
@@ -23,9 +21,9 @@ class CoalpediaController extends Controller
      */
     public function count()
     {
-        $buyer = Buyer::where('status', 'a')->count();
-        $seller = Seller::where('status', 'a')->count();
-        $vendor = Vendor::where('status', 'a')->count();
+        $buyer = Company::where('status', 'a')->where('company_type', 'b')->count();
+        $seller = Company::where('status', 'a')->where('company_type', 's')->count();
+        $vendor = Company::where('status', 'a')->where('company_type', 'v')->count();
         $concession = Concession::where('status', 'a')->count();
 
         return response()->json([
