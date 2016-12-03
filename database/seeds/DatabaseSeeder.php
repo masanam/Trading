@@ -15,19 +15,16 @@ class DatabaseSeeder extends Seeder
     	Model::unguard();
 
         $this->call(UsersTableSeeder::class);
-        $this->call(BuyersTableSeeder::class);
-        $this->call(SellersTableSeeder::class);
-        $this->call(BuyOrderTableSeeder::class);
-        $this->call(SellOrderTableSeeder::class);
-        $this->call(VendorsTableSeeder::class);
+        $this->call(CompaniesTableSeeder::class);
         $this->call(ConcessionTableSeeder::class);
         $this->call(ProductTableSeeder::class);
-        $this->call(ContactTableSeeder::class);
-        $this->call(BuyerSellerTableSeeder::class);
-        $this->call(IndexTableSeeder::class);
         $this->call(PortTableSeeder::class);
         $this->call(FactoryTableSeeder::class);
-        $this->call(OrdersTableSeeder::class);
+        $this->call(IndexTableSeeder::class);
+        
+        //$this->call(BuyOrderTableSeeder::class);
+        //$this->call(SellOrderTableSeeder::class);
+        //$this->call(OrdersTableSeeder::class);
 
         Model::reguard();
     }

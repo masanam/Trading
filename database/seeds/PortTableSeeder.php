@@ -13,10 +13,10 @@ class PortTableSeeder extends Seeder
     public function run()
     {
       $ports = [
-        ['id'=>1, 'seller' => 1, 'port_name' => 'Jetty Indexim', 'owner' => 'Indexim', 'is_private' => 1, 'location' => 'Kaliorang', 'size' => 0, 'river_capacity' => 0, 'latitude' => 0.8827427, 'longitude' => 117.81001, 'anchorage_distance' => 0, 'has_conveyor' => 0, 'has_crusher' => 0, 'has_blending' => 1, 'draft_height' => 222222],
-        ['id'=>2, 'seller' => 2, 'port_name' => 'Berau Coal, PT', 'owner' => 'Kalimantan Timur', 'is_private' => 1, 'location' => 'Sungai Segah', 'size' => 0, 'river_capacity' => 0, 'latitude' => 2.156904, 'longitude' => 117.4911258, 'anchorage_distance' => 0, 'has_conveyor' => 0, 'has_crusher' => 0, 'has_blending' => 0, 'draft_height' => 0],
-        ['id'=>3, 'seller' => 3, 'port_name' => 'Jetty BIB', 'owner' => 'BIB', 'is_private' => 0, 'location' => 'Bunati', 'size' => 0, 'river_capacity' => 0, 'latitude' => -3.7559161, 'longitude' => 115.6112452, 'anchorage_distance' => 0, 'has_conveyor' => 0, 'has_crusher' => 0, 'has_blending' => 1, 'draft_height' => 0],
-        ['id'=>4, 'seller' => 4, 'port_name' => 'Jetty Jembayan', 'owner' => 'JMB', 'is_private' => 1, 'location' => 'Sungai Mahakam', 'size' => 0, 'river_capacity' => 0, 'latitude' => 1.5408, 'longitude' => 117.1746903, 'anchorage_distance' => 0, 'has_conveyor' => 0, 'has_crusher' => 0, 'has_blending' => 1, 'draft_height' => 0]
+        ['id'=>1, 'company' => 4, 'port_name' => 'Jetty Indexim', 'owner' => 'Indexim', 'is_private' => 1, 'location' => 'Kaliorang', 'size' => 0, 'river_capacity' => 0, 'latitude' => 0.8827427, 'longitude' => 117.81001, 'anchorage_distance' => 0, 'has_conveyor' => 0, 'has_crusher' => 0, 'has_blending' => 1, 'draft_height' => 222222],
+        ['id'=>2, 'company' => 5, 'port_name' => 'Berau Coal, PT', 'owner' => 'Kalimantan Timur', 'is_private' => 1, 'location' => 'Sungai Segah', 'size' => 0, 'river_capacity' => 0, 'latitude' => 2.156904, 'longitude' => 117.4911258, 'anchorage_distance' => 0, 'has_conveyor' => 0, 'has_crusher' => 0, 'has_blending' => 0, 'draft_height' => 0],
+        ['id'=>3, 'company' => 6, 'port_name' => 'Jetty BIB', 'owner' => 'BIB', 'is_private' => 0, 'location' => 'Bunati', 'size' => 0, 'river_capacity' => 0, 'latitude' => -3.7559161, 'longitude' => 115.6112452, 'anchorage_distance' => 0, 'has_conveyor' => 0, 'has_crusher' => 0, 'has_blending' => 1, 'draft_height' => 0],
+        ['id'=>4, 'company' => 7, 'port_name' => 'Jetty Jembayan', 'owner' => 'JMB', 'is_private' => 1, 'location' => 'Sungai Mahakam', 'size' => 0, 'river_capacity' => 0, 'latitude' => 1.5408, 'longitude' => 117.1746903, 'anchorage_distance' => 0, 'has_conveyor' => 0, 'has_crusher' => 0, 'has_blending' => 1, 'draft_height' => 0]
 
 
         // ['seller' => [3,4], 'port_name' => 'Jetty MAS', 'owner' => 'MAS', 'is_private' => 1, 'location' => 'Sungai Segah', 'size' => 0, 'river_capacity' => 0, 'latitude' => 2.156904, 'longitude' => 117.4911258, 'anchorage_distance' => 0, 'has_conveyor' => 0, 'has_crusher' => 0, 'has_blending' => 1, 'draft_height' => 0],
@@ -53,8 +53,7 @@ class PortTableSeeder extends Seeder
           'daily_discharge_rate' => $faker->numberBetween($min = 1, $max = 55),
           'status' => 'a'
         ]);
-        if(isset($port['seller'])) $model->sellers()->attach($port['seller']);
-        if(isset($port['buyer'])) $model->buyers()->attach($port['buyer']);
+        if(isset($port['company'])) $model->companies()->attach($port['company']);
       }
     }
 }

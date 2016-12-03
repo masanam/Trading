@@ -16,7 +16,7 @@ class ConcessionTableSeeder extends Seeder
             [
                 'id' => 1,
                 'concession_name' => 'Indexim',
-                'seller_id' => 1,
+                'company_id' => 4,
                 'owner' => 'Indexim',
                 'address' => '',
                 'city' => 'Kutai Timur',
@@ -44,7 +44,7 @@ class ConcessionTableSeeder extends Seeder
             [
                 'id' => 2,
                 'concession_name' => 'PT Berau Coal Energy',
-                'seller_id' => 2,
+                'company_id' => 5,
                 'owner' => 'PT Berau Coal Energy',
                 'address' => '',
                 'city' => 'Berau',
@@ -72,7 +72,7 @@ class ConcessionTableSeeder extends Seeder
             [
                 'id' => 3,
                 'concession_name' => 'PT Berau Coal Energy',
-                'seller_id' => 2,
+                'company_id' => 5,
                 'owner' => 'PT Berau Coal Energy',
                 'address' => '',
                 'city' => 'Berau',
@@ -100,7 +100,7 @@ class ConcessionTableSeeder extends Seeder
             [
                 'id' => 4,
                 'concession_name' => 'Borneo Indobara',
-                'seller_id' => 3,
+                'company_id' => 6,
                 'owner' => 'Borneo Indobara',
                 'address' => '',
                 'city' => 'Angsana',
@@ -128,7 +128,7 @@ class ConcessionTableSeeder extends Seeder
             [
                 'id' => 5,
                 'concession_name' => 'PT. Jembayan Muara Bara',
-                'seller_id' => 4,
+                'company_id' => 7,
                 'owner' => 'Tiger Energy',
                 'address' => '',
                 'city' => 'Kutai Kertanegara',
@@ -159,7 +159,7 @@ class ConcessionTableSeeder extends Seeder
             Concession::create([
                 'id' => $concession['id'],
                 'concession_name' => $concession['concession_name'],
-                'seller_id' => $concession['seller_id'],
+                'company_id' => $concession['company_id'],
                 'owner' => $concession['owner'],
                 'address' => $concession['address'],
                 'city' => $concession['city'],
