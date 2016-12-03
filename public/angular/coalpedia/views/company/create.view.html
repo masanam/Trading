@@ -1,8 +1,8 @@
-<div class="box box-info" ng-controller="BuyerController">
+<div class="box box-info" ng-controller="CompanyController">
   <div class="box-header with-border">
     <h1 class="box-title" style="font-size: 25px">Create Customer</h1>
     <div class="box-tools pull-right">
-      <button type="button" class="btn btn-danger" ui-sref="lead.buyer">
+      <button type="button" class="btn btn-danger" ui-sref="lead.company">
         <i class="glyphicon glyphicon-arrow-left"></i> Back
       </button>
       <button type="button" class="btn btn-success" ng-click="nextToFactory()">
@@ -24,14 +24,14 @@
         <div class="select-box" ng-init="find()">
           <label for="id">Name of Company :</label>
           
-          <ui-select ng-model="selected.buyer"
+          <ui-select ng-model="selected.company"
             reset-search-input="false"
             style="min-width: 300px;"
             title="Choose an address">
             <ui-select-match placeholder="Name of the Company...">{{$select.selected.company_name}}</ui-select-match>
 
-            <ui-select-choices repeat="buyer in buyers track by $index">
-              {{ buyer.company_name | highlight: $select.search }}
+            <ui-select-choices repeat="company in companies track by $index">
+              {{ company.company_name | highlight: $select.search }}
             </ui-select-choices>
           </ui-select>
         </div>
@@ -44,60 +44,60 @@
       </div>
       <br>
       <br>
-      <button type="button" class="btn btn-primary btn-block" ng-click="createBuyerModal()">
+      <button type="button" class="btn btn-primary btn-block" ng-click="modalCreate()">
         <b>+</b> Add New Company
       </button>
       <br>
 
-      <div class="box box-primary" ng-show="selected.buyer">
+      <div class="box box-primary" ng-show="selected.company">
         <div class="box-body box-profile">
           <img class="profile-user-img img-responsive img-circle" src="/images/default.jpg">
 
-          <h3 class="profile-username text-center">{{selected.buyer.company_name}}</h3>
+          <h3 class="profile-username text-center">{{selected.company.company_name}}</h3>
 
-          <ul class="list-group list-group-unbordered" col-mg-4>
+          <ul class="list-group list-group-unbordered">
             <li class="list-group-item">
               <b>Customer Category</b>
-              <span class="badge" ng-show="selected.buyer.is_trader===1"><i class='fa fa-share-alt'></i> TRADER</span>
-              <span class="badge" ng-show="selected.buyer.is_trader===0"><i class='fa fa-share-alt'></i> END USER</span>
+              <span class="badge" ng-show="selected.company.is_trader===1"><i class='fa fa-share-alt'></i> TRADER</span>
+              <span class="badge" ng-show="selected.company.is_trader===0"><i class='fa fa-share-alt'></i> END USER</span>
             </li>
             <li class="list-group-item">
               <b>Customer status </b>
-              <span class="badge" ng-show="selected.buyer.is_affiliated===1"><i class='fa fa-tags'></i> AFFILIATED</span>
-              <span class="badge" ng-show="selected.buyer.is_affiliated===0"><i class='fa fa-tags'></i> NON - AFFILIATED</span>
+              <span class="badge" ng-show="selected.company.is_affiliated===1"><i class='fa fa-tags'></i> AFFILIATED</span>
+              <span class="badge" ng-show="selected.company.is_affiliated===0"><i class='fa fa-tags'></i> NON - AFFILIATED</span>
             </li>
             <li class="list-group-item">
-              <b>Phone</b> <span class="pull-right">{{selected.buyer.phone}}</span>
+              <b>Phone</b> <span class="pull-right">{{selected.company.phone}}</span>
             </li>
             <li class="list-group-item">
-              <b>Email</b> <span class="pull-right">{{selected.buyer.email}}</span>
+              <b>Email</b> <span class="pull-right">{{selected.company.email}}</span>
             </li>
             <li class="list-group-item">
-              <b>Web</b> <span class="pull-right">{{selected.buyer.web}}</span>
+              <b>Web</b> <span class="pull-right">{{selected.company.web}}</span>
             </li>
             <li class="list-group-item">
-              <b>Address</b> <span class="pull-right">{{selected.buyer.address}}</span>
+              <b>Address</b> <span class="pull-right">{{selected.company.address}}</span>
             </li>
             <li class="list-group-item">
-              <b>City</b> <span class="pull-right">{{selected.buyer.city}}</span>
+              <b>City</b> <span class="pull-right">{{selected.company.city}}</span>
             </li>
             <li class="list-group-item">
-              <b>Country</b> <span class="pull-right">{{selected.buyer.country}}</span>
+              <b>Country</b> <span class="pull-right">{{selected.company.country}}</span>
             </li>
             <li class="list-group-item">
-              <b>Industry</b> <span class="pull-right">{{selected.buyer.industry}}</span>
+              <b>Industry</b> <span class="pull-right">{{selected.company.industry}}</span>
             </li>
             <li class="list-group-item">
-              <b>Annual Demand</b> <span class="pull-right">{{selected.buyer.annual_demand}} <span class='badge'>Million Ton</span></span>
+              <b>Annual Demand</b> <span class="pull-right">{{selected.company.annual_demand}} <span class='badge'>Million Ton</span></span>
             </li>
             <li class="list-group-item">
-              <b>Shipping Term</b> <span class="pull-right">{{selected.buyer.preferred_trading_term}} {{selected.buyer.preferred_trading_term_detail}}</span>
+              <b>Shipping Term</b> <span class="pull-right">{{selected.company.preferred_trading_term}} {{selected.company.preferred_trading_term_detail}}</span>
             </li>
             <li class="list-group-item">
-              <b>Payment Term</b> <span class="pull-right">{{selected.buyer.preferred_payment_term}}</span>
+              <b>Payment Term</b> <span class="pull-right">{{selected.company.preferred_payment_term}}</span>
             </li>
             <li class="list-group-item">
-              <b>Description</b> <span class="pull-right">{{selected.buyer.description}}</span>
+              <b>Description</b> <span class="pull-right">{{selected.company.description}}</span>
             </li>
           </ul>
 

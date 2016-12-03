@@ -12,17 +12,17 @@ angular.module('buyer').config(['$stateProvider',
       })
       .state('buyer.list', {
         url: '?keyword',
-        templateUrl: '/angular/coalpedia/views/buyer/list.view.html',
+        templateUrl: '/angular/coalpedia/views/company/list.view.html',
         roles: ['user', 'trader', 'manager']
       })
       .state('buyer.create', {
         url: '/create',
-        templateUrl: '/angular/coalpedia/views/buyer/create.view.html',
+        templateUrl: '/angular/coalpedia/views/company/create.view.html',
         roles: ['user', 'trader', 'manager']
       })
       .state('buyer.view', {
         url: '/:id',
-        views: { '@': { templateUrl: '/angular/coalpedia/views/buyer/view.view.html' } },
+        views: { '@': { templateUrl: '/angular/coalpedia/views/company/view.view.html' } },
         roles: ['user', 'trader', 'manager']
       });
   }

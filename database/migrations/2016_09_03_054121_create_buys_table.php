@@ -18,7 +18,7 @@ class CreateBuysTable extends Migration
 
             $table->integer('user_id');
 
-            $table->integer('buyer_id')->unsigned();
+            $table->integer('company_id')->unsigned();
 
             $table->date('order_date')->nullable();
             $table->date('order_deadline')->nullable();
@@ -108,10 +108,8 @@ class CreateBuysTable extends Migration
             $table->char('progress_status', 1)->nullable();
 
             $table->timestamps();
-        });
 
-        Schema::table('buy_order', function (Blueprint $table) {
-            $table->foreign('buyer_id')->references('id')->on('buyers')->onDelete('cascade');
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
         });
     }
 

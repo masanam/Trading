@@ -1,14 +1,14 @@
-<div ui-view="buyer.list"></div>
-<div class="box box-info" ng-controller="BuyerController">
+<div ui-view="company.list"></div>
+<div class="box box-info" ng-controller="CompanyController">
   <div class="box-header with-border">
     <h1 class="box-title" style="font-size: 25px">Customer</h1>
     <div class="box-tools pull-right">
-      <button ui-sref="buyer.create" class="btn btn-primary">+ Create New Customer</button>
+      <button ui-sref="company.create" class="btn btn-primary">+ Create New Customer</button>
     </div>
   </div>
   <div class="box-body">
   <div class="table-responsive">
-    <table st-table="displayedCollection" st-safe-src="buyers" class="table table-striped" ng-init="find()">
+    <table st-table="displayedCollection" st-safe-src="companies" class="table table-striped" ng-init="find()">
       <thead>
         <!-- <tr>
           <th colspan="7"><input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
@@ -23,16 +23,16 @@
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="(idx, buyer) in displayedCollection">
-          <td>{{ buyer.id }}</td>
-          <td>{{ buyer.company_name }}</td>
-          <td>{{ buyer.phone }}</td>
-          <td>{{ buyer.email }}</td>
-          <td>{{ buyer.user.name }}</td>
+        <tr ng-repeat="(idx, company) in displayedCollection">
+          <td>{{ company.id }}</td>
+          <td>{{ company.company_name }}</td>
+          <td>{{ company.phone }}</td>
+          <td>{{ company.email }}</td>
+          <td>{{ company.user.name }}</td>
           <td>
-            <a ui-sref="buyer.view({ id: buyer.id })"><i class="glyphicon glyphicon-info-sign"></i></a>
-            <a ui-sref="buyer.update({ id: buyer.id })"><i class="glyphicon glyphicon-pencil"></i></a>
-            <a ng-click="delete(buyer)"><i class="glyphicon glyphicon-trash"></i></a>
+            <a ui-sref="company.view({ id: company.id })"><i class="glyphicon glyphicon-info-sign"></i></a>
+            <a ui-sref="company.update({ id: company.id })"><i class="glyphicon glyphicon-pencil"></i></a>
+            <a ng-click="delete(company)"><i class="glyphicon glyphicon-trash"></i></a>
           </td>
         </tr>
         <tr ng-if="displayedCollection.length == 0">

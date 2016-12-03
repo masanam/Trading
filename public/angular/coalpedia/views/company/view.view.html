@@ -1,8 +1,8 @@
-<div class="content" ng-controller="BuyerController" ng-init="findOne()">
+<div class="content" ng-controller="CompanyController" ng-init="findOne()">
   <!-- HEADER -->
   <div class="row submenu-header">
     <div class="submenu-header-item">
-      <button type="button" class="btn btn-primary" ui-sref="buyer.list">
+      <button type="button" class="btn btn-primary" ui-sref="company.list">
         <i class="glyphicon glyphicon-arrow-left"></i> Back
       </button>
     </div>
@@ -15,15 +15,15 @@
   <div class="box box-widget widget-user">
           <!-- Add the bg color to the header using any of the bg-* classes -->
     <div class="widget-user-header bg-aqua-active">
-      <h3 class="widget-user-username">{{ buyer.company_name }}</h3>
-      <h5 class="widget-user-desc">{{ buyer.industry }}</h5>
+      <h3 class="widget-user-username">{{ company.company_name }}</h3>
+      <h5 class="widget-user-desc">{{ company.industry }}</h5>
     </div>
     <div class="box-tools pull-right">
-      <span class="badge" ng-if="buyer.is_affiliated==0"><i class='fa fa-share-alt'></i> NON-AFFILIATED</span>
-      <span class="badge badge-info" ng-if="buyer.is_affiliated==1"><i class='fa fa-share-alt'></i> AFFILIATED</span>
+      <span class="badge" ng-if="company.is_affiliated==0"><i class='fa fa-share-alt'></i> NON-AFFILIATED</span>
+      <span class="badge badge-info" ng-if="company.is_affiliated==1"><i class='fa fa-share-alt'></i> AFFILIATED</span>
 
-      <span class="badge" ng-if="buyer.is_trader==0"><i class='fa fa-tags'></i> END-USER</span>
-      <span class="badge badge-info" ng-if="buyer.is_trader==1"><i class='fa fa-tags'></i> TRADER</span>
+      <span class="badge" ng-if="company.is_trader==0"><i class='fa fa-tags'></i> END-USER</span>
+      <span class="badge badge-info" ng-if="company.is_trader==1"><i class='fa fa-tags'></i> TRADER</span>
     </div>
     <div class="widget-user-image">
       <img class="img-circle" src="/images/default.jpg" alt="User Avatar">
@@ -33,7 +33,7 @@
       <div class="row">
         <div class="col-sm-12 border-right">
           <div class="description-block">
-            <h5 class="description-text">{{ buyer.address }}</h5>
+            <h5 class="description-text">{{ company.address }}</h5>
                 
           </div>
         </div> 
@@ -48,33 +48,33 @@
         <div class="box-header with-border">
           <h3 class="box-title" style="font-size: 25px">About</h3>
           <div class="box-tools pull-right">
-            <button type="button" ui-sref="lead.update-buyer({ id: buyer.id })" class="btn btn-info"><i class="glyphicon glyphicon-pencil"></i> Update</button>
+            <button type="button" ui-sref="lead.update-company({ id: company.id })" class="btn btn-info"><i class="glyphicon glyphicon-pencil"></i> Update</button>
           </div>
         </div>
         <div class="box-body">
           <div class="row-fluid" style="margin: 10px;">
             <div class="table-responsive">
             <table class="table table-striped">
-              <tr><td>Country:</td><td>{{ buyer.country }}</td></tr>
-              <tr><td>Address:</td><td>{{ buyer.address }}</td></tr>
-              <tr><td>City:</td><td>{{ buyer.city }}</td></tr>
-              <tr><td>Latitude:</td><td>{{ buyer.latitude }}</td></tr>
-              <tr><td>Longitude:</td><td>{{ buyer.longitude }}</td></tr>
-              <tr><td>Industry:</td><td>{{ buyer.industry }}</td></tr>
-              <tr><td>Annual Demand:</td><td>{{ buyer.annual_demand }} <span class='badge badger-danger'>Million USD</span></td></tr>
-              <tr><td>Preferred Trading Term:</td><td>{{ buyer.preferred_trading_term }}</td></tr>
-              <tr><td>Preferred Payment Term:</td><td>{{ buyer.preferred_payment_term }}</td></tr>
-              <tr><td>Phone:</td><td>{{ buyer.phone }}</td></tr>
-              <tr><td>Email:</td><td>{{ buyer.email }}</td></tr>
-              <tr><td>Web:</td><td>{{ buyer.web }}</td></tr>
-              <tr><td>Desc:</td><td>{{ buyer.description }}</td></tr>
-              <tr ng-if="buyer.status == 'a'"><td>Status:</td> <td>Active</td></tr>
-              <tr ng-if="buyer.status == 'x'"><td>Status:</td> <td>Deactivated</td></tr>
+              <tr><td>Country:</td><td>{{ company.country }}</td></tr>
+              <tr><td>Address:</td><td>{{ company.address }}</td></tr>
+              <tr><td>City:</td><td>{{ company.city }}</td></tr>
+              <tr><td>Latitude:</td><td>{{ company.latitude }}</td></tr>
+              <tr><td>Longitude:</td><td>{{ company.longitude }}</td></tr>
+              <tr><td>Industry:</td><td>{{ company.industry }}</td></tr>
+              <tr><td>Annual Demand:</td><td>{{ company.annual_demand }} <span class='badge badger-danger'>Million USD</span></td></tr>
+              <tr><td>Preferred Trading Term:</td><td>{{ company.preferred_trading_term }}</td></tr>
+              <tr><td>Preferred Payment Term:</td><td>{{ company.preferred_payment_term }}</td></tr>
+              <tr><td>Phone:</td><td>{{ company.phone }}</td></tr>
+              <tr><td>Email:</td><td>{{ company.email }}</td></tr>
+              <tr><td>Web:</td><td>{{ company.web }}</td></tr>
+              <tr><td>Desc:</td><td>{{ company.description }}</td></tr>
+              <tr ng-if="company.status == 'a'"><td>Status:</td> <td>Active</td></tr>
+              <tr ng-if="company.status == 'x'"><td>Status:</td> <td>Deactivated</td></tr>
 
             </table>
             </div>
-            <!--ng-map center="{{buyer.longitude}}, {{buyer.latitude}}">
-              <marker center="{{buyer.longitude}}, {{buyer.latitude}}"></marker>
+            <!--ng-map center="{{company.longitude}}, {{company.latitude}}">
+              <marker center="{{company.longitude}}, {{company.latitude}}"></marker>
             </ng-map-->
           </div>
         </div>
@@ -92,7 +92,7 @@
         <div class="box-body">
           <div class="row" style="margin: 10px;">
             <ul class="list-group">
-              <li class="list-group-item" ng-repeat="contact in buyer.contact">
+              <li class="list-group-item" ng-repeat="contact in company.contact">
                 {{ contact.name }}
                 <i class="glyphicon glyphicon-envelope" style="margin-left: 50px;"></i> {{ contact.email }}
                 <i class="glyphicon glyphicon-earphone" style="margin-left: 50px;"></i> {{ contact.phone }}
@@ -126,7 +126,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr ng-repeat="product in buyer.product">
+                <tr ng-repeat="product in company.product">
                   <td>{{ product.product_name }}</td>
                   <td>{{ product.gcv_adb_min | number }} - {{ product.gcv_adb_max | number }}</td>
                   <td>{{ product.gcv_arb_min | number }} - {{ product.gcv_arb_max | number }}</td>
@@ -165,7 +165,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr ng-repeat="factory in buyer.factory">
+                <tr ng-repeat="factory in company.factory">
                   <td>{{ factory.factory_name }}</td>
                   <td>{{ factory.longitude | number }}, {{ factory.latitude | number }} (Port: {{ factory.port_name || 'N/A' }})</td>
                   <td>{{ factory.consumption | number }}</td>
@@ -241,7 +241,7 @@
                     <td colspan="3">-- FEATURES COMING SOON --</td>
                   </tr-->
                   <!--<tr>
-                    <td colspan="3"><a class="btn btn-block btn-blue" ng-click="goToLastOrders(buyer.id)">View More</a></td>
+                    <td colspan="3"><a class="btn btn-block btn-blue" ng-click="goToLastOrders(company.id)">View More</a></td>
                   </tr>
               </tbody>
             </table>
@@ -292,7 +292,7 @@
                     
                     <!--<button type="button" ng-click="viewProduct({ id: product.id })" class="btn btn-info"><i class="glyphicon glyphicon-eye-open"></i></button>-->
                     <a ui-sref="lead.view-port({ id: port.id, portId: port.id })"><i class="glyphicon glyphicon-eye-open"></i></a>
-                    <a ng-click="delete(port, 'buyer')" style="cursor:pointer"><i class="glyphicon glyphicon-remove"></i></a>
+                    <a ng-click="delete(port, 'company')" style="cursor:pointer"><i class="glyphicon glyphicon-remove"></i></a>
                   </span></td>
                 </tr>
               </tbody>

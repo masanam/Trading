@@ -15,7 +15,7 @@ class CreateCompaniesTable extends Migration
     {
         Schema::create('companies', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id');
+            $table->integer('user_id')->unsigned();
             $table->string('company_name');
             $table->boolean('is_affiliated');
 
@@ -38,13 +38,15 @@ class CreateCompaniesTable extends Migration
             $table->char('company_type', 1); // b = buyer, s = seller, t = trader, v = vendor
             $table->char('status', 1); // A = Active , X = Deleted
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
 
         Schema::create('contacts', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->integer('user_id')->nullable();
-            $table->integer('company_id')->nullable();
+            $table->integer('user_id')->unsigned()->nullable();
+            $table->integer('company_id')->unsigned()->nullable();
 
             $table->string('name');
             $table->string('phone');
@@ -53,15 +55,47 @@ class CreateCompaniesTable extends Migration
             $table->char('status', 1);
             $table->timestamps();
 
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
         });
 
+        Schema::create('concessions', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('concession_name');
+            $table->integer('company_id')->unsigned()->nullable();
+            $table->string('owner')->nullable();
+            $table->string('address')->nullable();
+            $table->string('city')->nullable();
+            $table->string('country')->nullable();
+            $table->decimal('latitude', 10, 8)->nullable();
+            $table->decimal('longitude', 11, 8)->nullable();
+            $table->longText('polygon')->nullable();
+            $table->integer('size')->nullable();
+            $table->decimal('stripping_ratio', 4, 2)->nullable();
+            $table->integer('resource')->nullable();
+            $table->integer('reserves')->nullable();
+            $table->integer('contracted_volume')->nullable();
+            $table->integer('remaining_volume')->nullable();
+            $table->integer('annual_production')->nullable();
+            $table->string('hauling_road_name')->nullable(); //nama jalanannya
+            $table->integer('stockpile_capacity')->nullable(); //kapasitas 
+            $table->integer('stockpile_coverage')->nullable();
+            $table->integer('stockpile_distance')->nullable();
+            $table->integer('port_id')->nullable();
+            $table->decimal('port_distance', 6, 2)->nullable();
+            $table->string('license_type')->nullable();
+            $table->date('license_expiry_date')->nullable();
+            $table->char('status', 1); // A = Active , X = Deleted
+            $table->timestamps();
 
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
+        });
+        
         Schema::create('products', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('company_id');
-            $table->integer('concession_id')->nullable();
-            $table->string('brand');
+            $table->integer('company_id')->unsigned();
+            $table->integer('concession_id')->unsigned()->nullable();
+            $table->string('product_name');
             $table->string('typical_quality');
 
             $table->integer('gcv_arb_min')->nullable(); //gross calorific value, as received basis
@@ -95,36 +129,7 @@ class CreateCompaniesTable extends Migration
             $table->timestamps();
 
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
-        });
-
-        Schema::create('concessions', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('concession_name');
-            $table->integer('company_id')->unsigned()->nullable();
-            $table->string('owner')->nullable();
-            $table->string('address')->nullable();
-            $table->string('city')->nullable();
-            $table->string('country')->nullable();
-            $table->decimal('latitude', 10, 8)->nullable();
-            $table->decimal('longitude', 11, 8)->nullable();
-            $table->longText('polygon')->nullable();
-            $table->integer('size')->nullable();
-            $table->decimal('stripping_ratio', 4, 2)->nullable();
-            $table->integer('resource')->nullable();
-            $table->integer('reserves')->nullable();
-            $table->integer('contracted_volume')->nullable();
-            $table->integer('remaining_volume')->nullable();
-            $table->integer('annual_production')->nullable();
-            $table->string('hauling_road_name')->nullable(); //nama jalanannya
-            $table->integer('stockpile_capacity')->nullable(); //kapasitas 
-            $table->integer('stockpile_coverage')->nullable();
-            $table->integer('stockpile_distance')->nullable();
-            $table->integer('port_id')->nullable();
-            $table->decimal('port_distance', 6, 2)->nullable();
-            $table->string('license_type')->nullable();
-            $table->date('license_expiry_date')->nullable();
-            $table->char('status', 1); // A = Active , X = Deleted
-            $table->timestamps();
+            $table->foreign('concession_id')->references('id')->on('concessions')->onDelete('cascade');
         });
 
         Schema::create('factories', function (Blueprint $table) {
@@ -143,6 +148,8 @@ class CreateCompaniesTable extends Migration
             $table->decimal('port_distance', 6, 2)->nullable();
             $table->char('status', 1); // A = Active , X = Deleted
             $table->timestamps();
+
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
         });
         
         Schema::create('ports', function (Blueprint $table) {
@@ -186,8 +193,8 @@ class CreateCompaniesTable extends Migration
         Schema::dropIfExists('company_port');
         Schema::dropIfExists('ports');
         Schema::dropIfExists('factories');
-        Schema::dropIfExists('concessions');
         Schema::dropIfExists('products');
+        Schema::dropIfExists('concessions');
         Schema::dropIfExists('contacts');
         Schema::dropIfExists('companies');
     }
