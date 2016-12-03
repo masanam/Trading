@@ -43,6 +43,11 @@ Route::group(['middleware' => ['cors']], function() {
     Route::resource('buyer', 'BuyerController', ['except' => [ 'create', 'edit' ]]);
     Route::resource('seller', 'SellerController', ['except' => [ 'create', 'edit' ]]);
     Route::resource('vendor', 'VendorController', ['except' => [ 'create', 'edit' ]]);
+    
+    Route::resource('port', 'PortController', ['except' => [ 'create', 'edit' ]]);
+    Route::resource('product', 'ProductController', ['except' => [ 'create', 'edit' ]]);
+    Route::resource('concession', 'ConcessionController', ['except' => [ 'create', 'edit' ]]);
+    Route::resource('factory', 'FactoryController', ['except' => [ 'create', 'edit' ]]);
 
     //Port Management API
     // /api/port POST, GET
@@ -57,41 +62,35 @@ Route::group(['middleware' => ['cors']], function() {
     // /api/seller/:id/port/:port_id PUT, GET, DEL --> cuma attach dan detach dari data doang
 
 
-    Route::post('port/buyer/store', 'PortController@storeBuyerPort');
-    Route::post('port/seller/store', 'PortController@storeSellerPort');
-    Route::get('port/buyer/allMy/{buyer_id}', 'PortController@buyerAllMyPort');
-    Route::get('port/seller/allMy/{seller_id}', 'PortController@sellerAllMyPort');
-    Route::get('port/buyer/my/{buyer_id}', 'PortController@buyerMyPort');
-    Route::get('port/seller/my/{seller_id}', 'PortController@sellerMyPort');
-    Route::get('port/buyer/attachPort/{buyer_id}/{port_id}', 'PortController@attachBuyerPort');
-    Route::get('port/buyer/detachPort/{buyer_id}/{port_id}', 'PortController@detachBuyerPort');
-    Route::get('port/seller/attachPort/{seller_id}/{port_id}', 'PortController@attachSellerPort');
-    Route::get('port/seller/detachPort/{seller_id}/{port_id}', 'PortController@detachSellerPort');
-    Route::get('port/buyer/status/{buyer_id}/{port_id}/{status}', 'PortController@changePortStatusBuyer');
-    Route::get('port/seller/status/{seller_id}/{port_id}/{status}', 'PortController@changePortStatusSeller');
-    Route::get('port/{id}/concession', 'PortController@connectedConcessions');
-    Route::resource('port', 'PortController', ['except' => [ 'create', 'edit' ]]);
+    // Route::post('port/buyer/store', 'PortController@storeBuyerPort');
+    // Route::post('port/seller/store', 'PortController@storeSellerPort');
+    // Route::get('port/buyer/allMy/{buyer_id}', 'PortController@buyerAllMyPort');
+    // Route::get('port/seller/allMy/{seller_id}', 'PortController@sellerAllMyPort');
+    // Route::get('port/buyer/my/{buyer_id}', 'PortController@buyerMyPort');
+    // Route::get('port/seller/my/{seller_id}', 'PortController@sellerMyPort');
+    // Route::get('port/buyer/attachPort/{buyer_id}/{port_id}', 'PortController@attachBuyerPort');
+    // Route::get('port/buyer/detachPort/{buyer_id}/{port_id}', 'PortController@detachBuyerPort');
+    // Route::get('port/seller/attachPort/{seller_id}/{port_id}', 'PortController@attachSellerPort');
+    // Route::get('port/seller/detachPort/{seller_id}/{port_id}', 'PortController@detachSellerPort');
+    // Route::get('port/buyer/status/{buyer_id}/{port_id}/{status}', 'PortController@changePortStatusBuyer');
+    // Route::get('port/seller/status/{seller_id}/{port_id}/{status}', 'PortController@changePortStatusSeller');
+    // Route::get('port/{id}/concession', 'PortController@connectedConcessions');
 
     //Product Management API
-    Route::get('product/{id}/my/buyer', 'ProductController@findMyProductBuyer');
-    Route::get('product/{id}/my/seller', 'ProductController@findMyProductSeller');
-    Route::get('product/total', 'ProductController@getTotalProduct');
-    Route::get('product/search/{search?}', 'ProductController@search');
-    Route::delete('product/{id}', 'ProductController@destroyByID');
-    Route::resource('product', 'ProductController', ['except' => [ 'create', 'edit' ]]);
+    // Route::get('product/{id}/my/buyer', 'ProductController@findMyProductBuyer');
+    // Route::get('product/{id}/my/seller', 'ProductController@findMyProductSeller');
+    // Route::get('product/total', 'ProductController@getTotalProduct');
+    // Route::get('product/search/{search?}', 'ProductController@search');
+    // Route::delete('product/{id}', 'ProductController@destroyByID');
 
     //Concession Management API
-    Route::get('concession/total', 'ConcessionController@getTotalConcession');
-    Route::get('concession/filter', 'ConcessionController@filter');
-    Route::get('concession/my/{id}', 'ConcessionController@findMyConcession');
-    Route::get('concession/detail/{id}', 'ConcessionController@detail');
-    Route::resource('concession', 'ConcessionController', ['except' => [ 'create', 'edit' ]]);
+    // Route::get('concession/total', 'ConcessionController@getTotalConcession');
+    // Route::get('concession/filter', 'ConcessionController@filter');
+    // Route::get('concession/my/{id}', 'ConcessionController@findMyConcession');
+    // Route::get('concession/detail/{id}', 'ConcessionController@detail');
 
     //Factory Management API
-    Route::get('factory/my/{id}', 'FactoryController@findMyFactory');
-    Route::resource('factory', 'FactoryController', ['except' => [
-        'create', 'edit'
-    ]]);
+    //Route::get('factory/my/{id}', 'FactoryController@findMyFactory');
 
 
     /*
