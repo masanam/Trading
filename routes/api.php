@@ -40,10 +40,8 @@ Route::group(['middleware' => ['cors']], function() {
     Route::get('coalpedia/total', 'CoalpediaController@count');
 
     Route::resource('contact', 'ContactController', ['except' => [ 'create', 'edit' ]]);
-    Route::resource('buyer', 'BuyerController', ['except' => [ 'create', 'edit' ]]);
-    Route::resource('seller', 'SellerController', ['except' => [ 'create', 'edit' ]]);
-    Route::resource('vendor', 'VendorController', ['except' => [ 'create', 'edit' ]]);
-    
+    Route::resource('company', 'CompanyController', ['except' => [ 'create', 'edit' ]]);
+
     Route::resource('port', 'PortController', ['except' => [ 'create', 'edit' ]]);
     Route::resource('product', 'ProductController', ['except' => [ 'create', 'edit' ]]);
     Route::resource('concession', 'ConcessionController', ['except' => [ 'create', 'edit' ]]);
