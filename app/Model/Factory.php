@@ -6,17 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Factory extends Model
 {
-    protected $table = 'factory';
+    protected $table = 'factories';
 
-    public function Buyer() {
-    	return $this->belongsTo('App\Model\Buyer');
+    public function company() {
+    	return $this->belongsTo(Company::class);
     }
     
-    public function Product() {
-        return $this->hasMany('App\Model\Product');
+    public function products() {
+        return $this->hasMany(Product::class);
     }
 
-    public function Port() {
-    	return $this->belongsTo('App\Model\Port');
+    public function port() {
+    	return $this->belongsTo(Port::class);
     }
 }
