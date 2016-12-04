@@ -57,8 +57,8 @@
     <div class="col-lg-8">
       <div class="row" style="background:#eee; padding: 10px; margin-left:10px;">
         <ng-map zoom="4" center="Indonesia" default-style="false" style="width:100%; height:500px;">
-          <marker ng-if="concession.polygon === ''" position="{{concession.latitude}}, {{concession.longitude}}" id="mark{{concession.id}}" on-click="showDetail({{pos}})"></marker>
-          <shape name="polygon" ng-if="concession.polygon !== ''"
+          <marker ng-if="!concession.polygon" position="{{concession.latitude}}, {{concession.longitude}}" id="mark{{concession.id}}" on-click="showDetail({{pos}})"></marker>
+          <shape name="polygon" ng-if="concession.polygon"
              id="mark{{concession.id}}"
              paths="{{concession.polygon}}"
              stroke-color="#FF0000"

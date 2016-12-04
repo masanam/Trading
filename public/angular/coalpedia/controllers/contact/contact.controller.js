@@ -49,8 +49,8 @@ angular.module('coalpedia').controller('ContactController', ['$scope', '$statePa
         contact.$remove(function (res){
           $scope.company.contacts.splice($scope.company.contacts.indexOf(contact), 1);
         });
-      };
-    }
+      }
+    };
 
     $scope.findOne = function(id) {
       if(id !== undefined){

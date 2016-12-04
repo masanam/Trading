@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Factory extends Model
 {
     protected $table = 'factories';
+    protected $fillable = [
+        'owner', 'address', 'city', 'country', 'latitude', 'longitude',
+        'size', 'consumption', 'port_id', 'port_distance', 'factory_name'
+    ];
 
     public function company() {
     	return $this->belongsTo(Company::class);

@@ -1,0 +1,11 @@
+<div class="box">
+  <div class="box-header with-border">
+	  <h4 class="modal-title">Create Port</h4>
+	  <i class="fa fa-times pull-right" ng-click="close()"></i>
+  </div>
+  <div class="box-body">
+	  <form name="createPort" role="form" ng-submit="create(createPort)" ng-init="port = {}">
+	    <div ng-include="'/angular/coalpedia/views/port/_form.partial.html'"></div>
+	  </form>
+	</div>
+</div>

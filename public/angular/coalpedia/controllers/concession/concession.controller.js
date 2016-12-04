@@ -4,6 +4,47 @@ angular.module('coalpedia').controller('ConcessionController', ['$scope', '$stat
   function($scope, $stateParams, $state, $uibModal, Concession) {
     $scope.selected = {};
 
+    $scope.add = function () {
+      var modalInstance = $uibModal.open({
+        animation: true,
+        ariaLabelledBy: 'modal-title',
+        ariaDescribedBy: 'modal-body',
+        templateUrl: './angular/coalpedia/views/concession/_create.modal.view.html',
+        controller: 'ConcessionModalController',
+        windowClass: 'xl-modal',
+        resolve: {
+          concession: new Concession(),
+          company: $scope.company
+        }
+      });
+
+      modalInstance.result.then(function (res) {
+        if(!$scope.company.concessions) $scope.company.concessions = [];
+        
+        $scope.company.concessions.push(res);
+      });
+    };
+
+    $scope.edit = function (concession) {
+      var modalInstance = $uibModal.open({
+        animation: true,
+        ariaLabelledBy: 'modal-title',
+        ariaDescribedBy: 'modal-body',
+        templateUrl: './angular/coalpedia/views/concession/_update.modal.view.html',
+        controller: 'ConcessionModalController',
+        windowClass: 'xl-modal',
+        resolve: {
+          concession: angular.copy(concession),
+          company: $scope.company
+        }
+      });
+
+      modalInstance.result.then(function (res) {
+        if(!$scope.company.concessions) $scope.company.concessions = [];
+        $scope.company.concessions.splice($scope.company.concessions.indexOf(concession), 1, res);
+      });
+    };
+
     $scope.find = function() {
       $scope.concessions = Concession.query({ q: $stateParams.keyword, type:$scope.searchType });
     };

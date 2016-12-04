@@ -1,0 +1,11 @@
+<div class="box">
+  <div class="box-header with-border">
+	  <h4 class="modal-title">Create Concession</h4>
+	  <i class="fa fa-times pull-right" ng-click="close()"></i>
+  </div>
+  <div class="box-body">
+	  <form name="createConcession" role="form" ng-submit="create(createConcession)" ng-init="concession = {}">
+	    <div ng-include="'/angular/coalpedia/views/concession/_form.partial.html'"></div>
+	  </form>
+	</div>
+</div>

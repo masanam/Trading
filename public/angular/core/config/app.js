@@ -34,6 +34,8 @@ angular.module(ApplicationConfiguration.applicationModuleName).config(['$locatio
 
     //$httpProvider.interceptors.push('authInterceptor');
     var dateRegex = /\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/;
+    var floatRegex = /[+-]([0-9]*[.])?[0-9]+/;
+
     var convertDateStringsToDates = function (input) {
       for (var key in input) {
         if (!input.hasOwnProperty(key)) continue;
@@ -53,8 +55,28 @@ angular.module(ApplicationConfiguration.applicationModuleName).config(['$locatio
       }
     };
 
+    var convertFloatStringsToFloats = function (input) {
+      for (var key in input) {
+        if (!input.hasOwnProperty(key)) continue;
+
+        var value = input[key];
+        var match;
+
+        if (typeof value === 'string' && (match = value.match(floatRegex))) {
+          var number = parseFloat(match);
+          if (!isNaN(number)) {
+            input[key] = number;
+          }
+        } else if (typeof value === 'object') {
+            // Recurse into object
+          convertFloatStringsToFloats(value);
+        }
+      }
+    };
+
     $httpProvider.defaults.transformResponse.push(function(input){
       convertDateStringsToDates(input);
+      convertFloatStringsToFloats(input);
       return input;
     });
   }

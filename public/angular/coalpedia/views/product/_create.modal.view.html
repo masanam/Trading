@@ -1,0 +1,11 @@
+<div class="box">
+  <div class="box-header with-border">
+	  <h4 class="modal-title">Create Product</h4>
+	  <i class="fa fa-times pull-right" ng-click="close()"></i>
+  </div>
+  <div class="box-body">
+	  <form name="createProduct" role="form" ng-submit="create(createProduct)" ng-init="product = {}">
+	    <div ng-include="'/angular/coalpedia/views/product/_form.partial.html'"></div>
+	  </form>
+	</div>
+</div>

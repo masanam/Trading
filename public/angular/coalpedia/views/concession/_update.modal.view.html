@@ -1,0 +1,13 @@
+<div class="box">
+  <div class="box-header with-border">
+    <h1 class="box-title" style="font-size: 25px">Update Concession {{ concession.concession_name }}</h1>
+    <i class="fa fa-times pull-right" ng-click="close()"></i>
+  </div>
+  <div class="box-body">
+    <section class="content">
+      <form role="form" ng-submit="update()">
+        <div ng-include="'/angular/coalpedia/views/concession/_form.partial.html'"></div>
+      </form>
+    </section>
+  </div>      
+</div>

@@ -77,12 +77,12 @@
                 </tr>
                 <tr ng-if="company.company_type !== 'v'">
                   <td>Preferred Trading Term:</td><td>
-                    {{ company.preferred_trading_term }} - {{ company.preferred_trading_term_detail }}
+                    {{ company.preferred_trading_term }}<br>{{ company.preferred_trading_term_detail }}
                   </td>
                 </tr>
                 <tr ng-if="company.company_type !== 'v'">
                   <td>Preferred Payment Term:</td><td>
-                    {{ company.preferred_payment_term }} - {{ company.preferred_payment_term_detail }}
+                    {{ company.preferred_payment_term }}<br>{{ company.preferred_payment_term_detail }}
                   </td>
                 </tr>
                 <tr><td>Phone:</td><td>{{ company.phone }}</td></tr>
@@ -135,11 +135,11 @@
         </div>
       </div> <!-- CONTACTS -->
 
-      <div class="box box-info" ng-if="company.company_type === 'c' || company.company_type === 's'">
+      <div class="box box-info" ng-controller="ProductController" ng-if="company.company_type === 'c' || company.company_type === 's'"> <!-- PRODUCT -->
         <div class="box-header with-border">
           <h3 class="box-title" style="font-size: 25px">Product</h3>
           <div class="box-tools pull-right">
-            <button type="button" ng-click="addProductDetail()" class="btn btn-info"><i class="glyphicon glyphicon-plus"></i> Add New Product</button>
+            <button type="button" ng-click="add()" class="btn btn-info"><i class="glyphicon glyphicon-plus"></i> Add New Product</button>
           </div>
         </div>
         <div class="box-body no-padding">
@@ -160,22 +160,23 @@
                   <td>{{ product.gcv_adb_min | number }} - {{ product.gcv_adb_max | number }}</td>
                   <td>{{ product.gcv_arb_min | number }} - {{ product.gcv_arb_max | number }}</td>
                   <td>{{ product.ncv_min | number }} - {{ product.ncv_max | number }}</td>
-                  <td><span class="pull-right">
-                    <a ui-sref="lead.view-product({ id: product.id })"><i class="glyphicon glyphicon-eye-open"></i></a>
-                    <a href="#" ng-click="deleteProduct(product)"><i class="glyphicon glyphicon-remove"></i></a>
-                  </span></td>
+                  <td class="pull-right">
+                    <a class="glyphicon glyphicon-new-window" ui-sref="product.view({ id: product.id })" target="_blank"></a>
+                    <a class="glyphicon glyphicon-pencil" ng-click="edit(product)"></a>
+                    <a href="#" ng-click="delete(product)"><i class="glyphicon glyphicon-remove"></i></a>
+                  </td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
-      </div>
+      </div> <!-- PRODUCT -->
 
-      <div class="box box-info" ng-controller="ConcessionController"> <!-- CONCESSION -->
+      <div class="box box-info" ng-controller="ConcessionController" ng-if="company.company_type !== 'c'"> <!-- CONCESSION -->
         <div class="box-header with-border">
           <h3 class="box-title" style="font-size: 25px">Concessions</h3>
           <div class="box-tools pull-right">
-            <button type="button" class="btn btn-info" ng-click="addConcession()"><i class="glyphicon glyphicon-plus"></i> Add New Concessions</button>
+            <button type="button" class="btn btn-info" ng-click="add()"><i class="glyphicon glyphicon-plus"></i> Add New Concessions</button>
           </div>
         </div>
         <div class="box-body no-padding">
@@ -195,12 +196,11 @@
                   <td>{{ concession.concession_name }}</td>
                   <td>{{ concession.city }} (Port: {{ concession.port.port_name || 'N/A' }})</td>
                   <td>{{ concession.reserves | number }}</td>
-                  <td><span class="pull-right">
-                    <a ui-sref="concession.view({ id: concession.id })"><i class="glyphicon glyphicon-eye-open"></i></a>
-                    <span class="pull-right">
-                      <a href="#" ng-click="delete(concession)"><i class="glyphicon glyphicon-remove"></i></a>
-                    </span>
-                  </span></td>
+                  <td class="pull-right">
+                    <a class="glyphicon glyphicon-new-window" ui-sref="concession.view({ id: concession.id })" target="_blank"></a>
+                    <a class="glyphicon glyphicon-pencil" ng-click="edit(concession)"></a>
+                    <a href="#" ng-click="delete(concession)" class="glyphicon glyphicon-remove"></a>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -208,11 +208,11 @@
         </div>
       </div> <!-- CONCESSION -->
 
-      <div class="box box-info" ng-if="company.company_type === 'c'">
+      <div class="box box-info" ng-controller="FactoryController" ng-if="company.company_type === 'c'"> <!-- FACTORY -->
         <div class="box-header with-border">
           <h3 class="box-title" style="font-size: 25px">Factory</h3>
           <div class="box-tools pull-right">
-            <button type="button" class="btn btn-info" ng-click="addFactory()"><i class="glyphicon glyphicon-plus"></i> Add New Factory</button>
+            <button type="button" class="btn btn-info" ng-click="add()"><i class="glyphicon glyphicon-plus"></i> Add New Factory</button>
           </div>
         </div>
         <div class="box-body no-padding">
@@ -230,24 +230,23 @@
                   <td>{{ factory.factory_name }}</td>
                   <td>{{ factory.longitude | number }}, {{ factory.latitude | number }} (Port: {{ factory.port_name || 'N/A' }})</td>
                   <td>{{ factory.consumption | number }}</td>
-                  <td><span class="pull-right">
-                    <a ui-sref="lead.view-factory({ id: factory.id })"><i class="glyphicon glyphicon-eye-open"></i></a>
-                    <span class="pull-right">
-                      <a href="#" ng-click="deleteFactory(factory)"><i class="glyphicon glyphicon-remove"></i></a>
-                    </span>
-                  </span></td>
+                  <td class="pull-right">
+                    <a ui-sref="factory.view({ id: factory.id })" target="_blank" class="glyphicon glyphicon-new-window"></a>
+                    <a ng-click="edit(factory)" class="glyphicon glyphicon-pencil"></a>
+                    <a href="#" ng-click="delete(factory)" class="glyphicon glyphicon-remove"></a>
+                  </td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
-      </div>
+      </div> <!-- FACTORY -->
 
-      <div class="box box-info">
+      <div class="box box-info" ng-controller="PortController">  <!-- PORT -->
         <div class="box-header with-border">
           <h3 class="box-title" style="font-size: 25px">Ports</h3>
           <div class="box-tools pull-right">
-            <button type="button" ng-click="openModalDetailBuyer()" class="btn btn-info"><i class="glyphicon glyphicon-plus"></i> Add New Ports</button>
+            <button type="button" ng-click="add()" class="btn btn-info"><i class="glyphicon glyphicon-plus"></i> Add New Ports</button>
           </div>
         </div>
         <div class="box-body no-padding">
@@ -269,18 +268,17 @@
                   <td ng-show="port.is_private===1">Private</td>
                   <td ng-show="port.is_private===0">Public</td>
                   <td>{{ port.size }}</td>
-                  <td><span class="pull-right">
-                    
-                    <!--<button type="button" ng-click="viewProduct({ id: product.id })" class="btn btn-info"><i class="glyphicon glyphicon-eye-open"></i></button>-->
-                    <a ui-sref="lead.view-port({ id: port.id, portId: port.id })"><i class="glyphicon glyphicon-eye-open"></i></a>
-                    <a ng-click="delete(port, 'company')" style="cursor:pointer"><i class="glyphicon glyphicon-remove"></i></a>
-                  </span></td>
+                  <td class="pull-right">
+                    <a ui-sref="port.view({ id: port.id })" target="_blank" class="glyphicon glyphicon-new-window"></a>
+                    <a ng-click="edit(port)" class="glyphicon glyphicon-pencil"></a>
+                    <a ng-click="delete(port)" class="glyphicon glyphicon-remove"></a>
+                  </td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
-      </div>
+      </div>  <!-- PORT -->
 
     </div>
   </div>

@@ -2,13 +2,8 @@
 
 angular.module('product').factory('Product', ['$resource',
   function ($resource) {
-    return $resource('api/:option/:mineId/:sellerId/product/:id/:action/:type', {
-      option: undefined,
-      mineId: undefined,
-      sellerId: undefined,
-      id: undefined,
-      action: undefined,
-      type: undefined
+    return $resource('api/product/:id', {
+      id: '@id'
     }, {
       update: {
         method: 'PUT'

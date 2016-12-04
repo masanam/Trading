@@ -1,0 +1,11 @@
+<div class="box">
+  <div class="box-header with-border">
+	  <h4 class="modal-title">Create Factory</h4>
+	  <i class="fa fa-times pull-right" ng-click="close()"></i>
+  </div>
+  <div class="box-body">
+	  <form name="createFactory" role="form" ng-submit="create(createFactory)" ng-init="factory = {}">
+	    <div ng-include="'/angular/coalpedia/views/factory/_form.partial.html'"></div>
+	  </form>
+	</div>
+</div>
