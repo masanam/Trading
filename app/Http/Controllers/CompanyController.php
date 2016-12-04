@@ -28,7 +28,13 @@ class CompanyController extends Controller
     $companies = Company::with('user')->where('status', 'a');
 
     if($req->q) $companies->where('company_name', 'LIKE', '%'.$req->q.'%');
-    if($req->type) $companies->where('company_type', $req->type[0]);
+    if($req->type) {
+      if ($req->type[0] == 'c' || $req->type[0] == 's')
+        $companies->whereIn('company_type', [ $req->type[0], 't' ]);
+      
+      else
+        $companies->where('company_type', $req->type[0]);
+    }
 
     $companies = $companies->get();
     return response()->json($companies, 200);

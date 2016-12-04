@@ -31,7 +31,7 @@ class CompaniesTableSeeder extends Seeder
       'preferred_trading_term'=>'FOB MV',
       'preferred_payment_term'=> 'LC',
       'description' => 'This is an palm oil company' ,
-      'company_type' => 'b',
+      'company_type' => 'c',
       'status' => 'a' 
     ]) ;
 
@@ -51,7 +51,7 @@ class CompaniesTableSeeder extends Seeder
       'city' => 'Gresik' ,
       'address' => 'Jl. Kapten Darmo Sugondo No.56, Sidorukun, Kec. Gresik, Kabupaten Gresik, Jawa Timur' ,
       'description' => 'This is an palm oil company' ,
-      'company_type' => 'b',
+      'company_type' => 'c',
       'status' => 'a' 
     ]) ;
 

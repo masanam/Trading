@@ -3,6 +3,7 @@
 angular.module('coalpedia').controller('CompanyController', ['$scope', '$stateParams', '$state', '$uibModal', 'Company',
   function($scope, $stateParams, $state, $uibModal, Company) {
     $scope.selected = {};
+    $scope.companyType = $stateParams.type;
 
     $scope.find = function() {
       $scope.companies = Company.query({ q: $stateParams.keyword, type:$scope.searchType });
@@ -47,7 +48,7 @@ angular.module('coalpedia').controller('CompanyController', ['$scope', '$statePa
         controller: 'CompanyModalController',
         windowClass: 'xl-modal',
         resolve: {
-          company: $scope.findOne($scope.company.id)
+          company: $scope.company
         }
       });
 

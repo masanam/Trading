@@ -1,26 +1,26 @@
 'use strict';
 
 // Setting up route
-angular.module('buyer').config(['$stateProvider',
+angular.module('coalpedia').config(['$stateProvider',
   function ($stateProvider) {
     // Home state routing
     $stateProvider
-      .state('buyer', {
-        url: '/coalpedia/buyer',
+      .state('company', {
+        url: '/coalpedia/company/:type',
         abstract: true,
         templateUrl: '/angular/coalpedia/views/search.layout.html'
       })
-      .state('buyer.list', {
+      .state('company.list', {
         url: '?keyword',
         templateUrl: '/angular/coalpedia/views/company/list.view.html',
         roles: ['user', 'trader', 'manager']
       })
-      .state('buyer.create', {
+      .state('company.create', {
         url: '/create',
         templateUrl: '/angular/coalpedia/views/company/create.view.html',
         roles: ['user', 'trader', 'manager']
       })
-      .state('buyer.view', {
+      .state('company.view', {
         url: '/:id',
         views: { '@': { templateUrl: '/angular/coalpedia/views/company/view.view.html' } },
         roles: ['user', 'trader', 'manager']

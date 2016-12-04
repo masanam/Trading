@@ -2,14 +2,14 @@
   <!-- small box -->
   <div class="small-box bg-red">
     <div class="inner">
-      <h4>{{ total.buyer }} Records</h4>
+      <h4>{{ total.customer }} Records</h4>
 
       <p>Customer</p>
     </div>
     <div class="icon">
       <i class="fa fa-building"></i>
     </div>
-    <a ui-sref="buyer.list" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+    <a ui-sref="company.list({ type: 'customer' })" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
   </div>
 
   <div class="small-box bg-aqua">
@@ -21,7 +21,7 @@
     <div class="icon">
       <i class="fa fa-industry"></i>
     </div>
-     <a ui-sref="seller.list" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+     <a ui-sref="company.list({ type: 'seller' })" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
   </div>
 
   <div class="small-box bg-aqua">
@@ -33,12 +33,12 @@
     <div class="icon">
       <i class="fa fa-ship"></i>
     </div>
-     <a ui-sref="vendor.list" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+     <a ui-sref="company.list({ type: 'vendor' })" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
   </div>
 
   <div class="small-box bg-maroon">
     <div class="inner">
-      <h4>{{ totalConcession.count }} Records</h4>
+      <h4>{{ total.concession }} Records</h4>
       <p>CONCESSION</p>
     </div>
     <div class="icon">

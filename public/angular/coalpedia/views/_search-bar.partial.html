@@ -1,6 +1,6 @@
 <section>
   <div class="text-center">
-    <form class="form-group" ng-init="initSearch()" ng-submit="search(searchType, keyword)">
+    <form class="form-group" ng-submit="search(searchType, keyword)">
       <div class="input-group input-group-sm">
         <input type="text" class="col-md-12 form-control" ng-model="keyword">
         <span class="input-group-btn">
@@ -10,11 +10,11 @@
 
       <div class="btn-group">
         <label class="btn btn-sm btn-default" ng-model="searchType"
-          uib-btn-radio="'buyer'" ng-click="search('buyer')">
+          uib-btn-radio="'customer'" ng-click="search('customer')">
           Customer
         </label>
         <label class="btn btn-sm btn-default" ng-model="searchType"
-          uib-btn-radio="'seller'" ng-click="search('seller')">
+          uib-btn-radio="'supplier'" ng-click="search('supplier')">
           Supplier
         </label>
         <label class="btn btn-sm btn-default" ng-model="searchType"
