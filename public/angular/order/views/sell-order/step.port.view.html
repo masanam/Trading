@@ -2,7 +2,7 @@
 <div class="box box-info">
   <div class="box-header with-border">
     <h1 class="box-title" style="font-size: 25px">Buy Lead Port</h1>
-    <div class="box-tools pull-right">
+    <div class="box-tools pull-right" style="position:relative">
       <button type="button" class="btn btn-danger" ng-click="backToProduct()" ng-show="new!=='true'">
         <i class="glyphicon glyphicon-arrow-left"></i> Back
     	</button>
@@ -19,7 +19,7 @@
     <div class="row" style="margin: 10px;">
       <div class="select-box" ng-init="findAllPorts()">
         <label for="id">Port Name:</label>
-        <ui-select ng-model="port.selected" style="min-width: 300px;" title="Choose a port" append-to-body="true">
+        <ui-select ng-model="port.selected" style="display:inline" title="Choose a port" append-to-body="true">
           <ui-select-match placeholder="Port Name">{{ port.selected.port_name }}</ui-select-match>
           <ui-select-choices repeat="port in ports | propsFilter: {port_name: $select.search } | orderBy:'port_name'">
             <div ng-bind-html="port_name | highlight: $select.search"></div>
@@ -74,12 +74,23 @@
           <input name="size" type="number" class="form-control" min="0" id="size" ng-model="port.selected.size" required disabled>
         </div>
 
-        <div class="form-group">
+        <div class="form-group hidden-xs">
           <label for="contact">Port Coordinates*:</label>
           <div class="input-group" style="margin-bottom: 5px;">
             <span class="input-group-addon" style="width: 200px;">Latitude</span>
             <input type="number" class="form-control" placeholder="Latitude" ng-model="port.selected.latitude" min="-90" max="90" step="any" required>
             <span class="input-group-addon">Longitude</span>
+            <input type="number" class="form-control" placeholder="Longitude" ng-model="port.selected.longitude" min="-180" max="180" step="any" required>
+          </div>
+        </div>
+        <div class="form-group visible-xs">
+          <label for="contact">Port Coordinates*:</label>
+          <div class="input-group" style="width:100%">
+            <span class="input-group-addon" style="width:40%">Latitude*</span>
+            <input type="number" class="form-control" placeholder="Latitude" ng-model="port.selected.latitude" min="-90" max="90" step="any" required>
+          </div>
+          <div class="input-group" style="width:100%">
+            <span class="input-group-addon" style="width:40%">Longitude*</span>
             <input type="number" class="form-control" placeholder="Longitude" ng-model="port.selected.longitude" min="-180" max="180" step="any" required>
           </div>
         </div>

@@ -2,7 +2,7 @@
 <div class="box box-info" >
   <div class="box-header with-border">
     <h1 class="box-title" style="font-size: 25px">Sell Lead Customer</h1>
-    <div class="box-tools pull-right">
+    <div class="box-tools pull-right" style="position:relative">
       <button type="button" class="btn btn-danger" ui-sref="buy-order.index">
       <i class="glyphicon glyphicon-arrow-left"></i> Back
       </button>
@@ -18,9 +18,9 @@
     </div>
     <div class="select-box" ng-init="findAllBuyers()">
       <label for="id">Name of Company :</label>
-      <ui-select ng-model="buyer.selected" style="min-width: 300px;" title="Choose a Company" append-to-body="true">
+      <ui-select ng-model="buyer.selected" style="display:inline" title="Choose a Company" append-to-body="true">
         <ui-select-match placeholder="Name Of Company">{{ buyer.selected.company_name }}</ui-select-match>
-        <ui-select-choices repeat="buyer in buyers | propsFilter: {company_name: $select.search} | orderBy:'company_name'" >
+        <ui-select-choices repeat="buyer in buyers | propsFilter: {company_name: $select.search} | orderBy:'company_name'">
           <div ng-bind-html="company_name | highlight: $select.search"></div>
           <small>
             {{buyer.company_name}}
@@ -47,47 +47,47 @@
         <h3 class="profile-username text-center">{{buyer.selected.company_name}}</h3>
 
         <ul class="list-group list-group-unbordered" col-mg-4>
-          <li class="list-group-item">
+          <li class="list-group-item" style="overflow:hidden;">
             <b>Customer Category</b>
             <span class="badge" ng-show="buyer.selected.is_trader===1"><i class='fa fa-share-alt'></i> TRADER</span>
             <span class="badge" ng-show="buyer.selected.is_trader===0"><i class='fa fa-share-alt'></i> END USER</span>
           </li>
-          <li class="list-group-item">
+          <li class="list-group-item" style="overflow:hidden;">
             <b>Customer status </b>
             <span class="badge" ng-show="buyer.selected.is_affiliated===1"><i class='fa fa-tags'></i> AFFILIATED</span>
             <span class="badge" ng-show="buyer.selected.is_affiliated===0"><i class='fa fa-tags'></i> NON - AFFILIATED</span>
           </li>
-          <li class="list-group-item">
+          <li class="list-group-item" style="overflow:hidden;">
             <b>Phone</b> <a class="pull-right">{{buyer.selected.phone}}</a>
           </li>
-          <li class="list-group-item">
+          <li class="list-group-item" style="overflow:hidden;">
             <b>Email</b> <a class="pull-right">{{buyer.selected.email}}</a>
           </li>
-          <li class="list-group-item">
+          <li class="list-group-item" style="overflow:hidden;">
             <b>Web</b> <a class="pull-right">{{buyer.selected.web}}</a>
           </li>
-          <li class="list-group-item">
+          <li class="list-group-item" style="overflow:hidden;">
             <b>Address</b> <a class="pull-right">{{buyer.selected.address}}</a>
           </li>
-          <li class="list-group-item">
+          <li class="list-group-item" style="overflow:hidden;">
             <b>City</b> <a class="pull-right">{{buyer.selected.city}}</a>
           </li>
-          <li class="list-group-item">
+          <li class="list-group-item" style="overflow:hidden;">
             <b>Country</b> <a class="pull-right">{{buyer.selected.country}}</a>
           </li>
-          <li class="list-group-item">
+          <li class="list-group-item" style="overflow:hidden;">
             <b>Industry</b> <a class="pull-right">{{buyer.selected.industry}}</a>
           </li>
-          <li class="list-group-item">
-            <b>Annual Demand</b> <a class="pull-right">{{buyer.selected.annual_demand}} <span class='badge'>Million Ton</span></a> 
+          <li class="list-group-item" style="overflow:hidden;">
+            <b>Annual Demand</b> <a class="pull-right">{{buyer.selected.annual_demand | number}} <span class='badge'>Million Ton</span></a> 
           </li>
-          <li class="list-group-item">
+          <li class="list-group-item" style="overflow:hidden;">
             <b>Trading Term</b> <a class="pull-right">{{buyer.selected.preferred_trading_term}}</a>
           </li>
-          <li class="list-group-item">
+          <li class="list-group-item" style="overflow:hidden;">
             <b>Payment Term</b> <a class="pull-right">{{buyer.selected.preferred_payment_term}}</a>
           </li>
-          <li class="list-group-item">
+          <li class="list-group-item" style="overflow:hidden;">
             <b>Description</b> <a class="pull-right">{{buyer.selected.description}}</a>
           </li>
         </ul>

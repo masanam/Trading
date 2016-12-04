@@ -4,12 +4,14 @@
     	<h1 class="box-title">Create Orders</h1>
 
     	<span class="box-tools pull-right">
-    		<button class="btn btn-default" ui-sref="order.list">Back</button>
-    		<button class="btn btn-primary" ng-click="create()">Submit Order</button>
+    		<button class="btn btn-default hidden-xs" ui-sref="order.list">Back</button>
+    		<button class="btn btn-primary hidden-xs" ng-click="create()">Submit Order</button>
     	</span>
     </div>
 
     <div class="box-body">
+        <button class="btn btn-default hidden-sm hidden-md hidden-lg" ui-sref="order.list">Back</button>
+        <button class="btn btn-primary hidden-sm hidden-md hidden-lg" ng-click="create()">Submit Order</button>
 	    <div class="box-body no-padding" ng-include="'/angular/order/views/order/_order-detail.partial.html'"></div>
     </div>
   </div>

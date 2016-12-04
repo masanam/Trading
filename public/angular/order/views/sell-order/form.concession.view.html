@@ -13,7 +13,7 @@
   <input type="text" class="form-control" id="address" ng-model="concession.address" required>
 </div>
 
-<div class="form-group">
+<div class="form-group hidden-xs">
   <div class="input-group col-md-12" style="margin-bottom: 5px;">
     <span class="input-group-addon" style="width: 200px;">City*</span>
     <input type="text" class="form-control" placeholder="City" ng-model="concession.city" required>
@@ -26,7 +26,25 @@
     <span class="input-group-addon" style="width: 200px;">Longitude</span>
     <input type="number" min="-180" max="180" step="any" class="form-control" placeholder="Longitude" ng-model="concession.longitude" required>
   </div>
-</div>  
+</div> 
+<div class="form-group visible-xs">
+  <div class="input-group" style="width:100%">
+    <span class="input-group-addon" style="width:37%">City*</span>
+    <input type="text" class="form-control" placeholder="City" ng-model="concession.city" required>
+  </div>
+  <div class="input-group" style="width:100%">
+    <span class="input-group-addon" style="width:37%">Country*</span>
+    <input type="text" class="form-control" placeholder="Country" ng-model="concession.country" required>
+  </div>
+  <div class="input-group" style="width:100%">
+    <span class="input-group-addon" style="width:37%">Latitude*</span>
+    <input type="number" min="-90" max="90" step="any" class="form-control" placeholder="Latitude" ng-model="concession.latitude" required>
+  </div>
+  <div class="input-group" style="width:100%">
+    <span class="input-group-addon" style="width:37%">Longitude*</span>
+    <input type="number" min="-180" max="180" step="any" class="form-control" placeholder="Longitude" ng-model="concession.longitude" required>
+  </div>
+</div> 
 
 <div class="row">
   <div class="input-group col-md-12" style="margin-bottom: 5px;">
@@ -51,7 +69,7 @@
   <input type="number" min="0" class="form-control" id="size" ng-model="concession.size">
 </div>
 
-<div class="form-group">
+<div class="form-group hidden-xs">
     <label>Volumes</label>
     <div class="input-group col-md-12" style="margin-bottom: 5px;">
       <span class="input-group-addon" style="width: 250px;">Annual Production Capacity (MMT)*</span>
@@ -71,6 +89,33 @@
       <span class="input-group-addon" style="width: 200px;">Remaining</span>
       <input type="number" min="0" class="form-control" placeholder="Remaining Volume" ng-model="concession.remaining_volume">
     </div>
+</div>
+<div class="form-group visible-xs">
+  <label>Volumes</label>
+  <div class="input-group" style="width:100%">
+    <span class="input-group-addon" style="width:60%">Annual Production*</span>
+    <input type="number" min="0" class="form-control" placeholder="MMT" ng-model="concession.annual_production" required>
+  </div>
+  <div class="input-group" style="width:100%">
+    <span class="input-group-addon" style="width:60%">Stockpile Distance*</span>
+    <input type="number" min="0" class="form-control" placeholder="M" ng-model="concession.stockpile_distance" required>
+  </div>
+  <div class="input-group" style="width:100%">
+    <span class="input-group-addon" style="width:60%">Stockpile Capacity</span>
+    <input type="number" min="0" class="form-control" placeholder="MT" ng-model="concession.stockpile_capacity" required>
+  </div>
+  <div class="input-group" style="width:100%">
+    <span class="input-group-addon" style="width:60%">Stockpile Coverage</span>
+    <input type="number" min="0" class="form-control" placeholder="M" ng-model="concession.stockpile_coverage" required>
+  </div>
+  <div class="input-group" style="width:100%">
+    <span class="input-group-addon" style="width:60%">Contracted Volume</span>
+    <input type="number" min="0" class="form-control" placeholder="MMT" ng-model="concession.contracted_volume">
+  </div>
+  <div class="input-group" style="width:100%">
+    <span class="input-group-addon" style="width:60%">Remaining</span>
+    <input type="number" min="0" class="form-control" placeholder="MT" ng-model="concession.remaining_volume">
+  </div>
 </div>
 
 <div class="form-group">
@@ -119,8 +164,13 @@
 
 <div class="form-group">
   <label>License Type*</label>
-  <div class="input-group col-md-12" style="margin-bottom: 5px;">
-    <div class="btn-group">
+  <div class="input-group col-md-12" style="margin-bottom: 5px;width: 100%;">
+    <div class="btn-group hidden-xs">
+      <label class="btn btn-default" ng-model="concession.license_type" uib-btn-radio="'IUP Explorasi'" required>IUP Explorasi</label>
+      <label class="btn btn-default" ng-model="concession.license_type" uib-btn-radio="'IUP Produksi'" required>IUP Produksi</label>
+      <label class="btn btn-default" ng-model="concession.license_type" uib-btn-radio="'PKP2B'" required>PKP2B</label>
+    </div>
+    <div class="btn-group-vertical visible-xs">
       <label class="btn btn-default" ng-model="concession.license_type" uib-btn-radio="'IUP Explorasi'" required>IUP Explorasi</label>
       <label class="btn btn-default" ng-model="concession.license_type" uib-btn-radio="'IUP Produksi'" required>IUP Produksi</label>
       <label class="btn btn-default" ng-model="concession.license_type" uib-btn-radio="'PKP2B'" required>PKP2B</label>

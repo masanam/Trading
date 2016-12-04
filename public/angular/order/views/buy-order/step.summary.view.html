@@ -31,7 +31,7 @@
           <label>City : </label>
           <p>{{ buy_order.city }}</p>
           <label>Volume of Coal : </label>
-          <p>{{ buy_order.volume }} mt</p>
+          <p>{{ buy_order.volume | number }} mt</p>
           <label>Input Date : </label>
           <p class="form-inline">
             <input type="date" class="form-control" ng-model="buy_order.order_date"/>
@@ -64,7 +64,9 @@
           </div>
           <label>Laycan Period : </label>
           <p class="form-inline">
+            <label>from</label>
             <input type="date" class="form-control" ng-model="buy_order.ready_date"/> - 
+            <label>to</label>
             <input type="date" class="form-control" ng-model="buy_order.order_deadline"/>
           </p>
           <label>Payment Terms : </label>
@@ -102,15 +104,15 @@
               <table>
                 <tr>
                   <td>Port Discharging Rate  </td>
-                  <td>  : {{ buy_order.port_daily_rate || 'N / A' }} Tph </td>
+                  <td>  : {{ buy_order.port_daily_rate || 'N / A' | number }} Tph </td>
                 </tr>
                 <tr>
                   <td>Port Distance from Factory </td>
-                  <td>  : {{ buy_order.port_distance || 'N / A' }} Km</td>
+                  <td>  : {{ buy_order.port_distance || 'N / A' | number }} Km</td>
                 </tr>
                 <tr>
                   <td>Port Draft Height  </td>
-                  <td>  : {{ buy_order.port_draft_height || 'N / A' }} m </td>
+                  <td>  : {{ buy_order.port_draft_height || 'N / A' | number }} m </td>
                 </tr>
               </table>
             </section>
@@ -153,19 +155,19 @@
             <tbody>
               <tr>
                 <td><b>GCV ADB </b></td>
-                <td>{{buy_order.gcv_adb_min}} - {{buy_order.gcv_adb_max}} kcal</td>
+                <td>{{buy_order.gcv_adb_min | number}} - {{buy_order.gcv_adb_max | number}} kcal</td>
                 <td>{{buy_order.gcv_adb_bonus}}</td>
                 <td>{{buy_order.gcv_adb_reject}}</td>
               </tr>
               <tr>
                 <td><b>GCV ARB </b></td>
-                <td>{{buy_order.gcv_arb_min}} - {{buy_order.gcv_arb_max}} kcal</td>
+                <td>{{buy_order.gcv_arb_min | number}} - {{buy_order.gcv_arb_max | number}} kcal</td>
                 <td>{{buy_order.gcv_arb_bonus}}</td>
                 <td>{{buy_order.gcv_arb_reject}}</td>
               </tr>
               <tr>
                 <td><b>NCV ARB </b></td>
-                <td>{{buy_order.ncv_min}} - {{buy_order.ncv_max}} kcal</td>
+                <td>{{buy_order.ncv_min | number}} - {{buy_order.ncv_max | number}} kcal</td>
                 <td>{{buy_order.ncv_bonus}}</td>
                 <td>{{buy_order.ncv_reject}}</td>
               </tr>
@@ -225,7 +227,7 @@
               </tr>
               <tr>
                 <td><b>AFT</b></td>
-                <td>{{buy_order.aft_min}} - {{buy_order.aft_max}} &#176</td>
+                <td>{{buy_order.aft_min | number}} - {{buy_order.aft_max | number}} &#176</td>
                 <td>{{buy_order.aft_bonus}}</td>
                 <td>{{buy_order.aft_reject}}</td>
               </tr>

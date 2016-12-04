@@ -4,18 +4,47 @@
       <div class="box-header with-border">
         <h3 class="box-title">Index Prices</h3>
 
-        <div class="box-tools pull-right btn-group">
+        <div class="box-tools pull-right btn-group hidden-xs">
           <button class="btn btn-default" ng-click="indexPage = indexPage-1" ng-disabled="indexPage==0">Prev</button>
           <button class="btn btn-default" ng-click="indexPage = indexPage+1" ng-disabled="indexPage>(indices.length/6)-1">Next</button>
         </div>
+
+         
+        <div class="box-tools pull-right btn-group hidden-md hidden-xs hidden-lg ">
+          <button class="btn btn-default" ng-click="indexPage = indexPage-1" ng-disabled="indexPage==0">Prev</button>
+          <button class="btn btn-default" ng-click="indexPage = indexPage+1" ng-disabled="indexPage>(indices.length/3)-1">Next</button>
+        </div>
       </div>
-      <div class="box-body" ng-init="getIndices()">
+
+      <div class="btn-group  pull-right hidden-md hidden-sm hidden-lg">
+          <button class="col-sm-6 btn btn-default" ng-click="indexPage = indexPage-1" ng-disabled="indexPage==0">Prev</button>
+          <button class="col-sm-6 btn btn-default" ng-click="indexPage = indexPage+1" ng-disabled="indexPage>(indices.length/1)-1">Next</button>
+      </div>
+
+
+      <div class="box-body hidden-xs hidden-sm" ng-init="getIndices()">
       	<div ng-repeat="index in indices | startFrom:indexPage*6 | limitTo:6"
-      		class="col-lg-2 col-sm-4 col-xs-6 description-block border-right">
+      		class="col-lg-2 col-sm-4 col-xs-12 description-block border-right">
       		<p>{{ index.index_provider }} {{ index.index_name }}</p>
       		<h1>$ {{ index.price | number:2 }}</h1>
       		<small class="text-muted">last updated: {{ index.date | date }}</small>
       	</div>
+      </div>
+       <div class="box-body hidden-md hidden-sm hidden-lg" ng-init="getIndices()">
+        <div ng-repeat="index in indices | startFrom:indexPage*1 | limitTo:1"
+          class="col-lg-2 col-sm-4 col-xs-12 description-block border-right">
+          <p>{{ index.index_provider }} {{ index.index_name }}</p>
+          <h1>$ {{ index.price | number:2 }}</h1>
+          <small class="text-muted">last updated: {{ index.date | date }}</small>
+        </div>
+      </div>
+      <div class="box-body hidden-md hidden-xs hidden-lg" ng-init="getIndices()">
+        <div ng-repeat="index in indices | startFrom:indexPage*3 | limitTo:3"
+          class="col-lg-2 col-sm-4 col-xs-12 description-block border-right">
+          <p>{{ index.index_provider }} {{ index.index_name }}</p>
+          <h1>$ {{ index.price | number:2 }}</h1>
+          <small class="text-muted">last updated: {{ index.date | date }}</small>
+        </div>
       </div>
     </div>
   </div>

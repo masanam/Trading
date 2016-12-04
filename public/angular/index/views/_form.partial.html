@@ -16,10 +16,15 @@
 
   <div show-errors>
     <label for="frequency">Frequency</label>
-    <div class="btn-group">
+    <div class="btn-group hidden-xs">
         <label class="btn btn-default" ng-model="index.frequency" uib-btn-radio="'m'">Monthly</label>
         <label class="btn btn-default" ng-model="index.frequency" uib-btn-radio="'w'">Weekly</label>
         <label class="btn btn-default" ng-model="index.frequency" uib-btn-radio="'d'">Daily</label>
+    </div>
+    <div class="btn-group hidden-sm hidden-md hidden-lg">
+        <label class="btn btn-default btn-block" ng-model="index.frequency" uib-btn-radio="'m'">Monthly</label>
+        <label class="btn btn-default btn-block" ng-model="index.frequency" uib-btn-radio="'w'">Weekly</label>
+        <label class="btn btn-default btn-block" ng-model="index.frequency" uib-btn-radio="'d'">Daily</label>
     </div>
   </div>
 
