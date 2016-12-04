@@ -14,6 +14,11 @@ angular.module('concession').config(['$stateProvider',
         url: '?keyword',
         templateUrl: '/angular/coalpedia/views/concession/list.view.html',
         roles: ['user', 'trader', 'manager']
+      })
+      .state('concession.view', {
+        url: '/:id',
+        views: { '@': { templateUrl: '/angular/coalpedia/views/concession/view.view.html' } },
+        roles: ['user', 'trader', 'manager']
       });
   }
 ]);

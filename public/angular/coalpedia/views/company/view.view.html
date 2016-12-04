@@ -49,8 +49,8 @@
   </div>
 
 
-  <div style="margin-top:10px;">
-    <div class="col-lg-4" style="padding-left:0px;">
+  <div style="margin-top:10px;" class="row">
+    <div class="col-lg-4">
       <div class="box box-info">
         <div class="box-header with-border">
           <h3 class="box-title" style="font-size: 25px">About</h3>
@@ -58,8 +58,8 @@
             <button type="button" class="btn btn-info" ng-click="modalUpdate()"><i class="glyphicon glyphicon-pencil"></i> Update</button>
           </div>
         </div>
-        <div class="box-body">
-          <div class="row-fluid" style="margin: 10px;">
+        <div class="box-body no-padding">
+          <div class="row-fluid">
             <div class="table-responsive">
               <table class="table table-striped">
                 <tr><td>Country:</td><td>{{ company.country }}</td></tr>
@@ -75,8 +75,16 @@
                 <tr ng-if="company.company_type === 'c'">
                   <td>Annual Demand:</td><td>{{ company.annual_demand }} <span class='badge badger-danger'>Million Tonnes</span></td>
                 </tr>
-                <tr ng-if="company.company_type !== 'v'"><td>Preferred Trading Term:</td><td>{{ company.preferred_trading_term }}</td></tr>
-                <tr ng-if="company.company_type !== 'v'"><td>Preferred Payment Term:</td><td>{{ company.preferred_payment_term }}</td></tr>
+                <tr ng-if="company.company_type !== 'v'">
+                  <td>Preferred Trading Term:</td><td>
+                    {{ company.preferred_trading_term }} - {{ company.preferred_trading_term_detail }}
+                  </td>
+                </tr>
+                <tr ng-if="company.company_type !== 'v'">
+                  <td>Preferred Payment Term:</td><td>
+                    {{ company.preferred_payment_term }} - {{ company.preferred_payment_term_detail }}
+                  </td>
+                </tr>
                 <tr><td>Phone:</td><td>{{ company.phone }}</td></tr>
                 <tr><td>Email:</td><td>{{ company.email }}</td></tr>
                 <tr><td>Web:</td><td>{{ company.web }}</td></tr>
@@ -91,31 +99,41 @@
     </div>
 
     <div class="col-lg-8">
-      <div class="box box-info">
+      <div class="box box-info" ng-controller="ContactController"> <!-- CONTACTS -->
         <div class="box-header with-border">
           <h3 class="box-title" style="font-size: 25px">Contacts</h3>
           <div class="box-tools pull-right">
-            <button type="button" ng-click="addContact()" class="btn btn-info">
+            <button type="button" ng-click="add()" class="btn btn-info">
               <i class="glyphicon glyphicon-plus"></i> Add New Contact
             </button>
           </div>
         </div>
-        <div class="box-body">
-          <div class="row" style="margin: 10px;">
-            <ul class="list-group">
-              <li class="list-group-item" ng-repeat="contact in company.contacts">
-                {{ contact.name }}
-                <i class="glyphicon glyphicon-envelope" style="margin-left: 50px;"></i> {{ contact.email }}
-                <i class="glyphicon glyphicon-earphone" style="margin-left: 50px;"></i> {{ contact.phone }}
-
-                <span class="pull-right">
-                  <a href="#" ng-click="deleteContact(contact)"><i class="glyphicon glyphicon-remove"></i></a>
-                </span>
-              </li>
-            </ul>
+        <div class="box-body no-padding">
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th><i class="glyphicon glyphicon-envelope"></i> Email</th>
+                  <th><i class="glyphicon glyphicon-earphone"></i> Phone</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="contact in company.contacts">
+                  <td>{{ contact.name }}</td>
+                  <td>{{ contact.email }}</td>
+                  <td>{{ contact.phone }}</td>
+                  <td><span class="pull-right">
+                    <a href="#" ng-click="edit(contact)"><i class="glyphicon glyphicon-pencil"></i></a>
+                    <a href="#" ng-click="delete(contact)"><i class="glyphicon glyphicon-remove"></i></a>
+                  </span></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
-      </div>
+      </div> <!-- CONTACTS -->
 
       <div class="box box-info" ng-if="company.company_type === 'c' || company.company_type === 's'">
         <div class="box-header with-border">
@@ -124,8 +142,7 @@
             <button type="button" ng-click="addProductDetail()" class="btn btn-info"><i class="glyphicon glyphicon-plus"></i> Add New Product</button>
           </div>
         </div>
-        <div class="box-body">
-          <div class="row" style="margin: 10px;">
+        <div class="box-body no-padding">
           <div class="table-responsive">
             <table class="table table-striped">
               <thead>
@@ -150,10 +167,46 @@
                 </tr>
               </tbody>
             </table>
-            </div>
           </div>
         </div>
       </div>
+
+      <div class="box box-info" ng-controller="ConcessionController"> <!-- CONCESSION -->
+        <div class="box-header with-border">
+          <h3 class="box-title" style="font-size: 25px">Concessions</h3>
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-info" ng-click="addConcession()"><i class="glyphicon glyphicon-plus"></i> Add New Concessions</button>
+          </div>
+        </div>
+        <div class="box-body no-padding">
+          <div class="table-responsive">
+          
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th><i class="glyphicon glyphicon-map-marker"></i> Location</th>
+                  <th><i class="glyphicon glyphicon-scale"></i> Reserves (tonnes)</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="concession in company.concessions">
+                  <td>{{ concession.concession_name }}</td>
+                  <td>{{ concession.city }} (Port: {{ concession.port.port_name || 'N/A' }})</td>
+                  <td>{{ concession.reserves | number }}</td>
+                  <td><span class="pull-right">
+                    <a ui-sref="concession.view({ id: concession.id })"><i class="glyphicon glyphicon-eye-open"></i></a>
+                    <span class="pull-right">
+                      <a href="#" ng-click="delete(concession)"><i class="glyphicon glyphicon-remove"></i></a>
+                    </span>
+                  </span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div> <!-- CONCESSION -->
 
       <div class="box box-info" ng-if="company.company_type === 'c'">
         <div class="box-header with-border">
@@ -162,8 +215,7 @@
             <button type="button" class="btn btn-info" ng-click="addFactory()"><i class="glyphicon glyphicon-plus"></i> Add New Factory</button>
           </div>
         </div>
-        <div class="box-body">
-          <div class="row" style="margin: 10px;">
+        <div class="box-body no-padding">
           <div class="table-responsive">
             <table class="table table-striped">
               <thead>
@@ -187,18 +239,6 @@
                 </tr>
               </tbody>
             </table>
-            </div>
-            <ul class="list-group">
-              <li class="list-group-item" ng-repeat="concession in seller.concessions">
-                {{ concession.concession_name }}
-                <i class="glyphicon glyphicon-map-marker" style="margin-left: 50px;"></i>
-                  {{ concession.longitude | number }}, {{ concession.latitude | number }} (Port: {{ concession.port_name || 'N/A' }})
-                <i class="glyphicon glyphicon-scale" style="margin-left: 50px;"></i> {{ concession.reserves | number }} tones
-                <span class="pull-right">
-                  <a href="#" ng-click="deleteConcession(concession)"><i class="glyphicon glyphicon-remove"></i></a>
-                </span>
-              </li>
-            </ul>
           </div>
         </div>
       </div>
@@ -210,8 +250,7 @@
             <button type="button" ng-click="openModalDetailBuyer()" class="btn btn-info"><i class="glyphicon glyphicon-plus"></i> Add New Ports</button>
           </div>
         </div>
-        <div class="box-body">
-          <div class="row" style="margin: 10px;">
+        <div class="box-body no-padding">
           <div class="table-responsive">
             <table class="table table-striped">
               <thead>
@@ -239,7 +278,6 @@
                 </tr>
               </tbody>
             </table>
-            </div>
           </div>
         </div>
       </div>

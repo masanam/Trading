@@ -11,150 +11,100 @@ use Illuminate\Support\Facades\DB;
 
 class ContactController extends Controller
 {
-    public function __construct() {
-        $this->middleware('jwt.auth');
-    }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index($search = false)
-    {
-        if (!$search) {
-            $contact = Contact::where('status', 'a')->get();
-        } else {
-            $contact = Contact::where('status', 'a')->where('name', 'LIKE', '%'.$search.'%')->get();
-        }
-        return response()->json($contact, 200);
-    }
+  public function __construct() {
+    $this->middleware('jwt.auth');
+  }
+  
+  /**
+   * Display a listing of the resource.
+   *
+   * @return \Illuminate\Http\Response
+   */
+  public function index(Request $req)
+  {
+    $contact = Contact::where('status', 'a');
     
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function search($search = false)
-    {
-        if (!$search) {
-            $contact = Contact::where('status', 'a')->get();
-        } else {
-            $contact = Contact::where('status', 'a')->where('name', 'LIKE', '%'.$search.'%')->get();
-        }
-        return response()->json($contact, 200);
+    if($req->q) $contact->where('name', 'LIKE', '%'.$req->q.'%');
+
+    return response()->json($contact->get(), 200);
+  }
+
+  /**
+   * Display the specified resource.
+   *
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
+  public function show($id)
+  {
+    $contact = Contact::with('company', 'user')->find($id);
+
+    if($contact->status != 'a')
+      return response()->json(['message' => 'deactivated record'], 404);
+    
+    return response()->json($contact, 200);
+  }
+
+  /**
+   * Store a newly created resource in storage.
+   *
+   * @param  \Illuminate\Http\Request  $req
+   * @return \Illuminate\Http\Response
+   */
+  public function store(Request $req)
+  {
+    if(!$req) {
+      return response()->json([
+        'message' => 'Bad Request'
+      ], 400);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        if(!$request) {
-            return response()->json([
-                'message' => 'Bad Request'
-            ], 400);
-        }
+    $contact = new Contact($req->only(['name', 'phone', 'email']));
+    
+    $contact->user_id = $req->user_id  ? $req->user_id : NULL;
+    $contact->company_id = $req->company_id  ? $req->company_id : NULL;
+    $contact->status = 'a';
+    $contact->save();
 
-        $contact = new Contact();
-        
-        $contact->user_id = $request->user_id  ? $request->user_id : NULL;
-        $contact->buyer_id = $request->buyer_id  ? $request->buyer_id : NULL;
-        $contact->seller_id = $request->seller_id  ? $request->seller_id : NULL;
+    return response()->json($contact, 200);
+  }
 
-        $contact->name = $request->name;
-        $contact->phone = $request->phone;
-        $contact->email = $request->email;
-        $contact->status = 'a';
-        $contact->save();
+  /**
+   * Update the specified resource in storage.
+   *
+   * @param  \Illuminate\Http\Request  $req
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
+  public function update(Request $req, $contact)
+  {
+    $contact = Contact::find($contact);
 
-        return response()->json($contact, 200);
-    }
+    if (!$req) return response()->json([ 'message' => 'Bad Request' ], 400);
+    if (!$contact) return response()->json([ 'message' => 'Not found' ] ,404);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($contact)
-    {
-        $contact = Contact::find($contact);
+    $contact->user_id = $req->user_id  ? $req->user_id : NULL;
+    $contact->company_id = $req->company_id  ? $req->company_id : NULL;
 
-        if($contact->status == 'a') {
-            return response()->json($contact, 200);
-        } else {
-            return response()->json(['message' => 'deactivated record'], 404);
-        }
-    }
+    $contact->fill($req->only(['name', 'phone', 'email']))->save();
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $contact)
-    {
-        $contact = Contact::find($contact);
+    return response()->json($contact, 200);
+  }
 
-        if (!$request) {
-            return response()->json([
-                'message' => 'Bad Request'
-            ], 400);
-        }
+  /**
+   * Remove the specified resource from storage.
+   *
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
+  public function destroy($id)
+  {
+    $contact = Contact::where('status', 'a')->find($id);
+    
+    if (!$contact) return response()->json([ 'message' => 'Not found or Deactivated Contact' ] ,404);
 
-        if (!$contact) {
-            return response()->json([
-                'message' => 'Not found'
-            ] ,404);
-        }
+    $contact = DB::table('contacts')->where('id', $id)->update(['status' => 'x']);
 
-        $contact->user_id = $request->user_id  ? $request->user_id : NULL;
-        $contact->buyer_id = $request->buyer_id  ? $request->buyer_id : NULL;
-        $contact->seller_id = $request->seller_id  ? $request->seller_id : NULL;
-
-        $contact->name = $request->name;
-        $contact->phone = $request->phone;
-        $contact->email = $request->email;
-        $contact->save();
-
-        return response()->json($contact, 200);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $contact = Contact::find($id);
-        
-        if (!$id) {
-            return response()->json([
-                'message' => 'Not found'
-            ] ,404);
-        }
-
-        $contact = DB::table('contacts')->where('id', $id)->update(['status' => 'x']);
-
-        return response()->json($contact, 200);
-    }
-
-    public function getContactByName($name) {
-        $contact = Contact::where('company_name', 'like', '%'.$name.'%')->get();
-
-        return response()->json($contact, 200);
-    }
-
-    public function getTotalContact() {
-        $total = Contact::count();
-        $status = array('count' => $total);        
-        return response()->json($status, 200);
-    }
+    return response()->json($contact, 200);
+  }
 }

@@ -165,9 +165,9 @@ class ConcessionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($concession)
+    public function show($id)
     {
-        $concession = Concession::with('Port')->find($concession);
+        $concession = Concession::with('company', 'port', 'products')->find($id);
 
         if($concession->status == 'a') {
             return response()->json($concession, 200);

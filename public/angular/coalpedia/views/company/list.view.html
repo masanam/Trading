@@ -7,45 +7,45 @@
     </div>
   </div>
   <div class="box-body">
-  <div class="table-responsive">
-    <table st-table="displayedCollection" st-safe-src="companies" class="table table-striped" ng-init="find()">
-      <thead>
-        <!-- <tr>
-          <th colspan="7"><input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
-        </tr> -->
-        <tr>
-          <th st-sort="id">#</th>
-          <th st-sort="company_name">Company</th>
-          <th st-sort="phone">Phone</th>
-          <th st-sort="email">Email</th>
-          <th st-sort="user.name">Creator</th>
-          <th st-sort=""></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr ng-repeat="(idx, company) in displayedCollection">
-          <td>{{ company.id }}</td>
-          <td>{{ company.company_name }}</td>
-          <td>{{ company.phone }}</td>
-          <td>{{ company.email }}</td>
-          <td>{{ company.user.name }}</td>
-          <td>
-            <a ui-sref="company.view({ id: company.id })"><i class="glyphicon glyphicon-info-sign"></i></a>
-            <a ng-click="delete(company)"><i class="glyphicon glyphicon-trash"></i></a>
-          </td>
-        </tr>
-        <tr ng-if="displayedCollection.length == 0">
-          <td colspan="6" class="text-center">No data available</td>
-        </tr>
-      </tbody>
-      <tfoot>
-        <tr>
-          <td colspan="7" class="text-center">
-            <div st-pagination="" st-items-by-page="10" st-displayed-pages="5"></div>
-          </td>
-        </tr>
-      </tfoot>
-    </table>
+    <div class="table-responsive">
+      <table st-table="displayedCollection" st-safe-src="companies" class="table table-striped" ng-init="find()">
+        <thead>
+          <!-- <tr>
+            <th colspan="7"><input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
+          </tr> -->
+          <tr>
+            <th st-sort="id">#</th>
+            <th st-sort="company_name">Company</th>
+            <th st-sort="phone">Phone</th>
+            <th st-sort="email">Email</th>
+            <th st-sort="user.name">Creator</th>
+            <th st-sort=""></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="(idx, company) in displayedCollection">
+            <td>{{ company.id }}</td>
+            <td>{{ company.company_name }}</td>
+            <td>{{ company.phone }}</td>
+            <td>{{ company.email }}</td>
+            <td>{{ company.user.name }}</td>
+            <td>
+              <a ui-sref="company.view({ id: company.id })"><i class="glyphicon glyphicon-info-sign"></i></a>
+              <a ng-click="delete(company)"><i class="glyphicon glyphicon-trash"></i></a>
+            </td>
+          </tr>
+          <tr ng-if="displayedCollection.length == 0">
+            <td colspan="6" class="text-center">No data available</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="7" class="text-center">
+              <div st-pagination="" st-items-by-page="10" st-displayed-pages="5"></div>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
     </div>
     
   </div>

@@ -15,44 +15,15 @@ angular.module('coalpedia').controller('ConcessionController', ['$scope', '$stat
         $scope.concessionId = $stateParams.id;
       }
 
-      $scope.concession = Concession.get({ id: $scope.concessionId });
-    };
+      Concession.get({ id: $scope.concessionId }, function(concession){
+        $scope.concession = concession;
 
-    $scope.modalCreate = function () {
-      var modalInstance = $uibModal.open({
-        animation: true,
-        ariaLabelledBy: 'modal-title',
-        ariaDescribedBy: 'modal-body',
-        templateUrl: './angular/coalpedia/views/concession/_create.modal.view.html',
-        controller: 'ConcessionModalController',
-        windowClass: 'xl-modal',
-        resolve: {
-          concession: new Concession()
+        switch(concession.company.company_type){
+          case 'c' : $scope.companyType = 'customer'; break;
+          case 's' : $scope.companyType = 'supplier'; break;
+          case 't' : $scope.companyType = 'supplier'; break;
+          case 'v' : $scope.companyType = 'vendor'; break;
         }
-      });
-
-      modalInstance.result.then(function (concession) {
-        $scope.selected.concession = concession;
-      }, function () {
-        $scope.selected.concession = undefined;
-      });
-    };
-
-    $scope.modalUpdate = function () {
-      var modalInstance = $uibModal.open({
-        animation: true,
-        ariaLabelledBy: 'modal-title',
-        ariaDescribedBy: 'modal-body',
-        templateUrl: './angular/coalpedia/views/concession/_update.modal.view.html',
-        controller: 'ConcessionModalController',
-        windowClass: 'xl-modal',
-        resolve: {
-          concession: $scope.findOne($scope.concession.id)
-        }
-      });
-
-      modalInstance.result.then(function (concession) {
-        $scope.selected.concession = concession;
       });
     };
   }

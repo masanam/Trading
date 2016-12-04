@@ -51,6 +51,6 @@ class Company extends Model
   }
 
   public function concessions() {
-    return $this->hasMany(Factory::class)->where('status','a');
+    return $this->hasMany(Concession::class)->where('status','a');
   }
 }

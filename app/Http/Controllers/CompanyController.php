@@ -32,8 +32,7 @@ class CompanyController extends Controller
       if ($req->type[0] == 'c' || $req->type[0] == 's')
         $companies->whereIn('company_type', [ $req->type[0], 't' ]);
       
-      else
-        $companies->where('company_type', $req->type[0]);
+      else $companies->where('company_type', $req->type[0]);
     }
 
     $companies = $companies->get();
@@ -48,13 +47,12 @@ class CompanyController extends Controller
   */
   public function show($id)
   {
-    $company = Company::with(['contacts','products','factories','ports','concessions','user'])->find($id);
+    $company = Company::with(['contacts','products','factories','ports','concessions','concessions.port','user'])->find($id);
 
-    if($company->status == 'a') {
-      return response()->json($company, 200);
-    } else {
+    if($company->status != 'a')
       return response()->json(['message' => 'deactivated record'], 404);
-    }
+    
+    return response()->json($company, 200);
   }
 
   /**
@@ -71,7 +69,7 @@ class CompanyController extends Controller
       ], 400);
     }
 
-    $company = new Buyer($req->all());
+    $company = new Company($req->all());
     $company->user_id = Auth::user()->id;
     $company->company_type = $type[0];
     $company->status = 'a';
@@ -91,7 +89,7 @@ class CompanyController extends Controller
   */
   public function update(Request $req, $id)
   {
-    $company = Buyer::find($id);
+    $company = Company::find($id);
 
     if (!$req) return response()->json([ 'message' => 'Bad Request' ], 400);
     if (!$company) return response()->json([ 'message' => 'Not found' ] ,404);
@@ -110,7 +108,7 @@ class CompanyController extends Controller
   */
   public function destroy($id)
   {
-    $company = Buyer::find($id);
+    $company = Company::find($id);
 
     if (!$company) return response()->json([ 'message' => 'Not found' ] ,404);
 
