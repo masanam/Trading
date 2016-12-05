@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Model\Company;
 use App\Model\Contact;
+use App\Model\Concession;
+use App\Model\Factory;
+use App\Model\Product;
+use App\Model\Port;
 use Auth;
 
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\Model\BuyOder;
 
 use App\Events\InputEditCoalpedia;
 
@@ -116,5 +119,91 @@ class CompanyController extends Controller
     $company->save();
 
     return response()->json($company, 200);
+  }
+
+  /**
+  * Attach specified resource to a company
+  *
+  * @param  int  $id
+  * @param  int  $contact_id; $concession_id; $product_id; $factory_id; $port_id
+  * @return \Illuminate\Http\Response
+  */
+  public function attach(Request $req, $id)
+  {
+    if($req->contact_id){
+      $items['contact'] = Contact::find($req->contact_id);
+      $items['contact']->status = 'a';
+      $items['contact']->company_id = $id;
+      $items['contact']->save();
+    }
+
+    if($req->concession_id){
+      $items['concession'] = Concession::find($req->concession_id);
+      $items['concession']->status = 'a';
+      $items['concession']->company_id = $id;
+      $items['concession']->save();
+    }
+
+    if($req->product_id){
+      $items['product'] = Product::find($req->product_id);
+      $items['product']->status = 'a';
+      $items['product']->company_id = $id;
+      $items['product']->save();
+    }
+
+    if($req->factory_id){
+      $items['factory'] = Factory::find($req->factory_id);
+      $items['factory']->status = 'a';
+      $items['factory']->company_id = $id;
+      $items['factory']->save();
+    }
+
+    if($req->port_id){
+      $items['port'] = Port::find($req->port_id);
+      $items['port']->companies()->attach($id);
+    }
+
+    return response()->json($items, 200);
+  }
+
+  /**
+  * Detach specified resource from a company
+  *
+  * @param  int  $id
+  * @param  int  $contact_id; $concession_id; $product_id; $factory_id; $port_id
+  * @return \Illuminate\Http\Response
+  */
+  public function detach(Request $req, $id)
+  {
+    if($req->contact_id){
+      $items['contact'] = Contact::find($req->contact_id);
+      $items['contact']->status = 'x';
+      $items['contact']->save();
+    }
+
+    if($req->concession_id){
+      $items['concession'] = Concession::find($req->concession_id);
+      $items['concession']->status = 'x';
+      $items['concession']->save();
+    }
+
+    if($req->product_id){
+      $items['product'] = Product::find($req->product_id);
+      $items['product']->status = 'x';
+      $items['product']->save();
+    }
+
+    if($req->factory_id){
+      $items['factory'] = Factory::find($req->factory_id);
+      $items['factory']->status = 'x';
+      $items['factory']->save();
+    }
+
+    if($req->port_id){
+      $items['port'] = Port::find($req->port_id);
+      $items['port']->companies()->detach($id);
+    }
+
+    return response()->json($items, 200);
   }
 }

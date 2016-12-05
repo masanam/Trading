@@ -32,7 +32,7 @@ angular.module('coalpedia').controller('ContactModalController', ['$scope', '$ui
 
     $scope.attach = function (contact) {
       Company.get({ id: company.id, action: 'attach', contact_id: $scope.selected.contact.id }, function(response){
-        $uibModalInstance.close(response);
+        $uibModalInstance.close(response.contact);
       });
     };
 
