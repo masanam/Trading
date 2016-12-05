@@ -18,20 +18,54 @@
       <span class="glyphicon glyphicon-triangle-top pull-right" ng-if="!isCollapsed"></span> 
     </div>
     <div class="box-body" uib-collapse="isCollapsed">
-      <div class="pull-right btn-group">
+      <div class="pull-right btn-group hidden-xs">
         <button type="button" class="btn btn-primary" ng-click="changeOrderStatusAtDetail(sell_order, 'l')" ng-if="(sell_order.order_status==='v')&&Authentication.user.id===sell_order.user_id">
           <i class="glyphicon glyphicon-arrow-right"></i> lead
         </button>
-        <button type="button" class="btn btn-primary" ng-click="changeOrderStatusAtDetail(sell_order, 'v')" ng-if="(sell_order.order_status==='l')&&Authentication.user.id===sell_order.user_id">
+        <button type="button" class="btn btn-warning" ng-click="changeOrderStatusAtDetail(sell_order, 'v')" ng-if="(sell_order.order_status==='l')&&Authentication.user.id===sell_order.user_id">
           <i class="glyphicon glyphicon-arrow-right"></i> Verified
         </button>
-        <button type="button" class="btn btn-primary" ui-sref="sell-order.update({ id:sell_order.id })" ng-if="(sell_order.order_status==='l'||sell_order.order_status==='v')&&Authentication.user.id===sell_order.user_id">
+        <button type="button" class="btn btn-success" ui-sref="sell-order.update({ id:sell_order.id })" ng-if="(sell_order.order_status==='l'||sell_order.order_status==='v')&&Authentication.user.id===sell_order.user_id">
           <i class="glyphicon glyphicon-arrow-right"></i> Update
         </button>
-        <button type="button" class="btn btn-primary" ng-click="changeOrderStatusAtDetail(sell_order, 'x')"  ng-if="sell_order.order_status!=='o'&&sell_order.order_status!=='s'&&sell_order.order_status!=='p'&&Authentication.user.id===sell_order.user_id">
+        <button type="button" class="btn btn-danger" ng-click="changeOrderStatusAtDetail(sell_order, 'x')"  ng-if="sell_order.order_status!=='o'&&sell_order.order_status!=='s'&&sell_order.order_status!=='p'&&Authentication.user.id===sell_order.user_id">
           <i class="glyphicon glyphicon-trash"></i> Delete
         </button>
       </div>
+      <!--For Mobile-->
+      <div class="hidden-sm hidden-md hidden-lg">
+        <div class="btn-group" uib-dropdown >
+          <button type="button" class="btn btn-danger">Action</button>
+            <button type="button" class="btn dropdown-toggle btn-danger" data-toggle="dropdown" uib-dropdown-toggle>
+              <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+
+          <ul class="dropdown-menu" uib-dropdown-menu>
+            <li>
+              <a  ng-click="changeOrderStatusAtDetail(sell_order, 'l')" ng-if="(sell_order.order_status==='v')&&Authentication.user.id===sell_order.user_id">
+              <i class="glyphicon glyphicon-arrow-right"></i> lead
+              </a>
+            </li>
+            <li>
+              <a ng-click="changeOrderStatusAtDetail(sell_order, 'v')" ng-if="(sell_order.order_status==='l')&&Authentication.user.id===sell_order.user_id">
+              <i class="glyphicon glyphicon-arrow-right"></i> Verified
+              </a>
+            </li>
+            <li>
+              <a ui-sref="sell-order.update({ id:sell_order.id })" ng-if="(sell_order.order_status==='l'||sell_order.order_status==='v')&&Authentication.user.id===sell_order.user_id">
+              <i class="glyphicon glyphicon-arrow-right"></i> Update
+              </a>
+            </li>
+            <li>
+              <a ng-click="changeOrderStatusAtDetail(sell_order, 'x')"  ng-if="sell_order.order_status!=='o'&&sell_order.order_status!=='s'&&sell_order.order_status!=='p'&&Authentication.user.id===sell_order.user_id">
+              <i class="glyphicon glyphicon-trash"></i> Delete
+              </a>
+            </li>
+          </ul>
+        </div>    
+      </div>
+      <!--For Mobile-->
       <div class="form-group row-fluid">
         <div class="col-md-8" style="padding-left:0">
           <h1>{{ sell_order.seller.company_name }}</h1>

@@ -18,20 +18,56 @@
       <span class="glyphicon glyphicon-triangle-top pull-right" ng-if="!isCollapsed"></span> 
     </div>
     <div class="box-body" uib-collapse="isCollapsed">
-      <div class="pull-right btn-group">
+      <div class="pull-right btn-group hidden-xs">
         <button type="button" class="btn btn-primary" ng-click="changeOrderStatusAtDetail(buy_order, 'l')" ng-if="(buy_order.order_status==='v')&&Authentication.user.id===buy_order.user_id">
           <i class="glyphicon glyphicon-arrow-right"></i> lead
         </button>
-        <button type="button" class="btn btn-primary" ng-click="changeOrderStatusAtDetail(buy_order, 'v')" ng-if="(buy_order.order_status==='l')&&Authentication.user.id===buy_order.user_id">
+        <button type="button" class="btn btn-warning" ng-click="changeOrderStatusAtDetail(buy_order, 'v')" ng-if="(buy_order.order_status==='l')&&Authentication.user.id===buy_order.user_id">
           <i class="glyphicon glyphicon-arrow-right"></i> Verified
         </button>
-        <button type="button" class="btn btn-primary" ui-sref="buy-order.update({ id:buy_order.id })" ng-if="(buy_order.order_status==='l'||buy_order.order_status==='v')&&Authentication.user.id===buy_order.user_id">
+        <button type="button" class="btn btn-success" ui-sref="buy-order.update({ id:buy_order.id })" ng-if="(buy_order.order_status==='l'||buy_order.order_status==='v')&&Authentication.user.id===buy_order.user_id">
           <i class="glyphicon glyphicon-arrow-right"></i> Update
         </button>
-        <button type="button" class="btn btn-primary" ng-click="changeOrderStatusAtDetail(buy_order, 'x')" ng-if="buy_order.order_status!=='o'&&buy_order.order_status!=='s'&&buy_order.order_status!=='p'&&Authentication.user.id===buy_order.user_id">
+        <button type="button" class="btn btn-danger" ng-click="changeOrderStatusAtDetail(buy_order, 'x')" ng-if="buy_order.order_status!=='o'&&buy_order.order_status!=='s'&&buy_order.order_status!=='p'&&Authentication.user.id===buy_order.user_id">
           <i class="glyphicon glyphicon-trash"></i> Delete
         </button>
       </div>
+
+      <!--For Mobile-->
+      <div class="hidden-sm hidden-md hidden-lg">
+        <div class="btn-group" uib-dropdown >
+          <button type="button" class="btn btn-danger">Action</button>
+            <button type="button" class="btn dropdown-toggle btn-danger" data-toggle="dropdown" uib-dropdown-toggle>
+              <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+
+          <ul class="dropdown-menu" uib-dropdown-menu>
+            <li>
+              <a ng-click="changeOrderStatusAtDetail(buy_order, 'l')" ng-if="(buy_order.order_status==='v')&&Authentication.user.id===buy_order.user_id">
+              <i class="glyphicon glyphicon-arrow-right"></i> lead
+              </a>
+            </li>
+            <li>
+              <a ng-click="changeOrderStatusAtDetail(buy_order, 'v')" ng-if="(buy_order.order_status==='l')&&Authentication.user.id===buy_order.user_id">
+              <i class="glyphicon glyphicon-arrow-right"></i> Verified
+              </a>
+            </li>
+            <li>
+              <a  ui-sref="buy-order.update({ id:buy_order.id })" ng-if="(buy_order.order_status==='l'||buy_order.order_status==='v')&&Authentication.user.id===buy_order.user_id">
+              <i class="glyphicon glyphicon-arrow-right"></i> Update
+              </a>
+            </li>
+            <li>
+              <a ng-click="changeOrderStatusAtDetail(buy_order, 'x')" ng-if="buy_order.order_status!=='o'&&buy_order.order_status!=='s'&&buy_order.order_status!=='p'&&Authentication.user.id===buy_order.user_id">
+              <i class="glyphicon glyphicon-trash"></i> Delete
+              </a>
+            </li>
+          </ul>
+        </div>    
+      </div>
+      <!--For Mobile-->
+
       <div class="form-group row-fluid">
         <div class="col-md-8" style="padding-left:0">
           <h1>{{ buy_order.buyer.company_name }}</h1>
@@ -182,6 +218,7 @@
     <div class="box-body" uib-collapse="isCollapsed2">
       <div class="row-fluid" style="margin:10px">
         <div class="col-md-12 col-lg-12">
+          <div class="table-responsive">
           <table class="table table-striped table-bordered">
             <thead>
               <tr style="background-color: darkgray"}>
@@ -272,6 +309,7 @@
               </tr>
             </tbody>
           </table>
+          </div>
         </div>
       </div>
     </div>
