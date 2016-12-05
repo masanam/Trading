@@ -3,7 +3,7 @@
   <div class="box-header with-border">
     <h1 class="box-title" style="font-size: 25px">Buy Lead Concession</h1>
     <div class="box-tools pull-right" style="position:relative">
-      <button type="button" class="btn btn-primary" ui-sref="sell-order.step-supplier({ order_id:order_id })">
+      <button type="button" class="btn btn-danger" ui-sref="sell-order.step-supplier({ order_id:order_id })">
         <i class="glyphicon glyphicon-arrow-left"></i> Back
       </button>
      
@@ -166,9 +166,11 @@
           <label class="btn btn-default" ng-model="concession.selected.license_type" uib-btn-radio="'PKP2B'" required>PKP2B</label>
         </div>
         <div class="btn-group-vertical visible-xs">
-          <label class="btn btn-default" ng-model="concession.selected.license_type" uib-btn-radio="'IUP Explorasi'" required>IUP Explorasi</label>
-          <label class="btn btn-default" ng-model="concession.selected.license_type" uib-btn-radio="'IUP Produksi'" required>IUP Produksi</label>
-          <label class="btn btn-default" ng-model="concession.selected.license_type" uib-btn-radio="'PKP2B'" required>PKP2B</label>
+          <select class="form-control" ng-model="concession.selected.license_type">
+            <option value="IUP Explorasi">IUP Explorasi</option>
+            <option value="IUP Produksi">IUP Produksi</option>
+            <option value="PKP2B">PKP2B</option>
+          </select>
         </div>
       </div>
     </div>

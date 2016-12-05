@@ -75,11 +75,27 @@
         </div>
         &nbsp;
       </div>
-      <div class="row">
+      <div class="row hidden-xs">
         <div class="col-lg-12">
           <button class="btn btn-success" ng-click="addFilter()">+ Add Filter</button>
           <button class="btn btn-danger" ng-click="resetFilter()">Reset Filter</button>
           <button class="btn btn-info" ng-click="find()">Apply Filter</button>
+        </div>
+      </div>
+      <div class="row hidden-sm hidden-md hidden-lg">
+        <div class="col-sm-12">
+        <div class="btn-group" uib-dropdown >
+          <button type="button" class="btn btn-primary">Action</button>
+            <button type="button" class="btn dropdown-toggle btn-primary" data-toggle="dropdown" uib-dropdown-toggle>
+              <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+              <ul class="dropdown-menu" uib-dropdown-menu>
+                <li><a ng-click="addFilter()" >+ Add Filter</a></li>
+                <li><a ng-click="resetFilter()" >+ Reset Filter</a></li>
+                <li><a ng-click="find()" >+ Apply Filter</a></li>
+              </ul>
+        </div>
         </div>
       </div>
     </div>

@@ -10,8 +10,20 @@
     </div>
 
     <div class="box-body">
-        <button class="btn btn-default hidden-sm hidden-md hidden-lg" ui-sref="order.list">Back</button>
-        <button class="btn btn-primary hidden-sm hidden-md hidden-lg" ng-click="create()">Submit Order</button>
+        <div class="form-group hidden-sm hidden-md hidden-lg">
+            <div class="btn-group" uib-dropdown >
+              <button type="button" class="btn btn-primary">Action</button>
+                <button type="button" class="btn dropdown-toggle btn-primary" data-toggle="dropdown" uib-dropdown-toggle>
+                  <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                  <ul class="dropdown-menu" uib-dropdown-menu>
+                    <li><a ui-sref="order.list" ><i class="glyphicon glyphicon-chevron-left"></i> Back </a></li>
+                    <li><a ng-click="create()" > Submit Order</a></li>
+                  </ul>
+            </div>    
+        </div>
+
 	    <div class="box-body no-padding" ng-include="'/angular/order/views/order/_order-detail.partial.html'"></div>
     </div>
   </div>

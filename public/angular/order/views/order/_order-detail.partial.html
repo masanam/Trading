@@ -1,16 +1,21 @@
 <section ng-controller="OrderDetailController" ng-init="init()">
+<!--For Mobile-->
+<button ng-show="order.status !== 'x' && order.status !== 'a' && order.status !== 'f'" class="btn btn-block btn-default hidden-md hidden-lg" ng-click="addBuy()" ng-disabled=" order.buys.length > 1 && order.sells.length===1"> + Add Buy </button>
+<button ng-show="order.status !== 'x' && order.status !== 'a' && order.status !== 'f'" class="btn btn-block btn-default hidden-md hidden-lg" ng-click="addOwnProduct()" ng-disabled="order.buys.length != 1"> + Add BIB Product </button>
+<button ng-show="order.status !== 'x' && order.status !== 'f' && order.status !== 'a'" class="btn btn-block btn-default hidden-md hidden-lg" ng-click="addSell()" ng-disabled="order.sells.length > 1 && order.buys.length===1"> + Add Sell </button>
+<!--For Mobile-->
 <div class="table-responsive">
 	<table st-table="" class="table table-bordered table-striped">
 		<thead>
       <tr ng-if="!order.user_id || order.user_id === Authentication.user.id"  class="no-print">
         <td width=20%></td>
         <td width=40%>
-          <button ng-show="order.status !== 'x' && order.status !== 'a' && order.status !== 'f'" class="btn btn-default" ng-click="addBuy()" ng-disabled=" order.buys.length > 1 && order.sells.length===1"> + Add Buy </button>
-          <button ng-show="order.status !== 'x' && order.status !== 'a' && order.status !== 'f'" class="btn btn-default pull-right" ng-click="addOwnProduct()"
+          <button ng-show="order.status !== 'x' && order.status !== 'a' && order.status !== 'f'" class="btn btn-default hidden-xs hidden-sm" ng-click="addBuy()" ng-disabled=" order.buys.length > 1 && order.sells.length===1"> + Add Buy </button>
+          <button ng-show="order.status !== 'x' && order.status !== 'a' && order.status !== 'f'" class="btn btn-default pull-right hidden-xs hidden-sm" ng-click="addOwnProduct()"
           	ng-disabled="order.buys.length != 1"> + Add BIB Product </button>
         </td>
         <td width=40%>
-          <button ng-show="order.status !== 'x' && order.status !== 'f' && order.status !== 'a'" class="btn btn-default" ng-click="addSell()" ng-disabled="order.sells.length > 1 && order.buys.length===1"> + Add Sell </button>
+          <button ng-show="order.status !== 'x' && order.status !== 'f' && order.status !== 'a'" class="btn btn-default hidden-xs hidden-sm" ng-click="addSell()" ng-disabled="order.sells.length > 1 && order.buys.length===1"> + Add Sell </button>
         </td>
       </tr>
 			<tr>
