@@ -3,7 +3,12 @@
   <input type="text" class="form-control" id="concession_name" ng-model="concession.concession_name" required>
 </div>
 
-<div class="form-group">
+<div class="form-group" ng-if="!company">
+  <label for="reserves">Owner*:</label>
+  <input type="text" class="form-control" id="owner" ng-model="concession.owner" required>
+</div>
+
+<div class="form-group"  ng-if="!company">
   <label for="reserves">Owner*:</label>
   <input type="text" class="form-control" id="owner" ng-model="concession.owner" required>
 </div>

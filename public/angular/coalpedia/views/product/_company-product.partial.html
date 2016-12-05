@@ -1,0 +1,36 @@
+<div class="box box-info" ng-controller="ProductController" ng-if="company.company_type === 'c' || company.company_type === 's'"> <!-- PRODUCT -->
+  <div class="box-header with-border">
+    <h3 class="box-title" style="font-size: 25px">Product</h3>
+    <div class="box-tools pull-right">
+      <button type="button" ng-click="add()" class="btn btn-info"><i class="glyphicon glyphicon-plus"></i> Add New Product</button>
+    </div>
+  </div>
+  <div class="box-body no-padding">
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th><i class="glyphicon glyphicon-scale"></i> GCV ADB (kcal)</th>
+            <th><i class="glyphicon glyphicon-scale"></i> GCV ARB (kcal)</th>
+            <th><i class="glyphicon glyphicon-scale"></i> NCV (kcal)</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="product in company.products">
+            <td>{{ product.product_name }}</td>
+            <td>{{ product.gcv_adb_min | number }} - {{ product.gcv_adb_max | number }}</td>
+            <td>{{ product.gcv_arb_min | number }} - {{ product.gcv_arb_max | number }}</td>
+            <td>{{ product.ncv_min | number }} - {{ product.ncv_max | number }}</td>
+            <td class="pull-right">
+              <a class="glyphicon glyphicon-new-window" ui-sref="product.view({ id: product.id })" target="_blank"></a>
+              <a class="glyphicon glyphicon-pencil" ng-click="edit(product)"></a>
+              <a href="#" ng-click="delete(product)"><i class="glyphicon glyphicon-remove"></i></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div> <!-- PRODUCT -->

@@ -4,6 +4,7 @@ angular.module('coalpedia').controller('CompanyController', ['$scope', '$statePa
   function($scope, $stateParams, $state, $uibModal, Company) {
     $scope.selected = {};
     $scope.companyType = $stateParams.type;
+    $scope.state = $state;
 
     $scope.find = function() {
       $scope.companies = Company.query({ q: $stateParams.keyword, type:$scope.searchType });
@@ -34,6 +35,7 @@ angular.module('coalpedia').controller('CompanyController', ['$scope', '$statePa
 
       modalInstance.result.then(function (company) {
         $scope.selected.company = company;
+        $scope.companies.push(company);
       }, function () {
         $scope.selected.company = undefined;
       });
@@ -52,8 +54,8 @@ angular.module('coalpedia').controller('CompanyController', ['$scope', '$statePa
         }
       });
 
-      modalInstance.result.then(function (company) {
-        $scope.selected.company = company;
+      modalInstance.result.then(function (res) {
+        $scope.company = res;
       });
     };
   }

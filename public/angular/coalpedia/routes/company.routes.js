@@ -17,12 +17,34 @@ angular.module('coalpedia').config(['$stateProvider',
       })
       .state('company.create', {
         url: '/create',
-        templateUrl: '/angular/coalpedia/views/company/create.view.html',
+        templateUrl: '/angular/coalpedia/views/company/wizard/create.view.html',
         roles: ['user', 'trader', 'manager']
       })
       .state('company.view', {
         url: '/:id',
         views: { '@': { templateUrl: '/angular/coalpedia/views/company/view.view.html' } },
+        roles: ['user', 'trader', 'manager']
+      })
+
+      //Wizard states
+      .state('company.wizard', {
+        url: '/:id',
+        abstract: true,
+        templateUrl: '/angular/coalpedia/views/company/wizard/multistep.layout.html',
+      })
+      .state('company.wizard.connection', {
+        url: '/connection',
+        templateUrl: '/angular/coalpedia/views/company/wizard/connection.view.html',
+        roles: ['user', 'trader', 'manager']
+      })
+      .state('company.wizard.operation', {
+        url: '/operation',
+        templateUrl: '/angular/coalpedia/views/company/wizard/operation.view.html',
+        roles: ['user', 'trader', 'manager']
+      })
+      .state('company.wizard.product', {
+        url: '/product',
+        templateUrl: '/angular/coalpedia/views/company/wizard/product.view.html',
         roles: ['user', 'trader', 'manager']
       });
   }

@@ -1,0 +1,35 @@
+<div class="box box-info" ng-controller="ContactController"> <!-- CONTACTS -->
+  <div class="box-header with-border">
+    <h3 class="box-title" style="font-size: 25px">Contacts</h3>
+    <div class="box-tools pull-right">
+      <button type="button" ng-click="add()" class="btn btn-info">
+        <i class="glyphicon glyphicon-plus"></i> Add New Contact
+      </button>
+    </div>
+  </div>
+  <div class="box-body no-padding">
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th><i class="glyphicon glyphicon-envelope"></i> Email</th>
+            <th><i class="glyphicon glyphicon-earphone"></i> Phone</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="contact in company.contacts">
+            <td>{{ contact.name }}</td>
+            <td>{{ contact.email }}</td>
+            <td>{{ contact.phone }}</td>
+            <td><span class="pull-right">
+              <a href="#" ng-click="edit(contact)"><i class="glyphicon glyphicon-pencil"></i></a>
+              <a href="#" ng-click="delete(contact)"><i class="glyphicon glyphicon-remove"></i></a>
+            </span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div> <!-- CONTACTS -->
