@@ -7,8 +7,19 @@ angular.module('order').controller('ModalBuyOrderController', function ($scope, 
     availableOptions: [
       { id: 'TT', name: 'TT' },
       { id: 'LC on Sight f', name: 'LC on Sight' },
-      { id: 'LC on 30 days', name: 'LC on 30 days' }
+      { id: 'LC on 30 days', name: 'LC on 30 days' },
+      { id: 'other', name: 'Other' }
     ]
+  };
+
+  //show freetext payment terms
+  $scope.freetext = function() {
+    if($scope.buyer.preferred_payment_term === 'other'){
+      $scope.buyer.preferred_payment_term = '';
+      $scope.buyer.freetext = true;
+    }else{
+      $scope.buyer.freetext = false;
+    }
   };
 
   //creating a customer/buyer
