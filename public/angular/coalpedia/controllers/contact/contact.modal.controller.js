@@ -1,12 +1,14 @@
 'use strict';
 
-angular.module('coalpedia').controller('ContactModalController', ['$scope', '$uibModalInstance', '$timeout', '$interval', 'Contact', 'contact', 'company',
-  function($scope, $uibModalInstance, $timeout, $interval, Contact, contact, company) {
+angular.module('coalpedia').controller('ContactModalController', ['$scope', '$uibModalInstance', '$timeout', '$interval', 'Contact', 'Company', 'contact', 'company',
+  function($scope, $uibModalInstance, $timeout, $interval, Contact, Company, contact, company) {
     $scope.contact = contact;
     $scope.selected = {};
 
     $scope.find = function (keyword) {
-      $scope.contacts = Contact.query({ q: keyword });
+      Contact.query({ q: keyword }, function(res){
+        if(res.length > 0) $scope.contacts = res;
+      });
     };
 
     $scope.create = function() {
@@ -24,6 +26,12 @@ angular.module('coalpedia').controller('ContactModalController', ['$scope', '$ui
 
       $scope.contact.$update(function(response) {
         contact = response;
+        $uibModalInstance.close(response);
+      });
+    };
+
+    $scope.attach = function (contact) {
+      Company.get({ id: company.id, action: 'attach', contact_id: $scope.selected.contact.id }, function(response){
         $uibModalInstance.close(response);
       });
     };

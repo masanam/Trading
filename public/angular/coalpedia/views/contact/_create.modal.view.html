@@ -19,14 +19,26 @@
       </ui-select>
 
       <br>
-      <div class="text-center col-md-4 col-md-offset-4">
-        - OR -
+      <div ng-if="!selected.contact">
+        <div class="text-center col-md-4 col-md-offset-4">
+          - OR -
+        </div><br><br>
+        <button class="btn btn-primary col-lg-12" ng-click="createNew = true">
+          <b>+</b> Create New Contact
+        </button>
       </div>
-      <br>
-      <br>
-      <button class="btn btn-primary col-lg-12" ng-click="createNew = true">
-        <b>+</b> Create New Contact
-      </button>
+
+      <div ng-if="selected.contact">
+        <table class="table table-striped table-bordered">
+          <tr><td>Name</td><td>{{ selected.contact.name }}</td></tr>
+          <tr><td>Email</td><td>{{ selected.contact.email }}</td></tr>
+          <tr><td>Phone</td><td>{{ selected.contact.phone }}</td></tr>
+        </table>
+        <br>
+        <button class="btn btn-primary col-lg-12" ng-click="attach(selected.contact)">
+          Use This Contact
+        </button>
+      </div>
     </div>
 
 

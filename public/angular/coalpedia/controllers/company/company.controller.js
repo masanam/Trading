@@ -9,7 +9,9 @@ angular.module('coalpedia').controller('CompanyController', ['$scope', '$statePa
     $scope.find = function(keyword) {
       if(!keyword) keyword = $stateParams.keyword;
 
-      $scope.companies = Company.query({ q: keyword, type:$scope.searchType });
+      Company.query({ q: keyword, type:$scope.searchType }, function(res){
+        if(res.length > 0) $scope.companies = res;
+      });
     };
 
     $scope.findOne = function(id) {

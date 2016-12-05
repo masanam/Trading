@@ -29,7 +29,7 @@
 
               <ui-select-choices repeat="company in companies track by $index"
                 refresh="find($select.search)"
-                refresh-delay="1">
+                refresh-delay="0">
                 <div ng-bind-html="company.company_name  | highlight: $select.search | html"></div>
               </ui-select-choices>
             </ui-select>
