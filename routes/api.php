@@ -74,36 +74,36 @@ Route::group(['middleware' => ['cors']], function() {
      * ORDER API GROUP
      * Managing orders (buy/sell) done here
      */
-    Route::get('order/{order}/user', 'OrderUserController@findUserByOrder');
-    Route::get('order/user/{user}', 'OrderUserController@findOrderByUser');
-    Route::get('order/buy/status/{order_status}/{progress_status?}', 'BuyOrderController@status');
-    Route::get('order/buy/draft/{user_id}', 'BuyOrderController@draft');
-    Route::get('order/buy/getSub', 'BuyOrderController@getSub');
-    Route::get('order/buy/getManager', 'BuyOrderController@getManager');
+    //Route::get('order/{order}/user', 'OrderUserController@findUserByOrder');
+    // Route::get('order/user/{user}', 'OrderUserController@findOrderByUser');
+    // Route::get('order/buy/status/{order_status}/{progress_status?}', 'BuyOrderController@status');
+    // Route::get('order/buy/draft/{user_id}', 'BuyOrderController@draft');
+    // Route::get('order/buy/getSub', 'BuyOrderController@getSub');
+    // Route::get('order/buy/getManager', 'BuyOrderController@getManager');
     Route::get('order/buy/{id}/changeOrderStatus/{order_status}', 'BuyOrderController@changeOrderStatus');
 
-    Route::get('order/sell/status/{order_status}/{progress_status?}', 'SellOrderController@status', ['except' => [ 'create', 'edit' ]]);
-    Route::get('order/sell/draft/{user_id}', 'SellOrderController@draft', ['except' => [ 'create', 'edit' ]]);
+    // Route::get('order/sell/status/{order_status}/{progress_status?}', 'SellOrderController@status', ['except' => [ 'create', 'edit' ]]);
+    // Route::get('order/sell/draft/{user_id}', 'SellOrderController@draft', ['except' => [ 'create', 'edit' ]]);
     Route::get('order/sell/{id}/changeOrderStatus/{order_status}', 'SellOrderController@changeOrderStatus', ['except' => [ 'create', 'edit' ]]);
 
-    Route::get('order/lastOrder/{type}/{id}', 'BuySellOrderController@lastOrderByUser');
-    Route::get('order/lastOrders/{type}/{id}', 'BuySellOrderController@lastOrderForDetail');
+    // Route::get('order/lastOrder/{type}/{id}', 'BuySellOrderController@lastOrderByUser');
+    // Route::get('order/lastOrders/{type}/{id}', 'BuySellOrderController@lastOrderForDetail');
 
 
     Route::resource('order/sell', 'SellOrderController', ['except' => [ 'create', 'edit' ]]);
     Route::resource('order/buy', 'BuyOrderController', ['except' => [ 'create', 'edit' ]]);
 
     //DUmmy api, just for show
-    Route::get('order/{id}/approve-now', 'OrderController@approveNow');
-    Route::get('order/{id}/reject-now', 'OrderController@rejectNow');
+    // Route::get('order/{id}/approve-now', 'OrderController@approveNow');
+    // Route::get('order/{id}/reject-now', 'OrderController@rejectNow');
 
     /*
      * DEAL API GROUP
      * Managing the deals (buy/sell) done here
      */
-    Route::get('order/ordersum','OrderController@ordersum');
+    // Route::get('order/ordersum','OrderController@ordersum');
     Route::get('order/funnel','OrderController@funnel');
-    Route::get('order/{id}/test-mail', 'OrderController@testMail');
+    // Route::get('order/{id}/test-mail', 'OrderController@testMail');
     Route::post('order/{id}/stage', 'OrderController@stage');
     Route::get('order/{id}/stage', 'OrderController@stageOwn');
     Route::get('order/{id}/unstage', 'OrderController@unstage');

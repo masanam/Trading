@@ -5,6 +5,10 @@ angular.module('coalpedia').controller('ContactModalController', ['$scope', '$ui
     $scope.contact = contact;
     $scope.selected = {};
 
+    $scope.find = function (keyword) {
+      $scope.contacts = Contact.query({ q: keyword });
+    };
+
     $scope.create = function() {
       var contact = new Contact($scope.contact);
       contact.company_id = company.id;

@@ -3,6 +3,7 @@
 angular.module('coalpedia').controller('ConcessionModalController', ['$scope', '$uibModalInstance', '$timeout', '$interval', 'NgMap', 'Concession', 'concession', 'company',
   function($scope, $uibModalInstance, $timeout, $interval, NgMap, Concession, concession, company) {
     $scope.concession = concession;
+    $scope.createNew = false;
     $scope.display = {};
 
     $scope.create = function() {

@@ -27,8 +27,10 @@
               title="Choose an address">
               <ui-select-match placeholder="Name of the Company...">{{$select.selected.company_name}}</ui-select-match>
 
-              <ui-select-choices repeat="company in companies track by $index">
-                {{ company.company_name | highlight: $select.search }}
+              <ui-select-choices repeat="company in companies track by $index"
+                refresh="find($select.search)"
+                refresh-delay="1">
+                <div ng-bind-html="company.company_name  | highlight: $select.search | html"></div>
               </ui-select-choices>
             </ui-select>
           </div>

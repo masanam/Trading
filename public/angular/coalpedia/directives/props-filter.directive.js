@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('lead').filter('propsFilter', function() {
+angular.module('coalpedia').filter('propsFilter', function() {
   return function(items, props) {
     var out = [];
 
@@ -29,5 +29,11 @@ angular.module('lead').filter('propsFilter', function() {
     }
 
     return out;
+  };
+});
+
+angular.module('coalpedia').filter('html', function($sce) {
+  return function(val) {
+    return $sce.trustAsHtml(val);
   };
 });

@@ -4,7 +4,11 @@
 	  <i class="fa fa-times pull-right" ng-click="close()"></i>
   </div>
   <div class="box-body">
-	  <form name="createConcession" role="form" ng-submit="create(createConcession)" ng-init="concession = {}">
+  	<div>
+  		
+  	</div>
+
+	  <form name="createConcession" ng-if="createNew" role="form" ng-submit="create(createConcession)" ng-init="concession = {}">
 	    <div ng-include="'/angular/coalpedia/views/concession/_form.partial.html'"></div>
 	  </form>
 	</div>
