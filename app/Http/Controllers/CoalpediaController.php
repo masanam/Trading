@@ -21,8 +21,8 @@ class CoalpediaController extends Controller
      */
     public function count()
     {
-        $customer = Company::where('status', 'a')->where('company_type', 'c')->count();
-        $seller = Company::where('status', 'a')->where('company_type', 's')->count();
+        $customer = Company::where('status', 'a')->whereIn('company_type', ['c', 't'])->count();
+        $seller = Company::where('status', 'a')->whereIn('company_type', ['s', 't'])->count();
         $vendor = Company::where('status', 'a')->where('company_type', 'v')->count();
         $concession = Concession::where('status', 'a')->count();
 
