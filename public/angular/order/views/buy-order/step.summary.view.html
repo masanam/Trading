@@ -32,14 +32,48 @@
           <p>{{ buy_order.city }}</p>
           <label>Volume of Coal : </label>
           <p>{{ buy_order.volume | number }} mt</p>
+          <label class="hidden-xs">Input Date : </label>
+          <p class="form-inline hidden-xs">
+            <input type="date" class="form-control" ng-model="buy_order.order_date"/>
+          </p>
+        </div>
+        <div class="col-xs-6" style="padding-left:0">
+          <label>Country : </label>
+          <p>{{ buy_order.country }}</p>
+          <label>Asking Price : </label>
+          <div class="input-group">
+            <span class="input-group-addon">$</span>
+            <input type="text" class="form-control" ng-model="buy_order.max_price">
+          </div>
+          <label class="hidden-xs">Laycan Period : </label>
+          <p class="form-inline hidden-xs">
+            <label>from</label>
+            <input type="date" class="form-control" ng-model="buy_order.ready_date"/> - 
+            <label>to</label>
+            <input type="date" class="form-control" ng-model="buy_order.order_deadline"/>
+          </p>
+        </div>
+        <div class="col-xs-12 visible-xs row">
           <label>Input Date : </label>
           <p class="form-inline">
             <input type="date" class="form-control" ng-model="buy_order.order_date"/>
           </p>
+          <label>Laycan Period : </label>
+          <p class="form-inline">
+            <label>from</label>
+            <input type="date" class="form-control" ng-model="buy_order.ready_date"/>
+             - 
+            <label>to</label>
+            <input type="date" class="form-control" ng-model="buy_order.order_deadline"/>
+          </p>
+        </div>
+        <div class="col-xs-12" style="padding-left:0">
           <label>Valid Until : </label>
           <p class="form-inline">
             <input type="date" min="{{date | date:'yyyy-MM-dd'}}" class="form-control" ng-model="buy_order.expired_date"/>
           </p>
+        </div>
+        <div class="col-xs-6" style="padding-left:0">
           <label>Shipping Term : </label>
           <p class="form-inline">
             <select class="form-control" ng-model="buy_order.trading_term">
@@ -54,21 +88,7 @@
             <input type="text" class="form-control" ng-model="buy_order.trading_term_detail" placeholder="Detail" />
           </p>
         </div>
-        <div class="col-xs-6" style="padding-left:0">
-          <label>Country : </label>
-          <p>{{ buy_order.country }}</p>
-          <label>Asking Price : </label>
-          <div class="input-group">
-            <span class="input-group-addon">$</span>
-            <input type="text" class="form-control" ng-model="buy_order.max_price">
-          </div>
-          <label>Laycan Period : </label>
-          <p class="form-inline">
-            <label>from</label>
-            <input type="date" class="form-control" ng-model="buy_order.ready_date"/> - 
-            <label>to</label>
-            <input type="date" class="form-control" ng-model="buy_order.order_deadline"/>
-          </p>
+        <div class="col-xs-6" style="padding-left:0;padding-right: 10px;">
           <label>Payment Terms : </label>
           <select class="form-control" ng-model="buy_order.payment_terms" ng-change="freetext()">
             <option value="TT">TT</option>

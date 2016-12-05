@@ -6,9 +6,33 @@ angular.module('order').controller('ProductModalBuyOrderController',
     $scope.init = function () {
       $scope.product = new Product();
       $scope.bonusreject = new Product();
+      $scope.error = null;
     };
 
     $scope.create = function(){
+      if (!($scope.product.gcv_arb_min&&$scope.product.gcv_arb_max)) {
+        $scope.error = 'Please fill Min & Max GCV Arb !';
+        return;
+      }
+      if (!($scope.product.gcv_adb_min&&$scope.product.gcv_adb_max)) {
+        $scope.error = 'Please fill Min & Max GCV Adb !';
+        return;
+      }
+      if (!($scope.product.ncv_min&&$scope.product.ncv_max)) {
+        $scope.error = 'Please fill Min & Max NCV !';
+        return;
+      }
+      if (($scope.product.gcv_arb_reject&&$scope.product.gcv_arb_bonus)||
+          ($scope.product.gcv_adb_reject&&$scope.product.gcv_adb_bonus)||
+          ($scope.product.ncv_reject&&$scope.product.ncv_bonus)
+          ){
+        $scope.error = 'Please fill Bonus and Reject Contract !';
+        return;
+      }
+      if($scope.product.volume) {
+        $scope.error = 'Please fill Volume of Coal !';
+        return;
+      }
       $scope.product.buyer_id = $stateParams.id;
       $scope.product.$save(function (res) {
         $scope.product = res;

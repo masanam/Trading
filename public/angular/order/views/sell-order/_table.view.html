@@ -36,8 +36,8 @@
       <td ng-if="sell_order.order_status==='v'">Verified</td>
       <td ng-if="sell_order.order_status==='s'">Staged</td>
       <td ng-if="sell_order.order_status==='p'">Partial</td>
-      <td ng-if="sell_order.order_status==='0'"><a style="cursor:pointer" ng-click="toProduct(sell_order.id)">STEP : Supplier</a></td>
-      <td ng-if="sell_order.order_status==='1'"><a style="cursor:pointer" ng-click="toProduct(sell_order.seller_id,sell_order.id)">STEP : Concession</a></td>
+      <td ng-if="sell_order.order_status==='0'"><a style="cursor:pointer" ng-click="toSupplier(sell_order.id)">STEP : Supplier</a></td>
+      <td ng-if="sell_order.order_status==='1'"><a style="cursor:pointer" ng-click="toConcession(sell_order.seller_id,sell_order.id)">STEP : Concession</a></td>
       <td ng-if="sell_order.order_status==='2'"><a style="cursor:pointer" ng-click="toProduct(sell_order.seller_id,sell_order.id,sell_order.concession_id)">STEP : Product</a></td>
       <td ng-if="sell_order.order_status==='3'"><a style="cursor:pointer" ng-click="toPort(sell_order.seller_id,sell_order.id,sell_order.concession_id)">STEP : Port</a></td>
       <td ng-if="sell_order.order_status==='4'"><a style="cursor:pointer" ng-click="toSummary(sell_order.seller_id,sell_order.id,sell_order.concession_id)">STEP : Summary</a></td>
