@@ -4,15 +4,15 @@
       <h1 class="box-title" style="font-size: 25px">Orders</h1>
 
       <div class="box-tools pull-right">
-        <button ui-sref="order.create" class="btn btn-primary hidden-xs">+ Create New Order</button>
+        <button ui-sref="order.create" class="btn btn-primary hidden-xs hidden-sm hidden-md">+ Create New Order</button>
       </div>
     </div>
     <div class="box-body no-padding" ng-init="find();">
       <div class="box-body">
 
-        <div class="row">
+        <div class="row hidden-xs hidden-sm hidden-md">
           <div class="col-md-4">
-          <button ui-sref="order.create" class="btn btn-primary hidden-sm hidden-md hidden-lg">+ Create New Order</button>
+          
             <div class="box-tools btn-group btn-sm" ng-init="browse.possession = 'my'">
               <label class="btn btn-default btn-sm" ng-model="browse.possession" uib-btn-radio="'my'">My Orders</label>
               <label class="btn btn-default btn-sm" ng-model="browse.possession" uib-btn-radio="'subordinates'">Subordinates</label>
@@ -39,6 +39,51 @@
           </div>
         </div>
       </div>
+      <!--For Mobile-->
+      <div class="row hidden-lg">
+        <div class="form-group col-md-4 col-sm-4 col-xs-12">
+            <label>Filter Type Order</label>
+            <select class="form-control" ng-init="browse.status = 'my'" ng-model="browse.possession" >
+              <option> --Selected-- </option>
+              <option value="my">My Orders</option>
+              <option value="subordinates">Subordinates</option>
+              <option value="associated">Associated</option>
+            </select>
+        </div>
+
+        <div class="form-group col-md-4 col-sm-4 col-xs-12">
+            <label>Filter By Status</label>
+            <select class="form-control" ng-init="browse.status ='p'" ng-model="browse.status" >
+              <option> --Selected-- </option>
+              <option value="d">Draft</option>
+              <option value="p">Pending</option>
+              <option value="a">Approved</option>
+              <option value="f">Finalized</option>
+              <option value="c">Combined</option>
+              <option value="x">Deleted</option>
+            </select>
+
+        </div>
+
+        <div class="form-group col-md-4 col-sm-4 col-xs-12">
+        <br>
+        <div class="btn-group" uib-dropdown >
+          <button type="button" class="btn btn-primary">Action</button>
+            <button type="button" class="btn dropdown-toggle btn-primary" data-toggle="dropdown" uib-dropdown-toggle>
+              <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+              <ul class="dropdown-menu" uib-dropdown-menu>
+                <li><a ui-sref="order.create" >+ Create New Order</a></li>
+                <li><a ui-sref="sell-order.create" >+ Create buy lead</a></li>
+                <li><a ui-sref="buy-order.create" >+ Create sell lead</a></li>
+              </ul>
+        </div>
+        </div>
+
+      </div>  
+      <!--For Mobile-->
+
       <div class="row">
      <div class="table-responsive col-lg-12">
       <table st-table="orders" st-safe-src="orderCollection" class="table table-striped table-responsive">
