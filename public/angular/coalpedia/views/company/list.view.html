@@ -30,7 +30,7 @@
             <td>{{ company.email }}</td>
             <td>{{ company.user.name }}</td>
             <td>
-              <a ui-sref="company.view({ id: company.id })"><i class="glyphicon glyphicon-info-sign"></i></a>
+              <a ui-sref="company.view({ type: searchType, id: company.id })"><i class="glyphicon glyphicon-info-sign"></i></a>
               <a ng-click="delete(company)"><i class="glyphicon glyphicon-trash"></i></a>
             </td>
           </tr>
