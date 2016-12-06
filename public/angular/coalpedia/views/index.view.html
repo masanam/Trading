@@ -19,14 +19,14 @@
 
           <div class="small-box bg-aqua">
             <div class="inner">
-              <h4>{{ total.seller }} Records </h4>
+              <h4>{{ total.supplier }} Records </h4>
 
               <p>SUPPLIERS</p>
             </div>
             <div class="icon">
               <i class="fa fa-industry"></i>
             </div>
-             <a ui-sref="company.list({ type:'seller' })" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+             <a ui-sref="company.list({ type:'supplier' })" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
 
           <div class="small-box bg-teal">
@@ -75,7 +75,7 @@
                 <label class="btn btn-sm btn-default" ng-model="searchType" uib-btn-radio="'customer'">
                   Customer
                 </label>
-                <label class="btn btn-sm btn-default" ng-model="searchType" uib-btn-radio="'seller'">
+                <label class="btn btn-sm btn-default" ng-model="searchType" uib-btn-radio="'supplier'">
                   Supplier
                 </label>
                 <label class="btn btn-sm btn-default" ng-model="searchType" uib-btn-radio="'vendor'">
