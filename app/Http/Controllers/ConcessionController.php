@@ -26,11 +26,21 @@ class ConcessionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $req)
     {
+      if($req->supplier_id){
+        $concession = Concession::where('status', 'a')->where('company_id', $req->supplier_id)->get();
+        foreach ($concession as $con) {
+          $con->latitude = floatval($con->latitude);
+          $con->longitude = floatval($con->longitude);
+          $con->stripping_ratio = floatval($con->stripping_ratio);
+          $con->port_distance = floatval($con->port_distance);
+        }
+      }else{
         $concession = Concession::with('company', 'port')->where('status', 'a')->get();
+      }
 
-        return response()->json($concession, 200);
+      return response()->json($concession, 200);
     }
     
     /**

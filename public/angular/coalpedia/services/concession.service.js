@@ -2,9 +2,7 @@
 
 angular.module('concession').factory('Concession', ['$resource',
   function ($resource) {
-    return $resource('api/concession/:action/:id/:option', {
-      action: undefined,
-      sellerId: undefined,
+    return $resource('api/concession/:id/:option', {
       id: undefined,
       option: undefined
     }, {

@@ -21,6 +21,8 @@ class ProductController extends Controller
   public function index(Request $req)
   {
     $product = Product::where('status', 'a');
+
+    if($req->supplier_id) $product->where('company_id', $req->supplier_id);
     if($req->q)
       $product->where(function($query) use ($req) {
         return $query->where('product_name', 'LIKE', '%' . $req->q . '%')
