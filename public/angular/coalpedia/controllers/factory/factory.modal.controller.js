@@ -1,9 +1,10 @@
 'use strict';
 
-angular.module('coalpedia').controller('FactoryModalController', ['$scope', '$uibModalInstance', '$timeout', '$interval', 'Factory', 'factory', 'company',
-  function($scope, $uibModalInstance, $timeout, $interval, Factory, factory, company) {
+angular.module('coalpedia').controller('FactoryModalController', ['$scope', '$uibModalInstance', '$timeout', '$interval', 'Factory', 'Company', 'factory', 'company',
+  function($scope, $uibModalInstance, $timeout, $interval, Factory, Company, factory, company) {
     $scope.factory = factory;
     $scope.selected = {};
+    $scope.createNew = false;
 
     $scope.find = function (keyword) {
       Factory.query({ q: keyword }, function(res){
@@ -32,6 +33,12 @@ angular.module('coalpedia').controller('FactoryModalController', ['$scope', '$ui
       $scope.factory.$update(function(response) {
         factory = response;
         $uibModalInstance.close(response);
+      });
+    };
+
+    $scope.attach = function (factory) {
+      Company.get({ id: company.id, action: 'attach', factory_id: $scope.selected.factory.id }, function(response){
+        $uibModalInstance.close(response.factory);
       });
     };
 

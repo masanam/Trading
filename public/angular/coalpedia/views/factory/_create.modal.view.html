@@ -3,8 +3,9 @@
 	  <h4 class="modal-title">Create Factory</h4>
 	  <i class="fa fa-times pull-right" ng-click="close()"></i>
   </div>
+
   <div class="box-body">
-  	<div ng-show="!createNew" ng-init="find()">
+  	<div ng-if="!createNew" ng-init="find()">
       <ui-select ng-model="selected.factory"
         reset-search-input="false"
         style="min-width: 300px;"
@@ -19,14 +20,6 @@
       </ui-select>
 
       <br>
-      <div ng-if="!selected.factory">
-        <div class="text-center col-md-4 col-md-offset-4">
-          - OR -
-        </div><br><br>
-        <button class="btn btn-primary col-lg-12" ng-click="createNew = true">
-          <b>+</b> Create New Factory
-        </button>
-      </div>
 
       <div ng-if="selected.factory" class="row">
       	<div class="col-lg-8">
@@ -55,12 +48,20 @@
       </div>
     </div>
 
-    <button class="btn btn-primary col-lg-12" ng-click="createNew = false" ng-show="createNew">
-      <b>+</b> Add Existing Factory
-    </button><br><br>
+    <div ng-show="!selected.factory">
+      <div class="text-center col-md-4 col-md-offset-4" ng-if="!createNew">
+        - OR -<br><br>
+      </div>
+      <button class="btn btn-primary col-lg-12" ng-click="createNew=!createNew">
+        <b>+</b> {{ createNew ? 'Add Existing Factory' : 'Create New Factory' }}
+      </button>
+      <br><br>
+    </div>
 
-	  <form name="createFactory" ng-show="createNew" role="form" ng-submit="create(createFactory)" ng-init="factory = {}">
-	    <div ng-include="'/angular/coalpedia/views/factory/_form.partial.html'"></div>
-	  </form>
+    <div ng-if="createNew">
+  	  <form name="createFactory" role="form" ng-submit="create(createFactory)" ng-init="factory = {}">
+  	    <div ng-include="'/angular/coalpedia/views/factory/_form.partial.html'"></div>
+  	  </form>
+    </div>
 	</div>
 </div>
