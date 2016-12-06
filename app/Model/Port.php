@@ -9,25 +9,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class Port extends Model {
   protected $table = 'ports';
+  protected $fillable = [
+    'port_name', 'owner', 'is_private', 'location', 'size',
+    'river_capacity', 'latitude', 'longitude', 'anchorage_distance',
+    'has_conveyor', 'has_crusher', 'has_blending', 'draft_height', 'daily_discharge_rate'
+  ];
 
-  public function Concession() {
-    return $this->hasMany('App\Model\Concession');
+  public function concessions() {
+    return $this->hasMany(Concession::class);
   }
 
-  public function BuyerPort() {
-    return $this->belongsTo('App\Model\BuyerPort');
-  }
-
-  public function SellerPort() {
-      return $this->belongsTo('App\Model\SellerPort');
-  }
-
-  public function buyers() {
-    return $this->belongsToMany(Buyer::class, 'buyer_port');
-  }
-
-  public function sellers() {
-    return $this->belongsToMany(Seller::class, 'port_seller');
+  public function companies() {
+    return $this->belongsToMany(Company::class, 'company_port');
   }
 
 }

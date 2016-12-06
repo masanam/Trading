@@ -27,66 +27,32 @@ class PortController extends Controller
     public function index()
     {
         $port = Port::where('is_private', '=', 0)->get();
-        foreach ($port as $temp) {
-            $temp->latitude = floatval($temp->latitude);
-            $temp->longitude = floatval($temp->longitude);
-        }
-        return response()->json($port, 200);
-    }
-
-    public function buyerAllMyPort($buyer_id){
-        $port =  Port::leftJoin('buyer_port', 'ports.id', '=', 'buyer_port.port_id')->select('buyer_port.*', 'ports.*')->where('buyer_port.buyer_id', '=', $buyer_id)->orwhere('ports.is_private', '=', 0)->get();
-        return response()->json($port, 200);
-    }
-
-    public function sellerAllMyPort($seller_id){
-        $port =  Port::leftJoin('port_seller', 'ports.id', '=', 'port_seller.port_id')->where('port_seller.seller_id', '=', $seller_id)->orwhere('ports.is_private', '=', 0)->get();
-        return response()->json($port, 200);
-    }
-
-    public function buyerMyPort($buyer_id)
-    {
-        $port =  Port::join('buyer_port', 'ports.id', '=', 'buyer_port.port_id')->where('buyer_id', '=', $buyer_id)->where('status', '=', 'a')->get();
-        return response()->json($port, 200);
-    }
-
-    public function sellerMyPort($seller_id)
-    {
-        $port = Port::leftJoin('port_seller', 'ports.id', '=', 'port_seller.port_id')->where('seller_id', '=', $seller_id)->where('status', '=', 'a')->get();
         return response()->json($port, 200);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request  $req
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $req)
     {
-        if(!$request) {
+        if(!$req) {
             return response()->json([
                 'message' => 'Bad Request'
             ], 400);
         }
 
-        $port = new Port();
-        $port->port_name = $request->port_name;
-        $port->owner = $request->owner;
-        $port->is_private = $request->is_private;
-        $port->location = $request->location;
-        $port->size = $request->size;
-        $port->river_capacity = $request->river_capacity;
-        $port->latitude = $request->latitude;
-        $port->longitude = $request->longitude;
-        $port->anchorage_distance = $request->anchorage_distance;
-        $port->has_conveyor = $request->has_conveyor;
-        $port->has_crusher = $request->has_crusher;
-        $port->has_blending = $request->has_blending;
-        $port->draft_height = $request->draft_height;
-        $port->daily_discharge_rate = $request->daily_discharge_rate;
+        $port = new Port($req->only([
+            'port_name', 'owner', 'is_private', 'location', 'size',
+            'river_capacity', 'latitude', 'longitude', 'anchorage_distance',
+            'has_conveyor', 'has_crusher', 'has_blending', 'draft_height','daily_discharge_rate'
+        ]));
+
         $port->status = 'a';
         $port->save();
+        $port->companies()->attach($req->company_id);
 
         return response()->json($port, 200);
     }
@@ -113,41 +79,23 @@ class PortController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request  $req
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $port)
+    public function update(Request $req, $port)
     {
        $port = Port::find($port);
 
-        if (!$request) {
-            return response()->json([
-                'message' => 'Bad Request'
-            ], 400);
-        }
+        if (!$req) return response()->json(['message' => 'Bad Request'], 400);
+        if (!$port) return response()->json(['message' => 'Not found'] ,404);
 
-        if (!$port) {
-            return response()->json([
-                'message' => 'Not found'
-            ] ,404);
-        }
+        $port->fill($req->only([
+            'port_name', 'owner', 'is_private', 'location', 'size',
+            'river_capacity', 'latitude', 'longitude', 'anchorage_distance',
+            'has_conveyor', 'has_crusher', 'has_blending', 'draft_height','daily_discharge_rate'
+        ]));
 
-        $port->port_name = $request->port_name;
-        $port->owner = $request->owner;
-        $port->is_private = $request->is_private;
-        $port->location = $request->location;
-        $port->size = $request->size;
-        $port->river_capacity = $request->river_capacity;
-        $port->latitude = $request->latitude;
-        $port->longitude = $request->longitude;
-        $port->anchorage_distance = $request->anchorage_distance;
-        $port->has_conveyor = $request->has_conveyor;
-        $port->has_crusher = $request->has_crusher;
-        $port->has_blending = $request->has_blending;
-        $port->draft_height = $request->draft_height;
-        $port->daily_discharge_rate = $request->daily_discharge_rate;
-        $port->status = $request->status;
         $port->save();
 
         return response()->json($port, 200);
@@ -161,76 +109,36 @@ class PortController extends Controller
      */
     public function destroy($id)
     {
-        //
-    }
-
-    public function storeBuyerPort(Request $request)
-    {
-        if(!$request) {
-            return response()->json([
-                'message' => 'Bad Request'
-            ], 400);
-        }
-
-        $buyer_port = new BuyerPort();
-        $buyer_port->buyer_id = $request->buyer_id;
-        $buyer_port->port_id = $request->port_id;
-        $buyer_port->save();
-
-        return response()->json($buyer_port, 200);
-    }
-
-    public function storeSellerPort(Request $request)
-    {
-        if(!$request) {
-            return response()->json([
-                'message' => 'Bad Request'
-            ], 400);
-        }
-
-        $seller_port = new SellerPort();
-        $seller_port->seller_id = $request->seller_id;
-        $seller_port->port_id = $request->port_id;
-        $seller_port->save();
-
-        return response()->json($seller_port, 200);
-    }
-
-    public function attachBuyerPort($buyer_id, $port_id)
-    {
-        $port = Port::find($port_id);
-        $port->buyers()->attach($buyer_id);
+       $port = Port::findOrFail($port);
+        $port->status = 'x';
+        $port->save();
 
         return response()->json($port, 200);
     }
 
-    public function detachBuyerPort($buyer_id, $port_id)
+    public function attach($company_id, $id)
     {
-        $port = Port::find($port_id);
-        $port->buyers()->detach($buyer_id);
-        $factory = Factory::where('port_id',$port_id)->get();
+        $port = Port::find($id);
+        $port->companies()->attach($company_id);
+
+        return response()->json($port, 200);
+    }
+
+    public function detach($company_id, $id)
+    {
+        $port = Port::find($id);
+        $port->buyers()->detach($company_id);
+
+        $factory = Factory::where('port_id',$id)
+            ->where('company_id', $company_id)->get();
+        $concession = Concession::where('port_id',$id)
+            ->where('company_id', $company_id)->get();
+
         foreach ($factory as $item ) {
             $item->port_id = null;
             $item->port_distance = null;
             $item->save();
         }
-
-        return response()->json($port, 200);
-    }
-
-    public function attachSellerPort($seller_id, $port_id)
-    {
-        $port = Port::find($port_id);
-        $port->sellers()->attach($seller_id);
-
-        return response()->json($port, 200);
-    }
-
-    public function detachSellerPort($seller_id, $port_id)
-    {
-        $port = Port::find($port_id);
-        $port->sellers()->detach($seller_id);
-        $concession = Concession::where('port_id',$port_id)->get();
         foreach ($concession as $item ) {
             $item->port_id = null;
             $item->port_distance = null;
@@ -238,41 +146,5 @@ class PortController extends Controller
         }
 
         return response()->json($port, 200);
-    }
-
-    public function changePortStatusBuyer($buyer_id, $port_id, $status)
-    {
-        $buyer_port = BuyerPort::where('buyer_id', '=', $buyer_id)->where('port_id', '=', $port_id)->first();
-
-        if (!$buyer_port) {
-            return response()->json([
-                'message' => 'Not found'
-            ] ,404);
-        }
-
-        if ($status) {
-          $buyer_port->status = $status;
-          $buyer_port->save();
-        }
-
-        return response()->json($buyer_port, 200);
-    }
-
-    public function changePortStatusSeller($seller_id, $port_id, $status)
-    {
-        $seller_port = SellerPort::where('seller_id', '=', $seller_id)->where('port_id', '=', $port_id)->first();
-
-        if (!$seller_port) {
-            return response()->json([
-                'message' => 'Not found'
-            ] ,404);
-        }
-
-        if ($status) {
-          $seller_port->status = $status;
-          $seller_port->save();
-        }
-
-        return response()->json($seller_port, 200);
     }
 }

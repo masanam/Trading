@@ -3,10 +3,11 @@
     <div class="box-header with-border">
       <h1 class="box-title" style="font-size: 25px">Buy Leads</h1>
       <div class="box-tools pull-right">
-        <button ui-sref="sell-order.create" class="col-md-12 btn btn-primary">+ Create New</button>
+        <button ui-sref="sell-order.create " class="col-md-12 btn btn-primary hidden-xs">+ Create New</button>
       </div>
     </div>
     <div class="box-body">
+      <button ui-sref="sell-order.create" class="col-md-12 btn btn-primary btn-block hidden-sm hidden-md hidden-lg">+ Create New</button>
       <uib-tabset active="activeJustified" justified="true" ng-init="findDraft()">
         <uib-tab index="0" ng-click="findDraft()">
           <uib-tab-heading>

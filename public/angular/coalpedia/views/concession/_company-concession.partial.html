@@ -1,0 +1,35 @@
+<div class="box box-info" ng-controller="ConcessionController"> <!-- CONCESSION -->
+  <div class="box-header with-border">
+    <h3 class="box-title" style="font-size: 25px">Concessions</h3>
+    <div class="box-tools pull-right">
+      <button type="button" class="btn btn-info" ng-click="add()"><i class="glyphicon glyphicon-plus"></i> Add New Concessions</button>
+    </div>
+  </div>
+  <div class="box-body no-padding">
+    <div class="table-responsive">
+    
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th><i class="glyphicon glyphicon-map-marker"></i> Location</th>
+            <th><i class="glyphicon glyphicon-scale"></i> Reserves (tonnes)</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="concession in company.concessions">
+            <td>{{ concession.concession_name }}</td>
+            <td>{{ concession.city }} (Port: {{ concession.port.port_name || 'N/A' }})</td>
+            <td>{{ concession.reserves | number }}</td>
+            <td class="pull-right">
+              <a class="glyphicon glyphicon-new-window" ui-sref="concession.view({ id: concession.id })" target="_blank"></a>
+              <a class="glyphicon glyphicon-pencil" ng-click="edit(concession)"></a>
+              <a href="#" ng-click="delete(concession)" class="glyphicon glyphicon-remove"></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div> <!-- CONCESSION -->

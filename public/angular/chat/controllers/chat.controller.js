@@ -48,7 +48,7 @@ angular.module('chat').controller('ChatController', ['$scope', '$stateParams', '
 
   $scope.sendMessage = function() {
     var message = $scope.message;
-    if(message !== ""){
+    if(message !== ''){
       $scope.chat.key = Chat.sendChat($stateParams.id, $scope.relatedUsers, message);
       
       $scope.initialize();

@@ -1,0 +1,124 @@
+<div class="content" ng-controller="ProductController" ng-init="findOne()">
+  <!-- HEADER -->
+  <div class="col-sm-12">
+    <div class="submenu-header-item">
+      <button type="button" class="btn btn-default" ui-sref="company.list">
+        <i class="glyphicon glyphicon-arrow-left"></i> Company List
+      </button>
+      <i>/</i>
+      <button type="button" class="btn btn-default"
+        ui-sref="company.view({ type: companyType, id: product.company.id })">
+        <i class="glyphicon glyphicon-arrow-left"></i> {{ product.company.company_name }}
+      </button>
+
+      <button type="button" class="btn btn-primary" ng-click="edit(product)">
+        <i class="glyphicon glyphicon-pencil"></i> Update
+      </button>
+    </div>
+  </div>
+
+  <div class="col-sm-12">
+    <div class="box">
+      <div class="box-header with-border col-lg-12">
+        <h4 class="box-title" style="font-size: 35px">{{ product.product_name }}</h4>
+      <p>{{ product.concession.concession_name }}</p>
+      <p>{{ product.concession.buyer.company_name }}</p>
+      <p>{{ product.concession.seller.company_name }}</p>
+      </div>
+      <div class="box-body">
+        <div class="row-fluid">
+          <h4>Quality Matrix</h4>
+          <div class="col-lg-4">
+            <div class="small-box bg-red">
+              <div class="inner">
+                <h3>{{ product.gcv_adb_min }} ~ {{ product.gcv_adb_max }} kcal</h3>
+                <h4>GCV adb</h4>
+              </div>
+              <div class="icon">
+                <i class="fa fa-fire"></i>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="small-box bg-red">
+              <div class="inner">
+                <h3>{{ product.gcv_arb_min }} ~ {{ product.gcv_arb_max }} kcal</h3>
+                <h4>GCV arb</h4>
+              </div>
+              <div class="icon">
+                <i class="fa fa-fire"></i>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="small-box bg-red">
+              <div class="inner">
+                <h3>{{ product.ncv_min }} ~ {{ product.ncv_max }} kcal</h3>
+                <h4>NCV</h4>
+              </div>
+              <div class="icon">
+                <i class="fa fa-fire"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row-fluid col-lg-12">
+          <table class="table table-hover">
+            <tbody>
+              <tr>
+                <td class="bg-yellow">
+                  Ash:
+                  <span class="pull-right">{{ product.ash_min }} ~ {{ product.ash_max }} %</span>
+                </td>
+                <td class="bg-yellow">
+                  Total Sulphur :
+                  <span class="pull-right">{{ product.ts_min }} ~ {{ product.ts_max }} %</span>
+                </td>
+              </tr>
+              <tr>
+                <td class="bg-aqua">
+                  Total Moisture:
+                  <span class="pull-right">{{ product.tm_min }} ~ {{ product.tm_max }} %</span>
+                </td>
+                <td class="bg-aqua">
+                  Inherent Moisture :
+                  <span class="pull-right">{{ product.im_min }} ~ {{ product.im_max }} %</span>
+                </td>
+              </tr>
+              <tr>
+                <td class="bg-green">
+                  Volatile Matter:
+                  <span class="pull-right">{{ product.vm_min }} ~ {{ product.vm_max }} %</span>
+                </td>
+                <td class="bg-green">
+                  Fixed Carbon :
+                  <span class="pull-right">{{ product.fc_min }} ~ {{ product.fc_max }} %</span>
+                </td>
+              </tr>
+              <tr>
+                <td class="bg-green">
+                  HGI:
+                  <span class="pull-right">{{ product.hgi_min }} ~ {{ product.hgi_max }} </span>
+                </td>
+                <td class="bg-green">
+                  Size (0-50 mm):
+                  <span class="pull-right">{{ product.size_min }} ~ {{ product.size_max }} %</span>
+                </td>
+              </tr>
+              <tr>
+                <td class="bg-green">
+                  Fe2O3:
+                  <span class="pull-right">{{ product.fe2o3_min }} ~ {{ product.fe2o3_max }} %</span>
+                </td>
+                <td class="bg-green">
+                  AFT :
+                  <span class="pull-right">{{ product.aft_min }} ~ {{ product.aft_max }} &#176</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

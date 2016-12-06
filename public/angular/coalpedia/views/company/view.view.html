@@ -1,0 +1,110 @@
+<div class="content" ng-controller="CompanyController" ng-init="findOne()">
+  <!-- HEADER -->
+  <div class="row submenu-header">
+    <div class="submenu-header-item">
+      <button type="button" class="btn btn-primary" ui-sref="company.list({ type: companyType })">
+        <i class="glyphicon glyphicon-arrow-left"></i> Back
+      </button>
+    </div>
+    <div class="submenu-header-item">
+      <h4>{{ companyType | uppercase }} PROFILE</h4>
+    </div>
+  </div>
+
+  <!-- PRIMARY DETAIL -->
+  <div class="box box-widget widget-user">
+          <!-- Add the bg color to the header using any of the bg-* classes -->
+    <div class="widget-user-header bg-aqua-active">
+      <h3 class="widget-user-username" ng-switch="company.company_type">
+        {{ company.company_name }}
+
+
+        <span ng-switch-when="c" class="pull-right label label-info"><i class='fa fa-industry'></i> CUSTOMER</span>
+        <span ng-switch-when="s" class="pull-right label label-warning"><i class='fa fa-gear'></i> SUPPLIER</span>
+        <span ng-switch-when="t" class="pull-right label label-danger"><i class='fa fa-tags'></i> TRADER</span>
+        <span ng-switch-when="v" class="pull-right label label-success"><i class='fa fa-ship'></i> VENDOR</span>
+      </h3>
+      <h5 class="widget-user-desc" ng-switch="company.is_affiliated">
+        {{ company.industry }}
+
+        <span ng-switch-when=1 class="pull-right label label-info"><i class='fa fa-share-alt'></i> AFFILIATED</span>
+        <span ng-switch-when=0 class="pull-right label label-default"><i class='fa fa-exchange'></i> NON-AFFILIATED</span>
+        <span></span>
+      </h5>
+    </div>
+    <div class="widget-user-image">
+      <img class="img-circle" src="/images/default.jpg" alt="User Avatar">
+    </div>
+
+    <div class="box-footer">
+      <div class="row">
+        <div class="col-sm-12 border-right">
+          <div class="description-block">
+            <h5 class="description-text">{{ company.address }}</h5>
+                
+          </div>
+        </div> 
+      </div>
+    </div>
+  </div>
+
+
+  <div style="margin-top:10px;" class="row">
+    <div class="col-lg-4">
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title" style="font-size: 25px">About</h3>
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-info" ng-click="modalUpdate()"><i class="glyphicon glyphicon-pencil"></i> Update</button>
+          </div>
+        </div>
+        <div class="box-body no-padding">
+          <div class="row-fluid">
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <tr><td>Country:</td><td>{{ company.country }}</td></tr>
+                <tr><td>Address:</td><td>{{ company.address }}</td></tr>
+                <tr><td>City:</td><td>{{ company.city }}</td></tr>
+                <tr ng-if="company.company_type !== 'v'"><td>Industry:</td><td>{{ company.industry }}</td></tr>
+                <tr ng-if="company.company_type !== 'c'">
+                  <td>Annual Sales:</td><td>{{ company.annual_sales }} <span class='badge badger-danger'>Million USD</span></td>
+                </tr>
+                <tr ng-if="company.company_type !== 'c'">
+                  <td>Purchasing Countries:</td><td>{{ company.purchasing_countries }}</td>
+                </tr>
+                <tr ng-if="company.company_type === 'c'">
+                  <td>Annual Demand:</td><td>{{ company.annual_demand }} <span class='badge badger-danger'>Million Tonnes</span></td>
+                </tr>
+                <tr ng-if="company.company_type !== 'v'">
+                  <td>Preferred Trading Term:</td><td>
+                    {{ company.preferred_trading_term }}<br>{{ company.preferred_trading_term_detail }}
+                  </td>
+                </tr>
+                <tr ng-if="company.company_type !== 'v'">
+                  <td>Preferred Payment Term:</td><td>
+                    {{ company.preferred_payment_term }}<br>{{ company.preferred_payment_term_detail }}
+                  </td>
+                </tr>
+                <tr><td>Phone:</td><td>{{ company.phone }}</td></tr>
+                <tr><td>Email:</td><td>{{ company.email }}</td></tr>
+                <tr><td>Web:</td><td>{{ company.web }}</td></tr>
+                <tr><td>Desc:</td><td>{{ company.description }}</td></tr>
+                <tr ng-if="company.status == 'a'"><td>Status:</td> <td>Active</td></tr>
+                <tr ng-if="company.status == 'x'"><td>Status:</td> <td>Deactivated</td></tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-8">
+      <div ng-include="'/angular/coalpedia/views/contact/_company-contact.partial.html'"></div>
+      <div ng-include="'/angular/coalpedia/views/product/_company-product.partial.html'"></div>
+      <div ng-include="'/angular/coalpedia/views/concession/_company-concession.partial.html'"
+        ng-if="company.company_type !== 'c' && company.company_type !== 'v'"></div>
+      <div ng-include="'/angular/coalpedia/views/factory/_company-factory.partial.html'" ng-if="company.company_type === 'c'"></div>
+      <div ng-include="'/angular/coalpedia/views/port/_company-port.partial.html'"></div>
+    </div>
+  </div>
+</div>

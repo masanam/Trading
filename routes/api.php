@@ -37,51 +37,18 @@ Route::group(['middleware' => ['cors']], function() {
      * this API contains ALL the things needed by coalpedia to manage
      * all their data: contact, buyer, seller, vendor
      */
-    Route::get('buyer/total', 'BuyerController@getTotalBuyer');
-    Route::get('seller/total', 'SellerController@getTotalSeller');
+    Route::get('coalpedia/total', 'CoalpediaController@count');
+
+    Route::get('company/{id}/attach', 'CompanyController@attach'); //port, concession, factory, product
+    Route::get('company/{id}/detach', 'CompanyController@detach'); //port, concession, factory, product
 
     Route::resource('contact', 'ContactController', ['except' => [ 'create', 'edit' ]]);
-    Route::resource('buyer', 'BuyerController', ['except' => [ 'create', 'edit' ]]);
-    Route::resource('seller', 'SellerController', ['except' => [ 'create', 'edit' ]]);
-    Route::resource('vendor', 'VendorController', ['except' => [ 'create', 'edit' ]]);
+    Route::resource('company', 'CompanyController', ['except' => [ 'create', 'edit' ]]);
 
-    //Port Management API
-    Route::post('port/buyer/store', 'PortController@storeBuyerPort');
-    Route::post('port/seller/store', 'PortController@storeSellerPort');
-    Route::get('port/buyer/allMy/{buyer_id}', 'PortController@buyerAllMyPort');
-    Route::get('port/seller/allMy/{seller_id}', 'PortController@sellerAllMyPort');
-    Route::get('port/buyer/my/{buyer_id}', 'PortController@buyerMyPort');
-    Route::get('port/seller/my/{seller_id}', 'PortController@sellerMyPort');
-    Route::get('port/buyer/attachPort/{buyer_id}/{port_id}', 'PortController@attachBuyerPort');
-    Route::get('port/buyer/detachPort/{buyer_id}/{port_id}', 'PortController@detachBuyerPort');
-    Route::get('port/seller/attachPort/{seller_id}/{port_id}', 'PortController@attachSellerPort');
-    Route::get('port/seller/detachPort/{seller_id}/{port_id}', 'PortController@detachSellerPort');
-    Route::get('port/buyer/status/{buyer_id}/{port_id}/{status}', 'PortController@changePortStatusBuyer');
-    Route::get('port/seller/status/{seller_id}/{port_id}/{status}', 'PortController@changePortStatusSeller');
-    Route::get('port/{id}/concession', 'PortController@connectedConcessions');
     Route::resource('port', 'PortController', ['except' => [ 'create', 'edit' ]]);
-
-    //Product Management API
-    Route::get('product/{id}/my/buyer', 'ProductController@findMyProductBuyer');
-    Route::get('product/{id}/my/seller', 'ProductController@findMyProductSeller');
-    Route::get('product/total', 'ProductController@getTotalProduct');
-    Route::get('product/search/{search?}', 'ProductController@search');
-    Route::delete('product/{id}', 'ProductController@destroyByID');
     Route::resource('product', 'ProductController', ['except' => [ 'create', 'edit' ]]);
-
-    //Concession Management API
-    Route::get('concession/total', 'ConcessionController@getTotalConcession');
-    Route::get('concession/filter', 'ConcessionController@filter');
-    Route::get('concession/my/{id}', 'ConcessionController@findMyConcession');
-    Route::get('concession/detail/{id}', 'ConcessionController@detail');
     Route::resource('concession', 'ConcessionController', ['except' => [ 'create', 'edit' ]]);
-
-    //Factory Management API
-    Route::get('factory/my/{id}', 'FactoryController@findMyFactory');
-    Route::resource('factory', 'FactoryController', ['except' => [
-        'create', 'edit'
-    ]]);
-
+    Route::resource('factory', 'FactoryController', ['except' => [ 'create', 'edit' ]]);
 
     /*
      * INDEX API GROUP
@@ -108,7 +75,6 @@ Route::group(['middleware' => ['cors']], function() {
      * Managing orders (buy/sell) done here
      */
 
-
     Route::resource('leads', 'LeadController', ['except' => [ 'create', 'edit' ]]);
 
     Route::resource('orders', 'OrderController', ['except' => [ 'create', 'edit' ]]);
@@ -120,30 +86,31 @@ Route::group(['middleware' => ['cors']], function() {
     Route::get('order/buy/draft/{user_id}', 'BuyOrderController@draft');
     Route::get('order/buy/getSub', 'BuyOrderController@getSub');
     Route::get('order/buy/getManager', 'BuyOrderController@getManager');
+
     Route::get('order/buy/{id}/changeOrderStatus/{order_status}', 'BuyOrderController@changeOrderStatus');
 
-    Route::get('order/sell/status/{order_status}/{progress_status?}', 'SellOrderController@status', ['except' => [ 'create', 'edit' ]]);
-    Route::get('order/sell/draft/{user_id}', 'SellOrderController@draft', ['except' => [ 'create', 'edit' ]]);
+    // Route::get('order/sell/status/{order_status}/{progress_status?}', 'SellOrderController@status', ['except' => [ 'create', 'edit' ]]);
+    // Route::get('order/sell/draft/{user_id}', 'SellOrderController@draft', ['except' => [ 'create', 'edit' ]]);
     Route::get('order/sell/{id}/changeOrderStatus/{order_status}', 'SellOrderController@changeOrderStatus', ['except' => [ 'create', 'edit' ]]);
 
-    Route::get('order/lastOrder/{type}/{id}', 'BuySellOrderController@lastOrderByUser');
-    Route::get('order/lastOrders/{type}/{id}', 'BuySellOrderController@lastOrderForDetail');
+    // Route::get('order/lastOrder/{type}/{id}', 'BuySellOrderController@lastOrderByUser');
+    // Route::get('order/lastOrders/{type}/{id}', 'BuySellOrderController@lastOrderForDetail');
 
 
     Route::resource('order/sell', 'SellOrderController', ['except' => [ 'create', 'edit' ]]);
     Route::resource('order/buy', 'BuyOrderController', ['except' => [ 'create', 'edit' ]]);
 
     //DUmmy api, just for show
-    Route::get('order/{id}/approve-now', 'OrderController@approveNow');
-    Route::get('order/{id}/reject-now', 'OrderController@rejectNow');
+    // Route::get('order/{id}/approve-now', 'OrderController@approveNow');
+    // Route::get('order/{id}/reject-now', 'OrderController@rejectNow');
 
     /*
      * DEAL API GROUP
      * Managing the deals (buy/sell) done here
      */
-    Route::get('order/ordersum','OrderController@ordersum');
+    // Route::get('order/ordersum','OrderController@ordersum');
     Route::get('order/funnel','OrderController@funnel');
-    Route::get('order/{id}/test-mail', 'OrderController@testMail');
+    // Route::get('order/{id}/test-mail', 'OrderController@testMail');
     Route::post('order/{id}/stage', 'OrderController@stage');
     Route::get('order/{id}/stage', 'OrderController@stageOwn');
     Route::get('order/{id}/unstage', 'OrderController@unstage');

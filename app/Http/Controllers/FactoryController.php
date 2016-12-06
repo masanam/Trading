@@ -26,40 +26,34 @@ class FactoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $req)
     {
-        $factory = Factory::where('status', 'a')->get();
+        $factory = Factory::where('status', 'a');
+        if($req->q) $factory->where('factory_name', 'LIKE', '%' . $req->q . '%');
 
-        return response()->json($factory, 200);
+        return response()->json($factory->get(), 200);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request  $req
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $req)
     {
-        if(!$request) {
+        if(!$req) {
             return response()->json([
                 'message' => 'Bad Request'
             ], 400);
         }
 
-        $factory = new Factory();
-        $factory->factory_name = $request->factory_name;
-        $factory->buyer_id = $request->buyer_id;
-        $factory->owner = $request->owner;
-        $factory->address = $request->address;
-        $factory->city = $request->city;
-        $factory->country = $request->country;
-        $factory->latitude = $request->latitude;
-        $factory->longitude = $request->longitude;
-        $factory->size = $request->size;
-        $factory->consumption = $request->consumption;
-        $factory->port_id = $request->port_id;
-        $factory->port_distance = $request->port_distance;
+        $factory = new Factory($req->only([
+            'owner', 'address', 'city', 'country', 'latitude', 'longitude',
+            'size', 'consumption', 'port_id', 'port_distance', 'factory_name'
+        ]));
+
+        $factory->company_id = $req->company_id;
         $factory->status = 'a';
         $factory->save();
 
@@ -76,50 +70,32 @@ class FactoryController extends Controller
      */
     public function show($factory)
     {
-        $factory = Factory::with('Port')->find($factory);
-        if($factory->status == 'a') {
-            return response()->json($factory, 200);
-        } else {
-            return response()->json(['message' => 'deactivated record'], 404);
-        }
+        $factory = Factory::with('port', 'company')->findOrFail($factory);
+        if($factory->status != 'a') return response()->json(['message' => 'deactivated record'], 404);
+
+        return response()->json($factory, 200);
     }
     
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request  $req
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $factory)
+    public function update(Request $req, $id)
     {
-        $factory = Factory::find($factory);
+        $factory = Factory::find($id);
 
-        if (!$request) {
-            return response()->json([
-                'message' => 'Bad Request'
-            ], 400);
-        }
+        if (!$req) return response()->json([ 'message' => 'Bad Request' ], 400);
+        if (!$factory) return response()->json([ 'message' => 'Not found' ] ,404);
 
-        if (!$factory) {
-            return response()->json([
-                'message' => 'Not found'
-            ] ,404);
-        }
+        $factory->fill($req->only([
+            'owner', 'address', 'city', 'country', 'latitude', 'longitude',
+            'size', 'consumption', 'port_id', 'port_distance', 'factory_name'
+        ]));
 
-        $factory->factory_name = $request->factory_name;
-        $factory->buyer_id = $request->buyer_id;
-        $factory->owner = $request->owner;
-        $factory->address = $request->address;
-        $factory->city = $request->city;
-        $factory->country = $request->country;
-        $factory->latitude = $request->latitude;
-        $factory->longitude = $request->longitude;
-        $factory->size = $request->size;
-        $factory->consumption = $request->consumption;
-        $factory->port_id = $request->port_id;
-        $factory->port_distance = $request->port_distance;
-
+        $factory->company_id = $req->company_id;
         $factory->save();
 
         event(new InputEditCoalpedia(Auth::user(), $factory->id, 'factory', 'update'));
@@ -158,7 +134,7 @@ class FactoryController extends Controller
 
     public function findMyFactory($id)
     {
-        $factory = Factory::where('status', 'a')->where('buyer_id', $id)->get();
+        $factory = Factory::where('status', 'a')->where('company_id', $id)->get();
         foreach ($factory as $fac) {
             $fac->latitude = floatval($fac->latitude);
             $fac->longitude = floatval($fac->longitude);

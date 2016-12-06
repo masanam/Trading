@@ -1,0 +1,71 @@
+<div class="content" ng-controller="FactoryController" ng-init="findOne()">
+  <!-- HEADER -->
+  <div class="row submenu-header">
+    <div class="submenu-header-item">
+      <button type="button" class="btn btn-default" ui-sref="company.list({ type: companyType })">
+        <i class="glyphicon glyphicon-arrow-left"></i> Back
+      </button>
+      <i>/</i>
+      <button type="button" class="btn btn-default"
+        ui-sref="company.view({ type: companyType, id: factory.company.id })">
+        <i class="glyphicon glyphicon-arrow-left"></i> {{ factory.company.company_name }}
+      </button>
+    </div>
+    <div class="submenu-header-item">
+      <h4>{{ $stateParams.type }} Factory</h4>
+    </div>
+  </div>
+
+  <!-- PRIMARY DETAIL -->
+  <div style="height:200px; padding:10px; background:#eee;">
+    <div class="col-xs-2" style="background-image:url('/images/default.jpg'); background-size: cover; height:180px"></div>
+    <div class="col-xs-10">
+      <h1>{{ factory.factory_name }}</h1>
+      <h3>{{ factory.address }}</h3>
+    </div>
+  </div>
+
+  <div style="margin-top:10px;">
+    <div class="col-lg-4">
+      <div class="row" style="background:#eee; padding: 10px;">
+        <h3>About</h3>
+
+        <button type="button" class="btn btn-primary" ng-click="edit(factory)">
+          <i class="glyphicon glyphicon-pencil"></i> Update
+        </button><br><br>
+
+        <table class="table table-striped">
+          <tr><td>Address:</td><td>{{ factory.address }}</td></tr>
+          <tr><td>City:</td><td>{{ factory.city }}</td></tr>
+          <tr><td>Country:</td><td>{{ factory.country }}</td></tr>
+          <tr><td>Latitude:</td><td>{{ factory.latitude }}</td></tr>
+          <tr><td>Longitude:</td><td>{{ factory.longitude }}</td></tr>
+          <tr><td>Size:</td><td>{{ factory.size | number }}</td></tr>
+          <tr><td>Consumption:</td><td>{{ factory.consumption | number }}</td></tr>
+          <tr><td>Port Name:</td><td>{{ factory.port.port_name }}</td></tr>
+          <tr><td>Distance to Port:</td><td>{{ factory.port_distance | number }} km</td></tr>
+          <tr ng-if="factory.status == 'a'"><td>Status:</td> <td>Active</td></tr>
+          <tr ng-if="factory.status == 'x'"><td>Status:</td> <td>Deactivated</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="col-lg-8">
+      <div class="row" style="background:#eee; padding: 10px; margin-left:10px;">
+        <ng-map zoom="4" center="Indonesia" default-style="false" style="width:100%; height:500px;">
+          <marker position="{{factory.latitude}}, {{factory.longitude}}" id="mark{{factory.id}}" on-click="showDetail({{pos}})"></marker>
+          <marker
+            icon="{
+              url: '/images/boat.png'
+            }"
+            position="{{factory.port.latitude}}, {{factory.port.longitude}}"
+            id="markport{{factory.port.id}}"
+            on-click="showPortDetail({{pos}})"
+          >
+          </marker>
+        </ng-map>
+      </div>
+
+    </div>
+  </div>
+</div>

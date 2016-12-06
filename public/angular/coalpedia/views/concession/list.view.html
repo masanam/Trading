@@ -1,0 +1,53 @@
+<div class="box" ng-controller="ConcessionController">
+  <div class="box-header with-border">
+    <h1 class="box-title" style="font-size: 25px">Concessions</h1>
+    <div class="box-tools pull-right">
+      <button ui-sref="lead.create-concession" class="col-md-12 btn btn-primary">+ Create New Concession</button>
+    </div>
+  </div>
+  <div class="box-body">
+    <table ng-init="find()" st-table="displayedCollection" st-safe-src="concessions" class="table table-striped">
+      <thead>
+        <tr>
+          <th colspan="5"><input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
+        </tr>
+        <tr>
+          <th st-sort="">#</th>
+          <th st-sort="name">Name</th>
+          <th st-sort="city">City</th>
+          <th st-sort="port.port_name">Port Name</th>
+          <th st-sort="port.port_name">Port Location</th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr ng-repeat="(idx, concession) in displayedCollection">
+          <td>{{ concession.id }}</td>
+          <td>{{ concession.concession_name }}</td>
+          <td>{{ concession.city }}</td>
+          <td>{{ concession.port.port_name }}</td>
+          <td>{{ concession.port.location }}</td>
+          <td>
+            <a ui-sref="concession.view({ id: concession.id })"><i class="glyphicon glyphicon-info-sign"></i></a>
+            <a ng-click="delete(concession)"><i class="glyphicon glyphicon-trash"></i></a>
+          </td>
+        </tr>
+
+        <tr ng-if="displayedCollection.length == 0">
+          <td colspan="5" class="text-center">No data available</td>
+        </tr>
+
+      </tbody>
+
+      <tfoot>
+        <tr>
+          <td colspan="5" class="text-center">
+            <div st-pagination="" st-items-by-page="10" st-displayed-pages="7"></div>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>
+            

@@ -1,0 +1,53 @@
+<div class="row">
+  <div class="col-sm-3">
+    <div class="info-box" ng-class="state.current.name === 'company.create' ? 'bg-aqua' : 'bg-default'">
+      <span class="info-box-icon">
+        <i class="fa fa-building"></i>
+      </span>
+
+      <div class="info-box-content">
+        <span class="info-box-text">COMFIRM</span>
+        <span class="info-box-number">{{ companyType | uppercase }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-3">
+    <div class="info-box" ng-if="companyType !== 'vendor'" ng-class="state.current.name === 'company.wizard.connection' ? 'bg-aqua' : 'bg-default'">
+      <span class="info-box-icon">
+        <i class="fa fa-ship"></i>
+      </span>
+
+      <div class="info-box-content">
+        <span class="info-box-text">IDENTIFY</span>
+        <span class="info-box-number">CONNECTIONS</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-3">
+    <div class="info-box" ng-if="companyType !== 'vendor'" ng-class="state.current.name === 'company.wizard.operation' ? 'bg-aqua' : 'bg-default'">
+      <span class="info-box-icon">
+        <i class="fa fa-industry"></i>
+      </span>
+
+      <div class="info-box-content">
+        <span class="info-box-text">ADD</span>
+        <span class="info-box-number">OPERATIONAL BASES</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-3">
+    <div class="info-box" ng-class="state.current.name === 'company.wizard.product' ? 'bg-aqua' : 'bg-default'">
+      <span class="info-box-icon">
+        <i class="fa fa-shopping-cart"></i>
+      </span>
+
+      <div class="info-box-content">
+        <span class="info-box-text">SPECIFY</span>
+        <span class="info-box-number">PRODUCT DETAILS</span>
+      </div>
+    </div>
+  </div>
+</div>

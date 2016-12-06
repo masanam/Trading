@@ -1,0 +1,31 @@
+<section>
+  <div class="text-center">
+    <form class="form-group" ng-submit="search(searchType, keyword)">
+      <div class="input-group input-group-sm">
+        <input type="text" class="col-md-12 form-control" ng-model="keyword">
+        <span class="input-group-btn">
+          <button type="btn" type="submit" class="btn btn-info btn-flat">Search</button>
+        </span>
+      </div>
+
+      <div class="btn-group">
+        <label class="btn btn-sm btn-default" ng-model="searchType"
+          uib-btn-radio="'customer'" ng-click="search('customer')">
+          Customer
+        </label>
+        <label class="btn btn-sm btn-default" ng-model="searchType"
+          uib-btn-radio="'supplier'" ng-click="search('supplier')">
+          Supplier
+        </label>
+        <label class="btn btn-sm btn-default" ng-model="searchType"
+          uib-btn-radio="'vendor'" ng-click="search('vendor')">
+          Vendors
+        </label>
+        <label class="btn btn-sm btn-default" ng-model="searchType"
+          uib-btn-radio="'concession'" ng-click="search('concession')">
+          Concessions
+        </label>
+      </div>
+    </form>
+  </div>
+</section>

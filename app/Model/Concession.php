@@ -9,17 +9,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Concession extends Model
 {
-    protected $table = 'concession';
+    protected $table = 'concessions';
 
-    public function Seller() {
-    	return $this->belongsTo('App\Model\Seller');
+    public function company() {
+    	return $this->belongsTo(Company::class);
     }
     
-    public function Product() {
-        return $this->hasMany('App\Model\Product');
+    public function products() {
+        return $this->hasMany(Product::class);
     }
 
-    public function Port() {
-    	return $this->belongsTo('App\Model\Port');
+    public function port() {
+    	return $this->belongsTo(Port::class);
     }
 }

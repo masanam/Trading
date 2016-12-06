@@ -1,0 +1,53 @@
+<div class="box">
+  <div class="box-header with-border">
+    <h4 class="modal-title">Create Contact</h4>
+    <i class="fa fa-times pull-right" ng-click="close()"></i>
+  </div>
+  <div class="box-body">
+    <div ng-show="!createNew" ng-init="find()">
+      <ui-select ng-model="selected.contact"
+        reset-search-input="false"
+        style="min-width: 300px;"
+        title="Choose an contact">
+        <ui-select-match placeholder="Name of the Contact...">{{$select.selected.name}}</ui-select-match>
+
+        <ui-select-choices repeat="contact in contacts track by $index"
+          refresh="find($select.search)"
+          refresh-delay="1">
+          <div ng-bind-html="contact.name  | highlight: $select.search | html"></div>
+        </ui-select-choices>
+      </ui-select>
+
+      <br>
+      <div ng-if="!selected.contact">
+        <div class="text-center col-md-4 col-md-offset-4">
+          - OR -
+        </div><br><br>
+        <button class="btn btn-primary col-lg-12" ng-click="createNew = true">
+          <b>+</b> Create New Contact
+        </button>
+      </div>
+
+      <div ng-if="selected.contact">
+        <table class="table table-striped table-bordered">
+          <tr><td>Name</td><td>{{ selected.contact.name }}</td></tr>
+          <tr><td>Email</td><td>{{ selected.contact.email }}</td></tr>
+          <tr><td>Phone</td><td>{{ selected.contact.phone }}</td></tr>
+        </table>
+        <br>
+        <button class="btn btn-primary col-lg-12" ng-click="attach(selected.contact)">
+          Use This Contact
+        </button>
+      </div>
+    </div>
+
+
+    <button class="btn btn-primary col-lg-12" ng-click="createNew = false" ng-show="createNew">
+      <b>+</b> Add Existing Contact
+    </button><br><br>
+
+    <form name="createContact" ng-show="createNew" role="form" ng-submit="create(createContact)" ng-init="contact = {}">
+      <div ng-include="'/angular/coalpedia/views/contact/_form.partial.html'"></div>
+    </form>
+  </div>
+</div>

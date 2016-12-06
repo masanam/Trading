@@ -16,15 +16,13 @@ class Contact extends Model
 
     protected $table = 'contacts';
 
-    public function User() {
+    protected $fillable = ['name', 'phone', 'email'];
+
+    public function user() {
     	return $this->belongsTo('User');
     }
 
-    public function Buyer() {
-    	return $this->belongsTo('Buyer');
-    }
-
-    public function Seller() {
-    	return $this->belongsTo('Seller');
+    public function company() {
+    	return $this->belongsTo('Company');
     }
 }

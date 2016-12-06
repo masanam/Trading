@@ -36,6 +36,30 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
+
+        Schema::create('password_resets', function (Blueprint $table) {
+            $table->string('email')->index();
+            $table->string('token')->index();
+            $table->timestamp('created_at')->nullable();
+        });
+
+        Schema::create('login_user', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('user_id');
+            $table->integer('num_login');
+            $table->timestamps();
+        });
+        
+        Schema::create('activities', function (Blueprint $table) {
+            $table->increments('id');
+
+            $table->integer('user_id');
+            $table->string('action');
+            $table->string('table')->nullable();
+            $table->string('entity_id')->nullable();
+
+            $table->timestamps();
+        });
     }
 
     /**
@@ -45,6 +69,9 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::drop('users');
+        Schema::dropIfExists('activities');
+        Schema::dropIfExists('login_user');
+        Schema::dropIfExists('password_resets');
+        Schema::dropIfExists('users');
     }
 }

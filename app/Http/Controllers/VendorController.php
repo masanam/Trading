@@ -41,19 +41,7 @@ class VendorController extends Controller
             ], 400);
         }
 
-        $vendor = new Vendor();
-        $vendor->company_name = $request->company_name;
-            
-        $vendor->phone = $request->phone;
-        $vendor->email = $request->email;
-        $vendor->web = $request->web;
-
-        $vendor->industry = $request->industry;
-
-        $vendor->city = $request->city;
-        $vendor->address = $request->address;
-
-        $vendor->description = $request->description;
+        $vendor = new Vendor($request);
 
         $vendor->status = 'a';
         $vendor->save();
@@ -85,9 +73,9 @@ class VendorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $vendor)
+    public function update(Request $request, $id)
     {
-        $vendor = Vendor::find($vendor);
+        $vendor = Vendor::find($id);
 
         if (!$request) {
             return response()->json([
@@ -137,12 +125,6 @@ class VendorController extends Controller
 
         $vendor->status = 'x';
         $vendor->save();
-
-        return response()->json($vendor, 200);
-    }
-
-    public function getVendorByName($name) {
-        $vendor = Buyer::wherewhere('company_name', 'like', '%'.$name.'%')->get();
 
         return response()->json($vendor, 200);
     }

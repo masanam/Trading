@@ -29,23 +29,23 @@ angular.module('lead').config(['$stateProvider', '$urlRouterProvider',
       })
       .state('lead.buy.create', {
         url: '/create',
-        templateUrl: '/angular/order/views/sell-order/step.supplier.view.html'
+        templateUrl: '/angular/lead/views/buy/step/supplier.view.html'
       })
       .state('lead.buy.step-supplier', {
-        url: '/create/supplier/:order_id',
-        templateUrl: '/angular/order/views/sell-order/step.supplier.view.html'
+        url: '/create/supplier/:id',
+        templateUrl: '/angular/lead/views/buy/step/supplier.view.html'
       })
       .state('lead.buy.step-concession', {
-        url: '/create/concession/:id/:order_id',
-        templateUrl: '/angular/order/views/sell-order/step.concession.view.html'
+        url: '/create/concession/:id/:supplier_id',
+        templateUrl: '/angular/lead/views/buy/step/concession.view.html'
       })
       .state('lead.buy.step-product', {
-        url: '/create/product/:id/:order_id/:concession_id',
-        templateUrl: '/angular/order/views/sell-order/step.product.view.html'
+        url: '/create/product/:id/:supplier_id/:concession_id',
+        templateUrl: '/angular/lead/views/buy/step/product.view.html'
       })
       .state('lead.buy.step-port', {
-        url: '/create/port/:id/:order_id/:concession_id',
-        templateUrl: '/angular/order/views/sell-order/step.port.view.html'
+        url: '/create/port/:id/:supplier_id/:concession_id',
+        templateUrl: '/angular/lead/views/buy/step/port.view.html'
       })
       .state('lead.buy.step-summary', {
         url: '/create/summary/:id/:order_id/:concession_id',
