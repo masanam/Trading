@@ -6,6 +6,12 @@ angular.module('coalpedia').controller('ProductModalController', ['$scope', '$ui
     $scope.company = company;
     $scope.selected = {};
 
+    $scope.find = function (keyword) {
+      Product.query({ q: keyword }, function(res){
+        if(res.length > 0) $scope.products = res;
+      });
+    };
+
     $scope.create = function() {
       var product = new Product($scope.product);
       product.company_id = company.id;
@@ -22,6 +28,12 @@ angular.module('coalpedia').controller('ProductModalController', ['$scope', '$ui
       $scope.product.$update(function(response) {
         product = response;
         $uibModalInstance.close(response);
+      });
+    };
+
+    $scope.attach = function (product) {
+      Company.get({ id: company.id, action: 'attach', product_id: $scope.selected.product.id }, function(response){
+        $uibModalInstance.close(response.product);
       });
     };
 

@@ -1,10 +1,17 @@
 'use strict';
 
-angular.module('coalpedia').controller('ConcessionModalController', ['$scope', '$uibModalInstance', '$timeout', '$interval', 'NgMap', 'Concession', 'concession', 'company',
-  function($scope, $uibModalInstance, $timeout, $interval, NgMap, Concession, concession, company) {
+angular.module('coalpedia').controller('ConcessionModalController', ['$scope', '$uibModalInstance', '$timeout', '$interval', 'NgMap', 'Concession', 'Company', 'concession', 'company',
+  function($scope, $uibModalInstance, $timeout, $interval, NgMap, Concession, Company, concession, company) {
     $scope.concession = concession;
     $scope.createNew = false;
     $scope.display = {};
+    $scope.selected = {};
+
+    $scope.find = function (keyword) {
+      Concession.query({ q: keyword }, function(res){
+        if(res.length > 0) $scope.concessions = res;
+      });
+    };
 
     $scope.create = function() {
       var concession = new Concession($scope.concession);
@@ -68,6 +75,12 @@ angular.module('coalpedia').controller('ConcessionModalController', ['$scope', '
       NgMap.getMap().then(function(map) {
         $scope.map = map;
         $scope.resetPolygon();
+      });
+    };
+
+    $scope.attach = function (concession) {
+      Company.get({ id: company.id, action: 'attach', concession_id: $scope.selected.concession.id }, function(response){
+        $uibModalInstance.close(response.concession);
       });
     };
 

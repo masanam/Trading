@@ -4,8 +4,54 @@
 	  <i class="fa fa-times pull-right" ng-click="close()"></i>
   </div>
   <div class="box-body">
-	  <form name="createProduct" role="form" ng-submit="create(createProduct)" ng-init="product = {}">
-	    <div ng-include="'/angular/coalpedia/views/product/_form.partial.html'"></div>
-	  </form>
+  	<div ng-show="!createNew" ng-init="find()">
+      <ui-select ng-model="selected.product"
+        reset-search-input="false"
+        style="min-width: 300px;"
+        title="Choose an product">
+        <ui-select-match placeholder="Name of the Product...">{{$select.selected.product_name}}</ui-select-match>
+
+        <ui-select-choices repeat="product in products track by $index"
+          refresh="find($select.search)"
+          refresh-delay="1">
+          <div ng-bind-html="product.product_name + ' ' + product.typical_quality  | highlight: $select.search | html"></div>
+        </ui-select-choices>
+      </ui-select>
+
+      <br>
+
+      <div ng-if="selected.product" class="row">
+      	<div class="col-lg-12">
+	        <table class="table table-striped table-bordered">
+	          <tr><td>Brand</td><td>{{ selected.product.product_name }}</td></tr>
+	          <tr><td>Typical Quality</td><td>{{ selected.product.typical_quality }}</td></tr>
+						<tr><td>NCV</td><td>{{ selected.product.ncv_min }} ~ {{ selected.product.ncv_max }}</td></tr>
+						<tr><td>GCV (arb)</td><td>{{ selected.product.gcv_arb_min }} ~ {{ selected.product.gcv_arb_max }}</td></tr>
+						<tr><td>GCV (adb)</td><td>{{ selected.product.gcv_adb_min }} ~ {{ selected.product.gcv_adb_max }}</td></tr>
+	        </table>
+        </div>
+      	<div class="col-lg-12">
+	        <button class="btn btn-primary col-lg-12" ng-click="attach(selected.product)">
+	          Use This Product
+	        </button>
+	      </div>
+      </div>
+    </div>
+
+    <div ng-show="!selected.factory">
+      <div class="text-center col-md-4 col-md-offset-4" ng-if="!createNew">
+        - OR -<br><br>
+      </div>
+      <button class="btn btn-primary col-lg-12" ng-click="createNew=!createNew">
+        <b>+</b> {{ createNew ? 'Add Existing Product' : 'Create New Product' }}
+      </button>
+      <br><br>
+    </div>
+
+    <div ng-show="createNew">
+		  <form name="createProduct" role="form" ng-show="createNew" ng-submit="create(createProduct)" ng-init="product = {}">
+		    <div ng-include="'/angular/coalpedia/views/product/_form.partial.html'"></div>
+		  </form>
+		</div>
 	</div>
 </div>
