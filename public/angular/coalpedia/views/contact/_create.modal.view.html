@@ -1,7 +1,9 @@
 <div class="box">
   <div class="box-header with-border">
-    <h4 class="modal-title">Create Contact</h4>
-    <i class="fa fa-times pull-right" ng-click="close()"></i>
+    <h4 class="modal-title">
+      Create Contact
+      <i class="fa fa-times pull-right" ng-click="close()"></i>
+    </h4>
   </div>
   <div class="box-body">
     <div ng-show="!createNew" ng-init="find()">
@@ -19,14 +21,6 @@
       </ui-select>
 
       <br>
-      <div ng-if="!selected.contact">
-        <div class="text-center col-md-4 col-md-offset-4">
-          - OR -
-        </div><br><br>
-        <button class="btn btn-primary col-lg-12" ng-click="createNew = true">
-          <b>+</b> Create New Contact
-        </button>
-      </div>
 
       <div ng-if="selected.contact">
         <table class="table table-striped table-bordered">
@@ -41,10 +35,15 @@
       </div>
     </div>
 
-
-    <button class="btn btn-primary col-lg-12" ng-click="createNew = false" ng-show="createNew">
-      <b>+</b> Add Existing Contact
-    </button><br><br>
+    <div ng-show="!selected.contact">
+      <div class="text-center col-md-4 col-md-offset-4" ng-if="!createNew">
+        - OR -<br><br>
+      </div>
+      <button class="btn btn-primary col-lg-12" ng-click="createNew=!createNew">
+        <b>+</b> {{ createNew ? 'Add Existing Contact' : 'Create New Contact' }}
+      </button>
+      <br><br>
+    </div>
 
     <form name="createContact" ng-show="createNew" role="form" ng-submit="create(createContact)" ng-init="contact = {}">
       <div ng-include="'/angular/coalpedia/views/contact/_form.partial.html'"></div>
