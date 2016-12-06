@@ -7,7 +7,7 @@
     <div class="box">
       <div class="box-header with-border">
         <h1 class="box-title" style="font-size: 25px">Setup Concession</h1>
-        <div class="box-tools pull-right">
+        <div class="box-tools pull-right" style="position:relative">
           <button type="button" class="btn btn-primary" ui-sref="lead.create-seller">
             <i class="glyphicon glyphicon-arrow-left"></i> Back
           </button>
@@ -60,7 +60,7 @@
         </div>
         <div class="select-box" ng-init="findMyConcessions()">
           <label for="id">Name of Concession :</label>
-          <ui-select ng-model="concession.selected" style="min-width: 300px;" title="Choose a concession" append-to-body="true">
+          <ui-select ng-model="concession.selected" style="display:inline" title="Choose a concession" append-to-body="true">
             <ui-select-match placeholder="Name Of Concession">{{ concession.selected.concession_name }}</ui-select-match>
             <ui-select-choices repeat="concession in concessions | propsFilter: {concession_name: $select.search}">
               <div ng-bind-html="concession_name | highlight: $select.search"></div>
@@ -90,68 +90,66 @@
               <h3 class="profile-username text-center">{{concession.selected.concession_name}}</h3>
 
               <ul class="list-group list-group-unbordered" col-mg-4>
-                <li class="list-group-item">
+                <li class="list-group-item" style="overflow:hidden;">
                   <b>Owner</b> <a class="pull-right">{{concession.selected.owner}}</a>
                 </li>
-                <li class="list-group-item">
+                <li class="list-group-item" style="overflow:hidden;">
                   <b>Address</b> <a class="pull-right">{{concession.selected.address}}</a>
                 </li>
-                <li class="list-group-item">
+                <li class="list-group-item" style="overflow:hidden;">
                   <b>Country of coal purchase</b> <a class="pull-right">{{concession.selected.country}}</a>
                 </li>
-
-                <li class="list-group-item">
+                <li class="list-group-item" style="overflow:hidden;">
                   <b>City</b> <a class="pull-right">{{concession.selected.city}}</a>
                 </li>
-                <div class='col-md-6'>
-                <li class="list-group-item">
-                  <b>Total Coal Resources (MMT)</b> <a class="pull-right">{{concession.selected.resource}}</a>
-                </li>
-                <li class="list-group-item">
-                  <b>Total Coal Reserves (MMT)</b> <a class="pull-right">{{concession.selected.reserves}}</a>
-                </li>
-                <li class="list-group-item">
-                  <b>Annual Production Capacity (MMT)</b> <a class="pull-right">{{concession.selected.annual_production}}</a>
-                </li>
-                <li class="list-group-item">
-                  <b>Stockpile Capacity</b> <a class="pull-right">{{concession.selected.stockpile_capacity}}</a>
-                </li>
-                <li class="list-group-item">
-                  <b>Contracted volume (MMT)</b> <a class="pull-right">{{concession.selected.contracted_volume}}</a>
-                </li>
 
-                </div>
-                 <div class='col-md-6'>
-                <li class="list-group-item">
-                  <b>Stripping Ratio</b> <a class="pull-right">{{concession.selected.stripping_ratio}}</a>
-                </li>
-                <li class="list-group-item">
-                  <b>Size of Concession (Ha)</b> <a class="pull-right">{{concession.selected.size}}</a>
-                </li>
-                <li class="list-group-item">
-                  <b>Stockpile Distance</b> <a class="pull-right">{{concession.selected.stockpile_distance}}</a>
-                </li>
-                <li class="list-group-item">
-                  <b>Stockpile Coverage</b> <a class="pull-right">{{concession.selected.stockpile_coverage}}</a>
-                </li>
-                <li class="list-group-item">
-                  <b>Remaining</b> <a class="pull-right">{{concession.selected.remaining_volume}}</a>
-                </li>
-                </div>  
+                <ul class="list-group list-group-unbordered col-md-6" style="margin-bottom:0">
+                  <li class="list-group-item" style="overflow:hidden;">
+                    <b>Total Coal Resources (MMT)</b> <a class="pull-right">{{concession.selected.resource}}</a>
+                  </li>
+                  <li class="list-group-item" style="overflow:hidden;">
+                    <b>Total Coal Reserves (MMT)</b> <a class="pull-right">{{concession.selected.reserves}}</a>
+                  </li>
+                  <li class="list-group-item" style="overflow:hidden;">
+                    <b>Annual Production Capacity (MMT)</b> <a class="pull-right">{{concession.selected.annual_production}}</a>
+                  </li>
+                  <li class="list-group-item" style="overflow:hidden;">
+                    <b>Stockpile Capacity</b> <a class="pull-right">{{concession.selected.stockpile_capacity}}</a>
+                  </li>
+                  <li class="list-group-item" style="overflow:hidden;">
+                    <b>Contracted volume (MMT)</b> <a class="pull-right">{{concession.selected.contracted_volume}}</a>
+                  </li>
+                </ul>
+
+                <ul class="list-group list-group-unbordered col-md-6" style="margin-bottom:0">
+                  <li class="list-group-item" style="overflow:hidden;">
+                    <b>Stripping Ratio</b> <a class="pull-right">{{concession.selected.stripping_ratio}}</a>
+                  </li>
+                  <li class="list-group-item" style="overflow:hidden;">
+                    <b>Size of Concession (Ha)</b> <a class="pull-right">{{concession.selected.size}}</a>
+                  </li>
+                  <li class="list-group-item" style="overflow:hidden;">
+                    <b>Stockpile Distance</b> <a class="pull-right">{{concession.selected.stockpile_distance}}</a>
+                  </li>
+                  <li class="list-group-item" style="overflow:hidden;">
+                    <b>Stockpile Coverage</b> <a class="pull-right">{{concession.selected.stockpile_coverage}}</a>
+                  </li>
+                  <li class="list-group-item" style="overflow:hidden;">
+                    <b>Remaining</b> <a class="pull-right">{{concession.selected.remaining_volume}}</a>
+                  </li>
+                </ul>  
                 
-                <div class='col-md-12'>
-                  <li class="list-group-item">
+                <ul class="list-group list-group-unbordered col-md-12">
+                  <li class="list-group-item" style="overflow:hidden;">
                   <b>Hauling Road</b> <a class="pull-right">{{concession.selected.hauling_road_name}}</a>
                  </li>
-                  <li class="list-group-item">
+                  <li class="list-group-item" style="overflow:hidden;">
                   <b>License Type</b> <a class="pull-right">{{concession.selected.license_type}}</a>
                  </li>
-                  <li class="list-group-item">
+                  <li class="list-group-item" style="overflow:hidden;">
                   <b>Expiry Date</b> <a class="pull-right">{{concession.selected.license_expiry_date}}</a>
                  </li>
-
-
-                </div>
+               </ul>
                 
               </ul>
 

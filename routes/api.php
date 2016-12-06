@@ -107,6 +107,13 @@ Route::group(['middleware' => ['cors']], function() {
      * ORDER API GROUP
      * Managing orders (buy/sell) done here
      */
+
+
+    Route::resource('leads', 'LeadController', ['except' => [ 'create', 'edit' ]]);
+
+    Route::resource('orders', 'OrderController', ['except' => [ 'create', 'edit' ]]);
+
+
     Route::get('order/{order}/user', 'OrderUserController@findUserByOrder');
     Route::get('order/user/{user}', 'OrderUserController@findOrderByUser');
     Route::get('order/buy/status/{order_status}/{progress_status?}', 'BuyOrderController@status');
@@ -141,5 +148,5 @@ Route::group(['middleware' => ['cors']], function() {
     Route::get('order/{id}/stage', 'OrderController@stageOwn');
     Route::get('order/{id}/unstage', 'OrderController@unstage');
     Route::get('order/{id}/approve', 'OrderController@approve');
-    Route::resource('order', 'OrderController');
+    // Route::resource('order', 'OrderController');
 });

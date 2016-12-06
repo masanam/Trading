@@ -363,7 +363,7 @@ angular.module('seller').controller('CreateSellerModalController', function ($sc
   };
 
 
-  //show freetext payment term
+  //show freetext payment terms
   $scope.freetext = function() {
     if($scope.seller.preferred_payment_term === 'other'){
       $scope.seller.preferred_payment_term = '';

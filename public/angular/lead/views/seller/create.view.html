@@ -19,7 +19,7 @@
         </div>
   		  <div class="select-box" ng-init="findAllSellers()">
           <label for="id">Supplier Name :</label>
-          <ui-select ng-model="seller.selected" style="min-width: 300px;" title="Choose Supplier Name" append-to-body="true">
+          <ui-select ng-model="seller.selected" style="display:inline" title="Choose Supplier Name" append-to-body="true">
             <ui-select-match placeholder="Supplier Name">{{ seller.selected.company_name }}</ui-select-match>
             <ui-select-choices repeat="seller in sellers | propsFilter: {company_name: $select.search} | orderBy:'company_name'">
               <div ng-bind-html="company_name | highlight: $select.search"></div>
@@ -46,62 +46,62 @@
             <h3 class="profile-username text-center">{{seller.selected.company_name}}</h3>
 
             <ul class="list-group list-group-unbordered" col-mg-4>
-              <li class="list-group-item">
+              <li class="list-group-item" style="overflow:hidden;">
                 <b>Supplier category </b>
                 <span class="badge" ng-show="seller.selected.is_trader===1"><i class='fa fa-share-alt'></i> TRADER</span>
                 <span class="badge" ng-show="seller.selected.is_trader===0"><i class='fa fa-share-alt'></i> MINER</span>
               </li>
-              <li class="list-group-item">
+              <li class="list-group-item" style="overflow:hidden;">
                 <b>Supplier status </b>
                 <span class="badge" ng-show="seller.selected.is_affiliated===1"><i class='fa fa-tags'></i> AFFILIATED</span>
                 <span class="badge" ng-show="seller.selected.is_affiliated===0"><i class='fa fa-tags'></i> NON - AFFILIATED</span>
               </li>
-              <li class="list-group-item">
+              <li class="list-group-item" style="overflow:hidden;">
                 <b>Contact Person</b> <a class="pull-right">{{seller.selected.contact_person}}</a>
               </li>
-              <li class="list-group-item">
+              <li class="list-group-item" style="overflow:hidden;">
                 <b>Phone</b> <a class="pull-right">{{seller.selected.phone}}</a>
               </li>
-              <li class="list-group-item">
+              <li class="list-group-item" style="overflow:hidden;">
                 <b>Email</b> <a class="pull-right">{{seller.selected.email}}</a>
               </li>
-              <li class="list-group-item">
+              <li class="list-group-item" style="overflow:hidden;">
                 <b>Web</b> <a class="pull-right">{{seller.selected.web}}</a>
               </li>
-              <li class="list-group-item">
+              <li class="list-group-item" style="overflow:hidden;">
                 <b>Address</b> <a class="pull-right">{{seller.selected.address}}</a>
               </li>
-              <li class="list-group-item">
+              <li class="list-group-item" style="overflow:hidden;">
                 <b>City</b> <a class="pull-right">{{seller.selected.city}}</a>
               </li>
-              <li class="list-group-item">
+              <li class="list-group-item" style="overflow:hidden;">
                 <b>Country</b> <a class="pull-right">{{seller.selected.country}} </a>
               </li>
-              <li class="list-group-item">
+              <li class="list-group-item" style="overflow:hidden;">
                 <b>Industry</b> <a class="pull-right">{{seller.selected.industry}}</a>
               </li>
-              <li class="list-group-item">
+              <li class="list-group-item" style="overflow:hidden;">
                 <b>City</b> <a class="pull-right">{{seller.selected.city}}</a>
               </li>
-              <li class="list-group-item">
+              <li class="list-group-item" style="overflow:hidden;">
                 <b>County</b> <a class="pull-right">{{seller.selected.country}}</a>
               </li>
-              <li class="list-group-item">
+              <li class="list-group-item" style="overflow:hidden;">
                 <b>Industry</b> <a class="pull-right">{{seller.selected.industry}}</a>
               </li>
-              <li class="list-group-item">
+              <li class="list-group-item" style="overflow:hidden;">
                 <b>Total Annual Sales</b> <a class="pull-right">{{seller.selected.total_annual_sales}} <span class='badge badger-danger'>Million USD</span></a>
               </li>
-              <li class="list-group-item">
+              <li class="list-group-item" style="overflow:hidden;">
                 <b>Shipping Terms</b> <a class="pull-right">{{seller.selected.preferred_trading_term}} {{seller.selected.preferred_trading_term_detail}}</a>
               </li>
-              <li class="list-group-item">
+              <li class="list-group-item" style="overflow:hidden;">
                 <b>Preferred Payment Term</b> <a class="pull-right">{{seller.selected.preferred_payment_term}}</a>
               </li>
-              <li class="list-group-item">
+              <li class="list-group-item" style="overflow:hidden;">
                 <b>Purchasing Countries</b> <a class="pull-right">{{seller.selected.purchasing_countries}}</a>
               </li>
-             <li class="list-group-item">
+             <li class="list-group-item" style="overflow:hidden;">
                 <b>Description</b> <a class="pull-right">{{seller.selected.description}}</a>
               </li>
             </ul>

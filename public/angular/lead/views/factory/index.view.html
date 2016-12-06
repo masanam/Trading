@@ -7,7 +7,7 @@
     <div class="box box-info">
       <div class="box-header with-border">
         <h1 class="box-title" style="font-size: 25px">Setup Factory</h1>
-        <div class="box-tools pull-right">
+        <div class="box-tools pull-right" style="position:relative">
           <button type="button" class="btn btn-danger" ui-sref="lead.create-buyer">
             <i class="glyphicon glyphicon-arrow-left"></i> Back
           </button>
@@ -27,7 +27,7 @@
 
         <div class="select-box" ng-controller="SelectFactoryController" ng-init="findMyFactorys()">
           <label for="id">Name of Factory :</label>
-          <ui-select ng-model="factory.selected" style="min-width: 300px;" title="Choose a Factory" append-to-body="true">
+          <ui-select ng-model="factory.selected" style="display:inline" title="Choose a Factory" append-to-body="true">
             <ui-select-match placeholder="Name Of Factory">{{ factory.selected.factory_name }}</ui-select-match>
             <ui-select-choices repeat="factory in factorys | propsFilter: {factory_name: $select.search}">
               <div ng-bind-html="factory_name | highlight: $select.search"></div>
@@ -57,29 +57,27 @@
           <h3 class="profile-username text-center">{{factory.selected.factory_name}}</h3>
 
           <ul class="list-group list-group-unbordered" col-mg-4>
-            <li class="list-group-item">
+            <li class="list-group-item" style="overflow:hidden;">
               <b>Owner</b> <a class="pull-right">{{factory.selected.owner}}</a>
             </li>
-            <li class="list-group-item">
+            <li class="list-group-item" style="overflow:hidden;">
               <b>Address</b> <a class="pull-right">{{factory.selected.address}}</a>
             </li>
-            <li class="list-group-item">
+            <li class="list-group-item" style="overflow:hidden;">
               <b>Country of coal purchase</b> <a class="pull-right">{{factory.selected.country}}</a>
             </li>
-            <li class="list-group-item">
+            <li class="list-group-item" style="overflow:hidden;">
               <b>City</b> <a class="pull-right">{{factory.selected.city}}</a>
             </li>
-            <div class="row">
-              <div class="col-md-6" style="padding-right:0">
-                <li class="list-group-item">
-                  <b>Size of Factory (Ha)</b> <a class="pull-right">{{factory.selected.size}}</a>
-                </li>
-              </div>
-              <div class="col-md-6" style="padding-left:0">
-                <li class="list-group-item">
-                  <b>Consumption Rate</b> <a class="pull-right">{{factory.selected.consumption}}</a>
-                </li>
-              </div>
+            <div class="list-group list-group-unbordered col-md-6" style="padding-right:0;margin-bottom:0">
+              <li class="list-group-item" style="overflow:hidden;padding-right:10px;margin-bottom:0">
+                <b>Size of Factory (Ha)</b> <a class="pull-right">{{factory.selected.size}}</a>
+              </li>
+            </div>
+            <div class="list-group list-group-unbordered col-md-6" style="padding-left:0;padding-right:0;margin-bottom:0">
+              <li class="list-group-item" style="overflow:hidden;padding-right:10px">
+                <b>Consumption Rate</b> <a class="pull-right">{{factory.selected.consumption}}</a>
+              </li>
             </div>
           </ul>
         </div>

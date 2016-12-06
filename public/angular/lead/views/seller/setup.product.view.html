@@ -7,7 +7,7 @@
    <div class="box box-info">
         <div class="box-header with-border">
           <h3 class="box-title" style="font-size: 25px">Products Collections</h3>
-          <div class="box-tools pull-right">
+          <div class="box-tools pull-right" style="position:relative">
            <button type="button" ng-click="backToConcession()" class="btn btn-danger"><i class="glyphicon glyphicon-arrow-left"></i> Back</button>
 
             <button type="button" ng-click="nexToPort()" class="btn btn-success">Next <i class="glyphicon glyphicon-arrow-right"></i> </button>
@@ -22,7 +22,7 @@
           <div class="row" style="margin: 10px;">
             <div class="select-box" ng-init="findMyProductsSeller()">
               <label for="id">Product Name:</label>
-              <ui-select ng-model="product.selected" style="min-width: 300px;" title="Choose a product" append-to-body="true">
+              <ui-select ng-model="product.selected" style="display:inline" title="Choose a product" append-to-body="true">
                 <ui-select-match placeholder="Product Name">{{ product.selected.product_name }}</ui-select-match>
                 <ui-select-choices repeat="product in products | propsFilter: {product_name: $select.search}">
                   <div ng-bind-html="product_name | highlight: $select.search"></div>

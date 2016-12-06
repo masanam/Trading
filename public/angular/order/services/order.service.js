@@ -2,7 +2,7 @@
 
 angular.module('order').factory('Order', ['$resource',
   function ($resource) {
-    return $resource('api/order/:type/:id/:action/:order_status/:progress_status/:user_id', {
+    return $resource('api/orders/:type/:id/:action/:order_status/:progress_status/:user_id', {
       type: undefined,
       id: '@id',
       action: undefined,

@@ -1,0 +1,50 @@
+<section class="content" ng-controller="IndexLeadBuyController">
+  <div class="box">
+    <div class="box-header with-border">
+      <h1 class="box-title" style="font-size: 25px">Buy Leads</h1>
+      <div class="box-tools pull-right">
+        <button ui-sref="sell-order.create" class="col-md-12 btn btn-primary">+ Create New</button>
+      </div>
+    </div>
+    <div class="box-body">
+      <uib-tabset active="activeJustified" justified="true" ng-init="findStatus('draft')">
+        <uib-tab index="0" ng-click="findStatus('draft')">
+          <uib-tab-heading>
+            <i class='glyphicon glyphicon-fire'></i>  Draft<i class='glyphicon glyphicon-chevron-right pull-right'></i>
+          </uib-tab-heading>
+          <section ng-include="'/angular/order/views/sell-order/_table.view.html'"></section>
+        </uib-tab>
+        <uib-tab index="1" ng-click="findStatus('l')">
+          <uib-tab-heading>
+            <i class='glyphicon glyphicon-share'></i>  Lead<i class='glyphicon glyphicon-chevron-right pull-right'></i>
+          </uib-tab-heading>
+          <section ng-include="'/angular/order/views/sell-order/_table.view.html'"></section>
+        </uib-tab>
+        <uib-tab index="2" ng-click="findStatus('v')">
+          <uib-tab-heading>
+            <i class='glyphicon glyphicon-earphone'></i>  Verified<i class='glyphicon glyphicon-chevron-right pull-right'></i>
+          </uib-tab-heading>
+          <section ng-include="'/angular/order/views/sell-order/_table.view.html'"></section>
+        </uib-tab>
+        <uib-tab index="3" ng-click="findStatus('s')">
+          <uib-tab-heading>
+            <i class='glyphicon glyphicon-magnet'></i>  Staged<i class='glyphicon glyphicon-chevron-right pull-right'></i>
+          </uib-tab-heading>
+          <section ng-include="'/angular/order/views/sell-order/_table.view.html'"></section>
+        </uib-tab>
+        <uib-tab index="4" ng-click="findStatus('p')">
+          <uib-tab-heading>
+            <i class='glyphicon glyphicon-magnet'></i>  Partial<i class='glyphicon glyphicon-chevron-right pull-right'></i>
+          </uib-tab-heading>
+          <section ng-include="'/angular/order/views/sell-order/_table.view.html'"></section>
+        </uib-tab>
+        <uib-tab index="5" ng-click="findStatus('all')">
+          <uib-tab-heading>
+            <i class='glyphicon glyphicon-magnet'></i>  All<i class='glyphicon glyphicon-chevron-right pull-right'></i>
+          </uib-tab-heading>
+          <section ng-include="'/angular/order/views/sell-order/_table.view.html'"></section>
+        </uib-tab>
+      </uib-tabset>
+    </div>
+  </div>
+</section>

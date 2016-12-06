@@ -310,13 +310,13 @@ function($scope, $http, $stateParams, $state, $timeout, Buyer, Order, Factory, P
 //controller Create Buyer Modal
 angular.module('buyer').controller('BuyerModalController', function ($scope, $uibModalInstance, $timeout, $interval, Buyer, $location) {
 
-  //show freetext payment term
+  //show freetext payment terms
   $scope.freetext = function() {
     if($scope.buyer.preferred_payment_term === 'other'){
       $scope.buyer.preferred_payment_term = '';
-      $scope.seller.freetext = true;
+      $scope.buyer.freetext = true;
     }else{
-      $scope.seller.freetext = false;
+      $scope.buyer.freetext = false;
     }
   };
 

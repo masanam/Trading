@@ -16,6 +16,50 @@ angular.module('lead').config(['$stateProvider', '$urlRouterProvider',
         roles: ['user', 'trader', 'manager']
       })
 
+      //buy lead
+      .state('lead.buy', {
+        url: '/buy',
+        abstract: true,
+        template: '<ui-view/>'
+      })
+      .state('lead.buy.index', {
+        url: '',
+        templateUrl: '/angular/lead/views/buy/index.view.html',
+        roles: ['user', 'trader', 'manager']
+      })
+      .state('lead.buy.create', {
+        url: '/create',
+        templateUrl: '/angular/order/views/sell-order/step.supplier.view.html'
+      })
+      .state('lead.buy.step-supplier', {
+        url: '/create/supplier/:order_id',
+        templateUrl: '/angular/order/views/sell-order/step.supplier.view.html'
+      })
+      .state('lead.buy.step-concession', {
+        url: '/create/concession/:id/:order_id',
+        templateUrl: '/angular/order/views/sell-order/step.concession.view.html'
+      })
+      .state('lead.buy.step-product', {
+        url: '/create/product/:id/:order_id/:concession_id',
+        templateUrl: '/angular/order/views/sell-order/step.product.view.html'
+      })
+      .state('lead.buy.step-port', {
+        url: '/create/port/:id/:order_id/:concession_id',
+        templateUrl: '/angular/order/views/sell-order/step.port.view.html'
+      })
+      .state('lead.buy.step-summary', {
+        url: '/create/summary/:id/:order_id/:concession_id',
+        templateUrl: '/angular/order/views/sell-order/step.summary.view.html'
+      })
+      .state('lead.buy.view', {
+        url: '/:id',
+        templateUrl: '/angular/order/views/sell-order/view.view.html'
+      })
+      .state('lead.buy.update', {
+        url: '/update/:id',
+        templateUrl: '/angular/order/views/sell-order/update.view.html'
+      })
+
       //browse page
       .state('lead.buyer', {
         url: '/buyer?keyword',
