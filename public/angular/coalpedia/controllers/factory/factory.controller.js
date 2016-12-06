@@ -32,7 +32,7 @@ angular.module('coalpedia').controller('FactoryController', ['$scope', '$statePa
         controller: 'FactoryModalController',
         windowClass: 'xl-modal',
         resolve: {
-          factory: angular.copy(factory),
+          factory: Factory.get({ id: factory.id }),
           company: $scope.company
         }
       });

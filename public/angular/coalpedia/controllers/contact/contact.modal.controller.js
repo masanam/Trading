@@ -21,7 +21,6 @@ angular.module('coalpedia').controller('ContactModalController', ['$scope', '$ui
     };
 
     $scope.update = function() {
-      $scope.contact = new Contact($scope.contact);
       $scope.contact.company_id = company.id;
 
       $scope.contact.$update(function(response) {

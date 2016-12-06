@@ -32,7 +32,7 @@ angular.module('coalpedia').controller('ContactController', ['$scope', '$statePa
         controller: 'ContactModalController',
         windowClass: 'xl-modal',
         resolve: {
-          contact: angular.copy(contact),
+          contact: Contact.get({ id: contact.id }),
           company: $scope.company
         }
       });

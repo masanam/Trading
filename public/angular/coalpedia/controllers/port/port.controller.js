@@ -32,7 +32,7 @@ angular.module('coalpedia').controller('PortController', ['$scope', '$stateParam
         controller: 'PortModalController',
         windowClass: 'xl-modal',
         resolve: {
-          port: angular.copy(port),
+          port: Port.get({ id: port.id }),
           company: $scope.company
         }
       });

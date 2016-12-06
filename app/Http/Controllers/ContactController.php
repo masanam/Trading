@@ -37,7 +37,7 @@ class ContactController extends Controller
    */
   public function show($id)
   {
-    $contact = Contact::with('company', 'user')->find($id);
+    $contact = Contact::find($id);
 
     if($contact->status != 'a')
       return response()->json(['message' => 'deactivated record'], 404);

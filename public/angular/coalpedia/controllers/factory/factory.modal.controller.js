@@ -27,7 +27,6 @@ angular.module('coalpedia').controller('FactoryModalController', ['$scope', '$ui
     };
 
     $scope.update = function() {
-      $scope.factory = new Factory($scope.factory);
       $scope.factory.company_id = company.id;
 
       $scope.factory.$update(function(response) {
