@@ -4,7 +4,48 @@
 	  <i class="fa fa-times pull-right" ng-click="close()"></i>
   </div>
   <div class="box-body">
-	  <form name="createFactory" role="form" ng-submit="create(createFactory)" ng-init="factory = {}">
+  	<div ng-show="!createNew" ng-init="find()">
+      <ui-select ng-model="selected.factory"
+        reset-search-input="false"
+        style="min-width: 300px;"
+        title="Choose an factory">
+        <ui-select-match placeholder="Name of the Factory...">{{$select.selected.factory_name}}</ui-select-match>
+
+        <ui-select-choices repeat="factory in factories track by $index"
+          refresh="find($select.search)"
+          refresh-delay="1">
+          <div ng-bind-html="factory.factory_name  | highlight: $select.search | html"></div>
+        </ui-select-choices>
+      </ui-select>
+
+      <br>
+      <div ng-if="!selected.factory">
+        <div class="text-center col-md-4 col-md-offset-4">
+          - OR -
+        </div><br><br>
+        <button class="btn btn-primary col-lg-12" ng-click="createNew = true">
+          <b>+</b> Create New Factory
+        </button>
+      </div>
+
+      <div ng-if="selected.factory">
+        <table class="table table-striped table-bordered">
+          <tr><td>Name</td><td>{{ selected.factory.factory_name }}</td></tr>
+          <tr><td>Email</td><td>{{ selected.factory.email }}</td></tr>
+          <tr><td>Phone</td><td>{{ selected.factory.phone }}</td></tr>
+        </table>
+        <br>
+        <button class="btn btn-primary col-lg-12" ng-click="attach(selected.factory)">
+          Use This Factory
+        </button>
+      </div>
+    </div>
+
+    <button class="btn btn-primary col-lg-12" ng-click="createNew = false" ng-show="createNew">
+      <b>+</b> Add Existing Factory
+    </button><br><br>
+
+	  <form name="createFactory" ng-show="createNew" role="form" ng-submit="create(createFactory)" ng-init="factory = {}">
 	    <div ng-include="'/angular/coalpedia/views/factory/_form.partial.html'"></div>
 	  </form>
 	</div>
