@@ -2,11 +2,17 @@
   <div class="box-header with-border">
     <h3 class="box-title" style="font-size: 25px">Contacts</h3>
     <div class="box-tools pull-right">
-      <button type="button" ng-click="add()" class="btn btn-info">
+      <button type="button" ng-click="add()" class="btn btn-info hidden-xs">
         <i class="glyphicon glyphicon-plus"></i> Add New Contact
       </button>
     </div>
+     <!--For Mobile-->
+      <button type="button" ng-click="add()" class="btn btn-info btn-block visible-xs">
+        <i class="glyphicon glyphicon-plus"></i> Add New Contact
+      </button>
+      <!--For Mobile-->
   </div>
+     
   <div class="box-body no-padding">
     <div class="table-responsive">
       <table class="table table-striped">

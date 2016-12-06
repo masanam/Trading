@@ -75,22 +75,33 @@
             <li ng-if="notifications.length" class="footer"><a ui-sref="notification">View all</a></li>
           </ul>
         </li>
+
         <li class="dropdown user user-menu" ng-if="Authentication.user">
-          <a class="dropdown-toggle" ui-sref="user.edit">
+          <a class="dropdown-toggle" ui-sref="user.edit" data-toggle="dropdown" uib-dropdown-toggle>
             <img ng-src="{{ Authentication.user.image }}" ng-src-fallback="/image/default.png" class="user-image" alt="User Image">
             <span class="hidden-xs">{{ Authentication.user.name }} <br> </span>
           </a>
+            
         </li>
-        <li class="dropdown user user-menu" ng-if="Authentication.user">
+
+        <li ng-if="Authentication.user" class="hidden-xs" >
           <a class="dropdown-toggle">
-            <span class="hidden-xs role-header" ng-bind="Authentication.user.role"></span>
+            <span class="hidden-xs role-header" ng-bind="Authentication.user.role">{{ Authentication.user.role }}</span>
           </a>
         </li>
-        <li class="dropdown user user-menu" ng-if="Authentication.user">
+
+        <li ng-if="Authentication.user" class="hidden-xs">
           <a style="cursor: pointer" ng-click="logout()" class="dropdown-toggle">
-            <span class="hidden-xs">Sign out</span>
+            <span><i class="glyphicon glyphicon-off"></i> Sign out</span>
           </a>
         </li>
+
+        <li ng-if="Authentication.user" class="visible-xs">
+          <a style="cursor: pointer" ng-click="logout()" class="dropdown-toggle">
+            <span><i class="glyphicon glyphicon-off"></i></span>
+          </a>
+        </li>
+
       </ul>
     </div>
 

@@ -1,6 +1,6 @@
 <section>
   <div class="text-center">
-    <form class="form-group" ng-submit="search(searchType, keyword)">
+    <form class="form-group hidden-xs" ng-submit="search(searchType, keyword)">
       <div class="input-group input-group-sm">
         <input type="text" class="col-md-12 form-control" ng-model="keyword">
         <span class="input-group-btn">
@@ -8,7 +8,7 @@
         </span>
       </div>
 
-      <div class="btn-group">
+      <div class="btn-group hidden-xs">
         <label class="btn btn-sm btn-default" ng-model="searchType"
           uib-btn-radio="'customer'" ng-click="search('customer')">
           Customer
@@ -27,5 +27,28 @@
         </label>
       </div>
     </form>
+
+ <!--For mobile-->
+    <form ng-submit="search(searchType, keyword)" class="hidden-sm hidden-md hidden-lg">
+      <div class="input-group col-xs-12">
+        <input type="text" class="form-control" placeholder="example: Wilmar" ng-model="keyword">
+      </div>
+                
+      <div class="input-group">
+        <div class="input-group-btn">
+           <button type="button" class="btn btn-danger">Filter By</button>
+        </div>
+        <select ng-model="searchType" class="form-control">
+          <option value="costumer">Costumer</option>
+          <option value="seller">Supplier</option>
+          <option value="vendor">Vendors</option>
+          <option value="concession">Concessions</option>
+        </select>
+      </div>
+
+      <button type="btn" type="submit" class="btn btn-info btn-block btn-flat">Search</button>
+    </form>
+  <!--For mobile-->
+
   </div>
 </section>

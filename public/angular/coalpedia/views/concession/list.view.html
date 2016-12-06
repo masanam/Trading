@@ -2,10 +2,12 @@
   <div class="box-header with-border">
     <h1 class="box-title" style="font-size: 25px">Concessions</h1>
     <div class="box-tools pull-right">
-      <button ui-sref="lead.create-concession" class="col-md-12 btn btn-primary">+ Create New Concession</button>
+      <button ui-sref="lead.create-concession" class="col-md-12 btn btn-primary hidden-xs">+ Create New Concession</button>
     </div>
+    <button ui-sref="lead.create-concession" class="col-md-12 btn btn-primary visible-xs">+ Create New Concession</button>
   </div>
   <div class="box-body">
+    <div class="table-responsive">
     <table ng-init="find()" st-table="displayedCollection" st-safe-src="concessions" class="table table-striped">
       <thead>
         <tr>
@@ -48,6 +50,7 @@
         </tr>
       </tfoot>
     </table>
+    </div>
   </div>
 </div>
             
