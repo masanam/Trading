@@ -211,20 +211,20 @@ class OrderController extends Controller
    */
   public function show($id)
   {
-    $order = Order::with('trader', 'users', 'sells', 'sells.seller', 'buys', 'buys.buyer', 'buys.trader', 'approvals', 'buys.Factory', 'sells.Concession', 'sells.trader')->find($id);
-    $this->authorize('view', $order);
+    $order = Order::with('trader', 'users', 'sells', 'buys', 'buys.trader', 'approvals', 'sells.trader')->find($id);
+    // $this->authorize('view', $order);
 
-    // lazyloading semua negotiation log
-    foreach($order->sells as &$sell){
-      if($sell->user_id !== Auth::user()->id && Auth::user()->role !== 'manager')
-        $sell->seller = $sell->location = $sell->port_name = $sell->address = '-hidden value-';
-      $sell->pivot->negotiations = OrderNegotiation::where('order_detail_id', '=', $sell->pivot->id)->get();
-    }
-    foreach($order->buys as &$buy){
-      if($buy->user_id !== Auth::user()->id && Auth::user()->role !== 'manager')
-        $buy->buyer = $buy->location = $buy->port_name = $buy->address = '-hidden value-';
-      $buy->pivot->negotiations = OrderNegotiation::where('order_detail_id', '=', $buy->pivot->id)->get();
-    }
+    // // lazyloading semua negotiation log
+    // foreach($order->sells as &$sell){
+    //   if($sell->user_id !== Auth::user()->id && Auth::user()->role !== 'manager')
+    //     $sell->seller = $sell->location = $sell->port_name = $sell->address = '-hidden value-';
+    //   $sell->pivot->negotiations = OrderNegotiation::where('order_detail_id', '=', $sell->pivot->id)->get();
+    // }
+    // foreach($order->buys as &$buy){
+    //   if($buy->user_id !== Auth::user()->id && Auth::user()->role !== 'manager')
+    //     $buy->buyer = $buy->location = $buy->port_name = $buy->address = '-hidden value-';
+    //   $buy->pivot->negotiations = OrderNegotiation::where('order_detail_id', '=', $buy->pivot->id)->get();
+    // }
     
     //$user = User::findOrFail(Auth::user()->id); // Or an different ID
     //dd($user->Subordinates);

@@ -24,9 +24,9 @@ class PortController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $req)
     {
-        $port = Port::where('is_private', '=', 0)->get();
+        $port = Port::get();
         return response()->json($port, 200);
     }
 

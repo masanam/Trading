@@ -18,11 +18,16 @@ class ProductController extends Controller
    *
    * @return \Illuminate\Http\Response
    */
-  public function index()
+  public function index(Request $req)
   {
-    $product = Product::where('status', 'a')->get();
+    $product = Product::where('status', 'a');
+    if($req->q)
+      $product->where(function($query) use ($req) {
+        return $query->where('product_name', 'LIKE', '%' . $req->q . '%')
+          ->orWhere('typical_quality', 'LIKE', '%' . $req->q . '%');
+      });
 
-    return response()->json($product, 200);
+    return response()->json($product->get(), 200);
   }
 
   /**
