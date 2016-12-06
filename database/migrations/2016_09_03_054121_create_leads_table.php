@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBuysTable extends Migration
+class CreateLeadsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateBuysTable extends Migration
      */
     public function up()
     {
-        Schema::create('buy_order', function (Blueprint $table) {
+        Schema::create('leads', function (Blueprint $table) {
             $table->increments('id');
 
             $table->integer('user_id');
@@ -26,6 +26,7 @@ class CreateBuysTable extends Migration
             $table->date('expired_date')->nullable();
 
             $table->integer('factory_id')->nullable(); //weak relation tempat dikirim
+            $table->integer('concession_id')->nullable(); //weak relation tempat dikirim
             $table->string('address')->nullable();
             $table->string('city')->nullable();
             $table->string('country')->nullable();
@@ -98,12 +99,13 @@ class CreateBuysTable extends Migration
             $table->string('aft_bonus')->nullable();
 
             $table->integer('volume')->nullable();
-            $table->integer('max_price')->nullable();
+            $table->integer('price')->nullable();
             $table->string('trading_term')->nullable();
             $table->string('trading_term_detail')->nullable();
             $table->string('payment_terms')->nullable();
             $table->longText('commercial_term')->nullable();
             $table->longText('penalty_desc')->nullable();
+            $table->char('lead_type', 1)->nullable(); // buy(b), sell(s) 
             $table->char('order_status', 1); // customer(0), factory(1), product(2), port(3), summary(4), lead(l), staged(s), partial(p), deleted(x), verified(v)
             $table->char('progress_status', 1)->nullable();
 

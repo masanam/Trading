@@ -18,9 +18,13 @@ class ProductController extends Controller
    *
    * @return \Illuminate\Http\Response
    */
-  public function index()
+  public function index(Request $req)
   {
-    $product = Product::where('status', 'a')->get();
+    if($req->supplier_id){
+      $product = Product::where('status', 'a')->where('company_id', $req->supplier_id)->get();
+    }else{
+      $product = Product::where('status', 'a')->get();
+    }
 
     return response()->json($product, 200);
   }
