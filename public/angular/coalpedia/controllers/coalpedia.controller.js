@@ -2,7 +2,7 @@
 
 angular.module('coalpedia').controller('CoalpediaController', ['$scope', '$stateParams', '$state', 'Coalpedia', 
   function($scope, $stateParams, $state, Coalpedia) {
-    $scope.searchType = $stateParams.type || 'customer';
+    $scope.searchType = $state.current.name === 'concession.list' ? 'concession' : $stateParams.type || 'customer';
     $scope.keyword = $stateParams.keyword;
 
     $scope.search = function(searchType, keyword) {
