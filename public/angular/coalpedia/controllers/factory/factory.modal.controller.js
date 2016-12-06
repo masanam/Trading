@@ -5,6 +5,12 @@ angular.module('coalpedia').controller('FactoryModalController', ['$scope', '$ui
     $scope.factory = factory;
     $scope.selected = {};
 
+    $scope.find = function (keyword) {
+      Factory.query({ q: keyword }, function(res){
+        if(res.length > 0) $scope.factories = res;
+      });
+    };
+
     $scope.changePosition = function(e) {
       $scope.factory.latitude = e.latLng.lat();
       $scope.factory.longitude = e.latLng.lng();

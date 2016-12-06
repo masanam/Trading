@@ -26,11 +26,12 @@ class FactoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $req)
     {
-        $factory = Factory::where('status', 'a')->get();
+        $factory = Factory::where('status', 'a');
+        if($req->q) $factory->where('factory_name', 'LIKE', '%' . $req->q . '%');
 
-        return response()->json($factory, 200);
+        return response()->json($factory->get(), 200);
     }
 
     /**
