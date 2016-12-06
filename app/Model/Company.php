@@ -35,15 +35,15 @@ class Company extends Model
   }
 
   public function contacts() {
-    return $this->hasMany(Contact::class);
+    return $this->hasMany(Contact::class)->where('status','a');
   }
 
   public function products() {
-    return $this->hasMany(Product::class);
+    return $this->hasMany(Product::class)->where('status','a');
   }
 
   public function ports() {
-    return $this->belongsToMany(Port::class, 'company_port', 'company_id', 'port_id');
+    return $this->belongsToMany(Port::class, 'company_port', 'company_id', 'port_id')->where('status','a');
   }
 
   public function factories() {

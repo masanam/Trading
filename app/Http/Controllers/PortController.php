@@ -109,7 +109,7 @@ class PortController extends Controller
      */
     public function destroy($id)
     {
-       $port = Port::findOrFail($port);
+        $port = Port::findOrFail($id);
         $port->status = 'x';
         $port->save();
 

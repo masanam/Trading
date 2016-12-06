@@ -44,7 +44,7 @@ angular.module('coalpedia').controller('PortController', ['$scope', '$stateParam
     };
 
     $scope.delete = function (port) {
-      if(confirm('Are you sure you want to delete ' + port.name + '?')){
+      if(confirm('Are you sure you want to delete ' + port.port_name + '?')){
         port = new Port(port);
         port.$remove(function (res){
           $scope.company.ports.splice($scope.company.ports.indexOf(port), 1);

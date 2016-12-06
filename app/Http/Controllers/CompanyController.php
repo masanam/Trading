@@ -100,7 +100,7 @@ class CompanyController extends Controller
     $company->fill($req->all())->save();
 
     event(new InputEditCoalpedia(Auth::user(), $company->id, 'companies', 'update'));
-    return response()->json($company, 200);
+    return $this->show($id);
   }
 
   /**
