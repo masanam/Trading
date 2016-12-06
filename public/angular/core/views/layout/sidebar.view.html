@@ -30,8 +30,8 @@
         <ul class="treeview-menu" ng-class="lead ? 'menu-open' : ''" ng-style="{ 'display': style[1] }">
           <li><a ui-sref="map.index"><i class="fa fa-map"></i> Map</a></li>
           <li><a ui-sref="dashboard.index"><i class="fa fa-line-chart"></i> Index</a></li>
-          <li><a ui-sref="coalpedia.buyer"><i class="fa fa-circle-o"></i> Customer</a></li>
-          <li><a ui-sref="coalpedia.seller"><i class="fa fa-circle-o"></i> Supplier</a></li>
+          <li><a ui-sref="company.list({ type:'customer' })"><i class="fa fa-circle-o"></i> Customer</a></li>
+          <li><a ui-sref="company.list({ type:'supplier' })"><i class="fa fa-circle-o"></i> Supplier</a></li>
         </ul>
       </li>
       <!-- <li class="treeview">
