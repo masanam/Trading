@@ -8,7 +8,7 @@ angular.module('lead').controller('ProductLeadBuyController', ['$scope', '$state
 
     //Init select product
     $scope.findProducts = function() {
-      Product.query({ supplier_id: $stateParams.supplier_id  }, function(res){
+      Product.query({ supplier_id: $stateParams.supplier_id }, function(res){
         if(res.length === 0){
           $scope.openModal();
         }
