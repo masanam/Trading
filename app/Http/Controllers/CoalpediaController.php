@@ -22,13 +22,13 @@ class CoalpediaController extends Controller
     public function count()
     {
         $customer = Company::where('status', 'a')->whereIn('company_type', ['c', 't'])->count();
-        $seller = Company::where('status', 'a')->whereIn('company_type', ['s', 't'])->count();
+        $supplier = Company::where('status', 'a')->whereIn('company_type', ['s', 't'])->count();
         $vendor = Company::where('status', 'a')->where('company_type', 'v')->count();
         $concession = Concession::where('status', 'a')->count();
 
         return response()->json([
             'customer' => $customer,
-            'seller' => $seller,
+            'supplier' => $supplier,
             'vendor' => $vendor,
             'concession' => $concession,
         ], 200);

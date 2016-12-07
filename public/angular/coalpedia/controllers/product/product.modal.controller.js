@@ -1,10 +1,16 @@
 'use strict';
 
-angular.module('coalpedia').controller('ProductModalController', ['$scope', '$uibModalInstance', '$timeout', '$interval', 'Product', 'product', 'company',
-  function($scope, $uibModalInstance, $timeout, $interval, Product, product, company) {
+angular.module('coalpedia').controller('ProductModalController', ['$scope', '$uibModalInstance', '$timeout', '$interval', 'Product', 'Company', 'product', 'company',
+  function($scope, $uibModalInstance, $timeout, $interval, Product, Company, product, company) {
     $scope.product = product;
     $scope.company = company;
     $scope.selected = {};
+
+    $scope.find = function (keyword) {
+      Product.query({ q: keyword }, function(res){
+        if(res.length > 0) $scope.products = res;
+      });
+    };
 
     $scope.create = function() {
       var product = new Product($scope.product);
@@ -16,12 +22,17 @@ angular.module('coalpedia').controller('ProductModalController', ['$scope', '$ui
     };
 
     $scope.update = function() {
-      $scope.product = new Product($scope.product);
       $scope.product.company_id = company.id;
 
       $scope.product.$update(function(response) {
         product = response;
         $uibModalInstance.close(response);
+      });
+    };
+
+    $scope.attach = function (product) {
+      Company.get({ id: company.id, action: 'attach', product_id: $scope.selected.product.id }, function(response){
+        $uibModalInstance.close(response.product);
       });
     };
 

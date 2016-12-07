@@ -20,13 +20,16 @@ class ProductController extends Controller
    */
   public function index(Request $req)
   {
-    if($req->supplier_id){
-      $product = Product::where('status', 'a')->where('company_id', $req->supplier_id)->get();
-    }else{
-      $product = Product::where('status', 'a')->get();
-    }
+    $product = Product::where('status', 'a');
 
-    return response()->json($product, 200);
+    if($req->supplier_id) $product->where('company_id', $req->supplier_id);
+    if($req->q)
+      $product->where(function($query) use ($req) {
+        return $query->where('product_name', 'LIKE', '%' . $req->q . '%')
+          ->orWhere('typical_quality', 'LIKE', '%' . $req->q . '%');
+      });
+
+    return response()->json($product->get(), 200);
   }
 
   /**

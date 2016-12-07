@@ -10,13 +10,15 @@ angular.module('index').controller('IndexTodayController', ['$scope', '$state', 
       var x;
       var date = $scope.prices.date;
       $scope.prices = {
-        date: date
+        date: date,
+        value: []
       };
 
       Index.query({ action: 'single-date', date: date }, function (res){
         $scope.indexPrices = res;
+        for(x = 0; x<res.length; x++) $scope.prices.value[res[x].id] = parseFloat(res[x].price);
 
-        for(x = 0; x<res.length; x++) $scope.prices[res[x].id] = parseFloat(res[x].price);
+        $scope.successDate = res.date;
       });
     };
 
@@ -24,6 +26,7 @@ angular.module('index').controller('IndexTodayController', ['$scope', '$state', 
       var prices = new Index($scope.prices);
       prices.$save({ action: 'single-date', date: $scope.prices.date }, function (res){
         console.log(res);
+        $scope.successDate = res.date;
         //$state.go('index.list');
       }, function (err) {
         $scope.error = err.data.message;

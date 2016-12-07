@@ -64,7 +64,7 @@ class CompanyController extends Controller
   * @param  \Illuminate\Http\Request  $req
   * @return \Illuminate\Http\Response
   */
-  public function store(Request $req, $type)
+  public function store(Request $req)
   {
     if(!$req) {
       return response()->json([
@@ -74,7 +74,6 @@ class CompanyController extends Controller
 
     $company = new Company($req->all());
     $company->user_id = Auth::user()->id;
-    $company->company_type = $type[0];
     $company->status = 'a';
     $company->save();
 
@@ -100,7 +99,7 @@ class CompanyController extends Controller
     $company->fill($req->all())->save();
 
     event(new InputEditCoalpedia(Auth::user(), $company->id, 'companies', 'update'));
-    return response()->json($company, 200);
+    return $this->show($id);
   }
 
   /**
@@ -132,8 +131,14 @@ class CompanyController extends Controller
   {
     if($req->contact_id){
       $items['contact'] = Contact::find($req->contact_id);
-      $items['contact']->status = 'a';
-      $items['contact']->company_id = $id;
+      
+      if($items['contact']->company_id == $id){
+        $items['contact']->status = 'a';  
+      } else {
+        $items['contact'] = $items['contact']->replicate();  
+        $items['contact']->company_id = $id;
+      }
+      
       $items['contact']->save();
     }
 
@@ -146,8 +151,14 @@ class CompanyController extends Controller
 
     if($req->product_id){
       $items['product'] = Product::find($req->product_id);
-      $items['product']->status = 'a';
-      $items['product']->company_id = $id;
+      
+      if($items['product']->company_id == $id){
+        $items['product']->status = 'a';  
+      } else {
+        $items['product'] = $items['product']->replicate();  
+        $items['product']->company_id = $id;
+      }
+      
       $items['product']->save();
     }
 

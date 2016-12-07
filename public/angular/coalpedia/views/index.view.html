@@ -19,14 +19,14 @@
 
           <div class="small-box bg-aqua">
             <div class="inner">
-              <h4>{{ total.seller }} Records </h4>
+              <h4>{{ total.supplier }} Records </h4>
 
               <p>SUPPLIERS</p>
             </div>
             <div class="icon">
               <i class="fa fa-industry"></i>
             </div>
-             <a ui-sref="company.list({ type:'seller' })" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+             <a ui-sref="company.list({ type:'supplier' })" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
 
           <div class="small-box bg-teal">
@@ -60,7 +60,11 @@
               <img src="/images/globe.jpg" class="center-block img-responsive" style="height:270px;">
               </br>
 
+<<<<<<< HEAD
               <form ng-submit="search()" class="hidden-xs">
+=======
+              <form ng-submit="search(searchType, keyword)">
+>>>>>>> 1a64287d032901c7b9b1582f364bfa29b45e1f54
                 <div class="input-group input-group-sm">
                   <input type="text" class="col-md-12 form-control" placeholder="example: Wilmar" ng-model="keyword">
                   <span class="input-group-btn">
@@ -103,6 +107,7 @@
                   </select>
                 </div>
 
+<<<<<<< HEAD
                 <button type="btn" type="submit" class="btn btn-info btn-block btn-flat">Search
                 </button>
               </form>
@@ -113,6 +118,28 @@
 
              
            
+=======
+              <div class="btn-group">
+                <label class="btn btn-sm btn-default" ng-model="searchType" uib-btn-radio="'customer'">
+                  Customer
+                </label>
+                <label class="btn btn-sm btn-default" ng-model="searchType" uib-btn-radio="'supplier'">
+                  Supplier
+                </label>
+                <label class="btn btn-sm btn-default" ng-model="searchType" uib-btn-radio="'vendor'">
+                  Vendors
+                </label>
+                <label class="btn btn-sm btn-default" ng-model="searchType" uib-btn-radio="'concession'">
+                  Concessions
+                </label>
+                <!--label class="btn btn-sm btn-default" ng-model="searchType" uib-btn-radio="'product'">
+                  Products
+                </label>
+                <label class="btn btn-sm btn-default" ng-model="searchType" uib-btn-radio="'contact'">
+                  Contacts
+                </label-->
+              </div>
+>>>>>>> 1a64287d032901c7b9b1582f364bfa29b45e1f54
             </div>
     
         </div>      

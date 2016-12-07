@@ -32,7 +32,7 @@ angular.module('coalpedia').controller('PortController', ['$scope', '$stateParam
         controller: 'PortModalController',
         windowClass: 'xl-modal',
         resolve: {
-          port: angular.copy(port),
+          port: Port.get({ id: port.id }),
           company: $scope.company
         }
       });
@@ -44,7 +44,7 @@ angular.module('coalpedia').controller('PortController', ['$scope', '$stateParam
     };
 
     $scope.delete = function (port) {
-      if(confirm('Are you sure you want to delete ' + port.name + '?')){
+      if(confirm('Are you sure you want to delete ' + port.port_name + '?')){
         port = new Port(port);
         port.$remove(function (res){
           $scope.company.ports.splice($scope.company.ports.indexOf(port), 1);

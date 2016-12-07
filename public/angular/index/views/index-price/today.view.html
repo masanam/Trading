@@ -3,6 +3,9 @@
 		<h1 class="box-title">Add/Edit Index Price</h1>
 	</div>
 	<div class="box-body">
+		<div class="callout callout-success" ng-if="successDate">
+			You have succesfully updated price for {{ successDate }}!
+		</div>
 		<form name="pricesForm" class="form-horizontal" ng-submit="submit()">
 			<fieldset>
 			  <div class="form-group col-lg-12" show-errors>

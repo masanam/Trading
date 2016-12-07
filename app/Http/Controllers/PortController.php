@@ -24,9 +24,9 @@ class PortController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $req)
     {
-        $port = Port::where('is_private', '=', 0)->get();
+        $port = Port::get();
         return response()->json($port, 200);
     }
 
@@ -109,7 +109,7 @@ class PortController extends Controller
      */
     public function destroy($id)
     {
-       $port = Port::findOrFail($port);
+        $port = Port::findOrFail($id);
         $port->status = 'x';
         $port->save();
 

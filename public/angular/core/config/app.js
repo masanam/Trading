@@ -107,7 +107,7 @@ angular.module(ApplicationConfiguration.applicationModuleName).run(function ($ro
         var allowed = false;
 
         toState.roles.forEach(function (role) {
-          if (role === 'guest' || (Authentication.user !== undefined && Authentication.user.role === role)){
+          if (role === 'guest' || (Authentication.user !== undefined && (Authentication.user.role === role || Authentication.user.role === 'admin'))){
             allowed = true;
             return true;
           }
