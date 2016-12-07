@@ -64,7 +64,7 @@ class CompanyController extends Controller
   * @param  \Illuminate\Http\Request  $req
   * @return \Illuminate\Http\Response
   */
-  public function store(Request $req, $type)
+  public function store(Request $req)
   {
     if(!$req) {
       return response()->json([
@@ -74,7 +74,6 @@ class CompanyController extends Controller
 
     $company = new Company($req->all());
     $company->user_id = Auth::user()->id;
-    $company->company_type = $type[0];
     $company->status = 'a';
     $company->save();
 

@@ -9,7 +9,7 @@ angular.module('coalpedia').controller('CompanyModalController', ['$scope', '$ui
     $scope.create = function() {
       var company = new Company($scope.company);
 
-      company.$save(function(response) {
+      company.$save({ type: company.company_type }, function(response) {
         $uibModalInstance.close(response);
       });
     };
