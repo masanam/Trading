@@ -220,7 +220,7 @@ class OrderController extends Controller
    */
   public function show($id, Request $req)
   {
-    $order = Order::with('trader', 'users', 'sells', 'buys', 'buys.trader', 'approvals', 'sells.trader', 'orders')->find($id);
+    $order = Order::with('trader', 'users', 'sells', 'buys', 'buys.trader', 'approvals', 'sells.trader', 'orders', 'sells.company', 'buys.company')->find($id);
     // $this->authorize('view', $order);
 
     // // lazyloading semua negotiation log
