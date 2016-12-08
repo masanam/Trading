@@ -13,17 +13,17 @@ angular.module('dashboard').config(['$stateProvider',
       .state('dashboard.main', {
         url: '/main',
         templateUrl: '/angular/dashboard/views/main.view.html',
-        roles: ['trader', 'manager', 'admin']
+        roles: ['trader', 'manager']
       })
       .state('dashboard.map', {
         url: '/map',
         templateUrl: '/angular/dashboard/views/map.view.html',
-        roles: ['trader', 'manager', 'admin']
+        roles: ['trader', 'manager']
       })
       .state('dashboard.index', {
         url: '/index',
         templateUrl: '/angular/dashboard/views/index.view.html',
-        roles: ['trader', 'manager', 'admin']
+        roles: ['trader', 'manager']
       });
   }
 ]);
