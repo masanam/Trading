@@ -20,14 +20,14 @@ class CreateOrdersTable extends Migration
             $table->string('cancel_reason')->nullable();
             $table->string('request_reason')->nullable();
             $table->string('finalize_reason')->nullable();
-            $table->decimal('insurance_cost', 15, 3)->nullable();
-            $table->decimal('interest_cost', 15, 3)->nullable();
-            $table->decimal('surveyor_cost', 15, 3)->nullable();
-            $table->decimal('others_cost', 15, 3)->nullable();
-            $table->decimal('pit_to_port', 15, 3)->nullable();
-            $table->decimal('transhipment', 15, 3)->nullable();
-            $table->decimal('freight_cost', 15, 3)->nullable();
-            $table->decimal('port_to_factory', 15, 3)->nullable();
+            // $table->decimal('insurance_cost', 15, 3)->nullable();
+            // $table->decimal('interest_cost', 15, 3)->nullable();
+            // $table->decimal('surveyor_cost', 15, 3)->nullable();
+            // $table->decimal('others_cost', 15, 3)->nullable();
+            // $table->decimal('pit_to_port', 15, 3)->nullable();
+            // $table->decimal('transhipment', 15, 3)->nullable();
+            // $table->decimal('freight_cost', 15, 3)->nullable();
+            // $table->decimal('port_to_factory', 15, 3)->nullable();
             $table->timestamps();
         });
 
@@ -56,8 +56,8 @@ class CreateOrdersTable extends Migration
         Schema::create('order_details', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('order_id')->unsigned();
-            $table->integer('orderable_id')->unsigned();
-            $table->string('orderable_type');
+            $table->integer('leadable_id')->unsigned();
+            // $table->string('orderable_type');
             $table->integer('price');
             $table->integer('volume');
             $table->string('trading_term');
@@ -65,7 +65,7 @@ class CreateOrdersTable extends Migration
             $table->timestamps();
 
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
-            $table->unique(['order_id', 'orderable_id', 'orderable_type']);
+            $table->unique(['order_id', 'leadable_id']);
         });
 
         Schema::create('order_negotiations', function (Blueprint $table) {

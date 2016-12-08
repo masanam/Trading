@@ -5,6 +5,7 @@ namespace App\Model;
 use Illuminate\Database\Eloquent\Model;
 use App\Model\BuyOrder;
 use App\Model\SellOrder;
+use App\Model\Lead;
 use App\Model\User;
 
 class Order extends Model
@@ -22,6 +23,12 @@ class Order extends Model
     return $this->morphedByMany(SellOrder::class, 'orderable', 'order_details')
         ->withPivot('id', 'price', 'volume', 'payment_term', 'trading_term');
 	}
+
+  public function orders()
+  {
+    return $this->belongsToMany(Lead::class, 'order_details', 'order_id', 'leadable_id')
+      ->withPivot('id', 'price', 'volume', 'payment_term', 'trading_term');
+  }
 
 	public function approvals()
 	{

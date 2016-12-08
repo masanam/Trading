@@ -14,6 +14,8 @@ class OrderNegotiation extends Model
 			'volume',
 			'price',
 			'user_id',
+			'trading_term',
+			'payment_term',
 			'insurance_cost',
 			'interest_cost',
 			'surveyor_cost',
