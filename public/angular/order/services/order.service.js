@@ -2,13 +2,8 @@
 
 angular.module('order').factory('Order', ['$resource',
   function ($resource) {
-    return $resource('api/orders/:type/:id/:action/:order_status/:progress_status/:user_id', {
-      type: undefined,
-      id: '@id',
-      action: undefined,
-      order_status: undefined,
-      progress_status: undefined,
-      user_id: undefined,
+    return $resource('api/orders/:id/:action', {
+      id: '@id'
     }, {
       update: { method: 'PUT' },
       post: { method: 'POST' },
@@ -16,16 +11,16 @@ angular.module('order').factory('Order', ['$resource',
   }
 ]);
 
-angular.module('order').factory('OrderUser', ['$resource',
-  function ($resource) {
-    return $resource('api/order/:orderId/user/:userId', {
-      orderId: undefined,
-      userId: undefined
+angular.module('order').factory('Lead', ['$resource',
+  function ($resource){
+    return $resource('api/orders/:id', {
+      id: '@id',
     }, {
-      update: { method: 'PUT' }
+      update: { method: 'PUT' },
     });
   }
 ]);
+
 
 angular.module('order').factory('Term', function (){
   return {
