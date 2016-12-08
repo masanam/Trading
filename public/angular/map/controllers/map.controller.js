@@ -99,12 +99,8 @@ angular.module('map').controller('MapController', ['$scope', '$http', '$statePar
       $scope.find();
     };
 
-    $scope.searchByCategory = function(){
-      
-    };
-
     $scope.showDetail = function(event, concession) {
-      $scope.concession = Concession.get({ action:'detail', id: concession.id }, function(concession) {
+      $scope.concession = Concession.get({ id: concession.id }, function(concession) {
         $scope.concession = concession;
         $scope.map.showInfoWindow('info-window', event.latLng);
         
@@ -113,7 +109,7 @@ angular.module('map').controller('MapController', ['$scope', '$http', '$statePar
     };
 
     $scope.showPortDetail = function(event, port) {
-      $scope.connectedConcessions = Port.query({ id: port.id , concession: 'concession' });
+      $scope.connectedConcessions = Port.query({ id: port.id });
       $scope.port = Port.get({ id: port.id }, function(port) {
         $scope.event = event;
         $scope.port = port;
