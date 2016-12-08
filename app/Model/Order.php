@@ -3,8 +3,6 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Model\BuyOrder;
-use App\Model\SellOrder;
 use App\Model\Lead;
 use App\Model\User;
 
@@ -14,19 +12,29 @@ class Order extends Model
 
   public function buys()
 	{
-      return $this->morphedByMany(BuyOrder::class, 'orderable', 'order_details')
-        ->withPivot('id', 'price', 'volume', 'payment_term', 'trading_term');
+      return $this->belongsToMany(Lead::class, 'order_details', 'order_id', 'lead_id')
+        ->withPivot('id', 'price', 'volume', 'payment_term', 'trading_term')->where('lead_type', 'b');
 	}
 
   public function sells()
 	{
-    return $this->morphedByMany(SellOrder::class, 'orderable', 'order_details')
-        ->withPivot('id', 'price', 'volume', 'payment_term', 'trading_term');
+    return $this->belongsToMany(Lead::class, 'order_details', 'order_id', 'lead_id')
+        ->withPivot('id', 'price', 'volume', 'payment_term', 'trading_term')->where('lead_type', 's');
 	}
+  
+  public function earliest_laycans()
+  {
+    return $this->belongsToMany(Lead::class, 'order_details', 'order_id', 'lead_id')->earliest()->laycan_start;
+  }
+  
+  public function latest_laycans()
+  {
+    return $this->belongsToMany(Lead::class, 'order_details', 'order_id', 'lead_id')->latest()->laycan_start;
+  }
 
   public function orders()
   {
-    return $this->belongsToMany(Lead::class, 'order_details', 'order_id', 'leadable_id')
+    return $this->belongsToMany(Lead::class, 'order_details', 'order_id', 'lead_id')
       ->withPivot('id', 'price', 'volume', 'payment_term', 'trading_term');
   }
 

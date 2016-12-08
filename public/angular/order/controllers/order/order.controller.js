@@ -141,7 +141,8 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
     // Find existing order
     $scope.findOne = function () {
       $scope.order = Order.get({
-        id: $stateParams.id
+        id: $stateParams.id,
+        envelope: 'true'
       }, function(res){
         $scope.order = res;
         for (var i = 0; i < $scope.order.sells.length; i++) {

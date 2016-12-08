@@ -12,6 +12,8 @@ use App\Model\SellOrder;
 use App\Model\OrderUser;
 use App\Model\Lead;
 use App\Model\Order;
+use App\Model\IndexPrice;
+use App\Model\Index;
 use App\Model\OrderApproval;
 use App\Model\OrderNegotiation;
 use App\Mail\ApprovalRequest;
@@ -34,6 +36,15 @@ class OrderController extends Controller
       $order_user->role = $role;
       $order_user->save();
     }
+  }
+  
+  private function indexPrice ($id, $req) {
+    $query = IndexPrice::where([ 'index_id' => $id ])->orderBy('date', 'DESC');
+    
+    if($req['date']) $query->where('date', '<', date('Y-m-d', strtotime($req['date'])));
+    if($req['latest']) $query->limit(5);
+
+    return $query->get();
   }
 
   private function send_approval_mail($order, $user_id){
@@ -207,9 +218,9 @@ class OrderController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function show($id)
+  public function show($id, Request $req)
   {
-    $order = Order::with('trader', 'users', 'sells', 'buys', 'buys.trader', 'approvals', 'sells.trader')->find($id);
+    $order = Order::with('trader', 'users', 'sells', 'buys', 'buys.trader', 'approvals', 'sells.trader', 'orders')->find($id);
     // $this->authorize('view', $order);
 
     // // lazyloading semua negotiation log
@@ -227,8 +238,52 @@ class OrderController extends Controller
     //$user = User::findOrFail(Auth::user()->id); // Or an different ID
     //dd($user->Subordinates);
     //dd(Auth::user()->Subordinates);
+    
+    //var_dump(date('Y-m-d', strtotime($order->created_at)));die;
+    
+    if($req->envelope == "true"){
+      $params = [
+        'date' => date('Y-m-d', strtotime($order->created_at)),
+        'latest' => 7
+      ];
+      
+      $index = $this->indexPrice(10, $params);
+      
+      $earliest_laycan = $order->orders->min('laycan_start');
+      $latest_laycan = $order->orders->max('laycan_end');
+      $sum_buy_volume = 0; 
+      $sum_sell_volume = 0; 
+      $sell_price = 0; 
+      $buy_price = 0;
+      
+      foreach($order->buys as $buy){
+        $buy_price += ($buy->pivot->volume * $buy->pivot->price);
+        $sum_buy_volume += $buy->pivot->volume;
+      }
+      
+      foreach($order->sells as $sell){
+        $sell_price += ($sell->pivot->volume * $sell->pivot->price);
+        $sum_sell_volume += $sell->pivot->volume;
+      }
+      
+      $json = [
+        'status' => 200,
+        'error' => 'ok',
+        'latest_laycan' => $latest_laycan,
+        'earliest_laycan' => $earliest_laycan,
+        'buy_price' => $buy_price / $sum_buy_volume,
+        'sell_price' => $sell_price / $sum_sell_volume,
+        'order' => $order,
+        'index' => $index
+      ];
+      
+      $response = response()->json($json, 200);
+    }
+    else{
+      $response = response()->json($order, 200);
+    }
 
-    return response()->json($order, 200);
+    return $response;
   }
 
   /**
