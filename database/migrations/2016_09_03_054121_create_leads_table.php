@@ -21,9 +21,9 @@ class CreateLeadsTable extends Migration
             $table->integer('company_id')->unsigned();
 
             $table->date('order_date')->nullable();
-            $table->date('order_deadline')->nullable();
-            $table->date('ready_date')->nullable();
-            $table->date('expired_date')->nullable();
+            $table->date('order_expired')->nullable();
+            $table->date('laycan_start')->nullable();
+            $table->date('laycan_end')->nullable();
 
             $table->integer('factory_id')->nullable(); //weak relation tempat dikirim
             $table->integer('concession_id')->nullable(); //weak relation tempat dikirim

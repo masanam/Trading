@@ -6,14 +6,14 @@
     </tr>
     <tr>
       <th st-sort="id">#</th>
-      <th st-sort="name">PIC</th>
+      <th st-sort="user.name">PIC</th>
       <th st-sort="order_date">Input Date</th>
-      <th st-sort="company_name">Company</th>
+      <th st-sort="company.company_name">Company</th>
       <th st-sort="product_name">Quality</th>
       <th st-sort="volume">Qty</th>
       <th st-sort="volume">Qty Remaining</th>
       <th st-sort="order_deadline">Valid Until</th>
-      <th st-sort="min_price">Price / Tonnes</th>
+      <th st-sort="price">Price / Tonnes</th>
       <th st-sort="city">Location</th>
       <th st-sort="order_status">Status</th>
       <th></th>
@@ -23,14 +23,14 @@
   <tbody>
     <tr ng-repeat="sell_order in displayedCollection">
       <td>{{ sell_order.id }}</td>
-      <td>{{ sell_order.name }}</td>
+      <td>{{ sell_order.user.name }}</td>
       <td>{{ sell_order.order_date | date : 'd MMMM yyyy' }}</td>
-      <td>{{ sell_order.company_name }}</td>
+      <td>{{ sell_order.company.company_name }}</td>
       <td>{{ sell_order.typical_quality }}</td>
       <td>{{ sell_order.volume }} mt</td>
       <td>{{ sell_order.volume - sell_order.used_volume }} mt</td>
       <td>{{ sell_order.order_deadline | date : 'd MMMM yyyy' }}</td>
-      <td>{{ sell_order.min_price | currency : $ : 2}}</td>
+      <td>{{ sell_order.price | currency : $ : 2}}</td>
       <td>{{ sell_order.city }}</td>
       <td ng-if="sell_order.order_status==='l'">Lead</td>
       <td ng-if="sell_order.order_status==='v'">Verified</td>

@@ -21,8 +21,16 @@ class Lead extends Model
         return $this->hasOne('App\Model\Port', 'id', 'port_id');
     }
 
+    public function Concession() {
+        return $this->hasOne('App\Model\concession', 'id', 'concession_id');
+    }
+
     public function Factory() {
         return $this->hasOne('App\Model\Factory', 'id', 'factory_id');
+    }
+
+    public function Product() {
+        return $this->hasOne('App\Model\Product', 'id', 'product_id');
     }
 
     public function trader() {
@@ -35,8 +43,8 @@ class Lead extends Model
     }
 
     public function used() {
-        return $this->morphToMany(Order::class, 'orderable', 'order_details')
-            ->selectRaw('sum(order_details.volume) as volume')->whereIn('orders.status', ['a', 'f', 'p'])->groupBy('orderable_id', 'orderable_type');
+        return $this->belongsToMany(Order::class, 'order_details', 'leadable_id', 'id')
+            ->selectRaw('sum(order_details.volume) as volume')->whereIn('orders.status', ['a', 'f', 'p', 'd'])->groupBy('leadable_id');
     }
 
     public function reconcile() {
@@ -51,11 +59,11 @@ class Lead extends Model
         $this->latitude = null;
         $this->longitude = null;
 
-        if(isset($this->buyer)){
-            $this->buyer->company_name = null;
-            $this->buyer->latitude = null;
-            $this->buyer->longitude = null;
-            $this->buyer_id = null;
+        if(isset($this->company)){
+            $this->company->company_name = null;
+            $this->company->latitude = null;
+            $this->company->longitude = null;
+            $this->company_id = null;
         }
 
         if(isset($this->concession)){
@@ -76,6 +84,14 @@ class Lead extends Model
             $this->port->latitude = null;
             $this->port->longitude = null;
             $this->port_id = null;
+        }
+
+        if(isset($this->product)){
+            $this->product->product_name = null;
+            $this->product->company_id = null;
+            $this->product->concession_id = null;
+            $this->product_id = null;
+            $this->product_name = null;
         }
     }
 }
