@@ -26,6 +26,7 @@ class Company extends Model
     'preferred_trading_term_detail',
     'preferred_payment_term',
     'preferred_payment_term_detail',
+    'company_type',
     'purchasing_countries',
     'description',
   ];
