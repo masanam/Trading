@@ -30,7 +30,7 @@ class Lead extends Model
     }
 
     public function orders() {
-        return $this->morphToMany(Order::class, 'orderable', 'order_details')
+        return $this->belongsToMany(Order::class, 'order_details', 'leadable_id', 'id')
             ->withPivot('id', 'price', 'volume', 'payment_term', 'trading_term');
     }
 

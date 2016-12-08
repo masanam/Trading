@@ -10,6 +10,7 @@ use App\Model\User;
 use App\Model\BuyOrder;
 use App\Model\SellOrder;
 use App\Model\OrderUser;
+use App\Model\Lead;
 use App\Model\Order;
 use App\Model\OrderApproval;
 use App\Model\OrderNegotiation;
@@ -125,34 +126,31 @@ class OrderController extends Controller
         'message' => 'Bad Request'
       ], 400);
     }
-    $order = new Order($req->except(['buys', 'sells', 'additional', 'index']));
+    // return $req;
+    $order = new Order();
     $order->user_id = Auth::User()->id;
     $order->status = 'd';
     $order->save();
 
     if(count($req->buys) > 0){
       foreach($req->buys as $buy){
-        $buy_order = BuyOrder::with('orders', 'orders.sells', 'orders.buys')->find($buy['id']);
-        if($buy_order->orders) {
-          foreach($buy_order->orders as $o){
-            $o->status = 'c';
-            $o->save();
-          }
-        }
+        // $buy_order = BuyOrder::with('orders', 'orders.sells', 'orders.buys')->find($buy['id']);
+        // if($buy_order->orders) {
+        //   foreach($buy_order->orders as $o){
+        //     $o->status = 'c';
+        //     $o->save();
+        //   }
+        // }
+        $order->orders()->attach([ $buy['id'] => $buy['pivot'] ]);
+        Lead::find($buy['id'])->reconcile();
 
-        $order->buys()->attach([
-          $buy['id'] => $buy['pivot']
-        ]);
-        // BuyOrder::find($buy['id'])->reconcile();
-
-        $order_detail = $order->buys->find($buy['id']);
         OrderNegotiation::create([
-          'order_detail_id' => $order_detail->pivot->id,
+          'order_detail_id' => $buy['id'],
           'notes' => 'Initial Deal',
-          'volume' => $order_detail->pivot->volume,
-          'price' => $order_detail->pivot->price,
-          'trading_term' => $req->trading_term,
-          'payment_term' => $req->payment_term,
+          'volume' => $buy['pivot']['volume'],
+          'price' => $buy['pivot']['price'],
+          'trading_term' => $buy['pivot']['trading_term'],
+          'payment_term' => $buy['pivot']['payment_term'],
           'insurance_cost' => $buy['additional']['insurance_cost'],
           'interest_cost' => $buy['additional']['interest_cost'],
           'surveyor_cost' => $buy['additional']['surveyor_cost'],
@@ -168,25 +166,25 @@ class OrderController extends Controller
 
     if(count($req->sells) > 0) {
       foreach($req->sells as $sell){
-        $sell_order = SellOrder::with('orders', 'orders.sells', 'orders.buys')->find($sell['id']);
-        if($sell_order->orders) {
-          foreach($sell_order->orders as $o){
-            $o->status = 'c';
-            $o->save();
-          }
-        }
+        // $sell_order = SellOrder::with('orders', 'orders.sells', 'orders.buys')->find($sell['id']);
+        // if($sell_order->orders) {
+        //   foreach($sell_order->orders as $o){
+        //     $o->status = 'c';
+        //     $o->save();
+        //   }
+        // }
 
-        $order->sells()->attach([ $sell['id'] => $sell['pivot'] ]);
-        // SellOrder::find($sell['id'])->reconcile();
+        $order->orders()->attach([ $sell['id'] => $sell['pivot'] ]);
+        Lead::find($sell['id'])->reconcile();
 
-        $order_detail = $order->sells->find($sell['id']);
+        // $order_detail = $order->orders->find($sell['id']);
         OrderNegotiation::create([
-          'order_detail_id' => $order_detail->pivot->id,
+          'order_detail_id' => $sell['id'],
           'notes' => 'Initial Deal',
-          'volume' => $order_detail->pivot->volume,
-          'price' => $order_detail->pivot->price,
-          'trading_term' => $req->trading_term,
-          'payment_term' => $req->payment_term,
+          'volume' => $sell['pivot']['volume'],
+          'price' => $sell['pivot']['price'],
+          'trading_term' => $sell['pivot']['trading_term'],
+          'payment_term' => $sell['pivot']['payment_term'],
           'insurance_cost' => $sell['additional']['insurance_cost'],
           'interest_cost' => $sell['additional']['interest_cost'],
           'surveyor_cost' => $sell['additional']['surveyor_cost'],
