@@ -8,10 +8,10 @@
     <label for="company_type">Company:</label><br>
 
     <div class="btn-group">
-      <label class="btn btn-default" ng-model="company.company_type" uib-btn-radio="'c'" >Customer (End User)</label>
-      <label class="btn btn-default" ng-model="company.company_type" uib-btn-radio="'t'">Coal Trader</label>
-      <label class="btn btn-default" ng-model="company.company_type" uib-btn-radio="'s'">Supplier</label>
-      <label class="btn btn-default" ng-model="company.company_type" uib-btn-radio="'v'">Vendor</label>
+      <label class="btn btn-default" ng-model="company.company_type" uib-btn-radio="'c'" required>Customer (End User)</label>
+      <label class="btn btn-default" ng-model="company.company_type" uib-btn-radio="'t'" required>Coal Trader</label>
+      <label class="btn btn-default" ng-model="company.company_type" uib-btn-radio="'s'" required>Supplier</label>
+      <label class="btn btn-default" ng-model="company.company_type" uib-btn-radio="'v'" required>Vendor</label>
     </div>
   </div>
 
@@ -20,8 +20,8 @@
   <div class="form-group pull-left" style="margin-left:30px;">
     <label for="company_name">Affiliation Status:</label><br>
     <div class="btn-group">
-      <label class="btn btn-default" ng-model="company.is_affiliated" uib-btn-radio="0">Non-Affiliated</label>
-      <label class="btn btn-default" ng-model="company.is_affiliated" uib-btn-radio="1">Affiliated</label>
+      <label class="btn btn-default" ng-model="company.is_affiliated" uib-btn-radio="0" required>Non-Affiliated</label>
+      <label class="btn btn-default" ng-model="company.is_affiliated" uib-btn-radio="1" required>Affiliated</label>
     </div>
   </div>
 
@@ -29,54 +29,54 @@
     <label for="headquarter_location">Main business of Customer:</label><br>
     <div class="btn-group">
       <label ng-if="company.company_type === 'c'" class="btn btn-default"
-        ng-model="company.industry" uib-btn-radio="'Cements Industry'">
+        ng-model="company.industry" uib-btn-radio="'Cements Industry'" required>
         Cements Industry
       </label>
       <label ng-if="company.company_type === 'c'" class="btn btn-default"
-        ng-model="company.industry" uib-btn-radio="'Pulp & Paper'">
+        ng-model="company.industry" uib-btn-radio="'Pulp & Paper'" required>
         Pulp & Paper
       </label>
       <label ng-if="company.company_type === 'c'" class="btn btn-default"
-        ng-model="company.industry" uib-btn-radio="'Power Plants'">
+        ng-model="company.industry" uib-btn-radio="'Power Plants'" required>
         Power Plants
       </label>
 
       <label ng-if="company.company_type === 's' || company.company_type === 't'" class="btn btn-default"
-        ng-model="company.industry" uib-btn-radio="'Miner'">
+        ng-model="company.industry" uib-btn-radio="'Miner'" required>
         Miner
       </label>
       <label ng-if="company.company_type === 's' || company.company_type === 't'" class="btn btn-default"
-        ng-model="company.industry" uib-btn-radio="'Coal Trader'">
+        ng-model="company.industry" uib-btn-radio="'Coal Trader'" required>
         Coal Trader
       </label>
       <label ng-if="company.company_type === 's' || company.company_type === 't'" class="btn btn-default"
-        ng-model="company.industry" uib-btn-radio="'Coal Mining & Trader'">
+        ng-model="company.industry" uib-btn-radio="'Coal Mining & Trader'" required>
         Coal Mining & Trader
       </label>
 
       <label ng-if="company.company_type === 'v'" class="btn btn-default"
-        ng-model="company.industry" uib-btn-radio="'Surveyor'">
+        ng-model="company.industry" uib-btn-radio="'Surveyor'" required>
         Surveyor
       </label>
       <label ng-if="company.company_type === 'v'" class="btn btn-default"
-        ng-model="company.industry" uib-btn-radio="'Trucking'">
+        ng-model="company.industry" uib-btn-radio="'Trucking'" required>
         Trucking
       </label>
       <label ng-if="company.company_type === 'v'" class="btn btn-default"
-        ng-model="company.industry" uib-btn-radio="'Transshipment'">
+        ng-model="company.industry" uib-btn-radio="'Transshipment'" required>
         Transshipment
       </label>
       <label ng-if="company.company_type === 'v'" class="btn btn-default"
-        ng-model="company.industry" uib-btn-radio="'Freight'">
+        ng-model="company.industry" uib-btn-radio="'Freight'" required>
         Freight
       </label>
       <label ng-if="company.company_type === 'v'" class="btn btn-default"
-        ng-model="company.industry" uib-btn-radio="'Vessel'">
+        ng-model="company.industry" uib-btn-radio="'Vessel'" required>
         Vessel
       </label>
 
 
-      <label class="btn btn-default" ng-model="company.industry" uib-btn-radio="'General Industry'">
+      <label class="btn btn-default" ng-model="company.industry" uib-btn-radio="'General Industry'" required>
         General Industry
       </label>
     </div>
