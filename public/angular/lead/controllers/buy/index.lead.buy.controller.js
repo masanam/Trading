@@ -11,7 +11,7 @@ angular.module('lead').controller('IndexLeadBuyController', ['$scope', '$locatio
     };
     
     $scope.findStatus = function($order_status) {
-      $scope.sell_orders = Lead.query({ type: 'buy', order_status: $order_status });
+      $scope.sell_orders = Lead.query({ lead_type: 'buy', order_status: $order_status });
     };
 
     $scope.toSupplier = function(id) {

@@ -37,10 +37,12 @@ class ConcessionController extends Controller
           $con->port_distance = floatval($con->port_distance);
         }
       }else{
-        $concession = Concession::with('company', 'port')->where('status', 'a')->limit(20)->get();
+        $concession = Concession::with('company', 'port')->where('status', 'a')->limit(20);
+
+        if($req->q) $concession->where('concession_name', 'LIKE', '%' . $req->q . '%');
       }
 
-      return response()->json($concession, 200);
+      return response()->json($concession->get(), 200);
     }
     
     /**

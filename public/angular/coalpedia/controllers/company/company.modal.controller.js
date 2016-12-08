@@ -7,6 +7,9 @@ angular.module('coalpedia').controller('CompanyModalController', ['$scope', '$ui
     $scope.term = Term;
 
     $scope.create = function() {
+      //valudation on company name
+      if(!$scope.company.company_type) return alert('You must choose a company type!');
+
       var company = new Company($scope.company);
 
       company.$save({ type: company.company_type }, function(response) {
