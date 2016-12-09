@@ -94,4 +94,18 @@ class Lead extends Model
             $this->product_name = null;
         }
     }
+
+    public function difference($compare){
+    	$diff = ['order_date_diff','order_expired_diff'];
+    	$value = ['order_date','order_expired'];
+		$this->gcv_adb_min_diff = abs($this->gcv_adb_min - $compare->gcv_adb_min);
+		$this->gcv_adb_max_diff = abs($this->gcv_adb_max - $compare->gcv_adb_max);
+		$this->gcv_arb_min_diff = abs($this->gcv_arb_min - $compare->gcv_arb_min);
+		$this->gcv_arb_max_diff = abs($this->gcv_arb_max - $compare->gcv_arb_max);
+		$this->ncv_min_diff = abs($this->ncv_min - $compare->ncv_min);
+		$this->ncv_max_diff = abs($this->ncv_max - $compare->ncv_max);
+		for ($i=0; $i < count($diff) ; $i++) {
+			$this->$diff[$i] = floor((strtotime($this->$value[$i]) - strtotime($compare->$value[$i]))/3600/24);
+		}
+    }
 }

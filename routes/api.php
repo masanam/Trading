@@ -81,4 +81,5 @@ Route::group(['middleware' => ['cors']], function() {
     Route::put('order/{id}/stage', 'OrderController@stage');
     Route::put('order/{id}/approval', 'OrderController@approval');
     Route::resource('orders', 'OrderController', ['except' => [ 'create', 'edit' ]]);
+
 });
