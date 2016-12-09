@@ -2,12 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\Buyer;
-use App\Model\Seller;
-use App\Model\Vendor;
-use App\Model\Contact;
-use App\Model\BuyOrder;
-use App\Model\SellOrder;
 use App\Model\Company;
 use App\Model\Lead;
 use App\Model\Product;
