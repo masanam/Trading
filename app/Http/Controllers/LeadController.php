@@ -44,7 +44,7 @@ class LeadController extends Controller
                     ->limit($req->limit)
                     ->get();
                 foreach ($leads as $lead) {
-                    $lead->difference($compare);
+                    $lead->difference($compare,'s');
                 }
             }
             else if($req->order){
@@ -94,20 +94,20 @@ class LeadController extends Controller
         }
         else if ($req->lead_type === 'sell') {
 
-            if($req->order&&$req->order_id!==null){
+            if($req->order&&$req->lead_id!==null){
                 $compare = Lead::where('id',$req->lead_id)->where('lead_type', 's')->first();
                 $leads = Lead::where('lead_type', 'b')->limit($req->limit)->get();
                 foreach ($leads as $lead) {
                     $lead->difference($compare);
                 }
             }
-            else if($req->customer&&$req->order_id!==null){
+            else if($req->customer&&$req->lead_id!==null){
                 $compare = Lead::where('id',$req->lead_id)->where('lead_type', 's')->first();
                 $leads = Product::with('Company')
                     ->limit($req->limit)
                     ->get();
                 foreach ($leads as $lead) {
-                    $lead->difference($compare);
+                    $lead->difference($compare,'b');
                 }
             }
             else if($req->order){
