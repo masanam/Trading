@@ -37,71 +37,28 @@ class LeadController extends Controller
 
         if ($req->lead_type === 'buy') {
             
-            if($req->order&&$req->order_id!==null){
-                $user_id = Auth::User()->id;
-                $buy_order = BuyOrder::where('id',$req->order_id)->first();
-                $sell_order = SellOrder::with('Company','User','trader','used')
-                    ->where([
-                        ['order_status', 'v'],
-                        [DB::raw('DATEDIFF(ready_date,"'.$buy_order->ready_date.'")'),'>=',-7],
-                        [DB::raw('DATEDIFF(order_deadline,"'.$buy_order->order_deadline.'")'),'<=',7]
-                    ])
-                    ->orwhere([
-                        ['order_status', 'l'],
-                        [DB::raw('DATEDIFF(ready_date,"'.$buy_order->ready_date.'")'),'>=',-7],
-                        [DB::raw('DATEDIFF(order_deadline,"'.$buy_order->order_deadline.'")'),'<=',7]
-                    ])
-                    ->orwhere([
-                        ['order_status', 'p'],
-                        [DB::raw('DATEDIFF(ready_date,"'.$buy_order->ready_date.'")'),'>=',-7],
-                        [DB::raw('DATEDIFF(order_deadline,"'.$buy_order->order_deadline.'")'),'<=',7]
-                    ])
-                    ->select('sell_order.*',  
-                        DB::raw('ABS(sell_order.gcv_adb_min-'.$buy_order->gcv_adb_min.') as gcv_adb_min_diff'), 
-                        DB::raw('ABS(sell_order.gcv_adb_max-'.$buy_order->gcv_adb_max.') as gcv_adb_max_diff'),
-                        DB::raw('ABS(sell_order.gcv_arb_min-'.$buy_order->gcv_arb_min.') as gcv_arb_min_diff'), 
-                        DB::raw('ABS(sell_order.gcv_arb_max-'.$buy_order->gcv_arb_max.') as gcv_arb_max_diff'), 
-                        DB::raw('ABS(sell_order.ncv_min-'.$buy_order->ncv_min.') as ncv_min_diff'), 
-                        DB::raw('ABS(sell_order.ncv_max-'.$buy_order->ncv_max.') as ncv_max_diff'), 
-                        DB::raw('ABS(sell_order.volume-'.$buy_order->volume.') as volume_diff'),
-                        DB::raw('DATEDIFF(ready_date,"'.$buy_order->ready_date.'") as ready_date_diff'),
-                        DB::raw('DATEDIFF(order_deadline,"'.$buy_order->order_deadline.'") as order_deadline_diff'))
-                    ->orderBy('gcv_adb_min_diff','asc')
-                    ->orderBy('gcv_adb_max_diff','asc')
-                    ->orderBy('gcv_arb_min_diff','asc')
-                    ->orderBy('gcv_arb_max_diff','asc')
-                    ->orderBy('ncv_min_diff','asc')
-                    ->orderBy('ncv_max_diff','asc')
-                    ->orderBy('volume_diff','asc')
-                    ->orderBy('ready_date_diff','asc')
-                    ->orderBy('order_deadline_diff','asc')
-                    ->orderBy('min_price','asc')
-                    ->limit($req->limit)
-                    ->get();
+            if($req->order&&$req->lead_id!==null){
+                $compare = Lead::where('id',$req->lead_id)->where('lead_type', 'b')->first();
+                $leads = Lead::where('lead_type', 's')->limit($req->limit)->get();
+                foreach ($leads as $lead) {
+                    $lead->difference($compare);
+                }
             }
-            else if($req->supplier&&$req->order_id!==null){
-                $buy_order = BuyOrder::where('id',$req->order_id)->first();
-                $sell_order = Product::with('Company')
-                    ->where('buyer_id',null)
-                    ->select('products.*',  
-                        DB::raw('ABS(products.gcv_adb_min-'.$buy_order->gcv_adb_min.') as gcv_adb_min_diff'), 
-                        DB::raw('ABS(products.gcv_adb_max-'.$buy_order->gcv_adb_max.') as gcv_adb_max_diff'),
-                        DB::raw('ABS(products.gcv_arb_min-'.$buy_order->gcv_arb_min.') as gcv_arb_min_diff'), 
-                        DB::raw('ABS(products.gcv_arb_max-'.$buy_order->gcv_arb_max.') as gcv_arb_max_diff'), 
-                        DB::raw('ABS(products.ncv_min-'.$buy_order->ncv_min.') as ncv_min_diff'), 
-                        DB::raw('ABS(products.ncv_max-'.$buy_order->ncv_max.') as ncv_max_diff'))
-                    ->orderBy('gcv_adb_min_diff','asc')
-                    ->orderBy('gcv_adb_max_diff','asc')
-                    ->orderBy('gcv_arb_min_diff','asc')
-                    ->orderBy('gcv_arb_max_diff','asc')
-                    ->orderBy('ncv_min_diff','asc')
-                    ->orderBy('ncv_max_diff','asc')
+            else if($req->supplier&&$req->lead_id!==null){
+                $compare = Lead::where('id',$req->lead_id)->where('lead_type', 'b')->first();
+                $leads = Product::with('Company')
                     ->limit($req->limit)
                     ->get();
+                foreach ($leads as $lead) {
+                    $lead->difference($compare);
+                }
             }
             else if($req->order){
-                $user_id = Auth::User()->id;
-                $sell_order = SellOrder::with('Company','User','trader','used')->where('order_status', 'v')->orwhere('order_status', 'l')->orwhere('order_status', 'p')->get();
+                $leads = Lead::with('Company','User','trader','used')
+                    ->where([['order_status', 'v'],['lead_type', 'b']])
+                    ->orwhere([['order_status', 'l'],['lead_type', 'b']])
+                    ->orwhere([['order_status', 'p'],['lead_type', 'b']])
+                    ->get();
             }
 
             //list lead status
@@ -140,95 +97,72 @@ class LeadController extends Controller
                     }
                 }
             }
-            
-            return response()->json($leads, 200);
-
         }
         else if ($req->lead_type === 'sell') {
 
             if($req->order&&$req->order_id!==null){
-                $user_id = Auth::User()->id;
-                $sell_order = SellOrder::where('id',$req->order_id)->first();
-                $buy_order = BuyOrder::with('Buyer','User','trader','used')
-                    ->where([['order_status', 'v'],
-                        [DB::raw('DATEDIFF(ready_date,"'.$sell_order->ready_date.'")'),'>=',-7],
-                        [DB::raw('DATEDIFF(order_deadline,"'.$sell_order->order_deadline.'")'),'<=',7]])
-                    ->orwhere([['order_status', 'l'],
-                        [DB::raw('DATEDIFF(ready_date,"'.$sell_order->ready_date.'")'),'>=',-7],
-                        [DB::raw('DATEDIFF(order_deadline,"'.$sell_order->order_deadline.'")'),'<=',7]])
-                    ->orwhere([['order_status', 'p'],
-                        [DB::raw('DATEDIFF(ready_date,"'.$sell_order->ready_date.'")'),'>=',-7],
-                        [DB::raw('DATEDIFF(order_deadline,"'.$sell_order->order_deadline.'")'),'<=',7]])
-                    ->select('buy_order.*', 
-                        DB::raw('ABS(buy_order.gcv_adb_min-'.$sell_order->gcv_adb_min.') as gcv_adb_min_diff'), 
-                        DB::raw('ABS(buy_order.gcv_adb_max-'.$sell_order->gcv_adb_max.') as gcv_adb_max_diff'),
-                        DB::raw('ABS(buy_order.gcv_arb_min-'.$sell_order->gcv_arb_min.') as gcv_arb_min_diff'), 
-                        DB::raw('ABS(buy_order.gcv_arb_max-'.$sell_order->gcv_arb_max.') as gcv_arb_max_diff'), 
-                        DB::raw('ABS(buy_order.ncv_min-'.$sell_order->ncv_min.') as ncv_min_diff'), 
-                        DB::raw('ABS(buy_order.ncv_max-'.$sell_order->ncv_max.') as ncv_max_diff'), 
-                        DB::raw('ABS(buy_order.volume-'.$sell_order->volume.') as volume_diff'),
-                        DB::raw('DATEDIFF(ready_date,"'.$sell_order->ready_date.'") as ready_date_diff'),
-                        DB::raw('DATEDIFF(order_deadline,"'.$sell_order->order_deadline.'") as order_deadline_diff'))
-                    ->orderBy('gcv_adb_min_diff','asc')
-                    ->orderBy('gcv_adb_max_diff','asc')
-                    ->orderBy('gcv_arb_min_diff','asc')
-                    ->orderBy('gcv_arb_max_diff','asc')
-                    ->orderBy('ncv_min_diff','asc')
-                    ->orderBy('ncv_max_diff','asc')
-                    ->orderBy('volume_diff','asc')
-                    ->orderBy('ready_date_diff','asc')
-                    ->orderBy('order_deadline_diff','asc')
-                    ->orderBy('max_price','desc')
-                    ->limit($req->limit)
-                    ->get();
+                $compare = Lead::where('id',$req->lead_id)->where('lead_type', 's')->first();
+                $leads = Lead::where('lead_type', 'b')->limit($req->limit)->get();
+                foreach ($leads as $lead) {
+                    $lead->difference($compare);
+                }
             }
             else if($req->customer&&$req->order_id!==null){
-                $sell_order = SellOrder::where('id',$req->order_id)->first();
-                $buy_order = Product::with('Buyer')
-                    ->where('seller_id',null)
-                    ->select('products.*', 
-                        DB::raw('ABS(products.gcv_adb_min-'.$sell_order->gcv_adb_min.') as gcv_adb_min_diff'), 
-                        DB::raw('ABS(products.gcv_adb_max-'.$sell_order->gcv_adb_max.') as gcv_adb_max_diff'),
-                        DB::raw('ABS(products.gcv_arb_min-'.$sell_order->gcv_arb_min.') as gcv_arb_min_diff'), 
-                        DB::raw('ABS(products.gcv_arb_max-'.$sell_order->gcv_arb_max.') as gcv_arb_max_diff'), 
-                        DB::raw('ABS(products.ncv_min-'.$sell_order->ncv_min.') as ncv_min_diff'), 
-                        DB::raw('ABS(products.ncv_max-'.$sell_order->ncv_max.') as ncv_max_diff'))
-                    ->orderBy('gcv_adb_min_diff','asc')
-                    ->orderBy('gcv_adb_max_diff','asc')
-                    ->orderBy('gcv_arb_min_diff','asc')
-                    ->orderBy('gcv_arb_max_diff','asc')
-                    ->orderBy('ncv_min_diff','asc')
-                    ->orderBy('ncv_max_diff','asc')
+                $compare = Lead::where('id',$req->lead_id)->where('lead_type', 's')->first();
+                $leads = Product::with('Company')
                     ->limit($req->limit)
                     ->get();
-            }
-            else if(!$req->order){
-                $user_id = Auth::User()->id;
-                $buy_order = BuyOrder::with('Buyer','User','trader','used')
-                    ->where([['order_status', '1'], ['user_id', $user_id],])
-                    ->orwhere([['order_status', '2'], ['user_id', $user_id],])
-                    ->orwhere([['order_status', '3'], ['user_id', $user_id],])
-                    ->orwhere([['order_status', '4'], ['user_id', $user_id],])
-                    ->orwhere('order_status', 'v')
-                    ->orwhere('order_status', 'l')
-                    ->orwhere('order_status', 's')
-                    ->orwhere('order_status', 'p')
-                    ->get();
+                foreach ($leads as $lead) {
+                    $lead->difference($compare);
+                }
             }
             else if($req->order){
-                $user_id = Auth::User()->id;
-                $buy_order = BuyOrder::with('Buyer','User','trader','used')->where('order_status', 'v')->orwhere('order_status', 'l')->orwhere('order_status', 'p')->get();
-                $arrays = [];
-                foreach($buy_order as $object)
-                {
-                    $arrays[] =  (array) $object;
-                }
-                array_merge($arrays, $this->showApprovedLeads());
+               $leads = Lead::with('Company','User','trader','used')
+                    ->where([['order_status', 'v'],['lead_type', 's']])
+                    ->orwhere([['order_status', 'l'],['lead_type', 's']])
+                    ->orwhere([['order_status', 'p'],['lead_type', 's']])
+                    ->get();
             }
 
-            return response()->json($buy_order, 200);
+            //list lead status
+            else if($req->order_status){
+                if($req->order_status==='all'){
+                    $leads = Lead::with('Company','User','trader','used')
+                        ->where([['order_status', '1'], ['user_id', Auth::User()->id],['lead_type', 's']])
+                        ->orwhere([['order_status', '2'], ['user_id', Auth::User()->id],['lead_type', 's']])
+                        ->orwhere([['order_status', '3'], ['user_id', Auth::User()->id],['lead_type', 's']])
+                        ->orwhere([['order_status', '4'], ['user_id', Auth::User()->id],['lead_type', 's']])
+                        ->orwhere([['order_status', 'v'],['lead_type', 's']])
+                        ->orwhere([['order_status', 'l'],['lead_type', 's']])
+                        ->orwhere([['order_status', 's'],['lead_type', 's']])
+                        ->orwhere([['order_status', 'p'],['lead_type', 's']])
+                        ->get();
+                } else if($req->order_status==='draft') {
+                    $leads = Lead::with('Company','User')
+                        ->where([['order_status', '1'], ['user_id', Auth::User()->id],['lead_type', 's']])
+                        ->orwhere([['order_status', '2'], ['user_id', Auth::User()->id],['lead_type', 's']])
+                        ->orwhere([['order_status', '3'], ['user_id', Auth::User()->id],['lead_type', 's']])
+                        ->orwhere([['order_status', '4'], ['user_id', Auth::User()->id],['lead_type', 's']])
+                        ->orwhere([['order_status', '0'], ['user_id', Auth::User()->id],['lead_type', 's']])
+                        ->get();
+                } else if ($req->order_status!=='draft') {
+                    $leads = Lead::with('Company','User','Product','used')
+                    ->where('order_status', $req->order_status)
+                    ->where('lead_type', 's')
+                    ->get();
+                }
 
+                foreach ($leads as $lead) {
+                    if ($lead->order_status!=='s') {
+                        if(!in_array($lead->user_id, $all_access)){
+                            $lead->cleanse();
+                        }
+                    }
+                }
+            }
         }
+
+        return response()->json($leads, 200);
     }
 
   /**
@@ -519,35 +453,19 @@ class LeadController extends Controller
     * @param  int  $id
     * @return \Illuminate\Http\Response
     */
-    public function destroy($buyer){
-        if ($req->type === 'buy'){
-            $buy_order = BuyOrder::find($id);
+    public function destroy($id){
+        $lead = Lead::find($id);
 
-            if (!$buy_order) {
-                return response()->json([
-                    'message' => 'Not found'
-                ] ,404);
-            }
-
-            $buy_order->order_status = 'x';
-            $buy_order->save();
-
-            return response()->json($buy_order, 200);
+        if (!$lead) {
+            return response()->json([
+                'message' => 'Not found'
+            ] ,404);
         }
-        else if ($req->type === 'sell'){
-            $sell_order = SellOrder::find($id);
-        
-            if (!$sell_order) {
-                return response()->json([
-                    'message' => 'Not found'
-                ] ,404);
-            }
 
-            $sell_order->status = 'x';
-            $sell_order->save();
+        $lead->order_status = 'x';
+        $lead->save();
 
-            return response()->json($sell_order, 200);
-        }
+        return response()->json($lead, 200);
     }
 
     public function getSub(){
