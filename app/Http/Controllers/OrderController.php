@@ -220,7 +220,6 @@ class OrderController extends Controller
    */
   public function show($id, Request $req)
   {
-    $order = Order::with('trader', 'users', 'sells', 'buys', 'buys.trader', 'approvals', 'sells.trader', 'orders', 'sells.company', 'buys.company')->find($id);
     // $this->authorize('view', $order);
 
     // // lazyloading semua negotiation log
@@ -239,7 +238,7 @@ class OrderController extends Controller
     //dd($user->Subordinates);
     //dd(Auth::user()->Subordinates);
     
-    //var_dump(date('Y-m-d', strtotime($order->created_at)));die;
+    $order = Order::with('trader', 'users', 'sells', 'buys', 'buys.trader', 'approvals', 'sells.trader', 'orders', 'sells.company', 'buys.company', 'earliestLaycan', 'latestLaycan', 'buyPrice', 'sellPrice')->find($id);
     
     if($req->envelope == "true"){
       $params = [
@@ -249,7 +248,7 @@ class OrderController extends Controller
       
       $index = $this->indexPrice(10, $params);
       
-      $earliest_laycan = $order->orders->min('laycan_start');
+      /*$earliest_laycan = $order->orders->min('laycan_start');
       $latest_laycan = $order->orders->max('laycan_end');
       $sum_buy_volume = 0; 
       $sum_sell_volume = 0; 
@@ -264,15 +263,15 @@ class OrderController extends Controller
       foreach($order->sells as $sell){
         $sell_price += ($sell->pivot->volume * $sell->pivot->price);
         $sum_sell_volume += $sell->pivot->volume;
-      }
+      }*/
       
       $json = [
         'status' => 200,
         'error' => 'ok',
-        'latest_laycan' => $latest_laycan,
-        'earliest_laycan' => $earliest_laycan,
-        'buy_price' => $buy_price / $sum_buy_volume,
-        'sell_price' => $sell_price / $sum_sell_volume,
+        // 'latest_laycan' => $latest_laycan,
+        // 'earliest_laycan' => $earliest_laycan,
+        // 'buy_price' => $buy_price / $sum_buy_volume,
+        // 'sell_price' => $sell_price / $sum_sell_volume,
         'order' => $order,
         'index' => $index
       ];
