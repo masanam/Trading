@@ -152,7 +152,7 @@ class OrderController extends Controller
         //     $o->save();
         //   }
         // }
-        $order->orders()->attach([ $buy['id'] => $buy['pivot'] ]);
+        $order->leads()->attach([ $buy['id'] => $buy['pivot'] ]);
         Lead::find($buy['id'])->reconcile();
 
         OrderNegotiation::create([
@@ -185,7 +185,7 @@ class OrderController extends Controller
         //   }
         // }
 
-        $order->orders()->attach([ $sell['id'] => $sell['pivot'] ]);
+        $order->leads()->attach([ $sell['id'] => $sell['pivot'] ]);
         Lead::find($sell['id'])->reconcile();
 
         // $order_detail = $order->orders->find($sell['id']);
@@ -238,7 +238,7 @@ class OrderController extends Controller
     //dd($user->Subordinates);
     //dd(Auth::user()->Subordinates);
     
-    $order = Order::with('trader', 'users', 'sells', 'buys', 'buys.trader', 'approvals', 'sells.trader', 'orders', 'sells.company', 'buys.company', 'earliestLaycan', 'latestLaycan', 'buyPrice', 'sellPrice')->find($id);
+    $order = Order::with('trader', 'users', 'sells', 'buys', 'buys.trader', 'approvals', 'sells.trader', 'leads', 'sells.company', 'buys.company')->find($id);
     
     if($req->envelope == "true"){
       $params = [
@@ -248,30 +248,27 @@ class OrderController extends Controller
       
       $index = $this->indexPrice(10, $params);
       
-      /*$earliest_laycan = $order->orders->min('laycan_start');
-      $latest_laycan = $order->orders->max('laycan_end');
-      $sum_buy_volume = 0; 
-      $sum_sell_volume = 0; 
-      $sell_price = 0; 
-      $buy_price = 0;
+      $order->earliest_laycan = $order->leads->min('laycan_start');
+      $order->latest_laycan = $order->leads->max('laycan_end');
       
-      foreach($order->buys as $buy){
-        $buy_price += ($buy->pivot->volume * $buy->pivot->price);
-        $sum_buy_volume += $buy->pivot->volume;
+      $sum_sell_price = $sum_buy_price = $sum_buy_volume = $sum_sell_volume = 0;
+      
+      // lazyloading semua negotiation log
+      foreach($order->sells as &$sell){
+        $sum_sell_price += $sell->price*$sell->volume;
+        $sum_sell_volume += $sell->volume;
+      }
+      foreach($order->buys as &$buy){
+        $sum_buy_price += $buy->price*$buy->volume;
+        $sum_buy_volume += $buy->volume;
       }
       
-      foreach($order->sells as $sell){
-        $sell_price += ($sell->pivot->volume * $sell->pivot->price);
-        $sum_sell_volume += $sell->pivot->volume;
-      }*/
+      $order->buy_price = $sum_buy_price/$sum_buy_volume;
+      $order->sell_price = $sum_sell_price/$sum_sell_volume;
       
       $json = [
         'status' => 200,
         'error' => 'ok',
-        // 'latest_laycan' => $latest_laycan,
-        // 'earliest_laycan' => $earliest_laycan,
-        // 'buy_price' => $buy_price / $sum_buy_volume,
-        // 'sell_price' => $sell_price / $sum_sell_volume,
         'order' => $order,
         'index' => $index
       ];
@@ -520,7 +517,7 @@ class OrderController extends Controller
       'order_status' => 'v'
     ]);
 
-    $sell->orders()->attach([ $id => [
+    $sell->leads()->attach([ $id => [
       'volume' => $volume,
       'price' => 0,
       'trading_term' => 'FOB MV',
