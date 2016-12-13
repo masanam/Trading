@@ -107,8 +107,8 @@ class AuthenticateController extends Controller
         }
         
         $user = Auth::user();
-        $subordinates = Auth::user()->getAllSubordinates();
-        $managers = Auth::user()->getAllManagers();
+        $subordinates = $user->subordinates();
+        $managers = $user->managers();
  
         // the token is valid and we have found the user via the sub claim
         return response()->json(compact('user', $user, 'subordinates', $subordinates, 'managers', $managers), 200);

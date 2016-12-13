@@ -15,8 +15,8 @@
 </div>
 
 <div ng-include="'/angular/coalpedia/views/concession/_company-concession.partial.html'"
-  ng-if="company.company_type !== 'c' && company.company_type !== 'v'"></div>
-<div ng-include="'/angular/coalpedia/views/factory/_company-factory.partial.html'" ng-if="company.company_type === 'c'"></div>
+  ng-if="companyType !== 'customer' && companyType !== 'vendor'"></div>
+<div ng-include="'/angular/coalpedia/views/factory/_company-factory.partial.html'" ng-if="companyType !== 'supplier'"></div>
 
 <div class="box">
   <div class="box-header with-border">
