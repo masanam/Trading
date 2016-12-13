@@ -29,6 +29,34 @@ class LeadController extends Controller
         }
         $all_access[] = Auth::User()->id;
 
+        if ($req->lead_type === 'buy') $lead_type = 'b';
+        else if ($req->lead_type === 'sell') $lead_type = 's';
+
+        if ($lead_type == 'b') $compare_type = 's';
+        else if ($lead_type == 's') $compare_type = 'b';
+
+        if ($company_type == 's') $compare_type = 'b';
+        else if ($company_type == 'c') $compare_type = 's';
+
+        $compare = Lead::where('id',$req->lead_id)->where('lead_type', $compare_type)->first();
+
+        if($req->order&&$req->lead_id!==null){
+            $leads = Lead::where('lead_type', $lead_type)->limit($req->limit)->get();
+            foreach ($leads as $lead) {
+                $lead->difference($compare);
+            }
+        }
+        else if($req->company&&$req->lead_id!==null){
+            $leads = Product::with('Company')
+                ->limit($req->limit)
+                ->get();
+            foreach ($leads as $lead) {
+                $lead->difference($compare, $company_type);
+            }
+        }
+        
+
+
         if ($req->lead_type === 'buy') {
             
             if($req->order&&$req->lead_id!==null){
