@@ -18,7 +18,7 @@ angular.module('coalpedia').controller('PortModalController', ['$scope', '$uibMo
     };
 
     $scope.create = function(port) {
-      var port = new Port(port);
+      port = new Port(port);
       port.company_id = company.id;
 
       port.$save(function(response) {
