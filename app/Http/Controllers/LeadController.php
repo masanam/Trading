@@ -23,7 +23,29 @@ class LeadController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $req){
-        $subordinates = $this->getSub();
+        // get all subordinate of current users
+        $subs = Auth::user()->subordinates();
+        $subs_id = $subs->pluck('id')->all();
+
+        // this is the basic loading query of all leads
+        $query = Lead::with('trader', 'users');
+
+        // choose lead type
+        if ($req->lead_type === 'buy') $query->where('lead_type', 'b');
+        else if ($req->lead_type === 'sell') $query->where('lead_type', 's');
+
+        // select statuses to include based on query category
+        //if($req->order_status==='all') $status = ['0', '1', '2', '3', '4', 'v', 'l', 's', 'p'];
+        if($req->order_status==='draft') $status = ['0', '1', '2', '3', '4'];
+        else $status = ['v', 'p'];
+
+        $query->whereIn('order_status', $status);
+
+
+
+        return $subs_id;
+
+
         foreach ($subordinates as $sub ) {
             $all_access[] = $sub->id;
         }

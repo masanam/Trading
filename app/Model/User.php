@@ -73,35 +73,35 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return $this->hasMany('SellOrder');
     }
 
-    public function Subordinates() {
+    public function directSubordinates() {
         return  $this->hasMany('App\Model\User', 'manager_id');
     }
 
-    public function Manager() {
+    public function directManager() {
         return  $this->belongsTo('App\Model\User', 'manager_id');
     }
 
-    public function getAllSubordinates($user = false)
+    public function subordinates($user = false)
     {
         if(!$user) $user = $this;
-        $subs = [];
-        foreach ($user->Subordinates as $sub ) {
-            $subs[] = $sub;
-            $lower = $this->getAllSubordinates($sub);
-            $subs = array_merge($subs,$lower);
+        $subs = collect([]);
+        foreach ($user->directSubordinates as $sub ) {
+            $subs->push($sub);
+            $lower = $this->subordinates($sub);
+            $subs = $subs->merge($lower);
         }
         return $subs;
     }
 
-    public function getAllManagers($user = false)
+    public function managers($user = false)
     {
         if(!$user) $user = $this;
-        $sups = [];
-        if($user->Manager){
-            $sups[] = $user->Manager;
-            $upper = $this->getAllManagers($user->Manager);
+        $sups = collect([]);
+        if($user->directManager){
+            $sups->push($user->directManager);
+            $upper = $this->managers($user->directManager);
 
-            $sups = array_merge($sups,$upper);
+            $sups = $sups->merge($upper);
         }
         return $sups;
     }
