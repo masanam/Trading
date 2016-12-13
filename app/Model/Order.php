@@ -11,14 +11,16 @@ class Order extends Model
 {
   protected $table = 'orders';
 
-  public function buys()
-	{
+  /*
+   * Relations 
+   * 
+   */
+  public function buys() {
       return $this->belongsToMany(Lead::class, 'order_details', 'order_id', 'lead_id')
         ->withPivot('id', 'price', 'volume', 'payment_term', 'trading_term')->where('lead_type', 'b');
 	}
 
-  public function sells()
-	{
+  public function sells() {
     return $this->belongsToMany(Lead::class, 'order_details', 'order_id', 'lead_id')
         ->withPivot('id', 'price', 'volume', 'payment_term', 'trading_term')->where('lead_type', 's');
 	}
@@ -49,8 +51,7 @@ class Order extends Model
       ->withPivot('id', 'price', 'volume', 'payment_term', 'trading_term');
   }
 
-	public function approvals()
-	{
+	public function approvals() {
 		return $this->belongsToMany(User::class, 'order_approvals')->withPivot('status', 'updated_at');
 	}
 
@@ -60,5 +61,14 @@ class Order extends Model
 
   public function users() {
     return $this->belongsToMany(User::class, 'order_users')->withPivot('role');
+  }
+
+
+  public function earliest_laycans() {
+    return $this->belongsToMany(Lead::class, 'order_details', 'order_id', 'lead_id')->earliest()->laycan_start;
+  }
+  
+  public function latest_laycans() {
+    return $this->belongsToMany(Lead::class, 'order_details', 'order_id', 'lead_id')->latest()->laycan_start;
   }
 }

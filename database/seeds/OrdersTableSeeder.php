@@ -14,6 +14,16 @@ class OrdersTableSeeder extends Seeder
    */
   public function run()
   {
+    $lead = [
+        [
+            'user_id' => 7 , 'buyer_id' => 1 ,
+            'address' => 'Jl. Kapten Darmo Sugondo No.56, Sidorukun, Kec. Gresik, Kabupaten Gresik, Jawa Timur',
+            'latitude' => '-7.1844498' ,
+            'longitude' => '112.6528737' ,
+
+        ]
+    ];
+
     // $array = [
     //   [
     //     'order' => [ 'id' => 1, 'user_id' => 7, 'status' => 'p', ],
