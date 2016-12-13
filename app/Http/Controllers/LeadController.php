@@ -25,8 +25,8 @@ class LeadController extends Controller
     public function index(Request $req){
         // get all subordinate of current users
         $subs = Auth::user()->subordinates();
-        $all_access = $subs->pluck('id')->all(); 
-        $all_access[] = Auth::User()->id;
+        $users = $subs->pluck('id')->all(); 
+        $users->push(Auth::User()->id);
 
         // this is the basic loading query of all leads
         $query = Lead::with('Company','User','trader','used', 'Product');
@@ -36,9 +36,8 @@ class LeadController extends Controller
         else if ($req->lead_type === 'sell') $query->where('lead_type', 's');
 
         // select statuses to include based on query category
-        if($req->order) $status = ['v', 'l', 'p'];
-
-        if($req->order_status==='all') $status = ['v', 'l', 's', 'p'];
+        if($req->order) $status = ['v', 'l', 'p']; // only v, l, p IF this is a lead added to orders
+        else if($req->order_status==='all') $status = ['v', 'l', 's', 'p'];
         else if($req->order_status==='draft') { $status = ['0', '1', '2', '3', '4']; $user_id = true; }
         else if($req->order_status!==null) $query->where('order_status', $req->order_status);
 
@@ -80,7 +79,7 @@ class LeadController extends Controller
             $leads = $query->get();
             foreach ($leads as $lead) {
                 if ($lead->order_status!=='s') {
-                    if(!in_array($lead->user_id, $all_access)){
+                    if(!in_array($lead->user_id, $users)){
                         $lead->cleanse();
                     }
                 }
