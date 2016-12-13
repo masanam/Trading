@@ -110,7 +110,7 @@
       <div ng-include="'/angular/coalpedia/views/product/_company-product.partial.html'"></div>
       <div ng-include="'/angular/coalpedia/views/concession/_company-concession.partial.html'"
         ng-if="company.company_type !== 'c' && company.company_type !== 'v'"></div>
-      <div ng-include="'/angular/coalpedia/views/factory/_company-factory.partial.html'" ng-if="company.company_type === 'c'"></div>
+      <div ng-include="'/angular/coalpedia/views/factory/_company-factory.partial.html'" ng-if="company.company_type !== 's'"></div>
       <div ng-include="'/angular/coalpedia/views/port/_company-port.partial.html'"></div>
     </div>
   </div>
