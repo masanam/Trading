@@ -45,7 +45,8 @@ class Order extends Model
     return $this->belongsToMany(Lead::class, 'order_details', 'order_id', 'lead_id')->where('lead_type', 's')->select(DB::raw('SUM(order_details.volume*order_details.price)/SUM(order_details.volume) as price'));
   }
 
-  public function leads() {
+  public function leads()
+  {
     return $this->belongsToMany(Lead::class, 'order_details', 'order_id', 'lead_id')
       ->withPivot('id', 'price', 'volume', 'payment_term', 'trading_term');
   }
