@@ -28,29 +28,6 @@ angular.module('order').config(['$stateProvider',
       });
 
     $stateProvider
-      .state('lead', {
-        url: '/lead',
-        abstract: true,
-        templateUrl: '/angular/order/views/lead/main.layout.html',
-        roles: ['trader', 'manager']
-      })
-      .state('lead.list', {
-        url: '',
-        templateUrl: '/angular/order/views/lead/list.view.html',
-        roles: ['trader', 'manager']
-      })
-      .state('lead.create', {
-        url: '/create',
-        templateUrl: '/angular/order/views/lead/create.view.html',
-        roles: ['trader', 'manager']
-      })
-      .state('lead.view', {
-        url: '/:id',
-        templateUrl: '/angular/order/views/lead/view.view.html',
-        roles: ['trader', 'manager']
-      });
-
-    $stateProvider
       .state('buy-order-management', {
         url: '/buy-order-management',
         abstract: true,
