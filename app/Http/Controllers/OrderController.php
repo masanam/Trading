@@ -152,7 +152,7 @@ class OrderController extends Controller
         //     $o->save();
         //   }
         // }
-        $order->orders()->attach([ $buy['id'] => $buy['pivot'] ]);
+        $order->leads()->attach([ $buy['id'] => $buy['pivot'] ]);
         Lead::find($buy['id'])->reconcile();
 
         OrderNegotiation::create([
@@ -185,7 +185,7 @@ class OrderController extends Controller
         //   }
         // }
 
-        $order->orders()->attach([ $sell['id'] => $sell['pivot'] ]);
+        $order->leads()->attach([ $sell['id'] => $sell['pivot'] ]);
         Lead::find($sell['id'])->reconcile();
 
         // $order_detail = $order->orders->find($sell['id']);
