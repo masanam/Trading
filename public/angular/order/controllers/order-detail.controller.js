@@ -94,7 +94,7 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
         animation: true,
         ariaLabelledBy: 'modal-title',
         ariaDescribedBy: 'modal-body',
-        templateUrl: '/angular/order/views/order/_negotiate.modal.html',
+        templateUrl: '/angular/order/views/_negotiate.modal.html',
         controller: 'NegotiateModalController',
         windowClass: 'xl-modal',
         resolve: {
@@ -125,7 +125,7 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
         animation: true,
         ariaLabelledBy: 'modal-title',
         ariaDescribedBy: 'modal-body',
-        templateUrl: '/angular/order/views/order/_negotiate.modal.html',
+        templateUrl: '/angular/order/views/_negotiate.modal.html',
         controller: 'NegotiateModalController',
         windowClass: 'xl-modal',
         resolve: {
@@ -156,7 +156,7 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
         animation: true,
         ariaLabelledBy: 'modal-title',
         ariaDescribedBy: 'modal-body',
-        templateUrl: '/angular/order/views/order/_add-leads.modal.html',
+        templateUrl: '/angular/order/views/_add-leads.modal.html',
         controller: 'AddLeadsModalController',
         windowClass: 'xl-modal',
         resolve: {
@@ -200,7 +200,7 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
         animation: true,
         ariaLabelledBy: 'modal-title',
         ariaDescribedBy: 'modal-body',
-        templateUrl: '/angular/order/views/order/_add-leads.modal.html',
+        templateUrl: '/angular/order/views/_add-leads.modal.html',
         controller: 'AddLeadsModalController',
         windowClass: 'xl-modal',
         resolve: {
@@ -245,7 +245,7 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
       $scope.order.index = $scope.display.sell.index;
       var modalInstance = $uibModal.open({
         windowClass: 'xl-modal',
-        templateUrl: './angular/order/views/order/_add-cost.modal.html',
+        templateUrl: './angular/order/views/_add-cost.modal.html',
         controller: 'AddCostModalController',
         scope: $scope,
       });
@@ -275,7 +275,7 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
       $scope.order.index = $scope.display.buy.index;
       var modalInstance = $uibModal.open({
         windowClass: 'xl-modal',
-        templateUrl: './angular/order/views/order/_add-cost.modal.html',
+        templateUrl: './angular/order/views/_add-cost.modal.html',
         controller: 'AddCostModalController',
         scope: $scope,
       });
