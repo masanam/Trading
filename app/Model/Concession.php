@@ -11,6 +11,37 @@ class Concession extends Model
 {
     protected $table = 'concessions';
 
+    protected $fillable = [
+        'concession_name',
+        'seller_id',
+        'owner',
+        'address',
+        'city',
+        'country',
+        'latitude',
+        'longitude',
+        'polygon',
+        'size',
+        'stripping_ratio',
+        'resource',
+        'reserves',
+        'contracted_volume',
+        'remaining_volume',
+        'annual_production',
+        'hauling_road_name',
+        'stockpile_capacity',
+        'stockpile_coverage',
+        'stockpile_distance',
+        'port_id',
+        'port_distance',
+        'license_expiry_date',
+        'license_type',
+        'status',
+        'latitude',
+        'longitude',
+        'stripping_ratio'
+    ];
+
     public function company() {
     	return $this->belongsTo(Company::class);
     }

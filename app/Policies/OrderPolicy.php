@@ -17,8 +17,21 @@ class OrderPolicy
    * @param  App\Order  $order
    * @return mixed
    */
-  public function view(User $user, Order $order)
+  public function view(User $user, Order &$order)
   {
+    $subs = $user->subordinates();
+    $users = $subs->pluck('id')->all(); 
+    $users[] = $user->id;
+
+    // modify records based on the positions
+    foreach($order->sells as &$sell)
+      if(!in_array($sell->user_id, $users))
+        $sell->seller = $sell->location = $sell->port_name = $sell->address = '-hidden value-';
+
+    foreach($order->buys as &$buy)
+      if(!in_array($sell->user_id, $users))
+        $buy->buyer = $buy->location = $buy->port_name = $buy->address = '-hidden value-';
+
     foreach($order->users as $orderUser){
       if($orderUser->id === $user->id) return true;
     }

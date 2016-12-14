@@ -13,8 +13,8 @@ angular.module('coalpedia').controller('ConcessionModalController', ['$scope', '
       });
     };
 
-    $scope.create = function() {
-      var concession = new Concession($scope.concession);
+    $scope.create = function(concession) {
+      concession = new Concession(concession);
       concession.polygon = $scope.display.polygonString;
       concession.company_id = company.id;
 

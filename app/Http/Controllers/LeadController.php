@@ -26,7 +26,7 @@ class LeadController extends Controller
         // get all subordinate of current users
         $subs = Auth::user()->subordinates();
         $users = $subs->pluck('id')->all(); 
-        $users->push(Auth::User()->id);
+        $users[] = Auth::User()->id;
 
         // this is the basic loading query of all leads
         $query = Lead::with('Company','User','trader','used', 'Product');
@@ -45,14 +45,10 @@ class LeadController extends Controller
         if (isset($user_id)) $query->where('user_id', Auth::User()->id);
 
         // compare_type based lead_type
-        if ($req->lead_type === 'buy') $compare_type = 's';
-        else if ($req->lead_type === 'sell') $compare_type = 'b';
+        if ($req->lead_type === 'buy') $company_type = 'c';
+        else if ($req->lead_type === 'sell') $company_type = 's';
 
-        // if lead_type buy compare to product customer
-        if ($compare_type == 's') $company_type = 'c';
-        else if ($compare_type == 'b') $company_type = 's';
-
-        $compare = Lead::where('id',$req->lead_id)->where('lead_type', $compare_type)->first();
+        $compare = Lead::where('id',$req->lead_id)->where('lead_type', $req->lead_type === 'buy' ? 's' : 'b')->first();
 
         //list lead after theres 1 buy / sell lead at create order
         if($req->order&&$req->lead_id!==null){

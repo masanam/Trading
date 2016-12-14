@@ -1,0 +1,33 @@
+<section class="content" ng-controller="OperationLeadController" ng-init="init()">
+  <div class="box box-info" >
+    <div class="box-header with-border">
+      <h1 class="box-title" style="font-size: 25px">{{ lead_type | uppercase }} Lead {{ operation_type }}</h1>
+      <div class="box-tools pull-right" style="position:relative">
+        <button type="button" class="btn btn-danger" ui-sref="lead.company({ id:id })">
+          <i class="glyphicon glyphicon-arrow-left"></i> Back
+        </button>
+       
+        <button type="button" class="btn btn-success" ng-click="nextToProduct()">
+          <i class="glyphicon glyphicon-arrow-right"></i> Next
+        </button>
+      </div>
+    </div>
+    <div class="box-body">
+      <div class="form-group">
+        <label ng-show="error" class="alert bg-red" style="width:100%">{{error}}</label>
+      </div>
+      <div class="select-box">
+        <div ng-include="'/angular/lead/views/_operation.select.partial.html'"></div>
+      </div>
+      <div class="row">
+        <div class="text-center col-lg-12" style="padding: 20px">
+          OR
+        </div>
+      </div>
+      <button type="button" class="btn btn-primary btn-block" ng-click="openModal()">
+        <b>+</b> Add New {{ operation_type }}
+      </button>
+      <div ng-include="'/angular/lead/views/_operation.partial.html'"></div>
+    </div>
+  </div>
+</section>

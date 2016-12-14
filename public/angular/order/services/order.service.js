@@ -11,15 +11,15 @@ angular.module('order').factory('Order', ['$resource',
   }
 ]);
 
-angular.module('order').factory('Lead', ['$resource',
-  function ($resource){
-    return $resource('api/orders/:id', {
-      id: '@id',
-    }, {
-      update: { method: 'PUT' },
-    });
-  }
-]);
+// angular.module('order').factory('Lead', ['$resource',
+//   function ($resource){
+//     return $resource('api/orders/:id', {
+//       id: '@id',
+//     }, {
+//       update: { method: 'PUT' },
+//     });
+//   }
+// ]);
 
 
 angular.module('order').factory('Term', function (){

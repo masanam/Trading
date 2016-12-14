@@ -30,7 +30,6 @@ class CreateIndexTable extends Migration
             $table->integer('day_of_year');
             $table->integer('day_of_month');
             $table->integer('day_of_week');
-            //$table->string('data_type')->default('');
             $table->integer('week');
             $table->integer('month');
             $table->integer('year');
