@@ -126,6 +126,14 @@ class OrderController extends Controller
 
     //var_dump(DB::getQueryLog());
     $orders = $orders->get();
+
+    if($req->envelope)
+      $orders = [
+        'status' => 200,
+        'error' => 'ok',
+        'orders' => $orders
+      ];
+
     return response()->json($orders, 200);
   }
 

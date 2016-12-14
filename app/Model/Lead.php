@@ -122,13 +122,13 @@ class Lead extends Model
     }
 
     public function orders() {
-        return $this->belongsToMany(Order::class, 'order_details', 'leadable_id', 'id')
+        return $this->belongsToMany(Order::class, 'order_details', 'lead_id', 'id')
             ->withPivot('id', 'price', 'volume', 'payment_term', 'trading_term');
     }
 
     public function used() {
-        return $this->belongsToMany(Order::class, 'order_details', 'leadable_id', 'id')
-            ->selectRaw('sum(order_details.volume) as volume')->whereIn('orders.status', ['a', 'f', 'p', 'd'])->groupBy('leadable_id');
+        return $this->belongsToMany(Order::class, 'order_details', 'lead_id', 'id')
+            ->selectRaw('sum(order_details.volume) as volume')->whereIn('orders.status', ['a', 'f', 'p', 'd'])->groupBy('lead_id');
     }
 
     public function reconcile() {
