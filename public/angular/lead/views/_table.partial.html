@@ -1,0 +1,62 @@
+<div class="table-responsive">
+  <table st-table="displayedCollection" st-safe-src="leads" class="table table-striped">
+    <thead>
+      <tr>
+        <th colspan="11"><input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
+      </tr>
+      <tr>
+        <th st-sort="id">#</th>
+        <th st-sort="user.name">PIC</th>
+        <th st-sort="order_date">Input Date</th>
+        <th st-sort="company.company_name">Company</th>
+        <th st-sort="product_name">Quality</th>
+        <th st-sort="volume">Qty</th>
+        <th st-sort="volume">Qty Remaining</th>
+        <th st-sort="order_deadline">Valid Until</th>
+        <th st-sort="price">Price / Tonnes</th>
+        <th st-sort="city">Location</th>
+        <th st-sort="order_status">Status</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr ng-repeat="lead in displayedCollection">
+        <td>{{ lead.id }}</td>
+        <td>{{ lead.user.name }}</td>
+        <td>{{ lead.order_date | date : 'd MMMM yyyy' }}</td>
+        <td>{{ lead.company.company_name }}</td>
+        <td>{{ lead.typical_quality }}</td>
+        <td>{{ lead.volume }} mt</td>
+        <td>{{ lead.volume - lead.used_volume }} mt</td>
+        <td>{{ lead.order_deadline | date : 'd MMMM yyyy' }}</td>
+        <td>{{ lead.price | currency : $ : 2}}</td>
+        <td>{{ lead.city }}</td>
+        <td ng-if="lead.order_status==='l'">Lead</td>
+        <td ng-if="lead.order_status==='v'">Verified</td>
+        <td ng-if="lead.order_status==='s'">Staged</td>
+        <td ng-if="lead.order_status==='p'">Partial</td>
+        <td ng-if="lead.order_status==='0'"><a style="cursor:pointer" ng-click="toSupplier(lead.id)">STEP : Supplier</a></td>
+        <td ng-if="lead.order_status==='1'"><a style="cursor:pointer" ng-click="toConcession(lead.seller_id,lead.id)">STEP : Concession</a></td>
+        <td ng-if="lead.order_status==='2'"><a style="cursor:pointer" ng-click="toProduct(lead.seller_id,lead.id,lead.concession_id)">STEP : Product</a></td>
+        <td ng-if="lead.order_status==='3'"><a style="cursor:pointer" ng-click="toPort(lead.seller_id,lead.id,lead.concession_id)">STEP : Port</a></td>
+        <td ng-if="lead.order_status==='4'"><a style="cursor:pointer" ng-click="toSummary(lead.seller_id,lead.id,lead.concession_id)">STEP : Summary</a></td>
+        <td>
+          <a ng-if="lead.order_status==='s'||lead.order_status==='l'||lead.order_status==='v'" ui-sref="lead.view({ id: lead.id })"><i class="glyphicon glyphicon-info-sign"></i></a>
+          <a ng-if="lead.order_status!=='s'&&lead.order_status!=='p'&&Authentication.user.id===lead.user_id" ng-click="changeOrderStatus(lead, 'x')" style="cursor: pointer" uib-tooltip="Delete Order"><i class="glyphicon glyphicon-trash"></i></a>
+        </td>
+      </tr>
+      <tr ng-if="displayedCollection.length == 0">
+          <td colspan="11" class="text-center">No data available</td>
+      </tr>
+    </tbody>
+
+    <tfoot>
+      <tr>
+        <td colspan="11" class="text-center">
+          <div st-pagination="" st-items-by-page="10" st-displayed-pages="5"></div>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</div>

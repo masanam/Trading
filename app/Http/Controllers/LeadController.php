@@ -26,7 +26,7 @@ class LeadController extends Controller
         // get all subordinate of current users
         $subs = Auth::user()->subordinates();
         $users = $subs->pluck('id')->all(); 
-        $users->push(Auth::User()->id);
+        $users[] = Auth::User()->id;
 
         // this is the basic loading query of all leads
         $query = Lead::with('Company','User','trader','used', 'Product');
