@@ -42,7 +42,7 @@ class OrderController extends Controller
     $query = IndexPrice::where([ 'index_id' => $id ])->orderBy('date', 'DESC');
     
     if($req['date']) $query->where('date', '<', date('Y-m-d', strtotime($req['date'])));
-    if($req['latest']) $query->limit(5);
+    if($req['latest']) $query->limit(1);
 
     return $query->get();
   }
