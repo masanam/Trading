@@ -28,69 +28,74 @@ class OrderController extends Controller
     $this->order = $order;
   }
 
-  private function add_user_to_order($order = NULL, $user_id = '', $order_id='', $role=''){
-    if($order->users->count() == 0){
-      $order_user = new OrderUser();
-      $order_user->order_id = $order_id;
-      $order_user->user_id = $user_id;
-      $order_user->role = $role;
-      $order_user->save();
-    }
-  }
+  // private function add_user_to_order($order = NULL, $user_id = '', $order_id='', $role=''){
+  //   if($order->users->count() == 0){
+  //     $order_user = new OrderUser();
+  //     $order_user->order_id = $order_id;
+  //     $order_user->user_id = $user_id;
+  //     $order_user->role = $role;
+  //     $order_user->save();
+  //   }
+  // }
   
-  private function indexPrice ($id, $req) {
-    $query = IndexPrice::where([ 'index_id' => $id ])->orderBy('date', 'DESC');
-    
-    if($req['date']) $query->where('date', '<', date('Y-m-d', strtotime($req['date'])));
-    if($req['latest']) $query->limit(5);
+  private function indexPrice () {
+    $query = DB::table('index_price AS ip1')
+      ->select('index.id', 'index_provider', 'index_name', 'ip1.date', 'ip1.price')
+      ->join('index', 'ip1.index_id', '=', 'index.id')
+      ->orderBy('index.id')
+      ->join(DB::raw('(select index_id, MAX(date) AS date FROM index_price GROUP BY index_id) as ip2'),
+        function($join){
+          $join->on('ip1.index_id', '=', 'ip2.index_id')
+            ->on('ip1.date', '=', 'ip2.date');
+        });
 
     return $query->get();
   }
 
-  private function send_approval_mail($order, $user_id){
-    $user = User::findOrFail($user_id);
-    Mail::to($user->email)->send(new ApprovalRequest($order));
-  }
+  // private function send_approval_mail($order, $user_id){
+  //   $user = User::findOrFail($user_id);
+  //   Mail::to($user->email)->send(new ApprovalRequest($order));
+  // }
 
-  private function add_approval_to_order($order = NULL, $user_id = '', $order_id='', $status=''){
-    //var_dump($order->approvals->count());
-    if($order->approvals->count() > 0){
-      $order_approval = OrderApproval::where('user_id', $user_id)->where('order_id', $order_id)->first();
-      $order_approval->status = $status;
-      $order_approval->save();
+  // private function add_approval_to_order($order = NULL, $user_id = '', $order_id='', $status=''){
+  //   //var_dump($order->approvals->count());
+  //   if($order->approvals->count() > 0){
+  //     $order_approval = OrderApproval::where('user_id', $user_id)->where('order_id', $order_id)->first();
+  //     $order_approval->status = $status;
+  //     $order_approval->save();
       
-      $this->send_approval_mail($order, $user_id);
-    }else{
-      $order_approval = new OrderApproval();
-      $order_approval->order_id = $order_id;
-      $order_approval->user_id = $user_id;
-      $order_approval->status = $status;
-      $order_approval->save();
+  //     $this->send_approval_mail($order, $user_id);
+  //   }else{
+  //     $order_approval = new OrderApproval();
+  //     $order_approval->order_id = $order_id;
+  //     $order_approval->user_id = $user_id;
+  //     $order_approval->status = $status;
+  //     $order_approval->save();
 
-      $this->send_approval_mail($order, $user_id);
-    }
-  }
+  //     $this->send_approval_mail($order, $user_id);
+  //   }
+  // }
 
-  public function testMail($id){
-    $order = Order::findOrFail($id);
-    $this->send_approval_mail($order, 4);
+  // public function testMail($id){
+  //   $order = Order::findOrFail($id);
+  //   $this->send_approval_mail($order, 4);
 
-    return response()->json([ 'message' => 'Sent!' ], 200);
-  }
+  //   return response()->json([ 'message' => 'Sent!' ], 200);
+  // }
 
-  public function approveNow($id){
-    $order = Order::findOrFail($id);
-    $order->approvals()->sync([1 => [ 'status' => 'a' ]], false);
+  // public function approveNow($id){
+  //   $order = Order::findOrFail($id);
+  //   $order->approvals()->sync([1 => [ 'status' => 'a' ]], false);
 
-    return 'You Have Succesfuly Approved this Order';
-  }
+  //   return 'You Have Succesfuly Approved this Order';
+  // }
 
-  public function rejectNow($id){
-    $order = Order::findOrFail($id);
-    $order->approvals()->sync([1 => [ 'status' => 'r' ]], false);
+  // public function rejectNow($id){
+  //   $order = Order::findOrFail($id);
+  //   $order->approvals()->sync([1 => [ 'status' => 'r' ]], false);
 
-    return 'You Have Succesfuly Rejected this Order';
-  }
+  //   return 'You Have Succesfuly Rejected this Order';
+  // }
 
   /**
    * Display a listing of the resource.
@@ -145,14 +150,7 @@ class OrderController extends Controller
 
     if(count($req->buys) > 0){
       foreach($req->buys as $buy){
-        // $buy_order = BuyOrder::with('orders', 'orders.sells', 'orders.buys')->find($buy['id']);
-        // if($buy_order->orders) {
-        //   foreach($buy_order->orders as $o){
-        //     $o->status = 'c';
-        //     $o->save();
-        //   }
-        // }
-        $order->leads()->attach([ $buy['id'] => $buy['pivot'] ]);
+        $order->buys()->attach([ $buy['id'] => $buy['pivot'] ]);
         Lead::find($buy['id'])->reconcile();
 
         OrderNegotiation::create([
@@ -177,15 +175,7 @@ class OrderController extends Controller
 
     if(count($req->sells) > 0) {
       foreach($req->sells as $sell){
-        // $sell_order = SellOrder::with('orders', 'orders.sells', 'orders.buys')->find($sell['id']);
-        // if($sell_order->orders) {
-        //   foreach($sell_order->orders as $o){
-        //     $o->status = 'c';
-        //     $o->save();
-        //   }
-        // }
-
-        $order->leads()->attach([ $sell['id'] => $sell['pivot'] ]);
+        $order->sells()->attach([ $sell['id'] => $sell['pivot'] ]);
         Lead::find($sell['id'])->reconcile();
 
         // $order_detail = $order->orders->find($sell['id']);
@@ -219,67 +209,42 @@ class OrderController extends Controller
    * @return \Illuminate\Http\Response
    */
   public function show($id, Request $req)
-  {
-    // $this->authorize('view', $order);
+  { 
+    $order = Order::with('trader', 'users', 'sells', 'buys', 'buys.trader',
+      'approvals', 'sells.trader', 'sells.company', 'buys.company')->find($id);
 
-    // // lazyloading semua negotiation log
-    // foreach($order->sells as &$sell){
-    //   if($sell->user_id !== Auth::user()->id && Auth::user()->role !== 'manager')
-    //     $sell->seller = $sell->location = $sell->port_name = $sell->address = '-hidden value-';
-    //   $sell->pivot->negotiations = OrderNegotiation::where('order_detail_id', '=', $sell->pivot->id)->get();
-    // }
-    // foreach($order->buys as &$buy){
-    //   if($buy->user_id !== Auth::user()->id && Auth::user()->role !== 'manager')
-    //     $buy->buyer = $buy->location = $buy->port_name = $buy->address = '-hidden value-';
-    //   $buy->pivot->negotiations = OrderNegotiation::where('order_detail_id', '=', $buy->pivot->id)->get();
-    // }
+    $this->authorize('view', $order);
+
+    // lazyloading semua negotiation log
+    $order->getNegotiations();
+
+    // get the earliest laycan and latest one
+    $order->earliestLaycan();
+    $order->latestLaycan();
+
+    // find all averages of the order details.
+    $order->averageSell(); 
+    $order->averageBuy();
     
-    //$user = User::findOrFail(Auth::user()->id); // Or an different ID
-    //dd($user->Subordinates);
-    //dd(Auth::user()->Subordinates);
-    
-    $order = Order::with('trader', 'users', 'sells', 'buys', 'buys.trader', 'approvals', 'sells.trader', 'leads', 'sells.company', 'buys.company')->find($id);
-    
+    // IF envelope is requested, get all necessary components
     if($req->envelope == "true"){
       $params = [
         'date' => date('Y-m-d', strtotime($order->created_at)),
         'latest' => 7
       ];
       
+      // get index to fill things up
       $index = $this->indexPrice(10, $params);
-      
-      $order->earliest_laycan = $order->leads->min('laycan_start');
-      $order->latest_laycan = $order->leads->max('laycan_end');
-      
-      $sum_sell_price = $sum_buy_price = $sum_buy_volume = $sum_sell_volume = 0;
-      
-      // lazyloading semua negotiation log
-      foreach($order->sells as &$sell){
-        $sum_sell_price += $sell->price*$sell->volume;
-        $sum_sell_volume += $sell->volume;
-      }
-      foreach($order->buys as &$buy){
-        $sum_buy_price += $buy->price*$buy->volume;
-        $sum_buy_volume += $buy->volume;
-      }
-      
-      $order->buy_price = $sum_buy_price/$sum_buy_volume;
-      $order->sell_price = $sum_sell_price/$sum_sell_volume;
-      
+
       $json = [
         'status' => 200,
         'error' => 'ok',
         'order' => $order,
         'index' => $index
       ];
-      
-      $response = response()->json($json, 200);
-    }
-    else{
-      $response = response()->json($order, 200);
-    }
+    } else $json = $order;
 
-    return $response;
+    return response()->json($json, 200);;
   }
 
   /**
