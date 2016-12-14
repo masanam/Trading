@@ -15,8 +15,8 @@ angular.module('lead').controller('ListLeadController', ['$scope', '$location', 
       $location.path('sell-order/create/supplier/'+id);
     };
 
-    $scope.toConcession = function(seller_id,id) {
-      $location.path('sell-order/create/concession/'+seller_id+'/'+id);
+    $scope.toConcession = function(company_id,id) {
+      $location.path(id+'/concession/'+company_id);
     };
 
     $scope.toProduct = function(seller_id,id,concession_id) {
