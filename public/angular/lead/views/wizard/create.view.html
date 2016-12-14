@@ -1,13 +1,14 @@
 <section class="content" ng-controller="LeadController" ng-init="init()">
+<form ng-submit="create(lead)">
   <div class="box box-info" >
     <div class="box-header with-border">
-      <h3 class="box-title">CREATE {{ lead.lead_type | uppercase }} LEAD</h1>
+      <h3 class="box-title">CREATE {{ lead.lead_type | uppercase }} LEAD</h3>
       <div class="box-tools pull-right" style="position:relative">
         <button type="button" class="btn btn-danger" ui-sref="lead.list">
         <i class="glyphicon glyphicon-arrow-left"></i> Back
         </button>
        
-        <button type="button" class="btn btn-success" ng-click="nextToOperation({id})">
+        <button ng-disabled="!lead.lead_type" type="submit" class="btn btn-success">
           <i class="glyphicon glyphicon-arrow-right"></i> Next
         </button>
       </div>
@@ -64,6 +65,7 @@
           <div ng-include="'/angular/coalpedia/views/company/wizard/_company.partial.html'" ng-show="selected.company"></div>
         </div>  
       </div>  
-    </div>    
+    </div>
   </div>
+</form>
 </section>

@@ -23,7 +23,15 @@ angular.module('lead').controller('LeadController', ['$scope', '$stateParams', '
 
     $scope.init = function () {
     	$scope.lead = new Lead();
+      if($stateParams.lead_type) $scope.lead.lead_type = $stateParams.lead_type;
     };
 
+    $scope.nextToOperation = function(lead){
+      var lead = new Lead(lead);
+
+      lead.$save(function(res) {
+        console.log(res);
+      });
+    };
   }
 ]);

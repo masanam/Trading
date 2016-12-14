@@ -4,6 +4,11 @@ angular.module('lead').controller('LeadCompanyController', ['$scope', '$statePar
   function ($scope, $stateParams, $uibModal, Company, Lead) {
     $scope.selected = {};
 
+    $scope.$watch('selected.company', function (newValue, oldValue) {
+      if(newValue) $scope.lead.company_id = newValue.id;
+      else $scope.lead.company_id = undefined;
+    });
+
     //Init select companies
     $scope.find = function(keyword, type) {
       if(!type){
