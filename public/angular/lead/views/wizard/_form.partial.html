@@ -3,7 +3,15 @@
     <label>Asking Price : </label>
     <div class="input-group">
       <span class="input-group-addon">US$</span>
-      <input type="text" class="form-control" ng-model="lead.max_price">
+      <input type="text" class="form-control" ng-model="lead.price">
+    </div>
+  </div>
+
+  <div class="col-lg-3">
+    <label>Volume : </label>
+    <div class="input-group">
+      <input type="text" class="form-control" ng-model="lead.volume">
+      <span class="input-group-addon">Metric Tons</span>
     </div>
   </div>
 
@@ -11,15 +19,21 @@
     <label>Laycan Period : </label>
     <p class="input-group">
       <span class="input-group-addon">FROM</span>
-      <input type="date" class="form-control" ng-model="lead.ready_date"/>
+      <input type="date" class="form-control" ng-model="lead.laycan_start"/>
       <span class="input-group-addon">TO</span>
-      <input type="date" class="form-control" ng-model="lead.order_deadline"/>
+      <input type="date" class="form-control" ng-model="lead.laycan_end"/>
     </p>
   </div>
+</div>
 
+<div class="row">
+  <div class="col-lg-3">
+    <label>Date of Request : </label>
+    <input type="date" class="form-control" ng-model="lead.order_date"/>
+  </div>
   <div class="col-lg-3">
     <label>Order Valid Until : </label>
-    <input type="date" min="{{date | date:'yyyy-MM-dd'}}" class="form-control" ng-model="lead.expired_date"/>
+    <input type="date" min="{{date | date:'yyyy-MM-dd'}}" class="form-control" ng-model="lead.order_expired"/>
   </div>
 </div>
 
@@ -49,7 +63,11 @@
 </div>
 
 <div class="row">
-  <div class="col-xs-12">
+  <div class="col-lg-6">
+    <label>Commercial Terms : </label>
+    <textarea class="form-control" ng-model="lead.commercial_term"></textarea>
+  </div>
+  <div class="col-lg-6">
     <label>Penalty : </label>
     <textarea class="form-control" ng-model="lead.penalty"></textarea>
   </div>
