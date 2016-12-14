@@ -52,30 +52,31 @@ class LeadController extends Controller
     if($req->lead_id){
       $ref = Lead::where('id',$req->lead_id)->first();
 
+      // in case searching for product, replace the query
       $company_type = $ref->lead_type === 'b' ? 'c' : 's';
       if($req->matching === 'products'){
-        $leads = Product::with('Company')
-          ->limit($req->limit)
-          ->get();
-      } else $leads = $query->limit($req->limit)->get();
-    }
-
-    //list recomended product from compare product to a lead
-    foreach ($leads as $lead) {
-      $lead->difference($ref, $company_type);
-    }
-
-    //list lead if empty buy / sell lead at create order
-    $leads = $query->get();
-    
-    //list lead status at buy / sell lead
-    foreach ($leads as $lead) {
-      if ($lead->order_status!=='s') {
-        if(!in_array($lead->user_id, $users)){
-          $lead->cleanse();
-        }
+        $query = Product::with('Company')
+          ->limit($req->limit);
       }
     }
+
+    $leads = $query->limit($req->limit)->get();
+
+    //list recomended product from compare product to a lead
+    if($req->lead_id && $req->matching === 'products')
+      foreach ($leads as $lead) {
+        $lead->difference($ref, $company_type);
+      }
+
+    //list lead status at buy / sell lead
+    else
+      foreach ($leads as $lead) {
+        if ($lead->order_status!=='s') {
+          if(!in_array($lead->user_id, $users)){
+            $lead->cleanse();
+          }
+        }
+      }
 
     return response()->json($leads, 200);
   }
