@@ -122,6 +122,6 @@ class CreateLeadsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('buy_order');
+        Schema::drop('leads');
     }
 }
