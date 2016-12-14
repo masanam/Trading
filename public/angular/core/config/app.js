@@ -33,7 +33,7 @@ angular.module(ApplicationConfiguration.applicationModuleName).config(['$locatio
     $locationProvider.html5Mode(true).hashPrefix('!');
 
     //$httpProvider.interceptors.push('authInterceptor');
-    var dateRegex = /\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/;
+    var dateRegex = /\d{4}-\d{2}-\d{2}( \d{2}:\d{2}:\d{2})?/;
     var floatRegex = /[+-]([0-9]*[.])?[0-9]+/;
 
     var convertDateStringsToDates = function (input) {

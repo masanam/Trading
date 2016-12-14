@@ -1,0 +1,98 @@
+<div class="box box-info">
+  <div class="box-header with-border" ng-click="isCollapsed = !isCollapsed" style="cursor: pointer">
+    <h3 class="box-title">{{ lead.lead_type === 'b' ? 'Buy' : 'Sell' }} Lead</h3>
+    <span class="glyphicon glyphicon-triangle-bottom pull-right" ng-if="isCollapsed"></span> 
+    <span class="glyphicon glyphicon-triangle-top pull-right" ng-if="!isCollapsed"></span> 
+  </div>
+  <div class="box-body" uib-collapse="isCollapsed">
+    <div class="pull-right btn-group hidden-xs">
+      <button type="button" class="btn btn-primary" ng-click="changeOrderStatusAtDetail(lead, 'l')" ng-if="(lead.order_status==='v')&&Authentication.user.id===lead.user_id">
+        <i class="glyphicon glyphicon-arrow-right"></i> lead
+      </button>
+      <button type="button" class="btn btn-warning" ng-click="changeOrderStatusAtDetail(lead, 'v')" ng-if="(lead.order_status==='l')&&Authentication.user.id===lead.user_id">
+        <i class="glyphicon glyphicon-arrow-right"></i> Verified
+      </button>
+      <button type="button" class="btn btn-success" ui-sref="buy-order.update({ id:lead.id })" ng-if="(lead.order_status==='l'||lead.order_status==='v')&&Authentication.user.id===lead.user_id">
+        <i class="glyphicon glyphicon-arrow-right"></i> Update
+      </button>
+      <button type="button" class="btn btn-danger" ng-click="changeOrderStatusAtDetail(lead, 'x')" ng-if="lead.order_status!=='o'&&lead.order_status!=='s'&&lead.order_status!=='p'&&Authentication.user.id===lead.user_id">
+        <i class="glyphicon glyphicon-trash"></i> Delete
+      </button>
+    </div>
+
+    <!--For Mobile-->
+    <div class="hidden-sm hidden-md hidden-lg">
+      <div class="btn-group" uib-dropdown >
+        <button type="button" class="btn btn-danger">Action</button>
+          <button type="button" class="btn dropdown-toggle btn-danger" data-toggle="dropdown" uib-dropdown-toggle>
+            <span class="caret"></span>
+              <span class="sr-only">Toggle Dropdown</span>
+          </button>
+
+        <ul class="dropdown-menu" uib-dropdown-menu>
+          <li>
+            <a ng-click="changeOrderStatusAtDetail(lead, 'l')" ng-if="(lead.order_status==='v')&&Authentication.user.id===lead.user_id">
+            <i class="glyphicon glyphicon-arrow-right"></i> lead
+            </a>
+          </li>
+          <li>
+            <a ng-click="changeOrderStatusAtDetail(lead, 'v')" ng-if="(lead.order_status==='l')&&Authentication.user.id===lead.user_id">
+            <i class="glyphicon glyphicon-arrow-right"></i> Verified
+            </a>
+          </li>
+          <li>
+            <a  ui-sref="buy-order.update({ id:lead.id })" ng-if="(lead.order_status==='l'||lead.order_status==='v')&&Authentication.user.id===lead.user_id">
+            <i class="glyphicon glyphicon-arrow-right"></i> Update
+            </a>
+          </li>
+          <li>
+            <a ng-click="changeOrderStatusAtDetail(lead, 'x')" ng-if="lead.order_status!=='o'&&lead.order_status!=='s'&&lead.order_status!=='p'&&Authentication.user.id===lead.user_id">
+            <i class="glyphicon glyphicon-trash"></i> Delete
+            </a>
+          </li>
+        </ul>
+      </div>    
+    </div>
+    <!--For Mobile-->
+
+    <div class="form-group row-fluid">
+      <h1>{{ lead.buyer.company_name }}</h1>
+      <label ng-show="lead.product_name">Product Name : </label>
+      <p>{{ lead.product_name }}</p>
+      <label>Typical Quality : </label>
+      <p>{{ lead.typical_quality }}</p>
+      <label ng-show="lead.address">Address : </label>
+      <p>{{ lead.address }}</p>
+      <div class="col-xs-6" style="padding-left:0">
+        <label>City : </label>
+        <p>{{ lead.city }}</p>
+        <label>Volume of Coal : </label>
+        <p>{{ lead.volume }} mt, available {{ lead.volume - lead.used[0].volume }} mt</p>
+        <label>Input Date : </label>
+        <p>{{ lead.order_date | date : 'd MMMM yyyy' }}</p>
+      </div>
+      <div class="col-xs-6" style="padding-left:0">
+        <label>Country : </label>
+        <p>{{ lead.country }}</p>
+        <label>Asking Price : </label>
+        <p>$ {{ lead.price }}</p>
+        <label>Laycan Schedule : </label>
+        <p>{{ lead.laycan_start | date : 'd MMMM yyyy' }} - {{ lead.laycan_end | date : 'd MMMM yyyy' }}</p>
+      </div>
+      <div class="col-xs-12" style="padding-left:0">
+        <label>Valid Until : </label>
+        <p>{{ lead.order_expired | date : 'd MMMM yyyy' }}</p>
+      </div>
+      <div class="col-xs-6" style="padding-left:0">
+        <label>Shipping Term : </label>
+        <p>{{ lead.trading_term }} {{ lead.trading_term_detail }}</p>
+      </div>
+      <div class="col-xs-6" style="padding-left:0">
+        <label>Payment Terms : </label>
+        <p>{{ lead.payment_terms }}</p>
+      </div>
+      <label>Penalty : </label>
+      <p>{{ lead.penalty_desc }}</p>
+    </div>
+  </div>
+</div>

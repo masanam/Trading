@@ -17,7 +17,7 @@ angular.module('lead').config(['$stateProvider', '$urlRouterProvider',
       })
       .state('lead.create', {
         url: '/create?lead_type',
-        templateUrl: '/angular/lead/views/company.view.html',
+        templateUrl: '/angular/lead/views/wizard/create.view.html',
         roles: ['trader', 'manager']
       })
       .state('lead.view', {

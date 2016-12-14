@@ -1,0 +1,105 @@
+<div class="box box-default">
+  <div class="box-header with-border" ng-click="isCollapsed2 = !isCollapsed2" style="cursor: pointer">
+    <h3 class="box-title">Product Quality</h3>
+    <span class="glyphicon glyphicon-triangle-bottom pull-right" ng-if="isCollapsed2"></span> 
+    <span class="glyphicon glyphicon-triangle-top pull-right" ng-if="!isCollapsed2"></span> 
+  </div>
+  <div class="box-body" uib-collapse="isCollapsed2">
+    <div class="row-fluid" style="margin:10px">
+      <div class="col-md-12 col-lg-12">
+        <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+          <thead>
+            <tr style="background-color: darkgray"}>
+              <th style="width:30%">Quality </th>
+              <th>Typical</th>
+              <th>Bonus</th>
+              <th>Reject</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><b>GCV ADB </b></td>
+              <td>{{lead.gcv_adb_min}} - {{lead.gcv_adb_max}} kcal</td>
+              <td>{{lead.gcv_adb_bonus}}</td>
+              <td>{{lead.gcv_adb_reject}}</td>
+            </tr>
+            <tr>
+              <td><b>GCV ARB </b></td>
+              <td>{{lead.gcv_arb_min}} - {{lead.gcv_arb_max}} kcal</td>
+              <td>{{lead.gcv_arb_bonus}}</td>
+              <td>{{lead.gcv_arb_reject}}</td>
+            </tr>
+            <tr>
+              <td><b>NCV ARB </b></td>
+              <td>{{lead.ncv_min}} - {{lead.ncv_max}} kcal</td>
+              <td>{{lead.ncv_bonus}}</td>
+              <td>{{lead.ncv_reject}}</td>
+            </tr>
+            <tr>
+              <td><b>Total Moisture (ARB) </b></td>
+              <td>{{lead.tm_min}} - {{lead.tm_max}} %</td>
+              <td>{{lead.tm_bonus}}</td>
+              <td>{{lead.tm_reject}}</td>
+            </tr>
+            <tr>
+              <td><b>Inherent Moisture (ADB) </b></td>
+              <td>{{lead.im_min}} - {{lead.im_max}} %</td>
+              <td>{{lead.im_bonus}}</td>
+              <td>{{lead.im_reject}}</td>
+            </tr>
+            <tr>
+              <td><b>Volatile Matter (ADB) </b></td>
+              <td>{{lead.vm_min}} - {{lead.vm_max}} %</td>
+              <td>{{lead.vm_bonus}}</td>
+              <td>{{lead.vm_reject}}</td>
+            </tr>
+            <tr>
+              <td><b>Ash (ADB) </b></td>
+              <td>{{lead.ash_min}} - {{lead.ash_max}} %</td>
+              <td>{{lead.ash_bonus}}</td>
+              <td>{{lead.ash_reject}}</td>
+            </tr>
+            <tr>
+              <td><b>Fixed Carbon (ADB) </b></td>
+              <td>{{lead.fc_min}} - {{lead.fc_max}} %</td>
+              <td>{{lead.fc_bonus}}</td>
+              <td>{{lead.fc_reject}}</td>
+            </tr>
+            <tr>
+              <td><b>Total Sulphur (ADB) </b></td>
+              <td>{{lead.ts_min}} - {{lead.ts_max}} %</td>
+              <td>{{lead.ts_bonus}}</td>
+              <td>{{lead.ts_reject}}</td>
+            </tr>
+            <tr>
+              <td><b>HGI </b></td>
+              <td>{{lead.hgi_min}} - {{lead.hgi_max}}</td>
+              <td>{{lead.hgi_bonus}}</td>
+              <td>{{lead.hgi_reject}}</td>
+            </tr>
+            <tr>
+              <td><b>SIZE (0-50mm)</b></td>
+              <td>{{lead.size_min}} - {{lead.size_max}} %</td>
+              <td>{{lead.size_bonus}}</td>
+              <td>{{lead.size_reject}}</td>
+            </tr>
+            <tr>
+              <td><b>Fe2O3 </b></td>
+              <td>{{lead.fe2o3_min}} - {{lead.fe2o3_max}} %</td>
+              <td>{{lead.fe2o3_bonus}}</td>
+              <td>{{lead.fe2o3_reject}}</td>
+            </tr>
+            <tr>
+              <td><b>AFT</b></td>
+              <td>{{lead.aft_min}} - {{lead.aft_max}} &#176</td>
+              <td>{{lead.aft_bonus}}</td>
+              <td>{{lead.aft_reject}}</td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
