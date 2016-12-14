@@ -1,0 +1,171 @@
+<div class="form-group">
+  <label for="company_name">Name of Company:</label>
+  <input name="company_name" type="text" class="form-control" id="company_name" ng-model="company.company_name" required>
+</div>
+
+<div class="row col-lg-12">
+  <div class="form-group pull-left">
+    <label for="company_type">Company:</label><br>
+
+    <div class="btn-group">
+      <label ng-if="lead_type === 'sell'" class="btn btn-default" ng-model="company.company_type" uib-btn-radio="'c'" >Customer (End User)</label>
+      <label class="btn btn-default" ng-model="company.company_type" uib-btn-radio="'t'">Coal Trader</label>
+      <label ng-if="lead_type === 'buy'" class="btn btn-default" ng-model="company.company_type" uib-btn-radio="'s'">Supplier</label>
+      <label class="btn btn-default" ng-model="company.company_type" uib-btn-radio="'v'">Vendor</label>
+    </div>
+  </div>
+
+
+
+  <div class="form-group pull-left" style="margin-left:30px;">
+    <label for="company_name">Affiliation Status:</label><br>
+    <div class="btn-group">
+      <label class="btn btn-default" ng-model="company.is_affiliated" uib-btn-radio="0">Non-Affiliated</label>
+      <label class="btn btn-default" ng-model="company.is_affiliated" uib-btn-radio="1">Affiliated</label>
+    </div>
+  </div>
+
+  <div class="form-group pull-right">
+    <label for="headquarter_location">Main business of Company:</label><br>
+    <div class="btn-group">
+      <label ng-if="company.company_type === 'c'" class="btn btn-default"
+        ng-model="company.industry" uib-btn-radio="'Cements Industry'">
+        Cements Industry
+      </label>
+      <label ng-if="company.company_type === 'c'" class="btn btn-default"
+        ng-model="company.industry" uib-btn-radio="'Pulp & Paper'">
+        Pulp & Paper
+      </label>
+      <label ng-if="company.company_type === 'c'" class="btn btn-default"
+        ng-model="company.industry" uib-btn-radio="'Power Plants'">
+        Power Plants
+      </label>
+
+      <label ng-if="company.company_type === 's' || company.company_type === 't'" class="btn btn-default"
+        ng-model="company.industry" uib-btn-radio="'Miner'">
+        Miner
+      </label>
+      <label ng-if="company.company_type === 's' || company.company_type === 't'" class="btn btn-default"
+        ng-model="company.industry" uib-btn-radio="'Coal Trader'">
+        Coal Trader
+      </label>
+      <label ng-if="company.company_type === 's' || company.company_type === 't'" class="btn btn-default"
+        ng-model="company.industry" uib-btn-radio="'Coal Mining & Trader'">
+        Coal Mining & Trader
+      </label>
+
+      <label ng-if="company.company_type === 'v'" class="btn btn-default"
+        ng-model="company.industry" uib-btn-radio="'Surveyor'">
+        Surveyor
+      </label>
+      <label ng-if="company.company_type === 'v'" class="btn btn-default"
+        ng-model="company.industry" uib-btn-radio="'Trucking'">
+        Trucking
+      </label>
+      <label ng-if="company.company_type === 'v'" class="btn btn-default"
+        ng-model="company.industry" uib-btn-radio="'Transshipment'">
+        Transshipment
+      </label>
+      <label ng-if="company.company_type === 'v'" class="btn btn-default"
+        ng-model="company.industry" uib-btn-radio="'Freight'">
+        Freight
+      </label>
+      <label ng-if="company.company_type === 'v'" class="btn btn-default"
+        ng-model="company.industry" uib-btn-radio="'Vessel'">
+        Vessel
+      </label>
+
+
+      <label class="btn btn-default" ng-model="company.industry" uib-btn-radio="'General Industry'">
+        General Industry
+      </label>
+    </div>
+  </div>
+</div>
+
+<div class="form-group">
+  <label for="phone">Phone Number:</label>
+  <input name="phone" type="text" class="form-control" id="phone" ng-model="company.phone" required>
+</div>
+
+<div class="form-group">
+  <label for="contact">Email:</label>
+  <input name="email" type="text" class="form-control" id="email" ng-model="company.email" required>
+</div>
+
+<div class="form-group">
+  <label for="web">Web:</label>
+  <input name="web" type="text" class="form-control" id="web" ng-model="company.web">
+</div>
+
+<div class="form-group">
+  <label for="headquarter_location">Address:</label>
+  <input name="address" type="text" class="form-control" id="address" ng-model="company.address" required>
+</div>
+
+<div class="form-group">
+  <label for="city">City:</label>
+  <input name="city" type="text" class="form-control" id="city" ng-model="company.city" required>
+</div>
+
+<div class="form-group">
+  <label for="country">Company origin (Country):</label>
+  <input name="country" type="text" class="form-control" id="country" ng-model="company.country" required>
+</div>
+
+<div class="form-group" ng-if="company.company_type === 'c'">
+  <label for="annual_demand">Annual Demand (Million Metric Ton):</label>
+  <input name="annual_demand" type="number" step="any" class="form-control"
+    id="annual_demand" ng-model="company.annual_demand" required>
+</div>
+
+<div class="form-group" ng-if="company.company_type !== 'c'">
+  <label for="annual_sales">Annual Sales (Million USD):</label>
+  <input name="annual_sales" type="number" step="any" class="form-control"
+    id="annual_sales" ng-model="company.annual_sales" required>
+</div>
+
+<div class="form-group" ng-if="company.company_type !== 'c'">
+  <label for="purchasing_countries">Purchasing Countries:</label>
+  <input name="purchasing_countries" type="text" class="form-control"
+    id="purchasing_countries" ng-model="company.purchasing_countries" required>
+</div>
+
+<div class="form-group"  ng-if="company.company_type !== 'v'">
+  <label for="preferred_trading_term">Preferred Trading Term:</label>
+
+  <div class="input-group">
+    <select name="preferred_trading_term" id="preferred_trading_term" class="form-control"
+      ng-model="company.preferred_trading_term"  ng-options="term for term in term.trading" required></select>
+
+    <span class="input-group-addon">
+      Description
+    </span>
+
+    <input name="preferred_trading_term_detail" type="text" class="form-control"
+      id="preferred_trading_term_detail" ng-model="company.preferred_trading_term_detail" placeholder="Detail">
+  </div>
+</div>
+
+<div class="form-group"  ng-if="company.company_type !== 'v'">
+  <label for="headquarter_location">Preferred Payment Term:</label>
+  
+  <div class="input-group">
+    <select name="preferred_payment_term" id="preferred_payment_term" class="form-control"
+      ng-model="company.preferred_payment_term"  ng-options="term for term in term.payment" required></select>
+
+    <span class="input-group-addon">
+      Description
+    </span>
+
+    <input name="preferred_payment_term_detail" type="text" class="form-control"
+      id="preferred_payment_term_detail" ng-model="company.preferred_payment_term_detail" placeholder="Detail">
+  </div>
+</div>
+
+<div class="form-group">
+  <label for="description">Description:</label>
+  <textarea name="description" class="form-control" id="description" ng-model="company.description" required></textarea>
+</div>
+
+<button type="submit" class="btn btn-primary">Submit</button>
