@@ -13,12 +13,14 @@
         <table class="table table-striped">
           <tr ng-if="leadRecommendations.length > 0">
             <td width="10%"><label>Id</label></td>
-            <td width="40%"><label>Company Name</label></td>
-            <td width="45%"><label>Laycan Period</label></td>
+            <td width="20%"><label>Typical Quality</label></td>
+            <td width="35%"><label>Company Name</label></td>
+            <td width="30%"><label>Laycan Period</label></td>
             <td width="5%"></td>
           </tr>
           <tr ng-repeat="rec in leadRecommendations">
             <td>{{ rec.id }}</td>
+            <td>{{ rec.typical_quality }}</td>
             <td>{{ rec.company.company_name | date : 'd MMM yy' }}</td>
             <td>{{ rec.laycan_start | date : 'd MMM yy' }} - {{ rec.laycan_end | date : 'd MMM yy' }}</td>
             <td><i class="glyphicon glyphicon-info-sign" ng-click="showInfo(rec.id)" style="cursor:pointer" uib-tooltip="Show Info"></i></td>
