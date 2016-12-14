@@ -40,9 +40,10 @@ class ConcessionController extends Controller
         $concession = Concession::with('company', 'port')->where('status', 'a')->limit(20);
 
         if($req->q) $concession->where('concession_name', 'LIKE', '%' . $req->q . '%');
+        $concession = $concession->get();
       }
 
-      return response()->json($concession->get(), 200);
+      return response()->json($concession, 200);
     }
     
     /**

@@ -20,6 +20,16 @@ angular.module('lead').config(['$stateProvider', '$urlRouterProvider',
         templateUrl: '/angular/lead/views/wizard/create.view.html',
         roles: ['trader', 'manager']
       })
+      .state('lead.operation', {
+        url: '/:id/operation',
+        templateUrl: '/angular/lead/views/wizard/operation.view.html',
+        roles: ['trader', 'manager']
+      })
+      .state('lead.product', {
+        url: '/:id/product',
+        templateUrl: '/angular/lead/views/product.view.html',
+        roles: ['trader', 'manager']
+      })
       .state('lead.view', {
         url: '/:id',
         templateUrl: '/angular/lead/views/view.view.html',

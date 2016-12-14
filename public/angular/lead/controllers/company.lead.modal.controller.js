@@ -31,14 +31,14 @@ angular.module('lead').controller('CompanyLeadModalController', function ($scope
       //go to step concession from existing lead / back button
       if ($stateParams.id) {
         $scope.lead.$update({ type: $scope.lead_type, id: $stateParams.id }, function(res) {
-          $location.path(res.id+'/concession');
+          $location.path('lead'+res.id+'/operation');
           $uibModalInstance.close('success');
         });
       }
       //go to step concession new lead
       else{
         $scope.lead.$save({ type: $scope.lead_type }, function(res) {
-          $location.path(res.id+'/concession');
+          $location.path('lead'+res.id+'/operation');
           $uibModalInstance.close('success');
         });
       }
