@@ -95,9 +95,9 @@ class LeadsTableSeeder extends Seeder
       'price' => 52,
       'trading_term' => 'FOB',
       'trading_term_detail' => 'MV',
-      'payment_terms' => 'LC on Sight',
+      'payment_term' => 'LC on Sight',
       'commercial_term' => NULL,
-      'penalty_desc' => NULL,
+      'penalty' => NULL,
       'lead_type' => 'b',
       'order_status' => 's',
       'progress_status' => NULL
@@ -183,9 +183,9 @@ class LeadsTableSeeder extends Seeder
       'price' => 60,
       'trading_term' => 'FOB',
       'trading_term_detail' => 'Barge',
-      'payment_terms' => 'TT',
+      'payment_term' => 'TT',
       'commercial_term' => NULL,
-      'penalty_desc' => NULL,
+      'penalty' => NULL,
       'lead_type' => 's',
       'order_status' => 's',
       'progress_status' => NULL

@@ -26,11 +26,26 @@ angular.module('lead').controller('LeadController', ['$scope', '$stateParams', '
       if($stateParams.lead_type) $scope.lead.lead_type = $stateParams.lead_type;
     };
 
-    $scope.nextToOperation = function($lead){
-      var lead = new Lead($lead);
+    $scope.create = function (lead) {
+      var lead = new Lead(lead);
 
       lead.$save(function(res) {
         console.log(res);
+        $state.go('lead.location', { id: res.id });
+      });
+    };
+
+    $scope.update = function () {
+      $scope.lead.$update(function(res){
+        console.log(res);
+        var next;
+
+        if($state.current.name === 'lead.update') next = 'lead.location';
+        if($state.current.name === 'lead.location') next = 'lead.product';
+        else if($state.current.name === 'lead.product') next = 'lead.view';
+        else next = 'lead.view';
+
+        $state.go(next, { id: res.id });
       });
     };
   }

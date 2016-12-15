@@ -3,13 +3,13 @@
   <div class="box box-info" >
     <div class="box-header with-border">
       <h3 class="box-title">CREATE {{ lead.lead_type | uppercase }} LEAD</h3>
-      <div class="box-tools pull-right" style="position:relative">
+      <div class="box-tools">
         <button type="button" class="btn btn-danger" ui-sref="lead.list">
-        <i class="glyphicon glyphicon-arrow-left"></i> Back
+          <i class="glyphicon glyphicon-arrow-left"></i> Back
         </button>
        
         <button ng-disabled="!lead.lead_type" type="submit" class="btn btn-success">
-          <i class="glyphicon glyphicon-arrow-right"></i> Next
+          Next <i class="glyphicon glyphicon-arrow-right"></i>
         </button>
       </div>
     </div>
