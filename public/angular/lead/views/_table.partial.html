@@ -2,9 +2,6 @@
   <table st-table="displayedCollection" st-safe-src="leads" class="table table-striped">
     <thead>
       <tr>
-        <th colspan="11"><input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
-      </tr>
-      <tr>
         <th st-sort="id">#</th>
         <th st-sort="user.name">PIC</th>
         <th st-sort="order_date">Input Date</th>
@@ -32,15 +29,19 @@
         <td>{{ lead.order_deadline | date : 'd MMMM yyyy' }}</td>
         <td>{{ lead.price | currency : $ : 2}}</td>
         <td>{{ lead.city }}</td>
-        <td ng-if="lead.order_status==='l'">Lead</td>
-        <td ng-if="lead.order_status==='v'">Verified</td>
-        <td ng-if="lead.order_status==='s'">Staged</td>
-        <td ng-if="lead.order_status==='p'">Partial</td>
-        <td ng-if="lead.order_status==='1'"><a ui-sref="lead.location({ id: lead.id })">STEP : Locations</a></td>
-        <td ng-if="lead.order_status==='2'"><a ui-sref="lead.product({ id: lead.id })">STEP : Product</a></td>
+        <td ng-switch="lead.order_status">
+          <span ng-switch-when="'l'">Lead</span>
+          <span ng-switch-when="'v'">Verified</span>
+          <span ng-switch-when="'s'">Staged</span>
+          <span ng-switch-when="'p'">Partially Staged</span>
+          <a ng-switch-when="1" ui-sref="lead.location({ id: lead.id })">STEP 2 : Locations</a>
+          <a ng-switch-when="2" ui-sref="lead.product({ id: lead.id })">STEP 3 : Product</a>
+          <a ng-switch-when="3" ui-sref="lead.view({ id: lead.id })">Draft</a>
+        </td>
         <td>
-          <a ng-if="lead.order_status==='s'||lead.order_status==='l'||lead.order_status==='v'" ui-sref="lead.view({ id: lead.id })"><i class="glyphicon glyphicon-info-sign"></i></a>
-          <a ng-if="lead.order_status!=='s'&&lead.order_status!=='p'&&Authentication.user.id===lead.user_id" ng-click="changeOrderStatus(lead, 'x')" style="cursor: pointer" uib-tooltip="Delete Order"><i class="glyphicon glyphicon-trash"></i></a>
+          <a ui-sref="lead.view({ id: lead.id })" class="glyphicon glyphicon-info-sign"></a>
+          <a ng-click="delete(lead)" uib-tooltip="Delete Order" class="glyphicon glyphicon-trash"
+            ng-if="Authentication.user.id===lead.user_id && lead.status !== 's' && lead.status !== 'p'"></a>  
         </td>
       </tr>
       <tr ng-if="displayedCollection.length == 0">
