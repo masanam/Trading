@@ -103,9 +103,10 @@ angular.module('lead').controller('LeadController', ['$scope', '$state', '$state
       });
     };
 
-    $scope.find = function(status) {
+    $scope.find = function(status, lead_type) {
       if(!status) status = $stateParams.status;
-      $scope.leads = Lead.query({ status: status });
+      if(!lead_type) lead_type = $stateParams.lead_type;
+      $scope.leads = Lead.query({ status: status, type: lead_type });
     };
 
     $scope.findRecommendations = function () {

@@ -11,7 +11,7 @@ angular.module('lead').config(['$stateProvider', '$urlRouterProvider',
         template: '<ui-view>'
       })
       .state('lead.list', {
-        url: '?status',
+        url: '?status&lead_type',
         templateUrl: '/angular/lead/views/list.view.html',
         roles: ['trader', 'manager']
       })

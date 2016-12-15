@@ -36,7 +36,7 @@
       </li>
 
       
-      <!-- <li class="treeview">
+      <li class="treeview">
         <a ng-click="order = !order; openCollapse(2)">
           <i class="ion ion-magnet" style="font-size: 20px; margin-left: -3px;"></i>
           <span>Deal Room</span>
@@ -44,11 +44,11 @@
         </a>
         <ul class="treeview-menu" ng-class="order ? 'menu-open' : ''" ng-style="{ 'display': style[2] }">
           <li><a ui-sref="order.list"><i class="ion ion-ios-paperplane"></i> Orders</a></li>
-          <li><a ui-sref="lead.buy.index"><i class="ion ion-log-out"></i> Buy Leads</a></li>
-          <li><a ui-sref="buy-order.index"><i class="ion ion-log-in"></i> Sell Leads</a></li>
-          <li><a ui-sref="operation.index"><i class="ion ion-log-in"></i> Shipment Status</a></li>
+          <li><a ui-sref="lead.list({ lead_type: 'buy' })"><i class="ion ion-log-out"></i> Buy Leads</a></li>
+          <li><a ui-sref="lead.list({ lead_type: 'sell' })"><i class="ion ion-log-in"></i> Sell Leads</a></li>
+          <!-- <li><a ui-sref="operation.index"><i class="ion ion-log-in"></i> Shipment Status</a></li> -->
         </ul>
-      </li> -->
+      </li>
       <li class="treeview">
         <a ng-click="index = !index; openCollapse(3)">
           <i class="ion ion-gear-a" style="font-size: 20px; margin-left: -3px;"></i>
