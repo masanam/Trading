@@ -2,9 +2,9 @@
 
 angular.module('lead').controller('LeadController', ['$scope', '$stateParams', 'Authentication', 'Order', 'Lead', 'Term',
   function($scope, $stateParams, Authentication, Order, Lead, Term) {
-  	$scope.Authentication = Authentication;
-  	$scope.tradingTerm = Term.trading;
-  	$scope.paymentTerm = Term.payment;
+  	 $scope.Authentication = Authentication;
+  	 $scope.tradingTerm = Term.trading;
+  	 $scope.paymentTerm = Term.payment;
 
     $scope.findOne = function(id){
       if(!id) id = $stateParams.id;
