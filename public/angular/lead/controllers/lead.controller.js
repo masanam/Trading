@@ -127,6 +127,14 @@ angular.module('lead').controller('LeadController', ['$scope', '$state', '$state
       });
     };
 
+    $scope.status = function (lead, status) {
+      lead.order_status = status;
+
+      lead.$update(function(res){
+        lead = res;
+      });
+    };
+
     $scope.update = function () {
       var next;
 

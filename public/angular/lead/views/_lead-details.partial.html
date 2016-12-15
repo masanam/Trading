@@ -6,57 +6,23 @@
   </div>
   <div class="box-body" uib-collapse="isCollapsed">
     <!-- Button show on large screen -->
-    <div class="pull-right btn-group hidden-xs">
-      <button type="button" class="btn btn-primary" ng-click="changeOrderStatusAtDetail(lead, 'l')"
-        ng-if="(lead.order_status==='v') && Authentication.user.id===lead.user_id">
-        <i class="glyphicon glyphicon-arrow-right"></i> Lead
+    <div class="pull-right btn-group">
+      <button type="button" class="btn btn-default" ng-click="status(lead, 'l')"
+        ng-if="(lead.order_status==='v' || lead.order_status===3) && Authentication.user.id===lead.user_id">
+        <i class="glyphicon glyphicon-arrow-right"></i> Mark as Leads
       </button>
-      <button type="button" class="btn btn-warning" ng-click="changeOrderStatusAtDetail(lead, 'v')"
-        ng-if="(lead.order_status==='l') && Authentication.user.id===lead.user_id">
-        <i class="glyphicon glyphicon-arrow-right"></i> Verified
+      <button type="button" class="btn btn-default" ng-click="status(lead, 'v')"
+        ng-if="lead.order_status==='l' && Authentication.user.id===lead.user_id">
+        <i class="glyphicon glyphicon-arrow-right"></i> Mark Verified
       </button>
-      <button type="button" class="btn btn-success" ui-sref="buy-order.update({ id:lead.id })"
-        ng-if="(lead.order_status==='l'||lead.order_status==='v') && Authentication.user.id===lead.user_id">
-        <i class="glyphicon glyphicon-arrow-right"></i> Update
+      <button type="button" class="btn btn-default" ui-sref="lead.update({ id:lead.id })"
+        ng-if="lead.order_status!=='s' && lead.order_status!=='p' && Authentication.user.id===lead.user_id">
+        <i class="glyphicon glyphicon-pencil"></i> Update
       </button>
-      <button type="button" class="btn btn-danger" ng-click="changeOrderStatusAtDetail(lead, 'x')"
-        ng-if="lead.order_status!=='o' && lead.order_status!=='s' && lead.order_status!=='p' && Authentication.user.id===lead.user_id">
+      <button type="button" class="btn btn-danger" ng-click="status(lead, 'x')"
+        ng-if="lead.order_status!=='s' && lead.order_status!=='p' && Authentication.user.id===lead.user_id">
         <i class="glyphicon glyphicon-trash"></i> Delete
       </button>
-    </div>
-
-    <!-- Button show on small screen -->
-    <div class="hidden-sm hidden-md hidden-lg">
-      <div class="btn-group" uib-dropdown >
-        <button type="button" class="btn btn-danger">Action</button>
-          <button type="button" class="btn dropdown-toggle btn-danger" data-toggle="dropdown" uib-dropdown-toggle>
-            <span class="caret"></span>
-              <span class="sr-only">Toggle Dropdown</span>
-          </button>
-
-        <ul class="dropdown-menu" uib-dropdown-menu>
-          <li>
-            <a ng-click="changeOrderStatusAtDetail(lead, 'l')" ng-if="(lead.order_status==='v')&&Authentication.user.id===lead.user_id">
-            <i class="glyphicon glyphicon-arrow-right"></i> lead
-            </a>
-          </li>
-          <li>
-            <a ng-click="changeOrderStatusAtDetail(lead, 'v')" ng-if="(lead.order_status==='l')&&Authentication.user.id===lead.user_id">
-            <i class="glyphicon glyphicon-arrow-right"></i> Verified
-            </a>
-          </li>
-          <li>
-            <a  ui-sref="buy-order.update({ id:lead.id })" ng-if="(lead.order_status==='l'||lead.order_status==='v')&&Authentication.user.id===lead.user_id">
-            <i class="glyphicon glyphicon-arrow-right"></i> Update
-            </a>
-          </li>
-          <li>
-            <a ng-click="changeOrderStatusAtDetail(lead, 'x')" ng-if="lead.order_status!=='o'&&lead.order_status!=='s'&&lead.order_status!=='p'&&Authentication.user.id===lead.user_id">
-            <i class="glyphicon glyphicon-trash"></i> Delete
-            </a>
-          </li>
-        </ul>
-      </div>    
     </div>
 
     <div class="form-group row-fluid">
