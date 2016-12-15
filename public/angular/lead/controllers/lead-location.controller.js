@@ -2,23 +2,6 @@
 
 angular.module('lead').controller('LeadLocationController', ['$scope', '$stateParams', '$uibModal', 'Concession', 'Factory', 'Lead',
   function ($scope, $stateParams, $uibModal, Concession, Factory, Lead) {
-    $scope.$watch('selected.location', function (newValue, oldValue) {
-      if($scope.lead){
-        if(newValue){
-          if ($scope.lead.lead_type === 'b') $scope.lead.concession_id = newValue.id;
-          else $scope.lead.factory_id = newValue.id;
-
-          $scope.lead.address = newValue.address;
-          $scope.lead.city = newValue.city;
-          $scope.lead.country = newValue.country;
-          $scope.lead.port_distance = newValue.port_distance;
-          $scope.lead.latitude = newValue.latitude;
-          $scope.lead.longitude = newValue.longitude;
-        }
-        else $scope.lead.port_id = undefined;
-      }
-    });
-
     //Init select ports
     $scope.find = function(keyword) {
       if ($scope.lead.lead_type === 'b'){
