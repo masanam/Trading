@@ -62,8 +62,14 @@ class LeadController extends Controller
 
     $leads = $query->limit($req->limit)->get();
 
+    //list recomended leads from compare leads to a lead
+    if($req->lead_id && $req->order === 'matching')
+      foreach ($leads as $lead) {
+        $lead->difference($ref);
+      }
+
     //list recomended product from compare product to a lead
-    if($req->lead_id && $req->matching === 'products')
+    else if($req->lead_id && $req->matching === 'products')
       foreach ($leads as $lead) {
         $lead->difference($ref, $company_type);
       }

@@ -1,5 +1,4 @@
 'use strict';
-
 angular.module('lead').controller('LeadController', ['$scope', '$state', '$stateParams', 'Authentication', 'Order', 'Lead', 'Term',
   function($scope, $state, $stateParams, Authentication, Order, Lead, Term) {
     $scope.Authentication = Authentication;
