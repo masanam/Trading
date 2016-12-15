@@ -97,6 +97,7 @@ class LeadController extends Controller
     $lead = new Lead($req->all());
 
     $lead->user_id = Auth::User()->id;
+    $lead->company_id = $req->company_id;
 
     if ($req->lead_type === 'buy') {
       $lead->lead_type = 'b';
@@ -177,11 +178,9 @@ class LeadController extends Controller
     $lead->user_id = Auth::User()->id;
     $lead->fill($req->all());
 
-    if ($req->lead_type === 'buy') {
-      $lead->lead_type = 'b';
-    }
-    else if ($req->lead_type === 'sell') {
-      $lead->lead_type = 's';
+    // you can only change company_id if this is a draft
+    if(is_numeric($lead->order_status)){
+      $lead->company_id = $req->company_id;
     }
 
     $lead->order_date = date('Y-m-d',strtotime($req->order_date));
@@ -192,11 +191,6 @@ class LeadController extends Controller
     $lead->order_status = $req->order_status;
 
     $lead->save();
-
-    $lead->order_date = $req->order_date;
-    $lead->order_expired = $req->order_expired;
-    $lead->laycan_start = $req->laycan_start;
-    $lead->laycan_end = $req->laycan_end;
 
     return response()->json($lead, 200);
   }
