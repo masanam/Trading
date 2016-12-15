@@ -1,0 +1,25 @@
+<div class="content" ng-controller="LeadController" ng-init="findOne()">
+  <!-- HEADER -->
+  <div class="row-fluid" style="margin-bottom: 10px">
+    <button type="button" class="btn btn-primary" ui-sref="lead.list">
+      <i class="glyphicon glyphicon-arrow-left"></i> Back
+    </button>
+    <div class="pull-right">
+      <button type="button" class="btn btn-primary" ui-sref="order.create">
+        <i class="glyphicon glyphicon-arrow-right"></i> Start Deal
+      </button>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-lg-8">
+      <section ng-include="'/angular/lead/views/_lead-details.partial.html'"></section>
+      <section ng-include="'/angular/lead/views/_lead-port.partial.html'"></section>
+    </div>
+    <div class="col-lg-4">
+      <section ng-include="'/angular/lead/views/_lead-recommendations.partial.html'"></section>
+      <section ng-include="'/angular/lead/views/_lead-product.partial.html'"></section>
+    </div>
+  </div>
+</div>
+  
