@@ -54,4 +54,8 @@ class Company extends Model
   public function concessions() {
     return $this->hasMany(Concession::class)->where('status','a');
   }
+
+  public function orders() {
+    return $this->hasMany(Order::class, 'order_additional_costs')->withPivot('cost');
+  }
 }

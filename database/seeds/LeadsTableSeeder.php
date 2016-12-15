@@ -199,12 +199,14 @@ class LeadsTableSeeder extends Seeder
           2 => [ 'volume' => 1000, 'price' => 53000, 'trading_term' => 'FOB MV', 'payment_term' => 'TT' ] 
       ],
       'user' => [ 1 => [ 'role' => 'approver' ], 8 => [ 'role' => 'associated' ], 7 => [ 'role' => 'admin' ] ],
-      'approval' => [ 1 => [ 'status' => 'a' ], 2 => [ 'status' => 'a' ] ]
+      'approval' => [ 1 => [ 'status' => 'a' ], 2 => [ 'status' => 'a' ] ],
+      'companies' => [ 1 => [ 'cost' => 3 ] ]
     ];
 
     $order = Order::create($object['order']);
     if(isset($object['leads'])) $order->leads()->attach($object['leads']);
     $order->users()->attach($object['user']);
+    $order->companies()->attach($object['companies']);
     $order->approvals()->attach($object['approval']);
 
     OrderNegotiation::create([
@@ -225,5 +227,7 @@ class LeadsTableSeeder extends Seeder
       'payment_term' => 'TT',
       'notes' => 'Price decreased by 1, they agreed, but need to wire as fast as possible',
     ]);
+
+
   }
 }
