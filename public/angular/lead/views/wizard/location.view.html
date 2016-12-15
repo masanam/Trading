@@ -4,14 +4,14 @@
         <div class="box-header with-border">
         <h1 class="box-title"></h1>
         <div class="pull-left">
-          <a class="btn btn-default" ui-sref="lead.create">
+          <a class="btn btn-default" ui-sref="lead.update({ id: lead.id })">
             <i class="glyphicon glyphicon-arrow-left"></i> Back
           </a>
         </div>
         <div class="pull-right">
-          <a class="btn btn-success" ui-sref="lead.product({ id: lead.id })">
-            <i class="glyphicon glyphicon-arrow-right"></i> Next
-          </a>
+          <button ng-disabled="!lead.lead_type" type="submit" class="btn btn-success">
+            Next <i class="glyphicon glyphicon-arrow-right"></i>
+          </button>
         </div>
       </div>
     </div>

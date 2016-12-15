@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('lead').controller('LeadController', ['$scope', '$stateParams', 'Authentication', 'Order', 'Lead', 'Term',
-  function($scope, $stateParams, Authentication, Order, Lead, Term) {
+angular.module('lead').controller('LeadController', ['$scope', '$state', '$stateParams', 'Authentication', 'Order', 'Lead', 'Term',
+  function($scope, $state, $stateParams, Authentication, Order, Lead, Term) {
     $scope.Authentication = Authentication;
     $scope.tradingTerm = Term.trading;
     $scope.paymentTerm = Term.payment;
@@ -27,17 +27,15 @@ angular.module('lead').controller('LeadController', ['$scope', '$stateParams', '
     };
 
     $scope.create = function (lead) {
-      var lead = new Lead(lead);
+      lead = new Lead(lead);
 
       lead.$save(function(res) {
-        console.log(res);
         $state.go('lead.location', { id: res.id });
       });
     };
 
     $scope.update = function () {
       $scope.lead.$update(function(res){
-        console.log(res);
         var next;
 
         if($state.current.name === 'lead.update') next = 'lead.location';

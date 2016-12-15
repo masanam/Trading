@@ -20,6 +20,11 @@ angular.module('lead').config(['$stateProvider', '$urlRouterProvider',
         templateUrl: '/angular/lead/views/wizard/create.view.html',
         roles: ['trader', 'manager']
       })
+      .state('lead.update', {
+        url: '/:id/update',
+        templateUrl: '/angular/lead/views/wizard/update.view.html',
+        roles: ['trader', 'manager']
+      })
       .state('lead.location', {
         url: '/:id/location',
         templateUrl: '/angular/lead/views/wizard/location.view.html',
