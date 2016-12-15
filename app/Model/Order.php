@@ -43,6 +43,9 @@ class Order extends Model
     return $this->belongsToMany(User::class, 'order_users')->withPivot('role');
   }
 
+  public function companies() {
+    return $this->belongsToMany(Company::class, 'order_additional_costs')->withPivot('cost');
+  }
 
 
   // Model Functions
