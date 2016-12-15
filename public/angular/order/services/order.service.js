@@ -29,6 +29,9 @@ angular.module('order').factory('Term', function (){
     ],
     payment : [
       'TT', 'LC', 'LC USANCE'
+    ],
+    additionalCost : [
+      'Survey', 'Pit-to-Port', 'Transshipment', 'Freight', 'Port-to-Factory', 'Others'
     ]
   };
 });
