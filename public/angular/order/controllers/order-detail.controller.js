@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('order').controller('OrderDetailController', ['$scope', '$uibModal', 'Order',
-  function($scope,$uibModal, Order) {
+angular.module('order').controller('OrderDetailController', ['$scope', '$uibModal', 'Order', 'Lead',
+  function($scope,$uibModal, Order, Lead) {
 
     $scope.init = function () {
       $scope.totalPriceBuy = 0;
@@ -162,9 +162,9 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
         resolve: {
           items: function () {
             if($scope.order.buys.length===0){
-              return Order.query({ type: 'sell', order: true });
+              return Lead.query({ lead_type: 'sell', order: true });
             }else{
-              return Order.query({ type: 'sell', order: true, order_id: $scope.order.buys[0].id });
+              return Lead.query({ lead_type: 'sell', order: true, order_id: $scope.order.buys[0].id });
             }
           },
           lead: function () { return 'buy'; }
@@ -206,9 +206,9 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
         resolve: {
           items: function () {
             if($scope.order.sells.length===0){
-              return Order.query({ type: 'buy', order: true });
+              return Lead.query({ lead_type: 'buy', order: true });
             }else{
-              return Order.query({ type: 'buy', order: true, order_id: $scope.order.sells[0].id });
+              return Lead.query({ lead_type: 'buy', order: true, order_id: $scope.order.sells[0].id });
             }
           },
           lead: function () { return 'sell'; }

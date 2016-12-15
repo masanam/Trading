@@ -166,14 +166,6 @@ class OrderController extends Controller
           'price' => $buy['pivot']['price'],
           'trading_term' => $buy['pivot']['trading_term'],
           'payment_term' => $buy['pivot']['payment_term'],
-          'insurance_cost' => $buy['additional']['insurance_cost'],
-          'interest_cost' => $buy['additional']['interest_cost'],
-          'surveyor_cost' => $buy['additional']['surveyor_cost'],
-          'others_cost' => $buy['additional']['others_cost'],
-          'pit_to_port' => $buy['additional']['pit_to_port'],
-          'transhipment' => $buy['additional']['transhipment'],
-          'freight_cost' => $buy['additional']['freight_cost'],
-          'port_to_factory' => $buy['additional']['port_to_factory'],
           'user_id' => Auth::user()->id,
         ]);
       }
@@ -192,14 +184,6 @@ class OrderController extends Controller
           'price' => $sell['pivot']['price'],
           'trading_term' => $sell['pivot']['trading_term'],
           'payment_term' => $sell['pivot']['payment_term'],
-          'insurance_cost' => $sell['additional']['insurance_cost'],
-          'interest_cost' => $sell['additional']['interest_cost'],
-          'surveyor_cost' => $sell['additional']['surveyor_cost'],
-          'others_cost' => $sell['additional']['others_cost'],
-          'pit_to_port' => $sell['additional']['pit_to_port'],
-          'transhipment' => $sell['additional']['transhipment'],
-          'freight_cost' => $sell['additional']['freight_cost'],
-          'port_to_factory' => $sell['additional']['port_to_factory'],
           'user_id' => Auth::user()->id,
         ]);
       }

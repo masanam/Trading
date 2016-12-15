@@ -3,7 +3,6 @@
 angular.module('order').controller('OrderReasonModalController', ['$uibModalInstance', '$scope', 'Order', 'status', 'Notification',
   function($uibModalInstance, $scope, Order, status, Notification) {
     $scope.status = status;
-    console.log($scope.order);
 
     $scope.ok = function () {
       if($scope.reason !== ''){
