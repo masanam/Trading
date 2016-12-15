@@ -394,7 +394,7 @@ class OrderController extends Controller
 
   public function stage(Request $req, $id)
   {
-    $order = Order::with('sells', 'buys')->find($id);
+    $order = Order::with('buys', 'sells')->find($id);
     $details = [
       'volume' => $req->volume,
       'price' => $req->price,
@@ -405,26 +405,27 @@ class OrderController extends Controller
     else $notes = $req->notes;
 
     $this->authorize('update', $order);
-
     if($req->buy){
       if(count($order->sells) > 1)
-        return response()->json([ 'message' => 'Can\'t add more Sell on Multiple Buys' ], 400);
+        return response()->json([ 'message' => 'Can\'t add more Buy on Multiple Sells' ], 400);
 
       $order->buys()->sync([ $req->buy => $details ], false);
 
-      $buy = Lead::find($req->buy)->reconcile();
-  
-      $order_detail_id = $order->buys->find($req->buy)->pivot->id;
+      Lead::find($req->buy)->reconcile();
+      $lead_staged = $order->buys()->with('Company','User','trader')->find($req->buy);
+
+      $order_detail_id = $order->buys()->find($req->buy)->pivot->id;
     }
     if($req->sell){
       if(count($order->buys) > 1)
-        return response()->json([ 'message' => 'Can\'t add more Buy on Multiple Sells' ], 400);
+        return response()->json([ 'message' => 'Can\'t add more Sell on Multiple Buys' ], 400);
 
       $order->sells()->sync([ $req->sell => $details ], false);
 
-      $sell = Lead::find($req->sell)->reconcile();
+      Lead::find($req->sell)->reconcile();
+      $lead_staged = $order->sells()->with('Company','User','trader')->find($req->sell);
 
-      $order_detail_id = $order->sells->find($req->sell)->pivot->id;
+      $order_detail_id = $order->sells()->find($req->sell)->pivot->id;
     }
 
     // if notes is here, it's a negotiation
@@ -439,7 +440,7 @@ class OrderController extends Controller
       'user_id' => Auth::user()->id,
     ]);
     $negotiation->save();
-    return $this->show($id);
+    return response()->json($lead_staged,200);
   }
 
   public function unstage(Request $req, $id){

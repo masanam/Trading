@@ -172,22 +172,24 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
       });
 
       modalInstance.result.then(function (selectedItem) {
-        if(!$scope.order.sells) $scope.order.sells = [];
+        if(!$scope.order.buys) $scope.order.buys = [];
         
         if($scope.order.id){
           Order.update(
             { id:$scope.order.id, action: 'stage' },
-            { sell:selectedItem.id, volume:selectedItem.pivot.volume, price:selectedItem.pivot.price, trading_term:selectedItem.pivot.trading_term, payment_term:selectedItem.pivot.payment_term },
+            { buy:selectedItem.id, volume:selectedItem.pivot.volume, price:selectedItem.pivot.price, trading_term:selectedItem.pivot.trading_term, payment_term:selectedItem.pivot.payment_term },
             function (res){
-              $scope.order.sells = res.sells;
-              $scope.display.sell = selectedItem;
-              $scope.display.sell.index = $scope.order.sells.length-1;
+              console.log(res);
+              $scope.order.buys.push(res);
+              console.log($scope.order);
+              $scope.display.buy = selectedItem;
+              $scope.display.buy.index = $scope.order.buys.length-1;
               $scope.calculateTotal();
             });
         } else {
-          $scope.order.sells.push(selectedItem);
-          $scope.display.sell = selectedItem;
-          $scope.display.sell.index = $scope.order.sells.length-1;
+          $scope.order.buys.push(selectedItem);
+          $scope.display.buy = selectedItem;
+          $scope.display.buy.index = $scope.order.buys.length-1;
           $scope.calculateTotal();
         }
       }, function () {
