@@ -5,8 +5,11 @@ angular.module('lead').controller('LeadCompanyController', ['$scope', '$statePar
     $scope.selected = {};
 
     $scope.$watch('selected.company', function (newValue, oldValue) {
-      if(newValue) $scope.lead.company_id = newValue.id;
-      else $scope.lead.company_id = undefined;
+      if(newValue){
+        $scope.lead.company_id = newValue.id;
+        if(!$scope.lead.trading_term) $scope.lead.trading_term = newValue.preferred_trading_term;
+        if(!$scope.lead.payment_term) $scope.lead.payment_term = newValue.preferred_payment_term;
+      } else $scope.lead.company_id = undefined;
     });
 
     //Init select companies
