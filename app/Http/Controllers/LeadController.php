@@ -141,7 +141,7 @@ class LeadController extends Controller
   */
   public function show(Request $req, $id){
     
-    $lead = Lead::with('company','port','concession', 'orders');
+    $lead = Lead::with('company','port','concession','product','orders');
     if ($req->lead_type === 'buy'){
       $lead->where('lead_type', 'b');
     }

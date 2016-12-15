@@ -2,25 +2,19 @@
 
 angular.module('lead').controller('LeadCompanyController', ['$scope', '$stateParams', '$uibModal', 'Company', 'Lead',
   function ($scope, $stateParams, $uibModal, Company, Lead) {
-    $scope.selected = {};
-
     $scope.$watch('selected.company', function (newValue, oldValue) {
       if(newValue){
         $scope.lead.company_id = newValue.id;
         if(!$scope.lead.trading_term) $scope.lead.trading_term = newValue.preferred_trading_term;
         if(!$scope.lead.payment_term) $scope.lead.payment_term = newValue.preferred_payment_term;
       } else {
-        if(!isNaN($scope.lead.order_status)) $scope.lead.company_id = undefined
+        if(!isNaN($scope.lead.order_status)) $scope.lead.company_id = undefined;
         else {
           $scope.selected.company = oldValue;
           alert('You can only edit company in draft leads');
         }
-      };
+      }
     });
-
-    $scope.init = function () {
-      if($scope.lead.company_id) $scope.selected.company = $scope.lead.company;
-    };
 
     //Init select companies
     $scope.find = function(keyword, type) {

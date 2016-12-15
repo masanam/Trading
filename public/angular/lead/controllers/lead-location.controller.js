@@ -2,27 +2,22 @@
 
 angular.module('lead').controller('LeadLocationController', ['$scope', '$stateParams', '$uibModal', 'Concession', 'Factory', 'Lead',
   function ($scope, $stateParams, $uibModal, Concession, Factory, Lead) {
-    $scope.selected = {};
-
     $scope.$watch('selected.location', function (newValue, oldValue) {
-      if(newValue){
-        if ($scope.lead.lead_type === 'b') $scope.lead.concession_id = newValue.id;
-        else $scope.lead.factory_id = newValue.id;
+      if($scope.lead){
+        if(newValue){
+          if ($scope.lead.lead_type === 'b') $scope.lead.concession_id = newValue.id;
+          else $scope.lead.factory_id = newValue.id;
 
-        $scope.lead.address = newValue.address;
-        $scope.lead.city = newValue.city;
-        $scope.lead.country = newValue.country;
-        $scope.lead.port_distance = newValue.port_distance;
-        $scope.lead.latitude = newValue.latitude;
-        $scope.lead.longitude = newValue.longitude;
+          $scope.lead.address = newValue.address;
+          $scope.lead.city = newValue.city;
+          $scope.lead.country = newValue.country;
+          $scope.lead.port_distance = newValue.port_distance;
+          $scope.lead.latitude = newValue.latitude;
+          $scope.lead.longitude = newValue.longitude;
+        }
+        else $scope.lead.port_id = undefined;
       }
-      else $scope.lead.port_id = undefined;
     });
-
-    $scope.init = function () {
-      if ($scope.lead.lead_type === 'b') $scope.selected.concession = $scope.lead.location;
-      else $scope.selected.factory = $scope.lead.location;
-    };
 
     //Init select ports
     $scope.find = function(keyword) {
@@ -38,8 +33,10 @@ angular.module('lead').controller('LeadLocationController', ['$scope', '$statePa
     };
 
     $scope.add = function () {
+      var modalInstance;
+      
       if ($scope.lead.lead_type === 'b')
-        var modalInstance = $uibModal.open({
+        modalInstance = $uibModal.open({
           animation: true,
           ariaLabelledBy: 'modal-title',
           ariaDescribedBy: 'modal-body',
@@ -52,7 +49,7 @@ angular.module('lead').controller('LeadLocationController', ['$scope', '$statePa
           }
         });
       else
-        var modalInstance = $uibModal.open({
+        modalInstance = $uibModal.open({
           animation: true,
           ariaLabelledBy: 'modal-title',
           ariaDescribedBy: 'modal-body',
