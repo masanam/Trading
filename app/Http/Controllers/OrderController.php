@@ -217,9 +217,9 @@ class OrderController extends Controller
   public function show($id, Request $req)
   { 
     $order = Order::with('trader', 'users', 'sells', 'buys', 'buys.trader',
-      'approvals', 'sells.trader', 'sells.company', 'buys.company')->find($id);
-    
-    $this->authorize('view', $order);
+      'approvals', 'sells.trader', 'sells.company', 'buys.company', 'buys.concession', 'sells.factory')->find($id);
+
+    // $this->authorize('view', $order);
 
     // lazyloading semua negotiation log
     $order->getNegotiations();
@@ -412,7 +412,7 @@ class OrderController extends Controller
 
       $order->buys()->sync([ $req->buy => $details ], false);
 
-      $buy = BuyOrder::find($req->buy)->reconcile();
+      $buy = Lead::find($req->buy)->reconcile();
   
       $order_detail_id = $order->buys->find($req->buy)->pivot->id;
     }
@@ -422,7 +422,7 @@ class OrderController extends Controller
 
       $order->sells()->sync([ $req->sell => $details ], false);
 
-      $sell = SellOrder::find($req->sell)->reconcile();
+      $sell = Lead::find($req->sell)->reconcile();
 
       $order_detail_id = $order->sells->find($req->sell)->pivot->id;
     }

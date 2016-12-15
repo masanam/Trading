@@ -14,7 +14,7 @@
       </tr>
       <tr>
         <td><label>Price</label></td>
-        <td>{{ selected.item.max_price || selected.item.min_price }}</td>
+        <td>{{ selected.item.price }}</td>
       </tr>
       <tr>
         <td><label>Address</label></td>
@@ -41,11 +41,11 @@
       </tr>
       <tr>
         <td><label>Laycan</label></td>
-        <td>{{ selected.item.ready_date | date : 'd MMMM yyyy' }} - {{ selected.item.order_deadline | date : 'd MMMM yyyy' }}</td>
+        <td>{{ selected.item.laycan_start | date : 'd MMMM yyyy' }} - {{ selected.item.laycan_end | date : 'd MMMM yyyy' }}</td>
       </tr>
       <tr>
         <td><label>Valid Until</label></td>
-        <td>{{ selected.item.expired_date | date : 'd MMMM yyyy' }}</td>
+        <td>{{ selected.item.order_expired | date : 'd MMMM yyyy' }}</td>
       </tr>
       <tr>
         <td><label>Preferred Payment Term</label></td>
@@ -60,7 +60,7 @@
     <table class="table table-striped">
       <tr>
         <td><label>Penalty</label></td>
-        <td>{{ selected.item.penalty_desc }}</td>
+        <td>{{ selected.item.penalty }}</td>
       </tr>
     </table>
     </div>
