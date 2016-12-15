@@ -20,7 +20,7 @@ angular.module('coalpedia').controller('CompanyModalController', ['$scope', '$ui
     $scope.update = function() {
       var company = $scope.company;
 
-      company.$update(function(response) {
+      company.$update({ id: $scope.company.id }, function(response) {
         $uibModalInstance.close(response);
       });
     };

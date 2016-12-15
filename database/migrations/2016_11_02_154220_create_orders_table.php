@@ -81,6 +81,16 @@ class CreateOrdersTable extends Migration
             $table->foreign('order_detail_id')->references('id')->on('order_details')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
+
+        Schema::create('order_additional_costs', function (Blueprint $table) {
+            $table->integer('company_id')->unsigned();
+            $table->integer('order_id')->unsigned();
+            $table->string('label');
+            $table->decimal('cost', 15, 3);
+
+            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
+        });
     }
 
     /**
@@ -90,6 +100,7 @@ class CreateOrdersTable extends Migration
      */
     public function down()
     {
+        Schema::drop('order_additional_costs');
         Schema::drop('order_negotiations');
         Schema::drop('order_details');
         Schema::drop('order_users');

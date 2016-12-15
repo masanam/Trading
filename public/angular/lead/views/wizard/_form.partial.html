@@ -19,9 +19,9 @@
     <label>Laycan Period : </label>
     <p class="input-group">
       <span class="input-group-addon">FROM</span>
-      <input type="date" class="form-control" ng-model="lead.laycan_start"/>
+      <input type="date" min="{{date | date:'yyyy-MM-dd'}}" class="form-control" ng-model="lead.laycan_start"/>
       <span class="input-group-addon">TO</span>
-      <input type="date" class="form-control" ng-model="lead.laycan_end"/>
+      <input type="date" min="{{date | date:'yyyy-MM-dd'}}" class="form-control" ng-model="lead.laycan_end"/>
     </p>
   </div>
 </div>
@@ -29,11 +29,11 @@
 <div class="row">
   <div class="col-lg-3">
     <label>Date of Request : </label>
-    <input type="date" class="form-control" ng-model="lead.order_date"/>
+    <input type="date" class="form-control" ng-model="lead.order_date" required/>
   </div>
   <div class="col-lg-3">
     <label>Order Valid Until : </label>
-    <input type="date" min="{{date | date:'yyyy-MM-dd'}}" class="form-control" ng-model="lead.order_expired"/>
+    <input type="date" min="{{date | date:'yyyy-MM-dd'}}" class="form-control" ng-model="lead.order_expired" required/>
   </div>
 </div>
 
