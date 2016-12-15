@@ -26,3 +26,6 @@ ApplicationConfiguration.registerModule('contact');
 // Orders
 ApplicationConfiguration.registerModule('order');
 ApplicationConfiguration.registerModule('chat');
+
+// Bizdev
+ApplicationConfiguration.registerModule('bizdev');
