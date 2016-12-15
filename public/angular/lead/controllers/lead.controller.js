@@ -35,14 +35,14 @@ angular.module('lead').controller('LeadController', ['$scope', '$state', '$state
     };
 
     $scope.update = function () {
+      var next;
+
+      if($state.current.name === 'lead.update') next = 'lead.location';
+      if($state.current.name === 'lead.location') next = 'lead.product';
+      else if($state.current.name === 'lead.product') next = 'lead.view';
+      else next = 'lead.view';
+
       $scope.lead.$update(function(res){
-        var next;
-
-        if($state.current.name === 'lead.update') next = 'lead.location';
-        if($state.current.name === 'lead.location') next = 'lead.product';
-        else if($state.current.name === 'lead.product') next = 'lead.view';
-        else next = 'lead.view';
-
         $state.go(next, { id: res.id });
       });
     };

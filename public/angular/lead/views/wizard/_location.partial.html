@@ -1,196 +1,67 @@
-<div class="box box-primary" ng-show="concession.selected">
-  <div class="box-body box-profile" ng-if="lead_type==='buy'">
-    <div class="form-group">
-      <label for="concession_name">Name*:</label>
-      <p>{{concession.selected.concession_name || 'N/A'}}</p>
-    </div>
-    <div class="form-group">
-      <label for="reserves">Owner*:</label>
-      <p>{{concession.selected.owner || 'N/A'}}</p>
-    </div>
-    <div class="form-group">
-      <label for="reserves">Address*:</label>
-      <input type="text" class="form-control" id="address" ng-model="concession.selected.address" required>
-    </div>
-    <div class="form-group hidden-xs">
-      <div class="input-group col-md-12" style="margin-bottom: 5px;">
-        <span class="input-group-addon" style="width: 200px;">City*</span>
-        <input type="text" class="form-control" placeholder="City" ng-model="concession.selected.city" required>
-        <span class="input-group-addon">Country of coal purchase*</span>
-        <input type="text" class="form-control" placeholder="Country" ng-model="concession.selected.country" required>
-      </div>
-    </div>
-    <div class="form-group visible-xs">
-      <div class="input-group" style="width:100%">
-        <span class="input-group-addon" style="width:35%">City*</span>
-        <input type="text" class="form-control" placeholder="City" ng-model="concession.selected.city" required>
-      </div>
-      <div class="input-group" style="width:100%">
-        <span class="input-group-addon" style="width:35%">Country*</span>
-        <input type="text" class="form-control" placeholder="Country" ng-model="concession.selected.country" required>
-      </div>
-    </div>
-    <div class="row">
-      <div class="input-group col-md-12" style="margin-bottom: 5px;">
-        <div class="col-md-6">
-          <label for="reserves">Total Coal Resources (MMT):</label>
-          <p>{{concession.selected.resource || 'N/A'}}</p>
-        </div>
-        <div class="col-md-6">
-          <label for="reserves">Total Coal Reserves (MMT):</label>
-          <p>{{concession.selected.reserves || 'N/A'}}</p>
-        </div>
-      </div>
-    </div>
-    <div class="form-group">
-      <label for="stripping_ratio">Stripping Ratio:</label>
-      <p>{{concession.selected.stripping_ratio || 'N/A'}}</p>
-    </div>
-    <div class="form-group">
-      <label for="size">Size of Concession (Ha):</label>
-      <p>{{concession.selected.size || 'N/A'}}</p>
-    </div>
-    <div class="form-group hidden-xs">
-      <div class="row">
-        <div class="col-md-4" style="margin-bottom: 5px;">
-          <label style="width: 250px;">Annual Production Capacity (MMT)*</label>
-          <p>{{concession.selected.annual_production || 'N/A'}}</p>
-          <label style="width: 200px;">Stockpile Distance*</label>
-          <p>{{concession.selected.stockpile_distance || 'N/A'}}</p>
-        </div>
-        <div class="col-md-4" style="margin-bottom: 5px;">
-          <label style="width: 250px;">Stockpile Capacity</label>
-          <p>{{concession.selected.stockpile_capacity || 'N/A'}}</p>
-          <label style="width: 200px;">Stockpile Coverage</label>
-          <p>{{concession.selected.stockpile_coverage || 'N/A'}}</p>
-        </div>
-        <div class="col-md-4" style="margin-bottom: 5px;">
-          <label style="width: 250px;">Contracted Volume (MMT)</label>
-          <p>{{concession.selected.contracted_volume || 'N/A'}}</p>
-          <label style="width: 200px;">Remaining</label>
-          <p>{{concession.selected.remaining_volume || 'N/A'}}</p>
-        </div>
-      </div>
-    </div>
-    <div class="form-group visible-xs">
-      <div class="input-group" style="width:100%">
-        <label style="width:55%">Annual Production*</label>
-        <p>{{concession.selected.annual_production || 'N/A'}}</p>
-      </div>
-      <div class="input-group" style="width:100%">
-        <label style="width:55%">Stockpile Distance*</label>
-        <p>{{concession.selected.stockpile_distance || 'N/A'}}</p>
-      </div>
-      <div class="input-group" style="width:100%">
-        <label style="width:55%">Stockpile Capacity</label>
-        <p>{{concession.selected.stockpile_capacity || 'N/A'}}</p>
-      </div>
-      <div class="input-group" style="width:100%">
-        <label style="width:55%">Stockpile Coverage</label>
-        <p>{{concession.selected.stockpile_coverage || 'N/A'}}</p>
-      </div>
-      <div class="input-group" style="width:100%">
-        <label style="width:55%">Contracted Volume</label>
-        <p>{{concession.selected.contracted_volume || 'N/A'}}</p>
-      </div>
-      <div class="input-group" style="width:100%">
-        <label style="width:55%">Remaining</label>
-        <p>{{concession.selected.remaining_volume || 'N/A'}}</p>
-      </div>
-    </div>
-    <div class="form-group">
-      <label>Hauling Road</label>
-      <div class="input-group col-md-12" style="margin-bottom: 5px;">
-        <!--span class="input-group-addon" style="width: 200px;">Hauling Road Name</span-->
-        <div class="btn-group">
-          <p>{{concession.selected.hauling_road_name || 'N/A'}}</p>
-        </div>
-      </div>
-    </div>
-    <div class="form-group">
-      <label>License Type*</label>
-      <div class="input-group col-md-12" style="margin-bottom: 5px;width: 100%;">
-        <div class="btn-group hidden-xs">
-          <p>{{concession.selected.license_type || 'N/A'}}</p>
-        </div>
-        <div class="btn-group-vertical visible-xs">
-          <p>{{concession.selected.license_type || 'N/A'}}</p>
-        </div>
-      </div>
-    </div>
-    <div class="form-group">
-      <label>Expiry Date</label>
-      <div class="input-group col-md-12" style="margin-bottom: 5px;">
-        <p>{{concession.selected.license_expiry_date || 'N/A'}}</p>
-      </div>
-    </div>
-  </div>
+<div class="select-box" ng-init="find()">
+  <label for="id">Name of {{ lead.lead_type === 'b' ? 'Concession' : 'Factory' }} :</label>
+  
+  <ui-select ng-model="selected.location"
+    reset-search-input="false"
+    style="min-width: 30px;"
+    title="Choose an location">
+    <ui-select-match placeholder="Name of the {{ lead.lead_type === 'b' ? 'Concession' : 'Factory' }}...">
+      {{$select.selected.concession_name}}
+      {{$select.selected.factory_name}}
+    </ui-select-match>
+
+    <ui-select-choices repeat="location in locations track by $index"
+      refresh="find($select.search)"
+      refresh-delay="1">
+      <div ng-bind-html="location.concession_name  | highlight: $select.search | html"></div>
+      <div ng-bind-html="location.factory_name  | highlight: $select.search | html"></div>
+    </ui-select-choices>
+  </ui-select>
 </div>
 
-<div class="box box-primary" ng-show="factory.selected">
-  <div class="box-body box-profile" ng-if="lead_type==='sell'">
-    <div class="form-group">
-      <label for="factory_name">Name of Factory*:</label>
-      <p>{{factory.selected.factory_name || 'N/A'}}</p>
-    </div>
-
-    <div class="form-group">
-      <label for="reserves">Owner*:</label>
-      <p>{{factory.selected.factory_name || 'N/A'}}</p>
-    </div>
-
-    <div class="form-group">
-      <label for="reserves">Address*:</label>
-      <input type="text" class="form-control" id="address" ng-model="factory.selected.address" required>
-    </div>
-
-    <div class="form-group">
-      <div class="input-group col-md-12 hidden-xs" style="margin-bottom: 5px;">
-        <span class="input-group-addon" style="width: 200px;">City*</span>
-        <input type="text" class="form-control" placeholder="City" ng-model="factory.selected.city" required>
-        <span class="input-group-addon" style="width: 200px;">Country*</span>
-        <input type="text" class="form-control" placeholder="Country" ng-model="factory.selected.country" required>
-      </div>
-      <div class="input-group col-md-12 hidden-xs" style="margin-bottom: 5px;">
-        <span class="input-group-addon" style="width: 200px;">Latitude</span>
-        <input type="number" min="-90" max="90" step="any" class="form-control" placeholder="Latitude" ng-model="factory.selected.latitude" required>
-        <span class="input-group-addon" style="width: 200px;">Longitude</span>
-        <input type="number" min="-180" max="180" step="any" class="form-control" placeholder="Longitude" ng-model="factory.selected.longitude" required>
-      </div>
-      <div class="form-group visible-xs">
-        <div class="input-group" style="width:100%">
-          <span class="input-group-addon" style="width:35%">City*</span>
-          <input type="text" class="form-control" placeholder="City" ng-model="factory.selected.city" required>
-        </div>
-        <div class="input-group" style="width:100%">
-          <span class="input-group-addon" style="width:35%">Country*</span>
-          <input type="text" class="form-control" placeholder="Country" ng-model="factory.selected.country" required>
-        </div>
-        <div class="input-group" style="width:100%">
-          <span class="input-group-addon" style="width:35%">Latitude*</span>
-          <input type="number" min="-90" max="90" step="any" class="form-control" placeholder="Latitude" ng-model="factory.selected.latitude" required>
-        </div>
-        <div class="input-group" style="width:100%">
-          <span class="input-group-addon" style="width:35%">Longitude*</span>
-          <input type="number" min="-180" max="180" step="any" class="form-control" placeholder="Longitude" ng-model="factory.selected.longitude" required>
-        </div>
-      </div>
-      <div class="form-group">
-        <ng-map zoom="2" center="Indonesia" default-style="false" style="width:100%; height:500px;">
-          <marker draggable="true" on-mouseup="markerMove()" position="{{factory.latitude}}, {{factory.longitude}}" id="mark{{factory.id}}" ></marker>
-        </ng-map>
-      </div>
-      
-    </div>
-
-    <div class="form-group">
-      <label for="consumption">Consumption:</label>
-      <p>{{factory.selected.consumption || 'N/A'}}</p>
-    </div>
-
-    <div class="form-group">
-      <label for="size">Size of Factory (Ha):</label>
-      <p>{{factory.selected.size || 'N/A'}}</p>
+<div ng-show="!selected.location">
+  <div class="row">
+    <div class="text-center col-lg-12" style="padding: 20px">
+      OR
     </div>
   </div>
+  <button type="button" class="btn btn-primary btn-block" ng-click="modalCreate()">
+    <b>+</b> Add New {{ lead.lead_type === 'b' ? 'Concession' : 'Factory' }}
+  </button>
+</div>
+
+<hr>
+
+<div ng-show="selected.location" style="margin-top:20px;">
+  <div class="row"><div class="col-lg-12">
+    <label>Address</label>
+    <input type="text" class="form-control" ng-model="lead.address">
+  </div></div>
+  <div class="row"><div class="col-lg-12">
+    <label>City</label>
+    <input type="text" class="form-control" ng-model="lead.city">
+  </div></div>
+  <div class="row"><div class="col-lg-12">
+    <label>Country</label>
+    <input type="text" class="form-control" ng-model="lead.country">
+  </div></div>
+  <div class="row"><div class="col-lg-12">
+    <label>Distance to Port</label>
+    <input type="number" class="form-control" ng-model="lead.port_distance">
+  </div></div>
+  <div class="row"><div class="col-lg-12">
+    <label>Coordinate</label>
+    <div class="input-group">
+      <span class="input-group-addon">Lat</span>
+      <input type="text" class="form-control" ng-model="lead.latitude">
+      <span class="input-group-addon">Lng</span>
+      <input type="text" class="form-control" ng-model="lead.longitude">
+    </div>
+  </div></div>
+  <div class="row"><div class="col-lg-12" ng-if="lead.latitude && lead.longitude">
+    <ng-map center="[{{ lead.latitude }}, {{ lead.longitude }}]" on-click="changePosition()" id="location">
+      <marker draggable="true" on-dragend="changePosition()"
+        position="{{lead.latitude}}, {{lead.longitude}}" id="location-{{selected.location.id}}"></marker>
+    </ng-map>
+  </div></div>
 </div>
