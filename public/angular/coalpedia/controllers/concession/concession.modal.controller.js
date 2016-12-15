@@ -24,11 +24,11 @@ angular.module('coalpedia').controller('ConcessionModalController', ['$scope', '
     };
 
     $scope.update = function() {
-      $scope.concession = new Concession($scope.concession);
-      $scope.concession.polygon = $scope.display.polygonString;
-      $scope.concession.company_id = company.id;
+      concession = new Concession($scope.concession);
+      concession.polygon = $scope.display.polygonString;
+      concession.company_id = company.id;
 
-      $scope.concession.$update(function(response) {
+      concession.$update(function(response) {
         concession = response;
         $uibModalInstance.close(response);
       });

@@ -24,7 +24,7 @@ angular.module('coalpedia').controller('ProductModalController', ['$scope', '$ui
     $scope.update = function() {
       $scope.product.company_id = company.id;
 
-      $scope.product.$update(function(response) {
+      $scope.product.$update({ id: $scope.product.id }, function(response) {
         product = response;
         $uibModalInstance.close(response);
       });

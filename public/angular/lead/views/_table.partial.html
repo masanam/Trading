@@ -36,11 +36,8 @@
         <td ng-if="lead.order_status==='v'">Verified</td>
         <td ng-if="lead.order_status==='s'">Staged</td>
         <td ng-if="lead.order_status==='p'">Partial</td>
-        <td ng-if="lead.order_status==='0'"><a style="cursor:pointer" ng-click="toSupplier(lead.id)">STEP : Supplier</a></td>
-        <td ng-if="lead.order_status==='1'"><a style="cursor:pointer" ng-click="toConcession(lead.seller_id,lead.id)">STEP : Concession</a></td>
-        <td ng-if="lead.order_status==='2'"><a style="cursor:pointer" ng-click="toProduct(lead.seller_id,lead.id,lead.concession_id)">STEP : Product</a></td>
-        <td ng-if="lead.order_status==='3'"><a style="cursor:pointer" ng-click="toPort(lead.seller_id,lead.id,lead.concession_id)">STEP : Port</a></td>
-        <td ng-if="lead.order_status==='4'"><a style="cursor:pointer" ng-click="toSummary(lead.seller_id,lead.id,lead.concession_id)">STEP : Summary</a></td>
+        <td ng-if="lead.order_status==='1'"><a ui-sref="lead.location({ id: lead.id })">STEP : Locations</a></td>
+        <td ng-if="lead.order_status==='2'"><a ui-sref="lead.product({ id: lead.id })">STEP : Product</a></td>
         <td>
           <a ng-if="lead.order_status==='s'||lead.order_status==='l'||lead.order_status==='v'" ui-sref="lead.view({ id: lead.id })"><i class="glyphicon glyphicon-info-sign"></i></a>
           <a ng-if="lead.order_status!=='s'&&lead.order_status!=='p'&&Authentication.user.id===lead.user_id" ng-click="changeOrderStatus(lead, 'x')" style="cursor: pointer" uib-tooltip="Delete Order"><i class="glyphicon glyphicon-trash"></i></a>
