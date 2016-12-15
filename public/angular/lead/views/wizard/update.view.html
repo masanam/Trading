@@ -1,5 +1,5 @@
-<section class="content" ng-controller="LeadController" ng-init="init()">
-<form ng-submit="create(lead)">
+<section class="content" ng-controller="LeadController" ng-init="findOne()">
+<form ng-submit="update()">
   <div class="box box-info" >
     <div class="box-header with-border">
       <h3 class="box-title">UPDATE {{ lead.lead_type | uppercase }} LEAD</h3>
