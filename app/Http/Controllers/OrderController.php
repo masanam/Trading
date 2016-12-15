@@ -110,11 +110,9 @@ class OrderController extends Controller
     if($req->status != '') $orders = $orders->where('status', $req->status);
 
     if($req->possession == 'subordinates'){
-      $subordinates = $this->getSub();
-      foreach ($subordinates as $sub ) {
-          $lower[] = $sub->id;
-      }
-      $orders = $orders->whereIn('user_id', $lower);
+      $subs = Auth::user()->subordinates();
+      $users = $subs->pluck('id')->all(); 
+      $orders = $orders->whereIn('user_id', $users);
     }
     else if($req->possession == 'associated'){
       $orders->whereHas('users', function($query){
@@ -220,7 +218,7 @@ class OrderController extends Controller
   { 
     $order = Order::with('trader', 'users', 'sells', 'buys', 'buys.trader',
       'approvals', 'sells.trader', 'sells.company', 'buys.company')->find($id);
-
+    
     $this->authorize('view', $order);
 
     // lazyloading semua negotiation log
@@ -500,9 +498,4 @@ class OrderController extends Controller
     return $this->show($id);
   }
 
-
-  public function getSub(){
-    $user = Auth::User();
-    return $user->getAllSubordinates();
-  }
 }
