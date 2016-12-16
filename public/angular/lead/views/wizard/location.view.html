@@ -1,4 +1,5 @@
 <section class="content" ng-controller="LeadController" ng-init="findOne()">
+<form ng-submit="update()">
   <div class="col-lg-12">
     <div class="box box-default" >
         <div class="box-header with-border">
@@ -23,72 +24,20 @@
         <h3 class="box-title">Fill Port Details</h3>
       </div>
       <div class="box-body">
-        <div class="form-group">
-          <label ng-show="error" class="alert bg-red" style="width:100%">{{error}}</label>
-        </div>
-        <div class="select-box">
-          <div ng-include="'/angular/lead/views/wizard/_operation.select.partial.html'"></div>
-        </div>
-        <div class="row">
-          <div class="text-center col-lg-12" style="padding: 20px">
-            OR
-          </div>
-        </div>
-        <button type="button" class="btn btn-primary btn-block" ng-click="openModal()">
-          <b>+</b> Add New {{ operation_type }}
-        </button>
-        <div ng-include="'/angular/lead/views/wizard/_operation.partial.html'"></div>
+        <div ng-include="'/angular/lead/views/wizard/_port.partial.html'"></div>
       </div>
     </div>
   </div>
 
-  <div class="col-lg-6" ng-controller="LeadConcessionController" ng-if="lead.lead_type === 's'"> 
+  <div class="col-lg-6" ng-controller="LeadLocationController"> 
     <div class="box box-info" >
       <div class="box-header with-border">
-        <h3 class="box-title">Fill Concession Details</h3>
+        <h3 class="box-title">Fill {{ lead.lead_type === 'b' ? 'Concession' : 'Factory' }} Details</h3>
       </div>
       <div class="box-body">
-        <div class="form-group">
-          <label ng-show="error" class="alert bg-red" style="width:100%">{{error}}</label>
-        </div>
-        <div class="select-box">
-          <div ng-include="'/angular/lead/views/wizard/_operation.select.partial.html'"></div>
-        </div>
-        <div class="row">
-          <div class="text-center col-lg-12" style="padding: 20px">
-            OR
-          </div>
-        </div>
-        <button type="button" class="btn btn-primary btn-block" ng-click="openModal()">
-          <b>+</b> Add New {{ operation_type }}
-        </button>
-        <div ng-include="'/angular/lead/views/wizard/_operation.partial.html'"></div>
+        <div ng-include="'/angular/lead/views/wizard/_location.partial.html'"></div>
       </div>
     </div>
   </div>
-
-  <div class="col-lg-6" ng-controller="LeadFactoryController" ng-if="lead.lead_type === 'b'"> 
-    <div class="box box-info" >
-      <div class="box-header with-border">
-        <h3 class="box-title">Fill Factory Details</h3>
-      </div>
-      <div class="box-body">
-        <div class="form-group">
-          <label ng-show="error" class="alert bg-red" style="width:100%">{{error}}</label>
-        </div>
-        <div class="select-box">
-          <div ng-include="'/angular/lead/views/wizard/_operation.select.partial.html'"></div>
-        </div>
-        <div class="row">
-          <div class="text-center col-lg-12" style="padding: 20px">
-            OR
-          </div>
-        </div>
-        <button type="button" class="btn btn-primary btn-block" ng-click="openModal()">
-          <b>+</b> Add New {{ operation_type }}
-        </button>
-        <div ng-include="'/angular/lead/views/wizard/_operation.partial.html'"></div>
-      </div>
-    </div>
-  </div>
+</form>
 </section>
