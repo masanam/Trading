@@ -17,6 +17,14 @@ angular.module('bizdev').config(['$stateProvider',
       .state('bizdev.iup-management', {
         url: '/iup',
         templateUrl: '/angular/bizdev/views/iup/index.view.html'
+      })
+      .state('bizdev.iup-history', {
+        url: '/iup-history',
+        templateUrl: '/angular/bizdev/views/iup/history.view.html'
+      })
+      .state('bizdev.iup-view', {
+        url: '/iup-view',
+        templateUrl: '/angular/bizdev/views/iup/iup.view.html'
       });
       
   }
