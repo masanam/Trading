@@ -102,20 +102,20 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
         resolve: {
           lead: function () {
             return {
-              item: $scope.display.sell,
-              type: 'sell'
+              item: $scope.display.buy,
+              type: 'buy'
             }; 
           }
         }
       });
 
       modalInstance.result.then(function (negotiation) {
-        Order.post(
+        Order.update(
           { id:$scope.order.id, action: 'stage' },
-          { sell:negotiation.id, volume:negotiation.volume, price:negotiation.price, trading_term:negotiation.trading_term, payment_term:negotiation.payment_term, notes:negotiation.notes },
+          { lead_type:'buys', lead_id:negotiation.id, negotiation:true, volume:negotiation.volume, price:negotiation.price, trading_term:negotiation.trading_term, payment_term:negotiation.payment_term, notes:negotiation.notes },
           function (res){
-            $scope.order.sells = res.sells;
-            $scope.display.sell.pivot = negotiation;
+            $scope.order.buys = res.buys;
+            $scope.display.buy.pivot = negotiation;
           });
       }, function () {
         console.log('Modal dismissed at: ' + new Date());
@@ -133,20 +133,20 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
         resolve: {
           lead: function () {
             return {
-              item: $scope.display.buy,
-              type: 'buy'
+              item: $scope.display.sell,
+              type: 'sell'
             }; 
           }
         }
       });
 
       modalInstance.result.then(function (negotiation) {
-        Order.post(
+        Order.update(
           { id:$scope.order.id, action: 'stage' },
-          { buy:negotiation.id, volume:negotiation.volume, price:negotiation.price, trading_term:negotiation.trading_term, payment_term:negotiation.payment_term, notes:negotiation.notes },
+          { lead_type:'sells', lead_id:negotiation.id, negotiation:true, volume:negotiation.volume, price:negotiation.price, trading_term:negotiation.trading_term, payment_term:negotiation.payment_term, notes:negotiation.notes },
           function (res){
-            $scope.order.buys = res.buys;
-            $scope.display.buy.pivot = negotiation;
+            $scope.order.sells = res.sells;
+            $scope.display.sell.pivot = negotiation;
           });
       }, function () {
         console.log('Modal dismissed at: ' + new Date());

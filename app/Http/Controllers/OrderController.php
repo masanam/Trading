@@ -416,9 +416,10 @@ class OrderController extends Controller
       if(count($order->buys) > 1)
         return response()->json([ 'message' => 'Can\'t add more Sell on Multiple Buys' ], 400);
 
-    $order->$lead_type()->sync([ $req->lead_id => $details ], false);
-
-    Lead::find($req->lead_id)->reconcile();
+    if (!$req->negotiation){
+      $order->$lead_type()->sync([ $req->lead_id => $details ], false);
+      Lead::find($req->lead_id)->reconcile();
+    }
 
     $order_detail_id = $order->$lead_type()->find($req->lead_id)->pivot->id;
 
