@@ -198,12 +198,12 @@ class OrderController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function show($id, Request $req)
+  public function show($id, Request $req = null)
   { 
     $order = Order::with('trader', 'users', 'sells', 'buys', 'buys.trader',
-      'approvals', 'sells.trader', 'sells.company', 'buys.company')->find($id);
-    
-    $this->authorize('view', $order);
+      'approvals', 'sells.trader', 'sells.company', 'buys.company', 'buys.concession', 'sells.factory')->find($id);
+
+    // $this->authorize('view', $order);
 
     // lazyloading semua negotiation log
     $order->getNegotiations();
@@ -216,6 +216,7 @@ class OrderController extends Controller
     $order->averageSell(); 
     $order->averageBuy();
     
+    if (isset($req)) 
     // IF envelope is requested, get all necessary components
     if($req->envelope == "true"){
       $params = [
@@ -233,6 +234,7 @@ class OrderController extends Controller
         'index' => $index
       ];
     } else $json = $order;
+    else $json = $order;
 
     return response()->json($json, 200);;
   }
@@ -378,7 +380,7 @@ class OrderController extends Controller
 
   public function stage(Request $req, $id)
   {
-    $order = Order::with('sells', 'buys')->find($id);
+    $order = Order::with('buys', 'sells')->find($id);
     $details = [
       'volume' => $req->volume,
       'price' => $req->price,
@@ -388,28 +390,43 @@ class OrderController extends Controller
     if(!$req->notes) $notes = 'Initial Deal';
     else $notes = $req->notes;
 
-    $this->authorize('update', $order);
+    $lead_type = $req->lead_type;
 
-    if($req->buy){
+    $this->authorize('update', $order);
+    if ($lead_type === 'buys') 
       if(count($order->sells) > 1)
+        return response()->json([ 'message' => 'Can\'t add more Buy on Multiple Sells' ], 400);
+    else if ($lead_type === 'sells') 
+      if(count($order->buys) > 1)
         return response()->json([ 'message' => 'Can\'t add more Sell on Multiple Buys' ], 400);
 
-      $order->buys()->sync([ $req->buy => $details ], false);
-
-      $buy = BuyOrder::find($req->buy)->reconcile();
-  
-      $order_detail_id = $order->buys->find($req->buy)->pivot->id;
+    if (!$req->negotiation){
+      $order->$lead_type()->sync([ $req->lead_id => $details ], false);
+      Lead::find($req->lead_id)->reconcile();
     }
-    if($req->sell){
-      if(count($order->buys) > 1)
-        return response()->json([ 'message' => 'Can\'t add more Buy on Multiple Sells' ], 400);
 
-      $order->sells()->sync([ $req->sell => $details ], false);
+    $order_detail_id = $order->$lead_type()->find($req->lead_id)->pivot->id;
 
-      $sell = SellOrder::find($req->sell)->reconcile();
+    // if($req->buy){
+    //   if(count($order->sells) > 1)
+    //     return response()->json([ 'message' => 'Can\'t add more Buy on Multiple Sells' ], 400);
 
-      $order_detail_id = $order->sells->find($req->sell)->pivot->id;
-    }
+    //   $order->buys()->sync([ $req->buy => $details ], false);
+
+    //   Lead::find($req->buy)->reconcile();
+
+    //   $order_detail_id = $order->buys()->find($req->buy)->pivot->id;
+    // }
+    // if($req->sell){
+    //   if(count($order->buys) > 1)
+    //     return response()->json([ 'message' => 'Can\'t add more Sell on Multiple Buys' ], 400);
+
+    //   $order->sells()->sync([ $req->sell => $details ], false);
+
+    //   Lead::find($req->sell)->reconcile();
+
+    //   $order_detail_id = $order->sells()->find($req->sell)->pivot->id;
+    // }
 
     // if notes is here, it's a negotiation
     // Add new log of the nagotiation

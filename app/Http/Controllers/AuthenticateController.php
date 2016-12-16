@@ -49,9 +49,11 @@ class AuthenticateController extends Controller
         }
         $user = Auth::user();
 
+        $status = 200; $error = 'ok';
+
         event(new Login($user, false));
         // if no errors are encountered we can return a JWT
-        return response()->json(compact('token', 'user', $user), 200);
+        return response()->json(compact('token', 'user', 'status', 'error'), 200);
     }
 
     public function signup(Request $request)

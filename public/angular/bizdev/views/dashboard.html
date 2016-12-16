@@ -1,0 +1,96 @@
+<section ng-controller="BizdevController" class="content">
+  <div class="col-lg-12">
+    <div class="box box-info">
+      <div class="box-header with-border">
+        <h3 class="box-title">Dashboard</h3>
+      </div>
+      <div class="box-body">
+
+        <div class="col-lg-3 col-sm-4">
+          <div class="small-box bg-red">
+            <div class="inner">
+              <h4>IUP</h4>
+              <p>20</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-building"></i>
+            </div>
+            <a ui-sref="bizdev.iup-history" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-sm-4">
+          <div class="small-box bg-aqua">
+            <div class="inner">
+              <h4>Rejected</h4>
+              <p>5</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-industry"></i>
+            </div>
+             <a ui-sref="" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-sm-4">
+          <div class="small-box bg-green">
+            <div class="inner">
+              <h4>Approve</h4>
+
+              <p>4</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-map"></i>
+            </div>
+            <a ui-sref="" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-sm-4">
+          <div class="small-box bg-yellow">
+            <div class="inner">
+              <h4>Pending</h4>
+
+              <p>4</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-line-chart"></i>
+            </div>
+            <a ui-sref="" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+
+         <div class="text-center">
+          <form class="form-group" ng-submit="search(searchType, keyword)">
+            <div class="input-group input-group-sm">
+              <input type="text" class="col-md-12 form-control" ng-model="keyword">
+              <span class="input-group-btn">
+                <button type="btn" type="submit" class="btn btn-info btn-flat">Search</button>
+              </span>
+            </div>
+
+            <div class="btn-group">
+              <label class="btn btn-sm btn-default" ng-model="searchType"
+                uib-btn-radio="'customer'" ng-click="search('customer')">
+                Rejected
+              </label>
+              <label class="btn btn-sm btn-default" ng-model="searchType"
+                uib-btn-radio="'supplier'" ng-click="search('supplier')">
+                Approve
+              </label>
+              <label class="btn btn-sm btn-default" ng-model="searchType"
+                uib-btn-radio="'vendor'" ng-click="search('vendor')">
+                Pending
+              </label>
+             
+            </div>
+          </form>
+          </div>
+
+      </div>
+    </div>
+  </div>      
+  
+
+
+</section>

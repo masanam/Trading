@@ -12,6 +12,7 @@
           <li ng-repeat="item in items">
             <a href="#" ng-click="$event.preventDefault(); selected.item = item">
               {{ item.seller.company_name || item.buyer.company_name }} ({{ item.city }}) <span ng-if="item.gcv_adb_min_diff<=150&&item.gcv_adb_max_diff<=150&&item.gcv_arb_min_diff<=150&&item.gcv_arb_max_diff<=150&&item.ncv_min_diff<=150&&item.ncv_max_diff<=150&&item.volume_diff<=item.volume*0.1" style="color:green;">recomended</span><br>
+              {{ item.company.company_name }} ({{ item.city }}) <span ng-if="item.gcv_adb_min_diff<=150&&item.gcv_adb_max_diff<=150&&item.gcv_arb_min_diff<=150&&item.gcv_arb_max_diff<=150&&item.ncv_min_diff<=150&&item.ncv_max_diff<=150&&item.volume_diff<=item.volume*0.1" style="color:green;">recomended</span><br>
               exp: {{ item.order_expired | date:'d-M-yy' }}<br>
               LayCan: {{ item.laycan_start | date:'d-M-yy' }} to {{ item.laycan_end | date:'d-M-yy' }}
             </a>
@@ -23,7 +24,7 @@
           <div class="col-sm-6 form-group" ng-init="selected.item.pivot.volume = selected.item.volume-selected.item.used[0].volume">
             <input type="number" ng-model="selected.item.pivot.volume" class="form-control" placeholder="Volume (MT)" required>
           </div>
-          <div class="col-sm-6 form-group" ng-init="selected.item.pivot.price = ( selected.item.max_price || selected.item.min_price )">
+          <div class="col-sm-6 form-group" ng-init="selected.item.pivot.price = ( selected.item.price )">
             <input type="number" ng-model="selected.item.pivot.price" class="form-control" placeholder="Price (USD)" required>
           </div>
         </div>
@@ -50,12 +51,12 @@
     <button class="btn btn-default hidden-xs pull-left" type="button" ng-click="cancel()">Cancel</button>
 
     <span ng-switch-when="buy">
-      <a class="btn btn-primary" type="button" ui-sref="sell-order.create" target="_blank">Create New Buy</a>
+      <a class="btn btn-primary" type="button" ui-sref="lead.create" target="_blank">Create New Buy</a>
       <button class="btn btn-primary" type="submit">Buy This</button>
     </span>
 
     <span ng-switch-default>
-      <a class="btn btn-primary" type="button" ui-sref="buy-order.create" target="_blank">Create New Sell</a>
+      <a class="btn btn-primary" type="button" ui-sref="lead.create" target="_blank">Create New Sell</a>
       <button class="btn btn-primary" type="submit">Sell This</button>
     </span>
   </div>

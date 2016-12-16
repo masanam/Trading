@@ -26,8 +26,12 @@ class PortController extends Controller
      */
     public function index(Request $req)
     {
-        $port = Port::get();
-        return response()->json($port, 200);
+        $limit = $req->limit | 10;
+
+        $port = Port::limit($limit);
+        if($req->q) $port->where('port_name', 'LIKE', '%' . $req->q . '%');
+
+        return response()->json($port->get(), 200);
     }
 
     /**
