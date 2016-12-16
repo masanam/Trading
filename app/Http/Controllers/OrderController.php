@@ -214,7 +214,7 @@ class OrderController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function show($id, Request $req)
+  public function show($id, Request $req = null)
   { 
     $order = Order::with('trader', 'users', 'sells', 'buys', 'buys.trader',
       'approvals', 'sells.trader', 'sells.company', 'buys.company', 'buys.concession', 'sells.factory')->find($id);
@@ -232,6 +232,7 @@ class OrderController extends Controller
     $order->averageSell(); 
     $order->averageBuy();
     
+    if (isset($req)) 
     // IF envelope is requested, get all necessary components
     if($req->envelope == "true"){
       $params = [
@@ -249,6 +250,7 @@ class OrderController extends Controller
         'index' => $index
       ];
     } else $json = $order;
+    else $json = $order;
 
     return response()->json($json, 200);;
   }
@@ -404,29 +406,42 @@ class OrderController extends Controller
     if(!$req->notes) $notes = 'Initial Deal';
     else $notes = $req->notes;
 
+    $lead_type = $req->lead_type;
+
     $this->authorize('update', $order);
-    if($req->buy){
+    if ($lead_type === 'buys') 
       if(count($order->sells) > 1)
         return response()->json([ 'message' => 'Can\'t add more Buy on Multiple Sells' ], 400);
-
-      $order->buys()->sync([ $req->buy => $details ], false);
-
-      Lead::find($req->buy)->reconcile();
-      $lead_staged = $order->buys()->with('Company','User','trader')->find($req->buy);
-
-      $order_detail_id = $order->buys()->find($req->buy)->pivot->id;
-    }
-    if($req->sell){
+    else if ($lead_type === 'sells') 
       if(count($order->buys) > 1)
         return response()->json([ 'message' => 'Can\'t add more Sell on Multiple Buys' ], 400);
 
-      $order->sells()->sync([ $req->sell => $details ], false);
+    $order->$lead_type()->sync([ $req->lead_id => $details ], false);
 
-      Lead::find($req->sell)->reconcile();
-      $lead_staged = $order->sells()->with('Company','User','trader')->find($req->sell);
+    Lead::find($req->lead_id)->reconcile();
 
-      $order_detail_id = $order->sells()->find($req->sell)->pivot->id;
-    }
+    $order_detail_id = $order->$lead_type()->find($req->lead_id)->pivot->id;
+
+    // if($req->buy){
+    //   if(count($order->sells) > 1)
+    //     return response()->json([ 'message' => 'Can\'t add more Buy on Multiple Sells' ], 400);
+
+    //   $order->buys()->sync([ $req->buy => $details ], false);
+
+    //   Lead::find($req->buy)->reconcile();
+
+    //   $order_detail_id = $order->buys()->find($req->buy)->pivot->id;
+    // }
+    // if($req->sell){
+    //   if(count($order->buys) > 1)
+    //     return response()->json([ 'message' => 'Can\'t add more Sell on Multiple Buys' ], 400);
+
+    //   $order->sells()->sync([ $req->sell => $details ], false);
+
+    //   Lead::find($req->sell)->reconcile();
+
+    //   $order_detail_id = $order->sells()->find($req->sell)->pivot->id;
+    // }
 
     // if notes is here, it's a negotiation
     // Add new log of the nagotiation
@@ -440,7 +455,7 @@ class OrderController extends Controller
       'user_id' => Auth::user()->id,
     ]);
     $negotiation->save();
-    return response()->json($lead_staged,200);
+    return $this->show($id);
   }
 
   public function unstage(Request $req, $id){

@@ -79,6 +79,7 @@ Route::group(['middleware' => ['cors']], function() {
     Route::resource('leads', 'LeadController', ['except' => [ 'create', 'edit' ]]);
 
     Route::put('orders/{id}/stage', 'OrderController@stage');
+    Route::put('orders/{id}/unstage', 'OrderController@unstage');
     Route::put('orders/{id}/approval', 'OrderController@approval');
     Route::resource('orders', 'OrderController', ['except' => [ 'create', 'edit' ]]);
 
