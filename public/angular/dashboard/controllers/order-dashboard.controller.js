@@ -14,7 +14,7 @@ angular.module('dashboard').controller('OrderDashboardController', ['$scope', 'I
     };
 
     $scope.funnel=function () {
-      var order_funnel = Order.get({ action:'funnel' }, function(res){
+      var order_funnel = Order.get({ funnel:true }, function(res){
         $scope.funnel=res;
         $scope.labels = ['Leads', 'Pending', 'Approve', 'Finalized'];
         $scope.series = ['Buy', 'Sell', 'Order'];
