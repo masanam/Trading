@@ -27,6 +27,7 @@ class CreateOrdersTable extends Migration
             $table->increments('id');
             $table->integer('order_id')->unsigned();
             $table->integer('user_id')->unsigned();
+            $table->string('approval_token')->index();
             $table->char('status', 1); // A = Approved ; R = Reject
             $table->timestamps();
 
