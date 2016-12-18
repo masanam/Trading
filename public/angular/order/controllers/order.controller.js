@@ -45,7 +45,7 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
       
       var modalInstance = $uibModal.open({
         windowClass: 'xl-modal',
-        templateUrl: './angular/order/views/order/_reason.modal.html',
+        templateUrl: './angular/order/views/_reason.modal.html',
         controller: 'OrderReasonModalController',
         scope: $scope,
         resolve: {
@@ -57,7 +57,7 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
     $scope.openReasonModal = function () {
       var modalInstance = $uibModal.open({
         windowClass: 'xl-modal',
-        templateUrl: './angular/order/views/order/_reason.modal.html',
+        templateUrl: './angular/order/views/_reason.modal.html',
         controller: 'OrderReasonModalController',
         scope: $scope,
       });
@@ -175,7 +175,7 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
     $scope.addCostModal = function () {
       var modalInstance = $uibModal.open({
         windowClass: 'xl-modal',
-        templateUrl: './angular/order/views/order/_add-cost.modal.html',
+        templateUrl: './angular/order/views/_add-cost.modal.html',
         controller: 'AddCostModalController',
         scope: $scope,
       });

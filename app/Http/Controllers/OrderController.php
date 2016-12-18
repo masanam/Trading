@@ -52,6 +52,44 @@ class OrderController extends Controller
     return $query->get();
   }
 
+  /*
+   * Instead of returning a list of order, get a funnel and number of total orders
+   */
+  private function funnel(){
+    $order = Order::select(DB::raw('count(*) as count, status'))
+      ->whereIn('status', ['p', 'a', 'f'])
+      ->groupBy('status')->get();
+
+    $lead = Lead::select(DB::raw('count(*) as count, lead_type'))
+      ->whereIn('order_status',['v','l'])
+      ->groupBy('lead_type');
+
+    $funnel = [
+      'pending' => 0,
+      'approved' => 0,
+      'finalized' => 0,
+      'lead-buy' => 0,
+      'lead-sell' => 0
+    ];
+
+    foreach($order as $o){
+      switch($o->status){
+        case 'p' : $funnel['pending'] = $o->count; break;
+        case 'a' : $funnel['approved'] = $o->count; break;
+        case 'f' : $funnel['finalized'] = $o->count; break;
+      }
+    }
+
+    foreach($lead as $l){
+      switch($l->lead_type){
+        case 'b' : $funnel['lead-buy'] = $l->count; break;
+        case 's' : $funnel['lead-sell'] = $l->count; break;
+      }
+    }
+
+    return response()->json($funnel,200);
+  }
+
   // private function send_approval_mail($order, $user_id){
   //   $user = User::findOrFail($user_id);
   //   Mail::to($user->email)->send(new ApprovalRequest($order));
@@ -104,6 +142,8 @@ class OrderController extends Controller
    */
   public function index(Request $req)
   {
+    if($req->funnel == true) return $this->funnel();
+
     DB::enableQueryLog();
     $orders = Order::with('trader', 'approvals');
 
@@ -166,14 +206,6 @@ class OrderController extends Controller
           'price' => $buy['pivot']['price'],
           'trading_term' => $buy['pivot']['trading_term'],
           'payment_term' => $buy['pivot']['payment_term'],
-          'insurance_cost' => $buy['additional']['insurance_cost'],
-          'interest_cost' => $buy['additional']['interest_cost'],
-          'surveyor_cost' => $buy['additional']['surveyor_cost'],
-          'others_cost' => $buy['additional']['others_cost'],
-          'pit_to_port' => $buy['additional']['pit_to_port'],
-          'transhipment' => $buy['additional']['transhipment'],
-          'freight_cost' => $buy['additional']['freight_cost'],
-          'port_to_factory' => $buy['additional']['port_to_factory'],
           'user_id' => Auth::user()->id,
         ]);
       }
@@ -192,14 +224,6 @@ class OrderController extends Controller
           'price' => $sell['pivot']['price'],
           'trading_term' => $sell['pivot']['trading_term'],
           'payment_term' => $sell['pivot']['payment_term'],
-          'insurance_cost' => $sell['additional']['insurance_cost'],
-          'interest_cost' => $sell['additional']['interest_cost'],
-          'surveyor_cost' => $sell['additional']['surveyor_cost'],
-          'others_cost' => $sell['additional']['others_cost'],
-          'pit_to_port' => $sell['additional']['pit_to_port'],
-          'transhipment' => $sell['additional']['transhipment'],
-          'freight_cost' => $sell['additional']['freight_cost'],
-          'port_to_factory' => $sell['additional']['port_to_factory'],
           'user_id' => Auth::user()->id,
         ]);
       }
@@ -353,30 +377,6 @@ class OrderController extends Controller
     }
 
     return $this->show($id);
-  }
-
-  public function funnel()
-  {
-    $get=Order::orderBy('status')->select('status')->where('status','!=','c')->where('status','!=','x')->where('status','!=','d')->get();
-    $getLeadsell=SellOrder::orderBy('order_status')->select('order_status')->where('order_status','=','v')->orWhere('order_status','=','l')->count();
-    $getLeadbuy=BuyOrder::orderBy('order_status')->select('order_status')->where('order_status','=','v')->orWhere('order_status','=','l')->count();
-    $pending=0;
-    $Finalized=0;
-    $approved=0;
-    $sum=['lead-sell'=>0,'lead-buy'=>0,'pending'=>0,'approved'=>0,'finalized'=>0];
-    foreach ($get as $count) {
-    if ($count->status=='p') {
-        $pending=$pending+1;
-      }
-      elseif ($count->status=='e') {
-        $approved=$approved+1;
-      }
-      elseif ($count->status=='e') {
-        $Finalized=$Finalized+1;
-      }
-    }
-    $sum=['lead-sell'=>$getLeadsell,'lead-buy'=>$getLeadbuy,'pending'=>$pending,'approved'=>$approved,'finalized'=>$Finalized];
-    return response()->json($sum,200);
   }
 
   /**

@@ -199,7 +199,7 @@ class LeadsTableSeeder extends Seeder
           2 => [ 'volume' => 1000, 'price' => 53000, 'trading_term' => 'FOB MV', 'payment_term' => 'TT' ] 
       ],
       'user' => [ 1 => [ 'role' => 'approver' ], 8 => [ 'role' => 'associated' ], 7 => [ 'role' => 'admin' ] ],
-      'approval' => [ 1 => [ 'status' => 'a' ], 2 => [ 'status' => 'a' ] ],
+      'approval' => [ 1 => [ 'status' => 'a', 'token' => 'aaa' ], 2 => [ 'status' => 'a', 'token' => 'bbb' ] ],
       'companies' => [ 1 => [ 'cost' => 3 ] ]
     ];
 

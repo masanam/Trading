@@ -26,8 +26,5 @@ angular.module('order').controller('CreateOrderController', ['$scope', '$state',
         $scope.error = err;
       });
     };
-
-
-    
   }
 ]);
