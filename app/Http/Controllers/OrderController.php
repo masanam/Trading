@@ -121,6 +121,8 @@ class OrderController extends Controller
 
   /**
    * Store a newly created resource in storage.
+   * Since the resource are creted in "draft" status
+   * this acts as a dumb door to simply add value
    *
    * @param  \Illuminate\Http\Request  $req
    * @return \Illuminate\Http\Response
@@ -132,46 +134,14 @@ class OrderController extends Controller
         'message' => 'Bad Request'
       ], 400);
     }
-    // return $req;
+    
+    // Check the availability of associated leads
+
+
     $order = new Order();
     $order->user_id = Auth::User()->id;
     $order->status = 'd';
     $order->save();
-
-    if(count($req->buys) > 0){
-      foreach($req->buys as $buy){
-        $order->buys()->attach([ $buy['id'] => $buy['pivot'] ]);
-        Lead::find($buy['id'])->reconcile();
-
-        OrderNegotiation::create([
-          'order_detail_id' => $buy['id'],
-          'notes' => 'Initial Deal',
-          'volume' => $buy['pivot']['volume'],
-          'price' => $buy['pivot']['price'],
-          'trading_term' => $buy['pivot']['trading_term'],
-          'payment_term' => $buy['pivot']['payment_term'],
-          'user_id' => Auth::user()->id,
-        ]);
-      }
-    }
-
-    if(count($req->sells) > 0) {
-      foreach($req->sells as $sell){
-        $order->sells()->attach([ $sell['id'] => $sell['pivot'] ]);
-        Lead::find($sell['id'])->reconcile();
-
-        // $order_detail = $order->orders->find($sell['id']);
-        OrderNegotiation::create([
-          'order_detail_id' => $sell['id'],
-          'notes' => 'Initial Deal',
-          'volume' => $sell['pivot']['volume'],
-          'price' => $sell['pivot']['price'],
-          'trading_term' => $sell['pivot']['trading_term'],
-          'payment_term' => $sell['pivot']['payment_term'],
-          'user_id' => Auth::user()->id,
-        ]);
-      }
-    }
 
     return response()->json($order, 200);
   }
@@ -261,8 +231,48 @@ class OrderController extends Controller
         $q->where('user_id', Auth::user()->manager_id);
       }])->find($id);
 
-      $this->add_user_to_order($order, Auth::user()->manager_id, $id, 'approver');
-      $this->add_approval_to_order($order, Auth::user()->manager_id, $id, 'p');
+      
+      if(count($req->buys) > 0){
+        foreach($req->buys as $buy){
+          $order->buys()->attach([ $buy['id'] => $buy['pivot'] ]);
+          Lead::find($buy['id'])->reconcile();
+
+          OrderNegotiation::create([
+            'order_detail_id' => $buy['id'],
+            'notes' => 'Initial Deal',
+            'volume' => $buy['pivot']['volume'],
+            'price' => $buy['pivot']['price'],
+            'trading_term' => $buy['pivot']['trading_term'],
+            'payment_term' => $buy['pivot']['payment_term'],
+            'user_id' => Auth::user()->id,
+          ]);
+        }
+      }
+
+      if(count($req->sells) > 0) {
+        foreach($req->sells as $sell){
+          $order->sells()->attach([ $sell['id'] => $sell['pivot'] ]);
+          Lead::find($sell['id'])->reconcile();
+
+          // $order_detail = $order->orders->find($sell['id']);
+          OrderNegotiation::create([
+            'order_detail_id' => $sell['id'],
+            'notes' => 'Initial Deal',
+            'volume' => $sell['pivot']['volume'],
+            'price' => $sell['pivot']['price'],
+            'trading_term' => $sell['pivot']['trading_term'],
+            'payment_term' => $sell['pivot']['payment_term'],
+            'user_id' => Auth::user()->id,
+          ]);
+        }
+      }
+
+      // add manager to approve this order
+      if($user->manager_id){
+        $order->requestApproval(User::find($user->manager_id));
+      } else {
+        $order->status = 'a'; $order->save();
+      }
     }
 
     return $this->show($id);
