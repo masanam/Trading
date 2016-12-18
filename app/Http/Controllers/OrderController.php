@@ -134,14 +134,47 @@ class OrderController extends Controller
         'message' => 'Bad Request'
       ], 400);
     }
-    
-    // Check the availability of associated leads
-
 
     $order = new Order();
     $order->user_id = Auth::User()->id;
     $order->status = 'd';
     $order->save();
+    
+    // Check the availability of associated leads
+    if(count($req->buys) > 0){
+      foreach($req->buys as $buy){
+        $order->buys()->attach([ $buy['id'] => $buy['pivot'] ]);
+        Lead::find($buy['id'])->reconcile();
+
+        OrderNegotiation::create([
+          'order_detail_id' => $buy['id'],
+          'notes' => 'Initial Deal',
+          'volume' => $buy['pivot']['volume'],
+          'price' => $buy['pivot']['price'],
+          'trading_term' => $buy['pivot']['trading_term'],
+          'payment_term' => $buy['pivot']['payment_term'],
+          'user_id' => Auth::user()->id,
+        ]);
+      }
+    }
+
+    if(count($req->sells) > 0) {
+      foreach($req->sells as $sell){
+        $order->sells()->attach([ $sell['id'] => $sell['pivot'] ]);
+        Lead::find($sell['id'])->reconcile();
+
+        // $order_detail = $order->orders->find($sell['id']);
+        OrderNegotiation::create([
+          'order_detail_id' => $sell['id'],
+          'notes' => 'Initial Deal',
+          'volume' => $sell['pivot']['volume'],
+          'price' => $sell['pivot']['price'],
+          'trading_term' => $sell['pivot']['trading_term'],
+          'payment_term' => $sell['pivot']['payment_term'],
+          'user_id' => Auth::user()->id,
+        ]);
+      }
+    }
 
     return response()->json($order, 200);
   }
@@ -231,7 +264,7 @@ class OrderController extends Controller
         $q->where('user_id', Auth::user()->manager_id);
       }])->find($id);
 
-      
+
       if(count($req->buys) > 0){
         foreach($req->buys as $buy){
           $order->buys()->attach([ $buy['id'] => $buy['pivot'] ]);
@@ -359,27 +392,6 @@ class OrderController extends Controller
     }
 
     $order_detail_id = $order->$lead_type()->find($req->lead_id)->pivot->id;
-
-    // if($req->buy){
-    //   if(count($order->sells) > 1)
-    //     return response()->json([ 'message' => 'Can\'t add more Buy on Multiple Sells' ], 400);
-
-    //   $order->buys()->sync([ $req->buy => $details ], false);
-
-    //   Lead::find($req->buy)->reconcile();
-
-    //   $order_detail_id = $order->buys()->find($req->buy)->pivot->id;
-    // }
-    // if($req->sell){
-    //   if(count($order->buys) > 1)
-    //     return response()->json([ 'message' => 'Can\'t add more Sell on Multiple Buys' ], 400);
-
-    //   $order->sells()->sync([ $req->sell => $details ], false);
-
-    //   Lead::find($req->sell)->reconcile();
-
-    //   $order_detail_id = $order->sells()->find($req->sell)->pivot->id;
-    // }
 
     // if notes is here, it's a negotiation
     // Add new log of the nagotiation

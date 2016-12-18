@@ -58,6 +58,9 @@ class OrderPolicy
    */
   public function update(User $user, Order $order)
   {
+    foreach($order->users as $orderUser){
+      if($orderUser->id === $user->id && $orderUser->role === 'admin') return true;
+    }
     return $user->id === $order->user_id;
   }
 
