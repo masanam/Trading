@@ -113,7 +113,7 @@ class AuthenticateController extends Controller
         $managers = $user->managers();
  
         // the token is valid and we have found the user via the sub claim
-        return response()->json(compact('user', $user, 'subordinates', $subordinates, 'managers', $managers), 200);
+        return response()->json(compact('user', 'subordinates', 'managers'), 200);
     }
 
     public function signing(Request $request)
