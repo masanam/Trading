@@ -106,7 +106,7 @@ class Lead extends Model
     }
 
     public function Concession() {
-        return $this->hasOne('App\Model\concession', 'id', 'concession_id');
+        return $this->hasOne('App\Model\Concession', 'id', 'concession_id');
     }
 
     public function Factory() {
