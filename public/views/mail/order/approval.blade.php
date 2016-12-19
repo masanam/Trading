@@ -274,7 +274,7 @@
                                   <tr>
                                     <td align="left">ORD-{{ str_pad($order->id, 4, '0', STR_PAD_LEFT) }}</td>
                                     <td align="center">{{ $order->trader->name }}</td>
-                                    <td align="right">{{ date('Y-m-d', strtotime($order->created_at)) }}</td>
+                                    <td align="right">{{ date('d M y', strtotime($order->created_at)) }}</td>
                                   </tr>
                                   <tr>
                                     <td colspan=3>
@@ -282,63 +282,47 @@
                                     </td>
                                   </tr>
                                   <tr align="center">  
-                                    <td style="font-size:36pt">
-                                      {{ $order->sells[0]->typical_quality }}
+                                    <td style="font-size:18pt">
+                                      <p>Typical Quality</p>
+                                      <p style="font-size:18pt">{{ $order->buys[0]->typical_quality }}</p>
                                     </td>
                                     <td>
-                                      <p style="font-size:12pt">GC NEWC</p>
-                                      <p style="font-size:24pt">$ 62.89</p>
+                                      <p>GC NEWC</p>
+                                      <p style="font-size:18pt">{{ $index_price }}</p>
                                     </td>
                                     <td>
-                                      <p style="font-size:12pt">LayCan Period</p>
-                                      {{ $order->sells[0]->ready_date }}<br>
-                                      {{ $order->sells[0]->expired_date }}
+                                      <p>LayCan Period</p>
+                                      <p style="font-size:10pt">{{ date('d M y', strtotime($order->laycan_start)) }}<br>
+                                      {{ date('d M y', strtotime($order->laycan_end)) }}</p>
                                     </td>
                                   </tr>
                                   <tr align="center">
                                     <td>
-                                      <p style="font-size:12pt">BUY</p>
-                                      <p style="font-size:24pt">$ {{ $order->sells[0]->pivot->price }}</p>
-                                      <small>{{ round(($order->sells[0]->pivot->price-62.89)*100 / (62.89), 2) }} %</small>
+                                      <p>BUY</p>
+                                      <p style="font-size:18pt">$ {{ number_format($order->average_buy_price, 2) }}</p>
+                                      <small>{{ round(($order->average_buy_price-$index_price)*100 / $index_price, 2) }} %</small>
                                     </td>
                                     <td>
-                                      <p style="font-size:12pt">MARGIN</p>
-                                      <p style="font-size:24pt">$ {{ $order->buys[0]->pivot->price - $order->sells[0]->pivot->price }}</p>
+                                      <p>MARGIN</p>
+                                      <p style="font-size:18pt">$ {{ $order->average_sell_price - $order->average_buy_price }}</p>
+                                      <small></small>
                                     </td>
                                     <td>
-                                      <p style="font-size:12pt">SELL</p>
-                                      <p style="font-size:24pt">$ {{ $order->buys[0]->pivot->price }}</p>
-                                      <small>{{ round(($order->buys[0]->pivot->price-62.89)*100 / (62.89), 2) }} %</small>
+                                      <p>SELL</p>
+                                      <p style="font-size:18pt">$ {{ number_format($order->average_sell_price, 2) }}</p>
+                                      <small>{{ round(($order->average_sell_price-$index_price)*100 / $index_price, 2) }} %</small>
                                     </td>
                                   </tr>
                                   
                                   <tr>
                                     <td colspan=3>
                                       <table border="0" cellpadding="0" cellspacing="0" class="table-bordered">
-                                        @foreach ($order->sells as $sell)
-                                        <tr>
-                                          <td class="btn-danger">BUY</td>
-
-                                            <p>{{ $sell->seller->company_name }}</p>
-                                            <small>{{ $sell->trader->name }}</small>
-                                          </td>
-
-                                          <td>
-                                            <p>{{ $sell->pivot->trading_term }}</p>
-                                            <p>{{ $sell->pivot->payment_term }}</p>
-                                          </td>
-
-                                          <td>$ {{ $sell->pivot->price }}</p>
-                                          <td>{{ $sell->pivot->volume }} mt</p>
-                                          </td>
-                                        </tr>
-                                        @endforeach
-
                                         @foreach ($order->buys as $buy)
                                         <tr>
-                                          <td class="btn-primary">SELL<td>
+                                          <td>BUY</td>
 
-                                            <p>{{ $buy->buyer->company_name }}</p>
+                                          <td>
+                                            <p>{{ $buy->company->company_name }}</p>
                                             <small>{{ $buy->trader->name }}</small>
                                           </td>
 
@@ -347,8 +331,28 @@
                                             <p>{{ $buy->pivot->payment_term }}</p>
                                           </td>
 
-                                          <td>$ {{ $buy->pivot->price }}</p>
+                                          <td>$ {{ number_format($buy->pivot->price, 2) }}</p>
                                           <td>{{ $buy->pivot->volume }} mt</p>
+                                          </td>
+                                        </tr>
+                                        @endforeach
+
+                                        @foreach ($order->sells as $sell)
+                                        <tr>
+                                          <td>SELL</td>
+
+                                          <td>
+                                            <p>{{ $sell->company->company_name }}</p>
+                                            <small>{{ $sell->trader->name }}</small>
+                                          </td>
+
+                                          <td>
+                                            <p>{{ $sell->pivot->trading_term }}</p>
+                                            <p>{{ $sell->pivot->payment_term }}</p>
+                                          </td>
+
+                                          <td>$ {{ number_format($sell->pivot->price, 2) }}</p>
+                                          <td>{{ $sell->pivot->volume }} mt</p>
                                           </td>
                                         </tr>
                                         @endforeach
@@ -364,12 +368,12 @@
                                   <tbody>
                                     <tr>
                                       <td class="btn btn-danger">
-                                        <a href="http://coaltrade.volantech.io/api/order/{{ $order->id }}/reject-now">
+                                        <a href="http://coaltrade.volantech.io/api/order/{{ $order->id }}/approval?status=r&approval_token={{ $approval_token }}">
                                           Reject
                                         </a>
                                       </td>
                                       <td class="btn btn-primary">
-                                        <a href="http://coaltrade.volantech.io/api/order/{{ $order->id }}/approve-now">
+                                        <a href="http://coaltrade.volantech.io/api/order/{{ $order->id }}/approval?status=a&approval_token={{ $approval_token }}">
                                           Approve
                                         </a>
                                       </td>

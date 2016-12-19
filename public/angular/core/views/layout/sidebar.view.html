@@ -37,7 +37,7 @@
 
       
       <li class="treeview">
-        <a ng-click="order = !order; openCollapse(2)">
+        <a ng-click="order = !order; openCollapse(2)" ui-sref="order.list">
           <i class="ion ion-magnet" style="font-size: 20px; margin-left: -3px;"></i>
           <span>Deal Room</span>
           <span class="pull-right"><i ng-class="order ? 'fa fa-caret-down' : 'fa fa-caret-up'"></i></span>
@@ -46,7 +46,6 @@
           <li><a ui-sref="order.list"><i class="ion ion-ios-paperplane"></i> Orders</a></li>
           <li><a ui-sref="lead.list({ lead_type: 'buy' })"><i class="ion ion-log-out"></i> Buy Leads</a></li>
           <li><a ui-sref="lead.list({ lead_type: 'sell' })"><i class="ion ion-log-in"></i> Sell Leads</a></li>
-          <!-- <li><a ui-sref="operation.index"><i class="ion ion-log-in"></i> Shipment Status</a></li> -->
         </ul>
       </li>
       <li class="treeview">

@@ -30,7 +30,7 @@ return [
     */
 
     // 'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
-    // 'host' => env('MAIL_HOST', 'mailtrap.io'),
+    'host' => env('MAIL_HOST', 'http://mailtrap.io'),
 
     /*
     |--------------------------------------------------------------------------
@@ -44,7 +44,7 @@ return [
     */
 
     // 'port' => env('MAIL_PORT', 587),
-    // 'port' => env('MAIL_PORT', 2525),
+    'port' => env('MAIL_PORT', 2525),
 
     /*
     |--------------------------------------------------------------------------
@@ -57,10 +57,10 @@ return [
     |
     */
 
-    // 'from' => [
-    //     'address' => 'noreply-coaltrade@volantech.io',
-    //     'name' => 'Coaltrade Volantech',
-    // ],
+    'from' => [
+        'address' => 'noreply@volantech.io',
+        'name' => 'Coaltrade Volantech',
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -73,7 +73,7 @@ return [
     |
     */
 
-    // 'encryption' => env('MAIL_ENCRYPTION', 'tls'),
+    'encryption' => env('MAIL_ENCRYPTION', 'tls'),
 
     /*
     |--------------------------------------------------------------------------
@@ -86,7 +86,7 @@ return [
     |
     */
 
-    // 'username' => env('MAIL_USERNAME'),
+    'username' => env('MAIL_USERNAME'),
 
     /*
     |--------------------------------------------------------------------------
@@ -99,7 +99,7 @@ return [
     |
     */
 
-    // 'password' => env('MAIL_PASSWORD'),
+    'password' => env('MAIL_PASSWORD'),
 
     /*
     |--------------------------------------------------------------------------
@@ -113,5 +113,6 @@ return [
     */
 
     'sendmail' => '/usr/sbin/sendmail -bs',
+    'pretend' => false
 
 ];

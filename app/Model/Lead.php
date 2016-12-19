@@ -106,7 +106,7 @@ class Lead extends Model
     }
 
     public function Concession() {
-        return $this->hasOne('App\Model\concession', 'id', 'concession_id');
+        return $this->hasOne('App\Model\Concession', 'id', 'concession_id');
     }
 
     public function Factory() {
@@ -122,12 +122,12 @@ class Lead extends Model
     }
 
     public function orders() {
-        return $this->belongsToMany(Order::class, 'order_details', 'lead_id', 'id')
+        return $this->belongsToMany(Order::class, 'order_details')
             ->withPivot('id', 'price', 'volume', 'payment_term', 'trading_term');
     }
 
     public function used() {
-        return $this->belongsToMany(Order::class, 'order_details', 'lead_id', 'id')
+        return $this->belongsToMany(Order::class, 'order_details')
             ->selectRaw('sum(order_details.volume) as volume')->whereIn('orders.status', ['a', 'f', 'p', 'd'])->groupBy('lead_id');
     }
 
