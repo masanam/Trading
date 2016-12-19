@@ -113,13 +113,21 @@ angular.module('lead').controller('LeadController', ['$scope', '$state', '$state
     };
 
     $scope.findRecommendations = function () {
-      $scope.leadRecommendations = Lead.query({ matching: 'leads', lead_id: $stateParams.id });
+      $scope.leadRecommendations = Lead.query({ matching: 'leads', lead_id: $stateParams.id, lead_type:$scope.lead.lead_type });
       $scope.productRecommendations = Lead.query({ matching: 'products', lead_id: $stateParams.id });
     };
 
     $scope.init = function () {
       $scope.lead = new Lead();
       if($stateParams.lead_type) $scope.lead.lead_type = $stateParams.lead_type;
+    };
+    
+    $scope.getUsed = function(lead){
+      $scope.used = 0;
+      for(var i = 0; i < lead.used.length; i++){
+        $scope.used += lead.used[i].volume;
+      }
+      return $scope.used;
     };
 
     $scope.create = function (lead) {

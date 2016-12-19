@@ -129,6 +129,8 @@ class OrderController extends Controller
    */
   public function store(Request $req)
   {
+
+    return response()->json($req, 200);
     if(!$req) {
       return response()->json([
         'message' => 'Bad Request'
