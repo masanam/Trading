@@ -498,4 +498,23 @@ class OrderController extends Controller
     return $this->show($id);
   }
 
+  public function createOrderAdditionalCost($id, Request $request) {
+    $order = Order::find($id);
+
+    $order->companies()->attach([$request->companyId => [
+      'cost' => $request->cost
+    ]]);
+
+    return response()->json($order, 200);
+  }
+
+  public function updateOrderAdditionalCost($id, Request $request) {
+    $order = Order::find($id);
+
+    $order->companies()->updateExistingPivot([$request->companyId => [
+      'cost' => $request->cost
+    ]]);
+
+    return response()->json($order, 200);
+  }
 }
