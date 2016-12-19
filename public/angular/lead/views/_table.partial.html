@@ -30,6 +30,7 @@
         <td>{{ lead.price | currency : $ : 2}}</td>
         <td>{{ lead.city }}</td>
         <td ng-switch="lead.order_status">
+         {{lead.order_status}}
           <span ng-switch-when="'l'">Lead</span>
           <span ng-switch-when="'v'">Verified</span>
           <span ng-switch-when="'s'">Staged</span>

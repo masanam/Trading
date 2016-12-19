@@ -129,13 +129,32 @@ class OrderController extends Controller
    */
   public function store(Request $req)
   {
+    // Check the availability of volume lead
+    if(count($req->buys) > 0){
+      foreach($req->buys as $buy){
+        $used = 0;
+        foreach($buy['used'] as $use){
+          $used += $use['volume'];
+        }
+        if ($buy['pivot']['volume'] > $used) return response()->json([ 'message' => 'Bad Request' ], 400);
+      }
+    }
+    if(count($req->sells) > 0){
+      foreach($req->sells as $sell){
+        $used = 0;
+        foreach($sell['used'] as $use){
+          $used += $use['volume'];
+        }
+        if ($sell['pivot']['volume'] > $used) return response()->json([ 'message' => 'Bad Request' ], 400);
+      }
+    }
 
-    return response()->json($req, 200);
     if(!$req) {
       return response()->json([
         'message' => 'Bad Request'
       ], 400);
     }
+
 
     $order = new Order();
     $order->user_id = Auth::User()->id;

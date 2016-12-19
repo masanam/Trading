@@ -35,9 +35,12 @@ class LeadController extends Controller
     // this is the basic loading query of all leads
     $query = Lead::with('Company','User','trader','used', 'Product');
 
+    // lowercasing lead_type
+    $lead_type = strtolower($req->lead_type);
+
     // choose lead type, for view lead recomend using right condition 
-    if ($req->lead_type === 'buy' || $req->lead_type === 's') $query->where('lead_type', 'b');
-    else if ($req->lead_type === 'sell' || $req->lead_type === 'b') $query->where('lead_type', 's');
+    if ($lead_type === 'buy' || $req->lead_type === 's') $query->where('lead_type', 'b');
+    else if ($lead_type === 'sell' || $req->lead_type === 'b') $query->where('lead_type', 's');
 
     // select statuses to include based on query category
     if($req->order) $status = ['v', 'l', 'p']; // only v, l, p IF this is a lead added to orders
