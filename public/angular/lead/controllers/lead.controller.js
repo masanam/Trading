@@ -132,6 +132,7 @@ angular.module('lead').controller('LeadController', ['$scope', '$state', '$state
 
     $scope.create = function (lead) {
       lead = new Lead(lead);
+      lead.company_id = $scope.selected.company.id;
 
       lead.$save(function(res) {
         $state.go('lead.location', { id: res.id });
