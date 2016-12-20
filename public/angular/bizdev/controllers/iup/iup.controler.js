@@ -36,7 +36,7 @@ angular.module('bizdev').controller('IupController', ['$scope', '$stateParams', 
       });
     };
 
-    $scope.declined = function () {
+    $scope.decline = function () {
       var modalInstance = $uibModal.open({
         animation: true,
         ariaLabelledBy: 'modal-title',
