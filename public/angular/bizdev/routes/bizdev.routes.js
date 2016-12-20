@@ -25,6 +25,14 @@ angular.module('bizdev').config(['$stateProvider',
       .state('bizdev.iup-view', {
         url: '/iup-view',
         templateUrl: '/angular/bizdev/views/iup/iup.view.html'
+      })
+      .state('bizdev.map-index', {
+        url: '/map-index',
+        templateUrl: '/angular/bizdev/views/map/index.view.html'
+      })
+      .state('bizdev.map-view', {
+        url: '/map-view',
+        templateUrl: '/angular/bizdev/views/map/map.view.html'
       });
       
   }
