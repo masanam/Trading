@@ -13,5 +13,17 @@ angular.module('bizdev').controller('IupController', ['$scope', '$stateParams', 
         controller: 'IupModalController'
       });
     };
+
+    $scope.addMap = function () {
+      var modalInstance = $uibModal.open({
+        animation: true,
+        ariaLabelledBy: 'modal-title',
+        ariaDescribedBy: 'modal-body',
+        templateUrl: './angular/bizdev/views/map/create.view.html',
+        windowClass: 'xl-modal',
+        controller: 'IupModalController'
+      });
+    };
+
   }
 ]);
