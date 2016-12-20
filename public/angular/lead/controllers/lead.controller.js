@@ -42,31 +42,31 @@ angular.module('lead').controller('LeadController', ['$scope', '$state', '$state
                 $scope.lead.typical_quality = newValue.typical_quality;
 
                 $scope.lead.gcv_adb_min = newValue.gcv_adb_min;
-                $scope.lead.gcv_adb_min = newValue.gcv_adb_max;
+                $scope.lead.gcv_adb_max = newValue.gcv_adb_max;
                 $scope.lead.gcv_arb_min = newValue.gcv_arb_min;
-                $scope.lead.gcv_arb_min = newValue.gcv_arb_max;
+                $scope.lead.gcv_arb_max = newValue.gcv_arb_max;
                 $scope.lead.ncv_min = newValue.ncv_min;
-                $scope.lead.ncv_min = newValue.ncv_max;
+                $scope.lead.ncv_max = newValue.ncv_max;
                 $scope.lead.tm_min = newValue.tm_min;
-                $scope.lead.tm_min = newValue.tm_max;
+                $scope.lead.tm_max = newValue.tm_max;
                 $scope.lead.im_min = newValue.im_min;
-                $scope.lead.im_min = newValue.im_max;
+                $scope.lead.im_max = newValue.im_max;
                 $scope.lead.vm_min = newValue.vm_min;
-                $scope.lead.vm_min = newValue.vm_max;
+                $scope.lead.vm_max = newValue.vm_max;
                 $scope.lead.ash_min = newValue.ash_min;
-                $scope.lead.ash_min = newValue.ash_max;
+                $scope.lead.ash_max = newValue.ash_max;
                 $scope.lead.fc_min = newValue.fc_min;
-                $scope.lead.fc_min = newValue.fc_max;
+                $scope.lead.fc_max = newValue.fc_max;
                 $scope.lead.ts_min = newValue.ts_min;
-                $scope.lead.ts_min = newValue.ts_max;
+                $scope.lead.ts_max = newValue.ts_max;
                 $scope.lead.hgi_min = newValue.hgi_min;
-                $scope.lead.hgi_min = newValue.hgi_max;
+                $scope.lead.hgi_max = newValue.hgi_max;
                 $scope.lead.size_min = newValue.size_min;
-                $scope.lead.size_min = newValue.size_max;
+                $scope.lead.size_max = newValue.size_max;
                 $scope.lead.fe2o3_min = newValue.fe2o3_min;
-                $scope.lead.fe2o3_min = newValue.fe2o3_max;
+                $scope.lead.fe2o3_max = newValue.fe2o3_max;
                 $scope.lead.aft_min = newValue.aft_min;
-                $scope.lead.aft_min = newValue.aft_max;
+                $scope.lead.aft_max = newValue.aft_max;
               }
               else $scope.lead.product_id = undefined;
             }
@@ -113,7 +113,7 @@ angular.module('lead').controller('LeadController', ['$scope', '$state', '$state
     };
 
     $scope.findRecommendations = function () {
-      $scope.leadRecommendations = Lead.query({ matching: 'leads', lead_id: $stateParams.id });
+      $scope.leadRecommendations = Lead.query({ matching: 'leads', lead_id: $stateParams.id, lead_type:$scope.lead.lead_type });
       $scope.productRecommendations = Lead.query({ matching: 'products', lead_id: $stateParams.id });
     };
 
@@ -121,9 +121,20 @@ angular.module('lead').controller('LeadController', ['$scope', '$state', '$state
       $scope.lead = new Lead();
       if($stateParams.lead_type) $scope.lead.lead_type = $stateParams.lead_type;
     };
+    
+    $scope.getUsed = function(lead){
+      $scope.used = 0;
+      if (lead.used) {
+        for(var i = 0; i < lead.used.length; i++){
+          $scope.used += lead.used[i].volume;
+        }
+      }
+      return $scope.used;
+    };
 
     $scope.create = function (lead) {
       lead = new Lead(lead);
+      lead.company_id = $scope.selected.company.id;
 
       lead.$save(function(res) {
         $state.go('lead.location', { id: res.id });
@@ -143,14 +154,26 @@ angular.module('lead').controller('LeadController', ['$scope', '$state', '$state
 
       if($state.current.name === 'lead.update') next = 'lead.location';
       else if($state.current.name === 'lead.location') next = 'lead.product';
-      else if($state.current.name === 'lead.product') next = 'lead.view';
+      else if($state.current.name === 'lead.product') {
+        next = 'lead.view';
+        if (!(
+          ($scope.lead.gcv_adb_bonus&&$scope.lead.gcv_adb_reject)||
+          ($scope.lead.gcv_arb_bonus&&$scope.lead.gcv_arb_reject)||
+          ($scope.lead.ncv_bonus&&$scope.lead.ncv_reject)
+          )) {
+          $scope.error = 'Please Fill Contract Bonus & Reject';
+          return;
+        }
+        else $scope.error = null;
+      }
       else next = 'lead.view';
 
       console.log($scope.lead.order_status);
       //number logics
       switch($scope.lead.order_status){
-        case 1 :
-        case 2 : $scope.lead.order_status++;
+        case 1 : $scope.lead.order_status++;
+          break;
+        case 2 : $scope.lead.order_status = 'l';
           break;
       }
       console.log($scope.lead.order_status);
