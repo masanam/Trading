@@ -8,7 +8,7 @@ angular.module('user').factory('Authentication', ['$http', '$auth',
     $auth.loginUrl = '/api/authenticate';
 
     auth.authenticate = function (callback){
-      /*if($auth.isAuthenticated() && !auth.user) {
+      if($auth.isAuthenticated() && !auth.user) {
         $http.get('/api/authenticate/user').success(function(res){
           auth.user = res.user;
           auth.subordinates = res.subordinates;
@@ -18,14 +18,13 @@ angular.module('user').factory('Authentication', ['$http', '$auth',
         }).error(function(err){
           if(callback) return callback(err, undefined);
         });
-      } else callback({ message: 'No user logged in!' }, undefined);*/
+      } else callback({ message: 'No user logged in!' }, undefined);
     };
 
     auth.login = function (credentials, callback){
       // Use Satellizer's $auth service to login
       $auth.login(credentials).then(function(data) {
         // If login is successful, redirect to the users state
-        console.log(data);
         auth.authenticate(callback);
       }).catch(function(err){
         return callback({ message: 'Wrong username/password combination!' }, undefined);
