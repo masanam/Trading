@@ -58,14 +58,13 @@ class AuthenticateController extends Controller
 
     public function signup(Request $request)
     {
-      $user = User::where(['email' => $request->email])->get();
-      //var_dump($user);
+      $user = User::where(['email' => $request->email])->count();
       if(!$request) {
           return response()->json([
               'message' => 'Bad Request'
           ], 400);
       }
-      else if(!empty($user)){
+      else if($user > 0){
           return response()->json([
               'message' => 'Your email is already registered. If you forgot your password, please send an enquiry to info@volantech.io'
           ], 400);

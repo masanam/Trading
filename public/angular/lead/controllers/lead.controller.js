@@ -145,7 +145,12 @@ angular.module('lead').controller('LeadController', ['$scope', '$state', '$state
       lead.order_status = status;
 
       lead.$update(function(res){
-        lead = res;
+        if(res.lead_type==='b') $scope.lead_type = 'buy';
+        else $scope.lead_type = 'sell';
+        if (status === 'x') {
+          $state.go('lead.list', { lead_type: $scope.lead_type });
+        }
+        else lead = res;
       });
     };
 

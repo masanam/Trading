@@ -183,7 +183,7 @@ class LeadController extends Controller
       ], 400);
     }
 
-    $lead = Lead::find($id);
+    $lead = Lead::with('Company','User','trader','used', 'Product')->find($id);
     $lead->user_id = Auth::User()->id;
     $lead->fill($req->all());
 

@@ -2,21 +2,181 @@
   <div class="col-lg-12">
     <div class="box box-info">
       <div class="box-header with-border row">
-        <h3 class="box-title col-lg-2">IUP MANAGEMENT</h3>
-        <div class="col-lg-6">
-          <p style="text-align: right;">Filter
-            <select class="col-lg-">
-              <option value="Negotiable Factor">Negotiable Factor: High to Low</option>
-              <option value="Negotiable Factor">Negotiable Factor: Low to High</option>
-              <option value="Rejected Factor">Rejected Factor: High to Low</option>
-              <option value="Rejected Factor">Rejected Factor: Low to High</option>
-            </select>
-          </p>
+        <h3 class="box-title col-xs-2">IUP Management</h3>
+        <div class="col-xs-5 col-xs-offset-1">
+          <div class="row">
+            <input type="text" name="search" placeholder="  Search" class="form-control" style="margin-bottom: 10px;">
+          </div>
+        </div>  
+        <div class="col-xs-1">
+          <button ng-click="advance = !advance" class="btn btn-default">Advance Search</button>
         </div>        
         <div class="col-lg-2 pull-right" style="padding-left: 87px;">
             <button class="btn btn-primary" ng-click="add()">Create New</button>
         </div>
       </div>
+
+      <div class="box-body row" ng-show="advance">
+        <div class="col-xs-4">
+          <div class="row">
+            <p class="col-xs-7">Expired IUP</p>
+            <div class="input-group col-xs-5" style="margin-bottom: 15px;">
+              <div class="btn-group">
+                <label class="btn btn-default" ng-model="source" uib-btn-radio="0">Yes</label>
+                <label class="btn btn-default" ng-model="source" uib-btn-radio="1">No</label>
+                <label class="btn btn-default" ng-model="source" uib-btn-radio="2">All</label>             
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <p class="col-xs-7">SK IUP overlap with other IUP</p>          
+            <div class="input-group col-xs-5" style="margin-bottom: 15px;">
+              <div class="btn-group">
+                <label class="btn btn-default" ng-model="source" uib-btn-radio="0">Yes</label>
+                <label class="btn btn-default" ng-model="source" uib-btn-radio="1">No</label>
+                <label class="btn btn-default" ng-model="source" uib-btn-radio="2">All</label>             
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <p class="col-xs-7">SK issued after Jan 12, 2009</p>          
+            <div class="input-group col-xs-5" style="margin-bottom: 15px;">
+              <div class="btn-group">
+                <label class="btn btn-default" ng-model="source" uib-btn-radio="0">Yes</label>
+                <label class="btn btn-default" ng-model="source" uib-btn-radio="1">No</label>
+                <label class="btn btn-default" ng-model="source" uib-btn-radio="2">All</label>             
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <p class="col-xs-7">SK issued by law troubled Bupati</p>          
+            <div class="input-group col-xs-5" style="margin-bottom: 15px;">
+              <div class="btn-group">
+                <label class="btn btn-default" ng-model="source" uib-btn-radio="0">Yes</label>
+                <label class="btn btn-default" ng-model="source" uib-btn-radio="1">No</label>
+                <label class="btn btn-default" ng-model="source" uib-btn-radio="2">All</label>             
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <p class="col-xs-7">Operating company</p>          
+            <div class="input-group col-xs-5" style="margin-bottom: 15px;">
+              <div class="btn-group">
+                <label class="btn btn-default" ng-model="source" uib-btn-radio="0">Yes</label>
+                <label class="btn btn-default" ng-model="source" uib-btn-radio="1">No</label>
+                <label class="btn btn-default" ng-model="source" uib-btn-radio="2">All</label>             
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xs-4">
+          <div class="row">
+            <p class="col-xs-7">Location close to factory owned by Sinarmas group</p>
+            <div class="input-group col-xs-5" style="margin-bottom: 15px;">
+              <div class="btn-group">
+                <label class="btn btn-default" ng-model="source" uib-btn-radio="0">Yes</label>
+                <label class="btn btn-default" ng-model="source" uib-btn-radio="1">No</label>
+                <label class="btn btn-default" ng-model="source" uib-btn-radio="2">All</label>             
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <p class="col-xs-7">Location close to other Sinarmas’s IUP</p>          
+            <div class="input-group col-xs-5" style="margin-bottom: 15px;">
+              <div class="btn-group">
+                <label class="btn btn-default" ng-model="source" uib-btn-radio="0">Yes</label>
+                <label class="btn btn-default" ng-model="source" uib-btn-radio="1">No</label>
+                <label class="btn btn-default" ng-model="source" uib-btn-radio="2">All</label>             
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <p class="col-xs-7">Close to road/river</p>          
+            <div class="input-group col-xs-5" style="margin-bottom: 15px;">
+              <div class="btn-group">
+                <label class="btn btn-default" ng-model="source" uib-btn-radio="0">Yes</label>
+                <label class="btn btn-default" ng-model="source" uib-btn-radio="1">No</label>
+                <label class="btn btn-default" ng-model="source" uib-btn-radio="2">All</label>             
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <p class="col-xs-7">Close to other operating IUP</p>          
+            <div class="input-group col-xs-5" style="margin-bottom: 15px;">
+              <div class="btn-group">
+                <label class="btn btn-default" ng-model="source" uib-btn-radio="0">Yes</label>
+                <label class="btn btn-default" ng-model="source" uib-btn-radio="1">No</label>
+                <label class="btn btn-default" ng-model="source" uib-btn-radio="2">All</label>             
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <p class="col-xs-7">No coal bearing formation</p>          
+            <div class="input-group col-xs-5" style="margin-bottom: 15px;">
+              <div class="btn-group">
+                <label class="btn btn-default" ng-model="source" uib-btn-radio="0">Yes</label>
+                <label class="btn btn-default" ng-model="source" uib-btn-radio="1">No</label>
+                <label class="btn btn-default" ng-model="source" uib-btn-radio="2">All</label>             
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xs-4">  
+          <div class="row">
+            <p class="col-xs-7">IUP Located in a no mining zone</p>          
+            <div class="input-group col-xs-5" style="margin-bottom: 15px;">
+              <div class="btn-group">
+                <label class="btn btn-default" ng-model="source" uib-btn-radio="0">Yes</label>
+                <label class="btn btn-default" ng-model="source" uib-btn-radio="1">No</label>
+                <label class="btn btn-default" ng-model="source" uib-btn-radio="2">All</label>             
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <p class="col-xs-7">IUP located in a settlement area</p>          
+            <div class="input-group col-xs-5" style="margin-bottom: 15px;">
+              <div class="btn-group">
+                <label class="btn btn-default" ng-model="source" uib-btn-radio="0">Yes</label>
+                <label class="btn btn-default" ng-model="source" uib-btn-radio="1">No</label>
+                <label class="btn btn-default" ng-model="source" uib-btn-radio="2">All</label>             
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <p class="col-xs-7">IUP located in a palm plantation</p>          
+            <div class="input-group col-xs-5" style="margin-bottom: 15px;">
+              <div class="btn-group">
+                <label class="btn btn-default" ng-model="source" uib-btn-radio="0">Yes</label>
+                <label class="btn btn-default" ng-model="source" uib-btn-radio="1">No</label>
+                <label class="btn btn-default" ng-model="source" uib-btn-radio="2">All</label>             
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <p class="col-xs-7">IUP located in farming zone</p>          
+            <div class="input-group col-xs-5" style="margin-bottom: 15px;">
+              <div class="btn-group">
+                <label class="btn btn-default" ng-model="source" uib-btn-radio="0">Yes</label>
+                <label class="btn btn-default" ng-model="source" uib-btn-radio="1">No</label>
+                <label class="btn btn-default" ng-model="source" uib-btn-radio="2">All</label>             
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <p class="col-xs-7">IUP overlay with Sinarmas Forestry/palm</p>          
+            <div class="input-group col-xs-5" style="margin-bottom: 15px;">
+              <div class="btn-group">
+                <label class="btn btn-default" ng-model="source" uib-btn-radio="0">Yes</label>
+                <label class="btn btn-default" ng-model="source" uib-btn-radio="1">No</label>
+                <label class="btn btn-default" ng-model="source" uib-btn-radio="2">All</label>             
+              </div>
+            </div>
+          </div>            
+        </div>
+      </div>
+
       <div class="box-body">
        
        <div class="table-responsive">
