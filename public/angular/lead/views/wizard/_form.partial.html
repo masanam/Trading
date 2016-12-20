@@ -3,14 +3,14 @@
     <label>Asking Price : </label>
     <div class="input-group">
       <span class="input-group-addon">US$</span>
-      <input type="text" class="form-control" ng-model="lead.price">
+      <input type="number" class="form-control" ng-model="lead.price" required>
     </div>
   </div>
 
   <div class="col-lg-3">
     <label>Volume : </label>
     <div class="input-group">
-      <input type="text" class="form-control" ng-model="lead.volume">
+      <input type="number" class="form-control" ng-model="lead.volume" required>
       <span class="input-group-addon">Metric Tons</span>
     </div>
   </div>

@@ -86,9 +86,10 @@ class Lead extends Model
         'price',
         'trading_term',
         'trading_term_detail',
-        'payment_terms',
+        'payment_term',
+        'payment_term_detail',
         'commercial_term',
-        'penalty_desc',
+        'penalty',
         
         'progress_status',
     ];
