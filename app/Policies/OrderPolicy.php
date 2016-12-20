@@ -58,7 +58,24 @@ class OrderPolicy
    */
   public function update(User $user, Order $order)
   {
+    foreach($order->users as $orderUser){
+      if($orderUser->id === $user->id && $orderUser->role === 'admin') return true;
+    }
     return $user->id === $order->user_id;
+  }
+
+  /**
+   * Determine whether the user can approve/reject the order.
+   *
+   * @param  App\User  $user
+   * @param  App\Order  $order
+   * @return mixed
+   */
+  public function approve(User $user, Order $order){
+    foreach($order->approvals as $orderUser){
+      if($orderUser->id === $user->id) return true;
+    }
+    return false;
   }
 
   /**

@@ -1,9 +1,19 @@
 <section ng-controller="IupController" class="content">
   <div class="col-lg-12">
     <div class="box box-info">
-      <div class="box-header with-border">
-        <h3 class="box-title">Iup Management</h3>
-         <div class="pull-right">
+      <div class="box-header with-border row">
+        <h3 class="box-title col-lg-2">IUP MANAGEMENT</h3>
+        <div class="col-lg-6">
+          <p style="text-align: right;">Filter
+            <select class="col-lg-">
+              <option value="Negotiable Factor">Negotiable Factor: High to Low</option>
+              <option value="Negotiable Factor">Negotiable Factor: Low to High</option>
+              <option value="Rejected Factor">Rejected Factor: High to Low</option>
+              <option value="Rejected Factor">Rejected Factor: Low to High</option>
+            </select>
+          </p>
+        </div>        
+        <div class="col-lg-2 pull-right" style="padding-left: 87px;">
             <button class="btn btn-primary" ng-click="add()">Create New</button>
         </div>
       </div>
@@ -17,6 +27,8 @@
                 <th>Source</th>
                 <th>Contact</th>
                 <th>Type License</th>
+                <th>Negotiable Factor</th>
+                <th>Rejected Factor</th>
                 <th>Status</th>
                 <th>Check By</th>
                 <th></th>
@@ -28,11 +40,69 @@
               <td>Other</td>
               <td>Budi Suseno</td>
               <td>XPL</td>
+              <td>High</td>
+              <td>High</td>
               <td>Approve</td>
               <td>17 Jan 2010 | Robby </td>
               <td>
-              <a ><i class="glyphicon glyphicon-eye-open"></i></a>
-              <a ng-click="add()"><i class="glyphicon glyphicon-pencil"></i></a>
+                <a ui-sref="bizdev.iup-view"><i class="glyphicon glyphicon-eye-open"></i></a>
+                <a ng-click="add()"><i class="glyphicon glyphicon-pencil"></i></a>
+              </td>
+            </tr>
+            <tr>
+              <td>PT.ARINI</td>
+              <td>Other</td>
+              <td>Budi Suseno</td>
+              <td>XPL</td>
+              <td>Medium</td>
+              <td>Medium</td>
+              <td>Approve</td>
+              <td>12 Jan 2012 | Robby </td>
+              <td>
+                <a ui-sref="bizdev.iup-view"><i class="glyphicon glyphicon-eye-open"></i></a>
+                <a ng-click="add()"><i class="glyphicon glyphicon-pencil"></i></a>
+              </td>
+            </tr>
+            <tr>
+              <td>PT.ARINI</td>
+              <td>Other</td>
+              <td>Budi Suseno</td>
+              <td>XPL</td>
+              <td>Medium</td>
+              <td>Low</td>
+              <td>Declined</td>
+              <td>17 Jan 2010 | Robby </td>
+              <td>
+                <a ui-sref="bizdev.iup-view"><i class="glyphicon glyphicon-eye-open"></i></a>
+                <a ng-click="add()"><i class="glyphicon glyphicon-pencil"></i></a>
+              </td>
+            </tr>
+            <tr>
+              <td>PT.ARINI</td>
+              <td>Other</td>
+              <td>Budi Suseno</td>
+              <td>XPL</td>
+              <td>Low</td>
+              <td>Low</td>
+              <td>Pending</td>
+              <td>20 Jan 2013 | Robby </td>
+              <td>
+                <a ui-sref="bizdev.iup-view"><i class="glyphicon glyphicon-eye-open"></i></a>
+                <a ng-click="add()"><i class="glyphicon glyphicon-pencil"></i></a>
+              </td>
+            </tr>
+            <tr>
+              <td>PT.ARINI</td>
+              <td>Other</td>
+              <td>Budi Suseno</td>
+              <td>XPL</td>
+              <td>Low</td>
+              <td>Low</td>
+              <td>Approve</td>
+              <td>13 Jan 2012 | Robby </td>
+              <td>
+                <a ui-sref="bizdev.iup-view"><i class="glyphicon glyphicon-eye-open"></i></a>
+                <a ng-click="add()"><i class="glyphicon glyphicon-pencil"></i></a>
               </td>
             </tr>
           </tbody>
