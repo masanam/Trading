@@ -24,6 +24,9 @@
         <h3 class="box-title">Fill Product Details</h3>
       </div>
       <div class="box-body">
+        <div class="form-group">
+          <label ng-show="error" class="alert bg-red" style="width:100%">{{error}}</label>
+        </div>
         <div class="select-box" ng-init="find()">
           <label for="id">Name of Product :</label>
           
