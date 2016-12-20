@@ -2,16 +2,6 @@
 
 angular.module('lead').controller('LeadCompanyController', ['$scope', '$stateParams', '$uibModal', 'Company', 'Lead',
   function ($scope, $stateParams, $uibModal, Company, Lead) {
-    $scope.selected = {};
-
-    $scope.$watch('selected.company', function (newValue, oldValue) {
-      if(newValue){
-        $scope.lead.company_id = newValue.id;
-        if(!$scope.lead.trading_term) $scope.lead.trading_term = newValue.preferred_trading_term;
-        if(!$scope.lead.payment_term) $scope.lead.payment_term = newValue.preferred_payment_term;
-      } else $scope.lead.company_id = undefined;
-    });
-
     //Init select companies
     $scope.find = function(keyword, type) {
       if(!type){

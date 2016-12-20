@@ -16,7 +16,7 @@ class LeadsTableSeeder extends Seeder
   public function run()
   {
     Lead::create([
-      'user_id' => 6,
+      'user_id' => 3,
       'company_id' => 3,
       'order_date' => '2016-11-16',
       'order_expired' => '2016-11-30',
@@ -104,7 +104,7 @@ class LeadsTableSeeder extends Seeder
     ]);
 
     Lead::create([
-      'user_id' => 7,
+      'user_id' => 3,
       'company_id' => 2,
       'order_date' => '2016-11-16',
       'order_expired' => '2016-11-25',
@@ -193,13 +193,13 @@ class LeadsTableSeeder extends Seeder
 
 
     $object = [
-      'order' => [ 'id' => 1, 'user_id' => 7, 'status' => 'p', ],
+      'order' => [ 'id' => 1, 'user_id' => 3, 'status' => 'p', ],
       'leads' => [
           1 => [ 'volume' => 500, 'price' => 25000, 'trading_term' => 'FOB MV', 'payment_term' => 'TT' ],
           2 => [ 'volume' => 1000, 'price' => 53000, 'trading_term' => 'FOB MV', 'payment_term' => 'TT' ] 
       ],
-      'user' => [ 1 => [ 'role' => 'approver' ], 8 => [ 'role' => 'associated' ], 7 => [ 'role' => 'admin' ] ],
-      'approval' => [ 1 => [ 'status' => 'a' ], 2 => [ 'status' => 'a' ] ],
+      'user' => [ 1 => [ 'role' => 'approver' ], 2 => [ 'role' => 'associated' ], 3 => [ 'role' => 'admin' ] ],
+      'approval' => [ 1 => [ 'status' => 'a', 'approval_token' => 'aaa' ], 2 => [ 'status' => 'a', 'approval_token' => 'bbb' ] ],
       'companies' => [ 1 => [ 'cost' => 3 ] ]
     ];
 
@@ -211,7 +211,7 @@ class LeadsTableSeeder extends Seeder
 
     OrderNegotiation::create([
       'order_detail_id' => 1,
-      'user_id' => 1,
+      'user_id' => 3,
       'volume' => 500,
       'price' => 50,
       'trading_term' => 'FOB MV',
@@ -220,7 +220,7 @@ class LeadsTableSeeder extends Seeder
     ]);
     OrderNegotiation::create([
       'order_detail_id' => 1,
-      'user_id' => 1,
+      'user_id' => 3,
       'volume' => 500,
       'price' => 49,
       'trading_term' => 'FOB MV',

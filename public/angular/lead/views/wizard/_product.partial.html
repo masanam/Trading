@@ -1,0 +1,266 @@
+<div class="form-group">
+  <label for="term">Product Name :</label>
+  <input type="text" class="form-control" id="product_name" nama="product_name" ng-model="lead.product_name" required>
+</div>
+<div class="form-group">
+  <label for="term">Typical Quality :</label>
+  <input type="text" class="form-control" id="typical_quality" nama="typical_quality" ng-model="lead.typical_quality" required>
+</div>
+<div class="form-group">
+  <h2>Coal Quality</h2>
+  <div class="table-responsive">
+  <table class="table table-striped">
+    <tr align="center">
+      <th>
+        Characteristics
+      </th>
+      <th style="min-width:120px">
+        Min
+      </th>
+      <th style="min-width:120px">
+        Max
+      </th>
+      <th style="min-width:120px">
+        Bonus
+      </th>
+      <th style="min-width:120px">
+        Reject
+      </th>
+    </tr>
+    <tr>
+      <td>
+        Gross Caloric ADB
+      </td>
+      <td>
+        <input type="number" class="form-control" placeholder="kcal" ng-model="lead.gcv_adb_min">
+      </td>
+      <td>
+        <input type="number" class="form-control" placeholder="kcal" ng-model="lead.gcv_adb_max">
+      </td>
+      <td>
+        <input type="text" class="form-control" placeholder="Ex : < 5500" ng-model="lead.gcv_adb_reject">
+      </td>
+      <td>
+        <input type="text" class="form-control" placeholder="Ex : > 5700" ng-model="lead.gcv_adb_bonus">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Gross Caloric ARB
+      </td>
+      <td>
+        <input type="number" class="form-control" placeholder="kcal" ng-model="lead.gcv_arb_min">
+      </td>
+      <td>
+        <input type="number" class="form-control" placeholder="kcal" ng-model="lead.gcv_arb_max">
+      </td>
+      <td>
+        <input type="text" class="form-control" placeholder="Ex : > 5700" ng-model="lead.gcv_arb_bonus">
+      </td>
+
+      <td>
+        <input type="text" class="form-control" placeholder="Ex : < 5500" ng-model="lead.gcv_arb_reject">
+      </td>
+      
+    </tr>
+    <tr>
+      <td>
+        Nett Caloric Value ARB
+      </td>
+      <td>
+        <input type="number" class="form-control" placeholder="kcal" ng-model="lead.ncv_min">
+      </td>
+      <td>
+        <input type="number" class="form-control" placeholder="kcal" ng-model="lead.ncv_max">
+      </td>
+      <td>
+        <input type="text" class="form-control" placeholder="Ex : > 5700" ng-model="lead.ncv_bonus">
+      </td>
+      <td>
+        <input type="text" class="form-control" placeholder="Ex : < 5500" ng-model="lead.ncv_reject">
+      </td>
+      
+    </tr>
+    <tr>
+      <td>
+        Total Moisture (ARB)
+      </td>
+      <td>
+        <input type="number" step="any" class="form-control" placeholder="%" ng-model="lead.tm_min">
+      </td>
+      <td>
+        <input type="number" step="any" class="form-control" placeholder="%" ng-model="lead.tm_max">
+      </td>
+      <td>
+        <input type="text" class="form-control" placeholder="Ex : > 15%" ng-model="lead.tm_bonus">
+      </td>
+
+      <td>
+        <input type="text" class="form-control" placeholder="Ex : < 5%" ng-model="lead.tm_reject">
+      </td>
+      
+    </tr>
+    <tr>
+      <td>
+        Inherent Moisture (ADB)
+      </td>
+      <td>
+        <input type="number" step="any" class="form-control" placeholder="%" ng-model="lead.im_min">
+      </td>
+      <td>
+        <input type="number" step="any" class="form-control" placeholder="%" ng-model="lead.im_max">
+      </td>
+      <td>
+        <input type="text" class="form-control" placeholder="Ex : > 15%" ng-model="lead.im_bonus">
+      </td>
+      <td>
+        <input type="text" class="form-control" placeholder="Ex : < 5%" ng-model="lead.im_reject">
+      </td>
+    
+    </tr>
+    <tr>
+      <td>
+        Volatile Matter (ADB)
+      </td>
+      <td>
+        <input type="number" step="any" class="form-control" placeholder="%" ng-model="lead.vm_min">
+      </td>
+      <td>
+        <input type="number" step="any" class="form-control" placeholder="%" ng-model="lead.vm_max">
+      </td>
+      <td>
+        <input type="text" class="form-control" placeholder="Ex : > 15%" ng-model="lead.vm_bonus">
+      </td>
+
+      <td>
+        <input type="text" class="form-control" placeholder="Ex : < 5%" ng-model="lead.vm_reject">
+      </td>
+      
+    </tr>
+    <tr>
+      <td>
+        Ash (ADB)
+      </td>
+      <td>
+        <input type="number" step="any" class="form-control" placeholder="%" ng-model="lead.ash_min">
+      </td>
+      <td>
+        <input type="number" step="any" class="form-control" placeholder="%" ng-model="lead.ash_max">
+      </td>
+      <td>
+        <input type="text" class="form-control" placeholder="Ex : > 15%" ng-model="lead.ash_bonus">
+      </td>
+      <td>
+        <input type="text" class="form-control" placeholder="Ex : < 5%" ng-model="lead.ash_reject">
+      </td>
+      
+    </tr>
+    <tr>
+      <td>
+        Fixed Carbon (ADB)
+      </td>
+      <td>
+        <input type="number" step="any" class="form-control" placeholder="%" ng-model="lead.fc_min">
+      </td>
+      <td>
+        <input type="number" step="any" class="form-control" placeholder="%" ng-model="lead.fc_max">
+      </td>
+      <td>
+        <input type="text" class="form-control" placeholder="Ex : > 15%" ng-model="lead.fc_bonus">
+      </td>
+      <td>
+        <input type="text" class="form-control" placeholder="Ex : < 5%" ng-model="lead.fc_reject">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Total Sulphur (ADB)
+      </td>
+      <td>
+        <input type="number" step="any" class="form-control" placeholder="%" ng-model="lead.ts_min">
+      </td>
+      <td>
+        <input type="number" step="any" class="form-control" placeholder="%" ng-model="lead.ts_max">
+      </td>
+      <td>
+        <input type="text" class="form-control" placeholder="Ex : > 15%" ng-model="lead.ts_bonus">
+      </td>
+      <td>
+        <input type="text" class="form-control" placeholder="Ex : < 5%" ng-model="lead.ts_reject">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        HGI
+      </td>
+      <td>
+        <input type="number" step="any" class="form-control" placeholder="" ng-model="lead.hgi_min">
+      </td>
+      <td>
+        <input type="number" step="any" class="form-control" placeholder="" ng-model="lead.hgi_max">
+      </td>
+      <td>
+        <input type="text" class="form-control" placeholder="Ex : > 15" ng-model="lead.hgi_bonus">
+      </td>
+      <td>
+        <input type="text" class="form-control" placeholder="Ex : < 5" ng-model="lead.hgi_reject">
+      </td>
+      
+    </tr>
+    <tr>
+      <td>
+        SIZE (0-50mm)
+      </td>
+      <td>
+        <input type="number" step="any" class="form-control" placeholder="%" ng-model="lead.size_min">
+      </td>
+      <td>
+        <input type="number" step="any" class="form-control" placeholder="%" ng-model="lead.size_max">
+      </td>
+      <td>
+        <input type="text" class="form-control" placeholder="Ex : > 15%" ng-model="lead.size_bonus">
+      </td>
+      <td>
+        <input type="text" class="form-control" placeholder="Ex : < 5%" ng-model="lead.size_reject">
+      </td>
+      
+    </tr>
+    <tr>
+      <td>
+        Fe2o3
+      </td>
+      <td>
+        <input type="number" step="any" class="form-control" placeholder="%" ng-model="lead.fe2o3_min">
+      </td>
+      <td>
+        <input type="number" step="any" class="form-control" placeholder="%" ng-model="lead.fe2o3_max">
+      </td>
+      <td>
+        <input type="text" class="form-control" placeholder="Ex : > 15%" ng-model="lead.fe2o3_bonus">
+      </td>
+      <td>
+        <input type="text" class="form-control" placeholder="Ex : < 5%" ng-model="lead.fe2o3_reject">
+      </td>
+      
+    </tr>
+    <tr>
+      <td>
+        AFT
+      </td>
+      <td>
+        <input type="number" step="any" class="form-control" placeholder="&#176" ng-model="lead.aft_min">
+      </td>
+      <td>
+        <input type="number" step="any" class="form-control" placeholder="&#176" ng-model="lead.aft_max">
+      </td>
+      <td>
+        <input type="text" class="form-control" placeholder="Ex : > 15&#176" ng-model="lead.aft_bonus">
+      </td>
+      <td>
+        <input type="text" class="form-control" placeholder="Ex : < 5&#176" ng-model="lead.aft_reject">
+      </td>
+      
+    </tr>
+  </table>
+  </div>
+</div>

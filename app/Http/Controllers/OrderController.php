@@ -4,40 +4,29 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
 
 use App\Model\User;
-use App\Model\BuyOrder;
-use App\Model\SellOrder;
-use App\Model\OrderUser;
 use App\Model\Lead;
 use App\Model\Order;
 use App\Model\IndexPrice;
 use App\Model\Index;
-use App\Model\OrderApproval;
 use App\Model\OrderNegotiation;
-use App\Mail\ApprovalRequest;
 
+use Tymon\JWTAuth\Facades\JWTAuth;
 use Auth;
 
 class OrderController extends Controller
 {
   public function __construct(Order $order)
   {
-    $this->middleware('jwt.auth', [ 'except' => ['approveNow', 'rejectNow'] ]);
+    $this->middleware('jwt.auth', [ 'except' => 'approval' ]);
     $this->order = $order;
   }
-
-  // private function add_user_to_order($order = NULL, $user_id = '', $order_id='', $role=''){
-  //   if($order->users->count() == 0){
-  //     $order_user = new OrderUser();
-  //     $order_user->order_id = $order_id;
-  //     $order_user->user_id = $user_id;
-  //     $order_user->role = $role;
-  //     $order_user->save();
-  //   }
-  // }
   
+  /*
+   *  This is to display the indexPrice inside the orders when loaded for mobile apps
+   */
+
   private function indexPrice () {
     $query = DB::table('index_price AS ip1')
       ->select('index.id', 'index_provider', 'index_name', 'ip1.date', 'ip1.price')
@@ -52,50 +41,43 @@ class OrderController extends Controller
     return $query->get();
   }
 
-  // private function send_approval_mail($order, $user_id){
-  //   $user = User::findOrFail($user_id);
-  //   Mail::to($user->email)->send(new ApprovalRequest($order));
-  // }
+  /*
+   * Instead of returning a list of order, get a funnel and number of total orders
+   */
+  private function funnel(){
+    $order = Order::select(DB::raw('count(*) as count, status'))
+      ->whereIn('status', ['p', 'a', 'f'])
+      ->groupBy('status')->get();
 
-  // private function add_approval_to_order($order = NULL, $user_id = '', $order_id='', $status=''){
-  //   //var_dump($order->approvals->count());
-  //   if($order->approvals->count() > 0){
-  //     $order_approval = OrderApproval::where('user_id', $user_id)->where('order_id', $order_id)->first();
-  //     $order_approval->status = $status;
-  //     $order_approval->save();
-      
-  //     $this->send_approval_mail($order, $user_id);
-  //   }else{
-  //     $order_approval = new OrderApproval();
-  //     $order_approval->order_id = $order_id;
-  //     $order_approval->user_id = $user_id;
-  //     $order_approval->status = $status;
-  //     $order_approval->save();
+    $lead = Lead::select(DB::raw('count(*) as count, lead_type'))
+      ->whereIn('order_status',['v','l'])
+      ->groupBy('lead_type');
 
-  //     $this->send_approval_mail($order, $user_id);
-  //   }
-  // }
+    $funnel = [
+      'pending' => 0,
+      'approved' => 0,
+      'finalized' => 0,
+      'lead-buy' => 0,
+      'lead-sell' => 0
+    ];
 
-  // public function testMail($id){
-  //   $order = Order::findOrFail($id);
-  //   $this->send_approval_mail($order, 4);
+    foreach($order as $o){
+      switch($o->status){
+        case 'p' : $funnel['pending'] = $o->count; break;
+        case 'a' : $funnel['approved'] = $o->count; break;
+        case 'f' : $funnel['finalized'] = $o->count; break;
+      }
+    }
 
-  //   return response()->json([ 'message' => 'Sent!' ], 200);
-  // }
+    foreach($lead as $l){
+      switch($l->lead_type){
+        case 'b' : $funnel['lead-buy'] = $l->count; break;
+        case 's' : $funnel['lead-sell'] = $l->count; break;
+      }
+    }
 
-  // public function approveNow($id){
-  //   $order = Order::findOrFail($id);
-  //   $order->approvals()->sync([1 => [ 'status' => 'a' ]], false);
-
-  //   return 'You Have Succesfuly Approved this Order';
-  // }
-
-  // public function rejectNow($id){
-  //   $order = Order::findOrFail($id);
-  //   $order->approvals()->sync([1 => [ 'status' => 'r' ]], false);
-
-  //   return 'You Have Succesfuly Rejected this Order';
-  // }
+    return response()->json($funnel,200);
+  }
 
   /**
    * Display a listing of the resource.
@@ -104,7 +86,9 @@ class OrderController extends Controller
    */
   public function index(Request $req)
   {
-    DB::enableQueryLog();
+    if($req->funnel == true) return $this->funnel();
+
+    //DB::enableQueryLog();
     $orders = Order::with('trader', 'approvals');
 
     if($req->status != '') $orders = $orders->where('status', $req->status);
@@ -137,6 +121,8 @@ class OrderController extends Controller
 
   /**
    * Store a newly created resource in storage.
+   * Since the resource are creted in "draft" status
+   * this acts as a dumb door to simply add value
    *
    * @param  \Illuminate\Http\Request  $req
    * @return \Illuminate\Http\Response
@@ -148,12 +134,13 @@ class OrderController extends Controller
         'message' => 'Bad Request'
       ], 400);
     }
-    // return $req;
+
     $order = new Order();
     $order->user_id = Auth::User()->id;
     $order->status = 'd';
     $order->save();
-
+    
+    // Check the availability of associated leads
     if(count($req->buys) > 0){
       foreach($req->buys as $buy){
         $order->buys()->attach([ $buy['id'] => $buy['pivot'] ]);
@@ -166,14 +153,6 @@ class OrderController extends Controller
           'price' => $buy['pivot']['price'],
           'trading_term' => $buy['pivot']['trading_term'],
           'payment_term' => $buy['pivot']['payment_term'],
-          'insurance_cost' => $buy['additional']['insurance_cost'],
-          'interest_cost' => $buy['additional']['interest_cost'],
-          'surveyor_cost' => $buy['additional']['surveyor_cost'],
-          'others_cost' => $buy['additional']['others_cost'],
-          'pit_to_port' => $buy['additional']['pit_to_port'],
-          'transhipment' => $buy['additional']['transhipment'],
-          'freight_cost' => $buy['additional']['freight_cost'],
-          'port_to_factory' => $buy['additional']['port_to_factory'],
           'user_id' => Auth::user()->id,
         ]);
       }
@@ -192,14 +171,6 @@ class OrderController extends Controller
           'price' => $sell['pivot']['price'],
           'trading_term' => $sell['pivot']['trading_term'],
           'payment_term' => $sell['pivot']['payment_term'],
-          'insurance_cost' => $sell['additional']['insurance_cost'],
-          'interest_cost' => $sell['additional']['interest_cost'],
-          'surveyor_cost' => $sell['additional']['surveyor_cost'],
-          'others_cost' => $sell['additional']['others_cost'],
-          'pit_to_port' => $sell['additional']['pit_to_port'],
-          'transhipment' => $sell['additional']['transhipment'],
-          'freight_cost' => $sell['additional']['freight_cost'],
-          'port_to_factory' => $sell['additional']['port_to_factory'],
           'user_id' => Auth::user()->id,
         ]);
       }
@@ -214,11 +185,11 @@ class OrderController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function show($id, Request $req)
+  public function show($id, Request $req = null)
   { 
     $order = Order::with('trader', 'users', 'sells', 'buys', 'buys.trader',
-      'approvals', 'sells.trader', 'sells.company', 'buys.company')->find($id);
-    
+      'approvals', 'sells.trader', 'sells.company', 'buys.company', 'buys.concession', 'sells.factory')->find($id);
+
     $this->authorize('view', $order);
 
     // lazyloading semua negotiation log
@@ -232,22 +203,18 @@ class OrderController extends Controller
     $order->averageSell(); 
     $order->averageBuy();
     
-    // IF envelope is requested, get all necessary components
-    if($req->envelope == "true"){
-      $params = [
-        'date' => date('Y-m-d', strtotime($order->created_at)),
-        'latest' => 7
-      ];
-      
-      // get index to fill things up
-      $index = $this->indexPrice(10, $params);
+    if (isset($req)) {
+      // IF envelope is requested, get all necessary components
+      if($req->envelope == "true"){
+        $index = $this->indexPrice();
 
-      $json = [
-        'status' => 200,
-        'error' => 'ok',
-        'order' => $order,
-        'index' => $index
-      ];
+        $json = [
+          'status' => 200,
+          'error' => 'ok',
+          'order' => $order,
+          'index' => $index
+        ];
+      } else $json = $order;
     } else $json = $order;
 
     return response()->json($json, 200);;
@@ -263,22 +230,12 @@ class OrderController extends Controller
   {
     $order = Order::find($id);
 
-    if(!$req) {
-      return response()->json([
-        'message' => 'Bad Request'
-      ], 400);
-    }
-    if (!$order) {
-      return response()->json([
-        'message' => 'Not found'
-      ] ,404);
-    }
-    if ($order->user_id != Auth::user()->id) {
-      return response()->json([
-        'message' => 'You are not authorized to edit this order!'
-      ] ,403);
-    }
+    if(!$req) return response()->json([ 'message' => 'Bad Request' ], 400);
+    if (!$order) return response()->json([ 'message' => 'Not found' ] ,404);
+    if ($order->user_id != Auth::user()->id) return response()->json([ 'message' => 'You are not authorized to edit this order!' ] ,403);
+
     $this->authorize('update', $order);
+
     if(count($order->buys) > 0){
       foreach($order->buys as $buy){
         BuyOrder::find($buy['id'])->reconcile();
@@ -307,74 +264,51 @@ class OrderController extends Controller
         $q->where('user_id', Auth::user()->manager_id);
       }])->find($id);
 
-      $this->add_user_to_order($order, Auth::user()->manager_id, $id, 'approver');
-      $this->add_approval_to_order($order, Auth::user()->manager_id, $id, 'p');
-    }
 
-    return $this->show($id);
-  }
+      if(count($req->buys) > 0){
+        foreach($req->buys as $buy){
+          $order->buys()->attach([ $buy['id'] => $buy['pivot'] ]);
+          Lead::find($buy['id'])->reconcile();
 
-  /**
-   * Remove the specified resource from storage.
-   *
-   * @param  int  $id
-   * @return \Illuminate\Http\Response
-   */
-  public function approve($id, Request $req)
-  {
-    $order = Order::with(['approvals' => function($q){
-        $q->where('user_id', Auth::user()->id);
-      }, 'users' => function($q){
-        $q->where('user_id', Auth::user()->id);
-      }])->find($id);
+          OrderNegotiation::create([
+            'order_detail_id' => $buy['id'],
+            'notes' => 'Initial Deal',
+            'volume' => $buy['pivot']['volume'],
+            'price' => $buy['pivot']['price'],
+            'trading_term' => $buy['pivot']['trading_term'],
+            'payment_term' => $buy['pivot']['payment_term'],
+            'user_id' => Auth::user()->id,
+          ]);
+        }
+      }
 
-    $this->add_approval_to_order($order, Auth::user()->id, $id, $req->status);
+      if(count($req->sells) > 0) {
+        foreach($req->sells as $sell){
+          $order->sells()->attach([ $sell['id'] => $sell['pivot'] ]);
+          Lead::find($sell['id'])->reconcile();
 
-    //print_r($order);
+          // $order_detail = $order->orders->find($sell['id']);
+          OrderNegotiation::create([
+            'order_detail_id' => $sell['id'],
+            'notes' => 'Initial Deal',
+            'volume' => $sell['pivot']['volume'],
+            'price' => $sell['pivot']['price'],
+            'trading_term' => $sell['pivot']['trading_term'],
+            'payment_term' => $sell['pivot']['payment_term'],
+            'user_id' => Auth::user()->id,
+          ]);
+        }
+      }
 
-    if($req->status == 'a'){
-      if(!Auth::user()->manager_id){
-        $order->status = 'a';
-        $order->save();
-      }else{
-        $order = Order::with(['approvals' => function($q){
-          $q->where('user_id', Auth::user()->manager_id);
-        }, 'users' => function($q){
-          $q->where('user_id', Auth::user()->manager_id);
-        }])->find($id);
-
-        $this->add_user_to_order($order, Auth::user()->manager_id, $id, 'approver');
-        $this->add_approval_to_order($order, Auth::user()->manager_id, $id, 'p');
-        $order->status = 'p';
-        $order->save();
+      // add manager to approve this order
+      if($user->manager_id){
+        $order->requestApproval(User::find($user->manager_id));
+      } else {
+        $order->status = 'a'; $order->save();
       }
     }
 
     return $this->show($id);
-  }
-
-  public function funnel()
-  {
-    $get=Order::orderBy('status')->select('status')->where('status','!=','c')->where('status','!=','x')->where('status','!=','d')->get();
-    $getLeadsell=SellOrder::orderBy('order_status')->select('order_status')->where('order_status','=','v')->orWhere('order_status','=','l')->count();
-    $getLeadbuy=BuyOrder::orderBy('order_status')->select('order_status')->where('order_status','=','v')->orWhere('order_status','=','l')->count();
-    $pending=0;
-    $Finalized=0;
-    $approved=0;
-    $sum=['lead-sell'=>0,'lead-buy'=>0,'pending'=>0,'approved'=>0,'finalized'=>0];
-    foreach ($get as $count) {
-    if ($count->status=='p') {
-        $pending=$pending+1;
-      }
-      elseif ($count->status=='e') {
-        $approved=$approved+1;
-      }
-      elseif ($count->status=='e') {
-        $Finalized=$Finalized+1;
-      }
-    }
-    $sum=['lead-sell'=>$getLeadsell,'lead-buy'=>$getLeadbuy,'pending'=>$pending,'approved'=>$approved,'finalized'=>$Finalized];
-    return response()->json($sum,200);
   }
 
   /**
@@ -392,9 +326,47 @@ class OrderController extends Controller
     return response()->json($order, 200);
   }
 
+  /**
+   * Set the status of approval of an order
+   *
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
+  public function approval(Request $req, $id)
+  {
+    // since approval does not use jwt middleware,
+    // we need to try whether they are using approval token
+    // or using the JWT token.
+    $order = Order::with( 'approvals',
+      'sells', 'sells.trader', 'sells.company', 
+      'buys', 'buys.trader', 'buys.company')->find($id);
+
+    if($req->approval_token) $user = $order->getApproverByToken($req->approval_token); // if using token, get the specified approving user
+    else {
+      $user = JWTAuth::parseToken()->authenticate(); // or simply load the user if using Auth only.
+      $this->authorize('approve', $order);
+    }
+
+    // put the user's approval status to replace old one
+    $order->approvals()->sync([ $user->id => [ 'status' => $req->status ] ], false);
+
+    // if this user has manager, add approval on top of it
+    if($user->manager_id){
+      $order->requestApproval(User::find($user->manager_id));
+    }
+
+    return $this->show($id);
+  }
+
+  /**
+   * Put new leads into the order
+   *
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
   public function stage(Request $req, $id)
   {
-    $order = Order::with('sells', 'buys')->find($id);
+    $order = Order::with('buys', 'sells')->find($id);
     $details = [
       'volume' => $req->volume,
       'price' => $req->price,
@@ -404,28 +376,22 @@ class OrderController extends Controller
     if(!$req->notes) $notes = 'Initial Deal';
     else $notes = $req->notes;
 
-    $this->authorize('update', $order);
+    $lead_type = $req->lead_type;
 
-    if($req->buy){
+    $this->authorize('update', $order);
+    if ($lead_type === 'buys') 
       if(count($order->sells) > 1)
+        return response()->json([ 'message' => 'Can\'t add more Buy on Multiple Sells' ], 400);
+    else if ($lead_type === 'sells') 
+      if(count($order->buys) > 1)
         return response()->json([ 'message' => 'Can\'t add more Sell on Multiple Buys' ], 400);
 
-      $order->buys()->sync([ $req->buy => $details ], false);
-
-      $buy = BuyOrder::find($req->buy)->reconcile();
-  
-      $order_detail_id = $order->buys->find($req->buy)->pivot->id;
+    if (!$req->negotiation){
+      $order->$lead_type()->sync([ $req->lead_id => $details ], false);
+      Lead::find($req->lead_id)->reconcile();
     }
-    if($req->sell){
-      if(count($order->buys) > 1)
-        return response()->json([ 'message' => 'Can\'t add more Buy on Multiple Sells' ], 400);
 
-      $order->sells()->sync([ $req->sell => $details ], false);
-
-      $sell = SellOrder::find($req->sell)->reconcile();
-
-      $order_detail_id = $order->sells->find($req->sell)->pivot->id;
-    }
+    $order_detail_id = $order->$lead_type()->find($req->lead_id)->pivot->id;
 
     // if notes is here, it's a negotiation
     // Add new log of the nagotiation

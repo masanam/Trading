@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\DB;
 use App\Model\Lead;
 use App\Model\User;
 
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ApprovalRequest;
+
 class Order extends Model
 {
   protected $table = 'orders';
@@ -32,7 +35,7 @@ class Order extends Model
   }
 
 	public function approvals() {
-		return $this->belongsToMany(User::class, 'order_approvals')->withPivot('status', 'updated_at');
+		return $this->belongsToMany(User::class, 'order_approvals')->withPivot('status', 'approval_token', 'updated_at');
 	}
 
   public function trader() {
@@ -82,5 +85,48 @@ class Order extends Model
   public function getNegotiations(){
     foreach($this->sells as &$sell) $sell->pivot->negotiations = OrderNegotiation::where('order_detail_id', '=', $sell->pivot->id)->get();
     foreach($this->buys as &$buy) $buy->pivot->negotiations = OrderNegotiation::where('order_detail_id', '=', $buy->pivot->id)->get();
+  }
+
+  public function getApproverByToken($approval_token){
+    foreach($this->approvals as $a)
+      if($a->pivot->approval_token == $approval_token) return $a;
+  }
+
+  public function getApproverByUserId($user_id){
+    foreach($this->approvals as $a){
+      if($a->id == $user_id) return $a;
+    }
+  }
+
+  public function requestApproval($user){
+    // You can only add approval record from a user
+    // that HAS NOT YET been here before
+    // if($this->getApproverByUserId($user->id)) return false;
+
+    // get the earliest laycan and latest one
+    $this->earliestLaycan();
+    $this->latestLaycan();
+
+    // find all averages of the order details.
+    $this->averageSell(); 
+    $this->averageBuy();
+
+    // get latest GC NEWC price
+    $index = IndexPrice::orderBy('date', 'DESC')->where('index_id', 10)->first();
+
+    // Add new approval request
+    $approval_properties = [
+      'status' => 'p',
+      'approval_token' => bcrypt(date('Y-m-d H:i:s') . $user->name)
+    ];
+    $this->approvals()->sync([$user->id => $approval_properties], false);
+
+    $mail = new ApprovalRequest($this, $approval_properties['approval_token'], $index->price);
+    Mail::to($user->email)->send($mail);
+
+    // add new associated user in the request
+    $this->users()->sync([$user->id => [ 'role' => 'approver' ]], false);
+
+    return true;
   }
 }

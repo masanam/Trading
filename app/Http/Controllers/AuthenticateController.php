@@ -49,9 +49,11 @@ class AuthenticateController extends Controller
         }
         $user = Auth::user();
 
+        $status = 200; $error = 'ok';
+
         event(new Login($user, false));
         // if no errors are encountered we can return a JWT
-        return response()->json(compact('token', 'user', $user), 200);
+        return response()->json(compact('token', 'user', 'status', 'error'), 200);
     }
 
     public function signup(Request $request)
@@ -111,7 +113,7 @@ class AuthenticateController extends Controller
         $managers = $user->managers();
  
         // the token is valid and we have found the user via the sub claim
-        return response()->json(compact('user', $user, 'subordinates', $subordinates, 'managers', $managers), 200);
+        return response()->json(compact('user', 'subordinates', 'managers'), 200);
     }
 
     public function signing(Request $request)

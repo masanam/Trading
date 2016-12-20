@@ -62,8 +62,14 @@ class LeadController extends Controller
 
     $leads = $query->limit($req->limit)->get();
 
+    //list recomended leads from compare leads to a lead
+    if($req->lead_id && $req->order === 'matching')
+      foreach ($leads as $lead) {
+        $lead->difference($ref);
+      }
+
     //list recomended product from compare product to a lead
-    if($req->lead_id && $req->matching === 'products')
+    else if($req->lead_id && $req->matching === 'products')
       foreach ($leads as $lead) {
         $lead->difference($ref, $company_type);
       }
@@ -97,6 +103,7 @@ class LeadController extends Controller
     $lead = new Lead($req->all());
 
     $lead->user_id = Auth::User()->id;
+    $lead->company_id = $req->company_id;
 
     if ($req->lead_type === 'buy') {
       $lead->lead_type = 'b';
@@ -140,7 +147,7 @@ class LeadController extends Controller
   */
   public function show(Request $req, $id){
     
-    $lead = Lead::with('company','port','concession', 'orders');
+    $lead = Lead::with('company','port','concession','product','orders');
     if ($req->lead_type === 'buy'){
       $lead->where('lead_type', 'b');
     }
@@ -177,11 +184,9 @@ class LeadController extends Controller
     $lead->user_id = Auth::User()->id;
     $lead->fill($req->all());
 
-    if ($req->lead_type === 'buy') {
-      $lead->lead_type = 'b';
-    }
-    else if ($req->lead_type === 'sell') {
-      $lead->lead_type = 's';
+    // you can only change company_id if this is a draft
+    if(is_numeric($lead->order_status)){
+      $lead->company_id = $req->company_id;
     }
 
     $lead->order_date = date('Y-m-d',strtotime($req->order_date));
@@ -192,11 +197,6 @@ class LeadController extends Controller
     $lead->order_status = $req->order_status;
 
     $lead->save();
-
-    $lead->order_date = $req->order_date;
-    $lead->order_expired = $req->order_expired;
-    $lead->laycan_start = $req->laycan_start;
-    $lead->laycan_end = $req->laycan_end;
 
     return response()->json($lead, 200);
   }
