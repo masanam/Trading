@@ -19,11 +19,6 @@ angular.module('lead').controller('ListLeadController', ['$scope', '$location', 
       $scope.leads = Lead.query({ lead_type: $lead_type, order_status: $order_status });
     };
 
-    $scope.changeOrderStatus = function(sell_order, order_status) {
-      $scope.sell_orders.splice($scope.sell_orders.indexOf(sell_order), 1);
-      $scope.sell_order = Order.get({ type: 'sell', id: sell_order.id, action: 'changeOrderStatus', order_status: order_status });
-    };
-
     $scope.status = function (lead, status) {
       lead.order_status = status;
 
