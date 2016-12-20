@@ -130,37 +130,36 @@ class OrderController extends Controller
   public function store(Request $req)
   {
     // Check the availability of volume lead
-    if(count($req->buys) > 0){
-      foreach($req->buys as $buy){
-        $used = 0;
-        foreach($buy['used'] as $use){
-          $used += $use['volume'];
-        }
-        if ($buy['pivot']['volume'] > $used) return response()->json([ 'message' => 'Bad Request' ], 400);
-      }
-    }
-    if(count($req->sells) > 0){
-      foreach($req->sells as $sell){
-        $used = 0;
-        foreach($sell['used'] as $use){
-          $used += $use['volume'];
-        }
-        if ($sell['pivot']['volume'] > $used) return response()->json([ 'message' => 'Bad Request' ], 400);
-      }
-    }
+    // if(count($req->buys) > 0){
+    //   foreach($req->buys as $buy){
+    //     $used = 0;
+    //     foreach($buy['used'] as $use){
+    //       $used += $use['volume'];
+    //     }
+    //     if ($buy['pivot']['volume'] > $used) return response()->json([ 'message' => 'Bad Request' ], 400);
+    //   }
+    // }
+    // if(count($req->sells) > 0){
+    //   foreach($req->sells as $sell){
+    //     $used = 0;
+    //     foreach($sell['used'] as $use){
+    //       $used += $use['volume'];
+    //     }
+    //     if ($sell['pivot']['volume'] > $used) return response()->json([ 'message' => 'Bad Request' ], 400);
+    //   }
+    // }
 
-    if(!$req) {
-      return response()->json([
-        'message' => 'Bad Request'
-      ], 400);
-    }
-
+    // if(!$req) {
+    //   return response()->json([
+    //     'message' => 'Bad Request'
+    //   ], 400);
+    // }
 
     $order = new Order();
     $order->user_id = Auth::User()->id;
     $order->status = 'd';
     $order->save();
-    
+
     // Check the availability of associated leads
     if(count($req->buys) > 0){
       foreach($req->buys as $buy){
@@ -194,6 +193,14 @@ class OrderController extends Controller
           'payment_term' => $sell['pivot']['payment_term'],
           'user_id' => Auth::user()->id,
         ]);
+      }
+    }
+
+    if(count($req->additional) > 0) {
+      foreach($req->additional as $add) {
+        $order->companies()->sync([$add->company => [
+          'cost' => $add->cost
+        ]]);
       }
     }
 
@@ -318,6 +325,14 @@ class OrderController extends Controller
             'payment_term' => $sell['pivot']['payment_term'],
             'user_id' => Auth::user()->id,
           ]);
+        }
+      }
+
+      if(count($req->additional) > 0) {
+        foreach($req->additional as $add) {
+          $order->companies()->updateExistingPivot([$add->company => [
+            'cost' => $add->cost
+          ]]);
         }
       }
 
