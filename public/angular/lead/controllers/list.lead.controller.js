@@ -13,7 +13,7 @@ angular.module('lead').controller('ListLeadController', ['$scope', '$location', 
         $scope.used += lead.used[i].volume;
       }
       return $scope.used;
-    }
+    };
     
     $scope.findStatus = function($order_status, $lead_type) {
       $scope.leads = Lead.query({ lead_type: $lead_type, order_status: $order_status });

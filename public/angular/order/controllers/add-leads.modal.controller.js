@@ -17,7 +17,7 @@ angular.module('order').controller('AddLeadsModalController', ['$uibModalInstanc
         $scope.used += lead.used[i].volume;
       }
       return $scope.used;
-    }
+    };
 
     $scope.ok = function () {
       $uibModalInstance.close($scope.selected.item);
