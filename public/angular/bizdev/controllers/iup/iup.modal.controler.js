@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('bizdev').controller('IupModalController', ['$scope', '$uibModalInstance','NgMap',
-  function($scope, $uibModalInstance, NgMap) {
+angular.module('bizdev').controller('IupModalController', ['$scope','$uibModalInstance','$timeout','$interval','NgMap',
+  function($scope, $uibModalInstance,$timeout, $interval, NgMap) {
     $scope.display = {};
 
     $scope.resetPolygon = function () {

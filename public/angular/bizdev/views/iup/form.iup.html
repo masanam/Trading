@@ -10,11 +10,11 @@
           <label for="headquarter_location">Source:</label>
           <div class="input-group" style="margin-bottom: 5px;">
             <div class="btn-group">
-              <label class="btn btn-default" uib-btn-radio="0">Broker</label>
-              <label class="btn btn-default" uib-btn-radio="1">Internal</label>
-              <label class="btn btn-default" uib-btn-radio="2">KP Owner</label>
-              <label class="btn btn-default" uib-btn-radio="3">Widjaja</label>
-              <label class="btn btn-default" uib-btn-radio="4">Others</label>
+              <label class="btn btn-default" ng-model="source" uib-btn-radio="0">Broker</label>
+              <label class="btn btn-default" ng-model="source" uib-btn-radio="1">Internal</label>
+              <label class="btn btn-default" ng-model="source" uib-btn-radio="2">KP Owner</label>
+              <label class="btn btn-default" ng-model="source" uib-btn-radio="3">Widjaja</label>
+              <label class="btn btn-default" ng-model="source" uib-btn-radio="4">Others</label>
               
             </div>
           </div>
@@ -36,11 +36,11 @@
         <label for="headquarter_location">Type License:</label>
         <div class="input-group" style="margin-bottom: 5px;">
           <div class="btn-group">
-            <label class="btn btn-default" uib-btn-radio="0">SKIP</label>
-            <label class="btn btn-default" uib-btn-radio="1">PU</label>
-            <label class="btn btn-default" uib-btn-radio="2">XPL</label>
-            <label class="btn btn-default" uib-btn-radio="3">XPLT</label>
-            <label class="btn btn-default" uib-btn-radio="4">ANGK/JUAL</label>
+            <label class="btn btn-default" ng-model="tl" uib-btn-radio="0">SKIP</label>
+            <label class="btn btn-default" ng-model="tl" uib-btn-radio="1">PU</label>
+            <label class="btn btn-default" ng-model="tl" uib-btn-radio="2">XPL</label>
+            <label class="btn btn-default" ng-model="tl" uib-btn-radio="3">XPLT</label>
+            <label class="btn btn-default" ng-model="tl" uib-btn-radio="4">ANGK/JUAL</label>
               
           </div>
         </div>
@@ -56,8 +56,8 @@
         <label for="headquarter_location">Overlapping with SMG Forestry:</label>
         <div class="input-group">
           <div class="input-group-btn">
-            <label class="btn btn-default" uib-btn-radio="0">Yes</label>
-            <label class="btn btn-default" uib-btn-radio="1">No</label>
+            <label class="btn btn-default" ng-model="ow" uib-btn-radio="0">Yes</label>
+            <label class="btn btn-default" ng-model="ow"  uib-btn-radio="1">No</label>
           </div>
            <input name="smg" type="text" class="form-control" id="smg"> 
         </div>
@@ -68,8 +68,8 @@
         <label for="headquarter_location">Release after 12 Jan 2009:</label>
         <div class="input-group">
           <div class="input-group-btn">
-            <label class="btn btn-default" uib-btn-radio="0">Yes</label>
-            <label class="btn btn-default" uib-btn-radio="1">No</label>
+            <label class="btn btn-default" ng-model="ra"  uib-btn-radio="0">Yes</label>
+            <label class="btn btn-default" ng-model="ra"  uib-btn-radio="1">No</label>
           </div>
            <input name="telpon" type="text" class="form-control" id="telpon"> 
         </div>
@@ -80,8 +80,8 @@
         <label for="headquarter_location">Already to Production :</label>
         <div class="input-group">
           <div class="input-group-btn">
-            <label class="btn btn-default" uib-btn-radio="0">Yes</label>
-            <label class="btn btn-default" uib-btn-radio="1">No</label>
+            <label class="btn btn-default" ng-model="atp" uib-btn-radio="0">Yes</label>
+            <label class="btn btn-default" ng-model="atp" uib-btn-radio="1">No</label>
           </div>
            <input name="telpon" type="text" class="form-control" id="telpon"> 
         </div>
@@ -93,12 +93,12 @@
         <label for="headquarter_location">Restricted Area:</label>
         <div class="input-group" style="margin-bottom: 5px;">
           <div class="btn-group">
-            <label class="btn btn-default" uib-btn-radio="0">APL</label>
-            <label class="btn btn-default" uib-btn-radio="1">H.PROD</label>
-            <label class="btn btn-default" uib-btn-radio="2">HPT</label>
-            <label class="btn btn-default" uib-btn-radio="3">HPK</label>
-            <label class="btn btn-default" uib-btn-radio="4">CAGAR ALAM</label>
-            <label class="btn btn-default" uib-btn-radio="4">H.LINDUNG</label>
+            <label class="btn btn-default" ng-model="ra" uib-btn-radio="0">APL</label>
+            <label class="btn btn-default" ng-model="ra" uib-btn-radio="1">H.PROD</label>
+            <label class="btn btn-default" ng-model="ra" uib-btn-radio="2">HPT</label>
+            <label class="btn btn-default" ng-model="ra" uib-btn-radio="3">HPK</label>
+            <label class="btn btn-default" ng-model="ra" uib-btn-radio="4">CAGAR ALAM</label>
+            <label class="btn btn-default" ng-model="ra" uib-btn-radio="4">H.LINDUNG</label>
               
           </div>
         </div>
@@ -118,7 +118,7 @@
     <div class="form-group" ng-init="initMap()">
       <label for="polygon">Polygon*: </label>
       <div class="col-lg-12">
-        <div class="col-lg-4">
+        <div class="col-lg-6">
           Format : [[6,110], [8,110], ...]
           <textarea rows="12" cols="5" class="form-control" ng-model="display.polygonString" ng-change="updatePolygonArray()" required></textarea>
           <button type="button" class="btn btn-danger" ng-click="clearPolygon()">Clear Text</button>
@@ -149,8 +149,8 @@
         <label for="headquarter_location">Overlapping with SMG Forestly and SMG Palm Oil Plantation :</label>
         <div class="input-group">
           <div class="input-group-btn">
-            <label class="btn btn-default" uib-btn-radio="0">Yes</label>
-            <label class="btn btn-default" uib-btn-radio="1">No</label>
+            <label class="btn btn-default" ng-model="smg" uib-btn-radio="0">Yes</label>
+            <label class="btn btn-default" ng-model="smg" uib-btn-radio="1">No</label>
           </div>
            <input name="telpon" type="text" class="form-control" id="telpon"> 
     </div>
@@ -161,8 +161,8 @@
         <label for="headquarter_location">Produce KP :</label>
         <div class="input-group">
           <div class="input-group-btn">
-            <label class="btn btn-default" uib-btn-radio="0">Yes</label>
-            <label class="btn btn-default" uib-btn-radio="1">No</label>
+            <label class="btn btn-default" ng-model="pk" uib-btn-radio="0">Yes</label>
+            <label class="btn btn-default" ng-model="pk" uib-btn-radio="1">No</label>
           </div>
            <input name="telpon" type="text" class="form-control" id="telpon"> 
     </div>
@@ -174,21 +174,21 @@
         <label for="headquarter_location">Proximity :</label>
         <div class="input-group">
           <div class="input-group-btn">
-            <label class="btn btn-default" uib-btn-radio="0">SMG MILL</label>
+            <label class="btn btn-default" ng-model="p" uib-btn-radio="0">SMG MILL</label>
           </div>
            <input name="telpon" type="text" class="form-control" id="telpon"> 
         </div>
 
         <div class="input-group">
           <div class="input-group-btn">
-            <label class="btn btn-default" uib-btn-radio="0">SMG KP</label>
+            <label class="btn btn-default"  ng-model="smgkp" uib-btn-radio="0">SMG KP</label>
           </div>
            <input name="telpon" type="text" class="form-control" id="telpon"> 
         </div>
 
         <div class="input-group">
           <div class="input-group-btn">
-            <label class="btn btn-default" uib-btn-radio="0">RIVER ROAD</label>
+            <label class="btn btn-default" ng-model="rr" uib-btn-radio="0">RIVER ROAD</label>
           </div>
            <input name="telpon" type="text" class="form-control" id="telpon"> 
         </div>
