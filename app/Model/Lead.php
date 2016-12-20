@@ -86,9 +86,10 @@ class Lead extends Model
         'price',
         'trading_term',
         'trading_term_detail',
-        'payment_terms',
+        'payment_term',
+        'payment_term_detail',
         'commercial_term',
-        'penalty_desc',
+        'penalty',
         
         'progress_status',
     ];
@@ -122,12 +123,12 @@ class Lead extends Model
     }
 
     public function orders() {
-        return $this->belongsToMany(Order::class, 'order_details', 'lead_id', 'id')
+        return $this->belongsToMany(Order::class, 'order_details')
             ->withPivot('id', 'price', 'volume', 'payment_term', 'trading_term');
     }
 
     public function used() {
-        return $this->belongsToMany(Order::class, 'order_details', 'lead_id', 'id')
+        return $this->belongsToMany(Order::class, 'order_details')
             ->selectRaw('sum(order_details.volume) as volume')->whereIn('orders.status', ['a', 'f', 'p', 'd'])->groupBy('lead_id');
     }
 

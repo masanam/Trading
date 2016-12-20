@@ -11,8 +11,8 @@
         <ul class="nav nav-pills nav-stacked">
           <li ng-repeat="item in items">
             <a href="#" ng-click="$event.preventDefault(); selected.item = item">
-              {{ item.seller.company_name || item.buyer.company_name }} ({{ item.city }}) <span ng-if="item.gcv_adb_min_diff<=150&&item.gcv_adb_max_diff<=150&&item.gcv_arb_min_diff<=150&&item.gcv_arb_max_diff<=150&&item.ncv_min_diff<=150&&item.ncv_max_diff<=150&&item.volume_diff<=item.volume*0.1" style="color:green;">recomended</span><br>
-              {{ item.company.company_name }} ({{ item.city }}) <span ng-if="item.gcv_adb_min_diff<=150&&item.gcv_adb_max_diff<=150&&item.gcv_arb_min_diff<=150&&item.gcv_arb_max_diff<=150&&item.ncv_min_diff<=150&&item.ncv_max_diff<=150&&item.volume_diff<=item.volume*0.1" style="color:green;">recomended</span><br>
+              <!-- {{ item.seller.company_name || item.buyer.company_name }} ({{ item.city }}) <span ng-if="item.gcv_adb_min_diff<=150&&item.gcv_adb_max_diff<=150&&item.gcv_arb_min_diff<=150&&item.gcv_arb_max_diff<=150&&item.ncv_min_diff<=150&&item.ncv_max_diff<=150&&item.volume_diff<=item.volume*0.1" style="color:green;">recomended</span><br> -->
+              {{ item.company.company_name }} ({{ item.city }}) <span ng-if="(item.gcv_adb_min_diff<=150&&item.gcv_adb_max_diff<=150)||(item.gcv_arb_min_diff<=150&&item.gcv_arb_max_diff<=150)||(item.ncv_min_diff<=150&&item.ncv_max_diff<=150)||item.volume_diff<=item.volume*0.1" style="color:green;">recomended</span><br>
               exp: {{ item.order_expired | date:'d-M-yy' }}<br>
               LayCan: {{ item.laycan_start | date:'d-M-yy' }} to {{ item.laycan_end | date:'d-M-yy' }}
             </a>
@@ -21,7 +21,7 @@
       </div>
       <div class="col-sm-9" ng-if="selected.item">
         <div class="row">
-          <div class="col-sm-6 form-group" ng-init="selected.item.pivot.volume = selected.item.volume-selected.item.used[0].volume">
+          <div class="col-sm-6 form-group" ng-init="selected.item.pivot.volume = selected.item.volume - getUsed(selected.item)">
             <input type="number" ng-model="selected.item.pivot.volume" class="form-control" placeholder="Volume (MT)" required>
           </div>
           <div class="col-sm-6 form-group" ng-init="selected.item.pivot.price = ( selected.item.price )">

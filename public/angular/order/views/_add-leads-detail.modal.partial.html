@@ -10,7 +10,7 @@
       </tr>
       <tr>
         <td><label>Volume / Available</label></td>
-        <td>{{ selected.item.volume }} / {{ (selected.item.volume-selected.item.used[0].volume) }}</td>
+        <td>{{ selected.item.volume }} / {{ (selected.item.volume - getUsed(selected.item) ) }}</td>
       </tr>
       <tr>
         <td><label>Price</label></td>

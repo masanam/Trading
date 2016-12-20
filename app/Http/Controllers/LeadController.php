@@ -35,9 +35,12 @@ class LeadController extends Controller
     // this is the basic loading query of all leads
     $query = Lead::with('Company','User','trader','used', 'Product');
 
-    // choose lead type
-    if ($req->lead_type === 'buy') $query->where('lead_type', 'b');
-    else if ($req->lead_type === 'sell') $query->where('lead_type', 's');
+    // lowercasing lead_type
+    $lead_type = strtolower($req->lead_type);
+
+    // choose lead type, for view lead recomend using right condition 
+    if ($lead_type === 'buy' || $req->lead_type === 's') $query->where('lead_type', 'b');
+    else if ($lead_type === 'sell' || $req->lead_type === 'b') $query->where('lead_type', 's');
 
     // select statuses to include based on query category
     if($req->order) $status = ['v', 'l', 'p']; // only v, l, p IF this is a lead added to orders
@@ -63,7 +66,7 @@ class LeadController extends Controller
     $leads = $query->limit($req->limit)->get();
 
     //list recomended leads from compare leads to a lead
-    if($req->lead_id && $req->order === 'matching')
+    if($req->lead_id && ($req->order === 'matching' || $req->matching === 'leads')) 
       foreach ($leads as $lead) {
         $lead->difference($ref);
       }
@@ -147,7 +150,7 @@ class LeadController extends Controller
   */
   public function show(Request $req, $id){
     
-    $lead = Lead::with('company','port','concession','product','orders');
+    $lead = Lead::with('company','port','concession','product','used','orders');
     if ($req->lead_type === 'buy'){
       $lead->where('lead_type', 'b');
     }
@@ -180,7 +183,7 @@ class LeadController extends Controller
       ], 400);
     }
 
-    $lead = Lead::find($id);
+    $lead = Lead::with('Company','User','trader','used', 'Product')->find($id);
     $lead->user_id = Auth::User()->id;
     $lead->fill($req->all());
 

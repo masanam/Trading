@@ -26,7 +26,7 @@
     </div>
 
     <div class="form-group row-fluid">
-      <h1>{{ lead.buyer.company_name }}</h1>
+      <h1>{{ lead.company.company_name }}</h1>
       <label ng-show="lead.product_name">Product Name : </label>
       <p>{{ lead.product_name }}</p>
       <label>Typical Quality : </label>
@@ -37,7 +37,7 @@
         <label>City : </label>
         <p>{{ lead.city }}</p>
         <label>Volume of Coal : </label>
-        <p>{{ lead.volume }} mt, available {{ lead.volume - lead.used[0].volume }} mt</p>
+        <p>{{ lead.volume }} mt, available {{ lead.volume - getUsed(lead) }} mt</p>
         <label>Input Date : </label>
         <p>{{ lead.order_date | date : 'd MMMM yyyy' }}</p>
       </div>
@@ -59,10 +59,10 @@
       </div>
       <div class="col-xs-6" style="padding-left:0">
         <label>Payment Terms : </label>
-        <p>{{ lead.payment_terms }}</p>
+        <p>{{ lead.payment_term }}</p>
       </div>
       <label>Penalty : </label>
-      <p>{{ lead.penalty_desc }}</p>
+      <p>{{ lead.penalty }}</p>
     </div>
   </div>
 </div>
