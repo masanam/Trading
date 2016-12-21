@@ -199,7 +199,7 @@ class OrderController extends Controller
 
     if(count($req->additional) > 0) {
       foreach($req->additional as $add) {
-        $order->companies()->sync([$add['company']['id'] => [
+        $order->companies()->attach([$add['company']['id'] => [
           'cost' => $add['cost'],
           'label' => $add['label']
         ]]);
