@@ -266,17 +266,38 @@
     </div>
 
     <!-- INI NANTI GANTI YANG BISA DI TAMBAH -->
-    <div style="margin-bottom: 25px;">
-      <label>Upload Files:</label></br>
-      <div class="row">
-        <div class="col-xs-4">
-          <input name="file_name" type="text" class="form-control" id="file_name"  placeholder="  File Name">
+    <section ng-controller="IupController">
+
+      <div>
+        <label>Upload Files:</label></br>
+        <div class="row">
+          <div class="col-xs-3">
+            <input name="file_name" type="text" class="form-control" id="file_name"  placeholder="  File Name">
+          </div>
+          <div class="col-xs-6" style="margin-top: 5px;">
+            <input type="file" name="fileToUpload" id="fileToUpload">
+          </div>
+          <div class="col-xs-3">
+            <button ng-click="addItem()">Add Uploads</button>
+            <button ng-click="toggleChecked($index)">Delete</button>
+
+          </div>         
         </div>
-        <div class="col-xs-6" style="margin-top: 5px;">
-          <input type="file" name="fileToUpload" id="fileToUpload">
-        </div>        
       </div>
-    </div>
+      <div class="row" ng-repeat="item in items">
+          <div class="col-xs-3">
+            <input name="file_name" type="text" class="form-control" id="file_name"  placeholder="  File Name">
+          </div>
+          <div class="col-xs-6" style="margin-top: 5px;">
+            <input type="file" name="fileToUpload" id="fileToUpload">
+          </div>
+          <div class="col-xs-2">
+            <button ng-click="addItem()">Add Uploads</button>
+            <button ng-click="toggleChecked($index)">Delete</button>
+          </div>         
+      </div>
+
+    </section>
 
     <button type="submit" class="btn btn-primary">Submit</button>
 </div>    

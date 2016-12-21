@@ -47,5 +47,21 @@ angular.module('bizdev').controller('IupController', ['$scope', '$stateParams', 
       });
     };
 
+    $scope.items = [];
+
+    // Add a Item to the list
+    $scope.addItem = function () {
+
+      $scope.items.push({
+        amount: $scope.itemAmount,
+        name: $scope.itemName
+      });
+    };
+
+    // Add Item to Checked List and delete from Unchecked List
+    $scope.toggleChecked = function (item, index) {
+      $scope.items.splice(index, 1);
+    };
+
   }
 ]);

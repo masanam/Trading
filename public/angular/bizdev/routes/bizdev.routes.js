@@ -33,7 +33,6 @@ angular.module('bizdev').config(['$stateProvider',
       .state('bizdev.map-view', {
         url: '/map-view',
         templateUrl: '/angular/bizdev/views/map/map.view.html'
-      });
-      
+      });      
   }
 ]);
