@@ -29,7 +29,7 @@ class OrderPolicy
         $sell->seller = $sell->location = $sell->port_name = $sell->address = '-hidden value-';
 
     foreach($order->buys as &$buy)
-      if(!in_array($sell->user_id, $users))
+      if(!in_array($buy->user_id, $users))
         $buy->buyer = $buy->location = $buy->port_name = $buy->address = '-hidden value-';
 
     foreach($order->users as $orderUser){

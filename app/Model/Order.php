@@ -60,7 +60,8 @@ class Order extends Model
       $volume += $sell->pivot->volume;
     }
 
-    $this->average_sell_price = $price/$volume;
+    if($volume) $this->average_sell_price = $price/$volume;
+    else $this->average_sell_price = 0;
   }
 
   public function averageBuy() {
@@ -71,7 +72,8 @@ class Order extends Model
       $volume += $buy->pivot->volume;
     }
 
-    $this->average_buy_price = $price/$volume;
+    if($volume) $this->average_buy_price = $price/$volume;
+    else $this->average_buy_price = 0;
   }
 
   public function earliestLaycan(){
