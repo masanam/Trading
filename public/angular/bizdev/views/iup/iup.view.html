@@ -66,17 +66,17 @@
           <h5>No</h5>
           <h5>Overlap dengan area konsesi VICO Indonesia</h5>
         </div>
-        <h5>3. PROXIMITY</h5>
+        <h5>3. INFRASTRUCTURE</h5>
         <div class="col-xs-6">
           <b>
-            <h5>SMG Mill</h5>
-            <h5>SMG KP</h5>
-            <h5>River Road</h5>
+            <h5>Road (Pit to Port in km)</h5>
+            <h5>Port to Open Sea (km)</h5>
+            <h5>River</h5>
           </b>    
         </div>
         <div class="col-xs-6" style="margin-bottom: 25px !important;">
-          <h5>-</h5>
-          <h5>-</h5>
+          <h5>12 KM</h5>
+          <h5>5 KM</h5>
           <h5>S. Mahakam</h5>
         </div>
       </span>
@@ -86,22 +86,101 @@
           <b>
             <h5>Coal Bearing Formation</h5>
             <h5>Description</h5>
+            <h5>Quality:</h5>
+            <h5>CV (kkal):</h5>
+            <h5>TM (%):</h5>
+            <h5>TS (%):</h5>
+            <h5>Ash (%):</h5>
+            <h5>Reserve:</h5>
+            <h5>Stripping Ratio:</h5>
             <h5>Notes</h5>
           </b>    
         </div>
         <div class="col-xs-6" style="margin-bottom: 25px !important;">
           <h5>APL</h5>
           <h5>75% APL, 25% H.Produksi</h5>
+          <h5>Good</h5>
+          <h5>1928 kkal:</h5>
+          <h5>30%:</h5>
+          <h5>23%:</h5>
+          <h5>21%:</h5>
+          <h5>Yes</h5>
+          <h5>1 : 10</h5>
           <h5>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin arcu purus, auctor nec urna at, aliquam consectetur neque. Nunc eget maximus sapien. Integer eget luctus purus. Mauris lacinia vehicula arcu, sit amet pretium massa varius luctus. Nulla in congue ligula, at aliquet libero. Nullam et tincidunt dui. Nulla non congue purus, eget dictum lorem.</h5>
-        </div>
-        <div class="col-xs-6">
-          <ng-map zoom="4" center="Indonesia" default-style="false" style="width:500px; height:250px;">
-          </ng-map>
-        </div>
+        </div>        
       </span>
-    </div>
-      
+    </div> 
   </div>
+
+  <div style="margin:20px; padding: 20px; background: white;">
+    <h5>Map</h5>
+    <div class="row">
+      <div class="col-xs-6">
+        <ng-map zoom="4" center="Indonesia">
+          <shape id="polygon" name="polygon"
+            paths="[
+                {lat: 0.774, lng: 114.190},
+                {lat: 0.466, lng: 113.118},
+                {lat: -1.321, lng: 113.757},
+                {lat: 0.774, lng: 114.190}
+              ]"
+            stroke-color="#FF0000"
+            stroke-opacity="1.0"
+            stroke-weight="3">
+          </shape>
+        </ng-map>                
+      </div>
+      <div class="col-xs-6" style="margin-top: 50px; padding-left: 75px;">
+
+        <h5 class="row">Road <span style="padding-right: 20px;"></span>
+          <button class="btn btn-default" style="margin-right: 10px; min-width: 130px;">
+              Jln. Ahmad Yani
+          </button>
+          <button class="btn btn-default" style="margin-right: 10px; min-width: 130px;">
+              Jln. Surapati
+          </button>
+          <button class="btn btn-default" style="margin-right: 10px; min-width: 130px;">
+              Jln. Sutoyo
+          </button>
+        </h5>
+        <h5 class="row">River <span style="padding-right: 20px;"></span>
+          <button class="btn btn-default" style="margin-right: 10px; min-width: 130px;">
+              S.Mahakam
+          </button>
+          <button class="btn btn-default" style="margin-right: 10px; min-width: 130px;">
+              S. Bendungan
+          </button>
+          <button class="btn btn-default" style="margin-right: 10px; min-width: 130px;">
+              S. Merah
+          </button>
+        </h5>
+        <h5 class="row">HPH <span style="padding-right: 25px;"></span>
+          <button class="btn btn-default" style="margin-right: 10px; min-width: 130px;">
+              Lorem
+          </button>
+          <button class="btn btn-default" style="margin-right: 10px; min-width: 130px;">
+              Ipsum
+          </button>
+          <button class="btn btn-default" style="margin-right: 10px; min-width: 130px;">
+              Lorem
+          </button>
+        </h5>
+        <h5 class="row">HTI <span style="padding-right: 30px;"></span>
+          <button class="btn btn-default" style="margin-right: 10px; min-width: 130px;">
+              Ipsum
+          </button>
+          <button class="btn btn-default" style="margin-right: 10px; min-width: 130px;">
+              Lorem
+          </button>
+          <button class="btn btn-default" style="margin-right: 10px; min-width: 130px;">
+              Ipsum
+          </button>
+        </h5>        
+      </div>
+    </div>    
+  </div> 
+  
+
   <div ng-include="'./angular/bizdev/views/iup/download.view.html'"></div>
   <div ng-include="'./angular/bizdev/views/iup/history.view.html'"></div>
 </section>
