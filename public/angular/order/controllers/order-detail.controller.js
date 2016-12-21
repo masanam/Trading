@@ -45,20 +45,6 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
         }
       }
     };
-    
-    $scope.addOwnProduct = function () {
-      Order.get({ 
-        id : $scope.order.id, 
-        action : 'stage' 
-      },
-        function (res){
-          $scope.order.sells = res.sells;
-          $scope.display.sell = res;
-        }, function (err){
-          alert("Not available yet");
-          // alert(err.data.message);
-        });
-    };
 
     $scope.removeBuy = function () {
       Order.update(
@@ -243,67 +229,67 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
       });
     };
 
-    $scope.addCostModalBuys = function () {
+    // $scope.addCostModalBuys = function () {
 
-      $scope.order.additional = 'buy';
-      $scope.order.index = $scope.display.sell.index;
-      var modalInstance = $uibModal.open({
-        windowClass: 'xl-modal',
-        templateUrl: './angular/order/views/_add-cost.modal.html',
-        controller: 'AddCostModalController',
-        scope: $scope,
-      });
+    //   $scope.order.additional = 'buy';
+    //   $scope.order.index = $scope.display.sell.index;
+    //   var modalInstance = $uibModal.open({
+    //     windowClass: 'xl-modal',
+    //     templateUrl: './angular/order/views/_add-cost.modal.html',
+    //     controller: 'AddCostModalController',
+    //     scope: $scope,
+    //   });
 
-      modalInstance.result.then(function(res){
-        //if existing order, directly upload
-        $scope.order.sells[$scope.order.index].additional = res;
-        $scope.totalPriceBuy = 0;
-        $scope.totalVolumeBuy = 0;
-        $scope.totalSelfBuy = 0;
-        $scope.totalSelfAdditionalBuy = 0;
-        for (var i = 0; i < $scope.order.sells.length; i++) {
-          $scope.totalPriceBuy += $scope.order.sells[i].pivot.price;
-          $scope.totalVolumeBuy += $scope.order.sells[i].pivot.volume;
-          if ($scope.order.sells[i].additional !== undefined) {
-            $scope.totalSelfBuy += (($scope.order.sells[i].pivot.price + $scope.order.sells[i].additional.freight_cost + 
-              $scope.order.sells[i].additional.port_to_factory) * $scope.order.sells[i].pivot.volume);
-            $scope.totalSelfAdditionalBuy += ($scope.order.sells[i].additional.freight_cost + 
-              $scope.order.sells[i].additional.port_to_factory) * $scope.order.sells[i].pivot.volume;
-          }
-        }
-      });
-    };
+    //   modalInstance.result.then(function(res){
+    //     //if existing order, directly upload
+    //     $scope.order.sells[$scope.order.index].additional = res;
+    //     $scope.totalPriceBuy = 0;
+    //     $scope.totalVolumeBuy = 0;
+    //     $scope.totalSelfBuy = 0;
+    //     $scope.totalSelfAdditionalBuy = 0;
+    //     for (var i = 0; i < $scope.order.sells.length; i++) {
+    //       $scope.totalPriceBuy += $scope.order.sells[i].pivot.price;
+    //       $scope.totalVolumeBuy += $scope.order.sells[i].pivot.volume;
+    //       if ($scope.order.sells[i].additional !== undefined) {
+    //         $scope.totalSelfBuy += (($scope.order.sells[i].pivot.price + $scope.order.sells[i].additional.freight_cost + 
+    //           $scope.order.sells[i].additional.port_to_factory) * $scope.order.sells[i].pivot.volume);
+    //         $scope.totalSelfAdditionalBuy += ($scope.order.sells[i].additional.freight_cost + 
+    //           $scope.order.sells[i].additional.port_to_factory) * $scope.order.sells[i].pivot.volume;
+    //       }
+    //     }
+    //   });
+    // };
 
-    $scope.addCostModalSells = function () {
-      $scope.order.additional = 'sell';
-      $scope.order.index = $scope.display.buy.index;
-      var modalInstance = $uibModal.open({
-        windowClass: 'xl-modal',
-        templateUrl: './angular/order/views/_add-cost.modal.html',
-        controller: 'AddCostModalController',
-        scope: $scope,
-      });
+    // $scope.addCostModalSells = function () {
+    //   $scope.order.additional = 'sell';
+    //   $scope.order.index = $scope.display.buy.index;
+    //   var modalInstance = $uibModal.open({
+    //     windowClass: 'xl-modal',
+    //     templateUrl: './angular/order/views/_add-cost.modal.html',
+    //     controller: 'AddCostModalController',
+    //     scope: $scope,
+    //   });
 
-      modalInstance.result.then(function(res){
-        //if existing order, directly upload
-        $scope.order.buys[$scope.order.index].additional = res;
-        $scope.totalPriceSell = 0;
-        $scope.totalVolumeSell = 0;
-        $scope.totalSelfSell = 0;
-        $scope.totalSelfAdditionalSell = 0;
-        for (var i = 0; i < $scope.order.buys.length; i++) {
-          $scope.totalPriceSell += $scope.order.buys[i].pivot.price;
-          $scope.totalVolumeSell += $scope.order.buys[i].pivot.volume;
-          if ($scope.order.buys[i].additional !== undefined) {
-            $scope.totalSelfSell += (($scope.order.buys[i].pivot.price + $scope.order.buys[i].additional.freight_cost + 
-              $scope.order.buys[i].additional.port_to_factory) * $scope.order.buys[i].pivot.volume);
-            $scope.totalSelfAdditionalSell += ($scope.order.buys[i].additional.freight_cost + 
-              $scope.order.buys[i].additional.port_to_factory) * $scope.order.buys[i].pivot.volume;
-          }
-        }
+    //   modalInstance.result.then(function(res){
+    //     //if existing order, directly upload
+    //     $scope.order.buys[$scope.order.index].additional = res;
+    //     $scope.totalPriceSell = 0;
+    //     $scope.totalVolumeSell = 0;
+    //     $scope.totalSelfSell = 0;
+    //     $scope.totalSelfAdditionalSell = 0;
+    //     for (var i = 0; i < $scope.order.buys.length; i++) {
+    //       $scope.totalPriceSell += $scope.order.buys[i].pivot.price;
+    //       $scope.totalVolumeSell += $scope.order.buys[i].pivot.volume;
+    //       if ($scope.order.buys[i].additional !== undefined) {
+    //         $scope.totalSelfSell += (($scope.order.buys[i].pivot.price + $scope.order.buys[i].additional.freight_cost + 
+    //           $scope.order.buys[i].additional.port_to_factory) * $scope.order.buys[i].pivot.volume);
+    //         $scope.totalSelfAdditionalSell += ($scope.order.buys[i].additional.freight_cost + 
+    //           $scope.order.buys[i].additional.port_to_factory) * $scope.order.buys[i].pivot.volume;
+    //       }
+    //     }
         
-      });
-    };
+    //   });
+    // };
 
     $scope.addCostModal = function () {
       var modalInstance = $uibModal.open({
