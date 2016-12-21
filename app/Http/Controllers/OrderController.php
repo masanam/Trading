@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use App\Model\User;
 use App\Model\Lead;
 use App\Model\Order;
+use App\Model\OrderUser;
 use App\Model\IndexPrice;
 use App\Model\Index;
 use App\Model\OrderNegotiation;
@@ -297,13 +298,15 @@ class OrderController extends Controller
       }])->find($id);
 
 
-      // if($order->users->count() == 0){
-      //   $order_user = new OrderUser();
-      //   $order_user->order_id = $id;
-      //   $order_user->user_id = Auth::user()->manager_id;
-      //   $order_user->role = 'approver';
-      //   $order_user->save();
-      // }
+      if($order->users->count() == 0){
+        foreach (Auth::user()->managers() as $user_id) {
+          $order_user = new OrderUser();
+          $order_user->order_id = $id;
+          $order_user->user_id = $user_id->id;
+          $order_user->role = 'approver';
+          $order_user->save();
+        }
+      }
 
       // if($order->approvals->count() > 0){
       //   $order_approval = OrderApproval::where('user_id', $user_id)->where('order_id', $order_id)->first();
@@ -329,11 +332,11 @@ class OrderController extends Controller
       }
 
       // add manager to approve this order
-      if(Auth::user()->manager_id){
-        $order->requestApproval(User::find($user->manager_id));
-      } else {
-        $order->status = 'a'; $order->save();
-      }
+      // if(Auth::user()->manager_id){
+      //   $order->requestApproval(User::find($user->manager_id));
+      // } else {
+      //   $order->status = 'a'; $order->save();
+      // }
     }
 
     $req['envelope'] = 'true';
