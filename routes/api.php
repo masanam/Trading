@@ -77,11 +77,6 @@ Route::group(['middleware' => ['cors']], function() {
     Route::get('order/funnel','OrderController@funnel');
 
     Route::resource('leads', 'LeadController', ['except' => [ 'create', 'edit' ]]);
-    Route::post('order/{id}/additional-cost', 'OrderController@createOrderAdditionalCost');
-    Route::put('order/{id}/additional-cost', 'OrderController@updateOrderAdditionalCost');
-    Route::put('order/{id}/stage', 'OrderController@stage');
-    Route::put('order/{id}/approval', 'OrderController@approval');
-
     Route::put('orders/{id}/stage', 'OrderController@stage');
     Route::put('orders/{id}/unstage', 'OrderController@unstage');
     Route::match(['get','put'], 'orders/{id}/approval', 'OrderController@approval');

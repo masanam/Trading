@@ -46,5 +46,6 @@ angular.module('bizdev').controller('IupModalController', ['$scope','$uibModalIn
     $scope.close = function () {
       $uibModalInstance.dismiss('cancel');
     };
+
   }  
 ]);

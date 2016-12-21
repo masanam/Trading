@@ -55,7 +55,8 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
           $scope.order.sells = res.sells;
           $scope.display.sell = res;
         }, function (err){
-          alert(err.data.message);
+          alert("Not available yet");
+          // alert(err.data.message);
         });
     };
 
