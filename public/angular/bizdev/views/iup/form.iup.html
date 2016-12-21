@@ -2,11 +2,11 @@
   <div class="col-lg-12">
     <div class="form-group">
       <label for="port_name">Name Company:</label>
-      <input name="company_name" type="text" class="form-control" id="company_name" required>
+      <input name="company_name" type="text" class="form-control" id="company_name" >
     </div>
     <div class="form-group">
       <label for="port_name">No. IUP:</label>
-      <input name="iup_no" type="text" class="form-control" id="iup_no" required>
+      <input name="iup_no" type="text" class="form-control" id="iup_no" >
     </div>
 
  
@@ -27,12 +27,12 @@
 
     <div class="form-group">
       <label for="port_name">Contact Person:</label>
-      <input name="contact_person" type="text" class="form-control" id="contact_person" required>
+      <input name="contact_person" type="text" class="form-control" id="contact_person" >
     </div>
 
     <div class="form-group">
       <label for="port_name">Telpon Number:</label>
-      <input name="telpon" type="text" class="form-control" id="telpon" required>
+      <input name="telpon" type="text" class="form-control" id="telpon" >
     </div>
 
     <h4>1. Data License</h4>  
@@ -53,7 +53,7 @@
 
     <div class="form-group">
       <label for="port_name">Expired Date:</label>
-      <input name="expired" type="date" class="form-control" id="expired" required>
+      <input name="expired" type="date" class="form-control" id="expired" >
     </div>
 
     <div class="form-group">
@@ -111,12 +111,12 @@
 
     <div class="form-group">
       <label for="port_name">Description:</label>
-      <input name="decription" type="date" class="form-control" id="description" required>
+      <input name="decription" type="date" class="form-control" id="description" >
     </div>
 
     <div class="form-group">
       <label for="port_name">Land Use:</label>
-      <input name="landuse" type="date" class="form-control" id="landuse" required>
+      <input name="landuse" type="date" class="form-control" id="landuse" >
     </div>
 
 
@@ -125,7 +125,7 @@
       <div class="col-lg-12">
         <div class="col-lg-6">
           Format : [[6,110], [8,110], ...]
-          <textarea rows="12" cols="5" class="form-control" ng-model="display.polygonString" ng-change="updatePolygonArray()" required></textarea>
+          <textarea rows="12" cols="5" class="form-control" ng-model="display.polygonString" ng-change="updatePolygonArray()" ></textarea>
           <button type="button" class="btn btn-danger" ng-click="clearPolygon()">Clear Text</button>
           <button type="button" class="btn btn-default" ng-click="resetPolygon()">Reset Text</button>
         </div>
@@ -174,10 +174,22 @@
 
     </div>
 
-    <h4>3. PROXIMITY</h4>   
+    <h4>3. INFRASTRUCTURE</h4>   
      <div class="form-group">
-        <label for="headquarter_location">Proximity :</label>
+        <label for="headquarter_location">Infrastructure :</label>
         <div class="input-group">
+          <div class="input-group-btn">
+            <label class="btn btn-default" ng-model="p" uib-btn-radio="0" style="min-width: 200px; text-align: left;">Road (Pit to Port in km)</label>
+          </div>
+           <input name="telpon" type="text" class="form-control" id="telpon"> 
+        </div>
+        <div class="input-group">
+          <div class="input-group-btn">
+            <label class="btn btn-default" ng-model="p" uib-btn-radio="0" style="min-width: 200px; text-align: left;">Port to Open Sea (km)</label>
+          </div>
+           <input name="telpon" type="text" class="form-control" id="telpon"> 
+        </div>
+        <!-- <div class="input-group">
           <div class="input-group-btn">
             <label class="btn btn-default" ng-model="p" uib-btn-radio="0">SMG MILL</label>
           </div>
@@ -189,27 +201,56 @@
             <label class="btn btn-default"  ng-model="smgkp" uib-btn-radio="0">SMG KP</label>
           </div>
            <input name="telpon" type="text" class="form-control" id="telpon"> 
-        </div>
+        </div> -->
 
         <div class="input-group">
           <div class="input-group-btn">
-            <label class="btn btn-default" ng-model="rr" uib-btn-radio="0">RIVER ROAD</label>
+            <label class="btn btn-default" ng-model="rr" uib-btn-radio="0" style="min-width: 200px; text-align: left;">River</label>
           </div>
            <input name="telpon" type="text" class="form-control" id="telpon"> 
         </div>
     </div>
-      
+
     <h4>4. Geological</h4>   
     <div class="form-group">
       <label for="port_name">Coal Bearing Formation:</label>
-      <input name="landuse" type="text" class="form-control" id="landuse" required>
+      <input name="landuse" type="text" class="form-control" id="landuse" >
     </div>
 
     <div class="form-group">
-      <label for="port_name">Description:</label>
-      <input name="landuse" type="text" class="form-control" id="landuse" required>
+      <label>Quality:</label>
+      <input type="text" class="form-control"  >
     </div>
 
+    <div class="form-group">
+      <label>CV (kkal):</label>
+      <input type="text" class="form-control"  >
+    </div>
+
+    <div class="form-group">
+      <label>TM (%):</label>
+      <input type="text" class="form-control"  >
+    </div>
+
+    <div class="form-group">
+      <label>TS (%):</label>
+      <input type="text" class="form-control"  >
+    </div>
+
+    <div class="form-group">
+      <label>Ash (%):</label>
+      <input type="text" class="form-control"  >
+    </div>
+
+    <div class="form-group">
+      <label>Reserve:</label>
+      <input type="text" class="form-control"  >
+    </div>
+
+    <div class="form-group">
+      <label>Stripping Ratio:</label>
+      <input type="text" class="form-control"  >
+    </div>    
 
     <div class="form-group">
       <label for="port_name">Notes:</label>
@@ -217,15 +258,18 @@
     </div>
 
     <!-- INI NANTI GANTI YANG BISA DI TAMBAH -->
-    <div>
-      </br><label>Upload Files:</label></br>
-      <input type="file" name="fileToUpload" id="fileToUpload">
-      <input type="file" name="fileToUpload" id="fileToUpload">
-      <input type="file" name="fileToUpload" id="fileToUpload">
-      <input type="file" name="fileToUpload" id="fileToUpload">
-      <input type="file" name="fileToUpload" id="fileToUpload">
-      </br>
+    <div style="margin-bottom: 25px;">
+      <label>Upload Files:</label></br>
+      <div class="row">
+        <div class="col-xs-4">
+          <input name="file_name" type="text" class="form-control" id="file_name"  placeholder="  File Name">
+        </div>
+        <div class="col-xs-6" style="margin-top: 5px;">
+          <input type="file" name="fileToUpload" id="fileToUpload">
+        </div>        
+      </div>
     </div>
 
     <button type="submit" class="btn btn-primary">Submit</button>
 </div>    
+
