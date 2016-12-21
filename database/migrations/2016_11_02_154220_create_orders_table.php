@@ -16,7 +16,6 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
-            $table->integer('use_house_product');
             $table->char('status', 1);
             $table->string('cancel_reason')->nullable();
             $table->string('request_reason')->nullable();
