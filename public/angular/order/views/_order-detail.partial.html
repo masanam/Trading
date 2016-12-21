@@ -7,6 +7,9 @@
 </div>
 <!--For Mobile-->
 <div class="table-responsive">
+  <div style="text-align:center; margin-left:175px;" flex>
+    <button ng-show="order.status !== 'x' && order.status !== 'a' && order.status !== 'f'" class="btn btn-primary" ng-click="addCostModal()" flex> + Add Additional Cost </button>
+  </div>
 	<table st-table="" class="table table-bordered table-striped">
 		<thead>
       <tr ng-if="!order.user_id || order.user_id === Authentication.user.id"  class="no-print">
@@ -390,7 +393,7 @@
 			</tr>
     </tbody>
     <tbody id="financial-section" uib-collapse="!financialCollapsed">
-			<tr>
+			<!-- <tr>
 				<th></th>
         <th>
           <button class="btn btn-default" ng-click="addCostModalBuys()"> Update Additional Cost </button>
@@ -398,7 +401,7 @@
         <th>
           <button class="btn btn-default" ng-click="addCostModalSells()"> Update Additional Cost </button>
         </th>
-      </tr>
+      </tr> -->
       <tr>
 				<th>Total Price / mt</th>
         <td>

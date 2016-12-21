@@ -172,23 +172,26 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
       });
     };
 
-    $scope.addCostModal = function () {
-      var modalInstance = $uibModal.open({
-        windowClass: 'xl-modal',
-        templateUrl: './angular/order/views/_add-cost.modal.html',
-        controller: 'AddCostModalController',
-        scope: $scope,
-      });
+    // $scope.addCostModal = function () {
+    //   var modalInstance = $uibModal.open({
+    //     windowClass: 'xl-modal',
+    //     templateUrl: './angular/order/views/_add-cost.modal.html',
+    //     controller: 'AddCostModalController',
+    //     scope: $scope
+    //   });
 
-      modalInstance.result.then(function(res){
-        //if existing order, directly upload
-        $scope.order.$update(function (res) {
-          $scope.order = res;
-        }, function (err) {
-          $scope.error = err.data.message;
-        });
-      });
-    };
+    //   modalInstance.result.then(function(res){
+    //     if(!$scope.order.additional) $scope.order.additional = [];
+
+    //     angular.extend($scope.order.additional, res);
+    //     //if existing order, directly upload
+    //     // $scope.order.$update(function (res) {
+    //     //   $scope.order = res;
+    //     // }, function (err) {
+    //     //   $scope.error = err.data.message;
+    //     // });
+    //   });
+    // };
   }
 ]);
 

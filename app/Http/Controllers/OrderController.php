@@ -136,7 +136,7 @@ class OrderController extends Controller
         foreach($buy['used'] as $use){
           $used += $use['volume'];
         }
-        if ($buy['pivot']['volume'] > $used) return response()->json([ 'message' => 'Bad Request' ], 400);
+        // if ($buy['pivot']['volume'] > $used) return response()->json([ 'message' => 'Bad Request in buy pivot volume' ], 400);
       }
     }
     if(count($req->sells) > 0){
@@ -145,7 +145,7 @@ class OrderController extends Controller
         foreach($sell['used'] as $use){
           $used += $use['volume'];
         }
-        if ($sell['pivot']['volume'] > $used) return response()->json([ 'message' => 'Bad Request' ], 400);
+        // if ($sell['pivot']['volume'] > $used) return response()->json([ 'message' => 'Bad Request in sell pivot volume' ], 400);
       }
     }
 
@@ -155,12 +155,11 @@ class OrderController extends Controller
       ], 400);
     }
 
-
     $order = new Order();
     $order->user_id = Auth::User()->id;
     $order->status = 'd';
     $order->save();
-    
+
     // Check the availability of associated leads
     if(count($req->buys) > 0){
       foreach($req->buys as $buy){
@@ -194,6 +193,15 @@ class OrderController extends Controller
           'payment_term' => $sell['pivot']['payment_term'],
           'user_id' => Auth::user()->id,
         ]);
+      }
+    }
+
+    if(count($req->additional) > 0) {
+      foreach($req->additional as $add) {
+        $order->companies()->sync([$add['company']['id'] => [
+          'cost' => $add['cost'],
+          'label' => $add['label']
+        ]]);
       }
     }
 
@@ -321,6 +329,14 @@ class OrderController extends Controller
         }
       }
 
+      if(count($req->additional) > 0) {
+        foreach($req->additional as $add) {
+          $order->companies()->updateExistingPivot([$add->company => [
+            'cost' => $add->cost
+          ]]);
+        }
+      }
+
       // add manager to approve this order
       if($user->manager_id){
         $order->requestApproval(User::find($user->manager_id));
@@ -438,4 +454,70 @@ class OrderController extends Controller
     return $this->show($id);
   }
 
+  public function stageOwn($id){
+    $order = Order::with('sells', 'buys')->find($id);
+    $this->authorize('update', $order);
+
+    if(count($order->sells) && count($order->buys)>1)
+      return response()->json([ 'message'=> 'Multiple Buy & Sell can\'t add more'], 400);
+
+    //cari selisih volume
+    $sell_volume = $order->sells->sum('pivot.volume');
+    $buy_volume = $order->buys->sum('pivot.volume');
+
+    $volume = $buy_volume - $sell_volume;
+
+    if($volume <= 0)
+      return response()->json([ 'message'=> 'Sourcing is more than Market'], 400);
+
+    $sell = SellOrder::create([
+      'user_id' => Auth::user()->id,
+      'seller_id' => 1, //ganti sesuai siapa penjual default
+      'city' => 'JKT',
+      'country' => 'ID',
+      'commercial_term' => '',
+
+      'address' => 'Jl. Kapten Darmo Sugondo No.56, Sidorukun, Kec. Gresik, Kabupaten Gresik, Jawa Timur',
+      'latitude' => '-7.1844498' ,
+      'longitude' => '112.6528737' ,
+
+      'order_date' => date('Y-m-d'),
+      'order_deadline' => date('Y-m-d'),
+      'penalty_desc' => 'penalty',
+      'ready_date'=> date('Y-m-d'),
+      'expired_date'=> date('Y-m-d'),
+
+      'volume' => $volume,
+      'order_status' => 'v'
+    ]);
+
+    $sell->leads()->attach([ $id => [
+      'volume' => $volume,
+      'price' => 0,
+      'trading_term' => 'FOB MV',
+      'payment_term' => 'NET30',
+    ]]);
+
+    return $this->show($id);
+  }
+
+  public function createOrderAdditionalCost($id, Request $request) {
+    $order = Order::find($id);
+
+    $order->companies()->attach([$request->companyId => [
+      'cost' => $request->cost
+    ]]);
+
+    return response()->json($order, 200);
+  }
+
+  public function updateOrderAdditionalCost($id, Request $request) {
+    $order = Order::find($id);
+
+    $order->companies()->updateExistingPivot([$request->companyId => [
+      'cost' => $request->cost
+    ]]);
+
+    return response()->json($order, 200);
+  }
 }

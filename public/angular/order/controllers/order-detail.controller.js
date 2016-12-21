@@ -236,6 +236,7 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
           $scope.display.sell.index = $scope.order.sells.length-1;
           $scope.calculateTotal();
         }
+        console.log($scope.order);
       }, function () {
         console.log('Modal dismissed at: ' + new Date());
       });
@@ -300,6 +301,27 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
           }
         }
         
+      });
+    };
+
+    $scope.addCostModal = function () {
+      var modalInstance = $uibModal.open({
+        windowClass: 'xl-modal',
+        templateUrl: './angular/order/views/_add-cost.modal.html',
+        controller: 'AddCostModalController',
+        scope: $scope
+      });
+
+      modalInstance.result.then(function(res){
+        if(!$scope.order.additional) $scope.order.additional = [];
+
+        angular.extend($scope.order.additional, res);
+        //if existing order, directly upload
+        // $scope.order.$update(function (res) {
+        //   $scope.order = res;
+        // }, function (err) {
+        //   $scope.error = err.data.message;
+        // });
       });
     };
 

@@ -47,7 +47,7 @@ class Order extends Model
   }
 
   public function companies() {
-    return $this->belongsToMany(Company::class, 'order_additional_costs')->withPivot('cost');
+    return $this->belongsToMany(Company::class, 'order_additional_costs', 'order_id', 'company_id')->withPivot('label', 'cost');
   }
 
 

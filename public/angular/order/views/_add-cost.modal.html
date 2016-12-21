@@ -6,56 +6,51 @@
 
   <div class="modal-body" id="modal-body">
     <div class="row">
-      <div class="col-sm-6">
-        <label>Insurance Cost (mt)
-        </label>
-        <input type="number" class="form-control" ng-model="additional.insurance_cost" required />
-      </div>
-      <div class="col-sm-6">
-        <label>Interest Rate (mt)
-        </label>
-        <input type="number" class="form-control" ng-model="additional.interest_cost" required />
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-6">
-        <label>Surveyor (mt)
-        </label>
-        <input type="number" class="form-control" ng-model="additional.surveyor_cost" required />
-      </div>
-      <div class="col-sm-6">
-        <label>Others (mt)
-        </label>
-        <input type="number" class="form-control" ng-model="additional.others_cost" required />
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-3">
-        <label>Pit-to-Port Cost (mt)
-        </label>
-        <input type="number" class="form-control" ng-model="additional.pit_to_port" required />
-      </div>
-      <div class="col-sm-3">
-        <label>Transhipment (mt)
-        </label>
-        <input type="number" class="form-control" ng-model="additional.transhipment" required />
-      </div>
-      <div class="col-sm-3">
-        <label>Freight Cost (mt)
-        </label>
-        <input type="number" class="form-control" ng-model="additional.freight_cost" required />
-      </div>
-      <div class="col-sm-3">
-        <label>Port-to-Factory Cost (mt)
-        </label>
-        <input type="number" class="form-control" ng-model="additional.port_to_factory" required />
+      <div class="col-sm-12" ng-init="findVendors()">
+        <div class="col-sm-12" ng-repeat="additional in additionals">
+          <div class="row">
+            <div class="form-group col-lg-3">
+              <label for="id">Cost Types :</label>
+              <select name="type" id="type" class="form-control"
+                ng-model="additional.label"  ng-options="type for type in types" required>
+              </select>
+            </div>
+            <div class="select-box form-group col-lg-5" class="col-sm-6">
+              <label>Vendor :</label>
+              <ui-select ng-model="additional.company"
+                reset-search-input="false"
+                style="min-width: 30px;"
+                title="Choose a Company">
+                <ui-select-match placeholder="Name of the Company...">{{$select.selected.company_name}}</ui-select-match>
+
+                <ui-select-choices repeat="company in companies track by $index"
+                  refresh="find($select.search)"
+                  refresh-delay="0">
+                  <div ng-bind-html="company.company_name  | highlight: $select.search | html"></div>
+                </ui-select-choices>
+              </ui-select>
+            </div>
+              <div class="form-group col-lg-2">
+                <label>
+                  Cost (mt) :
+                </label>
+                <input type="number" class="form-control" ng-model="additional.cost" required />
+              </div>
+              <div class="form-group col-lg-1" style="margin-top:25px;">
+                <button class="btn btn-danger" ng-click="removeChoice(additional)">X</button>
+              </div>
+            </div>
+          <hr>
+          </div>
+        </div>
+        <button class="btn btn-primary col-lg-12" ng-click="addNewChoice()"> + Add Another One</button>
       </div>
     </div>
   </div>
   <div class="modal-footer" ng-switch="status">
     <button class="btn btn-default pull-left" type="button" ng-click="cancel()">Cancel</button>
     <span>
-      <button class="btn btn-primary" type="submit"><i class="glyphicon glyphicon-pencil"></i>Update</button>
+      <button class="btn btn-primary" type="submit"><i class="glyphicon glyphicon-pencil"></i>Submit</button>
     </span>
   </div>
 </form>
