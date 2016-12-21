@@ -15,8 +15,8 @@
 	<div class="box-body hidden-xs">
 		<div class="col-xs-2 description-block border-right">
   		<p>BUY PRICE</p>
-  		<h3>$ {{ (display.sell.pivot.price + order.pit_to_port + order.transhipment) | number:2 }}</h3>
-  		<small class="text-muted">deviation: {{ ((display.sell.pivot.price + order.pit_to_port + order.transhipment)/display.index.price)*100 | number:2 }}%</small>
+  		<h3>$ {{ ( display.buy.pivot.price ) | number:2 }}</h3>
+  		<small class="text-muted">deviation: {{ (( display.buy.pivot.price )/display.index.price)*100 | number:2 }}%</small>
   	</div>
 		<div ng-hide=" display.totalSellPrice === 0 || display.totalBuyPrice === 0 " class="col-xs-2 description-block border-right">
   		<p>{{ display.index.index_provider }} {{ display.index.index_name }}</p>
@@ -25,8 +25,8 @@
   	</div>
 		<div class="col-xs-2 description-block border-right">
   		<p>SELL PRICE</p>
-  		<h3>$ {{ (display.buy.pivot.price - order.port_to_factory - order.freight_cost) | number:2 }}</h3>
-  		<small class="text-muted">deviation: {{ ((display.buy.pivot.price - order.port_to_factory - order.freight_cost)/display.index.price)*100 | number:2 }}%</small>
+  		<h3>$ {{ (display.sell.pivot.price) | number:2 }}</h3>
+  		<small class="text-muted">deviation: {{ ((display.sell.pivot.price)/display.index.price)*100 | number:2 }}%</small>
   	</div>
 		<div class="col-xs-6 description-block" id="lineChart">
       <canvas id="line" class="chart chart-line" chart-data="data" chart-dataset-override="datasetOverride"
@@ -39,8 +39,8 @@
   <div class="box-body hidden-sm hidden-md hidden-lg">
     <div class="col-xs-12 ">
       <p>BUY PRICE</p>
-      <h3>$ {{ (display.sell.pivot.price + order.pit_to_port + order.transhipment) | number:2 }}</h3>
-      <small class="text-muted">deviation: {{ ((display.sell.pivot.price + order.pit_to_port + order.transhipment)/display.index.price)*100 | number:2 }}%</small>
+      <h3>$ {{ ( display.buy.pivot.price ) | number:2 }}</h3>
+      <small class="text-muted">deviation: {{ (( display.buy.pivot.price )/display.index.price)*100 | number:2 }}%</small>
     </div>
     <div ng-hide=" display.totalSellPrice === 0 || display.totalBuyPrice === 0 " class="col-xs-12 ">
       <p>{{ display.index.index_provider }} {{ display.index.index_name }}</p>
@@ -49,8 +49,8 @@
     </div>
     <div class="col-xs-12 ">
       <p>SELL PRICE</p>
-      <h3>$ {{ (display.buy.pivot.price - order.port_to_factory - order.freight_cost) | number:2 }}</h3>
-      <small class="text-muted">deviation: {{ ((display.buy.pivot.price - order.port_to_factory - order.freight_cost)/display.index.price)*100 | number:2 }}%</small>
+      <h3>$ {{ (display.sell.pivot.price) | number:2 }}</h3>
+      <small class="text-muted">deviation: {{ ((display.sell.pivot.price)/display.index.price)*100 | number:2 }}%</small>
     </div>
     <div class="col-xs-12 " id="lineChart">
       <canvas id="line" class="chart chart-line" chart-data="data" chart-dataset-override="datasetOverride"
