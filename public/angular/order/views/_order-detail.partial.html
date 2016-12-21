@@ -417,19 +417,32 @@
           </span>
         </td>
 			</tr>
-      <tr ng-repeat="additional in order.additional" ng-show="order.additional">
+      <tr ng-repeat="additional in order.additional" ng-show="order.additional && !order.companies">
 				<th>{{additional.label}} / mt</th>
         <td>
-          <span ng-show="order.additional">
+          <span ng-show="order.additional && !order.companies">
           <h4>{{additional.company.company_name}}</h4>
           </span>
 				</td>
         <td>
-          <span ng-show="order.additional">
+          <span ng-show="order.additional && !order.companies">
           <h4>US${{additional.cost | number}}</h4>
           </span>
         </td>
 			</tr>
+      <tr ng-repeat="additional in order.companies" ng-show="!order.additional && order.companies">
+        <th>{{additional.pivot.label}} / mt</th>
+        <td>
+          <span ng-show="!order.additional && order.companies">
+          <h4>{{additional.company_name}}</h4>
+          </span>
+        </td>
+        <td>
+          <span ng-show="!order.additional && order.companies">
+          <h4>US${{additional.pivot.cost | number}}</h4>
+          </span>
+        </td>
+      </tr>
       <tr>
 				<th>Coal Price</th>
         <td>
