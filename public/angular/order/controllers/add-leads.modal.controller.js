@@ -3,6 +3,7 @@
 angular.module('order').controller('AddLeadsModalController', ['$uibModalInstance', '$scope', 'Order', 'Term', 'items', 'lead',
   function($uibModalInstance, $scope, Order, Term, items, lead) {
     $scope.items = items;
+    console.log($scope.items);
     $scope.lead = lead;
     $scope.selected = {
       item: $scope.items[0]
