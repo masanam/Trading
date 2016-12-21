@@ -12,8 +12,8 @@
           <div class="col-sm-12">
             <table class="table table-bordered table-striped">
               <tr>
-                <td width="15%"><label>{{ lead.type === buy ? 'Seller' : 'Buyer' }}</label></td>
-                <td width="85%" colspan=3>{{ lead.item.seller.company_name || lead.item.buyer.company_name }}</td>
+                <td width="15%"><label>{{ lead.type === buy ? 'Customer' : 'Supplier' }}</label></td>
+                <td width="85%" colspan=3>{{ lead.item.company.company_name }}</td>
               </tr>
               <tr>
                 <td width="15%"><label>Volume</label></td>
