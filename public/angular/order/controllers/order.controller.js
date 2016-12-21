@@ -52,6 +52,10 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
           status: function () { return status; },
         }
       });
+
+      modalInstance.result.then(function (order) {
+        $scope.findOne();
+      });
     };
     
     $scope.openReasonModal = function () {
