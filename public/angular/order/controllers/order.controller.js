@@ -52,6 +52,10 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
           status: function () { return status; },
         }
       });
+
+      modalInstance.result.then(function (order) {
+        $scope.findOne();
+      });
     };
     
     $scope.openReasonModal = function () {
@@ -169,6 +173,7 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
           // $scope.order.buys[i].additional.pit_to_port = parseFloat($scope.order.buys[i].pivot.negotiations[0].pit_to_port) || 0;
         }
         $scope.checkOrderUsers();
+        console.log($scope.order);
       });
     };
 

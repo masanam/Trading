@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use App\Model\User;
 use App\Model\Lead;
 use App\Model\Order;
+use App\Model\OrderUser;
 use App\Model\IndexPrice;
 use App\Model\Index;
 use App\Model\OrderNegotiation;
@@ -198,7 +199,7 @@ class OrderController extends Controller
 
     if(count($req->additional) > 0) {
       foreach($req->additional as $add) {
-        $order->companies()->sync([$add['company']['id'] => [
+        $order->companies()->attach([$add['company']['id'] => [
           'cost' => $add['cost'],
           'label' => $add['label']
         ]]);
@@ -217,7 +218,7 @@ class OrderController extends Controller
   public function show($id, Request $req = null)
   { 
     $order = Order::with('trader', 'users', 'sells', 'buys', 'buys.trader',
-      'approvals', 'sells.trader', 'sells.company', 'buys.company', 'buys.concession', 'sells.factory')->find($id);
+      'approvals', 'sells.trader', 'sells.company', 'buys.company', 'buys.concession', 'sells.factory', 'companies')->find($id);
 
     $this->authorize('view', $order);
 
@@ -246,7 +247,7 @@ class OrderController extends Controller
       } else $json = $order;
     } else $json = $order;
 
-    return response()->json($json, 200);;
+    return response()->json($json, 200);
   }
 
   /**
@@ -265,26 +266,29 @@ class OrderController extends Controller
 
     $this->authorize('update', $order);
 
-    if(count($order->buys) > 0){
-      foreach($order->buys as $buy){
-        BuyOrder::find($buy['id'])->reconcile();
+    if(count($req->buys) > 0){
+      foreach($req->buys as $buy){
+        Lead::find($buy['id'])->reconcile();
       }
     }
     if(count($req->sells) > 0) {
       foreach($req->sells as $sell){
-        SellOrder::find($sell['id'])->reconcile();
+        Lead::find($sell['id'])->reconcile();
       }
     }
 
+    $order->request_reason = $req->request_reason;
+    $order->finalize_reason = $req->finalize_reason;
+    $order->cancel_reason = $req->cancel_reason;
     $order->status = $req->status;
     $order->save();
     //$order->updated_at = date('Y-m-d H:i:s');
 
     if($order->status == 'x'){
-      $buy_ids = $order->buys()->pluck('buy_order.id');
-      BuyOrder::whereIn('id', $buy_ids)->update(['order_status' => 'p']);
-      $sell_ids = $order->sells()->pluck('sell_order.id');
-      SellOrder::whereIn('id', $sell_ids)->update(['order_status' => 'p']);
+      $buy_ids = $order->buys()->pluck('leads.id');
+      Lead::whereIn('id', $buy_ids)->update(['order_status' => 'p']);
+      $sell_ids = $order->sells()->pluck('leads.id');
+      Lead::whereIn('id', $sell_ids)->update(['order_status' => 'p']);
     }
     else if($order->status == 'p'){
       $order = Order::with(['approvals' => function($q){
@@ -294,40 +298,30 @@ class OrderController extends Controller
       }])->find($id);
 
 
-      if(count($req->buys) > 0){
-        foreach($req->buys as $buy){
-          $order->buys()->attach([ $buy['id'] => $buy['pivot'] ]);
-          Lead::find($buy['id'])->reconcile();
-
-          OrderNegotiation::create([
-            'order_detail_id' => $buy['id'],
-            'notes' => 'Initial Deal',
-            'volume' => $buy['pivot']['volume'],
-            'price' => $buy['pivot']['price'],
-            'trading_term' => $buy['pivot']['trading_term'],
-            'payment_term' => $buy['pivot']['payment_term'],
-            'user_id' => Auth::user()->id,
-          ]);
+      if($order->users->count() == 0){
+        foreach (Auth::user()->managers() as $user_id) {
+          $order_user = new OrderUser();
+          $order_user->order_id = $id;
+          $order_user->user_id = $user_id->id;
+          $order_user->role = 'approver';
+          $order_user->save();
         }
       }
 
-      if(count($req->sells) > 0) {
-        foreach($req->sells as $sell){
-          $order->sells()->attach([ $sell['id'] => $sell['pivot'] ]);
-          Lead::find($sell['id'])->reconcile();
-
-          // $order_detail = $order->orders->find($sell['id']);
-          OrderNegotiation::create([
-            'order_detail_id' => $sell['id'],
-            'notes' => 'Initial Deal',
-            'volume' => $sell['pivot']['volume'],
-            'price' => $sell['pivot']['price'],
-            'trading_term' => $sell['pivot']['trading_term'],
-            'payment_term' => $sell['pivot']['payment_term'],
-            'user_id' => Auth::user()->id,
-          ]);
-        }
-      }
+      // if($order->approvals->count() > 0){
+      //   $order_approval = OrderApproval::where('user_id', $user_id)->where('order_id', $order_id)->first();
+      //   $order_approval->status = $status;
+      //   $order_approval->save();
+        
+      //   $this->send_approval_mail($order, $user_id);
+      // }else{
+      //   $order_approval = new OrderApproval();
+      //   $order_approval->order_id = $order_id;
+      //   $order_approval->user_id = $user_id;
+      //   $order_approval->status = $status;
+      //   $order_approval->save();
+      //   $this->send_approval_mail($order, $user_id);
+      // }
 
       if(count($req->additional) > 0) {
         foreach($req->additional as $add) {
@@ -338,14 +332,16 @@ class OrderController extends Controller
       }
 
       // add manager to approve this order
-      if($user->manager_id){
-        $order->requestApproval(User::find($user->manager_id));
-      } else {
-        $order->status = 'a'; $order->save();
-      }
+      // if(Auth::user()->manager_id){
+      //   $order->requestApproval(User::find($user->manager_id));
+      // } else {
+      //   $order->status = 'a'; $order->save();
+      // }
     }
 
-    return $this->show($id);
+    $req['envelope'] = 'true';
+
+    return $this->show($id, $req);
   }
 
   /**

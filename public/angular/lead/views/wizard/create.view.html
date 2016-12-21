@@ -18,12 +18,12 @@
         <label ng-show="error" class="alert bg-red" style="width:100%">{{error}}</label>
       </div>
 
-      <div class="row">
+      <div class="row" ng-controller="LeadCompanyController">
         <div class="col-lg-6">
           <label>Select Lead Type :</label>
           <div class="btn-group">
-            <label class="btn btn-default" ng-model="lead.lead_type" uib-btn-radio="'buy'">Buy</label>
-            <label class="btn btn-default" ng-model="lead.lead_type" uib-btn-radio="'sell'">Sell</label>
+            <label class="btn btn-default" ng-model="lead.lead_type" uib-btn-radio="'buy'" ng-click="find()">Buy</label>
+            <label class="btn btn-default" ng-model="lead.lead_type" uib-btn-radio="'sell'" ng-click="find()">Sell</label>
           </div>
         </div>
       </div>
