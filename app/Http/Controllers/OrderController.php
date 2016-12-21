@@ -217,7 +217,7 @@ class OrderController extends Controller
   public function show($id, Request $req = null)
   { 
     $order = Order::with('trader', 'users', 'sells', 'buys', 'buys.trader',
-      'approvals', 'sells.trader', 'sells.company', 'buys.company', 'buys.concession', 'sells.factory')->find($id);
+      'approvals', 'sells.trader', 'sells.company', 'buys.company', 'buys.concession', 'sells.factory', 'companies')->find($id);
 
     $this->authorize('view', $order);
 
