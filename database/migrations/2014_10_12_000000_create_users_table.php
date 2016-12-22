@@ -39,8 +39,8 @@ class CreateUsersTable extends Migration
 
 
         Schema::create('acting_users', function (Blueprint $table) {
-            $table->integer('user_id');
-            $table->integer('acting_as');
+            $table->integer('user_id')->unsigned();
+            $table->integer('acting_as')->unsigned();
             $table->datetime('date_start')->nullable();
             $table->datetime('date_end')->nullable();
             
@@ -59,7 +59,7 @@ class CreateUsersTable extends Migration
 
         Schema::create('login_user', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id');
+            $table->integer('user_id')->unsigned();
             $table->integer('num_login');
             $table->timestamps();
 
@@ -69,7 +69,7 @@ class CreateUsersTable extends Migration
         Schema::create('activities', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->integer('user_id');
+            $table->integer('user_id')->unsigned();
             $table->string('action');
             $table->string('table')->nullable();
             $table->string('entity_id')->nullable();
@@ -89,6 +89,7 @@ class CreateUsersTable extends Migration
         Schema::dropIfExists('activities');
         Schema::dropIfExists('login_user');
         Schema::dropIfExists('password_resets');
+        Schema::dropIfExists('acting_users');
         Schema::dropIfExists('users');
     }
 }
