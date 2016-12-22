@@ -106,7 +106,8 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
           { lead_type:'buys', lead_id:negotiation.id, negotiation:true, volume:negotiation.volume, price:negotiation.price, trading_term:negotiation.trading_term, payment_term:negotiation.payment_term, notes:negotiation.notes },
           function (res){
             $scope.order.buys = res.buys;
-            $scope.display.buy.pivot = negotiation;
+            negotiation.created_at = new Date();
+            $scope.display.buy.pivot.negotiations.push(negotiation);
           });
       }, function () {
         console.log('Modal dismissed at: ' + new Date());
@@ -137,7 +138,8 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
           { lead_type:'sells', lead_id:negotiation.id, negotiation:true, volume:negotiation.volume, price:negotiation.price, trading_term:negotiation.trading_term, payment_term:negotiation.payment_term, notes:negotiation.notes },
           function (res){
             $scope.order.sells = res.sells;
-            $scope.display.sell.pivot = negotiation;
+            negotiation.created_at = new Date();
+            $scope.display.sell.pivot.negotiations.push(negotiation);
           });
       }, function () {
         console.log('Modal dismissed at: ' + new Date());
