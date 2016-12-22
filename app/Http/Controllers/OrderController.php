@@ -288,7 +288,17 @@ class OrderController extends Controller
     if($order->status == 'x'){
       $buy_ids = $order->buys()->pluck('leads.id');
       Lead::whereIn('id', $buy_ids)->update(['order_status' => 'p']);
+      if(isset($buy_ids)) {
+        foreach ($buy_ids as $id) {
+          $order->buys()->detach($id);
+        }
+      }
       $sell_ids = $order->sells()->pluck('leads.id');
+      if(isset($sell_ids)) {
+        foreach ($sell_ids as $id) {
+          $order->sells()->detach($id);
+        }
+      }
       Lead::whereIn('id', $sell_ids)->update(['order_status' => 'p']);
     }
     else if($order->status == 'p'){
@@ -333,11 +343,11 @@ class OrderController extends Controller
       }
 
       // add manager to approve this order
-      // if(Auth::user()->manager_id){
-      //   $order->requestApproval(User::find($user->manager_id));
-      // } else {
-      //   $order->status = 'a'; $order->save();
-      // }
+      if(Auth::user()->manager_id){
+        $order->requestApproval(User::find(Auth::user()->manager_id));
+      } else {
+        $order->status = 'a'; $order->save();
+      }
     }
 
     $req['envelope'] = 'true';
