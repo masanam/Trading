@@ -1,96 +1,214 @@
-<section ng-controller="BizdevController" class="content">
-  <div class="col-lg-12">
-    <div class="box box-info">
-      <div class="box-header with-border">
-        <h3 class="box-title">Dashboard</h3>
-      </div>
-      <div class="box-body">
+<h3 style="text-align: center;">Your IUP Overview</h3>
+<section ng-controller="BizdevController">
 
-        <div class="col-lg-3 col-sm-4">
-          <div class="small-box bg-red">
-            <div class="inner">
-              <h4>IUP</h4>
-              <p>20</p>
-            </div>
-            <div class="icon">
-              <i class="fa fa-building"></i>
-            </div>
-            <a ui-sref="bizdev.iup-history" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-sm-4">
-          <div class="small-box bg-aqua">
-            <div class="inner">
-              <h4>Rejected</h4>
-              <p>5</p>
-            </div>
-            <div class="icon">
-              <i class="fa fa-industry"></i>
-            </div>
-             <a ui-sref="" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-sm-4">
-          <div class="small-box bg-green">
-            <div class="inner">
-              <h4>Approve</h4>
-
-              <p>4</p>
-            </div>
-            <div class="icon">
-              <i class="fa fa-map"></i>
-            </div>
-            <a ui-sref="" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-sm-4">
-          <div class="small-box bg-yellow">
-            <div class="inner">
-              <h4>Pending</h4>
-
-              <p>4</p>
-            </div>
-            <div class="icon">
-              <i class="fa fa-line-chart"></i>
-            </div>
-            <a ui-sref="" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-
-         <div class="text-center">
-          <form class="form-group" ng-submit="search(searchType, keyword)">
-            <div class="input-group input-group-sm">
-              <input type="text" class="col-md-12 form-control" ng-model="keyword">
-              <span class="input-group-btn">
-                <button type="btn" type="submit" class="btn btn-info btn-flat">Search</button>
-              </span>
-            </div>
-
-            <div class="btn-group">
-              <label class="btn btn-sm btn-default" ng-model="searchType"
-                uib-btn-radio="'customer'" ng-click="search('customer')">
-                Rejected
-              </label>
-              <label class="btn btn-sm btn-default" ng-model="searchType"
-                uib-btn-radio="'supplier'" ng-click="search('supplier')">
-                Approve
-              </label>
-              <label class="btn btn-sm btn-default" ng-model="searchType"
-                uib-btn-radio="'vendor'" ng-click="search('vendor')">
-                Pending
-              </label>
-             
-            </div>
-          </form>
-          </div>
-
-      </div>
+  <div class="box-body col-xs-6">       
+     <div class="table-responsive">
+      <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+              <th></th>
+              <th style="text-align: center;">2014</th>
+              <th style="text-align: center;">2015</th>
+              <th style="text-align: center;">2016</th>
+            </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Offer Rejected</td>
+            <td style="text-align: center;">19</td>
+            <td style="text-align: center;">25</td>
+            <td style="text-align: center;">26</td>
+          </tr>
+          <tr>
+            <td>Offer Approved to Level 2</td>
+            <td style="text-align: center;">12</td>
+            <td style="text-align: center;">15</td>
+            <td style="text-align: center;">20</td>
+          </tr>
+          <tr>
+            <td>On Progress</td>
+            <td style="text-align: center;">3</td>
+            <td style="text-align: center;">4</td>
+            <td style="text-align: center;">5</td>
+          </tr>
+          <tr>
+            <td style="text-align: right;"><b>Total</b></td>
+            <td style="text-align: center;">34</td>
+            <td style="text-align: center;">44</td>
+            <td style="text-align: center;">51</td>
+          </tr>
+        </tbody>
+      </table>
+      <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+              <th></th>
+              <th style="text-align: center;">2014</th>
+              <th style="text-align: center;">2015</th>
+              <th style="text-align: center;">2016</th>
+            </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Offer with Sufficient Data</td>
+            <td style="text-align: center;">27</td>
+            <td style="text-align: center;">35</td>
+            <td style="text-align: center;">39</td>
+          </tr>
+          <tr>
+            <td>Offer Insufficient Data</td>
+            <td style="text-align: center;">7</td>
+            <td style="text-align: center;">9</td>
+            <td style="text-align: center;">12</td>
+          </tr>
+          <tr>
+            <td style="text-align: right;"><b>Total</b></td>
+            <td style="text-align: center;">34</td>
+            <td style="text-align: center;">44</td>
+            <td style="text-align: center;">51</td>
+          </tr>
+        </tbody>
+      </table>
+      <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+              <th>Reason to Reject</th>
+              <th style="text-align: center;">2014</th>
+              <th style="text-align: center;">2015</th>
+              <th style="text-align: center;">2016</th>
+            </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Data License</td>
+            <td style="text-align: center;">4</td>
+            <td style="text-align: center;">6</td>
+            <td style="text-align: center;">6</td>
+          </tr>
+          <tr>
+            <td>Infrastructure</td>
+            <td style="text-align: center;">2</td>
+            <td style="text-align: center;">2</td>
+            <td style="text-align: center;">3</td>
+          </tr>
+          <tr>
+            <td>Land Use</td>
+            <td style="text-align: center;">4</td>
+            <td style="text-align: center;">5</td>
+            <td style="text-align: center;">5</td>
+          </tr>
+          <tr>
+            <td>Geological</td>
+            <td style="text-align: center;">4</td>
+            <td style="text-align: center;">4</td>
+            <td style="text-align: center;">8</td>
+          </tr>
+          <tr>
+            <td>Others</td>
+            <td style="text-align: center;">5</td>
+            <td style="text-align: center;">8</td>
+            <td style="text-align: center;">4</td>
+          </tr>
+          <tr>
+            <td style="text-align: right;"><b>Total</b></td>
+            <td style="text-align: center;">19</td>
+            <td style="text-align: center;">25</td>
+            <td style="text-align: center;">26</td>
+          </tr>
+        </tbody>
+      </table>
+      <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+              <th>Proposed Location</th>
+              <th style="text-align: center;">2014</th>
+              <th style="text-align: center;">2015</th>
+              <th style="text-align: center;">2016</th>
+            </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>South Sumatra</td>
+            <td style="text-align: center;">4</td>
+            <td style="text-align: center;">4</td>
+            <td style="text-align: center;">7</td>
+          </tr>
+          <tr>
+            <td>Jambi</td>
+            <td style="text-align: center;">5</td>
+            <td style="text-align: center;">6</td>
+            <td style="text-align: center;">9</td>
+          </tr>
+          <tr>
+            <td>Bengkulu</td>
+            <td style="text-align: center;">5</td>
+            <td style="text-align: center;">6</td>
+            <td style="text-align: center;">4</td>
+          </tr>
+          <tr>
+            <td>West Sumatra</td>
+            <td style="text-align: center;">4</td>
+            <td style="text-align: center;">6</td>
+            <td style="text-align: center;">2</td>
+          </tr>
+          <tr>
+            <td>East Kalimantan</td>
+            <td style="text-align: center;">6</td>
+            <td style="text-align: center;">8</td>
+            <td style="text-align: center;">9</td>
+          </tr>
+          <tr>
+            <td>West Kalimantan</td>
+            <td style="text-align: center;">3</td>
+            <td style="text-align: center;">4</td>
+            <td style="text-align: center;">7</td>
+          </tr>
+          <tr>
+            <td>South Kalimantan</td>
+            <td style="text-align: center;">3</td>
+            <td style="text-align: center;">4</td>
+            <td style="text-align: center;">6</td>
+          </tr>
+          <tr>
+            <td>North Kalimantan</td>
+            <td style="text-align: center;">4</td>
+            <td style="text-align: center;">6</td>
+            <td style="text-align: center;">7</td>
+          </tr>
+          <tr>
+            <td style="text-align: right;"><b>Total</b></td>
+            <td style="text-align: center;">34</td>
+            <td style="text-align: center;">44</td>
+            <td style="text-align: center;">51</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-  </div>      
-  
+  </div>
 
+  <div class="col-xs-5" style="margin-left: 50px;">
+    <label style="margin-bottom: 25px; margin-top: 15px;">Year to Year Proposal Status</label>
+    <canvas id="bar" class="chart chart-bar"
+      chart-data="data1" chart-labels="labels1" chart-series="series1">
+    </canvas>
+    <label style="margin-bottom: 25px; margin-top: 40px;">2016 Proposal Review Status</label>
+    <canvas id="bar" class="chart chart-bar"
+      chart-data="data2" chart-labels="labels2" chart-series="series2">
+    </canvas>
+    <div class="row" style="padding: 0px !important; margin:  0px !important;">
+      <div class="col-xs-6" style="padding: 0px 20px  !important; margin:  0px !important;">
+        <label style="margin-bottom: 25px; margin-top: 40px; text-align: center;">Proposal Reject Factors in 2016</label>
+        <canvas id="pie" class="chart chart-pie"
+          chart-data="data3" chart-labels="labels3" chart-options="options3">
+        </canvas> 
+      </div>
+      <div class="col-xs-6" style="padding: 0px 20px  !important; margin:  0px !important;">
+        <label style="margin-bottom: 35px; margin-top: 50px; text-align: center;">Proposal by Location in 2016</label>
+        <canvas id="pie" class="chart chart-pie"
+          chart-data="data4" chart-labels="labels4" chart-options="options4">
+        </canvas> 
+      </div>      
+    </div>    
+  </div>
 
 </section>
