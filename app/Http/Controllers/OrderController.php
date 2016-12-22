@@ -137,7 +137,7 @@ class OrderController extends Controller
         foreach($buy['used'] as $use){
           $used += $use['volume'];
         }
-        // if ($buy['pivot']['volume'] > $used) return response()->json([ 'message' => 'Bad Request in buy pivot volume' ], 400);
+        if ($buy['pivot']['volume'] > ($buy['volume'] - $used)) return response()->json([ 'message' => 'Bad Request in buy pivot volume' ], 400);
       }
     }
     if(count($req->sells) > 0){
@@ -146,7 +146,7 @@ class OrderController extends Controller
         foreach($sell['used'] as $use){
           $used += $use['volume'];
         }
-        // if ($sell['pivot']['volume'] > $used) return response()->json([ 'message' => 'Bad Request in sell pivot volume' ], 400);
+        if ($sell['pivot']['volume'] > ($sell['volume'] - $used)) return response()->json([ 'message' => 'Bad Request in sell pivot volume' ], 400);
       }
     }
 

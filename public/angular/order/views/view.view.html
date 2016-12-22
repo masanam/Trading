@@ -43,7 +43,7 @@
         <a class="btn btn-primary hidden-xs" ng-click="print(order);" ng-show="(order.status === 'a' || order.status === 'f') && (order.user_id === Authentication.user.id || approver === true)">
           <i class="glyphicon glyphicon-print" title="Print"></i> Print
         </a>
-        <a class="btn btn-success hidden-xs" ng-click="changeStatus('p');" ng-show="order.status === 'd' && order.user_id === Authentication.user.id">
+        <a class="btn btn-success hidden-xs" ng-click="changeStatus('p');" ng-show="(order.status === 'd' || order.status === 'p') && order.user_id === Authentication.user.id">
           <i class="glyphicon glyphicon-send" title="Request for Approval"></i> Request Approval
         </a>
         <a class="btn btn-success hidden-xs" ng-click="changeStatus('f');" ng-show="order.status === 'a' && order.user_id === Authentication.user.id">

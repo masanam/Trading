@@ -18,6 +18,7 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
     $scope.calculateTotal = function(){
       var i;
 
+      if ($scope.order.sells)
       for (i = 0; i < $scope.order.sells.length; i++) {
         $scope.totalPriceBuy += $scope.order.sells[i].pivot.price;
         $scope.totalVolumeBuy += $scope.order.sells[i].pivot.volume;
@@ -31,6 +32,7 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
           $scope.totalSelfAdditionalBuy += $scope.order.sells[i].pivot.volume;
         }
       }
+      if ($scope.order.buys)
       for (i = 0; i < $scope.order.buys.length; i++) {
         $scope.totalPriceSell += $scope.order.buys[i].pivot.price;
         $scope.totalVolumeSell += $scope.order.buys[i].pivot.volume;
