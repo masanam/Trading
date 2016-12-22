@@ -158,14 +158,15 @@ angular.module('lead').controller('LeadController', ['$scope', '$state', '$state
       var next;
 
       if($state.current.name === 'lead.update') next = 'lead.location';
-      else if($state.current.name === 'lead.location') next = 'lead.product';
+      else if($state.current.name === 'lead.location') next = 'lead.port';
+      else if($state.current.name === 'lead.port') next = 'lead.product';
       else if($state.current.name === 'lead.product') {
         next = 'lead.view';
-        if (!(
-          ($scope.lead.gcv_adb_bonus&&$scope.lead.gcv_adb_reject)||
-          ($scope.lead.gcv_arb_bonus&&$scope.lead.gcv_arb_reject)||
-          ($scope.lead.ncv_bonus&&$scope.lead.ncv_reject)
-          )) {
+        if (
+          !( ($scope.lead.gcv_adb_bonus && $scope.lead.gcv_adb_reject) ||
+          ($scope.lead.gcv_arb_bonus && $scope.lead.gcv_arb_reject) ||
+          ($scope.lead.ncv_bonus && $scope.lead.ncv_reject) )
+          ) {
           $scope.error = 'Please Fill Contract Bonus & Reject';
           return;
         }
@@ -173,15 +174,15 @@ angular.module('lead').controller('LeadController', ['$scope', '$state', '$state
       }
       else next = 'lead.view';
 
-      console.log($scope.lead.order_status);
       //number logics
       switch($scope.lead.order_status){
-        case 1 : $scope.lead.order_status++;
+        case 1 : 
+        case 2 : 
+          $scope.lead.order_status++;
           break;
-        case 2 : $scope.lead.order_status = 'l';
+        case 3 : $scope.lead.order_status = 'l';
           break;
       }
-      console.log($scope.lead.order_status);
 
       $scope.lead.$update(function(res){
         $state.go(next, { id: res.id });
