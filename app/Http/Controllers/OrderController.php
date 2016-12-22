@@ -285,20 +285,7 @@ class OrderController extends Controller
     $order->save();
 
     if($order->status == 'x'){
-      $buy_ids = $order->buys()->pluck('leads.id');
-      Lead::whereIn('id', $buy_ids)->update(['order_status' => 'p']);
-      if(isset($buy_ids)) {
-        foreach ($buy_ids as $id) {
-          $order->buys()->detach($id);
-        }
-      }
-      $sell_ids = $order->sells()->pluck('leads.id');
-      if(isset($sell_ids)) {
-        foreach ($sell_ids as $id) {
-          $order->sells()->detach($id);
-        }
-      }
-      Lead::whereIn('id', $sell_ids)->update(['order_status' => 'p']);
+      $order->leadToPartial();
     }
     else if($order->status == 'p'){
       $order = Order::with(['approvals' => function($q){
@@ -364,6 +351,8 @@ class OrderController extends Controller
   {
     $order = Order::with('trader', 'approvals')->find($id);
     $order->status = 'x';
+    $order->leadToPartial();
+
     $order->save();
 
     return response()->json($order, 200);

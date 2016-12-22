@@ -34,6 +34,11 @@ class Order extends Model
       ->withPivot('id', 'price', 'volume', 'payment_term', 'trading_term');
   }
 
+  public function countLeads() {
+    return $this->belongsToMany(Lead::class, 'order_details', 'order_id', 'lead_id')
+      ->count();
+  }
+
 	public function approvals() {
 		return $this->belongsToMany(User::class, 'order_approvals')->withPivot('status', 'approval_token', 'updated_at');
 	}
@@ -130,5 +135,22 @@ class Order extends Model
     $this->users()->sync([$user->id => [ 'role' => 'approver' ]], false);
 
     return true;
+  }
+
+  public function leadToPartial(){
+    $buy_ids = $this->buys()->pluck('leads.id');
+    Lead::whereIn('id', $buy_ids)->update(['order_status' => 'p']);
+    if(isset($buy_ids)) {
+      foreach ($buy_ids as $id) {
+        $this->buys()->detach($id);
+      }
+    }
+    $sell_ids = $this->sells()->pluck('leads.id');
+    Lead::whereIn('id', $sell_ids)->update(['order_status' => 'p']);
+    if(isset($sell_ids)) {
+      foreach ($sell_ids as $id) {
+        $this->sells()->detach($id);
+      }
+    }
   }
 }

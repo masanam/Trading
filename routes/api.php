@@ -82,4 +82,6 @@ Route::group(['middleware' => ['cors']], function() {
     Route::match(['get','put'], 'orders/{id}/approval', 'OrderController@approval');
     Route::resource('orders', 'OrderController', ['except' => [ 'create', 'edit' ]]);
 
+    Route::get('leads/{id}/test', 'LeadController@isSingleLeadInOrder');
+
 });
