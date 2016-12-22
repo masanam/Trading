@@ -197,14 +197,7 @@ class OrderController extends Controller
       }
     }
 
-    if(count($req->additional) > 0) {
-      foreach($req->additional as $add) {
-        $order->companies()->attach([$add['company']['id'] => [
-          'cost' => $add['cost'],
-          'label' => $add['label']
-        ]]);
-      }
-    }
+    $order->addAditionalCosts($req->additional);
 
     return response()->json($order, 200);
   }
@@ -262,12 +255,18 @@ class OrderController extends Controller
     return $req;
     $order = Order::find($id);
 
+    // Validations
     if(!$req) return response()->json([ 'message' => 'Bad Request' ], 400);
     if (!$order) return response()->json([ 'message' => 'Not found' ] ,404);
+
+    // Only the owner of the order can change anything
     if ($order->user_id != Auth::user()->id) return response()->json([ 'message' => 'You are not authorized to edit this order!' ] ,403);
+    // In-house product can only be used in Sell-Only Orders
+    if ($req->in_house && count($order->buys)) return response()->json([ 'message' => 'In-house product can only in sell-only Order' ] ,400);
 
     $this->authorize('update', $order);
 
+    // Reconcile the statuses of each leads
     if(count($req->buys) > 0){
       foreach($req->buys as $buy){
         Lead::find($buy['id'])->reconcile();
@@ -286,9 +285,15 @@ class OrderController extends Controller
     $order->status = $req->status;
     $order->save();
 
+    // Add new additional cost in the application
+    $order->addAditionalCosts($req->additional);
+
+    // If this is a delete operation, release all partials
     if($order->status == 'x'){
       $order->leadToPartial();
     }
+
+    // if Orders staged for approval, 
     else if($order->status == 'p'){
       $order = Order::with(['approvals' => function($q){
         $q->where('user_id', Auth::user()->manager_id);
@@ -304,29 +309,6 @@ class OrderController extends Controller
           $order_user->user_id = $user_id->id;
           $order_user->role = 'approver';
           $order_user->save();
-        }
-      }
-
-      // if($order->approvals->count() > 0){
-      //   $order_approval = OrderApproval::where('user_id', $user_id)->where('order_id', $order_id)->first();
-      //   $order_approval->status = $status;
-      //   $order_approval->save();
-        
-      //   $this->send_approval_mail($order, $user_id);
-      // }else{
-      //   $order_approval = new OrderApproval();
-      //   $order_approval->order_id = $order_id;
-      //   $order_approval->user_id = $user_id;
-      //   $order_approval->status = $status;
-      //   $order_approval->save();
-      //   $this->send_approval_mail($order, $user_id);
-      // }
-
-      if(count($req->additional) > 0) {
-        foreach($req->additional as $add) {
-          $order->companies()->updateExistingPivot([$add->company => [
-            'cost' => $add->cost
-          ]]);
         }
       }
 

@@ -105,6 +105,19 @@ class Order extends Model
     }
   }
 
+  public function addAdditionalCosts($additional) {
+    if(count($additional) > 0) {
+      $order->companies()->detach();
+
+      foreach($additional as $add) {
+        $order->companies()->attach([$add->company => [
+          'cost' => $add->cost,
+          'label' => $add->label
+        ]]);
+      }
+    }
+  }
+
   public function requestApproval($user){
     // You can only add approval record from a user
     // that HAS NOT YET been here before
