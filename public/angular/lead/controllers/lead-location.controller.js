@@ -55,5 +55,22 @@ angular.module('lead').controller('LeadLocationController', ['$scope', '$statePa
       $scope.lead.latitude = e.latLng.lat();
       $scope.lead.longitude = e.latLng.lng();
     };
+
+
+    $scope.select = function (location) {
+      if($scope.lead){
+        if(location){
+          if ($scope.lead.lead_type === 'b') $scope.lead.concession_id = location.id;
+          else $scope.lead.factory_id = location.id;
+
+          $scope.lead.address = location.address;
+          $scope.lead.city = location.city;
+          $scope.lead.country = location.country;
+          $scope.lead.port_distance = location.port_distance;
+          $scope.lead.latitude = location.latitude;
+          $scope.lead.longitude = location.longitude;
+        } else $scope.lead.port_id = undefined;
+      }
+    };
   }
 ]);

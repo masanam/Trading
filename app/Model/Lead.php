@@ -140,10 +140,13 @@ class Lead extends Model
             ->selectRaw('sum(order_details.volume) as volume')->whereIn('orders.status', ['a', 'f', 'p', 'd'])->groupBy('lead_id');
     }
 
+    // reconcile the status and remaining volume of a leads
     public function reconcile() {
         $volume = $this->orders->sum('pivot.volume');
+
         if($this->volume >= $volume) $this->order_status = 's';
         else $this->order_status = 'p';
+        
         $this->save();
     }
 
@@ -191,6 +194,7 @@ class Lead extends Model
     public function difference($compare){
     	$diff = ['order_date_diff','order_expired_diff'];
     	$value = ['order_date','order_expired'];
+
 		$this->gcv_adb_min_diff = abs($this->gcv_adb_min - $compare->gcv_adb_min);
 		$this->gcv_adb_max_diff = abs($this->gcv_adb_max - $compare->gcv_adb_max);
 		$this->gcv_arb_min_diff = abs($this->gcv_arb_min - $compare->gcv_arb_min);
@@ -199,8 +203,5 @@ class Lead extends Model
 		$this->ncv_max_diff = abs($this->ncv_max - $compare->ncv_max);
         $this->order_date_diff = floor((strtotime($this->order_date) - strtotime($compare->order_date))/3600/24);
         $this->order_expired_diff = floor((strtotime($this->order_expired) - strtotime($compare->order_expired))/3600/24);
-		// for ($i=0; $i < count($diff) ; $i++) {
-		// 	$this->$diff[$i] = floor((strtotime($this->$value[$i]) - strtotime($compare->$value[$i]))/3600/24);
-		// }
     }
 }

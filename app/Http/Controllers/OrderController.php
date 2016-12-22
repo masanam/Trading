@@ -162,7 +162,7 @@ class OrderController extends Controller
     $order->save();
 
     // Check the availability of associated leads
-    if(count($req->buys) > 0){
+    if(count($req->buys) > 0 && !$req->in_house){
       foreach($req->buys as $buy){
         $order->buys()->attach([ $buy['id'] => $buy['pivot'] ]);
         Lead::find($buy['id'])->reconcile();
@@ -259,6 +259,7 @@ class OrderController extends Controller
    */
   public function update(Request $req, $id)
   {
+    return $req;
     $order = Order::find($id);
 
     if(!$req) return response()->json([ 'message' => 'Bad Request' ], 400);
@@ -281,9 +282,9 @@ class OrderController extends Controller
     $order->request_reason = $req->request_reason;
     $order->finalize_reason = $req->finalize_reason;
     $order->cancel_reason = $req->cancel_reason;
+    $order->in_house = $req->in_house;
     $order->status = $req->status;
     $order->save();
-    //$order->updated_at = date('Y-m-d H:i:s');
 
     if($order->status == 'x'){
       $order->leadToPartial();
@@ -400,37 +401,36 @@ class OrderController extends Controller
   public function stage(Request $req, $id)
   {
     $order = Order::with('buys', 'sells')->find($id);
-    $details = [
+    $lead_type = $req->lead_type;
+    $this->authorize('update', $order);
+
+    // Validate the Multiplicity of the leads inside this Orders
+    if ($lead_type === 'buys'){
+      if(count($order->sells) > 1 && !$req->notes && count($order->buys))
+        return response()->json([ 'message' => 'Can\'t have Multiple Buy on Multiple Sells' ], 400);
+
+      if($order->in_house)
+        return response()->json([ 'message' => 'Can\'t add Buy when using House Products' ], 400);
+    }
+
+    else if ($lead_type === 'sells') 
+      if(count($order->buys) > 1 && !$req->notes && count($order->sells))
+        return response()->json([ 'message' => 'Can\'t add more Sell on Multiple Buys' ], 400);
+
+    // Update the data if pass all necessities
+    $order->leads()->sync([ $req->lead_id => [
       'volume' => $req->volume,
       'price' => $req->price,
       'trading_term' => $req->trading_term,
       'payment_term' => $req->payment_term
-    ];
-    if(!$req->notes) $notes = 'Initial Deal';
-    else $notes = $req->notes;
+    ]], false);
+    Lead::find($req->lead_id)->reconcile();
 
-    $lead_type = $req->lead_type;
-
-    $this->authorize('update', $order);
-    if ($lead_type === 'buys') 
-      if(count($order->sells) > 1)
-        return response()->json([ 'message' => 'Can\'t add more Buy on Multiple Sells' ], 400);
-    else if ($lead_type === 'sells') 
-      if(count($order->buys) > 1)
-        return response()->json([ 'message' => 'Can\'t add more Sell on Multiple Buys' ], 400);
-
-    if (!$req->negotiation){
-      $order->$lead_type()->sync([ $req->lead_id => $details ], false);
-      Lead::find($req->lead_id)->reconcile();
-    }
-
-    $order_detail_id = $order->$lead_type()->find($req->lead_id)->pivot->id;
-
-    // if notes is here, it's a negotiation
-    // Add new log of the nagotiation
+    // add negotiation log to the staged lead
+    $order_detail_id = $order->leads()->find($req->lead_id)->pivot->id; // find the ID of the order details
     $negotiation  = new OrderNegotiation([
       'order_detail_id' => $order_detail_id,
-      'notes' => $notes,
+      'notes' => $req->notes || 'Initial Deal',
       'volume' => $req->volume,
       'price' => $req->price,
       'trading_term' => $req->trading_term,
@@ -438,82 +438,23 @@ class OrderController extends Controller
       'user_id' => Auth::user()->id,
     ]);
     $negotiation->save();
+
     return $this->show($id);
   }
 
+  /**
+   * Delete staged leads from the orders
+   *
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
   public function unstage(Request $req, $id){
     $order = Order::find($id);
-    $this->authorize('view', $order);
-    if(isset($req->buy_id)) $order->buys()->detach($req->buy_id);
-    if(isset($req->sell_id)) $order->sells()->detach($req->sell_id);
-
-    return $this->show($id);
-  }
-
-  public function stageOwn($id){
-    $order = Order::with('sells', 'buys')->find($id);
     $this->authorize('update', $order);
 
-    if(count($order->sells) && count($order->buys)>1)
-      return response()->json([ 'message'=> 'Multiple Buy & Sell can\'t add more'], 400);
-
-    //cari selisih volume
-    $sell_volume = $order->sells->sum('pivot.volume');
-    $buy_volume = $order->buys->sum('pivot.volume');
-
-    $volume = $buy_volume - $sell_volume;
-
-    if($volume <= 0)
-      return response()->json([ 'message'=> 'Sourcing is more than Market'], 400);
-
-    $sell = SellOrder::create([
-      'user_id' => Auth::user()->id,
-      'seller_id' => 1, //ganti sesuai siapa penjual default
-      'city' => 'JKT',
-      'country' => 'ID',
-      'commercial_term' => '',
-
-      'address' => 'Jl. Kapten Darmo Sugondo No.56, Sidorukun, Kec. Gresik, Kabupaten Gresik, Jawa Timur',
-      'latitude' => '-7.1844498' ,
-      'longitude' => '112.6528737' ,
-
-      'order_date' => date('Y-m-d'),
-      'order_deadline' => date('Y-m-d'),
-      'penalty_desc' => 'penalty',
-      'ready_date'=> date('Y-m-d'),
-      'expired_date'=> date('Y-m-d'),
-
-      'volume' => $volume,
-      'order_status' => 'v'
-    ]);
-
-    $sell->leads()->attach([ $id => [
-      'volume' => $volume,
-      'price' => 0,
-      'trading_term' => 'FOB MV',
-      'payment_term' => 'NET30',
-    ]]);
+    $order->leads()->detach($req->lead_id);
+    Lead::find($req->lead_id)->reconcile();
 
     return $this->show($id);
-  }
-
-  public function createOrderAdditionalCost($id, Request $request) {
-    $order = Order::find($id);
-
-    $order->companies()->attach([$request->companyId => [
-      'cost' => $request->cost
-    ]]);
-
-    return response()->json($order, 200);
-  }
-
-  public function updateOrderAdditionalCost($id, Request $request) {
-    $order = Order::find($id);
-
-    $order->companies()->updateExistingPivot([$request->companyId => [
-      'cost' => $request->cost
-    ]]);
-
-    return response()->json($order, 200);
   }
 }

@@ -35,8 +35,9 @@
           <span ng-switch-when="s">Staged</span>
           <span ng-switch-when="p">Partially Staged</span>
           <a ng-switch-when="1" ui-sref="lead.location({ id: lead.id })">STEP 2 : Locations</a>
-          <a ng-switch-when="2" ui-sref="lead.product({ id: lead.id })">STEP 3 : Product</a>
-          <a ng-switch-when="3" ui-sref="lead.view({ id: lead.id })">Draft</a>
+          <a ng-switch-when="2" ui-sref="lead.port({ id: lead.id })">STEP 3 : Port</a>
+          <a ng-switch-when="3" ui-sref="lead.product({ id: lead.id })">STEP 3 : Product</a>
+          <a ng-switch-when="4" ui-sref="lead.view({ id: lead.id })">Draft</a>
         </td>
         <td>
           <a ui-sref="lead.view({ id: lead.id })" class="glyphicon glyphicon-info-sign"></a>
