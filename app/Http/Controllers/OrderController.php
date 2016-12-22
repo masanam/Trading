@@ -236,6 +236,7 @@ class OrderController extends Controller
     if (isset($req)) {
       // IF envelope is requested, get all necessary components
       if($req->envelope == "true"){
+        // dd($req);
         $index = $this->indexPrice();
 
         $json = [
