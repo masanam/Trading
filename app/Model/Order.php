@@ -134,8 +134,6 @@ class Order extends Model
     ];
     $this->approvals()->sync([$user->id => $approval_properties], false);
 
-    $interim = $user->interim();
-
     // add new associated user in the request
     $this->users()->sync([$user->id => [ 'role' => 'approver' ]], false);
 
@@ -157,6 +155,40 @@ class Order extends Model
 
     $mail = new ApprovalRequest($this, $approval_properties['approval_token'], $index->price);
     Mail::to($user->email)->send($mail);
+
+
+    /*
+     * Interim Logic
+     *
+     * Approval statuses:
+     * [p] --> pending ;    [m] --> pending, but acting
+     * [a] --> approved ;   [y] --> automatically approved
+     * [r] --> rejected ;   [n] --> automatically rejected
+     */
+
+    // Interim roles is non-descendable
+    // Only applied to 1 level directly below
+    $interims = $user->interims;
+
+    // add approval, association and email to all associated Users!
+    foreach($interims as $interim){
+      // If current user already inside approval list, don't add
+      if(!$this->approvals()->contains($interim->id)){
+        $approval_properties = [
+          'status' => 'm',
+          'approval_token' => bcrypt(date('Y-m-d H:i:s') . $interim->name)
+        ];
+
+        // add the user to the approval list
+        $this->approvals()->attach($interim->id, $approval_properties);
+        // and associate him/her to the order
+        $this->users()->sync([$user->id => [ 'role' => 'approver' ]], false);
+      
+        // Send the email now
+        $mail = new ApprovalRequest($this, $approval_properties['approval_token'], $index->price);
+        Mail::to($interim->email)->send($mail);
+      }
+    }
 
     return true;
   }

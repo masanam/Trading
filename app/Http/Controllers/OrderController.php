@@ -367,8 +367,28 @@ class OrderController extends Controller
     $order->approvals()->sync([ $user->id => [ 'status' => $req->status ] ], false);
 
     // if this user has manager, add approval on top of it
-    if($user->manager_id){
+    if($user->manager_id && $req->status == 'a'){
       $order->requestApproval(User::find(Auth::user()->manager_id));
+    }
+
+    /*
+     * Interim Logic
+     *
+     * Approval statuses:
+     * [p] --> pending ;    [m] --> pending, but acting
+     * [a] --> approved ;   [y] --> automatically approved
+     * [r] --> rejected ;   [n] --> automatically rejected
+     */
+
+    $interims = $user->interims;
+    $actings = $user->actings;
+
+    if(count($interims) || count($actings)){
+      if($req->status == 'a') $status = 'y';
+      else if($req->status == 'r') $status = 'n';
+
+      foreach($interims as $interim) $order->approvals()->sync([ $interim->id => [ 'status' => $status ] ], false);
+      foreach($actings as $actings) $order->approvals()->sync([ $acting->id => [ 'status' => $status ] ], false);
     }
 
     return $this->show($id);
