@@ -134,6 +134,8 @@ class Order extends Model
     ];
     $this->approvals()->sync([$user->id => $approval_properties], false);
 
+    $interim = $user->interim();
+
     // add new associated user in the request
     $this->users()->sync([$user->id => [ 'role' => 'approver' ]], false);
 
