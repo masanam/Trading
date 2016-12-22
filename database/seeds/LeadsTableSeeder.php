@@ -193,10 +193,10 @@ class LeadsTableSeeder extends Seeder
 
 
     $object = [
-      'order' => [ 'id' => 1, 'user_id' => 3, 'status' => 'p', ],
+      'order' => [ 'id' => 1, 'user_id' => 3, 'status' => 'p', 'in_house' => false ],
       'leads' => [
-          1 => [ 'volume' => 500, 'price' => 25000, 'trading_term' => 'FOB MV', 'payment_term' => 'TT' ],
-          2 => [ 'volume' => 1000, 'price' => 53000, 'trading_term' => 'FOB MV', 'payment_term' => 'TT' ] 
+          1 => [ 'volume' => 500, 'price' => 25, 'trading_term' => 'FOB MV', 'payment_term' => 'TT' ],
+          2 => [ 'volume' => 1000, 'price' => 53, 'trading_term' => 'FOB MV', 'payment_term' => 'TT' ] 
       ],
       'user' => [ 1 => [ 'role' => 'approver' ], 2 => [ 'role' => 'associated' ], 3 => [ 'role' => 'admin' ] ],
       'approval' => [ 1 => [ 'status' => 'a', 'approval_token' => 'aaa' ], 2 => [ 'status' => 'a', 'approval_token' => 'bbb' ] ],
