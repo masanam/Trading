@@ -16,10 +16,11 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
-            $table->char('status', 1);
+            $table->boolean('in_house')->default(false);
             $table->string('cancel_reason')->nullable();
             $table->string('request_reason')->nullable();
             $table->string('finalize_reason')->nullable();
+            $table->char('status', 1);
             $table->timestamps();
         });
 
