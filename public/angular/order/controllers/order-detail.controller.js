@@ -48,39 +48,49 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
         }
     };
 
-    $scope.removeBuy = function () {
-      Order.update(
-        { id:$scope.order.id, action: 'unstage' },
-        { buy_id:$scope.display.buy.id }, 
-      function (res){
-        delete $scope.display.buy;
-        $scope.order = res;
-        if($scope.order.buys!==null) $scope.display.buy = $scope.order.buys[0];
-      });
+    $scope.removeLead = function (lead) {
+      if($scope.order.id){
+        // delete lead in order
+        $scope.order.sells.splice(lead, 1);
+        $scope.order.buys.splice(lead, 1);
+
+        // if($scope.display.sell === lead) delete $scope.display.sell;
+        // if($scope.display.buy === lead) delete $scope.display.buy;
+      } else {
+        Order.update(
+          { id: $scope.order.id, action: 'unstage' },
+          { lead_id: lead.id }, 
+        function (res){
+          $scope.order.sells.splice(lead, 1);
+          $scope.order.buys.splice(lead, 1);
+          
+          // delete $scope.display.buy;
+          $scope.order = res;
+          //if($scope.order.buys !== null) $scope.display.buy = $scope.order.buys[0];
+        });
+      } 
     };
 
-    $scope.removeSell = function () {
-      Order.update({
-        id : $scope.order.id, action: 'unstage' 
-      },{
-        sell_id : $scope.display.sell.id
-      }, function (res){
-        delete $scope.display.sell;
-        $scope.order = res.order;
-        console.log($scope.order);
-        if($scope.order.sells!==null) $scope.display.sell = $scope.order.sells[0];
-      });
-    };
+    // $scope.removeSell = function () {
+    //   Order.update({
+    //     id : $scope.order.id, action: 'unstage' 
+    //   },{
+    //     sell_id : $scope.display.sell.id
+    //   }, function (res){
+    //     delete $scope.display.sell;
+    //     $scope.order = res.order;
+    //     console.log($scope.order);
+    //     if($scope.order.sells!==null) $scope.display.sell = $scope.order.sells[0];
+    //   });
+    // };
     
-    $scope.removeSellFront = function () {
-      $scope.order.sells.splice($scope.display.sell, 1);
-      delete $scope.display.sell;
-    };
+    // $scope.removeSellFront = function () {
+    // };
     
-    $scope.removeBuyFront = function () {
-      $scope.order.buys.splice($scope.display.buy, 1);
-      delete $scope.display.buy;
-    };
+    // $scope.removeBuyFront = function () {
+    //   $scope.order.buys.splice($scope.display.buy, 1);
+    //   delete $scope.display.buy;
+    // };
 
     $scope.negoBuy = function () {
       var modalInstance = $uibModal.open({
