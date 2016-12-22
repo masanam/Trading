@@ -123,6 +123,25 @@ class Order extends Model
     // that HAS NOT YET been here before
     // if($this->getApproverByUserId($user->id)) return false;
 
+    /*
+     * UPDATE DATA NOW!
+     */
+
+    // Add new approval request
+    $approval_properties = [
+      'status' => 'p',
+      'approval_token' => bcrypt(date('Y-m-d H:i:s') . $user->name)
+    ];
+    $this->approvals()->sync([$user->id => $approval_properties], false);
+
+    // add new associated user in the request
+    $this->users()->sync([$user->id => [ 'role' => 'approver' ]], false);
+
+
+    /*
+     * FIND ALL NECESSARY ELEMENTS TO SEND EMAILS
+     */
+
     // get the earliest laycan and latest one
     $this->earliestLaycan();
     $this->latestLaycan();
@@ -134,20 +153,17 @@ class Order extends Model
     // get latest GC NEWC price
     $index = IndexPrice::orderBy('date', 'DESC')->where('index_id', 10)->first();
 
-    // Add new approval request
-    $approval_properties = [
-      'status' => 'p',
-      'approval_token' => bcrypt(date('Y-m-d H:i:s') . $user->name)
-    ];
-    $this->approvals()->sync([$user->id => $approval_properties], false);
-
     $mail = new ApprovalRequest($this, $approval_properties['approval_token'], $index->price);
     Mail::to($user->email)->send($mail);
 
-    // add new associated user in the request
-    $this->users()->sync([$user->id => [ 'role' => 'approver' ]], false);
-
     return true;
+  }
+
+  public function resetApproval(){
+    // delete all approval, then
+    // add new approval starting from second level manager
+    $this->approvals()->detach();
+    $this->requestApproval(User::find($this->trader->manager_id));
   }
 
   public function leadToPartial(){

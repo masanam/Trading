@@ -382,7 +382,7 @@ class OrderController extends Controller
    */
   public function stage(Request $req, $id)
   {
-    $order = Order::with('buys', 'sells')->find($id);
+    $order = Order::with('buys', 'sells', 'approvals', 'trader')->find($id);
     $lead_type = $req->lead_type;
     $this->authorize('update', $order);
 
@@ -408,6 +408,9 @@ class OrderController extends Controller
     ]], false);
     Lead::find($req->lead_id)->reconcile();
 
+    // when details are changed, reset all approval
+    $order->resetApproval();
+
     // add negotiation log to the staged lead
     $order_detail_id = $order->leads()->find($req->lead_id)->pivot->id; // find the ID of the order details
     $negotiation  = new OrderNegotiation([
@@ -431,11 +434,14 @@ class OrderController extends Controller
    * @return \Illuminate\Http\Response
    */
   public function unstage(Request $req, $id){
-    $order = Order::find($id);
+    $order = Order::with('approvals', 'trader')->find($id);
     $this->authorize('update', $order);
 
     $order->leads()->detach($req->lead_id);
     Lead::find($req->lead_id)->reconcile();
+
+    // when details are changed, reset all approval
+    $order->resetApproval();
 
     return $this->show($id);
   }
