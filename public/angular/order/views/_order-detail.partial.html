@@ -25,8 +25,8 @@
 	<table st-table="" class="table table-bordered table-striped">
 		<thead>
       <tr ng-if="!order.user_id || order.user_id === Authentication.user.id"  class="no-print">
-        <td width="{{ order.in_house ? '40%' : '20%' }}"></td>
-        <td width=40% ng-if="!order.in_house">
+        <td></td>
+        <td>
           <button ng-show="order.status !== 'x' && order.status !== 'a' && order.status !== 'f' && order.status !== 'p'"
             class="btn btn-default hidden-xs hidden-sm" ng-click="addBuy()"
             ng-disabled=" order.buys.length > 1 && order.sells.length===1">
@@ -39,7 +39,7 @@
             + Add House Product
           </button>
         </td>
-        <td width="{{ order.in_house ? '60%' : '40%' }}">
+        <td>
           <button ng-show="order.status !== 'x' && order.status !== 'f' && order.status !== 'a' && order.status !== 'p'"
             class="btn btn-default hidden-xs hidden-sm" ng-click="addSell()"
             ng-disabled="order.sells.length > 1 && order.buys.length===1">
@@ -53,8 +53,8 @@
         </td>
       </tr>
 			<tr>
-				<th></th>
-    		<th ng-if="!order.in_house">
+				<th width="{{ order.in_house ? '40%' : '20%' }}"></th>
+    		<th ng-if="!order.in_house"  width=40% ng-if="!order.in_house">
 					<span style="font-size:20pt">Buy</span>
           <span ng-if="order.buys.length" uib-dropdown class="pull-right" ng-init="display.buy = order.buys[0]; display.buy.index = 0">
             <button type="button" ng-show="order.status !== 'x' && order.status !== 'f'" class="btn btn-default" uib-dropdown-toggle>
@@ -67,7 +67,7 @@
             </ul>
           </span>
 				</th>
-				<th>
+				<th width="{{ order.in_house ? '60%' : '40%' }}">
 					<span style="font-size:20pt">{{ order.in_house ? 'Order Details' : 'Sell' }}</span>
           <span ng-if="order.sells.length" uib-dropdown class="pull-right" ng-init="display.sell = order.sells[0]; display.sell.index = 0">
             <button type="button" ng-show="order.status !== 'x' && order.status !== 'f'" class="btn btn-default" uib-dropdown-toggle>
