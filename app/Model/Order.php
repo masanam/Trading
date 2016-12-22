@@ -36,7 +36,7 @@ class Order extends Model
 
   public function countLeads() {
     return $this->belongsToMany(Lead::class, 'order_details', 'order_id', 'lead_id')
-      ->count();
+      ->selectRaw('order_id, count(lead_id) as countLeads')->groupBy('order_id');
   }
 
 	public function approvals() {

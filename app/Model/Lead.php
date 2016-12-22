@@ -127,6 +127,14 @@ class Lead extends Model
             ->withPivot('id', 'price', 'volume', 'payment_term', 'trading_term');
     }
 
+    public function countInOrders() {
+        return $this->belongsToMany(Order::class, 'order_details')
+                    // ->where('lead_id', $id)
+                    ->groupBy('order_details.lead_id')
+                    // ->havingRaw('COUNT(order_details.order_id) < 2')
+                    ->get();
+    }
+
     public function used() {
         return $this->belongsToMany(Order::class, 'order_details')
             ->selectRaw('sum(order_details.volume) as volume')->whereIn('orders.status', ['a', 'f', 'p', 'd'])->groupBy('lead_id');
