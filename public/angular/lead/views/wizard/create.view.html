@@ -41,6 +41,7 @@
               <ui-select ng-model="selected.company"
                 reset-search-input="false"
                 style="min-width: 30px;"
+                ng-change="select(selected.company)"
                 title="Choose an address">
                 <ui-select-match placeholder="Name of the Company...">{{$select.selected.company_name}}</ui-select-match>
 
