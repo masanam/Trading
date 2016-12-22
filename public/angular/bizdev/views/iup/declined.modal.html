@@ -4,6 +4,16 @@
     <i class="fa fa-times pull-right" ng-click="close()"></i>
   </div>
   <div class="box-body">
+    <label for="headquarter_location">Select Your Reason:</label>
+    <div class="input-group" style="margin-bottom: 5px;">
+      <div class="btn-group">
+        <label class="btn btn-default" ng-model="source" uib-btn-radio="0">Data License</label>
+        <label class="btn btn-default" ng-model="source" uib-btn-radio="1">Infrastructure</label>
+        <label class="btn btn-default" ng-model="source" uib-btn-radio="2">Land Use</label>
+        <label class="btn btn-default" ng-model="source" uib-btn-radio="3">Geologocal</label>
+        <label class="btn btn-default" ng-model="source" uib-btn-radio="4">Others</label>
+      </div>
+    </div>
     <form name="createIUP" role="form" >
       <label>Write Down Your Reason for Declining</label>
       <textarea name="declined"  class="form-control" id="declined" ></textarea>
