@@ -34,6 +34,11 @@ class Order extends Model
       ->withPivot('id', 'price', 'volume', 'payment_term', 'trading_term');
   }
 
+  public function countLeads() {
+    return $this->belongsToMany(Lead::class, 'order_details', 'order_id', 'lead_id')
+      ->count();
+  }
+
 	public function approvals() {
 		return $this->belongsToMany(User::class, 'order_approvals')->withPivot('status', 'approval_token', 'updated_at');
 	}
