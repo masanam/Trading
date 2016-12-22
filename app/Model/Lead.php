@@ -189,8 +189,10 @@ class Lead extends Model
 		$this->gcv_arb_max_diff = abs($this->gcv_arb_max - $compare->gcv_arb_max);
 		$this->ncv_min_diff = abs($this->ncv_min - $compare->ncv_min);
 		$this->ncv_max_diff = abs($this->ncv_max - $compare->ncv_max);
-		for ($i=0; $i < count($diff) ; $i++) {
-			$this->$diff[$i] = floor((strtotime($this->$value[$i]) - strtotime($compare->$value[$i]))/3600/24);
-		}
+        $this->order_date_diff = floor((strtotime($this->order_date) - strtotime($compare->order_date))/3600/24);
+        $this->order_expired_diff = floor((strtotime($this->order_expired) - strtotime($compare->order_expired))/3600/24);
+		// for ($i=0; $i < count($diff) ; $i++) {
+		// 	$this->$diff[$i] = floor((strtotime($this->$value[$i]) - strtotime($compare->$value[$i]))/3600/24);
+		// }
     }
 }

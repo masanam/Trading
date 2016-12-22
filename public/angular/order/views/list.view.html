@@ -116,12 +116,12 @@
             <td>{{ order.updated_at | date:'d/M/yy' }}</td>
             <td>
               <div ng-repeat="app in order.approvals.slice().reverse()">
-                {{ app.name | firstWord }} [{{ app.status }}]
+                {{ app.name | firstWord }} [{{ app.pivot.status }}]
               </div>
             </td>
             <td>
               <a ui-sref="order.view({ id: order.id })"><i class="glyphicon glyphicon-eye-open"></i></a>
-              <a ng-click="remove(order)" ng-if="order.user_id === Authentication.user.id"><i class="glyphicon glyphicon-trash"></i></a>
+              <a ng-click="remove(order)" ng-if="(order.user_id === Authentication.user.id) && (browse.status ==='d')"><i class="glyphicon glyphicon-trash"></i></a>
             </td>
           </tr>
           <tr ng-if="orders.length == 0">
