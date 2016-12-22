@@ -34,8 +34,8 @@
 
          <div class="col-md-3">
           <div class="box-tools btn-group btn-sm">
-              <button ui-sref="sell-order.create" class="btn btn-primary btn-sm">+ Create buy lead</button>
-              <button ui-sref="buy-order.create" class="btn btn-primary btn-sm">+ Create sell lead</button>
+              <button ui-sref="lead.create({ type:'buy' })" class="btn btn-primary btn-sm">+ Create buy lead</button>
+              <button ui-sref="lead.create({ type:'sell' })" class="btn btn-primary btn-sm">+ Create sell lead</button>
           </div>
         </div>
       </div>
@@ -75,8 +75,8 @@
             </button>
               <ul class="dropdown-menu" uib-dropdown-menu>
                 <li><a ui-sref="order.create" >+ Create New Order</a></li>
-                <li><a ui-sref="sell-order.create" >+ Create buy lead</a></li>
-                <li><a ui-sref="buy-order.create" >+ Create sell lead</a></li>
+                <li><a ui-sref="lead.create({ type:'buy' })" >+ Create buy lead</a></li>
+                <li><a ui-sref="lead.create({ type:'sell' })" >+ Create sell lead</a></li>
               </ul>
         </div>
         </div>
@@ -116,12 +116,12 @@
             <td>{{ order.updated_at | date:'d/M/yy' }}</td>
             <td>
               <div ng-repeat="app in order.approvals.slice().reverse()">
-                {{ app.name | firstWord }} [{{ app.status }}]
+                {{ app.name | firstWord }} [{{ app.pivot.status }}]
               </div>
             </td>
             <td>
               <a ui-sref="order.view({ id: order.id })"><i class="glyphicon glyphicon-eye-open"></i></a>
-              <a ng-click="remove(order)" ng-if="order.user_id === Authentication.user.id"><i class="glyphicon glyphicon-trash"></i></a>
+              <a ng-click="remove(order)" ng-if="(order.user_id === Authentication.user.id) && (browse.status ==='d')"><i class="glyphicon glyphicon-trash"></i></a>
             </td>
           </tr>
           <tr ng-if="orders.length == 0">

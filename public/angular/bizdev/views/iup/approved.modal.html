@@ -1,0 +1,26 @@
+<div class="box" style="margin:20px; padding: 20px;">
+  
+  <div class="box-header with-border row">
+    <h4 class="modal-title col-xs-8">Reasons to Approved:</h4>
+    <i class="fa fa-times pull-right" ng-click="close()"></i>
+  </div>
+
+  <div class="box-body">
+    <label for="headquarter_location">Select Your Reason:</label>
+    <div class="input-group" style="margin-bottom: 5px;">
+      <div class="btn-group">
+        <label class="btn btn-default" ng-model="source" uib-btn-radio="0">Data License</label>
+        <label class="btn btn-default" ng-model="source" uib-btn-radio="1">Infrastructure</label>
+        <label class="btn btn-default" ng-model="source" uib-btn-radio="2">Land Use</label>
+        <label class="btn btn-default" ng-model="source" uib-btn-radio="3">Geologocal</label>
+        <label class="btn btn-default" ng-model="source" uib-btn-radio="4">Others</label>
+      </div>
+    </div>              
+    <form name="createIUP" role="form" >
+      <label>Write Down Your Reason for Approval</label>
+      <textarea name="approved"  class="form-control" id="approved" ></textarea>
+      </br><button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+
+</div>

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use App\Model\User;
 use App\Model\Lead;
 use App\Model\Order;
+use App\Model\OrderUser;
 use App\Model\IndexPrice;
 use App\Model\Index;
 use App\Model\OrderNegotiation;
@@ -136,7 +137,7 @@ class OrderController extends Controller
         foreach($buy['used'] as $use){
           $used += $use['volume'];
         }
-        if ($buy['pivot']['volume'] > $used) return response()->json([ 'message' => 'Bad Request' ], 400);
+        // if ($buy['pivot']['volume'] > $used) return response()->json([ 'message' => 'Bad Request in buy pivot volume' ], 400);
       }
     }
     if(count($req->sells) > 0){
@@ -145,7 +146,7 @@ class OrderController extends Controller
         foreach($sell['used'] as $use){
           $used += $use['volume'];
         }
-        if ($sell['pivot']['volume'] > $used) return response()->json([ 'message' => 'Bad Request' ], 400);
+        // if ($sell['pivot']['volume'] > $used) return response()->json([ 'message' => 'Bad Request in sell pivot volume' ], 400);
       }
     }
 
@@ -155,12 +156,11 @@ class OrderController extends Controller
       ], 400);
     }
 
-
     $order = new Order();
     $order->user_id = Auth::User()->id;
     $order->status = 'd';
     $order->save();
-    
+
     // Check the availability of associated leads
     if(count($req->buys) > 0){
       foreach($req->buys as $buy){
@@ -197,6 +197,15 @@ class OrderController extends Controller
       }
     }
 
+    if(count($req->additional) > 0) {
+      foreach($req->additional as $add) {
+        $order->companies()->attach([$add['company']['id'] => [
+          'cost' => $add['cost'],
+          'label' => $add['label']
+        ]]);
+      }
+    }
+
     return response()->json($order, 200);
   }
 
@@ -209,7 +218,7 @@ class OrderController extends Controller
   public function show($id, Request $req = null)
   { 
     $order = Order::with('trader', 'users', 'sells', 'buys', 'buys.trader',
-      'approvals', 'sells.trader', 'sells.company', 'buys.company', 'buys.concession', 'sells.factory')->find($id);
+      'approvals', 'sells.trader', 'sells.company', 'buys.company', 'buys.concession', 'sells.factory', 'companies')->find($id);
 
     $this->authorize('view', $order);
 
@@ -227,6 +236,7 @@ class OrderController extends Controller
     if (isset($req)) {
       // IF envelope is requested, get all necessary components
       if($req->envelope == "true"){
+        // dd($req);
         $index = $this->indexPrice();
 
         $json = [
@@ -238,7 +248,7 @@ class OrderController extends Controller
       } else $json = $order;
     } else $json = $order;
 
-    return response()->json($json, 200);;
+    return response()->json($json, 200);
   }
 
   /**
@@ -257,26 +267,39 @@ class OrderController extends Controller
 
     $this->authorize('update', $order);
 
-    if(count($order->buys) > 0){
-      foreach($order->buys as $buy){
-        BuyOrder::find($buy['id'])->reconcile();
+    if(count($req->buys) > 0){
+      foreach($req->buys as $buy){
+        Lead::find($buy['id'])->reconcile();
       }
     }
     if(count($req->sells) > 0) {
       foreach($req->sells as $sell){
-        SellOrder::find($sell['id'])->reconcile();
+        Lead::find($sell['id'])->reconcile();
       }
     }
 
+    $order->request_reason = $req->request_reason;
+    $order->finalize_reason = $req->finalize_reason;
+    $order->cancel_reason = $req->cancel_reason;
     $order->status = $req->status;
     $order->save();
     //$order->updated_at = date('Y-m-d H:i:s');
 
     if($order->status == 'x'){
-      $buy_ids = $order->buys()->pluck('buy_order.id');
-      BuyOrder::whereIn('id', $buy_ids)->update(['order_status' => 'p']);
-      $sell_ids = $order->sells()->pluck('sell_order.id');
-      SellOrder::whereIn('id', $sell_ids)->update(['order_status' => 'p']);
+      $buy_ids = $order->buys()->pluck('leads.id');
+      Lead::whereIn('id', $buy_ids)->update(['order_status' => 'p']);
+      if(isset($buy_ids)) {
+        foreach ($buy_ids as $id) {
+          $order->buys()->detach($id);
+        }
+      }
+      $sell_ids = $order->sells()->pluck('leads.id');
+      if(isset($sell_ids)) {
+        foreach ($sell_ids as $id) {
+          $order->sells()->detach($id);
+        }
+      }
+      Lead::whereIn('id', $sell_ids)->update(['order_status' => 'p']);
     }
     else if($order->status == 'p'){
       $order = Order::with(['approvals' => function($q){
@@ -286,50 +309,50 @@ class OrderController extends Controller
       }])->find($id);
 
 
-      if(count($req->buys) > 0){
-        foreach($req->buys as $buy){
-          $order->buys()->attach([ $buy['id'] => $buy['pivot'] ]);
-          Lead::find($buy['id'])->reconcile();
-
-          OrderNegotiation::create([
-            'order_detail_id' => $buy['id'],
-            'notes' => 'Initial Deal',
-            'volume' => $buy['pivot']['volume'],
-            'price' => $buy['pivot']['price'],
-            'trading_term' => $buy['pivot']['trading_term'],
-            'payment_term' => $buy['pivot']['payment_term'],
-            'user_id' => Auth::user()->id,
-          ]);
+      if($order->users->count() == 0){
+        foreach (Auth::user()->managers() as $user_id) {
+          $order_user = new OrderUser();
+          $order_user->order_id = $id;
+          $order_user->user_id = $user_id->id;
+          $order_user->role = 'approver';
+          $order_user->save();
         }
       }
 
-      if(count($req->sells) > 0) {
-        foreach($req->sells as $sell){
-          $order->sells()->attach([ $sell['id'] => $sell['pivot'] ]);
-          Lead::find($sell['id'])->reconcile();
+      // if($order->approvals->count() > 0){
+      //   $order_approval = OrderApproval::where('user_id', $user_id)->where('order_id', $order_id)->first();
+      //   $order_approval->status = $status;
+      //   $order_approval->save();
+        
+      //   $this->send_approval_mail($order, $user_id);
+      // }else{
+      //   $order_approval = new OrderApproval();
+      //   $order_approval->order_id = $order_id;
+      //   $order_approval->user_id = $user_id;
+      //   $order_approval->status = $status;
+      //   $order_approval->save();
+      //   $this->send_approval_mail($order, $user_id);
+      // }
 
-          // $order_detail = $order->orders->find($sell['id']);
-          OrderNegotiation::create([
-            'order_detail_id' => $sell['id'],
-            'notes' => 'Initial Deal',
-            'volume' => $sell['pivot']['volume'],
-            'price' => $sell['pivot']['price'],
-            'trading_term' => $sell['pivot']['trading_term'],
-            'payment_term' => $sell['pivot']['payment_term'],
-            'user_id' => Auth::user()->id,
-          ]);
+      if(count($req->additional) > 0) {
+        foreach($req->additional as $add) {
+          $order->companies()->updateExistingPivot([$add->company => [
+            'cost' => $add->cost
+          ]]);
         }
       }
 
       // add manager to approve this order
-      if($user->manager_id){
-        $order->requestApproval(User::find($user->manager_id));
+      if(Auth::user()->manager_id){
+        $order->requestApproval(User::find(Auth::user()->manager_id));
       } else {
         $order->status = 'a'; $order->save();
       }
     }
 
-    return $this->show($id);
+    $req['envelope'] = 'true';
+
+    return $this->show($id, $req);
   }
 
   /**
@@ -373,7 +396,7 @@ class OrderController extends Controller
 
     // if this user has manager, add approval on top of it
     if($user->manager_id){
-      $order->requestApproval(User::find($user->manager_id));
+      $order->requestApproval(User::find(Auth::user()->manager_id));
     }
 
     return $this->show($id);
@@ -438,4 +461,70 @@ class OrderController extends Controller
     return $this->show($id);
   }
 
+  public function stageOwn($id){
+    $order = Order::with('sells', 'buys')->find($id);
+    $this->authorize('update', $order);
+
+    if(count($order->sells) && count($order->buys)>1)
+      return response()->json([ 'message'=> 'Multiple Buy & Sell can\'t add more'], 400);
+
+    //cari selisih volume
+    $sell_volume = $order->sells->sum('pivot.volume');
+    $buy_volume = $order->buys->sum('pivot.volume');
+
+    $volume = $buy_volume - $sell_volume;
+
+    if($volume <= 0)
+      return response()->json([ 'message'=> 'Sourcing is more than Market'], 400);
+
+    $sell = SellOrder::create([
+      'user_id' => Auth::user()->id,
+      'seller_id' => 1, //ganti sesuai siapa penjual default
+      'city' => 'JKT',
+      'country' => 'ID',
+      'commercial_term' => '',
+
+      'address' => 'Jl. Kapten Darmo Sugondo No.56, Sidorukun, Kec. Gresik, Kabupaten Gresik, Jawa Timur',
+      'latitude' => '-7.1844498' ,
+      'longitude' => '112.6528737' ,
+
+      'order_date' => date('Y-m-d'),
+      'order_deadline' => date('Y-m-d'),
+      'penalty_desc' => 'penalty',
+      'ready_date'=> date('Y-m-d'),
+      'expired_date'=> date('Y-m-d'),
+
+      'volume' => $volume,
+      'order_status' => 'v'
+    ]);
+
+    $sell->leads()->attach([ $id => [
+      'volume' => $volume,
+      'price' => 0,
+      'trading_term' => 'FOB MV',
+      'payment_term' => 'NET30',
+    ]]);
+
+    return $this->show($id);
+  }
+
+  public function createOrderAdditionalCost($id, Request $request) {
+    $order = Order::find($id);
+
+    $order->companies()->attach([$request->companyId => [
+      'cost' => $request->cost
+    ]]);
+
+    return response()->json($order, 200);
+  }
+
+  public function updateOrderAdditionalCost($id, Request $request) {
+    $order = Order::find($id);
+
+    $order->companies()->updateExistingPivot([$request->companyId => [
+      'cost' => $request->cost
+    ]]);
+
+    return response()->json($order, 200);
+  }
 }

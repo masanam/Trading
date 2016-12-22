@@ -12,6 +12,7 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
     $scope.remove = function (order) {
       if (order) {
         order.$remove();
+        $scope.orders.splice($scope.orders.indexOf(order), 1);
 
         for (var i in $scope.indices) {
           if ($scope.indices[i] === order) {
@@ -52,6 +53,10 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
           status: function () { return status; },
         }
       });
+
+      modalInstance.result.then(function (order) {
+        $scope.findOne();
+      });
     };
     
     $scope.openReasonModal = function () {
@@ -67,7 +72,7 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
     $scope.approve_reject = function (status) {
       $scope.error = null;
 
-      Order.get({ id: $scope.order.id, action: 'approve', status : status }, function (res) {
+      Order.get({ id: $scope.order.id, action: 'approval', status : status }, function (res) {
         $scope.order = res;
         if(status === 'r') $scope.approving = false;
         Notification.sendNotification(status, $scope.order, false, false);
@@ -140,6 +145,7 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
 
     // Find existing order
     $scope.findOne = function () {
+      console.log("asdasdasdasdasd");
       $scope.order = Order.get({
         id: $stateParams.id,
         envelope: 'true'
@@ -169,26 +175,30 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
           // $scope.order.buys[i].additional.pit_to_port = parseFloat($scope.order.buys[i].pivot.negotiations[0].pit_to_port) || 0;
         }
         $scope.checkOrderUsers();
+        console.log($scope.order);
       });
     };
 
-    $scope.addCostModal = function () {
-      var modalInstance = $uibModal.open({
-        windowClass: 'xl-modal',
-        templateUrl: './angular/order/views/_add-cost.modal.html',
-        controller: 'AddCostModalController',
-        scope: $scope,
-      });
+    // $scope.addCostModal = function () {
+    //   var modalInstance = $uibModal.open({
+    //     windowClass: 'xl-modal',
+    //     templateUrl: './angular/order/views/_add-cost.modal.html',
+    //     controller: 'AddCostModalController',
+    //     scope: $scope
+    //   });
 
-      modalInstance.result.then(function(res){
-        //if existing order, directly upload
-        $scope.order.$update(function (res) {
-          $scope.order = res;
-        }, function (err) {
-          $scope.error = err.data.message;
-        });
-      });
-    };
+    //   modalInstance.result.then(function(res){
+    //     if(!$scope.order.additional) $scope.order.additional = [];
+
+    //     angular.extend($scope.order.additional, res);
+    //     //if existing order, directly upload
+    //     // $scope.order.$update(function (res) {
+    //     //   $scope.order = res;
+    //     // }, function (err) {
+    //     //   $scope.error = err.data.message;
+    //     // });
+    //   });
+    // };
   }
 ]);
 

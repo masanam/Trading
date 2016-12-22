@@ -11,11 +11,13 @@ angular.module('order').controller('CreateOrderController', ['$scope', '$state',
 
     // Create new Article
     $scope.create = function (isValid) {
+      console.log($scope.order);
       $scope.error = null;
 
       // Create new Article object
       var order = new Order($scope.order);
 
+      console.log(order.additional);
       // Redirect after save
       order.$save(function (res) {
         $state.go('order.view', { id: res.id });

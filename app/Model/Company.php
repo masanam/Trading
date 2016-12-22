@@ -56,6 +56,6 @@ class Company extends Model
   }
 
   public function orders() {
-    return $this->hasMany(Order::class, 'order_additional_costs')->withPivot('cost');
+    return $this->hasMany(Order::class, 'order_additional_costs', 'company_id', 'order_id')->withPivot('label', 'cost');
   }
 }

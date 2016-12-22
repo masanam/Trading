@@ -2,11 +2,14 @@
 <!--For Mobile-->
 <div ng-if="!order.user_id || order.user_id === Authentication.user.id">
   <button ng-show="order.status !== 'x' && order.status !== 'a' && order.status !== 'f'" class="btn btn-block btn-default hidden-md hidden-lg" ng-click="addBuy()" ng-disabled=" order.sells.length > 1 && order.buys.length===1"> + Add Buy </button>
-  <button ng-show="order.status !== 'x' && order.status !== 'a' && order.status !== 'f'" class="btn btn-block btn-default hidden-md hidden-lg" ng-click="addOwnProduct()" ng-disabled="order.buys.length != 1"> + Add BIB Product </button>
+  <button ng-show="order.status !== 'x' && order.status !== 'a' && order.status !== 'f'" class="btn btn-block btn-default hidden-md hidden-lg" ng-click="addOwnProduct()" ng-disabled="order.buys.length > 0 && order.sells.length < 1 "> + Add House Product </button>
   <button ng-show="order.status !== 'x' && order.status !== 'f' && order.status !== 'a'" class="btn btn-block btn-default hidden-md hidden-lg" ng-click="addSell()" ng-disabled="order.buys.length > 1 && order.sells.length===1"> + Add Sell </button>
 </div>
 <!--For Mobile-->
 <div class="table-responsive">
+  <div style="text-align:center; margin-left:175px;" flex>
+    <button ng-show="order.status !== 'x' && order.status !== 'a' && order.status !== 'f'" class="btn btn-primary" ng-click="addCostModal()" flex> + Add Additional Cost </button>
+  </div>
 	<table st-table="" class="table table-bordered table-striped">
 		<thead>
       <tr ng-if="!order.user_id || order.user_id === Authentication.user.id"  class="no-print">
@@ -14,7 +17,7 @@
         <td width=40%>
           <button ng-show="order.status !== 'x' && order.status !== 'a' && order.status !== 'f'" class="btn btn-default hidden-xs hidden-sm" ng-click="addBuy()" ng-disabled=" order.buys.length > 1 && order.sells.length===1"> + Add Buy </button>
           <button ng-show="order.status !== 'x' && order.status !== 'a' && order.status !== 'f'" class="btn btn-default pull-right hidden-xs hidden-sm" ng-click="addOwnProduct()"
-          	ng-disabled="order.buys.length != 1"> + Add BIB Product </button>
+          	 ng-disabled="order.buys.length !== 0 || order.sells.length === 0 "> + Add House Product </button>
         </td>
         <td width=40%>
           <button ng-show="order.status !== 'x' && order.status !== 'f' && order.status !== 'a'" class="btn btn-default hidden-xs hidden-sm" ng-click="addSell()" ng-disabled="order.sells.length > 1 && order.buys.length===1"> + Add Sell </button>
@@ -390,7 +393,7 @@
 			</tr>
     </tbody>
     <tbody id="financial-section" uib-collapse="!financialCollapsed">
-			<tr>
+			<!-- <tr>
 				<th></th>
         <th>
           <button class="btn btn-default" ng-click="addCostModalBuys()"> Update Additional Cost </button>
@@ -398,7 +401,7 @@
         <th>
           <button class="btn btn-default" ng-click="addCostModalSells()"> Update Additional Cost </button>
         </th>
-      </tr>
+      </tr> -->
       <tr>
 				<th>Total Price / mt</th>
         <td>
@@ -414,110 +417,32 @@
           </span>
         </td>
 			</tr>
-      <tr ng-show="order.sells[display.sell.index].additional.pit_to_port || order.buys[display.buy.index].additional.pit_to_port">
-				<th>Pit to Port / mt</th>
+      <tr ng-repeat="additional in order.additional" ng-show="order.additional && !order.companies">
+				<th>{{additional.label}} / mt</th>
         <td>
-          <span ng-show="order.buys[display.buy.index].additional.pit_to_port">
-          <h4>US${{ order.buys[display.buy.index].additional.pit_to_port | number }}</h4>
+          <span ng-show="order.additional && !order.companies">
+          <h4>{{additional.company.company_name}}</h4>
           </span>
 				</td>
         <td>
-          <span ng-show="order.sells[display.sell.index].additional.pit_to_port">
-          <h4>US${{ order.sells[display.sell.index].additional.pit_to_port | number }}</h4>
+          <span ng-show="order.additional && !order.companies">
+          <h4>US${{additional.cost | number}}</h4>
           </span>
         </td>
 			</tr>
-      <tr ng-show="order.sells[display.sell.index].additional.transhipment || order.buys[display.buy.index].additional.transhipment">
-				<th>Transhipment / mt</th>
+      <tr ng-repeat="additional in order.companies" ng-show="!order.additional && order.companies">
+        <th>{{additional.pivot.label}} / mt</th>
         <td>
-          <span ng-show="order.buys[display.buy.index].additional.transhipment">
-          <h4>US${{ order.buys[display.buy.index].additional.transhipment | number }}</h4>
-          </span>
-				</td>
-        <td>
-          <span ng-show="order.sells[display.sell.index].additional.transhipment">
-          <h4>US${{ order.sells[display.sell.index].additional.transhipment | number }}</h4>
-          </span>
-        </td>
-			</tr>
-      <tr ng-show="order.sells[display.sell.index].additional.freight_cost || order.buys[display.buy.index].additional.freight_cost">
-				<th>Freight Cost / mt</th>
-        <td>
-          <span ng-show="order.buys[display.buy.index].additional.freight_cost">
-          <h4>US${{ order.buys[display.buy.index].additional.freight_cost | number }}</h4>
+          <span ng-show="!order.additional && order.companies">
+          <h4>{{additional.company_name}}</h4>
           </span>
         </td>
         <td>
-          <span ng-show="order.sells[display.sell.index].additional.freight_cost">
-          <h4>US${{ order.sells[display.sell.index].additional.freight_cost | number }}</h4>
+          <span ng-show="!order.additional && order.companies">
+          <h4>US${{additional.pivot.cost | number}}</h4>
           </span>
         </td>
-			</tr>
-      <tr ng-show="order.sells[display.sell.index].additional.port_to_factory || order.buys[display.buy.index].additional.port_to_factory">
-				<th>Port to Factory / mt</th>
-        <td>
-          <span ng-show="order.buys[display.buy.index].additional.port_to_factory">
-          <h4>US${{ order.buys[display.buy.index].additional.port_to_factory | number }}</h4>
-          </span>
-        </td>
-        <td>
-          <span ng-show="order.sells[display.sell.index].additional.port_to_factory">
-          <h4>US${{ order.sells[display.sell.index].additional.port_to_factory | number }}</h4>
-          </span>
-        </td>
-			</tr>
-      <tr ng-show="order.sells[display.sell.index].additional.insurance_cost || order.buys[display.buy.index].additional.insurance_cost">
-				<th>Insurance / mt</th>
-        <td>
-          <span ng-show="order.buys[display.buy.index].additional.insurance_cost">
-          <h4>US${{ order.buys[display.buy.index].additional.insurance_cost | number }}</h4>
-          </span>
-        </td>
-        <td>
-          <span ng-show="order.sells[display.sell.index].additional.insurance_cost">
-          <h4>US${{ order.sells[display.sell.index].additional.insurance_cost | number }}</h4>
-          </span>
-        </td>
-			</tr>
-      <tr ng-show="order.sells[display.sell.index].additional.interest_cost || order.buys[display.buy.index].additional.interest_cost">
-				<th>Interest / mt</th>
-        <td>
-          <span ng-show="order.buys[display.buy.index].additional.interest_cost">
-          <h4>US${{ order.buys[display.buy.index].additional.interest_cost | number }}</h4>
-          </span>
-        </td>
-        <td>
-          <span ng-show="order.sells[display.sell.index].additional.interest_cost">
-          <h4>US${{ order.sells[display.sell.index].additional.interest_cost | number }}</h4>
-          </span>
-        </td>
-			</tr>
-      <tr ng-show="order.sells[display.sell.index].additional.surveyor_cost || order.buys[display.buy.index].additional.surveyor_cost">
-				<th>Surveyor / mt</th>
-        <td>
-          <span ng-show="order.buys[display.buy.index].additional.surveyor_cost">
-          <h4>US${{ order.buys[display.buy.index].additional.surveyor_cost | number }}</h4>
-          </span>
-        </td>
-        <td>
-          <span ng-show="order.sells[display.sell.index].additional.surveyor_cost">
-          <h4>US${{ order.sells[display.sell.index].additional.surveyor_cost | number }}</h4>
-          </span>
-        </td>
-			</tr>
-      <tr ng-show="order.sells[display.sell.index].additional.others_cost || order.buys[display.buy.index].additional.others_cost">
-				<th>Others / mt</th>
-        <td>
-          <span ng-show="order.buys[display.buy.index].additional.others_cost">
-          <h4>US${{ order.buys[display.buy.index].additional.others_cost | number }}</h4>
-          </span>
-        </td>
-        <td>
-          <span ng-show="order.sells[display.sell.index].additional.others_cost">
-          <h4>US${{ order.sells[display.sell.index].additional.others_cost | number }}</h4>
-          </span>
-        </td>
-			</tr>
+      </tr>
       <tr>
 				<th>Coal Price</th>
         <td>
