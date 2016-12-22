@@ -59,14 +59,16 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
 
     $scope.removeSell = function () {
       Order.update({
-        id : $scope.order.id, action: 'unstage',
-        sell_id : $scope.display.sell.id
-      }, function (res){
-        delete $scope.display.sell;
-        $scope.order = res;
-        if($scope.order.sells!==null) $scope.display.sell = $scope.order.sells[0];
-      });
-    };
+        id : $scope.order.id, action: 'unstage'},
+        {
+          sell_id : $scope.display.sell.id
+        }, function (res){
+          delete $scope.display.sell;
+          $scope.order = res.order;
+          console.log($scope.order);
+          if($scope.order.sells!==null) $scope.display.sell = $scope.order.sells[0];
+        });
+      };
     
     $scope.removeSellFront = function () {
       $scope.order.sells.splice($scope.display.sell, 1);
