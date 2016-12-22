@@ -81,27 +81,6 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
       } 
     };
 
-    // $scope.removeSell = function () {
-    //   Order.update({
-    //     id : $scope.order.id, action: 'unstage' 
-    //   },{
-    //     sell_id : $scope.display.sell.id
-    //   }, function (res){
-    //     delete $scope.display.sell;
-    //     $scope.order = res.order;
-    //     console.log($scope.order);
-    //     if($scope.order.sells!==null) $scope.display.sell = $scope.order.sells[0];
-    //   });
-    // };
-    
-    // $scope.removeSellFront = function () {
-    // };
-    
-    // $scope.removeBuyFront = function () {
-    //   $scope.order.buys.splice($scope.display.buy, 1);
-    //   delete $scope.display.buy;
-    // };
-
     $scope.negoBuy = function () {
       var modalInstance = $uibModal.open({
         animation: true,
