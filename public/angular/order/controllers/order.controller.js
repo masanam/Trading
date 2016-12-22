@@ -12,6 +12,7 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
     $scope.remove = function (order) {
       if (order) {
         order.$remove();
+        $scope.orders.splice($scope.orders.indexOf(order), 1);
 
         for (var i in $scope.indices) {
           if ($scope.indices[i] === order) {
@@ -71,7 +72,7 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
     $scope.approve_reject = function (status) {
       $scope.error = null;
 
-      Order.get({ id: $scope.order.id, action: 'approve', status : status }, function (res) {
+      Order.get({ id: $scope.order.id, action: 'approval', status : status }, function (res) {
         $scope.order = res;
         if(status === 'r') $scope.approving = false;
         Notification.sendNotification(status, $scope.order, false, false);

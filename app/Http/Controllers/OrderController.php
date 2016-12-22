@@ -395,7 +395,7 @@ class OrderController extends Controller
 
     // if this user has manager, add approval on top of it
     if($user->manager_id){
-      $order->requestApproval(User::find($user->manager_id));
+      $order->requestApproval(User::find(Auth::user()->manager_id));
     }
 
     return $this->show($id);
