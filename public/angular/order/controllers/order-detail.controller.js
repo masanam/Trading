@@ -19,33 +19,33 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
       var i;
 
       if ($scope.order.sells)
-      for (i = 0; i < $scope.order.sells.length; i++) {
-        $scope.totalPriceBuy += $scope.order.sells[i].pivot.price;
-        $scope.totalVolumeBuy += $scope.order.sells[i].pivot.volume;
-        if ($scope.order.sells[i].additional !== undefined) {
-          $scope.totalSelfBuy += (($scope.order.sells[i].pivot.price + $scope.order.sells[i].additional.freight_cost + 
-            $scope.order.sells[i].additional.port_to_factory) * $scope.order.sells[i].pivot.volume);
-          $scope.totalSelfAdditionalBuy += ($scope.order.sells[i].additional.freight_cost + 
-            $scope.order.sells[i].additional.port_to_factory) * $scope.order.sells[i].pivot.volume;
-        }else{
-          $scope.totalSelfBuy += (($scope.order.sells[i].pivot.price) * $scope.order.sells[i].pivot.volume);
-          $scope.totalSelfAdditionalBuy += $scope.order.sells[i].pivot.volume;
+        for (i = 0; i < $scope.order.sells.length; i++) {
+          $scope.totalPriceBuy += $scope.order.sells[i].pivot.price;
+          $scope.totalVolumeBuy += $scope.order.sells[i].pivot.volume;
+          if ($scope.order.sells[i].additional !== undefined) {
+            $scope.totalSelfBuy += (($scope.order.sells[i].pivot.price + $scope.order.sells[i].additional.freight_cost + 
+              $scope.order.sells[i].additional.port_to_factory) * $scope.order.sells[i].pivot.volume);
+            $scope.totalSelfAdditionalBuy += ($scope.order.sells[i].additional.freight_cost + 
+              $scope.order.sells[i].additional.port_to_factory) * $scope.order.sells[i].pivot.volume;
+          }else{
+            $scope.totalSelfBuy += (($scope.order.sells[i].pivot.price) * $scope.order.sells[i].pivot.volume);
+            $scope.totalSelfAdditionalBuy += $scope.order.sells[i].pivot.volume;
+          }
         }
-      }
       if ($scope.order.buys)
-      for (i = 0; i < $scope.order.buys.length; i++) {
-        $scope.totalPriceSell += $scope.order.buys[i].pivot.price;
-        $scope.totalVolumeSell += $scope.order.buys[i].pivot.volume;
-        if ($scope.order.buys[i].additional !== undefined) {
-          $scope.totalSelfSell += (($scope.order.buys[i].pivot.price + $scope.order.buys[i].additional.freight_cost + 
-            $scope.order.buys[i].additional.port_to_factory) * $scope.order.buys[i].pivot.volume);
-          $scope.totalSelfAdditionalSell += ($scope.order.buys[i].additional.freight_cost + 
-            $scope.order.buys[i].additional.port_to_factory) * $scope.order.buys[i].pivot.volume;
-        }else{
-          $scope.totalSelfSell += (($scope.order.buys[i].pivot.price) * $scope.order.buys[i].pivot.volume);
-          $scope.totalSelfAdditionalSell += $scope.order.buys[i].pivot.volume;
+        for (i = 0; i < $scope.order.buys.length; i++) {
+          $scope.totalPriceSell += $scope.order.buys[i].pivot.price;
+          $scope.totalVolumeSell += $scope.order.buys[i].pivot.volume;
+          if ($scope.order.buys[i].additional !== undefined) {
+            $scope.totalSelfSell += (($scope.order.buys[i].pivot.price + $scope.order.buys[i].additional.freight_cost + 
+              $scope.order.buys[i].additional.port_to_factory) * $scope.order.buys[i].pivot.volume);
+            $scope.totalSelfAdditionalSell += ($scope.order.buys[i].additional.freight_cost + 
+              $scope.order.buys[i].additional.port_to_factory) * $scope.order.buys[i].pivot.volume;
+          }else{
+            $scope.totalSelfSell += (($scope.order.buys[i].pivot.price) * $scope.order.buys[i].pivot.volume);
+            $scope.totalSelfAdditionalSell += $scope.order.buys[i].pivot.volume;
+          }
         }
-      }
     };
 
     $scope.removeBuy = function () {
@@ -61,16 +61,16 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
 
     $scope.removeSell = function () {
       Order.update({
-        id : $scope.order.id, action: 'unstage'},
-        {
-          sell_id : $scope.display.sell.id
-        }, function (res){
-          delete $scope.display.sell;
-          $scope.order = res.order;
-          console.log($scope.order);
-          if($scope.order.sells!==null) $scope.display.sell = $scope.order.sells[0];
-        });
-      };
+        id : $scope.order.id, action: 'unstage' 
+      },{
+        sell_id : $scope.display.sell.id
+      }, function (res){
+        delete $scope.display.sell;
+        $scope.order = res.order;
+        console.log($scope.order);
+        if($scope.order.sells!==null) $scope.display.sell = $scope.order.sells[0];
+      });
+    };
     
     $scope.removeSellFront = function () {
       $scope.order.sells.splice($scope.display.sell, 1);
