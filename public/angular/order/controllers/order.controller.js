@@ -58,6 +58,11 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
         $scope.findOne();
       });
     };
+
+    $scope.inHouse = function (status) {
+      $scope.order.in_house = status || false;
+      $scope.update(true);
+    }
     
     $scope.openReasonModal = function () {
       var modalInstance = $uibModal.open({

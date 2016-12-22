@@ -259,6 +259,7 @@ class OrderController extends Controller
    */
   public function update(Request $req, $id)
   {
+    return $req;
     $order = Order::find($id);
 
     if(!$req) return response()->json([ 'message' => 'Bad Request' ], 400);
@@ -281,6 +282,7 @@ class OrderController extends Controller
     $order->request_reason = $req->request_reason;
     $order->finalize_reason = $req->finalize_reason;
     $order->cancel_reason = $req->cancel_reason;
+    $order->in_house = $req->in_house;
     $order->status = $req->status;
     $order->save();
 
@@ -404,7 +406,7 @@ class OrderController extends Controller
 
     // Validate the Multiplicity of the leads inside this Orders
     if ($lead_type === 'buys'){
-      if(count($order->sells) > 1 && count($order->buys))
+      if(count($order->sells) > 1 && !$req->notes && count($order->buys))
         return response()->json([ 'message' => 'Can\'t have Multiple Buy on Multiple Sells' ], 400);
 
       if($order->in_house)
@@ -412,7 +414,7 @@ class OrderController extends Controller
     }
 
     else if ($lead_type === 'sells') 
-      if(count($order->buys) > 1 && count($order->sells))
+      if(count($order->buys) > 1 && !$req->notes && count($order->sells))
         return response()->json([ 'message' => 'Can\'t add more Sell on Multiple Buys' ], 400);
 
     // Update the data if pass all necessities
