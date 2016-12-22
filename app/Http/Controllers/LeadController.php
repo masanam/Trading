@@ -39,17 +39,15 @@ class LeadController extends Controller
     // lowercasing lead_type
     $lead_type = strtolower($req->lead_type);
 
-    // choose lead type, for view lead recomend using right condition 
-    if ($lead_type === 'buy' || $req->lead_type === 's') $query->where('lead_type', 'b');
-    else if ($lead_type === 'sell' || $req->lead_type === 'b') $query->where('lead_type', 's');
-
     // select statuses to include based on query category
     if($req->order) $status = ['v', 'l', 'p']; // only v, l, p IF this is a lead added to orders
-    else if($req->order_status==='all') $status = ['v', 'l', 's', 'p'];
-    else if($req->order_status==='draft') { $status = ['0', '1', '2', '3', '4']; $user_id = true; }
-    else if($req->order_status!==null) $query->where('order_status', $req->order_status);
+    else if($req->order_status=='all') $status = ['v', 'l', 's', 'p'];
+    else if($req->order_status=='draft') { $status = ['0', '1', '2', '3', '4']; $user_id = true; }
+    else if($req->order_status!=null) $query->where('order_status', $req->order_status);
 
     if (isset($status)) $query->whereIn('order_status', $status);
+
+    // if user_id is stated, take only those that belongs to that trader
     if (isset($user_id)) $query->where('user_id', Auth::User()->id);
 
     // company_type based on lead type of the reference lead
@@ -64,21 +62,44 @@ class LeadController extends Controller
       }
     }
 
+    // Run the logic ONLY IF this is a matching algorithm
+    // list down ALL order_id if contains EXACTLY 1 staged leads
+    // add that to be available for choice
+    if($req->order) {
+      $available_leads = DB::table('order_details')
+        ->join('leads', 'leads.id', 'order_details.lead_id')
+        ->select('order_details.lead_id', 'order_details.order_id')
+        ->groupBy('order_details.order_id')
+        ->havingRaw('count(order_details.lead_id) = 1')
+        ->where('leads.order_status', 's')->pluck('lead_id');
+
+      $query->orWhereIn('id', $available_leads);
+    }
+    
+    // choose lead type, for view lead recomend using right condition 
+    if ($lead_type === 'buy' || $req->lead_type === 's') $query->where('lead_type', 'b');
+    else if ($lead_type === 'sell' || $req->lead_type === 'b') $query->where('lead_type', 's');
+
     $leads = $query->limit($req->limit)->get();
 
-    //list recomended leads from compare leads to a lead
-    if($req->lead_id && ($req->order === 'matching' || $req->matching === 'leads')) 
+    // To list recommended leads in lead.view
+    // Find difference of each of the lead quality
+    // in list to reference lead
+    if($req->lead_id && $req->matching === 'leads') 
       foreach ($leads as $lead) {
         $lead->difference($ref);
       }
 
-    //list recomended product from compare product to a lead
+    // To list recommended product in lead.view
+    // Find difference of each of the product quality
+    // in list to reference lead
     else if($req->lead_id && $req->matching === 'products')
       foreach ($leads as $lead) {
         $lead->difference($ref, $company_type);
       }
 
-    //list lead status at buy / sell lead
+    // if this is not in-searching recommended product
+    // before responding, cleanse all data to hide their elements
     else
       foreach ($leads as $lead) {
         if ($lead->order_status!=='s') {
@@ -92,21 +113,20 @@ class LeadController extends Controller
   }
 
   // Check if an order only have one leads in them
-  public function isSingleLeadInOrder($id) {
-    $sum = 0;
-    $lead = Lead::with(['orders' => function($q) {
-      $q->select('orders.id');
-    }])->find($id);
+  // public function isSingleLeadInOrder($query) {
+  //   $sum = 0;
+  //   // dd($query);
+  //   foreach($query as $key => $q) {
+  //     $sum = 0;
+  //     foreach($q->orders as $order) {
+  //       if($sum > 2) { $sum=0; break; }
+  //       $sum += Order::find($order->id)->countLeads();
+  //     }
+  //     if($sum >= 2) { array_except($query, $key); continue; }
+  //   }
 
-    // dd($lead->orders);
-
-    foreach($lead->orders as $order) {
-      $sum += Order::find($order->id)->countLeads();
-    }
-
-    if($sum <= 1) return "true";
-    else return "false";
-  }
+  //   return $query;
+  // }
 
   /**
   * Store a newly created resource in storage.
