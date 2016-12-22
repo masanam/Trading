@@ -419,7 +419,7 @@ class OrderController extends Controller
         return response()->json([ 'message' => 'Can\'t have Multiple Buy on Multiple Sells' ], 400);
 
       if($order->in_house)
-        return response()->json([ 'message' => 'Can\'t add Buy when using House Products' ], 400)
+        return response()->json([ 'message' => 'Can\'t add Buy when using House Products' ], 400);
     }
 
     else if ($lead_type === 'sells') 

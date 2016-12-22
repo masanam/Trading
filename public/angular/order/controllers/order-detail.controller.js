@@ -49,24 +49,34 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
     };
 
     $scope.removeLead = function (lead) {
-      if($scope.order.id){
-        // delete lead in order
-        $scope.order.sells.splice(lead, 1);
-        $scope.order.buys.splice(lead, 1);
+      var sell_index = $scope.order.sells.indexOf(lead);
+      var buy_index = $scope.order.buys.indexOf(lead);
 
-        // if($scope.display.sell === lead) delete $scope.display.sell;
-        // if($scope.display.buy === lead) delete $scope.display.buy;
+      // delete lead in order & displayed elements
+      var reconcile = function () {
+        if(sell_index > -1) $scope.order.sells.splice(sell_index, 1);
+        if(buy_index > -1) $scope.order.buys.splice(buy_index, 1);
+        
+        if($scope.display.sell === lead){
+          delete $scope.display.sell;
+          if($scope.order.sells !== null) $scope.display.sell = $scope.order.sells[0];
+        }
+
+        if($scope.display.buy === lead){
+          delete $scope.display.buy;
+          if($scope.order.buys !== null) $scope.display.buy = $scope.order.buys[0];
+        }
+      };
+
+      if(!$scope.order.id){
+        reconcile();
       } else {
         Order.update(
           { id: $scope.order.id, action: 'unstage' },
           { lead_id: lead.id }, 
         function (res){
-          $scope.order.sells.splice(lead, 1);
-          $scope.order.buys.splice(lead, 1);
-          
-          // delete $scope.display.buy;
           $scope.order = res;
-          //if($scope.order.buys !== null) $scope.display.buy = $scope.order.buys[0];
+          reconcile();
         });
       } 
     };
