@@ -29,3 +29,5 @@ ApplicationConfiguration.registerModule('chat');
 
 // Bizdev
 ApplicationConfiguration.registerModule('bizdev');
+
+ApplicationConfiguration.registerModule('sales');

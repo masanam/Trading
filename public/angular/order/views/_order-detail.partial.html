@@ -1,9 +1,9 @@
 <section ng-controller="OrderDetailController" ng-init="init()">
 <!--For Mobile-->
 <div ng-if="!order.user_id || order.user_id === Authentication.user.id">
-  <button ng-show="order.status !== 'x' && order.status !== 'a' && order.status !== 'f'" class="btn btn-block btn-default hidden-md hidden-lg" ng-click="addBuy()" ng-disabled=" order.sells.length > 1 && order.buys.length===1"> + Add Buy </button>
-  <button ng-show="order.status !== 'x' && order.status !== 'a' && order.status !== 'f'" class="btn btn-block btn-default hidden-md hidden-lg" ng-click="addOwnProduct()" ng-disabled="order.buys.length > 0 && order.sells.length < 1 "> + Add House Product </button>
-  <button ng-show="order.status !== 'x' && order.status !== 'f' && order.status !== 'a'" class="btn btn-block btn-default hidden-md hidden-lg" ng-click="addSell()" ng-disabled="order.buys.length > 1 && order.sells.length===1"> + Add Sell </button>
+  <button ng-show="order.status !== 'x' && order.status !== 'a' && order.status !== 'f' && order.status !== 'p'" class="btn btn-block btn-default hidden-md hidden-lg" ng-click="addBuy()" ng-disabled=" order.sells.length > 1 && order.buys.length===1"> + Add Buy </button>
+  <button ng-show="order.status !== 'x' && order.status !== 'a' && order.status !== 'f' && order.status !== 'p'" class="btn btn-block btn-default hidden-md hidden-lg" ng-click="inHouse()" ng-disabled="order.buys.length > 0 && order.sells.length < 1 "> + Add House Product </button>
+  <button ng-show="order.status !== 'x' && order.status !== 'f' && order.status !== 'a' && order.status !== 'p'" class="btn btn-block btn-default hidden-md hidden-lg" ng-click="addSell()" ng-disabled="order.buys.length > 1 && order.sells.length===1"> + Add Sell </button>
 </div>
 <!--For Mobile-->
 <div class="table-responsive">
@@ -15,12 +15,12 @@
       <tr ng-if="!order.user_id || order.user_id === Authentication.user.id"  class="no-print">
         <td width=20%></td>
         <td width=40%>
-          <button ng-show="order.status !== 'x' && order.status !== 'a' && order.status !== 'f'" class="btn btn-default hidden-xs hidden-sm" ng-click="addBuy()" ng-disabled=" order.buys.length > 1 && order.sells.length===1"> + Add Buy </button>
-          <button ng-show="order.status !== 'x' && order.status !== 'a' && order.status !== 'f'" class="btn btn-default pull-right hidden-xs hidden-sm" ng-click="addOwnProduct()"
+          <button ng-show="order.status !== 'x' && order.status !== 'a' && order.status !== 'f' && order.status !== 'p'" class="btn btn-default hidden-xs hidden-sm" ng-click="addBuy()" ng-disabled=" order.buys.length > 1 && order.sells.length===1"> + Add Buy </button>
+          <button ng-show="order.status !== 'x' && order.status !== 'a' && order.status !== 'f' && order.status !== 'p'" class="btn btn-default pull-right hidden-xs hidden-sm" ng-click="inHouse()"
           	 ng-disabled="order.buys.length !== 0 || order.sells.length === 0 "> + Add House Product </button>
         </td>
         <td width=40%>
-          <button ng-show="order.status !== 'x' && order.status !== 'f' && order.status !== 'a'" class="btn btn-default hidden-xs hidden-sm" ng-click="addSell()" ng-disabled="order.sells.length > 1 && order.buys.length===1"> + Add Sell </button>
+          <button ng-show="order.status !== 'x' && order.status !== 'f' && order.status !== 'a' && order.status !== 'p'" class="btn btn-default hidden-xs hidden-sm" ng-click="addSell()" ng-disabled="order.sells.length > 1 && order.buys.length===1"> + Add Sell </button>
         </td>
       </tr>
 			<tr>
@@ -68,6 +68,7 @@
     <tbody id="detail-section" uib-collapse="isCollapsed">
 			<tr>
 				<td>Company</td>
+
         <td ng-switch="display.buy && (display.buy.user_id === Authentication.user.id || checkSubordinates(display.buy.user_id)) || !display.buy">
           <span ng-switch-when="true">
             {{ display.buy.company.company_name }}
@@ -76,10 +77,10 @@
             -Contact {{ display.buy.trader.name }} ({{ display.buy.trader.phone }})
           </i>
           <span class="pull-right">
-            <a ng-if="order.id" ng-click="removeBuy()" class="glyphicon glyphicon-trash"></a>
-            <a ng-if="!order.id" ng-click="removeBuyFront()" class="glyphicon glyphicon-trash"></a>
+            <a ng-if="!order.id || order.status === 'd'" ng-click="removeLead(display.buy)" class="glyphicon glyphicon-trash"></a>
           </span>
         </td>
+
 				<td ng-switch="display.sell && (display.sell.user_id === Authentication.user.id || checkSubordinates(display.sell.user_id)) || !display.sell">
 					<span ng-switch-when="true">
 						{{ display.sell.company.company_name }}
@@ -88,8 +89,7 @@
 						-Contact {{ display.sell.trader.name }} ({{ display.sell.trader.phone }})
 					</i>
           <span class="pull-right">
-            <a ng-if="order.id" ng-click="removeSell()" class="glyphicon glyphicon-trash"></a>
-            <a ng-if="!order.id" ng-click="removeSellFront()" class="glyphicon glyphicon-trash"></a>
+            <a ng-if="!order.id || order.status === 'd'" ng-click="removeLead(display.sell)" class="glyphicon glyphicon-trash"></a>
           </span>
 				</td>
 			</tr>
@@ -98,7 +98,7 @@
 				<td>
           <span ng-if="display.buy">
             {{ display.buy.pivot.volume | number }}mt - US$ {{ display.buy.pivot.price | number }}
-            <a ng-if="order.id" ng-if="display.buy.user_id === Authentication.user.id && order.id" 
+            <a ng-if="order.id && order.status !== 'a' && order.status !== 'x'" ng-if="display.buy.user_id === Authentication.user.id && order.id" 
               ng-click="negoBuy()" class="pull-right">
               Nego
             </a>
@@ -107,7 +107,7 @@
 				<td>
           <span ng-if="display.sell">
             {{ display.sell.pivot.volume | number }}mt - US$ {{ display.sell.pivot.price | number }}
-            <a ng-if="order.id" ng-if="display.sell.user_id === Authentication.user.id && order.id" 
+            <a ng-if="order.id && order.status !== 'a' && order.status !== 'x'" ng-if="display.sell.user_id === Authentication.user.id && order.id" 
               ng-click="negoSell()" class="pull-right">
               Nego
             </a>
