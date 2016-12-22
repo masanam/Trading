@@ -283,7 +283,6 @@ class OrderController extends Controller
     $order->cancel_reason = $req->cancel_reason;
     $order->status = $req->status;
     $order->save();
-    //$order->updated_at = date('Y-m-d H:i:s');
 
     if($order->status == 'x'){
       $buy_ids = $order->buys()->pluck('leads.id');
@@ -466,25 +465,5 @@ class OrderController extends Controller
     Lead::find($req->lead_id)->reconcile();
 
     return $this->show($id);
-  }
-
-  public function createOrderAdditionalCost($id, Request $request) {
-    $order = Order::find($id);
-
-    $order->companies()->attach([$request->companyId => [
-      'cost' => $request->cost
-    ]]);
-
-    return response()->json($order, 200);
-  }
-
-  public function updateOrderAdditionalCost($id, Request $request) {
-    $order = Order::find($id);
-
-    $order->companies()->updateExistingPivot([$request->companyId => [
-      'cost' => $request->cost
-    ]]);
-
-    return response()->json($order, 200);
   }
 }
