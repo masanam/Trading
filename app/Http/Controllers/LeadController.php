@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Model\Company;
+use App\Model\Order;
 use App\Model\Lead;
 use App\Model\Product;
 use Auth;
@@ -88,6 +89,23 @@ class LeadController extends Controller
       }
 
     return response()->json($leads, 200);
+  }
+
+  // Check if an order only have one leads in them
+  public function isSingleLeadInOrder($id) {
+    $sum = 0;
+    $lead = Lead::with(['orders' => function($q) {
+      $q->select('orders.id');
+    }])->find($id);
+
+    // dd($lead->orders);
+
+    foreach($lead->orders as $order) {
+      $sum += Order::find($order->id)->countLeads();
+    }
+
+    if($sum <= 1) return "true";
+    else return "false";
   }
 
   /**
