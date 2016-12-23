@@ -80,9 +80,10 @@ angular.module('map').controller('MapController', ['$scope', '$http', '$statePar
       }
       
       params.action = 'filter';
+      console.log(params);
       
-      $scope.concessions = Map.query(params);
-      //console.log($scope.concessions);
+      $scope.concessions = Concession.query(params);
+      console.log($scope.concessions);
     };
     
     $scope.addFilter = function(){

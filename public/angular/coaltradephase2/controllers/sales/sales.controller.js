@@ -2,6 +2,10 @@
 
 angular.module('sales').controller('SalesController', ['$scope', '$stateParams', '$state', 
   function($scope, $stateParams, $state) {
+    $scope.IsHidden = true;
+    $scope.ShowHide = function () {
+      $scope.IsHidden = $scope.IsHidden ? false : true;
+    };
 
     $scope.detail = [
         { ContractID:'CONTRACT0010',Costumer:'PT.ABC',Product:'',Tonnage:'30.000.000mt',Price:'$54',Planed:'MUST BE FILLED!' },
@@ -13,6 +17,5 @@ angular.module('sales').controller('SalesController', ['$scope', '$stateParams',
       $scope.contract=$scope.detail[ContractID];
 
     };
-
   }
 ]);
