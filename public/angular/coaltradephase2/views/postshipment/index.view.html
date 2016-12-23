@@ -1,33 +1,60 @@
 <section ng-controller="PostshipmentController" class="content">
-  <div class="col-lg-12">
+  
+  <div class="col-lg-3">
     <div class="box box-info">
       <div class="box-header with-border">
-        <h3 class="box-title">Sales | Dashboard</h3>
+        <h3 class="box-title">Post Shipment Contracts</h3>
       </div>
       <div class="box-body">
-      <div class="row">
-      <div class="col-lg-6">  
-       <div class="table-responsive">
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th> Month Order</th>
-            <th> Contract ID</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td> 27/01/2016</td>
-            <td> <a>00001</a></td>
-            
-          </tr>
-        </tbody>
-      </table>
-      </div>
-      </div>  
-       <div class="col-lg-6">  
-       </div>
+        <table class="table table-striped">
+          <thead> 
+            <tr>
+              <th> Desember 2016 </th>            
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-click="cont = !cont">
+              <td style="color:red">CONTRACT0010</td> 
+            </tr>
+            <tr ng-click="cont = !cont">
+              <td>CONTRACT0011</td> 
+            </tr>
+            <tr ng-click="cont = !cont">
+              <td>CONTRACT0012</td> 
+            </tr>
+          </tbody>
+        </table>
+        <table class="table table-striped">
+          <thead> 
+            <tr>
+              <th style="padding-top: 25px;"> Januari 2016 </th>            
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-click="cont = !cont">
+              <td style="color:red">CONTRACT0010</td> 
+            </tr>
+            <tr ng-click="cont = !cont">
+              <td>CONTRACT0011</td> 
+            </tr>
+            <tr ng-click="cont = !cont">
+              <td>CONTRACT0012</td> 
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
+
+  <div class="col-lg-9" ng-show="cont">
+    <div ng-include="'./angular/coaltradephase2/views/postshipment/todo.view.html'"></div>
+  </div>
+  <div class="col-lg-9" ng-show="!cont">
+    <div class="box box-info" style="margin: 0px 15px;">
+      <div class="box-header with-border" style="text-align: center; padding: 175px 0px;">
+        <h3 class="box-title">Click a Contract to View Details</h3>
+      </div>      
+    </div>
+  </div>    
+
 </section>
