@@ -20,7 +20,10 @@
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="product in company.products">
+          <tr ng-if="company.products.length < 1">
+            <td colspan="5" align="center">There is no record of product</td>
+          </tr>
+          <tr ng-if="company.products.length > 0" ng-repeat="product in company.products">
             <td>{{ product.product_name }}</td>
             <td>{{ product.gcv_adb_min | number }} - {{ product.gcv_adb_max | number }}</td>
             <td>{{ product.gcv_arb_min | number }} - {{ product.gcv_arb_max | number }}</td>
