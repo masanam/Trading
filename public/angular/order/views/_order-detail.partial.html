@@ -2,30 +2,59 @@
 <!--For Mobile-->
 <div ng-if="!order.user_id || order.user_id === Authentication.user.id">
   <button ng-show="order.status !== 'x' && order.status !== 'a' && order.status !== 'f' && order.status !== 'p'" class="btn btn-block btn-default hidden-md hidden-lg" ng-click="addBuy()" ng-disabled=" order.sells.length > 1 && order.buys.length===1"> + Add Buy </button>
-  <button ng-show="order.status !== 'x' && order.status !== 'a' && order.status !== 'f' && order.status !== 'p'" class="btn btn-block btn-default hidden-md hidden-lg" ng-click="inHouse()" ng-disabled="order.buys.length > 0 && order.sells.length < 1 "> + Add House Product </button>
+  
+  <button ng-show="order.status === 'd' && !order.in_house"
+    class="btn btn-block btn-default hidden-md hidden-lg" ng-click="inHouse(true)">
+    + Add House Product
+  </button>
+  <button ng-show="order.status === 'd' && order.in_house"
+    class="btn btn-block btn-default hidden-md hidden-lg" ng-click="inHouse(false)">
+    Remove House Product
+  </button>
+  
   <button ng-show="order.status !== 'x' && order.status !== 'f' && order.status !== 'a' && order.status !== 'p'" class="btn btn-block btn-default hidden-md hidden-lg" ng-click="addSell()" ng-disabled="order.buys.length > 1 && order.sells.length===1"> + Add Sell </button>
 </div>
 <!--For Mobile-->
 <div class="table-responsive">
   <div style="text-align:center; margin-left:175px;" flex>
-    <button ng-show="order.status !== 'x' && order.status !== 'a' && order.status !== 'f'" class="btn btn-primary" ng-click="addCostModal()" flex> + Add Additional Cost </button>
+    <button ng-show="order.status !== 'x' && order.status !== 'a' && order.status !== 'f'"
+      class="btn btn-primary" ng-click="addCostModal()" flex>
+      + Add Additional Cost
+    </button>
   </div>
 	<table st-table="" class="table table-bordered table-striped">
 		<thead>
       <tr ng-if="!order.user_id || order.user_id === Authentication.user.id"  class="no-print">
-        <td width=20%></td>
-        <td width=40%>
-          <button ng-show="order.status !== 'x' && order.status !== 'a' && order.status !== 'f' && order.status !== 'p'" class="btn btn-default hidden-xs hidden-sm" ng-click="addBuy()" ng-disabled=" order.buys.length > 1 && order.sells.length===1"> + Add Buy </button>
-          <button ng-show="order.status !== 'x' && order.status !== 'a' && order.status !== 'f' && order.status !== 'p'" class="btn btn-default pull-right hidden-xs hidden-sm" ng-click="inHouse()"
-          	 ng-disabled="order.buys.length !== 0 || order.sells.length === 0 "> + Add House Product </button>
+        <td></td>
+        <td>
+          <button ng-show="order.status !== 'x' && order.status !== 'a' && order.status !== 'f' && order.status !== 'p'"
+            class="btn btn-default hidden-xs hidden-sm" ng-click="addBuy()"
+            ng-disabled=" order.buys.length > 1 && order.sells.length===1">
+            + Add Buy
+          </button>
+
+          <button ng-show="order.status === 'd' && !order.in_house"
+            class="btn btn-default pull-right hidden-xs hidden-sm" ng-click="inHouse(true)"
+          	ng-disabled="order.buys.length !== 0 || order.sells.length === 0 ">
+            + Add House Product
+          </button>
         </td>
-        <td width=40%>
-          <button ng-show="order.status !== 'x' && order.status !== 'f' && order.status !== 'a' && order.status !== 'p'" class="btn btn-default hidden-xs hidden-sm" ng-click="addSell()" ng-disabled="order.sells.length > 1 && order.buys.length===1"> + Add Sell </button>
+        <td>
+          <button ng-show="order.status !== 'x' && order.status !== 'f' && order.status !== 'a' && order.status !== 'p'"
+            class="btn btn-default hidden-xs hidden-sm" ng-click="addSell()"
+            ng-disabled="order.sells.length > 1 && order.buys.length===1">
+            + Add Sell
+          </button>
+
+          <button ng-show="order.status === 'p' && order.in_house"
+            class="btn btn-default pull-right hidden-xs hidden-sm" ng-click="inHouse(false)">
+            Buy Product From Suppliers
+          </button>
         </td>
       </tr>
 			<tr>
-				<th></th>
-    		<th>
+				<th width="{{ order.in_house ? '40%' : '20%' }}"></th>
+    		<th ng-if="!order.in_house"  width=40% ng-if="!order.in_house">
 					<span style="font-size:20pt">Buy</span>
           <span ng-if="order.buys.length" uib-dropdown class="pull-right" ng-init="display.buy = order.buys[0]; display.buy.index = 0">
             <button type="button" ng-show="order.status !== 'x' && order.status !== 'f'" class="btn btn-default" uib-dropdown-toggle>
@@ -38,8 +67,8 @@
             </ul>
           </span>
 				</th>
-				<th>
-					<span style="font-size:20pt">Sell</span>
+				<th width="{{ order.in_house ? '60%' : '40%' }}">
+					<span style="font-size:20pt">{{ order.in_house ? 'Order Details' : 'Sell' }}</span>
           <span ng-if="order.sells.length" uib-dropdown class="pull-right" ng-init="display.sell = order.sells[0]; display.sell.index = 0">
             <button type="button" ng-show="order.status !== 'x' && order.status !== 'f'" class="btn btn-default" uib-dropdown-toggle>
               {{display.sell.company.company_name}} ({{ order.sells.length }}) <span class="caret"></span>
@@ -56,7 +85,7 @@
 		</thead>
 		<tbody>
       <tr>
-				<th colspan="3" style="text-align:center; background: #efefef;">
+				<th colspan=3 style="text-align:center; background: #efefef;">
           <a ng-href="" ng-click="isCollapsed = !isCollapsed">
             Order Details
             <span class="glyphicon glyphicon-triangle-bottom pull-right" ng-if="isCollapsed"></span> 
@@ -69,7 +98,7 @@
 			<tr>
 				<td>Company</td>
 
-        <td ng-switch="display.buy && (display.buy.user_id === Authentication.user.id || checkSubordinates(display.buy.user_id)) || !display.buy">
+        <td ng-switch="display.buy && (display.buy.user_id === Authentication.user.id || checkSubordinates(display.buy.user_id)) || !display.buy" ng-if="!order.in_house">
           <span ng-switch-when="true">
             {{ display.buy.company.company_name }}
           </span>
@@ -95,7 +124,7 @@
 			</tr>
 			<tr>
 				<td>Volume (mt) - Price (USD)</td>
-				<td>
+				<td ng-if="!order.in_house">
           <span ng-if="display.buy">
             {{ display.buy.pivot.volume | number }}mt - US$ {{ display.buy.pivot.price | number }}
             <a ng-if="order.id && order.status !== 'a' && order.status !== 'x'" ng-if="display.buy.user_id === Authentication.user.id && order.id" 
@@ -116,43 +145,30 @@
 			</tr>
 			<tr>
 				<td>Input Date</td>
-        <span ng-if="display.buy">
-          <td>{{ display.buy.order_date | date:'mediumDate' }}</td>
-        </span>
-        <span ng-if="display.sell">
-  				<td>{{ display.sell.order_date | date:'mediumDate' }}</td>
-        </span>
+        <td ng-if="!order.in_house">{{ display.buy.order_date | date:'mediumDate' }}</td>
+  			<td>{{ display.sell.order_date | date:'mediumDate' }}</td>
 			</tr>
 			<tr>
 				<td>LayCan</td>
-        <span ng-if="display.buy">
-          <td>{{ display.buy.laycan_start | date:'mediumDate' }} - {{ display.buy.laycan_end | date:'mediumDate' }}</td>
-        </span>
-        <span ng-if="display.sell">
-				  <td>{{ display.sell.laycan_start | date:'mediumDate' }} - {{ display.sell.laycan_end | date:'mediumDate' }}</td>
-        </span>
+        <td ng-if="!order.in_house">
+          {{ display.buy.laycan_start | date:'mediumDate' }} - {{ display.buy.laycan_end | date:'mediumDate' }}
+        </td>
+				<td>{{ display.sell.laycan_start | date:'mediumDate' }} - {{ display.sell.laycan_end | date:'mediumDate' }}</td>
 			</tr>
       <tr>
 				<td>Shipping Term</td>
-				<td>
-					<span>{{ display.buy.pivot.trading_term }}</span>
-				</td>
-        <td>
-          <span>{{ display.sell.pivot.trading_term }}</span>
-        </td>
+				<td ng-if="!order.in_house">{{ display.buy.pivot.trading_term }}</td>
+        <td>{{ display.sell.pivot.trading_term }}</td>
 			</tr>
       <tr>
 				<td>Payment Term</td>
-				<td>
-					<span>{{ display.buy.pivot.payment_term }}</span>
-				</td>
-        <td>
-          <span>{{ display.sell.pivot.payment_term }}</span>
-        </td>
+				<td ng-if="!order.in_house">{{ display.buy.pivot.payment_term }}</td>
+        <td>{{ display.sell.pivot.payment_term }}</td>
 			</tr>
 			<tr>
 				<td>Location</td>
-				<td ng-switch="display.buy.user_id === Authentication.user.id || checkSubordinates(display.buy.user_id) || !display.buy">
+				<td ng-switch="display.buy.user_id === Authentication.user.id || checkSubordinates(display.buy.user_id) || !display.buy"
+          ng-if="!order.in_house">
 					<span ng-switch-when="true">{{ display.buy.concession.city }}</span>
 					<i ng-switch-default style="color:green">-Contact {{ display.buy.trader.name }}-</i>
 				</td>
@@ -163,7 +179,8 @@
 			</tr>
 			<tr>
 				<td>Port</td>
-        <td ng-switch="display.buy.user_id === Authentication.user.id || checkSubordinates(display.buy.user_id) || !display.buy">
+        <td ng-switch="display.buy.user_id === Authentication.user.id || checkSubordinates(display.buy.user_id) || !display.buy"
+          ng-if="!order.in_house">
           <span ng-switch-when="true">{{ display.buy.port_name }}</span>
           <i ng-switch-default style="color:green">-Contact {{ display.buy.trader.name }}-</i>
         </td>
@@ -175,7 +192,7 @@
     </tbody>
     <tbody>
       <tr>
-				<th colspan="3" style="text-align:center; background: #efefef;">
+				<th colspan=3 style="text-align:center; background: #efefef;">
           <a ng-href="" ng-click="qualityCollapsed = !qualityCollapsed">
             Quality
             <span class="glyphicon glyphicon-triangle-bottom pull-right" ng-if="!qualityCollapsed"></span> 
@@ -187,7 +204,7 @@
     <tbody id="quality-section" uib-collapse="!qualityCollapsed">
       <tr>
         <td><b>GCV ADB </b></td>
-				<td>
+				<td ng-if="!order.in_house">
 					<span ng-if="display.buy">
 					{{ display.buy.gcv_adb_min }} ~ {{ display.buy.gcv_adb_max }} kcal<br>
 					{{ display.buy.gcv_adb_reject || '-' }} kcal reject; {{ display.buy.gcv_adb_bonus || '-' }} kcal bonus
@@ -202,7 +219,7 @@
       </tr>
       <tr>
         <td><b>GCV ARB </b></td>
-				<td>
+				<td ng-if="!order.in_house">
 					<span ng-if="display.buy">
 					{{ display.buy.gcv_arb_min }} ~ {{ display.buy.gcv_arb_max }} kcal<br>
 					{{ display.buy.gcv_arb_reject || '-' }} kcal reject; {{ display.buy.gcv_arb_bonus || '-' }} kcal bonus
@@ -217,7 +234,7 @@
       </tr>
       <tr>
         <td><b>NCV ARB </b></td>
-				<td>
+				<td ng-if="!order.in_house">
 					<span ng-if="display.buy">
 					{{ display.buy.ncv_min }} ~ {{ display.buy.ncv_max }} kcal<br>
 					{{ display.buy.ncv_reject || '-' }} kcal reject; {{ display.buy.ncv_bonus || '-' }} kcal bonus
@@ -232,7 +249,7 @@
       </tr>
       <tr ng-show="display.sell.tm_min !== 0 || display.buy.tm_min !== 0 || display.sell.tm_max !== 0 || display.buy.tm_max !== 0">
         <td><b>Total Moisture (ARB) </b></td>
-				<td>
+				<td ng-if="!order.in_house">
 					<span ng-if="display.buy">
 					{{ display.buy.tm_min }} ~ {{ display.buy.tm_max }} %<br>
 					{{ display.buy.tm_reject }} % reject; {{ display.buy.tm_bonus }} % bonus
@@ -247,7 +264,7 @@
       </tr>
       <tr ng-show="display.sell.im_min !== 0 || display.buy.im_min !== 0 || display.sell.im_max !== 0 || display.buy.im_max !== 0">
         <td><b>Inherent Moisture (ADB) </b></td>
-				<td>
+				<td ng-if="!order.in_house">
 					<span ng-if="display.buy">
 					{{ display.buy.im_min }} ~ {{ display.buy.im_max }} %<br>
 					{{ display.buy.im_reject }} % reject; {{ display.buy.im_bonus }} % bonus
@@ -262,7 +279,7 @@
       </tr>
       <tr ng-show="display.sell.vm_min !== 0 || display.buy.vm_min !== 0 || display.sell.vm_max !== 0 || display.buy.vm_max !== 0">
         <td><b>Volatile Matter (ADB) </b></td>
-				<td>
+				<td ng-if="!order.in_house">
 					<span ng-if="display.buy">
 					{{ display.buy.vm_min }} ~ {{ display.buy.vm_max }} %<br>
 					{{ display.buy.vm_reject }} % reject; {{ display.buy.vm_bonus }} % bonus
@@ -277,7 +294,7 @@
       </tr>
       <tr ng-show="display.sell.ash_min !== 0 || display.buy.ash_min !== 0 || display.sell.ash_max !== 0 || display.buy.ash_max !== 0">
         <td><b>Ash (ADB) </b></td>
-				<td>
+				<td ng-if="!order.in_house">
 					<span ng-if="display.buy">
 					{{ display.buy.ash_min }} ~ {{ display.buy.ash_max }} %<br>
 					{{ display.buy.ash_reject }} % reject; {{ display.buy.ash_bonus }} % bonus
@@ -292,7 +309,7 @@
       </tr>
       <tr ng-show="display.sell.fc_min !== 0 || display.buy.fc_min !== 0">
         <td><b>Fixed Carbon (ADB) </b></td>
-				<td>
+				<td ng-if="!order.in_house">
 					<span ng-if="display.buy">
 					{{ display.buy.fc_min }} ~ {{ display.buy.fc_max }} %<br>
 					{{ display.buy.fc_reject }} % reject; {{ display.buy.fc_bonus }} % bonus
@@ -307,7 +324,7 @@
       </tr>
       <tr ng-show="display.sell.ts_min !== 0 || display.buy.ts_min !== 0 || display.sell.ts_max !== 0 || display.buy.ts_max !== 0">
         <td><b>Total Sulphur (ADB) </b></td>
-				<td>
+				<td ng-if="!order.in_house">
 					<span ng-if="display.buy">
 					{{ display.buy.ts_min }} ~ {{ display.buy.ts_max }} %<br>
 					{{ display.buy.ts_reject }} % reject; {{ display.buy.ts_bonus }} % bonus
@@ -322,7 +339,7 @@
       </tr>
       <tr ng-show="display.sell.hgi_min !== 0 || display.buy.hgi_min !== 0 || display.sell.hgi_max !== 0 || display.buy.hgi_max !== 0">
         <td><b>HGI </b></td>
-				<td>
+				<td ng-if="!order.in_house">
 					<span ng-if="display.buy">
 					{{ display.buy.hgi_min }} ~ {{ display.buy.hgi_max }} <br>
 					{{ display.buy.hgi_reject }} reject; {{ display.buy.hgi_bonus }} bonus
@@ -337,7 +354,7 @@
       </tr>
       <tr ng-show="display.sell.size_min !== 0 || display.buy.size_min !== 0 || display.sell.size_max !== 0 || display.buy.size_max !== 0">
         <td><b>SIZE (0-50mm)</b></td>
-				<td>
+				<td ng-if="!order.in_house">
 					<span ng-if="display.buy">
 					{{ display.buy.size_min }} ~ {{ display.buy.size_max }} %<br>
 					{{ display.buy.size_reject }} % reject; {{ display.buy.size_bonus }} % bonus
@@ -352,7 +369,7 @@
       </tr>
       <tr ng-show="display.sell.fe2o3_min !== 0 || display.buy.fe2o3_min !== 0 || display.sell.fe2o3_max !== 0 || display.buy.fe2o3_max !== 0">
         <td><b>Fe2O3 </b></td>
-				<td>
+				<td ng-if="!order.in_house">
 					<span ng-if="display.buy">
 					{{ display.buy.fe2o3_min }} ~ {{ display.buy.fe2o3_max }} %<br>
 					{{ display.buy.fe2o3_reject }} % reject; {{ display.buy.fe2o3_bonus }} % bonus
@@ -367,7 +384,7 @@
       </tr>
       <tr ng-show="display.sell.aft_min !== 0 || display.buy.aft_min !== 0 || display.sell.aft_max !== 0 || display.buy.aft_max !== 0">
         <td><b>AFT</b></td>
-				<td>
+				<td ng-if="!order.in_house">
 					<span ng-if="display.buy">
 					{{ display.buy.aft_min }} ~ {{ display.buy.aft_max }} %<br>
 					{{ display.buy.aft_reject }} kcal reject; {{ display.buy.aft_bonus }} % bonus
@@ -393,18 +410,9 @@
 			</tr>
     </tbody>
     <tbody id="financial-section" uib-collapse="!financialCollapsed">
-			<!-- <tr>
-				<th></th>
-        <th>
-          <button class="btn btn-default" ng-click="addCostModalBuys()"> Update Additional Cost </button>
-        </th>
-        <th>
-          <button class="btn btn-default" ng-click="addCostModalSells()"> Update Additional Cost </button>
-        </th>
-      </tr> -->
       <tr>
 				<th>Total Price / mt</th>
-        <td>
+        <td ng-if="!order.in_house">
 					<span ng-if="display.buy">
 					<h4>US${{ display.buy.pivot.price | number }}</h4>
 					from {{ order.buys.length }} Customers
@@ -432,20 +440,15 @@
 			</tr>
       <tr ng-repeat="additional in order.companies" ng-show="!order.additional && order.companies">
         <th>{{additional.pivot.label}} / mt</th>
-        <td>
+        <td colspan="{{ order.in_house ? '1' : '2' }}">
           <span ng-show="!order.additional && order.companies">
-          <h4>{{additional.company_name}}</h4>
-          </span>
-        </td>
-        <td>
-          <span ng-show="!order.additional && order.companies">
-          <h4>US${{additional.pivot.cost | number}}</h4>
+            US${{additional.pivot.cost | number}} ( {{additional.company_name}} )
           </span>
         </td>
       </tr>
       <tr>
 				<th>Coal Price</th>
-        <td>
+        <td ng-if="!order.in_house">
 					<span ng-if="display.buy">
 					<h3>US${{ (totalSelfSell + totalSelfAdditionalBuy) / totalVolumeSell | number }}</h3>
 					from {{ order.buys.length }} Customers

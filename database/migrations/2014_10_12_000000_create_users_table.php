@@ -37,6 +37,20 @@ class CreateUsersTable extends Migration
             $table->timestamps();
         });
 
+
+        Schema::create('acting_users', function (Blueprint $table) {
+            $table->integer('user_id')->unsigned();
+            $table->integer('acting_as')->unsigned();
+            $table->datetime('date_start')->nullable();
+            $table->datetime('date_end')->nullable();
+            
+            $table->char('role', 1); // t = trade_approval
+            $table->char('status', 1); // a = Active , x = Deleted
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('acting_as')->references('id')->on('users')->onDelete('cascade');
+        });
+
         Schema::create('password_resets', function (Blueprint $table) {
             $table->string('email')->index();
             $table->string('token')->index();
@@ -45,20 +59,23 @@ class CreateUsersTable extends Migration
 
         Schema::create('login_user', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id');
+            $table->integer('user_id')->unsigned();
             $table->integer('num_login');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
         
         Schema::create('activities', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->integer('user_id');
+            $table->integer('user_id')->unsigned();
             $table->string('action');
             $table->string('table')->nullable();
             $table->string('entity_id')->nullable();
-
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -72,6 +89,7 @@ class CreateUsersTable extends Migration
         Schema::dropIfExists('activities');
         Schema::dropIfExists('login_user');
         Schema::dropIfExists('password_resets');
+        Schema::dropIfExists('acting_users');
         Schema::dropIfExists('users');
     }
 }

@@ -4,6 +4,7 @@
   <ui-select ng-model="selected.location"
     reset-search-input="false"
     style="min-width: 30px;"
+    ng-change="select(selected.location)"
     title="Choose an location">
     <ui-select-match placeholder="Name of the {{ lead.lead_type === 'b' ? 'Concession' : 'Factory' }}...">
       {{$select.selected.concession_name}}

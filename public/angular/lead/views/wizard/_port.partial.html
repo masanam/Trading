@@ -4,6 +4,7 @@
   <ui-select ng-model="selected.port"
     reset-search-input="false"
     style="min-width: 30px;"
+    ng-change="select(selected.port)"
     title="Choose an port">
     <ui-select-match placeholder="Name of the Port...">{{$select.selected.port_name}}</ui-select-match>
 
