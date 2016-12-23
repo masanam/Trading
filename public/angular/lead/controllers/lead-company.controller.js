@@ -43,7 +43,7 @@ angular.module('lead').controller('LeadCompanyController', ['$scope', '$statePar
       } else {
         if(!isNaN($scope.lead.order_status)) $scope.lead.company_id = undefined;
         else {
-          $scope.selected.company = oldValue;
+          $scope.selected.company = $scope.lead.company;
           alert('You can only edit company in draft leads');
         }
       }
