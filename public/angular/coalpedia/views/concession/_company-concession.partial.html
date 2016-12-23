@@ -19,14 +19,10 @@
           </tr>
         </thead>
         <tbody>
-<<<<<<< HEAD
-          <tr ng-repeat="concession in company.concessions" ng-if="company.concessions">
-=======
           <tr ng-if="company.concessions.length < 1">
             <td colspan="4" align="center">There is no record of concession</td>
           </tr>
           <tr ng-if="company.concessions.length > 0" ng-repeat="concession in company.concessions">
->>>>>>> 306aeb7839fe2256ba77ff983da2a9f9dc4a7ca8
             <td>{{ concession.concession_name }}</td>
             <td>{{ concession.city }} (Port: {{ concession.port.port_name || 'N/A' }})</td>
             <td>{{ concession.reserves | number }}</td>
@@ -35,9 +31,6 @@
               <a class="glyphicon glyphicon-pencil" ng-click="edit(concession)"></a>
               <a href="#" ng-click="delete(concession)" class="glyphicon glyphicon-remove"></a>
             </td>
-          </tr>
-          <tr ng-if="company.concessions == 0">
-            <td colspan="4" class="text-center">Not Available</td>
           </tr>
         </tbody>
       </table>
