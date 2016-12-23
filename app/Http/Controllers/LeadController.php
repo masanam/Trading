@@ -61,6 +61,9 @@ class LeadController extends Controller
           ->limit($req->limit);
       }
     }
+    // choose lead type, for view lead recomend using right condition 
+    if ($lead_type === 'buy' || $req->lead_type === 's') $query->where('lead_type', 'b');
+    else if ($lead_type === 'sell' || $req->lead_type === 'b') $query->where('lead_type', 's');
 
     // Run the logic ONLY IF this is a matching algorithm
     // list down ALL order_id if contains EXACTLY 1 staged leads
@@ -75,10 +78,6 @@ class LeadController extends Controller
 
       $query->orWhereIn('id', $available_leads);
     }
-    
-    // choose lead type, for view lead recomend using right condition 
-    if ($lead_type === 'buy' || $req->lead_type === 's') $query->where('lead_type', 'b');
-    else if ($lead_type === 'sell' || $req->lead_type === 'b') $query->where('lead_type', 's');
 
     $leads = $query->limit($req->limit)->get();
 
