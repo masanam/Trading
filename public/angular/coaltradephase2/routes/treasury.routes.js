@@ -12,6 +12,10 @@ angular.module('treasury').config(['$stateProvider',
       })
       .state('treasury.dashboard', {
         url: '/dashboard',
+        templateUrl: '/angular/coaltradephase2/views/treasury/dashboard.view.html'
+      })
+      .state('treasury.index', {
+        url: '/index',
         templateUrl: '/angular/coaltradephase2/views/treasury/index.view.html'
       });
       
