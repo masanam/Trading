@@ -154,7 +154,10 @@ class ConcessionController extends Controller
      */
     public function show($id)
     {
+        dd($id);
         $concession = Concession::with('company', 'port', 'products')->find($id);
+
+        dd($concession);
 
         if($concession->status == 'a') {
             return response()->json($concession, 200);

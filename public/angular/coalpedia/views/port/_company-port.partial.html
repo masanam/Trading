@@ -19,7 +19,14 @@
           </tr>
         </thead>
         <tbody>
+<<<<<<< HEAD
           <tr ng-repeat="port in company.ports" ng-if="company.ports">
+=======
+          <tr ng-if="company.ports.length < 1">
+            <td colspan="5" align="center">There is no record of port</td>
+          </tr>
+          <tr ng-if="company.ports.length > 0" ng-repeat="port in company.ports">
+>>>>>>> 306aeb7839fe2256ba77ff983da2a9f9dc4a7ca8
             <td>{{ port.port_name }}</td>
             <td>{{ port.location }}</td>
             <td ng-show="port.is_private===1">Private</td>
