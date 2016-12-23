@@ -13,6 +13,10 @@ angular.module('sales').config(['$stateProvider',
       .state('sales.dashboard', {
         url: '/dashboard',
         templateUrl: '/angular/coaltradephase2/views/sales/index.view.html'
+      })
+       .state('sales.ongoing', {
+        url: '/ongoing',
+        templateUrl: '/angular/coaltradephase2/views/sales/ongo.view.html'
       });
       
   }

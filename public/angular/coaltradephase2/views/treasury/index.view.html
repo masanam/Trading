@@ -2,24 +2,97 @@
   <div class="col-lg-12">
     <div class="box box-info">
       <div class="box-header with-border">
-        <h3 class="box-title">Sales | Dashboard</h3>
+        <h3 class="box-title">Treasury | Dashboard</h3>
       </div>
       <div class="box-body">
+
       <div class="row">
+     
+      <form > 
+      <div class="col-lg-2">  
+        <div class="form-group">
+          <select class="form-control" id="sel1">
+            <option> All Payment</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+          </select>
+
+        </div>
+      </div>
+
       <div class="col-lg-6">  
+        <div class="form-group">
+          <input type="text" class="form-control" id="usr">
+        </div>
+      </div>
+
+      <div class="col-lg-2">  
+        <div class="form-group">
+            <button type="button" class="btn btn-info" >+ NEW</button>
+        </div>
+      </div>
+
+      </form>
+      
+      </div>
+
+      <div class="row">
+      <div class="col-lg-12">  
        <div class="table-responsive">
       <table class="table table-striped">
         <thead>
           <tr>
-            <th> Month Order</th>
+            <th> Date </th>
+            <th> Invoice ID</th>
             <th> Contract ID</th>
+            <th> Costumer Name</th>
+            <th> Reference ID</th>
+            <th> Payment Method</th>
+            <th> Amount</th>
+            <th> Balance Due</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td> 27/01/2016</td>
-            <td> <a>00001</a></td>
-            
+            <td> 30 Nov 2016</td>
+            <td> INV49 </td>
+            <td>02</td>
+            <td>PT. AAA</td>
+            <td>0001</td>
+            <td>Cash</td>
+            <td>IDR 489,923,800</td>
+            <td>IDR 489,923,800</td>
+          </tr>
+          <tr>
+            <td> 21 Nov 2016</td>
+            <td> INV48 </td>
+            <td>04</td>
+            <td>PT. BBB</td>
+            <td>0002</td>
+            <td></td>
+            <td>IDR 505,000,000</td>
+            <td>IDR 250,000,000</td>
+          </tr>
+          <tr>
+            <td> 16 Nov 2016</td>
+            <td> INV47 </td>
+            <td>12</td>
+            <td>PT. CCC</td>
+            <td>Partially Paid</td>
+            <td></td>
+            <td>IDR 800,000,000</td>
+            <td>IDR 800,000,000</td>
+          </tr>
+          <tr>
+            <td> 15 Nov 2016</td>
+            <td> INV46 </td>
+            <td>89</td>
+            <td>PT. DDD</td>
+            <td>Partially Paid</td>
+            <td></td>
+            <td>IDR 1,200,000,000</td>
+            <td>IDR 1,200,000,000</td>
           </tr>
         </tbody>
       </table>
