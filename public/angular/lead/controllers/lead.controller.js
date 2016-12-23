@@ -79,9 +79,9 @@ angular.module('lead').controller('LeadController', ['$scope', '$state', '$state
       else if($state.current.name === 'lead.product') {
         next = 'lead.view';
         if (
-          !( ($scope.lead.gcv_adb_bonus && $scope.lead.gcv_adb_reject) ||
+          !(($scope.lead.gcv_adb_bonus && $scope.lead.gcv_adb_reject) ||
           ($scope.lead.gcv_arb_bonus && $scope.lead.gcv_arb_reject) ||
-          ($scope.lead.ncv_bonus && $scope.lead.ncv_reject) )
+          ($scope.lead.ncv_bonus && $scope.lead.ncv_reject))
           ) {
           $scope.error = 'Please Fill Contract Bonus & Reject';
           return false;

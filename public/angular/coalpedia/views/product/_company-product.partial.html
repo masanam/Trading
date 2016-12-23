@@ -1,6 +1,6 @@
 <div class="box box-info" ng-controller="ProductController"> <!-- PRODUCT -->
   <div class="box-header with-border">
-    <h3 class="box-title" style="font-size: 25px">Product</h3>
+    <h3 class="box-title" style="font-size: 25px">Products</h3>
     <div class="box-tools pull-right">
       <button type="button" ng-click="add()" class="btn btn-info hidden-xs"><i class="glyphicon glyphicon-plus"></i> Add New Product</button>
     </div>
@@ -20,7 +20,10 @@
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="product in company.products">
+          <tr ng-if="company.products.length < 1">
+            <td colspan="5" align="center">There is no record of product</td>
+          </tr>
+          <tr ng-if="company.products.length > 0" ng-repeat="product in company.products">
             <td>{{ product.product_name }}</td>
             <td>{{ product.gcv_adb_min | number }} - {{ product.gcv_adb_max | number }}</td>
             <td>{{ product.gcv_arb_min | number }} - {{ product.gcv_arb_max | number }}</td>
