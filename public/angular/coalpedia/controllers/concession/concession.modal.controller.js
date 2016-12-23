@@ -8,7 +8,7 @@ angular.module('coalpedia').controller('ConcessionModalController', ['$scope', '
     $scope.selected = {};
 
     $scope.find = function (keyword) {
-      Concession.query({ q: keyword }, function(res){
+      Concession.query({ q: keyword, company_id:company.id, coalpedia:true }, function(res){
         if(res.length > 0) $scope.concessions = res;
       });
     };

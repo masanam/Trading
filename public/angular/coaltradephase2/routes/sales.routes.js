@@ -12,11 +12,15 @@ angular.module('sales').config(['$stateProvider',
       })
       .state('sales.dashboard', {
         url: '/dashboard',
-        templateUrl: '/angular/coaltradephase2/views/sales/index.view.html'
+        templateUrl: '/angular/coaltradephase2/views/sales/dashboard.view.html'
       })
-       .state('sales.ongoing', {
+      .state('sales.ongoing', {
         url: '/ongoing',
         templateUrl: '/angular/coaltradephase2/views/sales/ongo.view.html'
+      })
+      .state('sales.order-history', {
+        url: '/history',
+        templateUrl: '/angular/coaltradephase2/views/sales/orderhistory.view.html'
       });
       
   }
