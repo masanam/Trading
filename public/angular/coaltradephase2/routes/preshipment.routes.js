@@ -12,6 +12,10 @@ angular.module('preshipment').config(['$stateProvider',
       })
       .state('preshipment.dashboard', {
         url: '/dashboard',
+        templateUrl: '/angular/coaltradephase2/views/preshipment/dashboard.view.html'
+      })
+      .state('preshipment.index', {
+        url: '/index',
         templateUrl: '/angular/coaltradephase2/views/preshipment/index.view.html'
       });
       
