@@ -59,7 +59,7 @@ class UsersTableSeeder extends Seeder
             ]);
         }
 
-        User::find(4)->acting()->attach(1, [
+        User::find(4)->actings()->attach(1, [
             'role' => 'a',
             'status' => 'a',
             'date_start' => date('Y-m-d'),

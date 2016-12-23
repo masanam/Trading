@@ -7,7 +7,7 @@ angular.module('coalpedia').controller('FactoryModalController', ['$scope', '$ui
     $scope.createNew = false;
 
     $scope.find = function (keyword) {
-      Factory.query({ q: keyword }, function(res){
+      Factory.query({ q: keyword, company_id:company.id, coalpedia:true }, function(res){
         if(res.length > 0) $scope.factories = res;
       });
     };
