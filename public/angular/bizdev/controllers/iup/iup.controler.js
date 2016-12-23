@@ -63,5 +63,12 @@ angular.module('bizdev').controller('IupController', ['$scope', '$stateParams', 
       $scope.items.splice(index, 1);
     };
 
+    $scope.maps = [
+        { name:'Jani',type:'Road' },
+        { name:'Hege',type:'River' },
+        { name:'Jani',type:'HTI' },
+        { name:'Hege',type:'HPH' }
+    ];
+
   }
 ]);
