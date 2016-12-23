@@ -25,14 +25,10 @@
           </tr>
         </thead>
         <tbody>
-<<<<<<< HEAD
-          <tr ng-repeat="contact in company.contacts" ng-if="company.contacts">
-=======
           <tr ng-if="company.contacts.length < 1">
             <td colspan="4" align="center">There is no record of contact</td>
           </tr>
           <tr ng-if="company.contacts.length > 0" ng-repeat="contact in company.contacts">
->>>>>>> 306aeb7839fe2256ba77ff983da2a9f9dc4a7ca8
             <td>{{ contact.name }}</td>
             <td>{{ contact.email }}</td>
             <td>{{ contact.phone }}</td>

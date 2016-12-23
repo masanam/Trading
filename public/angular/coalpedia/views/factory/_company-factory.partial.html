@@ -17,14 +17,10 @@
           </tr>
         </thead>
         <tbody>
-<<<<<<< HEAD
-          <tr ng-repeat="factory in company.factories" ng-if="company.factories">
-=======
           <tr ng-if="company.factories.length < 1">
             <td colspan="4" align="center">There is no record of factory</td>
           </tr>
           <tr ng-if="company.factories.length > 0" ng-repeat="factory in company.factories">
->>>>>>> 306aeb7839fe2256ba77ff983da2a9f9dc4a7ca8
             <td>{{ factory.factory_name }}</td>
             <td>{{ factory.longitude | number }}, {{ factory.latitude | number }} (Port: {{ factory.port_name || 'N/A' }})</td>
             <td>{{ factory.consumption | number }}</td>
