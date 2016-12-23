@@ -25,7 +25,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="contact in company.contacts">
+          <tr ng-repeat="contact in company.contacts" ng-if="company.contacts">
             <td>{{ contact.name }}</td>
             <td>{{ contact.email }}</td>
             <td>{{ contact.phone }}</td>
@@ -33,6 +33,9 @@
               <a href="#" ng-click="edit(contact)"><i class="glyphicon glyphicon-pencil"></i></a>
               <a href="#" ng-click="delete(contact)"><i class="glyphicon glyphicon-remove"></i></a>
             </span></td>
+          </tr>
+          <tr ng-if="company.contacts == 0">
+            <td colspan="4" class="text-center">Not Available</td>
           </tr>
         </tbody>
       </table>

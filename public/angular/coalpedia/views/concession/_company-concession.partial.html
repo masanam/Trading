@@ -19,7 +19,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="concession in company.concessions">
+          <tr ng-repeat="concession in company.concessions" ng-if="company.concessions">
             <td>{{ concession.concession_name }}</td>
             <td>{{ concession.city }} (Port: {{ concession.port.port_name || 'N/A' }})</td>
             <td>{{ concession.reserves | number }}</td>
@@ -28,6 +28,9 @@
               <a class="glyphicon glyphicon-pencil" ng-click="edit(concession)"></a>
               <a href="#" ng-click="delete(concession)" class="glyphicon glyphicon-remove"></a>
             </td>
+          </tr>
+          <tr ng-if="company.concessions == 0">
+            <td colspan="4" class="text-center">Not Available</td>
           </tr>
         </tbody>
       </table>

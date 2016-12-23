@@ -28,8 +28,11 @@ class ConcessionController extends Controller
      */
     public function index(Request $req)
     {
-      if($req->supplier_id){
-        $concession = Concession::where('status', 'a')->where('company_id', $req->supplier_id)->get();
+      if($req->company_id){
+        if($req->coalpedia)
+          $concession = Concession::where('status', 'a')->where('company_id', '!=', $req->company_id)->get();
+        else
+          $concession = Concession::where('status', 'a')->where('company_id', $req->company_id)->get();
         foreach ($concession as $con) {
           $con->latitude = floatval($con->latitude);
           $con->longitude = floatval($con->longitude);

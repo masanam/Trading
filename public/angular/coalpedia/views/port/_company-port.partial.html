@@ -19,7 +19,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="port in company.ports">
+          <tr ng-repeat="port in company.ports" ng-if="company.ports">
             <td>{{ port.port_name }}</td>
             <td>{{ port.location }}</td>
             <td ng-show="port.is_private===1">Private</td>
@@ -30,6 +30,9 @@
               <a ng-click="edit(port)" class="glyphicon glyphicon-pencil"></a>
               <a ng-click="delete(port)" class="glyphicon glyphicon-remove"></a>
             </td>
+          </tr>
+          <tr ng-if="company.ports == 0">
+            <td colspan="4" class="text-center">Not Available</td>
           </tr>
         </tbody>
       </table>

@@ -29,7 +29,10 @@ class FactoryController extends Controller
     public function index(Request $req)
     {
       if($req->company_id){
-        $factory = Factory::where('status', 'a')->where('company_id', $req->company_id)->get();
+        if($req->coalpedia)
+            $factory = Factory::where('status', 'a')->where('company_id', '!=', $req->company_id)->get();
+        else
+            $factory = Factory::where('status', 'a')->where('company_id', $req->company_id)->get();
         foreach ($factory as $fac) {
           $fac->latitude = floatval($fac->latitude);
           $fac->longitude = floatval($fac->longitude);
