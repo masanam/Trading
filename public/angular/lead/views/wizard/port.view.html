@@ -5,7 +5,7 @@
         <div class="box-header with-border">
         <h1 class="box-title"></h1>
         <div class="pull-left">
-          <a class="btn btn-default" ui-sref="lead.update({ id: lead.id })">
+          <a class="btn btn-default" ui-sref="lead.location({ id: lead.id })">
             <i class="glyphicon glyphicon-arrow-left"></i> Back
           </a>
         </div>
@@ -18,13 +18,13 @@
     </div>
   </div>
 
-  <div class="col-lg-12" ng-controller="LeadLocationController"> 
+  <div class="col-lg-12" ng-controller="LeadPortController"> 
     <div class="box box-info" >
       <div class="box-header with-border">
-        <h3 class="box-title">Fill {{ lead.lead_type === 'b' ? 'Concession' : 'Factory' }} Details</h3>
+        <h3 class="box-title">Fill Port Details</h3>
       </div>
       <div class="box-body">
-        <div ng-include="'/angular/lead/views/wizard/_location.partial.html'"></div>
+        <div ng-include="'/angular/lead/views/wizard/_port.partial.html'"></div>
       </div>
     </div>
   </div>

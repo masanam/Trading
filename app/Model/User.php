@@ -2,6 +2,7 @@
 
 namespace App\Model;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
@@ -33,44 +34,30 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
     protected $table = 'users';
 
-    public function Contact() {
+    public function contacts() {
         return $this->hasMany('Contact');
     }
 
-    public function Buyer() {
-        return $this->hasMany('Buyer');
-    }
-
-    public function Seller() {
-        return $this->hasMany('Seller');
-    }
-
-    public function Activity() {
+    public function activities() {
         return $this->hasMany('Activity');
     }
 
-    public function LoginUser() {
+    public function logins() {
         return $this->hasMany('LoginUser');
     }
-    
-    public function Deal() {
-        return $this->hasMany('Deal');
+
+    public function actings() { // who you're act for
+        return $this->belongsToMany(User::class, 'acting_users', 'user_id', 'acting_as')
+            ->where('acting_users.status', 'a')
+            ->whereRaw('\'' . date('Y-m-d') . '\' BETWEEN date_start AND date_end')
+            ->withPivot('role', 'date_start', 'date_end', 'status');
     }
 
-    public function BuyDeal() {
-        return $this->hasMany('BuyDeal');
-    }
-
-    public function SellDeal() {
-        return $this->hasMany('SellDeal');
-    }
-
-    public function BuyOrder() {
-        return $this->hasMany('BuyOrder');
-    }
-
-    public function SellOrder() {
-        return $this->hasMany('SellOrder');
+    public function interims() { // who acted for you
+        return $this->belongsToMany(User::class, 'acting_users', 'acting_as', 'user_id')
+            ->where('acting_users.status', 'a')
+            ->whereRaw('\'' . date('Y-m-d') . '\' BETWEEN date_start AND date_end')
+            ->withPivot('role', 'date_start', 'date_end', 'status');
     }
 
     public function directSubordinates() {

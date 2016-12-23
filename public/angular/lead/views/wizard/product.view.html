@@ -5,7 +5,7 @@
         <div class="box-header with-border">
         <h1 class="box-title"></h1>
         <div class="pull-left">
-          <a class="btn btn-default" ui-sref="lead.location({ id: lead.id })">
+          <a class="btn btn-default" ui-sref="lead.port({ id: lead.id })">
             <i class="glyphicon glyphicon-arrow-left"></i> Back
           </a>
         </div>
@@ -33,6 +33,7 @@
           <ui-select ng-model="selected.product"
             reset-search-input="false"
             style="min-width: 30px;"
+            ng-change="select(selected.product)"
             title="Choose an product">
             <ui-select-match placeholder="Name of the Product...">{{$select.selected.product_name}}</ui-select-match>
 
