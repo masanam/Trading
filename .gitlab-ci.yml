@@ -1,8 +1,20 @@
+image: php:7.0
+  
 before_script:
-  - bash .gitlab-ci.sh
+  - php -v
+  - composer --version
+  - git --version
+  - ls -lah
+  - composer self-update
+  - composer config --global github-oauth.github.com $GITHUB_TOKEN
+  - composer install --no-interaction
+  - php artisan env
+  - npm install
+  - bower install
+#  - php artisan migrate --seed
 
-# stages:
-#   - build
+stages:
+  - build
 
 build:
   script:
