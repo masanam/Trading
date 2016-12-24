@@ -13,9 +13,6 @@ before_script:
   - bower install
 #  - php artisan migrate --seed
 
-stages:
-  - build
-
 build:
   script:
     - gulp
