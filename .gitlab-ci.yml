@@ -3,10 +3,7 @@ image: karbon001/gitlab-ci-laravel-php
 before_script:
   - php -v
   - composer --version
-  - git --version
   - ls -lah
-  - composer self-update
-  - composer config --global github-oauth.github.com $GITHUB_TOKEN
   - composer install --no-interaction
   - php artisan env
   - npm install
