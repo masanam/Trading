@@ -26,5 +26,5 @@ gulp.task('default', function (done) {
 
 
 gulp.task('build', function (done) {
-  runSequence('lint', 'angular', done);
+  runSequence('lint', 'bower', 'angular', done);
 });

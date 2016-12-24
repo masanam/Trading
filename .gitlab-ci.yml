@@ -1,18 +1,32 @@
-#image: karbon001/gitlab-ci-laravel-php
 image: kahunacoder/docker-laravel-gulp
-  
-before_script:
-  # - php -v
-  # - composer --version
-  # - ls -lah
-  # - composer install --no-interaction
-  # - php artisan env
-  # - npm install
-  # - npm install -g bower
-  # - bower install
-  # - php artisan migrate --seed
-  - npm install
 
-build:
+development:
+  before_script:
+    - npm install
+  script:
+    - gulp lint
+  only:
+    - development
+
+release:
+  before_script:
+    - npm install -g bower
+    - npm install
+    - bower install
+    - composer install --no-interaction
+    - php artisan migrate --seed
   script:
     - gulp build
+  only:
+    - release
+
+master:
+  before_script:
+    - npm install -g bower
+    - npm install
+    - bower install
+    - composer install --no-interaction
+  script:
+    - gulp build
+  only:
+    - master
