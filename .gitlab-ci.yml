@@ -7,8 +7,8 @@ before_script:
   # - ls -lah
   # - composer install --no-interaction
   # - php artisan env
-  - npm install
-  - bower install
+  # - npm install
+  # - bower install
   # - php artisan migrate --seed
 
 build:
