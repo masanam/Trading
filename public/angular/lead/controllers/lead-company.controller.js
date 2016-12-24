@@ -14,7 +14,7 @@ angular.module('lead').controller('LeadCompanyController', ['$scope', '$statePar
       });
     };
 
-    $scope.modalCreate = function () {
+    $scope.add = function () {
       var modalInstance = $uibModal.open({
         animation: true,
         ariaLabelledBy: 'modal-title',
