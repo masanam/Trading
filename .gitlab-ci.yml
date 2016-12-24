@@ -9,9 +9,9 @@ before_script:
   - php artisan env
   - php artisan migrate --seed
 
-stages:
-  - build
+# stages:
+#   - build
 
 build:
   script:
-  - gulp
+    - gulp
