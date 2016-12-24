@@ -7,7 +7,7 @@ angular.module('coalpedia').controller('FactoryModalController', ['$scope', '$ui
     $scope.createNew = false;
 
     $scope.find = function (keyword) {
-      Factory.query({ q: keyword }, function(res){
+      Factory.query({ q: keyword, company_id:company.id, coalpedia:true }, function(res){
         if(res.length > 0) $scope.factories = res;
       });
     };
@@ -29,7 +29,7 @@ angular.module('coalpedia').controller('FactoryModalController', ['$scope', '$ui
     $scope.update = function() {
       $scope.factory.company_id = company.id;
 
-      $scope.factory.$update(function(response) {
+      $scope.factory.$update({ id: $scope.factory.id }, function(response) {
         factory = response;
         $uibModalInstance.close(response);
       });

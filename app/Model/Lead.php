@@ -9,8 +9,8 @@ class Lead extends Model
 {
     protected $table = 'leads';
     protected $fillable = [
-        'company_id',
-        
+        'factory_id',
+        'concession_id',
     	'address',
         'city',
         'country',
@@ -86,9 +86,10 @@ class Lead extends Model
         'price',
         'trading_term',
         'trading_term_detail',
-        'payment_terms',
+        'payment_term',
+        'payment_term_detail',
         'commercial_term',
-        'penalty_desc',
+        'penalty',
         
         'progress_status',
     ];
@@ -106,7 +107,7 @@ class Lead extends Model
     }
 
     public function Concession() {
-        return $this->hasOne('App\Model\concession', 'id', 'concession_id');
+        return $this->hasOne('App\Model\Concession', 'id', 'concession_id');
     }
 
     public function Factory() {
@@ -122,19 +123,30 @@ class Lead extends Model
     }
 
     public function orders() {
-        return $this->belongsToMany(Order::class, 'order_details', 'leadable_id', 'id')
+        return $this->belongsToMany(Order::class, 'order_details')
             ->withPivot('id', 'price', 'volume', 'payment_term', 'trading_term');
     }
 
-    public function used() {
-        return $this->belongsToMany(Order::class, 'order_details', 'leadable_id', 'id')
-            ->selectRaw('sum(order_details.volume) as volume')->whereIn('orders.status', ['a', 'f', 'p', 'd'])->groupBy('leadable_id');
+    public function countInOrders() {
+        return $this->belongsToMany(Order::class, 'order_details')
+                    // ->where('lead_id', $id)
+                    ->groupBy('order_details.lead_id')
+                    // ->havingRaw('COUNT(order_details.order_id) < 2')
+                    ->get();
     }
 
+    public function used() {
+        return $this->belongsToMany(Order::class, 'order_details')
+            ->selectRaw('sum(order_details.volume) as volume')->whereIn('orders.status', ['a', 'f', 'p', 'd'])->groupBy('lead_id');
+    }
+
+    // reconcile the status and remaining volume of a leads
     public function reconcile() {
         $volume = $this->orders->sum('pivot.volume');
+
         if($this->volume >= $volume) $this->order_status = 's';
         else $this->order_status = 'p';
+        
         $this->save();
     }
 
@@ -182,14 +194,14 @@ class Lead extends Model
     public function difference($compare){
     	$diff = ['order_date_diff','order_expired_diff'];
     	$value = ['order_date','order_expired'];
+
 		$this->gcv_adb_min_diff = abs($this->gcv_adb_min - $compare->gcv_adb_min);
 		$this->gcv_adb_max_diff = abs($this->gcv_adb_max - $compare->gcv_adb_max);
 		$this->gcv_arb_min_diff = abs($this->gcv_arb_min - $compare->gcv_arb_min);
 		$this->gcv_arb_max_diff = abs($this->gcv_arb_max - $compare->gcv_arb_max);
 		$this->ncv_min_diff = abs($this->ncv_min - $compare->ncv_min);
 		$this->ncv_max_diff = abs($this->ncv_max - $compare->ncv_max);
-		for ($i=0; $i < count($diff) ; $i++) {
-			$this->$diff[$i] = floor((strtotime($this->$value[$i]) - strtotime($compare->$value[$i]))/3600/24);
-		}
+        $this->order_date_diff = floor((strtotime($this->order_date) - strtotime($compare->order_date))/3600/24);
+        $this->order_expired_diff = floor((strtotime($this->order_expired) - strtotime($compare->order_expired))/3600/24);
     }
 }

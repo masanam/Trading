@@ -1,0 +1,72 @@
+<section class="content" ng-controller="LeadController" ng-init="init()">
+<form ng-submit="create(lead)">
+  <div class="box box-info" >
+    <div class="box-header with-border">
+      <h3 class="box-title">CREATE {{ lead.lead_type | uppercase }} LEAD</h3>
+      <div class="box-tools">
+        <button type="button" class="btn btn-default" ui-sref="lead.list">
+          <i class="glyphicon glyphicon-arrow-left"></i> Back
+        </button>
+       
+        <button ng-disabled="!lead.lead_type" type="submit" class="btn btn-success">
+          Next <i class="glyphicon glyphicon-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+    <div class="box-body">
+      <div class="form-group">
+        <label ng-show="error" class="alert bg-red" style="width:100%">{{error}}</label>
+      </div>
+
+      <div class="row" ng-controller="LeadCompanyController">
+        <div class="col-lg-6">
+          <label>Select Lead Type :</label>
+          <div class="btn-group">
+            <label class="btn btn-default" ng-model="lead.lead_type" uib-btn-radio="'buy'">Buy</label>
+            <label class="btn btn-default" ng-model="lead.lead_type" uib-btn-radio="'sell'">Sell</label>
+          </div>
+        </div>
+      </div>
+
+      <section ng-if="lead.lead_type" ng-include="'/angular/lead/views/wizard/_form.partial.html'"></section>
+
+      <hr>
+
+      <div class="row"  style="margin-top: 20px" ng-controller="LeadCompanyController" ng-if="lead.lead_type">
+        <div class="col-lg-12">
+          <div ng-show="!selected.company">
+            <div class="select-box" ng-init="find()" ng-click="find()">
+              <label for="id">Name of Company :</label>
+              
+              <ui-select ng-model="selected.company"
+                reset-search-input="false"
+                style="min-width: 30px;"
+                ng-change="select(selected.company)"
+                title="Choose an address">
+                <ui-select-match placeholder="Name of the Company...">{{$select.selected.company_name}}</ui-select-match>
+
+                <ui-select-choices repeat="company in companies track by $index"
+                  refresh="find($select.search)"
+                  refresh-delay="0">
+                  <div ng-bind-html="company.company_name  | highlight: $select.search | html"></div>
+                </ui-select-choices>
+              </ui-select>
+            </div>
+
+            <div class="row">
+              <div class="text-center col-lg-12" style="padding: 20px">
+                OR
+              </div>
+            </div>
+            <button type="button" class="btn btn-primary btn-block" ng-click="add()">
+              <b>+</b> Add New Company
+            </button>
+          </div>
+
+          <div ng-include="'/angular/coalpedia/views/company/wizard/_company.partial.html'" ng-show="selected.company"></div>
+        </div>  
+      </div>  
+    </div>
+  </div>
+</form>
+</section>

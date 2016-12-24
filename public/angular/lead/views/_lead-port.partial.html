@@ -1,0 +1,36 @@
+<div class="box box-default">
+  <div class="box-header with-border" ng-click="isCollapsed3 = !isCollapsed3">
+    <h3 class="box-title">Port</h3>
+    <span class="glyphicon glyphicon-triangle-bottom pull-right" ng-if="isCollapsed3"></span> 
+    <span class="glyphicon glyphicon-triangle-top pull-right" ng-if="!isCollapsed3"></span> 
+  </div>
+  <div class="box-body no-padding" uib-collapse="isCollapsed3">
+    <ng-map zoom="4" center="{{lead.port_latitude}}, {{lead.port_longitude}}" style="height:500px">
+      <marker icon="{ url: '/images/boat.png' }" position="{{lead.port_latitude}}, {{lead.port_longitude}}"
+        id="port" on-click="map.showInfoWindow('port-info-window')">  
+      </marker>
+      <info-window id="port-info-window" default-style="false" visible-on-marker="port" maxWidth="800px">
+        <div ng-non-bindable="" style="width:500px" class="no-gutter">
+          <h3>Port Name: {{ lead.port_name || 'N / A' }}</h3>
+          <hr/>
+          <section class="col-lg-12">
+            <table>
+              <tr>
+                <td>Port Discharging Rate  </td>
+                <td>  : {{ lead.port_daily_rate || 'N / A' }} Tph </td>
+              </tr>
+              <tr>
+                <td>Port Distance from Factory </td>
+                <td>  : {{ lead.port_distance || 'N / A' }} Km</td>
+              </tr>
+              <tr>
+                <td>Port Draft Height  </td>
+                <td>  : {{ lead.port_draft_height || 'N / A' }} m </td>
+              </tr>
+            </table>
+          </section>
+        </div>
+      </info-window>
+    </ng-map>
+  </div>
+</div>

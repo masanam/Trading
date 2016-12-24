@@ -1,0 +1,61 @@
+<div class="table-responsive">
+  <table st-table="displayedCollection" st-safe-src="leads" class="table table-striped">
+    <thead>
+      <tr>
+        <th st-sort="id">#</th>
+        <th st-sort="user.name">PIC</th>
+        <th st-sort="order_date">Input Date</th>
+        <th st-sort="company.company_name">Company</th>
+        <th st-sort="product_name">Quality</th>
+        <th st-sort="volume">Qty</th>
+        <th st-sort="lead.volume - getUsed(lead)">Qty Remaining</th>
+        <th st-sort="order_expired">Valid Until</th>
+        <th st-sort="price">Price / Tonnes</th>
+        <th st-sort="city">Location</th>
+        <th st-sort="order_status">Status</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr ng-repeat="lead in displayedCollection">
+        <td>{{ lead.id }}</td>
+        <td>{{ lead.user.name }}</td>
+        <td>{{ lead.order_date | date : 'd MMMM yyyy' }}</td>
+        <td>{{ lead.company.company_name }}</td>
+        <td>{{ lead.typical_quality }}</td>
+        <td>{{ lead.volume }} mt</td>
+        <td>{{ lead.volume - getUsed(lead) }} mt</td>
+        <td>{{ lead.order_expired | date : 'd MMMM yyyy' }}</td>
+        <td>{{ lead.price | currency : $ : 2}}</td>
+        <td>{{ lead.city }}</td>
+        <td ng-switch="lead.order_status">
+          <span ng-switch-when="l">Lead</span>
+          <span ng-switch-when="v">Verified</span>
+          <span ng-switch-when="s">Staged</span>
+          <span ng-switch-when="p">Partially Staged</span>
+          <a ng-switch-when="1" ui-sref="lead.location({ id: lead.id })">STEP 2 : Locations</a>
+          <a ng-switch-when="2" ui-sref="lead.port({ id: lead.id })">STEP 3 : Port</a>
+          <a ng-switch-when="3" ui-sref="lead.product({ id: lead.id })">STEP 3 : Product</a>
+          <a ng-switch-when="4" ui-sref="lead.view({ id: lead.id })">Draft</a>
+        </td>
+        <td>
+          <a ui-sref="lead.view({ id: lead.id })" class="glyphicon glyphicon-info-sign"></a>
+          <a ng-click="status(lead, 'x')" uib-tooltip="Delete Order" class="glyphicon glyphicon-trash"
+            ng-if="Authentication.user.id===lead.user_id && lead.status !== 's' && lead.status !== 'p'"></a>  
+        </td>
+      </tr>
+      <tr ng-if="displayedCollection.length == 0">
+          <td colspan="11" class="text-center">No data available</td>
+      </tr>
+    </tbody>
+
+    <tfoot>
+      <tr>
+        <td colspan="11" class="text-center">
+          <div st-pagination="" st-items-by-page="10" st-displayed-pages="5"></div>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</div>

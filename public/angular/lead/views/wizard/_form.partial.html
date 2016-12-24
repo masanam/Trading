@@ -1,0 +1,74 @@
+<div class="row">
+  <div class="col-lg-3">
+    <label>Asking Price : </label>
+    <div class="input-group">
+      <span class="input-group-addon">US$</span>
+      <input type="number" class="form-control" ng-model="lead.price" required>
+    </div>
+  </div>
+
+  <div class="col-lg-3">
+    <label>Volume : </label>
+    <div class="input-group">
+      <input type="number" class="form-control" ng-model="lead.volume" required>
+      <span class="input-group-addon">Metric Tons</span>
+    </div>
+  </div>
+
+  <div class="col-lg-6">
+    <label>Laycan Period : </label>
+    <p class="input-group">
+      <span class="input-group-addon">FROM</span>
+      <input type="date" min="{{date | date:'yyyy-MM-dd'}}" class="form-control" ng-model="lead.laycan_start"/>
+      <span class="input-group-addon">TO</span>
+      <input type="date" min="{{date | date:'yyyy-MM-dd'}}" class="form-control" ng-model="lead.laycan_end"/>
+    </p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-3">
+    <label>Date of Request : </label>
+    <input type="date" class="form-control" ng-model="lead.order_date" required/>
+  </div>
+  <div class="col-lg-3">
+    <label>Order Valid Until : </label>
+    <input type="date" min="{{date | date:'yyyy-MM-dd'}}" class="form-control" ng-model="lead.order_expired" required/>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-6">
+    <label>Shipping Term : </label>
+    <p class="input-group">
+      <select class="form-control" ng-model="lead.trading_term" 
+        ng-options="o as o for o in tradingTerm" required>
+        <option value="">-- Select Trading Term --</option>
+      </select>
+      <span class="input-group-addon">Details:</span>
+      <input type="text" class="form-control" ng-model="lead.trading_term_detail" placeholder="Detail" />
+    </p>
+  </div>
+  <div class="col-lg-6">
+    <label>Payment Terms : </label>
+    <p class="input-group">
+      <select class="form-control" ng-model="lead.payment_term" 
+        ng-options="o as o for o in paymentTerm" required>
+        <option value="">-- Select Payment Term --</option>
+      </select>
+      <span class="input-group-addon">Details:</span>
+      <input type="text" class="form-control" ng-model="lead.payment_term_detail" placeholder="Detail" />
+    </p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-6">
+    <label>Commercial Terms : </label>
+    <textarea class="form-control" ng-model="lead.commercial_term"></textarea>
+  </div>
+  <div class="col-lg-6">
+    <label>Penalty : </label>
+    <textarea class="form-control" ng-model="lead.penalty"></textarea>
+  </div>
+</div>

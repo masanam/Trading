@@ -49,21 +49,22 @@ class AuthenticateController extends Controller
         }
         $user = Auth::user();
 
+        $status = 200; $error = 'ok';
+
         event(new Login($user, false));
         // if no errors are encountered we can return a JWT
-        return response()->json(compact('token', 'user', $user), 200);
+        return response()->json(compact('token', 'user', 'status', 'error'), 200);
     }
 
     public function signup(Request $request)
     {
-      $user = User::where(['email' => $request->email])->get();
-      //var_dump($user);
+      $user = User::where(['email' => $request->email])->count();
       if(!$request) {
           return response()->json([
               'message' => 'Bad Request'
           ], 400);
       }
-      else if(!empty($user)){
+      else if($user > 0){
           return response()->json([
               'message' => 'Your email is already registered. If you forgot your password, please send an enquiry to info@volantech.io'
           ], 400);
@@ -111,7 +112,7 @@ class AuthenticateController extends Controller
         $managers = $user->managers();
  
         // the token is valid and we have found the user via the sub claim
-        return response()->json(compact('user', $user, 'subordinates', $subordinates, 'managers', $managers), 200);
+        return response()->json(compact('user', 'subordinates', 'managers'), 200);
     }
 
     public function signing(Request $request)

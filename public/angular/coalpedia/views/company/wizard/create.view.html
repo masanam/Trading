@@ -50,72 +50,7 @@
         </section>
         <br>
 
-        <div class="box box-primary" ng-show="selected.company">
-          <div class="box-header">
-            <h3 class="box-title" style="font-size: 25px">{{ selected.company.company_name }}</h3>
-
-            <span class="pull-right">
-              <i class="fa fa-times" ng-click="selected.company = undefined"></i>
-            </span>
-          </div>
-          <div class="box-body box-profile">
-            <img class="profile-user-img img-responsive img-circle" src="/images/default.jpg">
-
-            <h3 class="profile-username text-center">{{selected.company.address}}</h3>
-
-            <ul class="list-group list-group-unbordered">
-              <li class="list-group-item" style="overflow:hidden;">
-                <b>Customer Category</b>
-                <span class="badge" ng-show="selected.company.is_trader===1"><i class='fa fa-share-alt'></i> TRADER</span>
-                <span class="badge" ng-show="selected.company.is_trader===0"><i class='fa fa-share-alt'></i> END USER</span>
-              </li>
-              <li class="list-group-item" style="overflow:hidden;">
-                <b>Customer status </b>
-                <span class="badge" ng-show="selected.company.is_affiliated===1"><i class='fa fa-tags'></i> AFFILIATED</span>
-                <span class="badge" ng-show="selected.company.is_affiliated===0"><i class='fa fa-tags'></i> NON - AFFILIATED</span>
-              </li>
-              <li class="list-group-item" style="overflow:hidden;">
-                <b>Phone</b> <span class="pull-right">{{selected.company.phone}}</span>
-              </li>
-              <li class="list-group-item" style="overflow:hidden;">
-                <b>Email</b> <span class="pull-right">{{selected.company.email}}</span>
-              </li>
-              <li class="list-group-item" style="overflow:hidden;">
-                <b>Web</b> <span class="pull-right">{{selected.company.web}}</span>
-              </li>
-              <li class="list-group-item" style="overflow:hidden;">
-                <b>City</b> <span class="pull-right">{{selected.company.city}}</span>
-              </li>
-              <li class="list-group-item" style="overflow:hidden;">
-                <b>Country</b> <span class="pull-right">{{selected.company.country}}</span>
-              </li>
-              <li class="list-group-item" style="overflow:hidden;">
-                <b>Industry</b> <span class="pull-right">{{selected.company.industry}}</span>
-              </li>
-              <li class="list-group-item " ng-if="company.company_type === 'c'" style="overflow:hidden;">
-                <b>Annual Demand</b> <span class="pull-right">{{selected.company.annual_demand}} <span class='badge'>Million Ton</span></span>
-              </li>
-              <li class="list-group-item" ng-if="company.company_type === 's' || company.company_type === 't'" style="overflow:hidden;">
-                <b>Annual Sales</b> <span class="pull-right">{{selected.company.annual_sales}} <span class='badge'>Million USD</span></span>
-              </li>
-              <li class="list-group-item" ng-if="company.company_type === 's' || company.company_type === 't'" style="overflow:hidden;">
-                <b>Purchasing Countries</b> <span class="pull-right">{{selected.company.purchasing_countries}}</span>
-              </li>
-              <li class="list-group-item" ng-if="company.company_type !== 'v'" style="overflow:hidden;">
-                <b>Shipping Term</b> <span class="pull-right">{{selected.company.preferred_trading_term}} {{selected.company.preferred_trading_term_detail}}</span>
-              </li>
-              <li class="list-group-item" ng-if="company.company_type !== 'v'" style="overflow:hidden;">
-                <b>Payment Term</b> <span class="pull-right">{{selected.company.preferred_payment_term}}</span>
-              </li>
-              <li class="list-group-item" style="overflow:hidden;">
-                <b>Description</b> <span class="pull-right">{{selected.company.description}}</span>
-              </li>
-            </ul>
-
-
-          </div>
-          <!-- /.box-body -->
-        </div>
+        <div ng-include="'/angular/coalpedia/views/company/wizard/_company.partial.html'" ng-show="selected.company"></div>
       </section>
     </div>
   </div>

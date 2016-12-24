@@ -1,18 +1,18 @@
 <div class="row">
-  <div class="col-sm-3">
+  <div class="col-sm-3" style="padding-right:10px">
     <div class="info-box" ng-class="state.current.name === 'company.create' ? 'bg-aqua' : 'bg-default'">
       <span class="info-box-icon">
         <i class="fa fa-building"></i>
       </span>
 
       <div class="info-box-content">
-        <span class="info-box-text">COMFIRM</span>
+        <span class="info-box-text">CONFIRM</span>
         <span class="info-box-number">{{ companyType | uppercase }}</span>
       </div>
     </div>
   </div>
 
-  <div class="col-sm-3">
+  <div class="col-sm-3" style="padding-right:10px">
     <div class="info-box" ng-if="companyType !== 'vendor'" ng-class="state.current.name === 'company.wizard.connection' ? 'bg-aqua' : 'bg-default'">
       <span class="info-box-icon">
         <i class="fa fa-ship"></i>
@@ -25,7 +25,7 @@
     </div>
   </div>
 
-  <div class="col-sm-3">
+  <div class="col-sm-3" style="padding-right:10px">
     <div class="info-box" ng-if="companyType !== 'vendor'" ng-class="state.current.name === 'company.wizard.operation' ? 'bg-aqua' : 'bg-default'">
       <span class="info-box-icon">
         <i class="fa fa-industry"></i>
@@ -38,7 +38,7 @@
     </div>
   </div>
 
-  <div class="col-sm-3">
+  <div class="col-sm-3" style="padding-right:10px">
     <div class="info-box" ng-class="state.current.name === 'company.wizard.product' ? 'bg-aqua' : 'bg-default'">
       <span class="info-box-icon">
         <i class="fa fa-shopping-cart"></i>

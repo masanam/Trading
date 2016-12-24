@@ -1,0 +1,42 @@
+<div class="row" style="margin:20px; padding: 20px;">
+  <div class="col-xs-1" style="text-align: left;">
+    <h5>Type</h5>
+    <h3>Sungai</h3>
+  </div>
+  <div class="col-xs-1" style="text-align: left;">
+    <h5>Name</h5>
+    <h3>Mahakam</h3>
+  </div>
+  <div class="col-xs-2 col-xs-offset-6" style="padding-top: 15px;">
+    <h5>Created By:</h5>
+    <h5>Created On:</h5>
+  </div>
+  <div class="col-xs-2" style="padding-top: 15px;">
+    <h5>Budi Suseno</h5>
+    <h5>2 January 2016</h5> 
+  </div>
+</div>
+
+<div class="row" style="margin:20px; padding:20px; background: white;">
+  <ng-map zoom="4" center="Indonesia">
+    <shape id="polygon" name="polygon"
+      paths="[
+          {lat: 0.774, lng: 114.190},
+          {lat: 0.466, lng: 113.118},
+          {lat: -1.321, lng: 113.757},
+          {lat: 0.774, lng: 114.190}
+        ]"
+      stroke-color="#FF0000"
+      stroke-opacity="1.0"
+      stroke-weight="3">
+    </shape>
+<!--     <drawing-manager
+      on-overlaycomplete="updatePolygonString()"
+      drawing-control-options="{position: 'TOP_CENTER',drawingModes:['polygon']}"
+      polygonOptions="{fillColor:'#01539f', strokeColor: '#01539f', editable: true}"
+      drawingControl="true"
+      drawingMode="polygon">
+    </drawing-manager> -->
+  </ng-map>   
+</div>
+

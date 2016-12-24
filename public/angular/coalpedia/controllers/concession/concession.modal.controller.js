@@ -8,13 +8,13 @@ angular.module('coalpedia').controller('ConcessionModalController', ['$scope', '
     $scope.selected = {};
 
     $scope.find = function (keyword) {
-      Concession.query({ q: keyword }, function(res){
+      Concession.query({ q: keyword, company_id:company.id, coalpedia:true }, function(res){
         if(res.length > 0) $scope.concessions = res;
       });
     };
 
-    $scope.create = function() {
-      var concession = new Concession($scope.concession);
+    $scope.create = function(concession) {
+      concession = new Concession(concession);
       concession.polygon = $scope.display.polygonString;
       concession.company_id = company.id;
 
@@ -24,11 +24,11 @@ angular.module('coalpedia').controller('ConcessionModalController', ['$scope', '
     };
 
     $scope.update = function() {
-      $scope.concession = new Concession($scope.concession);
-      $scope.concession.polygon = $scope.display.polygonString;
-      $scope.concession.company_id = company.id;
+      concession = new Concession($scope.concession);
+      concession.polygon = $scope.display.polygonString;
+      concession.company_id = company.id;
 
-      $scope.concession.$update(function(response) {
+      concession.$update(function(response) {
         concession = response;
         $uibModalInstance.close(response);
       });

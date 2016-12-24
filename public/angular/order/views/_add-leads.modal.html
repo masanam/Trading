@@ -1,0 +1,69 @@
+<form ng-submit="ok()">
+  <div class="modal-header" ng-switch="lead">
+    <h3 class="modal-title" id="modal-title" ng-switch-when="buy">Add Existing Buy to Current Order</h3>
+    <h3 class="modal-title" id="modal-title" ng-switch-default>Add Existing Sell to Current Order</h3>
+    <button type="button" class="close" ng-click="cancel()" aria-label="Close">x</button>
+  </div>
+
+  <div class="modal-body" ng-focus="find()" id="modal-body">
+    <div class="row">
+      <div class="col-sm-3" style="max-height:500px; overflow-y:scroll;">
+        <ul class="nav nav-pills nav-stacked">
+          <li ng-repeat="item in items">
+            <a href="#" ng-click="$event.preventDefault(); selected.item = item">
+              {{ item.company.company_name }} ({{ item.city }})
+              <span ng-if="
+                (item.gcv_adb_min_diff<=150&&item.gcv_adb_max_diff<=150) ||
+                (item.gcv_arb_min_diff<=150&&item.gcv_arb_max_diff<=150) ||
+                (item.ncv_min_diff<=150&&item.ncv_max_diff<=150) ||
+                item.volume_diff<=item.volume*0.1" style="color:green; font-style:italic;">
+                recomended
+              </span><br>
+              exp: {{ item.order_expired | date:'d-M-yy' }}<br>
+              LayCan: {{ item.laycan_start | date:'d-M-yy' }} to {{ item.laycan_end | date:'d-M-yy' }}
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-sm-9" ng-if="selected.item">
+        <div class="row">
+          <div class="col-sm-6 form-group" ng-init="selected.item.pivot.volume = selected.item.volume - getUsed(selected.item)">
+            <input type="number" ng-model="selected.item.pivot.volume" class="form-control" placeholder="Volume (MT)" required>
+          </div>
+          <div class="col-sm-6 form-group" ng-init="selected.item.pivot.price = ( selected.item.price )">
+            <input type="number" ng-model="selected.item.pivot.price" class="form-control" placeholder="Price (USD)" required>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 form-group" ng-init="selected.item.pivot.trading_term = selected.item.trading_term">
+            <select class="form-control" ng-model="selected.item.pivot.trading_term"
+              ng-options="o as o for o in tradingTerm" required>
+              <option value="">-- Select Trading Term --</option>
+            </select>
+          </div>
+          <div class="col-sm-6 form-group" ng-init="selected.item.pivot.payment_term = selected.item.payment_term">
+            <select class="form-control" ng-model="selected.item.pivot.payment_term"
+              ng-options="o as o for o in paymentTerm" required>
+              <option value="">-- Select Payment Term --</option>
+            </select>
+          </div>
+        </div>
+        <div ng-static-include="'/angular/order/views/_add-leads-detail.modal.partial.html'"
+          style="max-height:500px; overflow-y:scroll;"></div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer" ng-switch="lead">
+    <button class="btn btn-default hidden-xs pull-left" type="button" ng-click="cancel()">Cancel</button>
+
+    <span ng-switch-when="buy">
+      <a class="btn btn-primary" type="button" ui-sref="lead.create" target="_blank">Create New Buy</a>
+      <button class="btn btn-primary" type="submit">Buy This</button>
+    </span>
+
+    <span ng-switch-default>
+      <a class="btn btn-primary" type="button" ui-sref="lead.create" target="_blank">Create New Sell</a>
+      <button class="btn btn-primary" type="submit">Sell This</button>
+    </span>
+  </div>
+</form>

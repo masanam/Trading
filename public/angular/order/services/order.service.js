@@ -11,15 +11,15 @@ angular.module('order').factory('Order', ['$resource',
   }
 ]);
 
-angular.module('order').factory('Lead', ['$resource',
-  function ($resource){
-    return $resource('api/orders/:id', {
-      id: '@id',
-    }, {
-      update: { method: 'PUT' },
-    });
-  }
-]);
+// angular.module('order').factory('Lead', ['$resource',
+//   function ($resource){
+//     return $resource('api/orders/:id', {
+//       id: '@id',
+//     }, {
+//       update: { method: 'PUT' },
+//     });
+//   }
+// ]);
 
 
 angular.module('order').factory('Term', function (){
@@ -29,6 +29,9 @@ angular.module('order').factory('Term', function (){
     ],
     payment : [
       'TT', 'LC', 'LC USANCE'
+    ],
+    additionalCost : [
+      'Survey', 'Pit-to-Port', 'Transshipment', 'Freight', 'Port-to-Factory', 'Others'
     ]
   };
 });

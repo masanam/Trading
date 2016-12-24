@@ -1,0 +1,32 @@
+<section class="content" ng-controller="LeadController" ng-init="findOne()">
+<form ng-submit="update()">
+  <div class="col-lg-12">
+    <div class="box box-default" >
+        <div class="box-header with-border">
+        <h1 class="box-title"></h1>
+        <div class="pull-left">
+          <a class="btn btn-default" ui-sref="lead.update({ id: lead.id })">
+            <i class="glyphicon glyphicon-arrow-left"></i> Back
+          </a>
+        </div>
+        <div class="pull-right">
+          <button ng-disabled="!lead.lead_type" type="submit" class="btn btn-success">
+            Next <i class="glyphicon glyphicon-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-12" ng-controller="LeadLocationController"> 
+    <div class="box box-info" >
+      <div class="box-header with-border">
+        <h3 class="box-title">Fill {{ lead.lead_type === 'b' ? 'Concession' : 'Factory' }} Details</h3>
+      </div>
+      <div class="box-body">
+        <div ng-include="'/angular/lead/views/wizard/_location.partial.html'"></div>
+      </div>
+    </div>
+  </div>
+</form>
+</section>

@@ -6,7 +6,7 @@ angular.module('coalpedia').controller('ContactModalController', ['$scope', '$ui
     $scope.selected = {};
 
     $scope.find = function (keyword) {
-      Contact.query({ q: keyword }, function(res){
+      Contact.query({ q: keyword, company_id:company.id }, function(res){
         if(res.length > 0) $scope.contacts = res;
       });
     };
@@ -23,7 +23,7 @@ angular.module('coalpedia').controller('ContactModalController', ['$scope', '$ui
     $scope.update = function() {
       $scope.contact.company_id = company.id;
 
-      $scope.contact.$update(function(response) {
+      $scope.contact.$update({ id: $scope.contact.id }, function(response) {
         contact = response;
         $uibModalInstance.close(response);
       });

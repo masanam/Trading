@@ -26,3 +26,13 @@ ApplicationConfiguration.registerModule('contact');
 // Orders
 ApplicationConfiguration.registerModule('order');
 ApplicationConfiguration.registerModule('chat');
+
+// Bizdev
+ApplicationConfiguration.registerModule('bizdev');
+
+//phase2
+ApplicationConfiguration.registerModule('sales');
+ApplicationConfiguration.registerModule('scheduler');
+ApplicationConfiguration.registerModule('preshipment');
+ApplicationConfiguration.registerModule('postshipment');
+ApplicationConfiguration.registerModule('treasury');

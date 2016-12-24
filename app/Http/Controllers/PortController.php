@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Model\Port;
+use App\Model\Company;
 use App\Model\BuyerPort;
 use App\Model\SellerPort;
 use App\Model\Factory;
@@ -26,8 +27,18 @@ class PortController extends Controller
      */
     public function index(Request $req)
     {
-        $port = Port::get();
-        return response()->json($port, 200);
+        $limit = $req->limit | 10;
+
+        $port = Port::limit($limit);
+        $port_id = Company::with('ports')->where('id', $req->company_id)->get();
+        $port_id = $port_id->pluck('ports');
+        foreach ($port_id as $p) {
+            $port_id = $p->pluck('id');
+        }
+        if($req->q) $port->where('port_name', 'LIKE', '%' . $req->q . '%');
+        if($port_id) $port->whereNotIn('id', $port_id);
+
+        return response()->json($port->get(), 200);
     }
 
     /**

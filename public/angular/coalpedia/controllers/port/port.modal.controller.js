@@ -7,7 +7,7 @@ angular.module('coalpedia').controller('PortModalController', ['$scope', '$uibMo
     $scope.selected = {};
 
     $scope.find = function (keyword) {
-      Port.query({ q: keyword }, function(res){
+      Port.query({ q: keyword, company_id:company.id }, function(res){
         if(res.length > 0) $scope.ports = res;
       });
     };
@@ -29,13 +29,14 @@ angular.module('coalpedia').controller('PortModalController', ['$scope', '$uibMo
     $scope.update = function() {
       $scope.port.company_id = company.id;
 
-      $scope.port.$update(function(response) {
+      $scope.port.$update({ id: $scope.port.id }, function(response) {
         port = response;
         $uibModalInstance.close(response);
       });
     };
 
     $scope.attach = function (port) {
+      console.log('aaa');
       Company.get({ id: company.id, action: 'attach', port_id: $scope.selected.port.id }, function(response){
         $uibModalInstance.close(response.port);
       });
