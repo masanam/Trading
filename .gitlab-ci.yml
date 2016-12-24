@@ -12,7 +12,7 @@ release:
   before_script:
     - npm install -g bower
     - npm install
-    - bower install
+    - bower install --allow-root
     - composer install --no-interaction
     - php artisan migrate --seed
   script:
@@ -24,7 +24,7 @@ master:
   before_script:
     - npm install -g bower
     - npm install
-    - bower install
+    - bower install --allow-root
     - composer install --no-interaction
   script:
     - gulp build
