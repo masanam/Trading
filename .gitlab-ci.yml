@@ -1,4 +1,4 @@
-image: php:7.0
+image: karbon001/gitlab-ci-laravel-php
   
 before_script:
   - php -v
