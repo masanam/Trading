@@ -8,9 +8,10 @@ before_script:
   # - composer install --no-interaction
   # - php artisan env
   # - npm install
+  # - npm install -g bower
   # - bower install
   # - php artisan migrate --seed
-  - npm install gulp gulp-load-plugins run-sequence gulp-angular-templatecache gulp-concat gulp-sourcemaps gulp-concat-sourcemap gulp-eslint gulp-uglify gulp-filter gulp-sass gulp-ng-annotate gulp-notify gulp-if run-sequence laravel-elixir gulp-cssnano gulp-connect-php
+  - npm install
 
 build:
   script:
