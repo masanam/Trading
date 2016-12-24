@@ -1,16 +1,15 @@
-image: karbon001/gitlab-ci-laravel-php
+#image: karbon001/gitlab-ci-laravel-php
+image: kahunacoder/docker-laravel-gulp
   
 before_script:
-  - apt-get -y install npm 
-  - npm install -g bower gulp
-  - php -v
-  - composer --version
-  - ls -lah
-  - composer install --no-interaction
-  - php artisan env
+  # - php -v
+  # - composer --version
+  # - ls -lah
+  # - composer install --no-interaction
+  # - php artisan env
   - npm install
   - bower install
-#  - php artisan migrate --seed
+  # - php artisan migrate --seed
 
 build:
   script:
