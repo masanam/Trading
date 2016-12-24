@@ -23,3 +23,8 @@ gulp.task('watch', function () {
 gulp.task('default', function (done) {
   runSequence('lint', ['bower', 'angular'], ['serve', 'watch'], done);
 });
+
+
+gulp.task('build', function (done) {
+  runSequence('lint', 'bower', 'angular', done);
+});

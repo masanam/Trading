@@ -1,8 +1,8 @@
 image: karbon001/gitlab-ci-laravel-php
   
 before_script:
-  - sudo apt-get install npm 
-  - sudo npm install -g bower gulp
+  - apt-get -y install npm 
+  - npm install -g bower gulp
   - php -v
   - composer --version
   - ls -lah
@@ -14,4 +14,4 @@ before_script:
 
 build:
   script:
-    - gulp
+    - gulp build
