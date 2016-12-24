@@ -9,7 +9,7 @@
   </button>
   <button ng-show="order.status === 'd' && order.in_house"
     class="btn btn-block btn-default hidden-md hidden-lg" ng-click="inHouse(false)">
-    Remove House Product
+    Buy Product From Suppliers
   </button>
   
   <button ng-show="order.status !== 'x' && order.status !== 'f' && order.status !== 'a' && order.status !== 'p'" class="btn btn-block btn-default hidden-md hidden-lg" ng-click="addSell()" ng-disabled="order.buys.length > 1 && order.sells.length===1"> + Add Sell </button>
@@ -26,7 +26,7 @@
 		<thead>
       <tr ng-if="!order.user_id || order.user_id === Authentication.user.id"  class="no-print">
         <td></td>
-        <td>
+        <td ng-if="!order.in_house">
           <button ng-show="order.status !== 'x' && order.status !== 'a' && order.status !== 'f' && order.status !== 'p'"
             class="btn btn-default hidden-xs hidden-sm" ng-click="addBuy()"
             ng-disabled=" order.buys.length > 1 && order.sells.length===1">
