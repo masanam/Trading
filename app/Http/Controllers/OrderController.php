@@ -224,7 +224,7 @@ class OrderController extends Controller
             $oldOrder = Order::find($order_id);
             $oldOrder->status = 'c';
             $oldOrder->save();
-            dd($oldOrder);
+            // dd($oldOrder);
           }
         }
       }
@@ -241,7 +241,7 @@ class OrderController extends Controller
             $oldOrder = Order::find($order_id);
             $oldOrder->status = 'c';
             $oldOrder->save();
-            dd($oldOrder);
+            // dd($oldOrder);
           }
         }
       }
@@ -302,7 +302,6 @@ class OrderController extends Controller
    */
   public function update(Request $req, $id)
   {
-    return $req;
     $order = Order::find($id);
 
     // Validations
