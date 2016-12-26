@@ -58,9 +58,10 @@ class LeadController extends Controller
       // if this is an alike query, find leads with same properties
       // directly return it
       if ($req->matching === 'alike') {
-        $query->whereRaw('\'' . $ref->laycan_start . '\' BETWEEN laycan_start AND laycan_end')
-          ->where('company_id', $ref->company_id)
-          ->where('volume', $ref->volume);
+        $query->where('company_id', $ref->company_id)
+          ->where('volume', $ref->volume)
+          ->whereRaw('\'' . $ref->laycan_start . '\' BETWEEN laycan_start AND laycan_end')
+          ->orWhereRaw('laycan_start BETWEEN \'' . $ref->laycan_start . '\' AND \'' . $ref->laycan_end . '\'');
 
         return response()->json($query->get(), 200);
       }
