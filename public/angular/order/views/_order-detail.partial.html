@@ -9,7 +9,7 @@
   </button>
   <button ng-show="order.status === 'd' && order.in_house"
     class="btn btn-block btn-default hidden-md hidden-lg" ng-click="inHouse(false)">
-    Remove House Product
+    Buy Product From Suppliers
   </button>
   
   <button ng-show="order.status !== 'x' && order.status !== 'f' && order.status !== 'a' && order.status !== 'p'" class="btn btn-block btn-default hidden-md hidden-lg" ng-click="addSell()" ng-disabled="order.buys.length > 1 && order.sells.length===1"> + Add Sell </button>
@@ -25,8 +25,8 @@
 	<table st-table="" class="table table-bordered table-striped">
 		<thead>
       <tr ng-if="!order.user_id || order.user_id === Authentication.user.id"  class="no-print">
-        <td width="{{ order.in_house ? '40%' : '20%' }}"></td>
-        <td width=40% ng-if="!order.in_house">
+        <td></td>
+        <td ng-if="!order.in_house">
           <button ng-show="order.status !== 'x' && order.status !== 'a' && order.status !== 'f' && order.status !== 'p'"
             class="btn btn-default hidden-xs hidden-sm" ng-click="addBuy()"
             ng-disabled=" order.buys.length > 1 && order.sells.length===1">
@@ -39,7 +39,7 @@
             + Add House Product
           </button>
         </td>
-        <td width="{{ order.in_house ? '60%' : '40%' }}">
+        <td>
           <button ng-show="order.status !== 'x' && order.status !== 'f' && order.status !== 'a' && order.status !== 'p'"
             class="btn btn-default hidden-xs hidden-sm" ng-click="addSell()"
             ng-disabled="order.sells.length > 1 && order.buys.length===1">
@@ -53,22 +53,45 @@
         </td>
       </tr>
 			<tr>
-				<th></th>
-    		<th ng-if="!order.in_house">
+				<th width="{{ order.in_house ? '40%' : '20%' }}"></th>
+    		<th ng-if="!order.in_house"  width=40% ng-if="!order.in_house">
 					<span style="font-size:20pt">Buy</span>
+          <span uib-dropdown ng-init="checkAlike(display.buy)" ng-if="alikeBuys">
+            <a class="glyphicon glyphicon-exclamation-sign" style="color:orange;" uib-dropdown-toggle
+              uib-tooltip="Another leads are identical to this">    
+            </a>
+            <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="simple-dropdown">
+              <li ng-repeat="buy in alikeBuys">
+                <a href>{{ buy.trader.name }}</a>
+              </li>
+            </ul>
+          </span>
+
           <span ng-if="order.buys.length" uib-dropdown class="pull-right" ng-init="display.buy = order.buys[0]; display.buy.index = 0">
             <button type="button" ng-show="order.status !== 'x' && order.status !== 'f'" class="btn btn-default" uib-dropdown-toggle>
               {{ display.buy.company.company_name }} ({{ order.buys.length }})<span class="caret"></span>
             </button>
             <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
-              <li role="menuitem" ng-repeat="buy in order.buys"><a ng-click="display.buy = buy; display.buy.index = $index">
+              <li role="menuitem" ng-repeat="buy in order.buys"><a ng-click="display.buy = buy; display.buy.index = $index;checkAlike(display.buy);">
               {{ buy.company.company_name }} : {{ buy.pivot.volume | number }}mt, US${{ buy.pivot.price | number }}
               </a></li>
             </ul>
           </span>
 				</th>
-				<th>
+				<th width="{{ order.in_house ? '60%' : '40%' }}">
 					<span style="font-size:20pt">{{ order.in_house ? 'Order Details' : 'Sell' }}</span>
+
+          <span uib-dropdown ng-init="checkAlike(display.sell)" ng-if="alikeSells">
+            <a class="glyphicon glyphicon-exclamation-sign" style="color:orange;" uib-dropdown-toggle
+              uib-tooltip="Another leads are identical to this">    
+            </a>
+            <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="simple-dropdown">
+              <li ng-repeat="sell in alikesells">
+                <a href>{{ sell.trader.name }}</a>
+              </li>
+            </ul>
+          </span>
+
           <span ng-if="order.sells.length" uib-dropdown class="pull-right" ng-init="display.sell = order.sells[0]; display.sell.index = 0">
             <button type="button" ng-show="order.status !== 'x' && order.status !== 'f'" class="btn btn-default" uib-dropdown-toggle>
               {{display.sell.company.company_name}} ({{ order.sells.length }}) <span class="caret"></span>

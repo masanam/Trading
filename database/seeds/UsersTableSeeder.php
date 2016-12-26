@@ -41,6 +41,8 @@ class UsersTableSeeder extends Seeder
             [ 'name' => 'Prasetyo Nugraha Gema', 'email' => 'pras@volantech.io', 'title' => 'Admin', 'image' => './images/default.png', 'phone'=> '1234567890', 'role'=>'admin', 'manager_id'=>null],
             [ 'name' => 'Martin', 'email' => 'dev@volantech.io', 'title' => 'Admin', 'image' => './images/default.png', 'phone'=> '1234567890', 'role'=>'admin', 'manager_id'=>1],
             [ 'name' => 'Giovanny Sientoro', 'email' => 'giovanny.sientoro@borneo-indobara.com', 'title' => 'Supervisor', 'image' => './images/default.png', 'phone'=> '1234567890', 'role'=>'manager', 'manager_id'=>3],
+
+            [ 'name' => 'Aryo Pradipta Gema', 'email' => 'aryo@volantech.io', 'title' => 'Admin', 'image' => './images/default.png', 'phone'=> '1234567890', 'role'=>'trader', 'manager_id'=>1],
         ];
 
 
@@ -56,5 +58,12 @@ class UsersTableSeeder extends Seeder
                 'status' => 'a' 
             ]);
         }
+
+        User::find(4)->actings()->attach(1, [
+            'role' => 'a',
+            'status' => 'a',
+            'date_start' => date('Y-m-d'),
+            'date_end' => '2017-03-01'
+        ]);
     }
 }

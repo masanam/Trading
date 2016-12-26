@@ -4,7 +4,7 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
   function($scope, $stateParams, $state, Order, Authentication, Notification, $uibModal) {
     $scope.browse = {};
 
-    $scope.$watchGroup(['browse.status', 'browse.possession'], function() { $scope.find(); });
+    $scope.$watchGroup(['browse.status', 'browse.category'], function() { $scope.find(); });
 
     $scope.display = {};
 
@@ -62,7 +62,7 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
     $scope.inHouse = function (status) {
       $scope.order.in_house = status || false;
       $scope.update(true);
-    }
+    };
     
     $scope.openReasonModal = function () {
       var modalInstance = $uibModal.open({
@@ -145,7 +145,7 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
 
     // Find list of order
     $scope.find = function () {
-      $scope.orders = Order.query({ possession: $scope.browse.possession, status: $scope.browse.status });
+      $scope.orders = Order.query({ category: $scope.browse.category, status: $scope.browse.status });
     };
 
     // Find existing order

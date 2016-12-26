@@ -48,6 +48,15 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
         }
     };
 
+    $scope.checkAlike = function (display){
+      Lead.query({ lead_id:display.id, matching:'alike', order:true }, function(res){
+        if (display.lead_type === 'b') 
+          $scope.alikeBuys = res;
+        else
+          $scope.alikeSells = res;
+      });
+    };
+
     $scope.removeLead = function (lead) {
       var sell_index = $scope.order.sells.indexOf(lead);
       var buy_index = $scope.order.buys.indexOf(lead);
@@ -105,7 +114,8 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
           { lead_type:'buy', lead_id:negotiation.id, negotiation:true, volume:negotiation.volume, price:negotiation.price, trading_term:negotiation.trading_term, payment_term:negotiation.payment_term, notes:negotiation.notes },
           function (res){
             $scope.order.buys = res.buys;
-            $scope.display.buy.pivot = negotiation;
+            negotiation.created_at = new Date();
+            $scope.display.buy.pivot.negotiations.push(negotiation);
           });
       }, function () {
         console.log('Modal dismissed at: ' + new Date());
@@ -136,7 +146,8 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
           { lead_type:'sell', lead_id:negotiation.id, negotiation:true, volume:negotiation.volume, price:negotiation.price, trading_term:negotiation.trading_term, payment_term:negotiation.payment_term, notes:negotiation.notes },
           function (res){
             $scope.order.sells = res.sells;
-            $scope.display.sell.pivot = negotiation;
+            negotiation.created_at = new Date();
+            $scope.display.sell.pivot.negotiations.push(negotiation);
           });
       }, function () {
         console.log('Modal dismissed at: ' + new Date());
@@ -165,6 +176,7 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
 
       modalInstance.result.then(function (selectedItem) {
         if(!$scope.order.buys) $scope.order.buys = [];
+        $scope.checkAlike(selectedItem);
         
         if($scope.order.id){
           Order.update(
@@ -209,6 +221,7 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
 
       modalInstance.result.then(function (selectedItem) {
         if(!$scope.order.buys) $scope.order.buys = [];
+        $scope.checkAlike(selectedItem);
         
         if($scope.order.id){
           Order.update(

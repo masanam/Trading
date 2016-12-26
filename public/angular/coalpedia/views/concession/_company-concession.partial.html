@@ -19,7 +19,10 @@
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="concession in company.concessions">
+          <tr ng-if="company.concessions.length < 1">
+            <td colspan="4" align="center">There is no record of concession</td>
+          </tr>
+          <tr ng-if="company.concessions.length > 0" ng-repeat="concession in company.concessions">
             <td>{{ concession.concession_name }}</td>
             <td>{{ concession.city }} (Port: {{ concession.port.port_name || 'N/A' }})</td>
             <td>{{ concession.reserves | number }}</td>

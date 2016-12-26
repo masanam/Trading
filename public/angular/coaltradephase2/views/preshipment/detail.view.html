@@ -1,0 +1,106 @@
+<section ng-controller="PreshipmentController" style="padding: 0px;" >
+  <div class="box box-info" style="margin: 0px; margin-right: 20px;" >
+    <div class="box-header with-border row">
+      <div class="col-lg-5" style="margin:  0px !important;">
+        <h3 class="box-title" style="padding-top: 10px;">Pre Shipment Contracts Overview</h3>
+      </div> 
+      <div class="col-lg-7" style="margin:  0px !important;">
+        <div class="row">
+          <div class="col-xs-8">
+            <input type="text" name="search" placeholder="  Search" class="form-control">
+          </div>            
+          <div class="col-xs-4" style="text-align: right;">
+            <button class="btn btn-default">Advance Search</button>
+          </div> 
+        </div>          
+      </div>             
+    </div>   
+    <div class="box-body">
+      <table class="table table-striped">
+        <thead> 
+          <tr>
+            <th></th>
+            <th>No. Contract</th>            
+            <th>Status</th>            
+            <th>Created By</th>            
+            <th>Deadline</th>            
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-click="openTodo()">
+            <td>1</td>
+            <td>CONTRACT0011</td> 
+            <td style="color:green">Completed</td>            
+            <td>Budiman Sudimara</td>            
+            <td>15 December 2016</td>
+            <td><a ng-click="openTodo()"><i class="glyphicon glyphicon-eye-open"></i></a></td>             
+          </tr>
+          <tr ng-click="openTodo()">
+            <td>2</td>
+            <td style="color:red">CONTRACT0012</td> 
+            <td style="color:orange">On Progress</td>            
+            <td>Budiman Sudimara</td>            
+            <td style="color:red">15 December 2016</td>
+            <td><a ng-click="openTodo()"><i class="glyphicon glyphicon-eye-open"></i></a></td>                       
+          </tr>
+          <tr ng-click="openTodo()">
+            <td>3</td>
+            <td style="color:red">CONTRACT0013</td> 
+            <td style="color:red">Unattended</td>            
+            <td>Budiman Sudimara</td>            
+            <td style="color:red">15 December 2016</td>
+            <td><a ng-click="openTodo()"><i class="glyphicon glyphicon-eye-open"></i></a></td>             
+          </tr>
+          <tr ng-click="openTodo()">
+            <td>4</td>
+            <td>CONTRACT0014</td> 
+            <td style="color:green">Completed</td>            
+            <td>Budiman Sudimara</td>            
+            <td>15 Januari 2017</td>
+            <td><a ng-click="openTodo()"><i class="glyphicon glyphicon-eye-open"></i></a></td>             
+          </tr>
+          <tr ng-click="openTodo()">
+            <td>5</td>
+            <td style="color:red">CONTRACT0015</td> 
+            <td style="color:orange">On Progress</td>            
+            <td>Budiman Sudimara</td>            
+            <td style="color:orange">15 Januari 2017</td>
+            <td><a ng-click="openTodo()"><i class="glyphicon glyphicon-eye-open"></i></a></td>                      
+          </tr>
+          <tr ng-click="openTodo()">
+            <td>6</td>
+            <td style="color:red">CONTRACT0016</td> 
+            <td style="color:red">Unattended</td>            
+            <td>Budiman Sudimara</td>            
+            <td style="color:orange">15 Januari 2017</td>
+            <td><a ng-click="openTodo()"><i class="glyphicon glyphicon-eye-open"></i></a></td>           
+          </tr>
+          <tr ng-click="openTodo()">
+            <td>7</td>
+            <td>CONTRACT0016</td> 
+            <td style="color:green">Completed</td>            
+            <td>Budiman Sudimara</td>            
+            <td>28 Febuary 2017</td>
+            <td><a ng-click="openTodo()"><i class="glyphicon glyphicon-eye-open"></i></a></td>             
+          </tr>
+          <tr ng-click="openTodo()">
+            <td>8</td>
+            <td>CONTRACT0017</td> 
+            <td style="color:orange">On Progress</td>            
+            <td>Budiman Sudimara</td>            
+            <td>28 Febuary 2017</td>
+            <td><a ng-click="openTodo()"><i class="glyphicon glyphicon-eye-open"></i></a></td>                        
+          </tr>
+          <tr ng-click="openTodo()">
+            <td>9</td>
+            <td style="color:red">CONTRACT0018</td> 
+            <td style="color:red">Unattended</td>            
+            <td>Budiman Sudimara</td>            
+            <td>28 Febuary 2017</td>
+            <td><a ng-click="openTodo()"><i class="glyphicon glyphicon-eye-open"></i></a></td>             
+          </tr>
+        </tbody>
+      </table>
+    </div>   
+  </div>
+</section>

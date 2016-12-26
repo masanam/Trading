@@ -4,6 +4,7 @@
   <ui-select ng-model="selected.port"
     reset-search-input="false"
     style="min-width: 30px;"
+    ng-change="select(selected.port)"
     title="Choose an port">
     <ui-select-match placeholder="Name of the Port...">{{$select.selected.port_name}}</ui-select-match>
 
@@ -21,7 +22,7 @@
       OR
     </div>
   </div>
-  <button type="button" class="btn btn-primary btn-block" ng-click="modalCreate()">
+  <button type="button" class="btn btn-primary btn-block" ng-click="add()">
     <b>+</b> Add New Port
   </button>
 </div>

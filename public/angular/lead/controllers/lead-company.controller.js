@@ -14,7 +14,7 @@ angular.module('lead').controller('LeadCompanyController', ['$scope', '$statePar
       });
     };
 
-    $scope.modalCreate = function () {
+    $scope.add = function () {
       var modalInstance = $uibModal.open({
         animation: true,
         ariaLabelledBy: 'modal-title',
@@ -33,6 +33,20 @@ angular.module('lead').controller('LeadCompanyController', ['$scope', '$statePar
       }, function () {
         $scope.selected.company = undefined;
       });
+    };
+
+    $scope.select = function (company) {
+      if(company){
+        $scope.lead.company_id = company.id;
+        if(!$scope.lead.trading_term) $scope.lead.trading_term = company.preferred_trading_term;
+        if(!$scope.lead.payment_term) $scope.lead.payment_term = company.preferred_payment_term;
+      } else {
+        if(!isNaN($scope.lead.order_status)) $scope.lead.company_id = undefined;
+        else {
+          $scope.selected.company = $scope.lead.company;
+          alert('You can only edit company in draft leads');
+        }
+      }
     };
   }
 ]);

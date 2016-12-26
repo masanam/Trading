@@ -94,18 +94,28 @@ class OrderController extends Controller
 
     if($req->status != '') $orders = $orders->where('status', $req->status);
 
-    if($req->possession == 'subordinates'){
+    if($req->category == 'subordinates'){
       $subs = Auth::user()->subordinates();
       $users = $subs->pluck('id')->all(); 
       $orders = $orders->whereIn('user_id', $users);
     }
-    else if($req->possession == 'associated'){
+    else if($req->category == 'associated'){
       $orders->whereHas('users', function($query){
         $query->where('user_id', Auth::user()->id);
       });
-    }else{
+    }
+    else if($req->category == 'approval'){
+      $orders->whereHas('approvals', function ($query){
+        $query->where('user_id', Auth::user()->id);
+      });
+    }
+    else{
       $orders->where('user_id', Auth::user()->id);
     }
+
+    //limit order
+    if (!$req->limit) $req->limit = 50;
+    $orders->limit($req->limit);
 
     //var_dump(DB::getQueryLog());
     $orders = $orders->get();
@@ -167,8 +177,11 @@ class OrderController extends Controller
         $order->buys()->attach([ $buy['id'] => $buy['pivot'] ]);
         Lead::find($buy['id'])->reconcile();
 
+        // add negotiation log to the staged lead
+        $order_detail_id = $order->buys()->find($buy['id'])->pivot->id;
+
         OrderNegotiation::create([
-          'order_detail_id' => $buy['id'],
+          'order_detail_id' => $order_detail_id,
           'notes' => 'Initial Deal',
           'volume' => $buy['pivot']['volume'],
           'price' => $buy['pivot']['price'],
@@ -184,9 +197,12 @@ class OrderController extends Controller
         $order->sells()->attach([ $sell['id'] => $sell['pivot'] ]);
         Lead::find($sell['id'])->reconcile();
 
+        // add negotiation log to the staged lead
+        $order_detail_id = $order->sells()->find($sell['id'])->pivot->id;
+
         // $order_detail = $order->orders->find($sell['id']);
         OrderNegotiation::create([
-          'order_detail_id' => $sell['id'],
+          'order_detail_id' => $order_detail_id,
           'notes' => 'Initial Deal',
           'volume' => $sell['pivot']['volume'],
           'price' => $sell['pivot']['price'],
@@ -197,14 +213,41 @@ class OrderController extends Controller
       }
     }
 
-    if(count($req->additional) > 0) {
-      foreach($req->additional as $add) {
-        $order->companies()->attach([$add['company']['id'] => [
-          'cost' => $add['cost'],
-          'label' => $add['label']
-        ]]);
+    if(count($req->buys) > 0 && !$req->in_house) {      
+      foreach($req->buys as $buy){
+        if($buy['order_status'] != 's') continue;
+        else {
+          $order_id = DB::table('order_details')
+          ->where('lead_id', $buy['id'])->pluck('order_id');
+          if(count($order_id) > 1) continue;
+          else {
+            $oldOrder = Order::find($order_id);
+            $oldOrder->status = 'c';
+            $oldOrder->save();
+            // dd($oldOrder);
+          }
+        }
       }
     }
+
+    if(count($req->sells) > 0) {
+      foreach($req->sells as $sell){
+        if($sell['order_status'] != 's') continue;
+        else {
+          $order_id = DB::table('order_details')
+          ->where('lead_id', $sell['id'])->pluck('order_id');
+          if(count($order_id) > 1) continue;
+          else {
+            $oldOrder = Order::find($order_id);
+            $oldOrder->status = 'c';
+            $oldOrder->save();
+            // dd($oldOrder);
+          }
+        }
+      }
+    }
+
+    $order->addAdditionalCosts($req->additional);
 
     return response()->json($order, 200);
   }
@@ -259,15 +302,20 @@ class OrderController extends Controller
    */
   public function update(Request $req, $id)
   {
-    return $req;
     $order = Order::find($id);
 
+    // Validations
     if(!$req) return response()->json([ 'message' => 'Bad Request' ], 400);
     if (!$order) return response()->json([ 'message' => 'Not found' ] ,404);
+
+    // Only the owner of the order can change anything
     if ($order->user_id != Auth::user()->id) return response()->json([ 'message' => 'You are not authorized to edit this order!' ] ,403);
+    // In-house product can only be used in Sell-Only Orders
+    if ($req->in_house && count($order->buys)) return response()->json([ 'message' => 'In-house product can only in sell-only Order' ] ,400);
 
     $this->authorize('update', $order);
 
+    // Reconcile the statuses of each leads
     if(count($req->buys) > 0){
       foreach($req->buys as $buy){
         Lead::find($buy['id'])->reconcile();
@@ -286,9 +334,15 @@ class OrderController extends Controller
     $order->status = $req->status;
     $order->save();
 
+    // Add new additional cost in the application
+    $order->addAdditionalCosts($req->additional);
+
+    // If this is a delete operation, release all partials
     if($order->status == 'x'){
       $order->leadToPartial();
     }
+
+    // if Orders staged for approval, 
     else if($order->status == 'p'){
       $order = Order::with(['approvals' => function($q){
         $q->where('user_id', Auth::user()->manager_id);
@@ -304,29 +358,6 @@ class OrderController extends Controller
           $order_user->user_id = $user_id->id;
           $order_user->role = 'approver';
           $order_user->save();
-        }
-      }
-
-      // if($order->approvals->count() > 0){
-      //   $order_approval = OrderApproval::where('user_id', $user_id)->where('order_id', $order_id)->first();
-      //   $order_approval->status = $status;
-      //   $order_approval->save();
-        
-      //   $this->send_approval_mail($order, $user_id);
-      // }else{
-      //   $order_approval = new OrderApproval();
-      //   $order_approval->order_id = $order_id;
-      //   $order_approval->user_id = $user_id;
-      //   $order_approval->status = $status;
-      //   $order_approval->save();
-      //   $this->send_approval_mail($order, $user_id);
-      // }
-
-      if(count($req->additional) > 0) {
-        foreach($req->additional as $add) {
-          $order->companies()->updateExistingPivot([$add->company => [
-            'cost' => $add->cost
-          ]]);
         }
       }
 
@@ -385,8 +416,28 @@ class OrderController extends Controller
     $order->approvals()->sync([ $user->id => [ 'status' => $req->status ] ], false);
 
     // if this user has manager, add approval on top of it
-    if($user->manager_id){
+    if($user->manager_id && $req->status == 'a'){
       $order->requestApproval(User::find(Auth::user()->manager_id));
+    }
+
+    /*
+     * Interim Logic
+     *
+     * Approval statuses:
+     * [p] --> pending ;    [m] --> pending, but acting
+     * [a] --> approved ;   [y] --> automatically approved
+     * [r] --> rejected ;   [n] --> automatically rejected
+     */
+
+    $interims = $user->interims;
+    $actings = $user->actings;
+
+    if(count($interims) || count($actings)){
+      if($req->status == 'a') $status = 'y';
+      else if($req->status == 'r') $status = 'n';
+
+      foreach($interims as $interim) $order->approvals()->sync([ $interim->id => [ 'status' => $status ] ], false);
+      foreach($actings as $actings) $order->approvals()->sync([ $acting->id => [ 'status' => $status ] ], false);
     }
 
     return $this->show($id);
@@ -400,7 +451,7 @@ class OrderController extends Controller
    */
   public function stage(Request $req, $id)
   {
-    $order = Order::with('buys', 'sells')->find($id);
+    $order = Order::with('buys', 'sells', 'approvals', 'trader')->find($id);
     $lead_type = $req->lead_type;
     $this->authorize('update', $order);
 
@@ -426,6 +477,9 @@ class OrderController extends Controller
     ]], false);
     Lead::find($req->lead_id)->reconcile();
 
+    // when details are changed, reset all approval
+    $order->resetApproval();
+
     // add negotiation log to the staged lead
     $order_detail_id = $order->leads()->find($req->lead_id)->pivot->id; // find the ID of the order details
     $negotiation  = new OrderNegotiation([
@@ -449,11 +503,14 @@ class OrderController extends Controller
    * @return \Illuminate\Http\Response
    */
   public function unstage(Request $req, $id){
-    $order = Order::find($id);
+    $order = Order::with('approvals', 'trader')->find($id);
     $this->authorize('update', $order);
 
     $order->leads()->detach($req->lead_id);
     Lead::find($req->lead_id)->reconcile();
+
+    // when details are changed, reset all approval
+    $order->resetApproval();
 
     return $this->show($id);
   }
