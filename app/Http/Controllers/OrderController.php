@@ -94,18 +94,28 @@ class OrderController extends Controller
 
     if($req->status != '') $orders = $orders->where('status', $req->status);
 
-    if($req->possession == 'subordinates'){
+    if($req->category == 'subordinates'){
       $subs = Auth::user()->subordinates();
       $users = $subs->pluck('id')->all(); 
       $orders = $orders->whereIn('user_id', $users);
     }
-    else if($req->possession == 'associated'){
+    else if($req->category == 'associated'){
       $orders->whereHas('users', function($query){
         $query->where('user_id', Auth::user()->id);
       });
-    }else{
+    }
+    else if($req->category == 'approval'){
+      $orders->whereHas('approvals', function ($query){
+        $query->where('user_id', Auth::user()->id);
+      });
+    }
+    else{
       $orders->where('user_id', Auth::user()->id);
     }
+
+    //limit order
+    if (!$req->limit) $req->limit = 50;
+    $orders->limit($req->limit);
 
     //var_dump(DB::getQueryLog());
     $orders = $orders->get();
@@ -167,8 +177,11 @@ class OrderController extends Controller
         $order->buys()->attach([ $buy['id'] => $buy['pivot'] ]);
         Lead::find($buy['id'])->reconcile();
 
+        // add negotiation log to the staged lead
+        $order_detail_id = $order->buys()->find($buy['id'])->pivot->id;
+
         OrderNegotiation::create([
-          'order_detail_id' => $buy['id'],
+          'order_detail_id' => $order_detail_id,
           'notes' => 'Initial Deal',
           'volume' => $buy['pivot']['volume'],
           'price' => $buy['pivot']['price'],
@@ -184,9 +197,12 @@ class OrderController extends Controller
         $order->sells()->attach([ $sell['id'] => $sell['pivot'] ]);
         Lead::find($sell['id'])->reconcile();
 
+        // add negotiation log to the staged lead
+        $order_detail_id = $order->sells()->find($sell['id'])->pivot->id;
+
         // $order_detail = $order->orders->find($sell['id']);
         OrderNegotiation::create([
-          'order_detail_id' => $sell['id'],
+          'order_detail_id' => $order_detail_id,
           'notes' => 'Initial Deal',
           'volume' => $sell['pivot']['volume'],
           'price' => $sell['pivot']['price'],
@@ -197,7 +213,41 @@ class OrderController extends Controller
       }
     }
 
-    $order->addAditionalCosts($req->additional);
+    if(count($req->buys) > 0 && !$req->in_house) {      
+      foreach($req->buys as $buy){
+        if($buy['order_status'] != 's') continue;
+        else {
+          $order_id = DB::table('order_details')
+          ->where('lead_id', $buy['id'])->pluck('order_id');
+          if(count($order_id) > 1) continue;
+          else {
+            $oldOrder = Order::find($order_id);
+            $oldOrder->status = 'c';
+            $oldOrder->save();
+            dd($oldOrder);
+          }
+        }
+      }
+    }
+
+    if(count($req->sells) > 0) {
+      foreach($req->sells as $sell){
+        if($sell['order_status'] != 's') continue;
+        else {
+          $order_id = DB::table('order_details')
+          ->where('lead_id', $sell['id'])->pluck('order_id');
+          if(count($order_id) > 1) continue;
+          else {
+            $oldOrder = Order::find($order_id);
+            $oldOrder->status = 'c';
+            $oldOrder->save();
+            dd($oldOrder);
+          }
+        }
+      }
+    }
+
+    $order->addAdditionalCosts($req->additional);
 
     return response()->json($order, 200);
   }
@@ -286,7 +336,7 @@ class OrderController extends Controller
     $order->save();
 
     // Add new additional cost in the application
-    $order->addAditionalCosts($req->additional);
+    $order->addAdditionalCosts($req->additional);
 
     // If this is a delete operation, release all partials
     if($order->status == 'x'){
