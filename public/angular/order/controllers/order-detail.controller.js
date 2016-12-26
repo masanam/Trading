@@ -48,9 +48,12 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
         }
     };
 
-    $scope.checkAlike = function (lead_type){
-      Lead.query({ lead_id:$scope.display.buy.id, lead_type:lead_type, matching:'alike', order:true }, function(res){
-        $scope.alike = res;
+    $scope.checkAlike = function (display){
+      Lead.query({ lead_id:display.id, matching:'alike', order:true }, function(res){
+        if (display.lead_type === 'b') 
+          $scope.alikeBuys = res;
+        else
+          $scope.alikeSells = res;
       });
     };
 
@@ -173,6 +176,7 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
 
       modalInstance.result.then(function (selectedItem) {
         if(!$scope.order.buys) $scope.order.buys = [];
+        $scope.checkAlike(selectedItem);
         
         if($scope.order.id){
           Order.update(
@@ -217,6 +221,7 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
 
       modalInstance.result.then(function (selectedItem) {
         if(!$scope.order.buys) $scope.order.buys = [];
+        $scope.checkAlike(selectedItem);
         
         if($scope.order.id){
           Order.update(

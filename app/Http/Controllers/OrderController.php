@@ -168,9 +168,7 @@ class OrderController extends Controller
                       ->where('lead_id', $buy['id'])->pluck('order_id');
           $oldOrders = Order::findMany($order_id);
           foreach($oldOrders as $oldOrder) {
-            if($oldOrder->status == 'a') {
-              $oldOrder->status = 'c';
-            }
+            if($oldOrder->status == 'a') $oldOrder->status = 'c';
             $oldOrder->save();
           }
         }
@@ -184,11 +182,8 @@ class OrderController extends Controller
           $order_id = DB::table('order_details')
                       ->where('lead_id', $sell['id'])->pluck('order_id');
           $oldOrders = Order::findMany($order_id);
-          // dd($oldOrders);
           foreach($oldOrders as $oldOrder) {
-            if($oldOrder->status == 'a') {
-              $oldOrder->status = 'c';
-            }
+            if($oldOrder->status == 'a') $oldOrder->status = 'c';
             $oldOrder->save();
           }
         }

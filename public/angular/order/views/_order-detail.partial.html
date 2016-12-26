@@ -56,7 +56,7 @@
 				<th width="{{ order.in_house ? '40%' : '20%' }}"></th>
     		<th ng-if="!order.in_house"  width=40% ng-if="!order.in_house">
 					<span style="font-size:20pt">Buy</span>
-          <span uib-dropdown ng-init="checkAlike(display.buy)" ng-if="alikeBuys.count > 0">
+          <span uib-dropdown ng-init="checkAlike(display.buy)" ng-if="alikeBuys.length > 0">
             <a class="glyphicon glyphicon-exclamation-sign" style="color:orange;" uib-dropdown-toggle
               uib-tooltip="Another leads are identical to this">    
             </a>
@@ -72,7 +72,7 @@
               {{ display.buy.company.company_name }} ({{ order.buys.length }})<span class="caret"></span>
             </button>
             <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
-              <li role="menuitem" ng-repeat="buy in order.buys"><a ng-click="display.buy = buy; display.buy.index = $index;checkAlike('buy');">
+              <li role="menuitem" ng-repeat="buy in order.buys"><a ng-click="display.buy = buy; display.buy.index = $index;checkAlike(display.buy);">
               {{ buy.company.company_name }} : {{ buy.pivot.volume | number }}mt, US${{ buy.pivot.price | number }}
               </a></li>
             </ul>
@@ -81,7 +81,7 @@
 				<th width="{{ order.in_house ? '60%' : '40%' }}">
 					<span style="font-size:20pt">{{ order.in_house ? 'Order Details' : 'Sell' }}</span>
 
-          <span uib-dropdown ng-init="checkAlike(display.sell)" ng-if="alikeSells.count > 0">
+          <span uib-dropdown ng-init="checkAlike(display.sell)" ng-if="alikeSells.length > 0">
             <a class="glyphicon glyphicon-exclamation-sign" style="color:orange;" uib-dropdown-toggle
               uib-tooltip="Another leads are identical to this">    
             </a>
@@ -98,7 +98,7 @@
             </button>
             <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
               <li role="menuitem" ng-repeat="sell in order.sells">
-              <a ng-click="display.sell = sell; display.sell.index = $index">
+              <a ng-click="display.sell = sell; display.sell.index = $index;checkAlike(display.sell);">
               {{ sell.company.company_name }} : {{ sell.pivot.volume | number }}mt, US${{ sell.pivot.price | number }}
               </a></li>
             </ul>
