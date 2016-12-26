@@ -1,0 +1,206 @@
+<section ng-controller="ScheduleController" class="content">
+  <div class="col-lg-4">
+    <div class="box box-info">
+      <div class="box-header with-border">
+        <h3 class="box-title"><a ui-sref="scheduler.dashboard">Dashboard</a></h3>
+      </div>
+
+     
+      <div class="box-body">
+      <div class="row">
+      <div class="col-sm-12">  
+       <div class="table-responsive">
+       <h4>Desember 2016</h4>
+        <table class="table table-striped">
+          <thead> 
+            <tr>
+            <th>No</th>
+            <th>Vessel Name</th>
+            <th>Shipment Date</th>
+            <th>Status</th>
+          </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+              1
+              </td>
+              <td><a ng-click="opendetailModal()"><p style="color:red">Vessel 1</p></a>
+              </td> 
+              <td>
+                14 December 2016
+              </td>
+              <td>
+                Unloaded
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+              2
+              </td>
+              <td><a ng-click="opendetailModal()"><p style="color:yellow">Vessel 2</p></a>
+              </td> 
+              <td>
+                20 December 2016
+              </td>
+              <td>
+                Unloaded
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+              3
+              </td>
+              <td><a ng-click="opendetailModal()"><p style="color:green">Vessel 3</p></a>
+              </td> 
+              <td>
+                22 December 2016
+              </td>
+              <td>
+                Shipping
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+              4
+              </td>
+              <td><a ng-click="opendetailModal()"><p style="color:green">Vessel 4</p></a>
+              </td> 
+              <td>
+                22 December 2016
+              </td>
+              <td>
+                Shipping
+              </td>
+            </tr>
+            
+            
+           
+          </tbody>
+        </table>
+      </div>
+
+
+       <div class="col-sm-12">  
+       <div class="table-responsive">
+       <h4>Januari 2017</h4>
+        <table class="table table-striped">
+          <thead> 
+            <tr>
+            <th>No</th>
+            <th>Vessel Name</th>
+            <th>Shipment Date</th>
+            <th>Status</th>
+          </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+              1
+              </td>
+              <td><a ng-click="opendetailModal()"><p>Vessel 5</p></a>
+              </td> 
+              <td>
+                4 Januari 2017
+              </td>
+              <td>
+                -
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+              2
+              </td>
+              <td><a ng-click="opendetailModal()"><p >Vessel 6</p></a>
+              </td> 
+              <td>
+                20 December 2016
+              </td>
+              <td>
+                -
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      </div>  
+       
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+
+ <div class="col-lg-8">
+    <div class="box box-info">
+      <div class="box-header with-border">
+        <h3 class="box-title">Current Shipment </h3>
+        
+      </div>
+
+      <div class="box-body">
+
+      <div class="col-lg-12">  
+       <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th> No</th>
+            <th> Vessel Name</th>
+            <th> Destination</th>
+            <th> Status</th>
+            <th> Concession</th>
+            <th> Product</th>
+            <th> Planed Delivery</th>
+            <th> Actual Delivery</th>
+            <th> Delivery Tonnage</th>
+            <th> Delivered Tonnage</th>
+            <th> </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td> Vessel 1 </td>
+            <td>PT. ABC</td>
+            <td></td>
+            <td>Sumatera Utara</td>
+            <td>Product A</td>
+            <td>January 2017 – March 2017</td>
+            <td><p style="color:red"><a ng-click="openaddveselModal()">MUST BE FILLED!</a></p></td>
+            <td>2,000,000 mt</td>
+            <td>32,000,000 mt</td>
+            <td><a ui-sref="scheduler.history-shipment" class="glyphicon glyphicon-new-window"></a></td>
+          </tr>
+
+          <tr>
+            <td>2</td>
+            <td> Vessel 2 </td>
+            <td>PT. ABB</td>
+            <td></td>
+            <td>Sumatera Utara</td>
+            <td>Product A</td>
+            <td>January 2017 – March 2017</td>
+            <td><p style="color:red"><a ng-click="openaddveselModal()">MUST BE FILLED!</a></p></td>
+            <td>2,000,000 mt</td>
+            <td>32,000,000 mt</td>
+            <td><a ui-sref="scheduler.history-shipment" class="glyphicon glyphicon-new-window"></a></td>
+          </tr>
+          
+         
+        </tbody>
+      </table>
+      </div>
+      </div>  
+  
+
+    </div>
+  </div>
+</div>
+
+</section>
