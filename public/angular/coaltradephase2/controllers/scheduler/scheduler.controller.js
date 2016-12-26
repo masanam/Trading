@@ -1,7 +1,24 @@
 'use strict';
+angular.module('scheduler').controller('ScheduleController', ['$scope', '$stateParams', '$state','$uibModal', 
+  function($scope, $stateParams, $state, $uibModal) {
 
-angular.module('scheduler').controller('SchedulerController', ['$scope', '$stateParams', '$state', 
-  function($scope, $stateParams, $state) {
-    
+    $scope.opendetailModal = function () {
+      var modalInstance = $uibModal.open({
+        windowClass: 'xl-modal',
+        templateUrl: './angular/coaltradephase2/views/scheduler/modal.view.detail.html',
+        controller: 'ScheduleModalController',
+        scope: $scope,
+      });
+    };
+
+    $scope.openhistoryModal = function () {
+      var modalInstance = $uibModal.open({
+        windowClass: 'xl-modal',
+        templateUrl: './angular/coaltradephase2/views/scheduler/modal.history.detail.html',
+        controller: 'ScheduleModalController',
+        scope: $scope,
+      });
+    };
+
   }
 ]);

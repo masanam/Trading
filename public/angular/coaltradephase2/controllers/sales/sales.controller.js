@@ -19,6 +19,5 @@ angular.module('sales').controller('SalesController', ['$scope', '$stateParams',
         scope: $scope,
       });
     };
-
   }
 ]);
