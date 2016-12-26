@@ -13,7 +13,7 @@ angular.module('chat').factory('Chat', ['Authentication', 'FirebaseService', '$f
         return callback(chats);
       },
 
-      sendChat: function(orderId, userId, message) {
+      sendChat: function(orderId, users, message) {
         // sending chat
         var chat = {
           'order_id': orderId,
@@ -34,8 +34,8 @@ angular.module('chat').factory('Chat', ['Authentication', 'FirebaseService', '$f
           'isRead': false
         };
 
-        for (var i = userId.length - 1; i >= 0; i--) {
-          var notif_key = mainApp.database().ref('notification/' + userId[i].user_id).push(notification).key;
+        for (var i = users.length - 1; i >= 0; i--) {
+          var notif_key = mainApp.database().ref('notification/' + users[i].id).push(notification).key;
         }
       }
     };

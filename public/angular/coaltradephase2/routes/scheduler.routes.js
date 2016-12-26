@@ -12,7 +12,15 @@ angular.module('scheduler').config(['$stateProvider',
       })
       .state('scheduler.dashboard', {
         url: '/dashboard',
-        templateUrl: '/angular/coaltradephase2/views/scheduler/index.view.html'
+        templateUrl: '/angular/coaltradephase2/views/scheduler/dashboard.view.html'
+      })
+      .state('scheduler.current-shipment', {
+        url: '/currentshipment',
+        templateUrl: '/angular/coaltradephase2/views/scheduler/currentshipment.view.html'
+      })
+      .state('scheduler.history-shipment', {
+        url: '/historyshipment',
+        templateUrl: '/angular/coaltradephase2/views/scheduler/currenthistory.view.html'
       });
       
   }

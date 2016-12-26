@@ -160,6 +160,36 @@ class OrderController extends Controller
       }
     }
 
+    if(count($req->buys) > 0 && !$req->in_house) {      
+      foreach($req->buys as $buy){
+        if($buy['order_status'] != 'p' && $buy['order_status'] != 's') continue;
+        else {
+          $order_id = DB::table('order_details')
+                      ->where('lead_id', $buy['id'])->pluck('order_id');
+          $oldOrders = Order::findMany($order_id);
+          foreach($oldOrders as $oldOrder) {
+            if($oldOrder->status == 'a') $oldOrder->status = 'c';
+            $oldOrder->save();
+          }
+        }
+      }
+    }
+
+    if(count($req->sells) > 0) {
+      foreach($req->sells as $sell){
+        if($sell['order_status'] != 'p' && $sell['order_status'] != 's') continue;
+        else {
+          $order_id = DB::table('order_details')
+                      ->where('lead_id', $sell['id'])->pluck('order_id');
+          $oldOrders = Order::findMany($order_id);
+          foreach($oldOrders as $oldOrder) {
+            if($oldOrder->status == 'a') $oldOrder->status = 'c';
+            $oldOrder->save();
+          }
+        }
+      }
+    }
+
     if(!$req) {
       return response()->json([
         'message' => 'Bad Request'
@@ -210,40 +240,6 @@ class OrderController extends Controller
           'payment_term' => $sell['pivot']['payment_term'],
           'user_id' => Auth::user()->id,
         ]);
-      }
-    }
-
-    if(count($req->buys) > 0 && !$req->in_house) {      
-      foreach($req->buys as $buy){
-        if($buy['order_status'] != 's') continue;
-        else {
-          $order_id = DB::table('order_details')
-          ->where('lead_id', $buy['id'])->pluck('order_id');
-          if(count($order_id) > 1) continue;
-          else {
-            $oldOrder = Order::find($order_id);
-            $oldOrder->status = 'c';
-            $oldOrder->save();
-            // dd($oldOrder);
-          }
-        }
-      }
-    }
-
-    if(count($req->sells) > 0) {
-      foreach($req->sells as $sell){
-        if($sell['order_status'] != 's') continue;
-        else {
-          $order_id = DB::table('order_details')
-          ->where('lead_id', $sell['id'])->pluck('order_id');
-          if(count($order_id) > 1) continue;
-          else {
-            $oldOrder = Order::find($order_id);
-            $oldOrder->status = 'c';
-            $oldOrder->save();
-            // dd($oldOrder);
-          }
-        }
       }
     }
 
