@@ -26,6 +26,7 @@ return [
     */
 
     'env' => env('APP_ENV', 'production'),
+    'deployment' => env('APP_DEPLOYMENT', 'BIB'),
 
     /*
     |--------------------------------------------------------------------------

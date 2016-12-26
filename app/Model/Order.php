@@ -107,12 +107,12 @@ class Order extends Model
 
   public function addAdditionalCosts($additional) {
     if(count($additional) > 0) {
-      $order->companies()->detach();
+      $this->companies()->detach();
 
       foreach($additional as $add) {
-        $order->companies()->attach([$add->company => [
-          'cost' => $add->cost,
-          'label' => $add->label
+        $this->companies()->attach([$add['company']['id'] => [
+          'cost' => $add['cost'],
+          'label' => $add['label']
         ]]);
       }
     }
