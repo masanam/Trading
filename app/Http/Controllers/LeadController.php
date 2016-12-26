@@ -60,6 +60,8 @@ class LeadController extends Controller
       if ($req->matching === 'alike') {
         $query->where('company_id', $ref->company_id)
           ->where('volume', $ref->volume)
+          ->where('lead_type', $ref->lead_type)
+          ->where('id', '<>', $ref->id)
           ->where(function ($q) use ($ref){
             return $q->whereRaw('\'' . $ref->laycan_start . '\' BETWEEN laycan_start AND laycan_end')
               ->orWhereRaw('laycan_start BETWEEN \'' . $ref->laycan_start . '\' AND \'' . $ref->laycan_end . '\'');
