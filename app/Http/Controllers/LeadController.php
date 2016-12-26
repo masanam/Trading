@@ -54,6 +54,12 @@ class LeadController extends Controller
     if($req->lead_id){
       $ref = Lead::where('id',$req->lead_id)->first();
 
+      // display alike at detail order
+      if ($req->matching === 'alike') {
+        unset($ref->id);
+        // dd($ref);die();
+      }
+
       // in case searching for product, replace the query
       $company_type = $ref->lead_type === 'b' ? 'c' : 's';
       if($req->matching === 'products'){
@@ -61,6 +67,7 @@ class LeadController extends Controller
           ->limit($req->limit);
       }
     }
+
     // choose lead type, for view lead recomend using right condition 
     if ($lead_type === 'buy' || $req->lead_type === 's') $query->where('lead_type', 'b');
     else if ($lead_type === 'sell' || $req->lead_type === 'b') $query->where('lead_type', 's');
@@ -95,6 +102,11 @@ class LeadController extends Controller
     else if($req->lead_id && $req->matching === 'products')
       foreach ($leads as $lead) {
         $lead->difference($ref, $company_type);
+      }
+
+    else if($req->lead_id && $req->matching === 'alike')
+      foreach ($leads as $lead) {
+        $lead->difference($ref);
       }
 
     // if this is not in-searching recommended product
