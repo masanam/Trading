@@ -94,18 +94,28 @@ class OrderController extends Controller
 
     if($req->status != '') $orders = $orders->where('status', $req->status);
 
-    if($req->possession == 'subordinates'){
+    if($req->category == 'subordinates'){
       $subs = Auth::user()->subordinates();
       $users = $subs->pluck('id')->all(); 
       $orders = $orders->whereIn('user_id', $users);
     }
-    else if($req->possession == 'associated'){
+    else if($req->category == 'associated'){
       $orders->whereHas('users', function($query){
         $query->where('user_id', Auth::user()->id);
       });
-    }else{
+    }
+    else if($req->category == 'approval'){
+      $orders->whereHas('approvals', function ($query){
+        $query->where('user_id', Auth::user()->id);
+      });
+    }
+    else{
       $orders->where('user_id', Auth::user()->id);
     }
+
+    //limit order
+    if (!$req->limit) $req->limit = 50;
+    $orders->limit($req->limit);
 
     //var_dump(DB::getQueryLog());
     $orders = $orders->get();

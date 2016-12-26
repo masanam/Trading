@@ -13,10 +13,11 @@
         <div class="row hidden-xs hidden-sm hidden-md">
           <div class="col-md-4">
           
-            <div class="box-tools btn-group btn-sm" ng-init="browse.possession = 'my'">
-              <label class="btn btn-default btn-sm" ng-model="browse.possession" uib-btn-radio="'my'">My Orders</label>
-              <label class="btn btn-default btn-sm" ng-model="browse.possession" uib-btn-radio="'subordinates'">Subordinates</label>
-              <label class="btn btn-default btn-sm" ng-model="browse.possession" uib-btn-radio="'associated'">Associated</label>
+            <div class="box-tools btn-group btn-sm" ng-init="browse.category = 'my'">
+              <label class="btn btn-default btn-sm" ng-model="browse.category" uib-btn-radio="'my'">My Orders</label>
+              <label class="btn btn-default btn-sm" ng-model="browse.category" uib-btn-radio="'subordinates'">Subordinates</label>
+              <label class="btn btn-default btn-sm" ng-model="browse.category" uib-btn-radio="'associated'">Associated</label>
+              <label class="btn btn-default btn-sm" ng-model="browse.category" uib-btn-radio="'approval'">Approval</label>
             </div>
           </div>
          
@@ -43,7 +44,7 @@
       <div class="row hidden-lg">
         <div class="form-group col-md-4 col-sm-4 col-xs-12">
             <label>Filter Type Order</label>
-            <select class="form-control" ng-init="browse.status = 'my'" ng-model="browse.possession" >
+            <select class="form-control" ng-init="browse.status = 'my'" ng-model="browse.category" >
               <option> --Selected-- </option>
               <option value="my">My Orders</option>
               <option value="subordinates">Subordinates</option>
