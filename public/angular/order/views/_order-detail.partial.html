@@ -72,7 +72,7 @@
               {{ display.buy.company.company_name }} ({{ order.buys.length }})<span class="caret"></span>
             </button>
             <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
-              <li role="menuitem" ng-repeat="buy in order.buys"><a ng-click="display.buy = buy; display.buy.index = $index">
+              <li role="menuitem" ng-repeat="buy in order.buys"><a ng-click="display.buy = buy; display.buy.index = $index;checkAlike('buy');">
               {{ buy.company.company_name }} : {{ buy.pivot.volume | number }}mt, US${{ buy.pivot.price | number }}
               </a></li>
             </ul>

@@ -54,6 +54,17 @@ class LeadController extends Controller
     if($req->lead_id){
       $ref = Lead::where('id',$req->lead_id)->first();
 
+      // display alike at detail order
+      // if this is an alike query, find leads with same properties
+      // directly return it
+      if ($req->matching === 'alike') {
+        $query->whereRaw('\'' . $ref->laycan_start . '\' BETWEEN laycan_start AND laycan_end')
+          ->where('company_id', $ref->company_id)
+          ->where('volume', $ref->volume);
+
+        return response()->json($query->get(), 200);
+      }
+
       // in case searching for product, replace the query
       $company_type = $ref->lead_type === 'b' ? 'c' : 's';
       if($req->matching === 'products'){
@@ -61,6 +72,7 @@ class LeadController extends Controller
           ->limit($req->limit);
       }
     }
+
     // choose lead type, for view lead recomend using right condition 
     if ($lead_type === 'buy' || $req->lead_type === 's') $query->where('lead_type', 'b');
     else if ($lead_type === 'sell' || $req->lead_type === 'b') $query->where('lead_type', 's');
