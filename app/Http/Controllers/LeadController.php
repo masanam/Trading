@@ -55,9 +55,14 @@ class LeadController extends Controller
       $ref = Lead::where('id',$req->lead_id)->first();
 
       // display alike at detail order
+      // if this is an alike query, find leads with same properties
+      // directly return it
       if ($req->matching === 'alike') {
-        unset($ref->id);
-        // dd($ref);die();
+        $query->whereRaw('\'' . $ref->laycan_start . '\' BETWEEN laycan_start AND laycan_end')
+          ->where('company_id', $ref->company_id)
+          ->where('volume', $ref->volume);
+
+        return response()->json($query->get(), 200);
       }
 
       // in case searching for product, replace the query
@@ -105,11 +110,6 @@ class LeadController extends Controller
     else if($req->lead_id && $req->matching === 'products')
       foreach ($leads as $lead) {
         $lead->difference($ref, $company_type);
-      }
-
-    else if($req->lead_id && $req->matching === 'alike')
-      foreach ($leads as $lead) {
-        $lead->difference($ref);
       }
 
     // if this is not in-searching recommended product
