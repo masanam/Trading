@@ -51,7 +51,7 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
     $scope.checkAlike = function (lead_type){
       Lead.query({ lead_id:$scope.display.buy.id, lead_type:lead_type, matching:'alike', order:true }, function(res){
         $scope.alike = res;
-      }) 
+      });
     };
 
     $scope.removeLead = function (lead) {
