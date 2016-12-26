@@ -82,8 +82,11 @@ class LeadController extends Controller
         ->groupBy('order_details.order_id')
         ->havingRaw('count(order_details.lead_id) = 1')
         ->where('leads.order_status', 's')->pluck('lead_id');
+      
 
       $query->orWhereIn('id', $available_leads);
+      if ($lead_type === 'buy' || $req->lead_type === 's') $query->where('lead_type', 'b');
+      else if ($lead_type === 'sell' || $req->lead_type === 'b') $query->where('lead_type', 's');
     }
 
     $leads = $query->limit($req->limit)->get();

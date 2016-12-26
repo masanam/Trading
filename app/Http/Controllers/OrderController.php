@@ -206,8 +206,8 @@ class OrderController extends Controller
         ]);
       }
     }
-
-    $order->addAditionalCosts($req->additional);
+    // dd($req->additional->company);
+    $order->addAdditionalCosts($req->additional);
 
     return response()->json($order, 200);
   }
@@ -296,7 +296,7 @@ class OrderController extends Controller
     $order->save();
 
     // Add new additional cost in the application
-    $order->addAditionalCosts($req->additional);
+    $order->addAdditionalCosts($req->additional);
 
     // If this is a delete operation, release all partials
     if($order->status == 'x'){
