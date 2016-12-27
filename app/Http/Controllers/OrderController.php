@@ -230,7 +230,7 @@ class OrderController extends Controller
         $order_id = DB::table('order_details')
                     ->where('lead_id', $item['id'])
                     ->where('order_id', '!=', $id)->pluck('order_id');
-        if(count($order_id) > 1) { $message = 'error'; continue; }
+        if(count($order_id) != 1) { $message = 'error'; continue; }
         else {
           $oldOrder = Order::with('leads')->find($order_id);
           if($oldOrder->leads->count() > 1) { $message = 'error'; continue; }
@@ -335,6 +335,7 @@ class OrderController extends Controller
     if(count($req->sells) > 0) {
       $message = $this->combineOrder($req->sells, $id);
     }
+
 
     $order->request_reason = $req->request_reason;
     $order->finalize_reason = $req->finalize_reason;
