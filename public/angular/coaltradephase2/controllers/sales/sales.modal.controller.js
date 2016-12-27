@@ -2,8 +2,7 @@
 
 angular.module('sales').controller('SalesModalController', ['$uibModalInstance', '$scope',
   function($uibModalInstance, $scope) {
-
-  	$scope.items = [];
+    $scope.items = [];
 
     // Add a Item to the list
     $scope.addItem = function () {

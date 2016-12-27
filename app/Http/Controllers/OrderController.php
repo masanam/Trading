@@ -230,7 +230,7 @@ class OrderController extends Controller
         $order_id = DB::table('order_details')
                     ->where('lead_id', $item['id'])
                     ->where('order_id', '!=', $id)->pluck('order_id');
-        if(count($order_id) > 1) { $message = 'error'; continue; }
+        if(count($order_id) != 1) { $message = 'error'; continue; }
         else {
           $oldOrder = Order::with('leads')->find($order_id);
           if($oldOrder->leads->count() > 1) { $message = 'error'; continue; }
@@ -372,14 +372,14 @@ class OrderController extends Controller
       }
     }
 
-    // if(count($req->buys) > 0 && !$req->in_house) {      
-    //   $message = $this->combineOrder($req->buys, $id);
-    // }
-    // dd();
+    if(count($req->buys) > 0 && !$req->in_house) {      
+      $message = $this->combineOrder($req->buys, $id);
+    }
+
     if(count($req->sells) > 0) {
-      // dd($req->sells);
       $message = $this->combineOrder($req->sells, $id);
     }
+
 
     $order->request_reason = $req->request_reason;
     $order->finalize_reason = $req->finalize_reason;
@@ -528,6 +528,11 @@ class OrderController extends Controller
     else if ($lead_type === 'sells') 
       if(count($order->buys) > 1 && !$req->notes && count($order->sells))
         return response()->json([ 'message' => 'Can\'t add more Sell on Multiple Buys' ], 400);
+
+    if($req->lead_id) {
+      $lead = Lead::with('Company','User','trader','used', 'Product')->find($req->lead_id);
+      $message = $this->combineOrder($lead, $id);
+    }
 
     // Update the data if pass all necessities
     $order->leads()->sync([ $req->lead_id => [
