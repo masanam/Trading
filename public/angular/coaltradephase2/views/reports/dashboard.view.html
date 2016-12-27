@@ -2,73 +2,172 @@
   
   <div class="row">
 
-    <span class="col-xs-3" style="padding-right: 0px !important; ">
-      <div class="box box-info" >
-        <div class="box-header with-border">
-          <h3 class="box-title"> <b>Reports</b></h3>
-        </div>
-        <div class="box-body">
-          <h5>Current Year Total Receivable</h5>
-          <h3 style="margin-top: 0px !important;">IDR 9,239,248,054</h3>
-          <h5 style="margin-top: 25px;">Current Month Total Receivable</h5>
-          <h3 style="margin-top: 0px !important;">IDR 3,924,034,089</h3>
-        </div>
+    <div class="box box-info" >
+      <div class="box-header with-border">
+        <h3 class="box-title"> <b>Sales Detail Monthly Reports (Data in Million)</b></h3>
       </div>
-    </span>
-
-    <span class="col-xs-9" style="padding-left: 0px !important;">
-      <div class="box box-info" >
-        <div class="box-header with-border">
-          <h3 class="box-title"> <b>Overdue</b></h3>
-        </div>
-        <div class="box-body row">
-          <div class="col-xs-6">
-            <h5>1-15 Days</h5>
-            <h3 style="margin-top: 0px !important;">IDR 1,391,405,039</h3>
-            <h5 style="margin-top: 25px;">16-30 Days</h5>
-            <h3 style="margin-top: 0px !important;">IDR 2,932,343,500</h3>
+      <div class="box-body">
+        <div style="padding: 0px !important; margin: 0px !important" class="row">
+          <div style="padding: 0px !important; margin: 0px !important" class="col-xs-8">
+            <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" chart-options="options" chart-dataset-override="datasetOverride" chart-click="onClick" style="padding: 20px; height: 475px;">
+            </canvas>  
           </div>
-          <div class="col-xs-6">
-            <h5>31-45 Days</h5>
-            <h3 style="margin-top: 0px !important;">IDR 682,834,034</h3>
-            <h5 style="margin-top: 25px;">Above 45 Days</h5>                
-            <h3 style="margin-top: 0px !important;">IDR 308,631,391</h3>              
-          </div>       
-        </div>
+          <div style="padding: 0px !important; margin: 0px !important" class="col-xs-4">
+            <h5><b>Total Sales</b></h5>
+            <h3 style="margin-top: 0px !important;">IDR 9,239,248,054</h3>
+            <h5 style="margin-top: 25px;"><b>Top Customer</b></h5>            
+            <table class="table table-striped">
+              <tr>
+                <td>1</td>
+                <td>Fallon Hutchinson</td>
+                <td>IDR 902,248,054</td>                
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Roary Chapman</td>
+                <td>IDR 689,248,054</td>                
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>Sigourney Porter</td>
+                <td>IDR 812,248,054</td>                
+              </tr>
+            </table>
+            <h5 style="margin-top: 25px;"><b>Top Trader</b></h5>
+            <table class="table table-striped">
+              <tr>
+                <td>1</td>
+                <td>Angelica Morrison</td>
+                <td>IDR 902,248,054</td>                
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Kyle Guthrie</td>
+                <td>IDR 689,248,054</td>                
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>Amaya Zimmerman</td>
+                <td>IDR 812,248,054</td>                
+              </tr>
+            </table>
+            <a ui-sref="reports.sales-index"><button class="btn btn-primary btn-block btn-flat">View More Details</button> </a>
+          </div>
+        </div>       
       </div>
-    </span>   
+    </div>
+
+    <div class="box box-info" >
+      <div class="box-header with-border">
+        <h3 class="box-title"> <b>Expense Details Monthly Reports (Data in Million)</b></h3>
+      </div>
+      <div class="box-body">
+        <div style="padding: 0px !important; margin: 0px !important" class="row">
+          <div style="padding: 0px !important; margin: 0px !important" class="col-xs-8">
+            <canvas id="line" class="chart chart-line" chart-data="data1" chart-labels="labels1" chart-options="options1" chart-dataset-override="datasetOverride" chart-click="onClick" style="padding: 20px; height: 475px;">
+          </canvas> 
+          </div>
+          <div style="padding: 0px !important; margin: 0px !important" class="col-xs-4">
+            <h5><b>Total Expense</b></h5>
+            <h3 style="margin-top: 0px !important;">IDR 9,239,248,054</h3>
+            <h5 style="margin-top: 25px;"><b>Biggest Expense</b></h5>            
+            <table class="table table-striped">
+              <tr>
+                <td>1</td>
+                <td>CONTRACT0012</td>
+                <td>IDR 789,923,800</td>               
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>CONTRACT0023</td>
+                <td>IDR 605,000,000</td>                
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>CONTRACT0034</td>
+                <td>IDR 500,000,000</td>              
+              </tr>
+            </table>
+            <h5 style="margin-top: 25px;"><b>Smallest Expense</b></h5>
+            <table class="table table-striped">
+              <tr>
+                <td>1</td>
+                <td>CONTRACT0032</td>
+                <td>IDR 489,923,800</td>               
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>CONTRACT0029</td>
+                <td>IDR 405,000,000</td>                
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>CONTRACT0018</td>
+                <td>IDR 400,000,000</td>                
+              </tr>
+            </table>
+            <a ui-sref="reports.expense-index"><button class="btn btn-primary btn-block btn-flat">View More Details</button> </a>
+          </div>
+        </div>       
+      </div>
+    </div>
+
+    <div class="box box-info" >
+      <div class="box-header with-border">
+        <h3 class="box-title"> <b>Customer Balance Monthly Reports (Data in Million)</b></h3>
+      </div>
+      <div class="box-body">
+        <div style="padding: 0px !important; margin: 0px !important" class="row">
+          <div style="padding: 0px !important; margin: 0px !important" class="col-xs-8">
+            <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" chart-options="options" chart-dataset-override="datasetOverride" chart-click="onClick" style="padding: 20px; height: 475px;">
+            </canvas>  
+          </div>
+          <div style="padding: 0px !important; margin: 0px !important" class="col-xs-4">
+            <h5><b>Total Balance</b></h5>
+            <h3 style="margin-top: 0px !important;">IDR 9,239,248,054</h3>
+            <h5 style="margin-top: 25px;"><b>Biggest Balance</b></h5>
+            <table class="table table-striped">
+              <tr>
+                <td>1</td>
+                <td>PT. Goff Wood</td>
+                <td>IDR 789,923,800</td>               
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>PT. Griffith</td>
+                <td>IDR 605,000,000</td>                
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>PT. Sherman</td>
+                <td>IDR 500,000,000</td>              
+              </tr>
+            </table>
+            <h5 style="margin-top: 25px;"><b>Smallest Balance</b></h5>
+            <table class="table table-striped">
+              <tr>
+                <td>1</td>
+                <td>PT. Mills</td>
+                <td>IDR 489,923,800</td>               
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>PT. Holloway</td>
+                <td>IDR 405,000,000</td>               
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>PT. Jennings</td>    
+                <td>IDR 400,000,000</td>                
+              </tr>
+            </table>
+            <a ui-sref="reports.balance-index"><button class="btn btn-primary btn-block btn-flat">View More Details</button> </a>
+          </div>
+        </div>       
+      </div>
+    </div>
 
   </div>
-
-  <div class="row">
-
-    <span class="col-xs-6" style="padding-right: 0px !important; ">
-      <div class="box box-info">
-        <div class="box-header with-border">
-          <h3 class="box-title"> <b>Current Year Recievable Progress (Data in Million)</b></h3>
-        </div>
-        <div class="box-body">
-          <canvas id="line" class="chart chart-line" chart-data="data1" chart-labels="labels1" chart-options="options1" chart-dataset-override="datasetOverride" chart-click="onClick" style="padding: 20px;">
-          </canvas>                   
-        </div>
-      </div>
-    </span>
-
-    <span class="col-xs-6" style="padding-left: 0px !important;">
-      <div class="box box-info">
-        <div class="box-header with-border">
-          <h3 class="box-title"> <b>Yearly Recievable Progress (Data in Million)</b></h3>
-        </div>
-        <div class="box-body">
-          <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" chart-options="options" chart-dataset-override="datasetOverride" chart-click="onClick" style="padding: 20px;">
-          </canvas>                   
-        </div>
-      </div>
-    </span>   
-
-  </div>   
-
-  <a ui-sref="reports.index"><button class="btn btn-primary btn-block btn-flat">View All Recievable History </button> </a>
 
 </section>
 
