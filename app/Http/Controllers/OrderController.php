@@ -179,7 +179,7 @@ class OrderController extends Controller
     if(count($req->buys) > 0 && !$req->in_house){
       foreach($req->buys as $buy){
         $order->buys()->attach([ $buy['id'] => $buy['pivot'] ]);
-        Lead::find($buy['id'])->reconcile();
+        // Lead::find($buy['id'])->reconcile();
 
         // add negotiation log to the staged lead
         $order_detail_id = $order->buys()->find($buy['id'])->pivot->id;
@@ -301,10 +301,54 @@ class OrderController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
+
+  private function checkAvailable($order, $lead = null){
+    if($lead){
+      $item = Lead::with('ordersSpecific','orders')->find($lead->lead_id);
+      // dd(count($item->orders));
+      if(count($item->orders)>0){
+        foreach($item->orders as $o) {
+          $volume = $o->pivot->volume;
+        }
+      }
+      else $volume = $lead->volume;
+
+      $item->used = 0;
+      foreach ($item->ordersSpecific as $used) {
+        $item->used += $used->pivot->volume;
+      }
+
+      if ($volume > ($item->volume - $item->used)) 
+        $order->avaliable_volume = 'error';
+    }else{
+      foreach ($order->buys as $buy) {
+        $buy->used = 0;
+        foreach ($buy->ordersSpecific as $used) {
+          $buy->used += $used->pivot->volume;
+        }
+        if ($buy->pivot->volume > ($buy->volume - $buy->used)) 
+          $order->avaliable_volume = 'error';
+      }
+      foreach ($order->sells as $sell) {
+        $sell->used = 0;
+        foreach ($sell->ordersSpecific as $used) {
+          $sell->used += $used->pivot->volume;
+        }
+        if ($sell->pivot->volume > ($sell->volume - $sell->used)) 
+          $order->avaliable_volume = 'error';
+      }
+    }
+  }
+
   public function update(Request $req, $id)
   {
-    $order = Order::find($id);
+    $order = Order::with('buys','sells','buys.ordersSpecific','sells.ordersSpecific')->find($id);
 
+    // Check available volume
+    $this->checkAvailable($order);
+    if ($order->avaliable_volume === 'error') {
+      return response()->json([ 'message' => 'Volume not avaliable' ], 400);
+    }
     // Validations
     if(!$req) return response()->json([ 'message' => 'Bad Request' ], 400);
     if (!$order) return response()->json([ 'message' => 'Not found' ] ,404);
@@ -461,7 +505,14 @@ class OrderController extends Controller
    */
   public function stage(Request $req, $id)
   {
-    $order = Order::with('buys', 'sells', 'approvals', 'trader')->find($id);
+    $order = Order::with('buys', 'sells', 'approvals', 'trader','buys.ordersSpecific','sells.ordersSpecific')->find($id);
+
+    // Check available volume
+    $this->checkAvailable($order, $req);
+    if ($order->avaliable_volume === 'error') {
+      return response()->json([ 'message' => 'Volume not avaliable' ], 400);
+    }
+
     $lead_type = $req->lead_type;
     $this->authorize('update', $order);
 
