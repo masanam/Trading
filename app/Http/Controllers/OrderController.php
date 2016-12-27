@@ -105,12 +105,12 @@ class OrderController extends Controller
       });
     }
     else if($req->category == 'approval'){
-      $orders->whereHas('approvals', function ($query){
-        $query->where('id', Auth::user()->id);
+      $orders->whereHas('approvals', function ($query) use ($req){
+        $query->where('users.id', Auth::user()->id);
 
-        // if($req->approval_status){
-        //   $query->where('')
-        // }
+        if($req->approval_status){
+          $query->where('order_approvals.status', $req->approval_status);
+        }
       });
     }
     else{
