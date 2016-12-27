@@ -164,14 +164,6 @@ class OrderController extends Controller
       }
     }
 
-    if(count($req->buys) > 0 && !$req->in_house) {      
-      $this->combineOrder($req->buys);
-    }
-
-    if(count($req->sells) > 0) {
-      $this->combineOrder($req->sells);
-    }
-
     if(!$req) {
       return response()->json([
         'message' => 'Bad Request'
@@ -230,19 +222,35 @@ class OrderController extends Controller
     return response()->json($order, 200);
   }
 
-  private function combineOrder($items) {
+  private function combineOrder($items, $id) {
+    $message = 'error';
     foreach($items as $item){
-      if($item['order_status'] != 'p' && $item['order_status'] != 's') continue;
+      if($item['order_status'] != 'p' && $item['order_status'] != 's') { $message = 'error'; continue; }
       else {
         $order_id = DB::table('order_details')
-                    ->where('lead_id', $item['id'])->pluck('order_id');
-        $oldOrders = Order::findMany($order_id);
-        foreach($oldOrders as $oldOrder) {
-          if($oldOrder->status == 'a') $oldOrder->status = 'c';
-          $oldOrder->save();
+                    ->where('lead_id', $item['id'])
+                    ->where('order_id', '!=', $id)->pluck('order_id');
+        if(count($order_id) != 1) { $message = 'error'; continue; }
+        else {
+          $oldOrder = Order::with('leads')->find($order_id);
+          if($oldOrder->leads->count() > 1) { $message = 'error'; continue; }
+          else {
+            if($oldOrder->status == 'a') {
+              foreach($oldOrder->leads as $lead) {
+                if($lead->pivot['volume'] == $item['pivot']['volume']) {
+                  $oldOrder->status = 'c';
+                  $oldOrder->save();
+                  $message = 'success';
+                }
+                else { $message = 'error'; continue; }
+              }
+            }
+            else { $message = 'error'; continue; }
+          }
         }
       }
     }
+    return $message;
   }
 
   /**
@@ -319,6 +327,15 @@ class OrderController extends Controller
         Lead::find($sell['id'])->reconcile();
       }
     }
+
+    if(count($req->buys) > 0 && !$req->in_house) {      
+      $message = $this->combineOrder($req->buys, $id);
+    }
+
+    if(count($req->sells) > 0) {
+      $message = $this->combineOrder($req->sells, $id);
+    }
+
 
     $order->request_reason = $req->request_reason;
     $order->finalize_reason = $req->finalize_reason;
@@ -460,6 +477,11 @@ class OrderController extends Controller
     else if ($lead_type === 'sells') 
       if(count($order->buys) > 1 && !$req->notes && count($order->sells))
         return response()->json([ 'message' => 'Can\'t add more Sell on Multiple Buys' ], 400);
+
+    if($req->lead_id) {
+      $lead = Lead::with('Company','User','trader','used', 'Product')->find($req->lead_id);
+      $message = $this->combineOrder($lead, $id);
+    }
 
     // Update the data if pass all necessities
     $order->leads()->sync([ $req->lead_id => [

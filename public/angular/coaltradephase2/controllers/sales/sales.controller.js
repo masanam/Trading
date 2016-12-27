@@ -14,7 +14,7 @@ angular.module('sales').controller('SalesController', ['$scope', '$stateParams',
     $scope.openaddveselModal = function () {
       var modalInstance = $uibModal.open({
         windowClass: 'xl-modal',
-        templateUrl: './angular/coaltradephase2/views/sales/add_vesel.html',
+        templateUrl: './angular/coaltradephase2/views/sales/modal.add.vesel.html',
         controller: 'SalesModalController',
         scope: $scope,
       });

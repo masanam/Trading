@@ -1,13 +1,17 @@
 'use strict';
 
-angular.module('usermanagement').controller('UserManagementController', ['$scope', '$stateParams', '$state', 
-  function($scope, $stateParams, $state) {
+angular.module('usermanagement').controller('UserManagementController', ['$scope', '$stateParams', '$state','$uibModal', 
+  function($scope, $stateParams, $state, $uibModal) {
 
-    $scope.onClick = function (points, evt) {
-      console.log(points, evt);
+  	$scope.openNew = function () {
+      var modalInstance = $uibModal.open({
+        windowClass: 'xl-modal',
+        templateUrl: './angular/coaltradephase2/views/usermanagement/create.modal.view.html',
+        controller: 'UserManagementModalController',
+        scope: $scope,
+      });
     };
-
-    $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }];
+   
     
   }
 ]);

@@ -19,7 +19,7 @@ angular.module('sales').controller('SalesModalController', ['$uibModalInstance',
       $scope.items.splice(index, 1);
     };
 
-    $scope.cancel = function () {
+    $scope.close = function () {
       $uibModalInstance.dismiss('cancel');
     };
   }
