@@ -1,0 +1,28 @@
+<div class="form-group">
+  <label for="name">Username:</label>
+  <input type="text" class="form-control" id="username" ng-model="usermanagement.username" required>
+</div>
+
+<div class="form-group">
+  <label for="email">Email:</label>
+  <input type="text" class="form-control" id="email" ng-model="usermanagement.email" required>
+</div>
+
+<div class="form-group">
+  <label for="phone">Role:</label>
+  <select class="form-control" id="sel1">
+            <option>-- Role ---</option>
+            <option> Trader </option>
+            <option> Sales</option>
+            <option> Scheduler</option>
+            <option> Pre Shipment</option>
+            <option> Post Shipment</option>
+            <option> Tresury</option>
+          </select>
+</div>
+
+<div class="form-group">
+  <label ng-show="error" class="alert alert-danger">{{error}}</label>
+</div>
+
+<button type="submit" class="btn btn-success pull-right">Submit</button>

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('scheduler').controller('ScheduleModalController', ['$uibModalInstance', '$scope',
+angular.module('usermanagement').controller('UserManagementModalController', ['$uibModalInstance', '$scope',
   function($uibModalInstance, $scope) {
 
     $scope.close = function () {

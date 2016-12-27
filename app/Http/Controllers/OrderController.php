@@ -105,8 +105,12 @@ class OrderController extends Controller
       });
     }
     else if($req->category == 'approval'){
-      $orders->whereHas('approvals', function ($query){
-        $query->where('user_id', Auth::user()->id);
+      $orders->whereHas('approvals', function ($query) use ($req){
+        $query->where('users.id', Auth::user()->id);
+
+        if($req->approval_status){
+          $query->where('order_approvals.status', $req->approval_status);
+        }
       });
     }
     else{
@@ -446,7 +450,7 @@ class OrderController extends Controller
       foreach($actings as $actings) $order->approvals()->sync([ $acting->id => [ 'status' => $status ] ], false);
     }
 
-    return $this->show($id);
+    return $this->show($id, $req);
   }
 
   /**
@@ -499,7 +503,7 @@ class OrderController extends Controller
     ]);
     $negotiation->save();
 
-    return $this->show($id);
+    return $this->show($id, $req);
   }
 
   /**
@@ -518,6 +522,6 @@ class OrderController extends Controller
     // when details are changed, reset all approval
     $order->resetApproval();
 
-    return $this->show($id);
+    return $this->show($id, $req);
   }
 }

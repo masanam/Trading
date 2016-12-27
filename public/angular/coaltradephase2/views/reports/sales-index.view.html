@@ -1,0 +1,114 @@
+<section ng-controller="ReportsController" class="content">
+
+  <div class="col-lg-12">
+    <div class="box box-info">
+      <div class="box-header with-border row">
+        <div class="col-lg-5">
+          <h3 class="box-title" style="padding-top: 10px;"><b>Balance Summary (Data in Million)</b></h3>          
+        </div>
+        <div class="col-lg-3">
+          <div class="form-group">
+            <select class="form-control" id="sel1">
+              <option> Sales by Customer</option>
+              <option> Sales by Trader</option>
+              <option> Sales by Contract</option>
+              <option> Sales by Suplier</option>
+              <option> Sales by Tonage</option>              
+              <option> All Balance</option>              
+            </select>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <input type="text" class="form-control" id="usr" placeholder="   Search ...">
+        </div>     
+      </div>
+      
+      <div class="box-body">
+        <dIv class="row">
+          <div class="col-lg-5">
+            <h5 class="box-title" style="text-align: center; margin-top: 15px;"><b>Total Balance</b></h5>       
+<!--             <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" chart-options="options" chart-dataset-override="datasetOverride" chart-click="onClick" ></canvas> -->
+            <canvas id="base" class="chart-horizontal-bar"
+              chart-data="data2" chart-labels="labels2" style="padding: 10px; ">
+            </canvas> 
+          </div>
+          <div class="col-lg-7">  
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th style="vertical-align: middle;"> Customer</th>               
+                    <th style="vertical-align: middle;"> Trader</th>
+                    <th style="vertical-align: middle;"> Sales Date</th>
+                    <th style="vertical-align: middle;"> Contract ID</th>
+                    <th style="vertical-align: middle;"> Suplier</th>
+                    <th style="vertical-align: middle;"> Volume Tonage</th>
+                    <th style="vertical-align: middle;"> Amount </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>PT. Goff Wood</td>
+                    <td>Fallon Hutchinson</td>
+                    <td>30 Nov 2016</td>
+                    <td>CONTRACT012</td>                  
+                    <td>PT. Jennings</td>                  
+                    <td>4837</td>
+                    <td>IDR 789,923,800</td>
+                  </tr>
+                  <tr>
+                    <td>PT. Griffith</td>
+                    <td>Roary Chapman</td>
+                    <td>21 Nov 2016</td>
+                    <td>CONTRACT053</td>                  
+                    <td>PT. Holloway</td>              
+                    <td>3421</td>
+                    <td>IDR 605,000,000</td>
+                  </tr>
+                  <tr>
+                    <td>PT. Sherman</td>
+                    <td>Sigourney Porter</td>
+                    <td>16 Nov 2016</td>
+                    <td>CONTRACT021</td>                  
+                    <td>PT. Mills</td>    
+                    <td>3292</td>
+                    <td>IDR 500,000,000</td>
+                  </tr>
+                  <tr>
+                    <td>PT. Mills</td>
+                    <td>Angelica Morrison</td>
+                    <td>30 Nov 2016</td>
+                    <td>CONTRACT011</td>                  
+                    <td>PT. Sherman</td>                  
+                    <td>2183</td>
+                    <td>IDR 489,923,800</td>
+                  </tr>
+                  <tr>
+                    <td>PT. Holloway</td>
+                    <td>Kyle Guthrie</td>
+                    <td>21 Nov 2016</td>
+                    <td>CONTRACT052</td>                  
+                    <td>PT. Griffith</td>              
+                    <td>2531</td>
+                    <td>IDR 405,000,000</td>
+                  </tr>
+                  <tr>
+                    <td>PT. Jennings</td>
+                    <td>Amaya Zimmerman</td>
+                    <td>16 Nov 2016</td>
+                    <td>CONTRACT025</td>                  
+                    <td>PT. Goff Wood</td>    
+                    <td>2019</td>
+                    <td>IDR 400,000,000</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>          
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
