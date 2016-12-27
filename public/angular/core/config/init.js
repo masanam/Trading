@@ -36,3 +36,7 @@ ApplicationConfiguration.registerModule('scheduler');
 ApplicationConfiguration.registerModule('preshipment');
 ApplicationConfiguration.registerModule('postshipment');
 ApplicationConfiguration.registerModule('treasury');
+
+ApplicationConfiguration.registerModule('contract');
+ApplicationConfiguration.registerModule('reports');
+ApplicationConfiguration.registerModule('usermanagement');
