@@ -160,6 +160,14 @@ class OrderController extends Controller
       }
     }
 
+    if(count($req->buys) > 0 && !$req->in_house) {      
+      $this->combineOrder($req->buys);
+    }
+
+    if(count($req->sells) > 0) {
+      $this->combineOrder($req->sells);
+    }
+
     if(!$req) {
       return response()->json([
         'message' => 'Bad Request'
@@ -213,43 +221,24 @@ class OrderController extends Controller
       }
     }
 
-    if(count($req->buys) > 0 && !$req->in_house) {      
-      foreach($req->buys as $buy){
-        if($buy['order_status'] != 's') continue;
-        else {
-          $order_id = DB::table('order_details')
-          ->where('lead_id', $buy['id'])->pluck('order_id');
-          if(count($order_id) > 1) continue;
-          else {
-            $oldOrder = Order::find($order_id);
-            $oldOrder->status = 'c';
-            $oldOrder->save();
-            // dd($oldOrder);
-          }
-        }
-      }
-    }
-
-    if(count($req->sells) > 0) {
-      foreach($req->sells as $sell){
-        if($sell['order_status'] != 's') continue;
-        else {
-          $order_id = DB::table('order_details')
-          ->where('lead_id', $sell['id'])->pluck('order_id');
-          if(count($order_id) > 1) continue;
-          else {
-            $oldOrder = Order::find($order_id);
-            $oldOrder->status = 'c';
-            $oldOrder->save();
-            // dd($oldOrder);
-          }
-        }
-      }
-    }
-
     $order->addAdditionalCosts($req->additional);
 
     return response()->json($order, 200);
+  }
+
+  private function combineOrder($items) {
+    foreach($items as $item){
+      if($item['order_status'] != 'p' && $item['order_status'] != 's') continue;
+      else {
+        $order_id = DB::table('order_details')
+                    ->where('lead_id', $item['id'])->pluck('order_id');
+        $oldOrders = Order::findMany($order_id);
+        foreach($oldOrders as $oldOrder) {
+          if($oldOrder->status == 'a') $oldOrder->status = 'c';
+          $oldOrder->save();
+        }
+      }
+    }
   }
 
   /**
