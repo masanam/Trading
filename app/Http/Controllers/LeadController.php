@@ -88,11 +88,17 @@ class LeadController extends Controller
     if($req->order) {
       $available_leads = DB::table('order_details')
         ->join('leads', 'leads.id', 'order_details.lead_id')
+        ->join('orders', 'orders.id', 'order_details.order_id')
         ->select('order_details.lead_id', 'order_details.order_id')
-        ->groupBy('order_details.order_id')
-        ->havingRaw('count(order_details.lead_id) = 1')
-        ->where('leads.order_status', 's')->pluck('lead_id');
-      
+        ->where('leads.order_status', 's')
+        ->orWhere('leads.order_status', 'p')
+        ->where('orders.status', 'a')
+        ->join('order_details as od1', 'od1.lead_id', 'order_details.lead_id')
+        ->groupBy('od1.lead_id')
+        ->havingRaw('count(od1.order_id) = 1')
+        ->join('order_details as od2', 'od2.order_id', 'order_details.order_id')
+        ->groupBy('od2.order_id')
+        ->havingRaw('count(od2.lead_id) = 1')->pluck('lead_id');
 
       $query->orWhereIn('id', $available_leads);
       if ($lead_type === 'buy' || $req->lead_type === 's') $query->where('lead_type', 'b');
@@ -130,22 +136,6 @@ class LeadController extends Controller
 
     return response()->json($leads, 200);
   }
-
-  // Check if an order only have one leads in them
-  // public function isSingleLeadInOrder($query) {
-  //   $sum = 0;
-  //   // dd($query);
-  //   foreach($query as $key => $q) {
-  //     $sum = 0;
-  //     foreach($q->orders as $order) {
-  //       if($sum > 2) { $sum=0; break; }
-  //       $sum += Order::find($order->id)->countLeads();
-  //     }
-  //     if($sum >= 2) { array_except($query, $key); continue; }
-  //   }
-
-  //   return $query;
-  // }
 
   /**
   * Store a newly created resource in storage.
