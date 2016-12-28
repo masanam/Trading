@@ -109,7 +109,7 @@ class OrderController extends Controller
         $query->where('users.id', Auth::user()->id);
 
         if($req->approval_status){
-          $query->where('order_approvals.status', $req->approval_status);
+          $query->where('order_approvals.status', substr($req->approval_status,0,1));
         }
       });
     }
