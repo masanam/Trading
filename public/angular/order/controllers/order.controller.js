@@ -40,7 +40,7 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
             }
           }
         }, function() {
-          $log.info('Modal dismissed at: ' + new Date());
+          console.log('Modal dismissed at: ' + new Date());
         });
       } else {
         $scope.order.$remove(function () {
