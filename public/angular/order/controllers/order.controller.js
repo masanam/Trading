@@ -11,14 +11,37 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
     // Remove existing order
     $scope.remove = function (order) {
       if (order) {
-        order.$remove();
-        $scope.orders.splice($scope.orders.indexOf(order), 1);
+        var modalInstance = $uibModal.open({
+          windowClass: 'xl-modal',
+          templateUrl: './angular/dashboard/views/remove-confirm.modal.html',
+          controller: function($scope, $uibModalInstance) {
+            console.log('Modal is opened');
 
-        for (var i in $scope.indices) {
-          if ($scope.indices[i] === order) {
-            $scope.indices.splice(i, 1);
+            $scope.ok = function () {
+              $uibModalInstance.close('true');
+            };
+
+            $scope.cancel = function () {
+              $uibModalInstance.dismiss('cancel');
+            };
+          },
+          scope: $scope,
+        });
+
+        modalInstance.result.then(function(ok) {
+          if(ok === 'true') {
+            order.$remove();
+            $scope.orders.splice($scope.orders.indexOf(order), 1);
+
+            for (var i in $scope.indices) {
+              if ($scope.indices[i] === order) {
+                $scope.indices.splice(i, 1);
+              }
+            }
           }
-        }
+        }, function() {
+          $log.info('Modal dismissed at: ' + new Date());
+        });
       } else {
         $scope.order.$remove(function () {
           $state.go('order.list');

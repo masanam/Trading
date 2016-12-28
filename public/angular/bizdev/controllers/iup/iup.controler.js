@@ -1,7 +1,17 @@
 'use strict';
 
-angular.module('bizdev').controller('IupController', ['$scope', '$stateParams', 'Authentication', '$location','$uibModal', 
-  function($scope, $stateParams, Authentication, $location, $uibModal) {
+angular.module('bizdev').controller('IupController', ['$scope', '$stateParams', 'Authentication', '$location','$uibModal', 'Concession',
+  function($scope, $stateParams, Authentication, $location, $uibModal, Concession) {
+
+    $scope.find = function() {
+      $scope.concessions = Concession.query({ q: $stateParams.keyword, type:$scope.searchType }, function(res){
+        console.log(res);
+        $scope.status = ['Approve', 'Declined', 'Pending'];
+        for (var i = 0; i < res.length; i++) {
+          $scope.concessions[i].rand = $scope.status[Math.floor(Math.random() * $scope.status.length)];
+        }
+      });
+    };
 
     $scope.add = function () {
       var modalInstance = $uibModal.open({
