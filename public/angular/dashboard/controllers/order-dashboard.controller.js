@@ -13,6 +13,23 @@ angular.module('dashboard').controller('OrderDashboardController', ['$scope', 'I
       $scope.orders = Order.query({ possession: possession, status: 'p' });
     };
 
+    $scope.remove = function (order) {
+      if (order) {
+        order.$remove();
+        $scope.orders[$scope.orders.indexOf(order)].status = 'x';
+
+        for (var i in $scope.indices) {
+          if ($scope.indices[i] === order) {
+            $scope.indices.splice(i, 1);
+          }
+        }
+      } else {
+        $scope.order.$remove(function () {
+          $state.go('order.list');
+        });
+      }
+    };
+
     $scope.funnel=function () {
       var order_funnel = Order.get({ funnel:true }, function(res){
         $scope.funnel=res;
