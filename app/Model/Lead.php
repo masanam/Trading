@@ -127,6 +127,12 @@ class Lead extends Model
             ->withPivot('id', 'price', 'volume', 'payment_term', 'trading_term');
     }
 
+    public function ordersSpecific($status = 'd') {
+        return $this->belongsToMany(Order::class, 'order_details')
+            ->where('status','!=',$status)
+            ->withPivot('id', 'price', 'volume', 'payment_term', 'trading_term');
+    }
+
     public function countInOrders() {
         return $this->belongsToMany(Order::class, 'order_details')
                     // ->where('lead_id', $id)

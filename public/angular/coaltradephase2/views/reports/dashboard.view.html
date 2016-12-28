@@ -8,50 +8,56 @@
       </div>
       <div class="box-body">
         <div style="padding: 0px !important; margin: 0px !important" class="row">
-          <div style="padding: 0px !important; margin: 0px !important" class="col-xs-8">
-            <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" chart-options="options" chart-dataset-override="datasetOverride" chart-click="onClick" style="padding: 20px; height: 475px;">
+          <div style="padding: 0px !important; margin: 0px !important" class="col-xs-6">
+            <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" chart-options="options" chart-dataset-override="datasetOverride" chart-click="onClick" style="padding: 20px;">
             </canvas>  
           </div>
-          <div style="padding: 0px !important; margin: 0px !important" class="col-xs-4">
+          <div style="padding: 0px !important;" class="col-xs-6">
             <h5><b>Total Sales</b></h5>
             <h3 style="margin-top: 0px !important;">IDR 9,239,248,054</h3>
-            <h5 style="margin-top: 25px;"><b>Top Customer</b></h5>            
-            <table class="table table-striped">
-              <tr>
-                <td>1</td>
-                <td>Fallon Hutchinson</td>
-                <td>IDR 902,248,054</td>                
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>Roary Chapman</td>
-                <td>IDR 689,248,054</td>                
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>Sigourney Porter</td>
-                <td>IDR 812,248,054</td>                
-              </tr>
-            </table>
-            <h5 style="margin-top: 25px;"><b>Top Trader</b></h5>
-            <table class="table table-striped">
-              <tr>
-                <td>1</td>
-                <td>Angelica Morrison</td>
-                <td>IDR 902,248,054</td>                
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>Kyle Guthrie</td>
-                <td>IDR 689,248,054</td>                
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>Amaya Zimmerman</td>
-                <td>IDR 812,248,054</td>                
-              </tr>
-            </table>
-            <a ui-sref="reports.sales-index"><button class="btn btn-primary btn-block btn-flat">View More Details</button> </a>
+            <div class="row">
+              <span class="col-xs-6">
+                <h5 style="margin-top: 25px;"><b>Top Customer</b></h5>
+                <table class="table table-striped">
+                  <tr>
+                    <td>1</td>
+                    <td>Fallon Hutchinson</td>
+                    <td>IDR 902,248,054</td>                
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Roary Chapman</td>
+                    <td>IDR 689,248,054</td>                
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td>Sigourney Porter</td>
+                    <td>IDR 812,248,054</td>                
+                  </tr>
+                </table>
+              </span>
+              <span class="col-xs-6">
+                <h5 style="margin-top: 25px;"><b>Top Trader</b></h5>
+                <table class="table table-striped">
+                  <tr>
+                    <td>1</td>
+                    <td>Angelica Morrison</td>
+                    <td>IDR 902,248,054</td>                
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Kyle Guthrie</td>
+                    <td>IDR 689,248,054</td>                
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td>Amaya Zimman</td>
+                    <td>IDR 812,248,054</td>                
+                  </tr>
+                </table>
+              </span>              
+            </div>
+            <a ui-sref="reports.sales-index"><button class="btn btn-primary btn-block btn-flat">View More Details</button></a>
           </div>
         </div>       
       </div>
@@ -63,51 +69,57 @@
       </div>
       <div class="box-body">
         <div style="padding: 0px !important; margin: 0px !important" class="row">
-          <div style="padding: 0px !important; margin: 0px !important" class="col-xs-8">
-            <canvas id="line" class="chart chart-line" chart-data="data1" chart-labels="labels1" chart-options="options1" chart-dataset-override="datasetOverride" chart-click="onClick" style="padding: 20px; height: 475px;">
-          </canvas> 
+          <div style="padding: 0px !important; margin: 0px !important" class="col-xs-6">
+            <canvas id="line" class="chart chart-line" chart-data="data1" chart-labels="labels1" chart-options="options1" chart-dataset-override="datasetOverride" chart-click="onClick" style="padding: 20px;">
+            </canvas>
           </div>
-          <div style="padding: 0px !important; margin: 0px !important" class="col-xs-4">
+          <div style="padding: 0px !important;" class="col-xs-6">
             <h5><b>Total Expense</b></h5>
             <h3 style="margin-top: 0px !important;">IDR 9,239,248,054</h3>
-            <h5 style="margin-top: 25px;"><b>Biggest Expense</b></h5>            
-            <table class="table table-striped">
-              <tr>
-                <td>1</td>
-                <td>CONTRACT0012</td>
-                <td>IDR 789,923,800</td>               
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>CONTRACT0023</td>
-                <td>IDR 605,000,000</td>                
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>CONTRACT0034</td>
-                <td>IDR 500,000,000</td>              
-              </tr>
-            </table>
-            <h5 style="margin-top: 25px;"><b>Smallest Expense</b></h5>
-            <table class="table table-striped">
-              <tr>
-                <td>1</td>
-                <td>CONTRACT0032</td>
-                <td>IDR 489,923,800</td>               
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>CONTRACT0029</td>
-                <td>IDR 405,000,000</td>                
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>CONTRACT0018</td>
-                <td>IDR 400,000,000</td>                
-              </tr>
-            </table>
-            <a ui-sref="reports.expense-index"><button class="btn btn-primary btn-block btn-flat">View More Details</button> </a>
-          </div>
+            <div class="row">
+              <span class="col-xs-6">
+                <h5 style="margin-top: 25px;"><b>Biggest Expense</b></h5>
+                <table class="table table-striped">
+                  <tr>
+                    <td>1</td>
+                    <td>CONTRACT0012</td>
+                    <td>IDR 789,923,800</td>               
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>CONTRACT0023</td>
+                    <td>IDR 605,000,000</td>                
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td>CONTRACT0034</td>
+                    <td>IDR 500,000,000</td>              
+                  </tr>
+                </table>
+              </span>
+              <span class="col-xs-6">
+                <h5 style="margin-top: 25px;"><b>Smallest Expense</b></h5>
+                <table class="table table-striped">
+                  <tr>
+                    <td>1</td>
+                    <td>CONTRACT0032</td>
+                    <td>IDR 489,923,800</td>               
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>CONTRACT0029</td>
+                    <td>IDR 405,000,000</td>                
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td>CONTRACT0018</td>
+                    <td>IDR 400,000,000</td>                
+                  </tr>
+                </table>
+              </span>              
+            </div>
+            <a ui-sref="reports.expense-index"><button class="btn btn-primary btn-block btn-flat">View More Details</button></a>
+          </div>          
         </div>       
       </div>
     </div>
@@ -118,49 +130,55 @@
       </div>
       <div class="box-body">
         <div style="padding: 0px !important; margin: 0px !important" class="row">
-          <div style="padding: 0px !important; margin: 0px !important" class="col-xs-8">
-            <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" chart-options="options" chart-dataset-override="datasetOverride" chart-click="onClick" style="padding: 20px; height: 475px;">
+          <div style="padding: 0px !important; margin: 0px !important" class="col-xs-6">
+            <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" chart-options="options" chart-dataset-override="datasetOverride" chart-click="onClick" style="padding: 20px;">
             </canvas>  
           </div>
-          <div style="padding: 0px !important; margin: 0px !important" class="col-xs-4">
+          <div style="padding: 0px !important; margin: 0px !important" class="col-xs-6">
             <h5><b>Total Balance</b></h5>
             <h3 style="margin-top: 0px !important;">IDR 9,239,248,054</h3>
-            <h5 style="margin-top: 25px;"><b>Biggest Balance</b></h5>
-            <table class="table table-striped">
-              <tr>
-                <td>1</td>
-                <td>PT. Goff Wood</td>
-                <td>IDR 789,923,800</td>               
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>PT. Griffith</td>
-                <td>IDR 605,000,000</td>                
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>PT. Sherman</td>
-                <td>IDR 500,000,000</td>              
-              </tr>
-            </table>
-            <h5 style="margin-top: 25px;"><b>Smallest Balance</b></h5>
-            <table class="table table-striped">
-              <tr>
-                <td>1</td>
-                <td>PT. Mills</td>
-                <td>IDR 489,923,800</td>               
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>PT. Holloway</td>
-                <td>IDR 405,000,000</td>               
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>PT. Jennings</td>    
-                <td>IDR 400,000,000</td>                
-              </tr>
-            </table>
+            <div class="row">
+              <span class="col-xs-6">
+                <h5 style="margin-top: 25px;"><b>Biggest Balance</b></h5>
+                <table class="table table-striped">
+                  <tr>
+                    <td>1</td>
+                    <td>PT. Goff Wood</td>
+                    <td>IDR 789,923,800</td>               
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>PT. Griffith</td>
+                    <td>IDR 605,000,000</td>                
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td>PT. Sherman</td>
+                    <td>IDR 500,000,000</td>              
+                  </tr>
+                </table>
+              </span>
+              <span class="col-xs-6">
+                <h5 style="margin-top: 25px;"><b>Smallest Balance</b></h5>
+                <table class="table table-striped">
+                  <tr>
+                    <td>1</td>
+                    <td>PT. Mills</td>
+                    <td>IDR 489,923,800</td>               
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>PT. Holloway</td>
+                    <td>IDR 405,000,000</td>               
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td>PT. Jennings</td>    
+                    <td>IDR 400,000,000</td>                
+                  </tr>
+                </table>
+              </span>              
+            </div>
             <a ui-sref="reports.balance-index"><button class="btn btn-primary btn-block btn-flat">View More Details</button> </a>
           </div>
         </div>       

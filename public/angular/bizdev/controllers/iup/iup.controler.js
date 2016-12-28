@@ -31,7 +31,7 @@ angular.module('bizdev').controller('IupController', ['$scope', '$stateParams', 
         ariaLabelledBy: 'modal-title',
         ariaDescribedBy: 'modal-body',
         templateUrl: './angular/bizdev/views/iup/approved.modal.html',
-        windowClass: 'xl-modal',
+        windowClass: 'md-modal',
         controller: 'IupModalController'
       });
     };
@@ -42,7 +42,7 @@ angular.module('bizdev').controller('IupController', ['$scope', '$stateParams', 
         ariaLabelledBy: 'modal-title',
         ariaDescribedBy: 'modal-body',
         templateUrl: './angular/bizdev/views/iup/declined.modal.html',
-        windowClass: 'xl-modal',
+        windowClass: 'md-modal',
         controller: 'IupModalController'
       });
     };

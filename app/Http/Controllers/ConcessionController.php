@@ -45,6 +45,9 @@ class ConcessionController extends Controller
                           }])
                           ->with(['port' => function($q) {
                             $q->where('ports.status', 'a');
+                          }])
+                          ->with(['products' => function($q) {
+                            $q->where('products.status', 'a');
                           }]);
 
         if(isset($req['gt'])){
@@ -97,7 +100,7 @@ class ConcessionController extends Controller
         //var_dump($concession->toSql());
         $concession = $concession->where('concessions.status', 'a')->get();
       }else {
-        $concession = Concession::with('company', 'port')->where('status', 'a')->limit(20);
+        $concession = Concession::with('company', 'products', 'port')->where('status', 'a')->limit(20);
 
         if($req->q) $concession->where('concession_name', 'LIKE', '%' . $req->q . '%');
         $concession = $concession->get();
@@ -136,10 +139,7 @@ class ConcessionController extends Controller
      */
     public function show($id)
     {
-        dd($id);
         $concession = Concession::with('company', 'port', 'products')->find($id);
-
-        dd($concession);
 
         if($concession->status == 'a') {
             return response()->json($concession, 200);

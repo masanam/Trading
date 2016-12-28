@@ -20,5 +20,14 @@ angular.module('scheduler').controller('ScheduleController', ['$scope', '$stateP
       });
     };
 
+    $scope.openaddveselModal = function () {
+      var modalInstance = $uibModal.open({
+        windowClass: 'xl-modal',
+        templateUrl: './angular/coaltradephase2/views/sales/modal.add.vesel.html',
+        controller: 'SalesModalController',
+        scope: $scope,
+      });
+    };
+
   }
 ]);
