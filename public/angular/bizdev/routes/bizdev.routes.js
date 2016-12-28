@@ -23,7 +23,7 @@ angular.module('bizdev').config(['$stateProvider',
         templateUrl: '/angular/bizdev/views/iup/history.view.html'
       })
       .state('bizdev.iup-view', {
-        url: '/iup-view',
+        url: '/iup-view/:id',
         templateUrl: '/angular/bizdev/views/iup/iup.view.html'
       })
       .state('bizdev.map-index', {

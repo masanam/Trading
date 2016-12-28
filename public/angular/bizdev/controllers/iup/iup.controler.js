@@ -13,6 +13,19 @@ angular.module('bizdev').controller('IupController', ['$scope', '$stateParams', 
       });
     };
 
+    $scope.findOne = function(id) {
+      if(id !== undefined){
+        $scope.concessionId = id;
+      } else {
+        $scope.concessionId = $stateParams.id;
+      }
+
+      Concession.get({ id: $scope.concessionId }, function(res){
+        $scope.concession = res;
+        console.log(res);
+      });
+    };
+
     $scope.add = function () {
       var modalInstance = $uibModal.open({
         animation: true,
