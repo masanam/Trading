@@ -109,7 +109,7 @@ class OrderController extends Controller
         $query->where('users.id', Auth::user()->id);
 
         if($req->approval_status){
-          $query->where('order_approvals.status', $req->approval_status);
+          $query->where('order_approvals.status', substr($req->approval_status,0,1));
         }
       });
     }
@@ -121,8 +121,18 @@ class OrderController extends Controller
     if (!$req->limit) $req->limit = 50;
     $orders->limit($req->limit);
 
-    //var_dump(DB::getQueryLog());
     $orders = $orders->get();
+
+
+    if($req->category == 'approval'){
+      $orders = $orders->each(function ($item, $key) {
+        foreach($item->approvals as $approval){
+          if($approval->id === Auth::user()->id){
+            $item->approval_status = $approval->pivot->status;
+          }
+        }
+      });
+    }
 
     if($req->envelope)
       $orders = [
@@ -179,7 +189,7 @@ class OrderController extends Controller
     if(count($req->buys) > 0 && !$req->in_house){
       foreach($req->buys as $buy){
         $order->buys()->attach([ $buy['id'] => $buy['pivot'] ]);
-        Lead::find($buy['id'])->reconcile();
+        // Lead::find($buy['id'])->reconcile();
 
         // add negotiation log to the staged lead
         $order_detail_id = $order->buys()->find($buy['id'])->pivot->id;
@@ -301,9 +311,32 @@ class OrderController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
+
+  private function checkAvailable($order, $lead){
+    // if update
+    if(!$lead->lead_id) $lead = $lead->pivot;
+
+    $item = Lead::with('ordersSpecific','orders')->find($lead->lead_id);
+    if(count($item->orders)>0){
+      foreach($item->orders as $o) {
+        $volume = $o->pivot->volume;
+      }
+    }
+    else $volume = $lead->volume;
+
+    $item->used = 0;
+    foreach ($item->ordersSpecific as $used) {
+      $item->used += $used->pivot->volume;
+    }
+
+    if ($volume > ($item->volume - $item->used)) {
+      $order->avaliable_volume = 'error';
+    }
+  }
+
   public function update(Request $req, $id)
   {
-    $order = Order::find($id);
+    $order = Order::with('buys','sells','buys.ordersSpecific','sells.ordersSpecific')->find($id);
 
     // Validations
     if(!$req) return response()->json([ 'message' => 'Bad Request' ], 400);
@@ -317,15 +350,22 @@ class OrderController extends Controller
     $this->authorize('update', $order);
 
     // Reconcile the statuses of each leads
-    if(count($req->buys) > 0){
-      foreach($req->buys as $buy){
+    if(count($order->buys) > 0){
+      foreach($order->buys as $buy){
+        $this->checkAvailable($order, $buy);
         Lead::find($buy['id'])->reconcile();
       }
     }
-    if(count($req->sells) > 0) {
-      foreach($req->sells as $sell){
+    if(count($order->sells) > 0) {
+      foreach($order->sells as $sell){
+        $this->checkAvailable($order, $sell);
         Lead::find($sell['id'])->reconcile();
       }
+    }
+
+    // Check available volume
+    if ($order->avaliable_volume === 'error') {
+      return response()->json([ 'message' => 'Volume not avaliable' ], 400);
     }
 
     if(count($req->buys) > 0 && !$req->in_house) {      
@@ -461,7 +501,14 @@ class OrderController extends Controller
    */
   public function stage(Request $req, $id)
   {
-    $order = Order::with('buys', 'sells', 'approvals', 'trader')->find($id);
+    $order = Order::with('buys', 'sells', 'approvals', 'trader','buys.ordersSpecific','sells.ordersSpecific')->find($id);
+
+    // Check available volume
+    $this->checkAvailable($order, $req);
+    if ($order->avaliable_volume === 'error') {
+      return response()->json([ 'message' => 'Volume not avaliable' ], 400);
+    }
+
     $lead_type = $req->lead_type;
     $this->authorize('update', $order);
 
