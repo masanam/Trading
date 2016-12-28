@@ -10,5 +10,14 @@ angular.module('usermanagement').controller('UserManagementController', ['$scope
         scope: $scope,
       });
     }; 
+
+    $scope.openUpdate = function () {
+      var modalInstance = $uibModal.open({
+        windowClass: 'xl-modal',
+        templateUrl: './angular/coaltradephase2/views/usermanagement/update.modal.view.html',
+        controller: 'UserManagementModalController',
+        scope: $scope,
+      });
+    }; 
   }
 ]);

@@ -16,7 +16,7 @@ angular.module('index').controller('LayoutController', ['$scope', '$state', 'Aut
     };
 
     $scope.openCollapse = function($i){
-      for(var n=1;n<=3;n++){
+      for(var n=1;n<=5;n++){
         if(n===$i){
           if ($scope.style[n]===false) {
             $scope.style[n]='block';

@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('dashboard').controller('OrderDashboardController', ['$scope', 'Index','Order','Authentication',
-  function($scope, Index, Order, Authentication) {
+angular.module('dashboard').controller('OrderDashboardController', ['$scope', '$uibModal', '$state', '$log','Index','Order','Authentication',
+  function($scope, $uibModal, $state, $log, Index, Order, Authentication) {
     $scope.Authentication = Authentication;
 
     //find list of order in dashboard
@@ -11,6 +11,46 @@ angular.module('dashboard').controller('OrderDashboardController', ['$scope', 'I
       if(Authentication.user.role === 'manager') possession = 'subordinates';
       else if(Authentication.user.role === 'trader') possession = 'my';
       $scope.orders = Order.query({ possession: possession, status: 'p' });
+    };
+
+    $scope.remove = function (order) {
+      if (order) {
+        var modalInstance = $uibModal.open({
+          windowClass: 'xl-modal',
+          templateUrl: './angular/dashboard/views/remove-confirm.modal.html',
+          controller: function($scope, $uibModalInstance) {
+            console.log('Modal is opened');
+
+            $scope.ok = function () {
+              $uibModalInstance.close('true');
+            };
+
+            $scope.cancel = function () {
+              $uibModalInstance.dismiss('cancel');
+            };
+          },
+          scope: $scope,
+        });
+
+        modalInstance.result.then(function(ok) {
+          if(ok === 'true') {
+            order.$remove();
+            $scope.orders.splice($scope.orders.indexOf(order), 1);
+
+            for (var i in $scope.indices) {
+              if ($scope.indices[i] === order) {
+                $scope.indices.splice(i, 1);
+              }
+            }
+          }
+        }, function() {
+          $log.info('Modal dismissed at: ' + new Date());
+        });
+      } else {
+        $scope.order.$remove(function () {
+          $state.go('order.list');
+        });
+      }
     };
 
     $scope.funnel=function () {

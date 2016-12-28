@@ -1,0 +1,38 @@
+<div class="form-group">
+  <label for="name">Username:</label>
+  <input type="text" class="form-control" id="username" value="giovanny.sientoro" required>
+</div>
+
+<div class="form-group">
+  <label for="email">Email:</label>
+  <input type="text" class="form-control" id="email" value="giovanny.sientoro@borneo-indobara.com" required>
+</div>
+
+<div class="form-group">
+  <label for="phone">Role:</label>
+  <select class="form-control" id="sel1">
+            <option>-- Role ---</option>
+            <option selected> Trader </option>
+            <option> Sales</option>
+            <option> Scheduler</option>
+            <option> Pre Shipment</option>
+            <option> Post Shipment</option>
+            <option> Tresury</option>
+          </select>
+</div>
+
+<div class="form-group">
+  <label for="email">Password:</label>
+  <input type="password" class="form-control" id="password" ng-model="usermanagement.password" required>
+</div>
+
+<div class="form-group">
+  <label for="email">Confirm Password:</label>
+  <input type="password" class="form-control" id="passwordconfirm" ng-model="usermanagement.passwordconfirm" required>
+</div>
+
+<div class="form-group">
+  <label ng-show="error" class="alert alert-danger">{{error}}</label>
+</div>
+
+<button type="submit" class="btn btn-success pull-right">Submit</button>
