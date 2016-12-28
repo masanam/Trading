@@ -228,7 +228,7 @@
                         <div class="row">
                           <div class="col-lg-3">
                             <uib-tabset active="activePill" vertical="true" type="pills">
-                              <uib-tab ng-repeat="(idx, prod) in concession.product" index="idx" ng-click="showProduct(prod)" heading="{{prod.product_name || 'Coal'}}"></uib-tab>
+                              <uib-tab ng-repeat="(idx, prod) in concession.products" index="idx" ng-click="showProduct(prod)" heading="{{prod.product_name || 'Coal'}}"></uib-tab>
                             </uib-tabset>
                           </div>
                           <div class="col-lg-9">
@@ -380,7 +380,7 @@
                             </uib-tabset>
                           </div-->
                             <uib-tabset class="col-lg-12" active="activePill" vertical="true" type="pills">
-                              <uib-tab ng-repeat="connectedConcession in connectedConcessions" ng-click="showDetail(event, connectedConcession); map.hideInfoWindow('port-info-window');" heading="{{connectedConcession.concession_name}}"></uib-tab>
+                              <uib-tab ng-repeat="connectedConcession in port.concessions" ng-click="showDetail(event, connectedConcession); map.hideInfoWindow('port-info-window');" heading="{{connectedConcession.concession_name}}"></uib-tab>
                             </uib-tabset>
                           &nbsp;
                         </div>

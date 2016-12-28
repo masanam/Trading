@@ -1,4 +1,4 @@
-<section ng-controller="TreasuryController" class="content">
+<section ng-controller="UserManagementController" class="content">
   <div class="col-lg-12">
     <div class="box box-info">
       <div class="box-header with-border">
@@ -12,35 +12,27 @@
       <div class="col-lg-2">  
         <div class="form-group">
           <select class="form-control" id="sel1">
-            <option> Date Paid</option>
-            <option> Invoice ID</option>
-            <option> Contract ID</option>
-            <option> Customer Name</option>
-            <option> Amount</option>
-            <option> Balance Due</option>
+            <option>-- Role ---</option>
+            <option> Trader </option>
+            <option> Sales</option>
+            <option> Scheduler</option>
+            <option> Pre Shipment</option>
+            <option> Post Shipment</option>
+            <option> Tresury</option>
           </select>
         </div>
       </div>
 
-      <div class="col-lg-2">  
-        <div class="form-group">
-          <select class="form-control" id="sel1">
-            <option> All Payment</option>
-            <option> Partially Paid</option>
-            <option> Fully Paid</option>
-          </select>
-        </div>
-      </div>
 
       <div class="col-lg-6">  
         <div class="form-group">
-          <input type="text" class="form-control" id="usr" placeholder="   Search ...">
+          <input type="text" class="form-control" id="usr" placeholder="   Search...">
         </div>
       </div>
 
       <div class="col-lg-2">  
         <div class="form-group">
-            <button type="button" class="btn btn-info" >+ NEW</button>
+            <button type="button" ng-click="openNew()" class="btn btn-info" >+ NEW</button>
         </div>
       </div>
 
@@ -54,63 +46,89 @@
       <table class="table table-striped">
         <thead>
           <tr>
-            <th> Date </th>
-            <th> Invoice ID</th>
-            <th> Contract ID</th>
-            <th> Costumer Name</th>
-            <th> Reference ID</th>
-            <th> Payment Method</th>
-            <th> Amount</th>
-            <th> Balance Due</th>
+            <th> User ID </th>
+            <th> Username</th>
+            <th> Status</th>
+            <th> Role</th>
+            <th> Email</th>
+            <th> Action</th>
+            
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td> 30 Nov 2016</td>
-            <td> INV49 </td>
-            <td>02</td>
-            <td>PT. AAA</td>
-            <td>0001</td>
-            <td>Cash</td>
-            <td>IDR 489,923,800</td>
-            <td>IDR 489,923,800</td>
+          <td>1</td>
+          <td>giovanny.sientoro</td>
+          <td>Active</td>
+          <td>Trader</td>
+          <td>giovanny.sientoro@borneo-indobara.com</td>
+          <td>
+              <a href="#" ng-click="openNew()"><i class="glyphicon glyphicon-pencil"></i></a>
+              <a href="#" ng-click="delete(contact)"><i class="glyphicon glyphicon-remove"></i></a>
+          </td>
           </tr>
           <tr>
-            <td> 21 Nov 2016</td>
-            <td> INV48 </td>
-            <td>04</td>
-            <td>PT. BBB</td>
-            <td>0002</td>
-            <td></td>
-            <td>IDR 505,000,000</td>
-            <td>IDR 250,000,000</td>
+          <td>2</td>
+          <td>dwi.suseno</td>
+          <td>Active</td>
+          <td>Sales</td>
+          <td>dwi.suseno@sinarmasmining.com</td>
+          <td>
+              <a href="#" ng-click="openNew()"><i class="glyphicon glyphicon-pencil"></i></a>
+              <a href="#" ng-click="delete(contact)"><i class="glyphicon glyphicon-remove"></i></a>
+          </td>
           </tr>
           <tr>
-            <td> 16 Nov 2016</td>
-            <td> INV47 </td>
-            <td>12</td>
-            <td>PT. CCC</td>
-            <td>Partially Paid</td>
-            <td></td>
-            <td>IDR 800,000,000</td>
-            <td>IDR 800,000,000</td>
+          <td>3</td>
+          <td>lelyindahsari</td>
+          <td>Active</td>
+          <td>Scheduler</td>
+          <td>lelyindahsari@borneo-indobara.com</td>
+          <td>
+              <a href="#" ng-click="openNew()"><i class="glyphicon glyphicon-pencil"></i></a>
+              <a href="#" ng-click="delete(contact)"><i class="glyphicon glyphicon-remove"></i></a>
+          </td>
           </tr>
           <tr>
-            <td> 15 Nov 2016</td>
-            <td> INV46 </td>
-            <td>89</td>
-            <td>PT. DDD</td>
-            <td>Partially Paid</td>
-            <td></td>
-            <td>IDR 1,200,000,000</td>
-            <td>IDR 1,200,000,000</td>
+          <td>4</td>
+          <td>yos.wibowo</td>
+          <td>Active</td>
+          <td>Pre Shipment</td>
+          <td>yos.wibowo@sinarmasmining.com</td>
+          <td>
+              <a href="#" ng-click="openNew()"><i class="glyphicon glyphicon-pencil"></i></a>
+              <a href="#" ng-click="delete(contact)"><i class="glyphicon glyphicon-remove"></i></a>
+          </td>
           </tr>
+          <tr>
+          <td>5</td>
+          <td>nattasya.nattasya</td>
+          <td>Active</td>
+          <td>Post Shipment</td>
+          <td>nattasya.nattasya@borneo-indobara.com</td>
+          <td>
+              <a href="#" ng-click="openNew()"><i class="glyphicon glyphicon-pencil"></i></a>
+              <a href="#" ng-click="delete(contact)"><i class="glyphicon glyphicon-remove"></i></a>
+          </td>
+          </tr>
+          <td>6</td>
+          <td>flora.anggraini</td>
+          <td>Active</td>
+          <td>Tresury</td>
+          <td>flora.anggraini@sinarmasmining.com</td>
+          <td>
+              <a href="#" ng-click="openNew()"><i class="glyphicon glyphicon-pencil"></i></a>
+              <a href="#" ng-click="delete(contact)"><i class="glyphicon glyphicon-remove"></i></a>
+          </td>
+          </tr>
+
+
+          
         </tbody>
       </table>
       </div>
       </div>  
-       <div class="col-lg-6">  
-       </div>
+       
       </div>
     </div>
   </div>

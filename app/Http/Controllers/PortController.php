@@ -29,7 +29,7 @@ class PortController extends Controller
     {
         $limit = $req->limit | 10;
 
-        $port = Port::limit($limit);
+        $port = Port::with('concessions')->limit($limit);
         $port_id = Company::with('ports')->where('id', $req->company_id)->get();
         $port_id = $port_id->pluck('ports');
         foreach ($port_id as $p) {
@@ -76,7 +76,7 @@ class PortController extends Controller
      */
     public function show($id)
     {
-        $port = Port::find($id);
+        $port = Port::with('concessions')->find($id);
 
         return response()->json($port, 200);
     }

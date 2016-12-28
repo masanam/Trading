@@ -10,12 +10,8 @@ angular.module('usermanagement').config(['$stateProvider',
         abstract: true,
         template: '<ui-view>'
       })
-      .state('usermanagement.dashboard', {
-        url: '/dashboard',
-        templateUrl: '/angular/coaltradephase2/views/usermanagement/dashboard.view.html'
-      })
       .state('usermanagement.index', {
-        url: '/index',
+        url: '',
         templateUrl: '/angular/coaltradephase2/views/usermanagement/index.view.html'
       });
       
