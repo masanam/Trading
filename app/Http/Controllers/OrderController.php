@@ -121,8 +121,18 @@ class OrderController extends Controller
     if (!$req->limit) $req->limit = 50;
     $orders->limit($req->limit);
 
-    //var_dump(DB::getQueryLog());
     $orders = $orders->get();
+
+
+    if($req->category == 'approval'){
+      $orders = $orders->each(function ($item, $key) {
+        foreach($item->approvals as $approval){
+          if($approval->id === Auth::user()->id){
+            $item->approval_status = $approval->pivot->status;
+          }
+        }
+      });
+    }
 
     if($req->envelope)
       $orders = [
