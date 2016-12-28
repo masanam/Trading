@@ -161,6 +161,71 @@ class CompaniesTableSeeder extends Seeder
       'status' => 'a'
     ]);
 
+    Company::create([
+      'id'=>8,
+      'company_name' => 'Amanah',
+      'user_id' => '1',
+      'phone' => '',
+      'is_affiliated'=>'1',
+      'annual_sales'=>'0',
+      'preferred_trading_term'=>'FOB MV',
+      'preferred_payment_term'=> 'LC',
+      'purchasing_countries'=>'',
+      'email' => '',
+      'web' => '',
+      'country'=> 'ID',
+      'industry' => 'Coal Mining',
+      'city' => 'Kalimantan Selatan',
+      'address' =>'',
+      'description' => '',
+      'company_type' => 's',
+      'purchasing_countries' => 'ID',
+      'status' => 'a'
+    ]);
+
+    Company::create([
+      'id'=>9,
+      'company_name' => 'Bukit Baiduri Energi',
+      'user_id' => '2',
+      'phone' => '',
+      'is_affiliated'=>'1',
+      'annual_sales'=>'0',
+      'preferred_trading_term'=>'FOB MV',
+      'preferred_payment_term'=> 'LC',
+      'purchasing_countries'=>'',
+      'email' => '',
+      'web' => '',
+      'country'=> 'ID',
+      'industry' => 'Coal Mining',
+      'city' => 'Kalimantan Timur',
+      'address' =>'',
+      'description' => '',
+      'company_type' => 's',
+      'purchasing_countries' => 'ID',
+      'status' => 'a'
+    ]);
+
+    Company::create([
+      'id'=>10,
+      'company_name' => 'Arutmin',
+      'user_id' => '3',
+      'phone' => '',
+      'is_affiliated'=>'1',
+      'annual_sales'=>'0',
+      'preferred_trading_term'=>'FOB MV',
+      'preferred_payment_term'=> 'LC',
+      'purchasing_countries'=>'',
+      'email' => '',
+      'web' => '',
+      'country'=> 'ID',
+      'industry' => 'Coal Mining',
+      'city' => 'Kalimantan Timur',
+      'address' =>'',
+      'description' => '',
+      'company_type' => 's',
+      'purchasing_countries' => 'ID',
+      'status' => 'a'
+    ]);
 
     Contact::create([
       'id' => 1,
