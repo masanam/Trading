@@ -177,7 +177,7 @@
         </div>
       </div>
 
-      <div class="box-body">
+      <div class="box-body" ng-init="find()">
        
        <div class="table-responsive">
         <table class="table table-striped table-bordered">
@@ -195,21 +195,21 @@
               </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>PT.ARINI</td>
+            <tr ng-repeat="concession in concessions">
+              <td>{{concession.company.company_name}}</td>
               <td>Other</td>
               <td>Budi Suseno</td>
               <td>XPL</td>
               <td>High</td>
               <td>High</td>
-              <td>Approve</td>
+              <td>{{concession.rand}}</td>
               <td>17 Jan 2010 | Robby </td>
               <td>
-                <a ui-sref="bizdev.iup-view"><i class="glyphicon glyphicon-eye-open"></i></a>
+                <a ui-sref="bizdev.iup-view({ id: concession.id })"><i class="glyphicon glyphicon-eye-open"></i></a>
                 <a ng-click="add()"><i class="glyphicon glyphicon-pencil"></i></a>
               </td>
             </tr>
-            <tr>
+            <!-- <tr>
               <td>PT.ARINI</td>
               <td>Other</td>
               <td>Budi Suseno</td>
@@ -264,7 +264,7 @@
                 <a ui-sref="bizdev.iup-view"><i class="glyphicon glyphicon-eye-open"></i></a>
                 <a ng-click="add()"><i class="glyphicon glyphicon-pencil"></i></a>
               </td>
-            </tr>
+            </tr> -->
           </tbody>
         </table>
       </div>

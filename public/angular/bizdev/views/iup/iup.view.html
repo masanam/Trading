@@ -1,8 +1,8 @@
-<section ng-controller="IupController">
+<section ng-controller="IupController" ng-init="findOne()">
   <div class="row" style="margin:20px; padding: 20px;">
     <div class="col-xs-4" style="text-align: left;">
       <h5>Company Name</h5>
-      <h4>PT. ARINI</h4>
+      <h4>{{concession.company.company_name}}</h4>
       <h5>No. IUP: 12947 81238 2132</h5>
     </div>
     <div class="col-xs-2" >
@@ -116,7 +116,14 @@
     <h5>Map</h5>
     <div class="row">
       <div class="col-xs-6">
-        <ng-map zoom="4" center="Indonesia">
+        <ng-map zoom="4" center="Indonesia" default-style="false">
+          <marker ng-if="!concession.polygon" position="{{concession.latitude}}, {{concession.longitude}}" id="mark{{concession.id}}" on-click="showDetail({{pos}})"></marker>
+          <shape id="polygon" name="polygon"
+            paths="{{concession.polygon}}"
+            stroke-color="#FF0000"
+            stroke-opacity="0.7"
+            stroke-weight="3">
+          </shape>
           <shape id="polygon" name="polygon"
             paths="[
                 {lat: 0.774, lng: 114.190},
@@ -124,23 +131,20 @@
                 {lat: -1.321, lng: 113.757},
                 {lat: 0.774, lng: 114.190}
               ]"
-            fill-color="#FF0000"
-            stroke-color="#FF0000"
-            stroke-opacity="0.7"
-            stroke-weight="3">
-          </shape>
-          <shape id="polygon" name="polygon"
-            paths="[
-                {lat: 2.774, lng: 114.190},
-                {lat: 5.466, lng: 113.118},
-                {lat: -2.321, lng: 113.757},
-                {lat: 5.774, lng: 114.190}
-              ]"
             stroke-color="#ffff00"
             fill-color="#ffff00"
             stroke-opacity="0.7"
             stroke-weight="3">
           </shape>
+          <marker 
+            icon="{
+              url: '/images/boat.png'
+            }" 
+            position="{{concession.port.latitude}}, {{concession.port.longitude}}" 
+            id="markport{{concession.port.id}}" 
+            on-click="showPortDetail({{pos}})"
+          >
+          </marker>
         </ng-map>                
       </div>
       <div class="col-xs-6" style="margin-top: 50px; padding-left: 75px;">
