@@ -103,9 +103,7 @@ angular.module(ApplicationConfiguration.applicationModuleName).config(['$urlRout
 angular.module(ApplicationConfiguration.applicationModuleName).run(function ($rootScope, $state, $http, $uibModalStack, $window, Authentication) {
   // Always check authentication before changing state
   $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
-
-    //Load authorization event listener once all authentication done 
-    Authentication.authenticate(function(user){
+    var checkAuthorization = function(user){
       if (toState.roles && toState.roles.length > 0) {
         var allowed = false;
 
@@ -127,7 +125,11 @@ angular.module(ApplicationConfiguration.applicationModuleName).run(function ($ro
           }
         }
       }
-    });
+    };
+
+    //Load authorization event listener once all authentication done 
+    if(!Authentication.user) Authentication.authenticate(checkAuthorization);
+    else checkAuthorization(Authentication.user);
   });
 
   // Always record previous state
