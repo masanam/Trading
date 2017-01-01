@@ -11,6 +11,7 @@ development:
 release:
   before_script:
     - npm install -g bower
+    - curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
     - npm install
     - bower install --allow-root
     - composer install --no-interaction
@@ -23,6 +24,7 @@ release:
 master:
   before_script:
     - npm install -g bower
+    - curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
     - npm install
     - bower install --allow-root
     - composer install --no-interaction
