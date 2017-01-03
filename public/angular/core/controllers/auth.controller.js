@@ -42,5 +42,16 @@ angular.module('auth').controller('AuthController', ['$scope', '$state', '$urlRo
         $scope.err = 'Password(s) does not match!';
       }
     };
+
+    $scope.forgot = function() {
+      var email= $scope.forgot.email;
+
+      Authentication.forgot(email, function(err) {
+        if(err) console.log(err);
+        else {
+          $state.go('home', {});
+        }
+      });
+    };
   }
 ]);
