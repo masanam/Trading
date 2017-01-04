@@ -22,9 +22,10 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $user = User::where('status', 'a')->get();
+        if($request->status) $user = User::where('status', $request->status)->get();
+        else $user = User::where('status', 'a')->get();
 
         return response()->json($user, 200);
     }
@@ -85,10 +86,6 @@ class UserController extends Controller
         }    
     }
 
-    public function currentUser() {
-        return response()->json(Auth::user(), 200);
-    }
-
     /**
      * Update the specified resource in storage.
      *
@@ -139,6 +136,23 @@ class UserController extends Controller
         return response()->json($user, 200);
     }
 
+    public function setActing(Request $request, $user) {
+        // find the person who want to give the priviledge of acting role
+        $user = User::find($user);
+
+        if(!$user) 
+            return response()->json([
+                'message' => 'Not found'
+            ] ,404);
+
+        $user->interims()->attach($request->interim_id, [
+            'date_start' => $request->date_start,
+            'date_end' => $request->date_end,
+            'role' => $request->role,
+            'status' => 'a'
+        ]);
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -161,37 +175,18 @@ class UserController extends Controller
         return response()->json($user, 200);
     }
 
-    public function broker()
-    {
-        return Password::broker();
-    }
-
-    public function sendResetLinkEmail(Request $request)
-    {
-        // $this->validate($request, ['email' => 'required|email']);
-
-        // We will send the password reset link to this user. Once we have attempted
-        // to send the link, we will examine the response then see the message we
-        // need to show to the user. Finally, we'll send out a proper response.
-        $response = $this->broker()->sendResetLink(
-            $request->only('email'), function (Message $message) {
-                dd($message);
-                $message->subject('Forgot Coaltrade Password');
-                $message->from('noreply-coaltrade@volantech.io', 'Coaltrade');
-
-                $message->to($request->email);
-            }
-        );
-
-        if ($response === Password::RESET_LINK_SENT) {
-            return back()->with('status', trans($response));
+    public function restore($user) {
+        $user = User::find($user);
+        
+        if (!$user) {
+            return response()->json([
+                'message' => 'Not found'
+            ] ,404);
         }
 
-        // If an error was returned by the password broker, we will get this message
-        // translated so we can notify a user of the problem. We'll redirect back
-        // to where the users came from so they can attempt this process again.
-        return back()->withErrors(
-            ['email' => trans($response)]
-        );
+        $user->status = 'a';
+        $user->save();
+
+        return response()->json($user, 200);
     }
 }
