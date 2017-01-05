@@ -15,20 +15,35 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id');
+            $table->integer('user_id')->unsigned();
+            $table->integer('index_id')->unsigned()->nullable();
             $table->boolean('in_house')->default(false);
             $table->string('cancel_reason')->nullable();
             $table->string('request_reason')->nullable();
             $table->string('finalize_reason')->nullable();
             $table->char('status', 1);
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('index_id')->references('id')->on('index')->onDelete('cascade');
         });
 
         Schema::create('order_approvals', function (Blueprint $table) {
-            $table->increments('id');
             $table->integer('order_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->string('approval_token')->index();
+            $table->char('status', 1); // A = Approved ; R = Reject
+            $table->timestamps();
+
+            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unique(['order_id', 'user_id']);
+        });
+
+        //intinya sama dengan si order_approval, tapi bedanya ini cuma log doang
+        Schema::create('order_approval_logs', function (Blueprint $table) {
+            $table->integer('order_id')->unsigned();
+            $table->integer('user_id')->unsigned();
             $table->char('status', 1); // A = Approved ; R = Reject
             $table->timestamps();
 

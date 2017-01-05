@@ -9,6 +9,7 @@ angular.module('index').factory('Environment', ['$window',
     env.dist = $window.dist;
     env.trx = $window.trx;
     env.showBuy = $window.showBuy;
+    env.destinationBy = $window.destinationBy;
 
     return env;
   }

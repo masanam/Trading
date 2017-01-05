@@ -29,6 +29,7 @@ return [
     'deployment' => env('APP_DEPLOYMENT', 'bib'),
     'defaultTrx' => env('DEFAULT_TRANSACTION', 'trade'),
     'showBuy' => env('SHOW_BUY', 'trade'),
+    'destinationBy' => env('DESTINATION_BY', 'factory'),
 
     /*
     |--------------------------------------------------------------------------
