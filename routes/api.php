@@ -22,8 +22,6 @@ Route::group(['middleware' => ['cors']], function() {
     Route::post('authenticate', 'AuthenticateController@authenticate');
     Route::post('authenticate/signup', 'AuthenticateController@signup');
     Route::get('authenticate/user', 'AuthenticateController@getAuthenticatedUser');
-    Route::post('authenticate/forgot', 'AuthenticateController@forgotPassword');
-    // Route::put('authenticate/change', 'AuthenticateController@changePassword');
 
     //S3 Upload file signing API
     Route::post('signing', 'AuthenticateController@signing');
@@ -32,8 +30,6 @@ Route::group(['middleware' => ['cors']], function() {
     //Forgot Password API
     Route::post('user/password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
     Route::get('user/current', 'UserController@currentUser');
-    Route::put('user/{user}/restore', 'UserController@restore');
-    Route::put('user/{user}/acting', 'UserController@setActing');
     Route::resource('user', 'UserController', ['except' => [ 'create', 'edit' ]]);
 
     /*
@@ -87,5 +83,8 @@ Route::group(['middleware' => ['cors']], function() {
     Route::resource('orders', 'OrderController', ['except' => [ 'create', 'edit' ]]);
 
     Route::get('leads/{id}/test', 'LeadController@isSingleLeadInOrder');
+
+    //roles API
+    Route::resource('role','RoleController', ['except' => [ 'create', 'edit' ]]);
 
 });
