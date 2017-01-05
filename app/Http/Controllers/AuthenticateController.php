@@ -6,8 +6,11 @@ use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Login;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Password;
+
+use App\Mail\ForgotPassword;
 
 use Illuminate\Support\Facades\Config;
 
@@ -21,7 +24,7 @@ class AuthenticateController extends Controller
 {
     public function __construct()
    {
-       $this->middleware('jwt.auth', ['except' => ['authenticate', 'signup']]);
+       $this->middleware('jwt.auth', ['except' => ['authenticate', 'signup', 'forgotPassword']]);
    }
  
     /**
@@ -113,6 +116,36 @@ class AuthenticateController extends Controller
  
         // the token is valid and we have found the user via the sub claim
         return response()->json(compact('user', 'subordinates', 'managers'), 200);
+    }
+
+    private function randomPassword() {
+        $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*():?><,./;';
+        $pass = array(); //remember to declare $pass as an array
+        $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
+        for ($i = 0; $i < 8; $i++) {
+            $n = rand(0, $alphaLength);
+            $pass[] = $alphabet[$n];
+        }
+        return implode($pass); //turn the array into a string
+    }
+
+    public function forgotPassword(Request $request) {
+        $user = User::where('email', $request->email)->first();
+        if($user) {
+            $randPass = $this->randomPassword();
+            $user->password = bcrypt($randPass);
+            $user->save();
+
+            $mail = new ForgotPassword($request->email, $randPass);
+            Mail::to($request->email)
+                ->send($mail);
+
+            return response()->json(['message' => 'Email Sent'], 200);
+        }
+        else {
+            return response()->json(['message' => 'Not Found'], 404);
+        }
+
     }
 
     public function signing(Request $request)
