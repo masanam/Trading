@@ -46,8 +46,9 @@
         </a>
         <ul class="treeview-menu" ng-class="order ? 'menu-open' : ''" ng-style="{ 'display': style[2] }">
           <li><a ui-sref="order.list"><i class="ion ion-ios-paperplane"></i> Orders</a></li>
-          <li><a ui-sref="lead.list({ lead_type: 'buy' })"><i class="ion ion-log-out"></i> Buy Leads</a></li>
-          <li><a ui-sref="lead.list({ lead_type: 'sell' })"><i class="ion ion-log-in"></i> Sell Leads</a></li>
+          <li ng-if="showBuy"><a ui-sref="lead.list({ lead_type: 'buy' })"><i class="ion ion-log-out"></i> Buy Leads</a></li>
+          <li ng-if="showBuy"><a ui-sref="lead.list({ lead_type: 'sell' })"><i class="ion ion-log-in"></i> Sell Leads</a></li>
+          <li ng-if="!showBuy"><a ui-sref="lead.list({ lead_type: 'sell' })"><i class="ion ion-log-in"></i> Leads</a></li>
         </ul>
       </li>
       <li class="treeview">

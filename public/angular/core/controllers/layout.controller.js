@@ -1,8 +1,9 @@
 'use strict';
 
-angular.module('index').controller('LayoutController', ['$scope', '$state', 'Authentication',
-  function($scope, $state, Authentication) {
+angular.module('index').controller('LayoutController', ['$scope', '$state', 'Authentication', 'Environment',
+  function($scope, $state, Authentication, Environment) {
     $scope.Authentication = Authentication;
+    $scope.showBuy = Environment.showBuy;
     
     $scope.init = function(){
       $scope.style=[];

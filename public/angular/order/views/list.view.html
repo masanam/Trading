@@ -34,9 +34,16 @@
         </div>
 
          <div class="col-md-3">
-          <div class="box-tools btn-group btn-sm">
-              <button ui-sref="lead.create({ type:'buy' })" class="btn btn-primary btn-sm">+ Create buy lead</button>
-              <button ui-sref="lead.create({ type:'sell' })" class="btn btn-primary btn-sm">+ Create sell lead</button>
+          <div class="box-tools btn-group btn-sm pull-right">
+              <button ui-sref="lead.create({ type:'buy' })"  ng-if="showBuy" class="btn btn-primary btn-sm">
+                + Create buy lead
+              </button>
+              <button ui-sref="lead.create({ type:'sell' })"  ng-if="showBuy" class="btn btn-primary btn-sm">
+                + Create sell lead
+              </button>
+              <button ui-sref="lead.create({ type:'sell' })"  ng-if="!showBuy" class="btn btn-primary btn-sm">
+                + Create Leads
+              </button>
           </div>
         </div>
       </div>

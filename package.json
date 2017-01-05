@@ -35,6 +35,6 @@
     "main-bower-files": "^2.13.1",
     "merge-stream": "^1.0.0",
     "webpack-stream": "^3.2.0",
-    "gulp-load-plugins": "^1.4.0",
+    "gulp-load-plugins": "^1.4.0"
   }
 }

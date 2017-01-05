@@ -7,6 +7,8 @@ angular.module('index').factory('Environment', ['$window',
 
     env.env = $window.env;
     env.dist = $window.dist;
+    env.trx = $window.trx;
+    env.showBuy = $window.showBuy;
 
     return env;
   }
