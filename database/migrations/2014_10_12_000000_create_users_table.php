@@ -51,6 +51,13 @@ class CreateUsersTable extends Migration
             $table->foreign('acting_as')->references('id')->on('users')->onDelete('cascade');
         });
 
+        Schema::create('roles', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('role_name');
+            $table->text('access');
+            $table->timestamps();
+        });
+
         Schema::create('password_resets', function (Blueprint $table) {
             $table->string('email')->index();
             $table->string('token')->index();
@@ -88,6 +95,7 @@ class CreateUsersTable extends Migration
     {
         Schema::dropIfExists('activities');
         Schema::dropIfExists('login_user');
+        Schema::dropIfExists('roles');
         Schema::dropIfExists('password_resets');
         Schema::dropIfExists('acting_users');
         Schema::dropIfExists('users');
