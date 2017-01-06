@@ -1,12 +1,12 @@
 'use strict';
 
-angular.module('order').controller('OrderController', ['$scope', '$stateParams', '$state', 'Order', 'Authentication', 'Notification', '$uibModal',
-  function($scope, $stateParams, $state, Order, Authentication, Notification, $uibModal) {
+angular.module('order').controller('OrderController', ['$scope', '$stateParams', '$state', 'Order', 'Authentication', 'Notification', '$uibModal', 'Environment',
+  function($scope, $stateParams, $state, Order, Authentication, Notification, $uibModal, Environment) {
     $scope.browse = {};
-
     $scope.$watchGroup(['browse.status', 'browse.category'], function() { $scope.find(); });
-
     $scope.display = {};
+
+    $scope.showBuy = Environment.showBuy;
 
     // Remove existing order
     $scope.remove = function (order) {

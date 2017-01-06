@@ -21,6 +21,9 @@
   <script type="text/javascript">
     var env = "{{ Config::get('app.env') }}";
     var dist = "{{ Config::get('app.deployment') }}";
+    var trx = "{{ Config::get('app.defaultTrx') }}";
+    var showBuy = "{{ Config::get('app.showBuy') }}";
+    var destinationBy = "{{ Config::get('app.destinationBy') }}";
   </script>
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->

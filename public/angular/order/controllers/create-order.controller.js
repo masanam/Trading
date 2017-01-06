@@ -1,12 +1,14 @@
 'use strict';
 
-angular.module('order').controller('CreateOrderController', ['$scope', '$state', '$uibModal', 'Order',
-  function($scope, $state, $uibModal, Order) {
+angular.module('order').controller('CreateOrderController', ['$scope', '$state', '$uibModal', 'Environment', 'Order',
+  function($scope, $state, $uibModal, Environment, Order) {
     $scope.init = function (){
       $scope.order = {};
       $scope.order.buys = [];
       $scope.order.sells = [];
       $scope.display = {};
+
+      if(Environment.trx === 'sell') $scope.order.in_house = true;
     };
 
     // Create new Article

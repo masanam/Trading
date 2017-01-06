@@ -1,13 +1,13 @@
 <section ng-controller="OrderDetailController" ng-init="init()">
 <!--For Mobile-->
 <div ng-if="!order.user_id || order.user_id === Authentication.user.id">
-  <button ng-show="order.status !== 'x' && order.status !== 'a' && order.status !== 'f' && order.status !== 'p'" class="btn btn-block btn-default hidden-md hidden-lg" ng-click="addBuy()" ng-disabled=" order.sells.length > 1 && order.buys.length===1"> + Add Buy </button>
+  <button ng-show="order.status !== 'x' && order.status !== 'a' && order.status !== 'f' && order.status !== 'p'" class="btn btn-block btn-default hidden-md hidden-lg" ng-click="addBuy()"  ng-if="showBuy" ng-disabled=" order.sells.length > 1 && order.buys.length===1"> + Add Buy </button>
   
-  <button ng-show="order.status === 'd' && !order.in_house"
+  <button ng-show="order.status === 'd' && !order.in_house" ng-if="!showBuy"
     class="btn btn-block btn-default hidden-md hidden-lg" ng-click="inHouse(true)">
     + Add House Product
   </button>
-  <button ng-show="order.status === 'd' && order.in_house"
+  <button ng-show="order.status === 'd' && order.in_house" ng-if="!showBuy"
     class="btn btn-block btn-default hidden-md hidden-lg" ng-click="inHouse(false)">
     Buy Product From Suppliers
   </button>
@@ -28,12 +28,12 @@
         <td></td>
         <td ng-if="!order.in_house">
           <button ng-show="order.status !== 'x' && order.status !== 'a' && order.status !== 'f' && order.status !== 'p'"
-            class="btn btn-default hidden-xs hidden-sm" ng-click="addBuy()"
+            class="btn btn-default hidden-xs hidden-sm" ng-click="addBuy()"  ng-if="showBuy"
             ng-disabled=" order.buys.length > 1 && order.sells.length===1">
             + Add Buy
           </button>
 
-          <button ng-show="order.status === 'd' && !order.in_house"
+          <button ng-show="order.status === 'd' && !order.in_house"  ng-if="!showBuy"
             class="btn btn-default pull-right hidden-xs hidden-sm" ng-click="inHouse(true)"
           	ng-disabled="order.buys.length !== 0 || order.sells.length === 0 ">
             + Add House Product
@@ -43,10 +43,11 @@
           <button ng-show="order.status !== 'x' && order.status !== 'f' && order.status !== 'a' && order.status !== 'p'"
             class="btn btn-default hidden-xs hidden-sm" ng-click="addSell()"
             ng-disabled="order.sells.length > 1 && order.buys.length===1">
-            + Add Sell
+            <span ng-if="showBuy">+ Add Sell</span>
+            <span ng-if="!showBuy">+ Add Leads</span>
           </button>
 
-          <button ng-show="order.status === 'p' && order.in_house"
+          <button ng-show="order.status === 'p' && order.in_house"  ng-if="!showBuy"
             class="btn btn-default pull-right hidden-xs hidden-sm" ng-click="inHouse(false)">
             Buy Product From Suppliers
           </button>
