@@ -182,6 +182,7 @@ class OrderController extends Controller
 
     $order = new Order();
     $order->user_id = Auth::User()->id;
+    $order->index_id = $req->index_id;
     $order->status = 'd';
     $order->save();
 

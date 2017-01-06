@@ -16,16 +16,15 @@
 </div>
 <!--For Mobile-->
 <div class="table-responsive">
-  <div style="text-align:center; margin-left:175px;" flex>
-    <button ng-show="order.status !== 'x' && order.status !== 'a' && order.status !== 'f' && order.status !== 'p'"
-      class="btn btn-primary" ng-click="addCostModal()" flex>
-      + Add Additional Cost
-    </button>
-  </div>
 	<table st-table="" class="table table-bordered table-striped">
 		<thead>
       <tr ng-if="!order.user_id || order.user_id === Authentication.user.id"  class="no-print">
-        <td></td>
+        <td>
+          <button ng-show="order.status !== 'x' && order.status !== 'a' && order.status !== 'f' && order.status !== 'p'"
+            class="btn btn-primary" ng-click="addCostModal()" flex>
+            + Add Additional Cost
+          </button>
+        </td>
         <td ng-if="!order.in_house">
           <button ng-show="order.status !== 'x' && order.status !== 'a' && order.status !== 'f' && order.status !== 'p'"
             class="btn btn-default hidden-xs hidden-sm" ng-click="addBuy()"  ng-if="showBuy"

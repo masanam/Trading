@@ -9,22 +9,37 @@
     	</span>
     </div>
 
-    <div class="box-body">
-        <div class="form-group hidden-sm hidden-md hidden-lg">
-            <div class="btn-group" uib-dropdown >
-              <button type="button" class="btn btn-primary">Action</button>
-                <button type="button" class="btn dropdown-toggle btn-primary" data-toggle="dropdown" uib-dropdown-toggle>
-                  <span class="caret"></span>
-                    <span class="sr-only">Toggle Dropdown</span>
-                </button>
-                  <ul class="dropdown-menu" uib-dropdown-menu>
-                    <li><a ui-sref="order.list" ><i class="glyphicon glyphicon-chevron-left"></i> Back </a></li>
-                    <li><a ng-click="create()" > Submit Order</a></li>
-                  </ul>
-            </div>    
-        </div>
 
-	    <div class="box-body no-padding" ng-include="'/angular/order/views/_order-detail.partial.html'"></div>
+    <div class="box-body">
+      <div class="form-group hidden-sm hidden-md hidden-lg">
+        <div class="btn-group" uib-dropdown >
+          <button type="button" class="btn btn-primary">Action</button>
+          <button type="button" class="btn dropdown-toggle btn-primary" data-toggle="dropdown" uib-dropdown-toggle>
+            <span class="caret"></span>
+            <span class="sr-only">Toggle Dropdown</span>
+          </button>
+          <ul class="dropdown-menu" uib-dropdown-menu>
+            <li><a ui-sref="order.list" ><i class="glyphicon glyphicon-chevron-left"></i> Back </a></li>
+            <li><a ng-click="create()" > Submit Order</a></li>
+          </ul>
+        </div>    
+      </div>
+
+	    <div class="no-padding">
+        <div class="col-lg-10" ng-include="'/angular/order/views/_order-detail.partial.html'"></div>
+        
+        <div class="col-lg-2" ng-controller="OrderIndexController" ng-init="getIndices()">
+          Price Index Reference
+          <div class="btn-group-vertical">
+            <label class="btn btn-default" ng-repeat="index in indices"
+              ng-model="order.index_id" uib-btn-radio="index.id">
+              <small>{{ index.index_provider }}    
+              {{ index.index_name }} - </small>
+              {{ index.price }}
+            </label>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
