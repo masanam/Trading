@@ -39,8 +39,12 @@ class Order extends Model
       ->selectRaw('order_id, count(lead_id) as countLeads')->groupBy('order_id');
   }
 
-	public function approvals() {
-		return $this->belongsToMany(User::class, 'order_approvals')->withPivot('status', 'approval_token', 'updated_at');
+  public function approvals() {
+    return $this->belongsToMany(User::class, 'order_approvals')->withPivot('status', 'approval_token', 'updated_at');
+  }
+
+	public function approvalLogs() {
+		return $this->belongsToMany(User::class, 'order_approval_logs')->withPivot('status', 'updated_at');
 	}
 
   public function trader() {

@@ -12,6 +12,7 @@ use App\Model\OrderUser;
 use App\Model\IndexPrice;
 use App\Model\Index;
 use App\Model\OrderNegotiation;
+use App\Model\OrderApprovalLog;
 
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Auth;
@@ -272,8 +273,9 @@ class OrderController extends Controller
    */
   public function show($id, Request $req = null)
   { 
-    $order = Order::with('trader', 'users', 'sells', 'buys', 'buys.trader',
-      'approvals', 'sells.trader', 'sells.company', 'buys.company', 'buys.concession', 'sells.factory', 'companies')->find($id);
+    $order = Order::with('trader', 'users', 'sells', 'buys',
+      'buys.trader', 'sells.trader', 'approvals', 'approvalLogs', 'companies',
+      'sells.company', 'buys.company', 'buys.concession', 'sells.factory')->find($id);
 
     $this->authorize('view', $order);
 
@@ -463,8 +465,12 @@ class OrderController extends Controller
       $this->authorize('approve', $order);
     }
 
+    // put the approval to Log
+    $order->approvalLogs()->attach([ $user->id => [ 'status' => $req->status ] ]);
+
     // put the user's approval status to replace old one
     $order->approvals()->sync([ $user->id => [ 'status' => $req->status ] ], false);
+
 
     // if this user has manager, add approval on top of it
     if($user->manager_id && $req->status == 'a'){

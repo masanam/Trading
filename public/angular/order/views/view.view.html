@@ -124,9 +124,16 @@
 
 <div class="col-lg-4" ng-if="included === true || order.user_id === Authentication.user.id" id="order-approval">
   <div class="box">
-    <div class="box-header">Approval</div>
+    <div class="box-header">
+      Approval
+      <button class="btn btn-default pull-right" ng-click="showLog = !showLog">
+        {{ showLog ? 'Hide' : 'Show' }} Log
+      </button>
+    </div>
     <div class="box-body no-padding with-border">
+      <div ng-if="showLog" c ng-static-include="'/angular/order/views/_approval-history.partial.html'"></div>
       <div ng-static-include="'/angular/order/views/_approval.partial.html'"></div>
+
       <div class="no-print" ng-static-include="'/angular/chat/views/_view-chat.partial.html'"></div>
     </div>
   </div>

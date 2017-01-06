@@ -49,7 +49,6 @@ class CreateOrdersTable extends Migration
 
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->unique(['order_id', 'user_id']);
         });
 
         Schema::create('order_users', function (Blueprint $table) {
@@ -122,6 +121,7 @@ class CreateOrdersTable extends Migration
         Schema::drop('order_details');
         Schema::drop('order_users');
         Schema::drop('order_approvals');
+        Schema::drop('order_approval_logs');
         Schema::drop('orders');
     }
 }

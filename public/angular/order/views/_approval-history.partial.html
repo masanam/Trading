@@ -1,0 +1,33 @@
+<div style="background:#343434; color:white; padding:5px;" >
+	<p>Approval History</p>
+	<table class="table">
+		<thead>
+			<tr><th>Name</th><th>Status</th><th>Updated</th></tr>
+		</thead>
+		<tbody>
+	    <style>
+	      .img-user img {
+	        object-fit: cover;
+	        height: 30px;
+	      }
+	      .img-user img[class] { width: 30px }
+	    </style>
+			<tr ng-repeat="al in order.approval_logs">
+				<td>
+	        <div class="img-user">
+	          <img ng-src="{{al.image}}" ng-fallback-src="./images/default.png"
+	          	class="img-circle div-img-circle small" style="float:left; margin:2px;" />
+	          {{ al.name }}
+	        </div>
+				</td>
+				<td>
+				{{  al.pivot.status === 'a' ? 'Accepted' :
+					al.pivot.status === 'r' ? 'Rejected' : 
+					al.pivot.status === 'y' ? 'Auto-Acc' : 
+					al.pivot.status === 'n' ? 'Auto-Rjct' : 'Pending' }}
+				</td>
+				<td>{{ al.pivot.updated_at | date }}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

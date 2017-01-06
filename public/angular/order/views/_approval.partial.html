@@ -19,7 +19,10 @@
         </div>
 			</td>
 			<td>
-				{{ approval.pivot.status === 'a' ? 'Accepted' : approval.pivot.status === 'r' ? 'Rejected' : 'Pending' }}
+				{{  approval.pivot.status === 'a' ? 'Accepted' :
+					approval.pivot.status === 'r' ? 'Rejected' : 
+					approval.pivot.status === 'y' ? 'Auto-Acc' : 
+					approval.pivot.status === 'n' ? 'Auto-Rjct' : 'Pending' }}
 			</td>
 			<td>{{ approval.pivot.updated_at | date }}</td>
 		</tr>
