@@ -77,7 +77,7 @@ class UserController extends Controller
      */
     public function show($user)
     {
-        $user = User::find($user);
+        $user = User::with('directSubordinates','directManager')->find($user);
 
         if($user->status == 'a') {
             return response()->json($user, 200);
@@ -93,11 +93,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $user)
+    public function update(Request $req, $id)
     {
-        $user = User::find($user);
+        $user = User::with('directSubordinates')->find($id);
 
-        if (!$request) {
+        if (!$req) {
             return response()->json([
                 'message' => 'Bad Request'
             ], 400);
@@ -109,17 +109,26 @@ class UserController extends Controller
             ] ,404);
         }
 
+        if($req->direct_subordinates){
+            foreach ($req->direct_subordinates as $sub) {
+                $temp_sub = User::find($sub['id']);
+                $temp_sub->manager_id = $id;
+                $temp_sub->save();
+            }
+        }
+
         $lastImage = $user->image;
 
-        $user->name = $request->name;
-        $user->image = $request->image;
-        $user->title = $request->title;
-        $user->email = $request->email;
-        $user->phone = $request->phone;
-        $user->password = bcrypt($request->password);
-        $user->employee_id = $request->employee_id;
+        $user->name = $req->name;
+        $user->image = $req->image;
+        $user->title = $req->title;
+        $user->email = $req->email;
+        $user->phone = $req->phone;
+        $user->password = bcrypt($req->password);
+        $user->employee_id = $req->employee_id;
+        $user->manager_id = $req->manager_id;
 
-        $user->role = $request->role ? $request->role : 'user';
+        $user->role = $req->role ? $req->role : 'user';
 
         $user->status = 'a';
 
@@ -133,7 +142,7 @@ class UserController extends Controller
         // regardless of whether they change the photo or not, they still change the profile
         event(new EditUserProfile($user, 'edit'));
 
-        return response()->json($user, 200);
+        return $this->show($id);
     }
 
     public function setActing(Request $request, $user) {
@@ -159,9 +168,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($user)
+    public function destroy($user, Request $req = null)
     {
-        $user = User::find($user);
+        $user = User::with('directSubordinates')->find($user);
         
         if (!$user) {
             return response()->json([
@@ -169,7 +178,8 @@ class UserController extends Controller
             ] ,404);
         }
 
-        $user->status = 'x';
+        if($req->manager) $user->manager_id = null;
+        else $user->status = 'x';
         $user->save();
 
         return response()->json($user, 200);
