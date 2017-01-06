@@ -21,7 +21,13 @@
   <div class="col-lg-12" ng-controller="LeadLocationController"> 
     <div class="box box-info" >
       <div class="box-header with-border">
-        <h3 class="box-title">Fill {{ lead.lead_type === 'b' ? 'Concession' : 'Factory' }} Details</h3>
+        <h3 class="box-title">Fill
+          {{
+            locationBy === 'country' ?
+              (lead.lead_type === 'b' ? 'Concession' : 'Factory')
+              : 'Destination'
+          }} Details
+        </h3>
       </div>
       <div class="box-body">
         <div ng-include="'/angular/lead/views/wizard/_location.partial.html'"></div>

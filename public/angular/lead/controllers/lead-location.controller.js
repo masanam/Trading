@@ -2,7 +2,7 @@
 
 angular.module('lead').controller('LeadLocationController', ['$scope', '$stateParams', '$uibModal', 'Environment', 'Concession', 'Factory', 'Lead',
   function ($scope, $stateParams, $uibModal, Environment, Concession, Factory, Lead) {
-    $scope.locationBy = Environment.locationBy;
+    $scope.destinationBy = Environment.destinationBy;
 
     //Init select ports
     $scope.find = function(keyword) {
