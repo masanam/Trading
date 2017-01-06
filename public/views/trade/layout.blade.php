@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">  
 
   <script type="text/javascript">
+    var deployment = "{{ Config::get('app.deployment') }}";
     var env = "{{ Config::get('app.env') }}";
     var dist = "{{ Config::get('app.deployment') }}";
     var trx = "{{ Config::get('app.defaultTrx') }}";

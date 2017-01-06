@@ -4,6 +4,7 @@ angular.module('index').controller('LayoutController', ['$scope', '$state', 'Aut
   function($scope, $state, Authentication, Environment) {
     $scope.Authentication = Authentication;
     $scope.showBuy = Environment.showBuy;
+    $scope.deployment = Environment.deployment;
     
     $scope.init = function(){
       $scope.style=[];

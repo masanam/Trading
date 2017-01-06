@@ -3,9 +3,16 @@
   <!-- Logo -->
   <a ui-sref="home" class="logo">
     <!-- mini logo for sidebar mini 50x50 pixels -->
-    <span class="logo-mini"><img src="./images/sinarmas.png" style="width:30px;"></span>
+    <span class="logo-mini">
+      <img src="./images/berau.jpg" style="width:30px;" ng-if="deployment === 'berau'">
+      <img src="./images/sinarmas.png" style="width:30px;" ng-if="deployment === 'bib'">
+    </span>
     <!-- logo for regular state and mobile devices -->
-    <span class="logo-lg"><img src="./images/sinarmas.png" style="width:30px; margin-right: 10px;"><b>COALTRADE</b></span>
+    <span class="logo-lg">
+      <img src="./images/berau.jpg" style="width:30px; margin-right: 10px;" ng-if="deployment === 'berau'">
+      <img src="./images/sinarmas.png" style="width:30px; margin-right: 10px;" ng-if="deployment === 'bib'">
+      <b>COALTRADE</b>
+    </span>
   </a>
 
   <!-- Header Navbar: style can be found in header.less -->
