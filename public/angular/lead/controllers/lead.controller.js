@@ -76,7 +76,14 @@ angular.module('lead').controller('LeadController', ['$scope', '$state', '$state
       var next;
 
       if($state.current.name === 'lead.update') next = 'lead.location';
-      else if($state.current.name === 'lead.location') next = 'lead.port';
+      else if($state.current.name === 'lead.location'){
+        // if location is by country, skip port
+        if(Environment.destinationBy === 'country'){
+          console.log(next);
+          $scope.lead.order_status++;
+          next = 'lead.product';
+        } else next = 'lead.port';
+      }
       else if($state.current.name === 'lead.port') next = 'lead.product';
       else if($state.current.name === 'lead.product') {
         next = 'lead.view';

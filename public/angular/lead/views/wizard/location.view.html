@@ -10,7 +10,7 @@
           </a>
         </div>
         <div class="pull-right">
-          <button ng-disabled="!lead.lead_type" type="submit" class="btn btn-success">
+          <button type="submit" class="btn btn-success">
             Next <i class="glyphicon glyphicon-arrow-right"></i>
           </button>
         </div>
@@ -23,9 +23,8 @@
       <div class="box-header with-border">
         <h3 class="box-title">Fill
           {{
-            locationBy === 'country' ?
+            destinationBy === 'country' ? 'Destination' :
               (lead.lead_type === 'b' ? 'Concession' : 'Factory')
-              : 'Destination'
           }} Details
         </h3>
       </div>
