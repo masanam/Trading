@@ -92,4 +92,15 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         }
         return $sups;
     }
+
+    public function roles() { 
+        return $this->belongsToMany(Roles::class, 'acting_users', 'user_id', 'acting_as')
+            ->where('acting_users.status', 'a')
+            ->whereRaw('\'' . date('Y-m-d') . '\' BETWEEN date_start AND date_end')
+            ->withPivot('role', 'date_start', 'date_end', 'status');
+    }
+
+    public function roles(){
+        return $this->belongsToMany(Roles::class, 'user_role', 'role_id', 'user_id');
+    }
 }

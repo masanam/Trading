@@ -53,8 +53,27 @@ class CreateUsersTable extends Migration
 
         Schema::create('roles', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('role_name');
-            $table->text('access');
+            $table->string('role');
+            $table->timestamps();
+        });
+
+        Schema::create('user_role', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('user_id');
+            $table->integer('role_id');
+            $table->timestamps();
+        });
+
+        Schema::create('permissions', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('permission');
+            $table->timestamps();
+        });
+
+        Schema::create('permission_role', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('permission_id');
+            $table->integer('role_id');
             $table->timestamps();
         });
 
@@ -96,6 +115,9 @@ class CreateUsersTable extends Migration
         Schema::dropIfExists('activities');
         Schema::dropIfExists('login_user');
         Schema::dropIfExists('roles');
+        Schema::dropIfExists('user_role');
+        Schema::dropIfExists('permissions');
+        Schema::dropIfExists('permission_role');
         Schema::dropIfExists('password_resets');
         Schema::dropIfExists('acting_users');
         Schema::dropIfExists('users');
