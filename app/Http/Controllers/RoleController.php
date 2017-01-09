@@ -5,8 +5,14 @@ namespace App\Http\Controllers;
 use App\Model\Role;
 use Illuminate\Http\Request;
 
+use Auth;
+
 class RoleController extends Controller
 {
+    public function __construct() {
+        $this->middleware(['jwt.auth']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +20,10 @@ class RoleController extends Controller
      */
     public function index()
     {
-        //
+        $user = Auth::user();
+        dd(Auth::user()->roles());
+
+        return array_search('admin', $user->roles());
     }
 
     /**

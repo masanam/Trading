@@ -86,5 +86,4 @@ Route::group(['middleware' => ['cors']], function() {
 
     //roles API
     Route::resource('role','RoleController', ['except' => [ 'create', 'edit' ]]);
-
 });

@@ -110,7 +110,7 @@ class AuthenticateController extends Controller
  
         }
         
-        $user = Auth::user();
+        $user = User::with('roles')->find(Auth::user()->id);
         $subordinates = $user->subordinates();
         $managers = $user->managers();
  
