@@ -21,7 +21,7 @@ class RoleController extends Controller
      */
     public function index(Request $req)
     {
-        $role = Role::with('permissions')->get();
+        $role = Role::get();
 
         return response()->json($role, 200);
     }
@@ -63,7 +63,7 @@ class RoleController extends Controller
      */
     public function show($id)
     {
-        $role = Role::with('permissions')->find($id);
+        $role = Role::find($id);
 
         return response()->json($role, 200);
     }
@@ -78,8 +78,8 @@ class RoleController extends Controller
     public function update(Request $req, $id)
     {
         $role = Role::find($id);
-
-        $role->permissions()->attach($req->permission_id);
+        $role->role = $req->role;
+        $role->save();
 
         return $this->show($id);
     }
