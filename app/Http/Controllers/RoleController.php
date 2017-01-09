@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Model\Role;
+use App\Model\Permission;
 use Illuminate\Http\Request;
 
 use Auth;
@@ -18,12 +19,11 @@ class RoleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $req)
     {
-        $user = Auth::user();
-        dd(Auth::user()->roles());
+        $role = Role::with('permissions')->get();
 
-        return array_search('admin', $user->roles());
+        return response()->json($role, 200);
     }
 
     /**
@@ -34,18 +34,25 @@ class RoleController extends Controller
      */
     public function store(Request $req)
     {
-      if(!$req) {
-        return response()->json([
-          'message' => 'Bad Request'
-        ], 400);
-      }
+        if(!$req) {
+            return response()->json([
+              'message' => 'Bad Request'
+            ], 400);
+        }
 
-      $role = new Role();
-      $role->role_name = $req->role_name;
-      $role->access = json_encode($req->access);
+        // if create role
+        if($req->role){
+            $role = new Role();
+            $role->role = $req->role;
+        }
+        // if create permission
+        // else if($req->permission){
+        //     $role = new Permission();
+        //     $role->permission = $req->permission;
+        // }
 
-      $role->save();
-      return response()->json($role, 200);
+        $role->save();
+        return response()->json($role, 200);
     }
 
     /**
@@ -56,7 +63,9 @@ class RoleController extends Controller
      */
     public function show($id)
     {
-        //
+        $role = Role::with('permissions')->find($id);
+
+        return response()->json($role, 200);
     }
 
     /**
@@ -66,9 +75,13 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $req, $id)
     {
-        //
+        $role = Role::find($id);
+
+        $role->permissions()->attach($req->permission_id);
+
+        return $this->show($id);
     }
 
     /**

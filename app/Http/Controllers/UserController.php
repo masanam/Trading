@@ -77,7 +77,7 @@ class UserController extends Controller
      */
     public function show($user)
     {
-        $user = User::with('directSubordinates','directManager')->find($user);
+        $user = User::with('directSubordinates','directManager','roles')->find($user);
 
         if($user->status == 'a') {
             return response()->json($user, 200);
@@ -128,7 +128,8 @@ class UserController extends Controller
         $user->employee_id = $req->employee_id;
         $user->manager_id = $req->manager_id;
 
-        $user->role = $req->role ? $req->role : 'user';
+        if($req->role_id) $user->roles()->attach($req->role_id);
+        // $user->role = $req->role ? $req->role : 'user';
 
         $user->status = 'a';
 
