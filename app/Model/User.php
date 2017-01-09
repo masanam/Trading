@@ -98,6 +98,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     public function isAdmin() {
-        return array_search('admin', $this->roles());
+        foreach ($this->roles() as $role) {
+            if($role->role == 'admin') return true;
+        }
+        return false;
     }
 }
