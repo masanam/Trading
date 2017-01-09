@@ -128,7 +128,8 @@ class UserController extends Controller
         $user->employee_id = $req->employee_id;
         $user->manager_id = $req->manager_id;
 
-        $user->role = $req->role ? $req->role : 'user';
+        if($req->role_id) $user->roles()->attach($req->role_id);
+        // $user->role = $req->role ? $req->role : 'user';
 
         $user->status = 'a';
 

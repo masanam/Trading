@@ -84,7 +84,8 @@ Route::group(['middleware' => ['cors']], function() {
 
     Route::get('leads/{id}/test', 'LeadController@isSingleLeadInOrder');
 
-    //roles API
+    //roles & permission API
     Route::resource('role','RoleController', ['except' => [ 'create', 'edit' ]]);
+    Route::resource('permission','PermissionController', ['except' => [ 'create', 'edit' ]]);
 
 });

@@ -1,6 +1,8 @@
 <?php
 
 use App\Model\User;
+use App\Model\Role;
+use App\Model\Permission;
 
 use Illuminate\Database\Seeder;
 
@@ -59,6 +61,26 @@ class UsersTableSeeder extends Seeder
                 'status' => 'a' 
             ]);
         }
+
+        Role::create([
+            'role' => 'admin',
+        ]);
+        Role::create([
+            'role' => 'trader',
+        ]);
+
+        Permission::create([
+            'permission' => 'hal 1',
+        ]);
+        Permission::create([
+            'permission' => 'hal 2',
+        ]);
+
+        User::find(1)->roles()->attach(1);
+        User::find(2)->roles()->attach(2);
+        Role::find(1)->permissions()->attach(1);
+        Role::find(1)->permissions()->attach(2);
+        Role::find(2)->permissions()->attach(2);
 
         User::find(4)->actings()->attach(1, [
             'role' => 'a',

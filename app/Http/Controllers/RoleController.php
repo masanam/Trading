@@ -14,7 +14,9 @@ class RoleController extends Controller
      */
     public function index()
     {
-        //
+        $role = Role::with('permissions')->get();
+
+        return response()->json($role, 200);
     }
 
     /**
@@ -57,9 +59,11 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $req, $id)
     {
-        //
+        $role = Role::find($id);
+
+        $role->permissions()->attach($req->permission_id);
     }
 
     /**
