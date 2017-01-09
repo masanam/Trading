@@ -77,7 +77,7 @@ class UserController extends Controller
      */
     public function show($user)
     {
-        $user = User::with('directSubordinates','directManager')->find($user);
+        $user = User::with('directSubordinates','directManager','roles')->find($user);
 
         if($user->status == 'a') {
             return response()->json($user, 200);
