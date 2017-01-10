@@ -169,6 +169,7 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
     // Find list of order
     $scope.find = function () {
       $scope.orders = Order.query({ category: $scope.browse.category, status: $scope.browse.status });
+	  // $scope.orderCollection = $scope.orders;
     };
 
     // Find existing order
