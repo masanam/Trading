@@ -12,7 +12,6 @@ angular.module('auth').controller('AuthController', ['$scope', '$state', '$urlRo
       };
 
       Authentication.login(credentials, function(err, res){
-        console.log(Authentication.user);
         if(err) $scope.err = err;
         else $state.go('dashboard.main', {});
       }, function(response){
