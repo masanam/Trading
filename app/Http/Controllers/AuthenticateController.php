@@ -76,12 +76,13 @@ class AuthenticateController extends Controller
         $user->name = trim($request->name);
         $user->title = trim($request->title);
         $user->image = trim($request->image);
-        $user->role = $request->role  ? $request->role : 'trader';
         $user->status = 'a';
         $user->email = trim(strtolower($request->email));
         $user->phone = trim($request->phone);
         $user->password = bcrypt($request->password);
         $user->save();
+
+        $user->roles()->attach(2);
 
         $token = JWTAuth::fromUser($user);
 
