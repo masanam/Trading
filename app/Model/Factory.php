@@ -12,6 +12,11 @@ class Factory extends Model
         'size', 'consumption', 'port_id', 'port_distance', 'factory_name'
     ];
 
+    public function getCreatedAtAttribute($value)
+    {
+        return date('d.m.Y H:i:s', strtotime($value));
+    }
+
     public function company() {
     	return $this->belongsTo(Company::class);
     }

@@ -10,6 +10,11 @@ class Activity extends Model
 {
     protected $table = 'activities';
 
+    public function getCreatedAtAttribute($value)
+    {
+        return date('d.m.Y H:i:s', strtotime($value));
+    }
+
     public function User() {
     	return $this->belongsTo('User');
     }

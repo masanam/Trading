@@ -38,6 +38,11 @@ class Product extends Model
         'aft_max',
     ];
 
+    public function getCreatedAtAttribute($value)
+    {
+        return date('d.m.Y H:i:s', strtotime($value));
+    }
+
     public function company() {
     	return $this->belongsTo(Company::class);
     }

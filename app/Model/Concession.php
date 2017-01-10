@@ -42,6 +42,11 @@ class Concession extends Model
         'stripping_ratio'
     ];
 
+    public function getCreatedAtAttribute($value)
+    {
+        return date('d.m.Y H:i:s', strtotime($value));
+    }
+
     public function company() {
     	return $this->belongsTo(Company::class);
     }

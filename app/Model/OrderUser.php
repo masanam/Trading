@@ -8,4 +8,9 @@ class OrderUser extends Model
 {
     public $timestamps = false;
     protected $table = 'order_users';
+
+    public function getCreatedAtAttribute($value)
+    {
+        return date('d.m.Y H:i:s', strtotime($value));
+    }
 }

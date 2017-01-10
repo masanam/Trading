@@ -15,6 +15,11 @@ class Port extends Model {
     'has_conveyor', 'has_crusher', 'has_blending', 'draft_height', 'daily_discharge_rate'
   ];
 
+  public function getCreatedAtAttribute($value)
+  {
+      return date('d.m.Y H:i:s', strtotime($value));
+  }
+
   public function concessions() {
     return $this->hasMany(Concession::class);
   }

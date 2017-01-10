@@ -18,6 +18,11 @@ class Contact extends Model
 
     protected $fillable = ['name', 'phone', 'email'];
 
+    public function getCreatedAtAttribute($value)
+    {
+        return date('d.m.Y H:i:s', strtotime($value));
+    }
+
     public function user() {
     	return $this->belongsTo('User');
     }
