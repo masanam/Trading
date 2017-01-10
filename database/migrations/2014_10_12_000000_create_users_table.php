@@ -58,23 +58,11 @@ class CreateUsersTable extends Migration
         });
 
         Schema::create('user_role', function (Blueprint $table) {
-            $table->increments('id');
             $table->integer('user_id');
             $table->integer('role_id');
             $table->timestamps();
-        });
 
-        Schema::create('permissions', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('permission');
-            $table->timestamps();
-        });
-
-        Schema::create('permission_role', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('permission_id');
-            $table->integer('role_id');
-            $table->timestamps();
+            $table->unique(['user_id', 'role_id']);
         });
 
         Schema::create('password_resets', function (Blueprint $table) {

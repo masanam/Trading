@@ -95,7 +95,7 @@ class UserController extends Controller
      */
     public function update(Request $req, $id)
     {
-        $user = User::with('directSubordinates')->find($id);
+        $user = User::with('directSubordinates','roles')->find($id);
 
         if (!$req) {
             return response()->json([
@@ -128,7 +128,15 @@ class UserController extends Controller
         $user->employee_id = $req->employee_id;
         $user->manager_id = $req->manager_id;
 
-        if($req->role_id) $user->roles()->attach($req->role_id);
+        if($req->roles){
+            // $user->roles()->detach();
+            foreach ($req->roles as $r) {
+                // if($user->roles[]->id != $r['id'])
+                if (!$user->roles->contains($r['id']))
+                    $user->roles()->attach($r['id']);
+            }
+        }
+        // if($req->role_id) $user->roles()->attach($req->role_id);
         // $user->role = $req->role ? $req->role : 'user';
 
         $user->status = 'a';
@@ -169,9 +177,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($user, Request $req = null)
+    public function destroy($id, Request $req = null)
     {
-        $user = User::with('directSubordinates')->find($user);
+        $user = User::with('directSubordinates')->find($id);
         
         if (!$user) {
             return response()->json([
@@ -179,9 +187,18 @@ class UserController extends Controller
             ] ,404);
         }
 
-        if($req->manager) $user->manager_id = null;
-        else $user->status = 'x';
-        $user->save();
+        //remove roles for admin
+        if($req->role_id){
+            $user->roles()->detach($req->role_id);
+        }
+        //general user remove
+        else{
+            //manager remove for admin
+            if($req->manager) $user->manager_id = null;            
+            //general user remove
+            else $user->status = 'x';
+            $user->save();
+        }
 
         return response()->json($user, 200);
     }
