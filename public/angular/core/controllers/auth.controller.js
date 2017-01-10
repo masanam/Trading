@@ -12,6 +12,7 @@ angular.module('auth').controller('AuthController', ['$scope', '$state', '$urlRo
       };
 
       Authentication.login(credentials, function(err, res){
+        console.log(Authentication.user);
         if(err) $scope.err = err;
         else $state.go('dashboard.main', {});
       }, function(response){
@@ -34,9 +35,16 @@ angular.module('auth').controller('AuthController', ['$scope', '$state', '$urlRo
         };
         
         // Use Satellizer's $auth service to login
-        Authentication.signup(registration, function(err){
-          if(err) $scope.err = err.message.data.message;
-          else $state.go('home', {});
+        Authentication.signup(registration, function(res){
+          // if(err) $scope.err = err.message.data.message;
+          // else $state.go('home', {});
+          Authentication.login(credentials, function(res){
+            $state.go('home', {});
+          }, function(err) {
+            $scope.err = err.message;
+          });
+        }, function(err) {
+          $scope.err = err.message;
         });
       } else {
         $scope.err = 'Password(s) does not match!';
