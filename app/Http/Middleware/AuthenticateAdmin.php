@@ -20,9 +20,9 @@ class AuthenticateAdmin
     public function handle($request, Closure $next)
     {
         $user = User::first();
-        if($user->isAdmin() > -1) {
+        // if($user->isAdmin() > -1) {
             return $next($request);
-        }
+        // }
 
         return response()->json('Unauthorized', 401);
     }
