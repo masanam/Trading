@@ -50,7 +50,7 @@ angular.module('user').factory('Authentication', ['$http', '$auth',
       $http.post('/api/authenticate/forgot', { email: email }).success(function(res) {
         return callback(res);
       }).error(function(err){
-        if(callback) return callback(err);
+        if(callback) return callback(err, undefined);
       });
     };
 

@@ -22,6 +22,7 @@ Route::group(['middleware' => ['cors']], function() {
     Route::post('authenticate', 'AuthenticateController@authenticate');
     Route::post('authenticate/signup', 'AuthenticateController@signup');
     Route::get('authenticate/user', 'AuthenticateController@getAuthenticatedUser');
+    Route::post('authenticate/forgot', 'AuthenticateController@forgotPassword');
 
     //S3 Upload file signing API
     Route::post('signing', 'AuthenticateController@signing');
