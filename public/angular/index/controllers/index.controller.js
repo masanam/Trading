@@ -3,6 +3,9 @@
 // Index controller
 angular.module('index').controller('IndexController', ['$scope', '$stateParams', '$state', 'Index',
   function ($scope, $stateParams, $state, Index) {
+    $scope.init = function() {
+      $scope.index = {};
+    };
     // Create new Article
     $scope.create = function (isValid) {
       $scope.error = null;
