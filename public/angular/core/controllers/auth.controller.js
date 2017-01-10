@@ -51,13 +51,17 @@ angular.module('auth').controller('AuthController', ['$scope', '$state', '$urlRo
     };
 
     $scope.forgot = function() {
+      $scope.err = '';
+      $scope.success = '';
+    
+      $scope.loading = true;
       var email= $scope.forgot.email;
 
-      Authentication.forgot(email, function(err) {
-        if(err) console.log(err);
-        else {
-          $state.go('home', {});
-        }
+      Authentication.forgot(email, function(res) {
+        $scope.loading = false;
+        if(res.message !== 'Not Found') $scope.success = res.message + ' to ' + email;
+        else $scope.success = res.message;
+        // $state.go('home', {});
       });
     };
   }
