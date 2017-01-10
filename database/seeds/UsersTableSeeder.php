@@ -68,9 +68,16 @@ class UsersTableSeeder extends Seeder
         Role::create([
             'role' => 'trader',
         ]);
+		Role::create([
+			'role'=>'manager',
+		]);
+		
         
         User::find(1)->roles()->attach(1);
         User::find(2)->roles()->attach(2);
+		User::find(3)->roles()->attach(3);
+		User::find(3)->roles()->attach(2);
+		User::find(4)->roles()->attach(1);
 
         User::find(4)->actings()->attach(1, [
             'role' => 'a',
