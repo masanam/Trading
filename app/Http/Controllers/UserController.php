@@ -95,7 +95,7 @@ class UserController extends Controller
      */
     public function update(Request $req, $id)
     {
-        $user = User::with('directSubordinates','roles')->find($id);
+        $user = User::find($id);
 
         if (!$req) {
             return response()->json([
@@ -129,13 +129,14 @@ class UserController extends Controller
         $user->manager_id = $req->manager_id;
 
         if($req->roles){
-            // $user->roles()->detach();
-            foreach ($req->roles as $r) {
-                // if($user->roles[]->id != $r['id'])
-                if (!$user->roles->contains($r['id']))
-                    $user->roles()->attach($r['id']);
+            $roles = [];
+            foreach($req->roles as $r) {
+                $roles[] = $r['id'];
             }
+                // if($user->roles[]->id != $r['id'])
+            $user->roles()->sync($roles);
         }
+
         // if($req->role_id) $user->roles()->attach($req->role_id);
         // $user->role = $req->role ? $req->role : 'user';
 
