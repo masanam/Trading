@@ -28,6 +28,11 @@ class OrderNegotiation extends Model
 
     public function getCreatedAtAttribute($value)
     {
-        return date('d.m.Y H:i:s', strtotime($value));
+        return date('d-m-Y', strtotime($value));
+    }
+
+    public function getUpdatedAtAttribute($value)
+    {
+        return date('d-m-Y', strtotime($value));
     }
 }
