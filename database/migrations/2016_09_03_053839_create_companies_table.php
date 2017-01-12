@@ -86,7 +86,49 @@ class CreateCompaniesTable extends Migration
             $table->string('license_type')->nullable();
             $table->date('license_expiry_date')->nullable();
             $table->char('status', 1); // A = Active , X = Deleted
+            $table->string('iup_id')->nullable();
             $table->timestamps();
+
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
+        });
+
+        /*kamal 2017-01-12 16:40
+        * membuat tabel 98-134
+        */
+        Schema::create('concession_files', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('url');
+            $table->integer('concession_id');
+
+            $table->foreign('concession_id')->references('id')->on('concession')->onDelete('cascade');
+        });
+
+        Schema::create('iup', function (Blueprint $table) {
+            $table->string('id');
+            $table->integer('company_id');
+            $table->string('source');
+            $table->string('type');
+            $table->string('negotiable');
+            $table->string('rejected');
+            $table->char('status',1);
+            $table->date('checkby')->nullable();
+            $table->string('expired')->nullable();
+            $table->string('overlap_other')->nullable();
+            $table->string('produce_kp')->nullable();
+            $table->string('land_use')->nullable();
+            $table->string('description')->nullable();
+            $table->string('restricted_area')->nullable();
+            $table->string('overlap_smg')->nullable();
+            $table->string('coal_bearing_formation')->nullable();
+            $table->string('geological_description')->nullable();
+            $table->string('geological_quality')->nullable();
+            $table->string('geological_cv')->nullable();
+            $table->string('geological_tm')->nullable();
+            $table->string('geological_ts')->nullable();
+            $table->string('geological_ash')->nullable();
+            $table->string('geological_reserve')->nullable();
+            $table->string('geological_stripping_ratio')->nullable();
+            $table->string('geological_notes')->nullable();
 
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
         });
@@ -152,6 +194,10 @@ class CreateCompaniesTable extends Migration
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
         });
         
+        
+        /*kamal 2017-01-12 16:50
+        * add atribut river 208
+        */
         Schema::create('ports', function (Blueprint $table) {
             $table->increments('id');
             $table->string('port_name');
@@ -159,6 +205,7 @@ class CreateCompaniesTable extends Migration
             $table->boolean('is_private');
             $table->string('location');
             $table->integer('size')->unsigned();
+            $table->string('river')->nullable();
             $table->integer('river_capacity')->nullable();
             $table->decimal('latitude', 10, 8);
             $table->decimal('longitude', 11, 8);
