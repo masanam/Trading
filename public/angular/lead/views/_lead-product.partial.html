@@ -18,83 +18,70 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td><b>GCV ADB </b></td>
-              <td>{{lead.gcv_adb_min}} - {{lead.gcv_adb_max}} kcal</td>
-              <td>{{lead.gcv_adb_bonus}}</td>
-              <td>{{lead.gcv_adb_reject}}</td>
+            <tr lead-quality 
+            min="lead.gcv_adb_min" max="lead.gcv_adb_max"
+            bonus="lead.gcv_adb_bonus" reject="lead.gcv_adb_reject" quality="'GCV ADB'"
+            >
             </tr>
-            <tr>
-              <td><b>GCV ARB </b></td>
-              <td>{{lead.gcv_arb_min}} - {{lead.gcv_arb_max}} kcal</td>
-              <td>{{lead.gcv_arb_bonus}}</td>
-              <td>{{lead.gcv_arb_reject}}</td>
+            <tr lead-quality 
+            min="lead.gcv_arb_min" max="lead.gcv_arb_max"
+            bonus="lead.gcv_arb_bonus" reject="lead.gcv_arb_reject" quality="'GCV ARB'"
+            >
             </tr>
-            <tr>
-              <td><b>NCV ARB </b></td>
-              <td>{{lead.ncv_min}} - {{lead.ncv_max}} kcal</td>
-              <td>{{lead.ncv_bonus}}</td>
-              <td>{{lead.ncv_reject}}</td>
+            <tr lead-quality 
+            min="lead.ncv_min" max="lead.ncv_max"
+            bonus="lead.ncv_bonus" reject="lead.ncv_reject" quality="'NCV ARB'"
+            >
             </tr>
-            <tr>
-              <td><b>Total Moisture (ARB) </b></td>
-              <td>{{lead.tm_min}} - {{lead.tm_max}} %</td>
-              <td>{{lead.tm_bonus}}</td>
-              <td>{{lead.tm_reject}}</td>
+            <tr lead-quality 
+            min="lead.tm_min" max="lead.tm_max"
+            bonus="lead.tm_bonus" reject="lead.tm_reject" quality="'Total Moisture (ARB)'"
+            >
             </tr>
-            <tr>
-              <td><b>Inherent Moisture (ADB) </b></td>
-              <td>{{lead.im_min}} - {{lead.im_max}} %</td>
-              <td>{{lead.im_bonus}}</td>
-              <td>{{lead.im_reject}}</td>
+            <tr lead-quality 
+            min="lead.im_min" max="lead.im_max"
+            bonus="lead.im_bonus" reject="lead.im_reject" quality="'Inherent Moisture (ADB)'"
+            >
             </tr>
-            <tr>
-              <td><b>Volatile Matter (ADB) </b></td>
-              <td>{{lead.vm_min}} - {{lead.vm_max}} %</td>
-              <td>{{lead.vm_bonus}}</td>
-              <td>{{lead.vm_reject}}</td>
+            <tr lead-quality 
+            min="lead.vm_min" max="lead.vm_max"
+            bonus="lead.vm_bonus" reject="lead.vm_reject" quality="'Volatile Matter (ADB)'"
+            >
             </tr>
-            <tr>
-              <td><b>Ash (ADB) </b></td>
-              <td>{{lead.ash_min}} - {{lead.ash_max}} %</td>
-              <td>{{lead.ash_bonus}}</td>
-              <td>{{lead.ash_reject}}</td>
+            <tr lead-quality 
+            min="lead.ash_min" max="lead.ash_max"
+            bonus="lead.ash_bonus" reject="lead.ash_reject" quality="'Ash (ADB)'"
+            >
             </tr>
-            <tr>
-              <td><b>Fixed Carbon (ADB) </b></td>
-              <td>{{lead.fc_min}} - {{lead.fc_max}} %</td>
-              <td>{{lead.fc_bonus}}</td>
-              <td>{{lead.fc_reject}}</td>
+            <tr lead-quality 
+            min="lead.fc_min" max="lead.fc_max"
+            bonus="lead.fc_bonus" reject="lead.fc_reject" quality="'Fixed Carbon (ADB)'"
+            >
             </tr>
-            <tr>
-              <td><b>Total Sulphur (ADB) </b></td>
-              <td>{{lead.ts_min}} - {{lead.ts_max}} %</td>
-              <td>{{lead.ts_bonus}}</td>
-              <td>{{lead.ts_reject}}</td>
+            <tr lead-quality 
+            min="lead.ts_min" max="lead.ts_max"
+            bonus="lead.ts_bonus" reject="lead.ts_reject" quality="'Total Sulphur (ADB)'"
+            >
             </tr>
-            <tr>
-              <td><b>HGI </b></td>
-              <td>{{lead.hgi_min}} - {{lead.hgi_max}}</td>
-              <td>{{lead.hgi_bonus}}</td>
-              <td>{{lead.hgi_reject}}</td>
+            <tr lead-quality 
+            min="lead.hgi_min" max="lead.hgi_max"
+            bonus="lead.hgi_bonus" reject="lead.hgi_reject" quality="'HGI'"
+            >
             </tr>
-            <tr>
-              <td><b>SIZE (0-50mm)</b></td>
-              <td>{{lead.size_min}} - {{lead.size_max}} %</td>
-              <td>{{lead.size_bonus}}</td>
-              <td>{{lead.size_reject}}</td>
+            <tr lead-quality 
+            min="lead.size_min" max="lead.size_max"
+            bonus="lead.size_bonus" reject="lead.size_reject" quality="'SIZE (0-50mm)'"
+            >
             </tr>
-            <tr>
-              <td><b>Fe2O3 </b></td>
-              <td>{{lead.fe2o3_min}} - {{lead.fe2o3_max}} %</td>
-              <td>{{lead.fe2o3_bonus}}</td>
-              <td>{{lead.fe2o3_reject}}</td>
+            <tr lead-quality 
+            min="lead.fe2o3_min" max="lead.fe2o3_max"
+            bonus="lead.fe2o3_bonus" reject="lead.fe2o3_reject" quality="'Fe2O3'"
+            >
             </tr>
-            <tr>
-              <td><b>AFT</b></td>
-              <td>{{lead.aft_min}} - {{lead.aft_max}} &#176</td>
-              <td>{{lead.aft_bonus}}</td>
-              <td>{{lead.aft_reject}}</td>
+            <tr lead-quality 
+            min="lead.aft_min" max="lead.aft_max"
+            bonus="lead.aft_bonus" reject="lead.aft_reject" quality="'AFT'"
+            >
             </tr>
           </tbody>
         </table>

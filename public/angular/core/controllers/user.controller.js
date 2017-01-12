@@ -39,6 +39,7 @@ angular.module('user').controller('UserController', ['$scope', '$http', '$stateP
           $scope.loading = false;
           $scope.success = 'Your profile has been updated successfully';
           $scope.error = undefined;
+          console.log($scope.success);
         });
       } else {
         $scope.success = undefined;

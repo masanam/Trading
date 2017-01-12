@@ -76,12 +76,13 @@ class AuthenticateController extends Controller
         $user->name = trim($request->name);
         $user->title = trim($request->title);
         $user->image = trim($request->image);
-        $user->role = $request->role  ? $request->role : 'user';
         $user->status = 'a';
         $user->email = trim(strtolower($request->email));
         $user->phone = trim($request->phone);
         $user->password = bcrypt($request->password);
         $user->save();
+
+        $user->roles()->attach(2);
 
         $token = JWTAuth::fromUser($user);
 
@@ -111,17 +112,25 @@ class AuthenticateController extends Controller
         }
         
         $roles=[];
-        $user = User::with('roles')->find(Auth::user()->id);
-        foreach($user->roles as $r) {
-            $roles[] = $r->role;
-        }
-        $user->role = $roles;
 
-        $subordinates = $user->subordinates();
-        $managers = $user->managers();
- 
-        // the token is valid and we have found the user via the sub claim
-        return response()->json(compact('user', 'subordinates', 'managers'), 200);
+        $user = User::with('roles')->where('status', 'a')->find(Auth::user()->id);
+        if($user) {
+            foreach($user->roles as $r) {
+                // dd($r->role);
+                $roles[] = $r->role;
+            }
+            $user->role = $roles;
+
+            // dd($user->roles);
+            $subordinates = $user->subordinates();
+            $managers = $user->managers();
+     
+            // the token is valid and we have found the user via the sub claim
+            return response()->json(compact('user', 'subordinates', 'managers'), 200);
+        }
+        else {
+            return response()->json(['message' => 'User is deactivated or not found'], 400);
+        }
     }
 
     private function randomPassword() {

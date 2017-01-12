@@ -14,6 +14,16 @@ class Order extends Model
 {
   protected $table = 'orders';
 
+  public function getCreatedAtAttribute($value)
+    {
+        return date('d-m-Y', strtotime($value));
+    }
+
+    public function getUpdatedAtAttribute($value)
+    {
+        return date('d-m-Y', strtotime($value));
+    }
+
   /*
    * Relations 
    * 
@@ -174,27 +184,29 @@ class Order extends Model
     // Only applied to 1 level directly below
     $interims = $user->interims;
 
-    // add approval, association and email to all associated Users!
-    foreach($interims as $interim){
-      // If current user already inside approval list, don't add
-      if(!$this->approvals()->contains($interim->id)){
-        $approval_properties = [
-          'status' => 'm',
-          'approval_token' => bcrypt(date('Y-m-d H:i:s') . $interim->name)
-        ];
+    if($interims) {
+      // add approval, association and email to all associated Users!
+      foreach($interims as $interim){
+        // If current user already inside approval list, don't add
+        if(!$this->approvals->contains($interim->id)){
+          $approval_properties = [
+            'status' => 'm',
+            'approval_token' => bcrypt(date('Y-m-d H:i:s') . $interim->name)
+          ];
 
-        // add the user to the approval list
-        $this->approvals()->attach($interim->id, $approval_properties);
-        // and associate him/her to the order
-        $this->users()->sync([$user->id => [ 'role' => 'approver' ]], false);
-      
-        // Send the email now
-        $mail = new ApprovalRequest($this, $approval_properties['approval_token'], $index->price);
-        Mail::to($interim->email)->send($mail);
+          // add the user to the approval list
+          $this->approvals()->attach($interim->id, $approval_properties);
+          // and associate him/her to the order
+          $this->users()->sync([$user->id => [ 'role' => 'approver' ]], false);
+        
+          // Send the email now
+          $mail = new ApprovalRequest($this, $approval_properties['approval_token'], $index->price);
+          Mail::to($interim->email)->send($mail);
+        }
       }
+      return true;
     }
-
-    return true;
+    else return false;
   }
 
   public function resetApproval(){

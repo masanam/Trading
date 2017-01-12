@@ -1,7 +1,7 @@
 <section class="content" ng-controller="ListLeadController" ng-init="init()">
   <div class="box">
     <div class="box-header with-border">
-      <h1 class="box-title" style="font-size: 25px">{{ lead_type = 'buy' ? 'Buy' : 'Sell' }} Leads</h1>
+      <h1 class="box-title" style="font-size: 25px">{{ lead_type == 'buy' ? 'Buy' : 'Sell' }} Leads</h1>
       <div class="box-tools pull-right">
         <button ui-sref="lead.create()" class="col-md-12 btn btn-primary">+ Create New</button>
       </div>
