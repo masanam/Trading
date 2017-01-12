@@ -105,7 +105,6 @@ class CreateCompaniesTable extends Migration
 
         Schema::create('iup', function (Blueprint $table) {
             $table->string('id');
-            $table->integer('company_id');
             $table->string('source');
             $table->string('type');
             $table->string('negotiable');
