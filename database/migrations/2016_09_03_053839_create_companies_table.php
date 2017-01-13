@@ -101,16 +101,16 @@ class CreateCompaniesTable extends Migration
         Schema::create('concession_files', function (Blueprint $table) {
             $table->increments('id');
             $table->string('url');
-            $table->integer('concession_id');
+            $table->integer('concession_id')->unsigned();
 
-            $table->foreign('concession_id')->references('id')->on('concession')->onDelete('cascade');
+            $table->foreign('concession_id')->references('id')->on('concessions')->onDelete('cascade');
         });
 
         Schema::create('iup', function (Blueprint $table) {
             $table->string('id');
-            $table->integer('company_id')->nullable();
-            $table->integer('concession_id')->nullable();
-            $table->integer('contact_id')->nullable();
+            $table->integer('company_id')->unsigned()->nullable();
+            $table->integer('concession_id')->unsigned()->nullable();
+            $table->integer('contact_id')->unsigned()->nullable();
             $table->string('source');
             $table->string('type');
             $table->date('expired')->nullable();
@@ -143,7 +143,7 @@ class CreateCompaniesTable extends Migration
             $table->string('geological_ts')->nullable();
             $table->string('geological_ash')->nullable();
             $table->string('geological_reserve')->nullable();
-            $table->string('geological_stripping_ratio')->nullable();
+            // $table->string('geological_stripping_ratio')->nullable();
             $table->string('notes')->nullable();
 
             $table->string('created_by')->nullable();
@@ -155,11 +155,20 @@ class CreateCompaniesTable extends Migration
             $table->char('status',1);
             $table->timestamps();
 
+            $table->primary('id');
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
         });
 
         Schema::table('iup', function ($table) {
             DB::statement('ALTER TABLE iup ADD COLUMN polygon geometry;');
+        });
+
+        Schema::create('iup_files', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('iup_id')->nullable();
+            $table->string('url')->nullable();
+            $table->string('upload_by')->nullable();
+            $table->timestamps();
         });
 
         Schema::create('spatial_data', function (Blueprint $table) {
@@ -172,7 +181,7 @@ class CreateCompaniesTable extends Migration
         });
 
         Schema::table('spatial_data', function ($table) {
-            DB::statement('ALTER TABLE spatial_data ADD COLUMN polygon shp;');
+            DB::statement('ALTER TABLE spatial_data ADD COLUMN shp geometry;');
         });
         
         Schema::create('products', function (Blueprint $table) {
@@ -283,6 +292,10 @@ class CreateCompaniesTable extends Migration
         Schema::dropIfExists('ports');
         Schema::dropIfExists('factories');
         Schema::dropIfExists('products');
+        Schema::dropIfExists('spatial_data');
+        Schema::dropIfExists('iup_files');
+        Schema::dropIfExists('iup');
+        Schema::dropIfExists('concession_files');
         Schema::dropIfExists('concessions');
         Schema::dropIfExists('contacts');
         Schema::dropIfExists('companies');
