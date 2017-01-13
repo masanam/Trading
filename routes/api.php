@@ -89,4 +89,14 @@ Route::group(['middleware' => ['cors']], function() {
     Route::resource('role','RoleController', ['except' => [ 'create', 'edit' ]]);
     Route::resource('permission','PermissionController', ['except' => [ 'create', 'edit' ]]);
 
+    /*
+     * IUP 
+     * By AndezTea
+     */
+    Route::resource('iup', 'IupController', ['except' => ['create', 'edit']]);
+    Route::resource('maps-iup', 'IupMapsController', ['except' => ['create', 'edit']]);
+    
+
+
+
 });

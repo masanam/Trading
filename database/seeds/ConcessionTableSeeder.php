@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Model\Concession;
+use App\Model\Iup;
 
 class ConcessionTableSeeder extends Seeder
 {
@@ -39,6 +40,7 @@ class ConcessionTableSeeder extends Seeder
                 'port_distance' => NULL,
                 'license_type' => NULL,
                 'license_expiry_date' => NULL,
+                'iup_id' => '101010101',
                 'status' => 'a'
             ],
             [
@@ -67,6 +69,7 @@ class ConcessionTableSeeder extends Seeder
                 'port_distance' => NULL,
                 'license_type' => NULL,
                 'license_expiry_date' => NULL,
+                'iup_id' => '101010102',
                 'status' => 'a'
             ],
             [
@@ -95,6 +98,7 @@ class ConcessionTableSeeder extends Seeder
                 'port_distance' => NULL,
                 'license_type' => NULL,
                 'license_expiry_date' => NULL,
+                'iup_id' => '101010103',
                 'status' => 'a'
             ],
             [
@@ -123,6 +127,7 @@ class ConcessionTableSeeder extends Seeder
                 'port_distance' => NULL,
                 'license_type' => NULL,
                 'license_expiry_date' => NULL,
+                'iup_id' => '101010104',
                 'status' => 'a'
             ],
             [
@@ -151,6 +156,7 @@ class ConcessionTableSeeder extends Seeder
                 'port_distance' => NULL,
                 'license_type' => NULL,
                 'license_expiry_date' => NULL,
+                'iup_id' => '101010105',
                 'status' => 'a'
             ],
             [
@@ -179,6 +185,7 @@ class ConcessionTableSeeder extends Seeder
                 'port_distance' => NULL,
                 'license_type' => NULL,
                 'license_expiry_date' => NULL,
+                'iup_id' => '101010106',
                 'status' => 'a'
             ],
             [
@@ -207,6 +214,7 @@ class ConcessionTableSeeder extends Seeder
                 'port_distance' => NULL,
                 'license_type' => NULL,
                 'license_expiry_date' => NULL,
+                'iup_id' => '101010107',
                 'status' => 'a'
             ],
             [
@@ -235,6 +243,7 @@ class ConcessionTableSeeder extends Seeder
                 'port_distance' => NULL,
                 'license_type' => NULL,
                 'license_expiry_date' => NULL,
+                'iup_id' => '101010108',
                 'status' => 'a'
             ],
             [
@@ -263,6 +272,7 @@ class ConcessionTableSeeder extends Seeder
                 'port_distance' => NULL,
                 'license_type' => NULL,
                 'license_expiry_date' => NULL,
+                'iup_id' => '101010109',
                 'status' => 'a'
             ],
             [
@@ -291,6 +301,7 @@ class ConcessionTableSeeder extends Seeder
                 'port_distance' => NULL,
                 'license_type' => NULL,
                 'license_expiry_date' => NULL,
+                'iup_id' => '101010110',
                 'status' => 'a'
             ],
         ];
@@ -322,7 +333,17 @@ class ConcessionTableSeeder extends Seeder
                 'port_distance' => $concession['port_distance'],
                 'license_type' => $concession['license_type'],
                 'license_expiry_date' => $concession['license_expiry_date'],
+                'iup_id' => $concession['iup_id'],
                 'status' => $concession['status']
+            ]);
+
+        Iup::create([
+                'id' => '101010110',
+                'source' => $concession['owner'],
+                'type' => 'XPL',
+                'negotiable' => 'High',
+                'rejected' => 'Low',
+                'status' => 'Approve'
             ]);
 
 
