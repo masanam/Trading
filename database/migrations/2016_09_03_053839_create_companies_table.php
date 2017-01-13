@@ -69,7 +69,6 @@ class CreateCompaniesTable extends Migration
             $table->string('country')->nullable();
             $table->decimal('latitude', 10, 8)->nullable();
             $table->decimal('longitude', 11, 8)->nullable();
-            $table->longText('polygon')->nullable();
             $table->integer('size')->nullable();
             $table->decimal('stripping_ratio', 4, 2)->nullable();
             $table->integer('resource')->nullable();
@@ -92,6 +91,10 @@ class CreateCompaniesTable extends Migration
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
         });
 
+        Schema::table('concessions', function ($table) {
+            DB::statement('ALTER TABLE concessions ADD COLUMN polygon geometry;');
+        });
+
         /*kamal 2017-01-12 16:40
         * membuat tabel 98-134
         */
@@ -105,19 +108,33 @@ class CreateCompaniesTable extends Migration
 
         Schema::create('iup', function (Blueprint $table) {
             $table->string('id');
+            $table->integer('company_id')->nullable();
+            $table->integer('concession_id')->nullable();
+            $table->integer('contact_id')->nullable();
             $table->string('source');
             $table->string('type');
-            $table->string('negotiable');
-            $table->string('rejected');
-            $table->char('status',1);
-            $table->date('checkby')->nullable();
-            $table->string('expired')->nullable();
+            $table->date('expired')->nullable();
+            $table->integer('total_area');
             $table->string('overlap_other')->nullable();
-            $table->string('produce_kp')->nullable();
-            $table->string('land_use')->nullable();
-            $table->string('description')->nullable();
+            $table->string('reason_overlap_other')->nullable();
+            $table->string('release_after')->nullable();
+            $table->string('reason_release_after')->nullable();
+            $table->string('already_production')->nullable();
+            $table->string('reason_already_production')->nullable();
+
             $table->string('restricted_area')->nullable();
+            $table->string('description')->nullable();
             $table->string('overlap_smg')->nullable();
+            $table->string('reason_overlap_smg')->nullable();
+            $table->string('produce_kp')->nullable();
+            $table->string('reason_produce_kp')->nullable();
+            $table->string('land_use')->nullable();
+
+            $table->string('pit_to_port')->nullable();
+            $table->string('port_to_sea')->nullable();
+            $table->string('river')->nullable();
+
+            $table->string('location')->nullable();
             $table->string('coal_bearing_formation')->nullable();
             $table->string('geological_description')->nullable();
             $table->string('geological_quality')->nullable();
@@ -127,9 +144,35 @@ class CreateCompaniesTable extends Migration
             $table->string('geological_ash')->nullable();
             $table->string('geological_reserve')->nullable();
             $table->string('geological_stripping_ratio')->nullable();
-            $table->string('geological_notes')->nullable();
+            $table->string('notes')->nullable();
+
+            $table->string('created_by')->nullable();
+            $table->string('checked_by')->nullable();
+            $table->date('date_checked_by')->nullable();
+            $table->string('received_by')->nullable();
+            $table->date('date_received_by')->nullable();
+
+            $table->char('status',1);
+            $table->timestamps();
 
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
+        });
+
+        Schema::table('iup', function ($table) {
+            DB::statement('ALTER TABLE iup ADD COLUMN polygon geometry;');
+        });
+
+        Schema::create('spatial_data', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('restricted_area')->nullable();
+            $table->string('type')->nullable();
+            $table->string('desc')->nullable();
+            $table->string('created_by');
+            $table->timestamps();
+        });
+
+        Schema::table('spatial_data', function ($table) {
+            DB::statement('ALTER TABLE spatial_data ADD COLUMN polygon shp;');
         });
         
         Schema::create('products', function (Blueprint $table) {
