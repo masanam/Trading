@@ -1,0 +1,25 @@
+<div>
+  <div class="modal-header" ng-switch="status">
+    <h3 class="modal-title" id="modal-title" ng-switch-when="f">Finalize Order And Contract Planning</h3>
+    <button type="button" class="close" ng-click="cancel()" aria-label="Close">x</button>
+  </div>
+
+  <div class="modal-body" ng-focus="find()" id="modal-body">
+    <section ng-include="'./angular/order/views/_progress.partial.html'"></section>
+    <section ng-if="step === 1" ng-include="'./angular/order/views/_contract-planning-1.partial.html'"></section>
+    <section ng-if="step === 2" ng-include="'./angular/order/views/_contract-planning-2.partial.html'"></section>
+    <section ng-if="step === 3" ng-include="'./angular/order/views/_contract-planning-3.partial.html'"></section>
+    <section ng-if="step === 4" ng-include="'./angular/order/views/_contract-planning-4.partial.html'"></section>
+  </div>
+  <div class="modal-footer" ng-switch="status">
+    <button ng-if="step === 1" class="btn btn-default pull-left hidden-xs" type="button" ng-click="cancel()">Cancel</button>
+    <button ng-if="step !== 1" class="btn btn-default pull-left hidden-xs" type="button" ng-click="back()">Back</button>
+
+    <span ng-switch-when="f" ng-if="step !== 4">
+      <button class="btn btn-primary" ng-click="ok()">Next</button>
+    </span>
+    <span ng-switch-when="f" ng-if="step === 4">
+      <button class="btn btn-primary" ng-click="submit()">Submit</button>
+    </span>
+  </div>
+</div>

@@ -66,20 +66,35 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
     $scope.changeStatus = function (status) {
       $scope.error = null;
       $scope.reason = '';
+      var modalInstance = null;
+      if(status === 'f') {
+        modalInstance = $uibModal.open({
+          windowClass: 'xl-modal',
+          templateUrl: './angular/order/views/_contract-planning.modal.html',
+          controller: 'OrderReasonModalController',
+          scope: $scope,
+          resolve: {
+            status: function () { return status; },
+          }
+        });
+        modalInstance.result.then(function (order) {
+          $scope.findOne();
+        });
+      } else {
+        modalInstance = $uibModal.open({
+          windowClass: 'xl-modal',
+          templateUrl: './angular/order/views/_reason.modal.html',
+          controller: 'OrderReasonModalController',
+          scope: $scope,
+          resolve: {
+            status: function () { return status; },
+          }
+        });
+        modalInstance.result.then(function (order) {
+          $scope.findOne();
+        });
+      }
       
-      var modalInstance = $uibModal.open({
-        windowClass: 'xl-modal',
-        templateUrl: './angular/order/views/_reason.modal.html',
-        controller: 'OrderReasonModalController',
-        scope: $scope,
-        resolve: {
-          status: function () { return status; },
-        }
-      });
-
-      modalInstance.result.then(function (order) {
-        $scope.findOne();
-      });
     };
 
     $scope.inHouse = function (status) {

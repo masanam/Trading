@@ -1,0 +1,27 @@
+<div class="row">
+  <div class="col-sm-12">
+  	<label>This is the summary of the contract</label>
+  	<div class="row">
+	  	<div class="col-lg-4">
+	  		<label># CONTRACT ID</label>
+	  		<span>{{order.contract_id}}</span>
+	  	</div>
+	  	<div class="col-lg-4">
+	  		<label>Number of Shipment</label>
+	  		<span>{{order.num_ship}}</span>
+	  	</div>
+	  	<div class="col-lg-2">
+	  		<label>Date From</label>
+	  		<span>{{order.date_from}}</span>
+	  	</div>
+	  	<div class="col-lg-2">
+	  		<label>Date To</label>
+	  		<span>{{order.date_to}}</span>
+	  	</div>
+  	</div>
+  	<div class="row">
+  		<label>Customer : {{order.buy.company.company_name}}</label>
+  		<label>Tonnage : {{order.buy.volume}}</label>
+  	</div>
+  </div>
+</div>
