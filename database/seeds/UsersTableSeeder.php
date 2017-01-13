@@ -71,6 +71,12 @@ class UsersTableSeeder extends Seeder
 		Role::create([
 			'role'=>'manager',
 		]);
+		Role::create([
+			'role'=>'bizdev',
+		]);
+		Role::create([
+			'role'=>'bizdev-approver',
+		]);
 		
         
         User::find(1)->roles()->attach(1);

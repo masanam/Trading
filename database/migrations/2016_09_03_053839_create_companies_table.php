@@ -69,7 +69,7 @@ class CreateCompaniesTable extends Migration
             $table->string('country')->nullable();
             $table->decimal('latitude', 10, 8)->nullable();
             $table->decimal('longitude', 11, 8)->nullable();
-            $table->longText('polygon')->nullable();
+            // $table->longText('polygon')->nullable();
             $table->integer('size')->nullable();
             $table->decimal('stripping_ratio', 4, 2)->nullable();
             $table->integer('resource')->nullable();
@@ -90,6 +90,10 @@ class CreateCompaniesTable extends Migration
 
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
         });
+		
+		Schema::table('concessions', function ($table) {
+			DB::statement('ALTER TABLE concessions ADD COLUMN polygon geometry;');
+		});
         
         Schema::create('products', function (Blueprint $table) {
             $table->increments('id');

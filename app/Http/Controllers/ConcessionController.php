@@ -28,12 +28,12 @@ class ConcessionController extends Controller
      */
     public function index(Request $req)
     {
-      $concession = Concession::select('concession_name', 'owner', 'city',
+      $concession = Concession::select('id','concession_name', 'company_id','owner', 'address', 'city', 'country', 'latitude', 'longitude', 'size', 'stripping_ratio', 'resource', 'reserves', 'contracted_volume', 'remaining_volume', 'annual_production', 'hauling_road_name', 'stockpile_capacity', 'stockpile_coverage', 'stockpile_distance', 'port_id', 'port_distance', 'license_type', 'license_expiry_date', 'status', 'created_at','updated_at',
 		DB::raw('ST_AsGeoJSON(polygon, 8) AS polygon'));
 	  
       if($req->company_id){
         if($req->coalpedia)
-	      $concesion->where('status', 'a')
+	      $concession = $concession->where('status', 'a')
 			->where('company_id', '!=', $req->company_id)
 			->get();
         else
@@ -112,8 +112,7 @@ class ConcessionController extends Controller
 
         if($req->q) $concession->where('concession_name', 'LIKE', '%' . $req->q . '%');
         $concession = $concession->get();
-      }
-
+      }		
       return response()->json($concession, 200);
     }
 
@@ -135,7 +134,6 @@ class ConcessionController extends Controller
         $concession->save();
 		
         event(new InputEditCoalpedia(Auth::user(), $concession->id, 'concessions', 'create'));
-
         return response()->json($concession, 200);
     }
 
@@ -147,7 +145,34 @@ class ConcessionController extends Controller
      */
     public function show($id)
     {
-        $concession = Concession::select()
+        $concession = Concession::select(
+			'concession_name',
+			'owner',
+			'address',
+			'city',
+			'country',
+			'latitude',
+			'longitude',
+			DB::raw('ST_AsGeoJSON(polygon, 8) as polygon') ,
+			'size',
+			'stripping_ratio',
+			'resource',
+			'reserves',
+			'contracted_volume',
+			'remaining_volume',
+			'annual_production',
+			'hauling_road_name',
+			'stockpile_capacity',
+			'stockpile_coverage',
+			'stockpile_distance',
+			'port_id',
+			'port_distance',
+			'license_expiry_date',
+			'license_type',
+			'status',
+			'latitude',
+			'longitude',
+			'stripping_ratio')
 		  ->with('company', 'port', 'products')->find($id);
 
         if($concession->status == 'a') {
