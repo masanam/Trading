@@ -21,7 +21,6 @@ class DatabaseSeeder extends Seeder
         $this->call(PortTableSeeder::class);
         $this->call(FactoryTableSeeder::class);
         $this->call(IndexTableSeeder::class);
-        
         $this->call(LeadsTableSeeder::class);
         $this->call(IupTableSeeder::class);
 
