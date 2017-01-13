@@ -69,6 +69,7 @@ class CreateCompaniesTable extends Migration
             $table->string('country')->nullable();
             $table->decimal('latitude', 10, 8)->nullable();
             $table->decimal('longitude', 11, 8)->nullable();
+
             $table->integer('size')->nullable();
             $table->decimal('stripping_ratio', 4, 2)->nullable();
             $table->integer('resource')->nullable();
