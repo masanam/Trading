@@ -20,6 +20,7 @@ class CreateSpatialData extends Migration
 			$table->string('type')->nullable();
 			$table->string('desc')->nullable();
             $table->string('created_by')->nullable();
+            $table->timestamps();
 		});
         
 		Schema::table('spatial_data', function ($table) {

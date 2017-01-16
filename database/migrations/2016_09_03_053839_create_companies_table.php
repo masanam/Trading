@@ -86,7 +86,7 @@ class CreateCompaniesTable extends Migration
             $table->string('license_type')->nullable();
             $table->date('license_expiry_date')->nullable();
             $table->char('status', 1); // A = Active , X = Deleted
-            $table->string('iup_id')->nullable();
+            // $table->integer('mining_license_id')->unsigned()->nullable();
             $table->timestamps();
 
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
@@ -162,7 +162,7 @@ class CreateCompaniesTable extends Migration
         
         /*
          * kamal 2017-01-12 16:50
-         * added atribut river 172
+         * added atribut river
          */
         Schema::create('ports', function (Blueprint $table) {
             $table->increments('id');
@@ -200,6 +200,7 @@ class CreateCompaniesTable extends Migration
 
         /*
          * Kamal 2017-01-12 16:40
+         * Kamal 2017-01-17 13:00 ganti type data dll
          *
          * Tables untuk coalbizpedia baru
          * concession_files --> files yang dimiliki untuk konsesi ketika daftar
@@ -215,7 +216,8 @@ class CreateCompaniesTable extends Migration
         });
 
         Schema::create('mining_licenses', function (Blueprint $table) {
-            $table->string('id');
+            $table->increments('id');
+            $table->string('no');
             $table->integer('company_id')->unsigned()->nullable(); //integer unsigned reference
             $table->integer('concession_id')->unsigned()->nullable();
             $table->integer('contact_id')->unsigned()->nullable();
@@ -223,8 +225,8 @@ class CreateCompaniesTable extends Migration
             $table->string('type');
             $table->date('expired')->nullable();
             $table->integer('total_area');
-            $table->boolean('overlap_other')->nullable(); // kalo ini bentuknya boolean, bikin boolean aja, default false
-            $table->string('overlap_other_desc')->nullable(); // semua yang _XYZ diganti jadi XYZ_desc, type nya text
+            $table->boolean('overlap_other')->nullable(); 
+            $table->string('overlap_other_desc')->nullable();
             $table->boolean('release_after')->nullable();
             $table->string('release_after_desc')->nullable();
             $table->boolean('already_production')->nullable();
@@ -272,10 +274,13 @@ class CreateCompaniesTable extends Migration
 
         Schema::create('mining_license_files', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('mining_license_id')->nullable(); //ini foreign key ke mining_licenses, dibikin aja integer unsigned dan reference
+            $table->integer('mining_license_id')->unsigned()->nullable();
             $table->string('url')->nullable();
-            $table->string('upload_by')->nullable(); //ini foreign key ke user, again, integer unsigned reference
+            $table->integer('upload_by')->unsigned()->nullable(); //ini foreign key ke user, again, integer unsigned reference
             $table->timestamps(); 
+
+            $table->foreign('mining_license_id')->references('id')->on('mining_licenses')->onDelete('cascade');
+            $table->foreign('upload_by')->references('id')->on('users')->onDelete('cascade');
         });
      
     }

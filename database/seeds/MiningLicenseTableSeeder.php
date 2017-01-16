@@ -15,7 +15,7 @@ class MiningLicenseTableSeeder extends Seeder
     {
         
         MiningLicense::create([
-            'id'=> '12947812382132',
+            'no'=> '12947812382132',
             'company_id'=> 1,
             'concession_id'=> 1,
             'contact_id'=> 1,
