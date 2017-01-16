@@ -22,6 +22,8 @@ class DatabaseSeeder extends Seeder
         $this->call(FactoryTableSeeder::class);
         $this->call(IndexTableSeeder::class);
         $this->call(LeadsTableSeeder::class);
+        $this->call(MiningLicenseTableSeeder::class);
+
         Model::reguard();
     }
 }

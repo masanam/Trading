@@ -99,8 +99,8 @@ Route::group(['middleware' => ['cors']], function() {
      * IUP 
      * By AndezTea
      */
-    Route::resource('iup', 'IupController', ['except' => ['create', 'edit']]);
-    Route::resource('maps-iup', 'IupMapsController', ['except' => ['create', 'edit']]);
+    Route::resource('mining-license', 'MiningLicenseController', ['except' => ['create', 'edit']]);
+    Route::resource('spatial-data', 'SpatialDataController', ['except' => ['create', 'edit']]);
     
 
 
