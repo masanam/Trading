@@ -103,6 +103,8 @@ class CreateCompaniesTable extends Migration
             $table->string('product_name');
             $table->string('typical_quality');
 
+            $table->integer('pit_to_port')->nullable(); // integer ini
+
             $table->integer('gcv_arb_min')->nullable(); //gross calorific value, as received basis
             $table->integer('gcv_arb_max')->nullable();
             $table->integer('gcv_adb_min')->nullable(); //gross calorific value, air dried basis
@@ -171,6 +173,7 @@ class CreateCompaniesTable extends Migration
             $table->integer('size')->unsigned();
             $table->string('river')->nullable();
             $table->integer('river_capacity')->nullable();
+            $table->integer('open_sea_distance')->nullable(); // 
             $table->decimal('latitude', 10, 8);
             $table->decimal('longitude', 11, 8);
             $table->integer('anchorage_distance')->nullable();
@@ -211,35 +214,32 @@ class CreateCompaniesTable extends Migration
             $table->foreign('concession_id')->references('id')->on('concession')->onDelete('cascade');
         });
 
-        Schema::create('mining_license', function (Blueprint $table) {
+        Schema::create('mining_licenses', function (Blueprint $table) {
             $table->string('id');
-            $table->integer('company_id')->nullable();
+            $table->integer('company_id')->nullable(); //integer unsigned reference
             $table->integer('concession_id')->nullable();
             $table->integer('contact_id')->nullable();
             $table->string('source');
             $table->string('type');
             $table->date('expired')->nullable();
             $table->integer('total_area');
-            $table->string('overlap_other')->nullable();
-            $table->string('reason_overlap_other')->nullable();
+            $table->string('overlap_other')->nullable(); // kalo ini bentuknya boolean, bikin boolean aja, default false
+            $table->string('reason_overlap_other')->nullable(); // semua yang reason_XYZ diganti jadi XYZ_desc, type nya text
             $table->string('release_after')->nullable();
             $table->string('reason_release_after')->nullable();
             $table->string('already_production')->nullable();
             $table->string('reason_already_production')->nullable();
 
             $table->string('restricted_area')->nullable();
-            $table->string('description')->nullable();
+            $table->string('description')->nullable(); // sama, text juga
             $table->string('overlap_smg')->nullable();
             $table->string('reason_overlap_smg')->nullable();
             $table->string('produce_kp')->nullable();
             $table->string('reason_produce_kp')->nullable();
             $table->string('land_use')->nullable();
 
-            $table->string('pit_to_port')->nullable();
-            $table->string('port_to_sea')->nullable();
-            $table->string('river')->nullable();
-
             $table->string('location')->nullable();
+
             $table->string('coal_bearing_formation')->nullable();
             $table->string('geological_description')->nullable();
             $table->string('geological_quality')->nullable();
@@ -249,13 +249,13 @@ class CreateCompaniesTable extends Migration
             $table->string('geological_ash')->nullable();
             $table->string('geological_reserve')->nullable();
             $table->string('geological_stripping_ratio')->nullable();
-            $table->string('notes')->nullable();
+            $table->string('notes')->nullable(); //notes dan description bedanya apa?
 
-            $table->string('created_by')->nullable();
-            $table->string('checked_by')->nullable();
-            $table->date('date_checked_by')->nullable();
-            $table->string('received_by')->nullable();
-            $table->date('date_received_by')->nullable();
+            $table->string('created_by')->nullable(); // ini reference ke user
+            $table->string('checked_by')->nullable(); // ini reference ke user
+            $table->date('checked_at')->nullable();
+            $table->string('received_by')->nullable(); // ini reference ke user
+            $table->date('received_at')->nullable();
 
             $table->char('status',1);
             $table->timestamps();
@@ -263,9 +263,18 @@ class CreateCompaniesTable extends Migration
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
         });
 
-        Schema::table('mining_license', function ($table) {
-            DB::statement('ALTER TABLE mining_license ADD COLUMN polygon geometry;');
+        Schema::table('mining_licenses', function ($table) {
+            DB::statement('ALTER TABLE mining_licenses ADD COLUMN polygon geometry;');
         });
+
+        Schema::create('mining_license_files', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('mining_license_id')->nullable(); //ini foreign key ke mining_licenses, dibikin aja integer unsigned dan reference
+            $table->string('url')->nullable();
+            $table->string('upload_by')->nullable(); //ini foreign key ke user, again, integer unsigned reference
+            $table->timestamps(); 
+        });
+
         
         Schema::create('spatial_data', function (Blueprint $table) {
             $table->increments('id');
@@ -289,6 +298,7 @@ class CreateCompaniesTable extends Migration
     public function down()
     {
         Schema::dropIfExists('spatial_data');
+        Schema::dropIfExists('mining_license_files');
         Schema::dropIfExists('mining_license');
         Schema::dropIfExists('concession_files');
         Schema::dropIfExists('company_port');
