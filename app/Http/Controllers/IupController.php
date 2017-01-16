@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Model\Iup;
 
 use App\Http\Requests;
 
@@ -15,17 +16,9 @@ class IupController extends Controller
      */
     public function index()
     {
-        //
-    }
+        $iup = Iup::get();
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return response()->json($iup, 200);
     }
 
     /**
@@ -47,18 +40,10 @@ class IupController extends Controller
      */
     public function show($id)
     {
-        //
-    }
+        
+        $iup = Iup::find($id);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return response()->json($iup, 200);
     }
 
     /**
