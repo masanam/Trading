@@ -208,59 +208,62 @@ class CreateCompaniesTable extends Migration
          */
         Schema::create('concession_files', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('concession_id');
+            $table->integer('concession_id')->unsigned();
             $table->string('url');
 
-            $table->foreign('concession_id')->references('id')->on('concession')->onDelete('cascade');
+            $table->foreign('concession_id')->references('id')->on('concessions')->onDelete('cascade');
         });
 
         Schema::create('mining_licenses', function (Blueprint $table) {
             $table->string('id');
-            $table->integer('company_id')->nullable(); //integer unsigned reference
-            $table->integer('concession_id')->nullable();
-            $table->integer('contact_id')->nullable();
+            $table->integer('company_id')->unsigned()->nullable(); //integer unsigned reference
+            $table->integer('concession_id')->unsigned()->nullable();
+            $table->integer('contact_id')->unsigned()->nullable();
             $table->string('source');
             $table->string('type');
             $table->date('expired')->nullable();
             $table->integer('total_area');
-            $table->string('overlap_other')->nullable(); // kalo ini bentuknya boolean, bikin boolean aja, default false
-            $table->string('reason_overlap_other')->nullable(); // semua yang reason_XYZ diganti jadi XYZ_desc, type nya text
-            $table->string('release_after')->nullable();
-            $table->string('reason_release_after')->nullable();
-            $table->string('already_production')->nullable();
-            $table->string('reason_already_production')->nullable();
+            $table->boolean('overlap_other')->nullable(); // kalo ini bentuknya boolean, bikin boolean aja, default false
+            $table->string('overlap_other_desc')->nullable(); // semua yang _XYZ diganti jadi XYZ_desc, type nya text
+            $table->boolean('release_after')->nullable();
+            $table->string('release_after_desc')->nullable();
+            $table->boolean('already_production')->nullable();
+            $table->string('already_production_desc')->nullable();
 
             $table->string('restricted_area')->nullable();
-            $table->string('description')->nullable(); // sama, text juga
-            $table->string('overlap_smg')->nullable();
-            $table->string('reason_overlap_smg')->nullable();
-            $table->string('produce_kp')->nullable();
-            $table->string('reason_produce_kp')->nullable();
+            $table->text('description')->nullable(); 
+            $table->boolean('overlap_smg')->nullable();
+            $table->string('overlap_smg_desc')->nullable();
+            $table->boolean('produce_kp')->nullable();
+            $table->string('produce_kp_desc')->nullable();
             $table->string('land_use')->nullable();
 
             $table->string('location')->nullable();
 
             $table->string('coal_bearing_formation')->nullable();
-            $table->string('geological_description')->nullable();
+            $table->text('geological_description')->nullable();
             $table->string('geological_quality')->nullable();
             $table->string('geological_cv')->nullable();
             $table->string('geological_tm')->nullable();
             $table->string('geological_ts')->nullable();
             $table->string('geological_ash')->nullable();
-            $table->string('geological_reserve')->nullable();
+            $table->boolean('geological_reserve')->nullable();
             $table->string('geological_stripping_ratio')->nullable();
-            $table->string('notes')->nullable(); //notes dan description bedanya apa?
+            $table->text('notes')->nullable(); //notes dan description bedanya apa?
 
-            $table->string('created_by')->nullable(); // ini reference ke user
-            $table->string('checked_by')->nullable(); // ini reference ke user
+            $table->integer('created_by')->unsigned()->nullable(); // ini reference ke user
+            $table->integer('checked_by')->unsigned()->nullable(); // ini reference ke user
             $table->date('checked_at')->nullable();
-            $table->string('received_by')->nullable(); // ini reference ke user
+            $table->integer('received_by')->unsigned()->nullable(); // ini reference ke user
             $table->date('received_at')->nullable();
 
             $table->char('status',1);
             $table->timestamps();
 
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
+            $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('checked_by')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('received_by')->references('id')->on('users')->onDelete('cascade');
         });
 
         Schema::table('mining_licenses', function ($table) {
@@ -274,20 +277,7 @@ class CreateCompaniesTable extends Migration
             $table->string('upload_by')->nullable(); //ini foreign key ke user, again, integer unsigned reference
             $table->timestamps(); 
         });
-
-        
-        Schema::create('spatial_data', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('restricted_area')->nullable();
-            $table->string('type')->nullable();
-            $table->string('desc')->nullable();
-            $table->string('created_by');
-            $table->timestamps();
-        });
-
-        Schema::table('spatial_data', function ($table) {
-            DB::statement('ALTER TABLE spatial_data ADD COLUMN polygon shp;');
-        });
+     
     }
 
     /**
@@ -297,9 +287,8 @@ class CreateCompaniesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('spatial_data');
         Schema::dropIfExists('mining_license_files');
-        Schema::dropIfExists('mining_license');
+        Schema::dropIfExists('mining_licenses');
         Schema::dropIfExists('concession_files');
         Schema::dropIfExists('company_port');
         Schema::dropIfExists('ports');
