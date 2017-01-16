@@ -24,8 +24,11 @@ class AuthenticateController extends Controller
 {
     public function __construct()
    {
-       $this->middleware('jwt.auth', ['except' => ['authenticate', 'signup', 'forgotPassword']]);
+       $this->middleware('jwt.auth', ['except' => ['authenticate', 'signup', 'helloworld', 'forgotPassword']]);
    }
+   
+   
+   
  
     /**
      * Display a listing of the resource.
@@ -36,6 +39,25 @@ class AuthenticateController extends Controller
     {
         return "Auth index";
     }
+	
+	public function helloworld(Request $req){
+	   $user = User::with('roles');
+	   
+	   // filter if role is preset in request
+	   if($req->role) $user->where('role',$req->role);
+
+	   // filter if name is present in request
+	   if($req->q) $user->where('name', 'LIKE', '%'.$req->q. '%');
+	   
+	   $user=$user->get();
+	   
+	   
+	   
+	   return response()->json($user,200);
+	   
+	   
+	}
+	
  
     public function authenticate(Request $request)
     {

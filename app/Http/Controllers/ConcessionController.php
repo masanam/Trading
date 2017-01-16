@@ -131,6 +131,8 @@ class ConcessionController extends Controller
         }
 
         $concession = new Concession($req->all());
+        $concession->polygon = DB::raw('GeomFromText(\'POLYGON('.$concession->polygon.')\')');
+        $concession->status = 'a';
         $concession->save();
 		
         event(new InputEditCoalpedia(Auth::user(), $concession->id, 'concessions', 'create'));

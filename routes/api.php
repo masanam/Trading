@@ -24,6 +24,10 @@ Route::group(['middleware' => ['cors']], function() {
     Route::get('authenticate/user', 'AuthenticateController@getAuthenticatedUser');
     Route::post('authenticate/forgot', 'AuthenticateController@forgotPassword');
 
+	
+	//testing
+	Route::get('helloworld', 'AuthenticateController@helloworld');
+	
     //S3 Upload file signing API
     Route::post('signing', 'AuthenticateController@signing');
 
@@ -33,6 +37,8 @@ Route::group(['middleware' => ['cors']], function() {
     Route::get('user/current', 'UserController@currentUser');
     Route::resource('user', 'UserController', ['except' => [ 'create', 'edit' ]]);
 
+	
+	
     /*
      * COALPEDIA API GROUP
      * this API contains ALL the things needed by coalpedia to manage

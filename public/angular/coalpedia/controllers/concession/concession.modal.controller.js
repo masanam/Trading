@@ -15,7 +15,13 @@ angular.module('coalpedia').controller('ConcessionModalController', ['$scope', '
 
     $scope.create = function(concession) {
       concession = new Concession(concession);
-      concession.polygon = $scope.display.polygonString;
+
+      if($scope.display.polygonArray[0] !== $scope.display.polygonArray[$scope.display.polygonArray.length-1])
+        $scope.display.polygonArray.push($scope.display.polygonArray[0]);
+
+      $scope.display.polygonString = angular.toJson($scope.display.polygonArray);
+      concession.polygon = $scope.display.polygonString.split(',').join(' ').split('[[').join('(').split(']]').join(')');
+      concession.polygon = concession.polygon.split('] [').join(', ');
       concession.company_id = company.id;
 
       concession.$save(function(response) {
