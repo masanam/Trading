@@ -1,9 +1,7 @@
 <?php
-
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-
 class CreateCompaniesTable extends Migration
 {
     /**
@@ -18,7 +16,6 @@ class CreateCompaniesTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->string('company_name');
             $table->boolean('is_affiliated');
-
             $table->string('phone');
             $table->string('email');
             $table->string('web')->nullable();;
@@ -34,31 +31,24 @@ class CreateCompaniesTable extends Migration
             $table->string('preferred_payment_term_detail')->nullable();
             $table->string('purchasing_countries');
             $table->text('description');
-
             $table->char('company_type', 1); // b = buyer, s = seller, t = trader, v = vendor
             $table->char('status', 1); // A = Active , X = Deleted
             $table->timestamps();
-
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
-
         Schema::create('contacts', function (Blueprint $table) {
             $table->increments('id');
-
             $table->integer('user_id')->unsigned()->nullable();
             $table->integer('company_id')->unsigned()->nullable();
-
             $table->string('name');
             $table->string('phone');
             $table->string('email');
             
             $table->char('status', 1);
             $table->timestamps();
-
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
         });
-
         Schema::create('concessions', function (Blueprint $table) {
             $table->increments('id');
             $table->string('concession_name');
@@ -69,7 +59,6 @@ class CreateCompaniesTable extends Migration
             $table->string('country')->nullable();
             $table->decimal('latitude', 10, 8)->nullable();
             $table->decimal('longitude', 11, 8)->nullable();
-
             $table->integer('size')->nullable();
             $table->decimal('stripping_ratio', 4, 2)->nullable();
             $table->integer('resource')->nullable();
@@ -88,10 +77,8 @@ class CreateCompaniesTable extends Migration
             $table->char('status', 1); // A = Active , X = Deleted
             // $table->integer('mining_license_id')->unsigned()->nullable();
             $table->timestamps();
-
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
         });
-
         Schema::table('concessions', function ($table) {
             DB::statement('ALTER TABLE concessions ADD COLUMN polygon geometry;');
         });
@@ -102,9 +89,7 @@ class CreateCompaniesTable extends Migration
             $table->integer('concession_id')->unsigned()->nullable();
             $table->string('product_name');
             $table->string('typical_quality');
-
             $table->integer('pit_to_port')->nullable(); // integer ini
-
             $table->integer('gcv_arb_min')->nullable(); //gross calorific value, as received basis
             $table->integer('gcv_arb_max')->nullable();
             $table->integer('gcv_adb_min')->nullable(); //gross calorific value, air dried basis
@@ -131,14 +116,11 @@ class CreateCompaniesTable extends Migration
             $table->integer('fe2o3_max')->nullable();
             $table->integer('aft_min')->nullable(); //size/piece
             $table->integer('aft_max')->nullable();
-
             $table->char('status', 1); // A = Active , X = Deleted
             $table->timestamps();
-
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
             $table->foreign('concession_id')->references('id')->on('concessions')->onDelete('cascade');
         });
-
         Schema::create('factories', function (Blueprint $table) {
             $table->increments('id');
             $table->string('factory_name');
@@ -155,7 +137,6 @@ class CreateCompaniesTable extends Migration
             $table->decimal('port_distance', 6, 2)->nullable();
             $table->char('status', 1); // A = Active , X = Deleted
             $table->timestamps();
-
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
         });
         
@@ -186,7 +167,6 @@ class CreateCompaniesTable extends Migration
             
             $table->timestamps();
         });
-
         Schema::create('company_port', function (Blueprint $table) {
             $table->integer('port_id')->unsigned();
             $table->integer('company_id')->unsigned();
@@ -195,9 +175,6 @@ class CreateCompaniesTable extends Migration
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
             $table->primary(array('port_id', 'company_id'));
         });
-
-
-
         /*
          * Kamal 2017-01-12 16:40
          * Kamal 2017-01-17 13:00 ganti type data dll
@@ -211,10 +188,8 @@ class CreateCompaniesTable extends Migration
             $table->increments('id');
             $table->integer('concession_id')->unsigned();
             $table->string('url');
-
             $table->foreign('concession_id')->references('id')->on('concessions')->onDelete('cascade');
         });
-
         Schema::create('mining_licenses', function (Blueprint $table) {
             $table->increments('id');
             $table->string('no');
@@ -231,7 +206,6 @@ class CreateCompaniesTable extends Migration
             $table->string('release_after_desc')->nullable();
             $table->boolean('already_production')->nullable();
             $table->string('already_production_desc')->nullable();
-
             $table->string('restricted_area')->nullable();
             $table->text('description')->nullable(); 
             $table->boolean('overlap_smg')->nullable();
@@ -239,9 +213,7 @@ class CreateCompaniesTable extends Migration
             $table->boolean('produce_kp')->nullable();
             $table->string('produce_kp_desc')->nullable();
             $table->string('land_use')->nullable();
-
             $table->string('location')->nullable();
-
             $table->string('coal_bearing_formation')->nullable();
             $table->text('geological_description')->nullable();
             $table->string('geological_quality')->nullable();
@@ -252,26 +224,21 @@ class CreateCompaniesTable extends Migration
             $table->boolean('geological_reserve')->nullable();
             $table->string('geological_stripping_ratio')->nullable();
             $table->text('notes')->nullable(); //notes dan description bedanya apa?
-
             $table->integer('created_by')->unsigned()->nullable(); // ini reference ke user
             $table->integer('checked_by')->unsigned()->nullable(); // ini reference ke user
             $table->date('checked_at')->nullable();
             $table->integer('received_by')->unsigned()->nullable(); // ini reference ke user
             $table->date('received_at')->nullable();
-
             $table->char('status',1);
             $table->timestamps();
-
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('checked_by')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('received_by')->references('id')->on('users')->onDelete('cascade');
         });
-
         Schema::table('mining_licenses', function ($table) {
             DB::statement('ALTER TABLE mining_licenses ADD COLUMN polygon geometry;');
         });
-
         Schema::create('mining_license_files', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('mining_license_id')->unsigned()->nullable();
@@ -284,7 +251,6 @@ class CreateCompaniesTable extends Migration
         });
      
     }
-
     /**
      * Reverse the migrations.
      *
