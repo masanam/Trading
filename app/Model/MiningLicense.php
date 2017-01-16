@@ -49,4 +49,12 @@ class MiningLicense extends Model {
 		'received_at'
     ];
 
+    public function Company() {
+        return $this->belongsTo('App\Model\Company');
+    }
+
+    public function Contact() {
+        return $this->belongsTo('App\Model\Contact');
+    }
+
 }
