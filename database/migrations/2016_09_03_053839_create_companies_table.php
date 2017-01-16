@@ -116,9 +116,13 @@ class CreateCompaniesTable extends Migration
             $table->date('expired')->nullable();
             $table->integer('total_area');
             $table->string('overlap_other')->nullable();
+
             $table->string('reason_overlap_other')->nullable();
+
             $table->string('release_after')->nullable();
+            
             $table->string('reason_release_after')->nullable();
+            
             $table->string('already_production')->nullable();
             $table->string('reason_already_production')->nullable();
 
