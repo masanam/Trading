@@ -49,6 +49,9 @@
         <a class="btn btn-success hidden-xs" ng-click="changeStatus('f');" ng-show="order.status === 'a' && order.user_id === Authentication.user.id">
           <i class="glyphicon glyphicon-floppy-saved" title="Finalize Order"></i> Finalize Order
         </a>
+        <a class="btn btn-success hidden-xs" ng-click="changeStatus('f');" ng-show="order.status === 'f' && order.user_id === Authentication.user.id">
+          <i class="glyphicon glyphicon-floppy-saved" title="Finalize Order"></i> Edit Contract
+        </a>
         <a class="btn btn-danger hidden-xs" ng-click="changeStatus('x');" ng-show="(order.status !== 'c' && order.status !== 'x' && order.status !== 'f') && order.user_id === Authentication.user.id">
           <i class="glyphicon glyphicon-trash" title="Cancel Order"></i> Cancel Order
         </a>

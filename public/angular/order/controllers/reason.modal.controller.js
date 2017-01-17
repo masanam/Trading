@@ -2,8 +2,13 @@
 
 angular.module('order').controller('OrderReasonModalController', ['$uibModalInstance', '$scope', 'Order', 'status', 'Notification', 'Contract',
   function($uibModalInstance, $scope, Order, status, Notification, Contract) {
+
     $scope.status = status;
     $scope.step = 1;
+    $scope.init= function(){
+      $scope.order.reason = '';
+      $scope.order.contracts = {};
+    }
 
     $scope.ok = function () {
       console.log($scope.order);
@@ -22,9 +27,9 @@ angular.module('order').controller('OrderReasonModalController', ['$uibModalInst
       if($scope.order.reason !== ''){
         var order = new Order($scope.order);
         var contract = new Contract({
-          'contract_id': $scope.order.contracts.contract_no,
+          'contract_no': $scope.order.contracts.contract_no,
           'order_id': $scope.order.id,
-          'shipment_no': $scope.order.contracts.shipment_no,
+          'shipment_count': $scope.order.contracts.shipment_count,
           'term': $scope.order.contracts.term,
           'term_desc': $scope.order.contracts.term_desc,
           'date_from': $scope.order.contracts.date_from,
