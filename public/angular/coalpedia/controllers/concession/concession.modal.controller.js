@@ -1,8 +1,10 @@
 'use strict';
 
-angular.module('coalpedia').controller('ConcessionModalController', ['$scope', '$uibModalInstance', '$timeout', '$interval', 'NgMap', 'Concession', 'Company', 'concession', 'company',
-  function($scope, $uibModalInstance, $timeout, $interval, NgMap, Concession, Company, concession, company) {
+angular.module('coalpedia').controller('ConcessionModalController', ['$scope', '$uibModalInstance', '$stateParams', '$timeout', '$interval', 'NgMap', 'Concession', 'Company', 'concession', 'company',
+  function($scope, $uibModalInstance, $stateParams, $timeout, $interval, NgMap, Concession, Company, concession, company) {
     $scope.concession = concession;
+    $scope.concession.polygon = angular.fromJson(concession.polygon);
+
     $scope.createNew = false;
     $scope.display = {};
     $scope.selected = {};
@@ -30,20 +32,29 @@ angular.module('coalpedia').controller('ConcessionModalController', ['$scope', '
     };
 
     $scope.update = function() {
-      concession = new Concession($scope.concession);
-      concession.polygon = $scope.display.polygonString;
-      concession.company_id = company.id;
+      concession = $scope.concession;
 
-      concession.$update(function(response) {
+      if($scope.display.polygonArray[0] !== $scope.display.polygonArray[$scope.display.polygonArray.length-1])
+        $scope.display.polygonArray.push($scope.display.polygonArray[0]);
+
+      $scope.display.polygonString = angular.toJson($scope.display.polygonArray);
+      concession.polygon = $scope.display.polygonString.split(',').join(' ').split('[[').join('(').split(']]').join(')');
+      concession.polygon = concession.polygon.split('] [').join(', ');
+
+     // concession.polygon = $scope.display.polygonString;
+      concession.company_id = concession.company_id;
+
+      concession.$update({ id: $stateParams.id} , function(response) {
         concession = response;
         $uibModalInstance.close(response);
+        $scope.concession=response;
       });
     };
 
     // Reset the polygon to the original inside the model
     $scope.resetPolygon = function () {
-      $scope.display.polygonString = $scope.concession.polygon;
-      $scope.display.polygonArray = angular.fromJson($scope.concession.polygon);
+      $scope.display.polygonArray = $scope.concession.polygon.coordinates[0];
+      $scope.display.polygonString = angular.toJson($scope.display.polygonArray);
     };
 
     // Clear displayed polygon to restart adding new ones

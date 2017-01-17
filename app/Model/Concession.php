@@ -2,7 +2,7 @@
 
 namespace App\Model;
 
-use App\Model\Seller;
+use App\Model\Company;
 use App\Model\Product;
 
 use Illuminate\Database\Eloquent\Model;
@@ -13,7 +13,7 @@ class Concession extends Model
 
     protected $fillable = [
         'concession_name',
-        'seller_id',
+        'company_id',
         'owner',
         'address',
         'city',

@@ -21,6 +21,8 @@ angular.module('coalpedia').controller('CompanyController', ['$scope', '$statePa
         $scope.companyId = $stateParams.id;
       }
 
+      console.log($scope.companyId);
+
       $scope.company = Company.get({ id: $scope.companyId });
     };
 

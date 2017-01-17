@@ -57,9 +57,10 @@
       <div class="row" style="background:#eee; padding: 10px; margin-left:10px;">
         <ng-map zoom="4" center="Indonesia" default-style="false" style="width:100%; height:500px;">
           <marker ng-if="!concession.polygon" position="{{concession.latitude}}, {{concession.longitude}}" id="mark{{concession.id}}" on-click="showDetail({{pos}})"></marker>
-          <shape name="polygon" ng-if="concession.polygon"
+
+          <shape name="polygon" ng-if="concession.polygon.coordinates[0]"
              id="mark{{concession.id}}"
-             paths="[{{concession.polygon.split('[[')[1].substring(0, concession.polygon.split('[[')[1].length-2)}}"
+             paths="{{concession.polygon.coordinates[0]}}"
              stroke-color="#FF0000"
              stroke-opacity="0.8"
              stroke-weight="2"
