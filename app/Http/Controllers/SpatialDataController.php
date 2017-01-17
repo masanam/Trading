@@ -21,7 +21,9 @@ class SpatialDataController extends Controller
      */
     public function index()
     {
-        //
+        $data = SpatialData::with('User')->select('*', DB::raw('ST_AsGeoJSON(polygon, 8) AS polygon'))->where('status', 'a')->get();
+
+        return response()->json($data, 200);
     }
 
     /**
@@ -30,9 +32,21 @@ class SpatialDataController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $req)
     {
-        //
+        if(!$req) {
+          return response()->json([
+            'message' => 'Bad Request'
+          ], 400);
+        }
+
+        $data = new SpatialData($req->all());
+        $data->created_by = Auth::User()->id;
+        $data->polygon = DB::raw('GeomFromText(\'POLYGON('.$req->polygon.')\')');
+        $data->status = 'a';
+        $data->save();
+
+        return response()->json($data, 200);
     }
 
     /**
@@ -43,7 +57,9 @@ class SpatialDataController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = SpatialData::select('*', DB::raw('ST_AsGeoJSON(polygon, 8) AS polygon'))->where('id',$id)->where('status', 'a')->first();
+
+        return response()->json($data, 200);
     }
 
     /**
@@ -53,9 +69,19 @@ class SpatialDataController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $req, $id)
     {
-        //
+        if(!$req) {
+          return response()->json([
+            'message' => 'Bad Request'
+          ], 400);
+        }
+        $data = SpatialData::find($id);
+        $data->fill($req->all());
+        $data->polygon = DB::raw('GeomFromText(\'POLYGON('.$req->polygon.')\')');
+        $data->save();
+
+        return response()->json($data, 200);
     }
 
     /**
@@ -66,6 +92,17 @@ class SpatialDataController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data = SpatialData::find($id);
+
+        if (!$data) {
+          return response()->json([
+            'message' => 'Not found'
+          ] ,404);
+        }
+
+        $data->status = 'x';
+        $data->save();
+
+        return response()->json($data, 200);
     }
 }
