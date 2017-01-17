@@ -33,9 +33,9 @@ class ContractController extends Controller
         if($order){
           $contract = new Contract();
 
-          $contract->contract_id = $request->contract_id;
+          $contract->contract_no = $request->contract_no;
           $contract->order_id = $request->order_id;
-          $contract->num_ship = $request->num_ship;
+          $contract->shipment_count = $request->shipment_count;
           $contract->term = $request->term;
           $contract->term_desc = $request->term_desc;
           $contract->date_from = $request->date_from;
@@ -77,9 +77,9 @@ class ContractController extends Controller
         return response()->json(['message' => 'not found'], 404);
       }
       else {
-        $contract->contract_id = $request->contract_id;
+        $contract->contract_no = $request->contract_no;
         $contract->order_id = $request->order_id;
-        $contract->num_ship = $request->num_ship;
+        $contract->shipment_count = $request->shipment_count;
         $contract->term = $request->term;
         $contract->term_desc = $request->term_desc;
         $contract->date_from = $request->date_from;

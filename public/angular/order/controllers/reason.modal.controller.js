@@ -22,9 +22,9 @@ angular.module('order').controller('OrderReasonModalController', ['$uibModalInst
       if($scope.order.reason !== ''){
         var order = new Order($scope.order);
         var contract = new Contract({
-          'contract_id': $scope.order.contracts.contract_id,
+          'contract_id': $scope.order.contracts.contract_no,
           'order_id': $scope.order.id,
-          'num_ship': $scope.order.contracts.num_ship,
+          'shipment_no': $scope.order.contracts.shipment_no,
           'term': $scope.order.contracts.term,
           'term_desc': $scope.order.contracts.term_desc,
           'date_from': $scope.order.contracts.date_from,
