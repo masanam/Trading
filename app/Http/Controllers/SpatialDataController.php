@@ -42,11 +42,11 @@ class SpatialDataController extends Controller
 
         $data = new SpatialData($req->all());
         $data->created_by = Auth::User()->id;
-        $data->polygon = DB::raw('GeomFromText(\'POLYGON('.$req->polygon.')\')');
+        if($req->polygon) $data->polygon = DB::raw('GeomFromText(\'POLYGON('.$req->polygon.')\')');
         $data->status = 'a';
         $data->save();
 
-        return response()->json($data, 200);
+        return $this->show($data->id);
     }
 
     /**
@@ -57,7 +57,7 @@ class SpatialDataController extends Controller
      */
     public function show($id)
     {
-        $data = SpatialData::select('*', DB::raw('ST_AsGeoJSON(polygon, 8) AS polygon'))->where('id',$id)->where('status', 'a')->first();
+        $data = SpatialData::with('User')->select('*', DB::raw('ST_AsGeoJSON(polygon, 8) AS polygon'))->where('id',$id)->where('status', 'a')->first();
 
         return response()->json($data, 200);
     }
@@ -78,10 +78,10 @@ class SpatialDataController extends Controller
         }
         $data = SpatialData::find($id);
         $data->fill($req->all());
-        $data->polygon = DB::raw('GeomFromText(\'POLYGON('.$req->polygon.')\')');
+        if($req->polygon) $data->polygon = DB::raw('GeomFromText(\'POLYGON('.$req->polygon.')\')');
         $data->save();
 
-        return response()->json($data, 200);
+        return $this->show($data->id);
     }
 
     /**
