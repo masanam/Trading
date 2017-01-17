@@ -70,14 +70,14 @@ class Company extends Model
   }
 
   public function customer_shipment() {
-    return $this->belongsToMany(Shipment::class, 'customer_id');
+    return $this->hasMany(Shipment::class, 'customer_id');
   }
 
   public function supplier_shipment() {
-    return $this->belongsToMany(Shipment::class, 'supplier_id');
+    return $this->hasMany(Shipment::class, 'supplier_id');
   }
 
   public function surveyor_shipment() {
-    return $this->belongsToMany(Shipment::class, 'surveyor_id');
+    return $this->hasMany(Shipment::class, 'surveyor_id');
   }
 }

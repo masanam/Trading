@@ -57,7 +57,7 @@ class Product extends Model
     }
 
     public function shipment() {
-      return $this->belongsToMany(Shipment::class);
+      return $this->hasMany(Shipment::class);
     }
 
     public function difference($compare, $company_type){
