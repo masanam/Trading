@@ -11,4 +11,7 @@ class Contract extends Model
     return $this->belongsTo(Order::class);
   }
 
+  public function shipments() {
+    return $this->hasOne(Shipment::class);
+  }
 }

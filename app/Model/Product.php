@@ -51,9 +51,13 @@ class Product extends Model
     public function company() {
     	return $this->belongsTo(Company::class);
     }
-    
+
     public function concession() {
     	return $this->belongsTo(Concession::class);
+    }
+
+    public function shipment() {
+      return $this->hasMany(Shipment::class);
     }
 
     public function difference($compare, $company_type){

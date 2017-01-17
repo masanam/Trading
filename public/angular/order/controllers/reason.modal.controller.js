@@ -35,11 +35,12 @@ angular.module('order').controller('OrderReasonModalController', ['$uibModalInst
           'date_from': $scope.order.contracts.date_from,
           'date_to': $scope.order.contracts.date_to,
         });
-
         order.status = $scope.status;
         if($scope.status === 'x') order.cancel_reason = $scope.order.reason;
         else if($scope.status === 'f') order.finalize_reason = $scope.order.reason;
         else if($scope.status === 'p') order.request_reason = $scope.order.reason;
+
+        console.log(order);
         order.$update({ id:order.id, status:order.status }, function (res) {
           $scope.order = res;
           // if($scope.status === 'x') $scope.order.cancel_reason = $scope.reason;
@@ -51,13 +52,15 @@ angular.module('order').controller('OrderReasonModalController', ['$uibModalInst
           * Aryo Pradipta Gema 17 - 01 - 2017 12:42 pm
           * Create contract after finishing an order
           */
-          contract.$save(function(res) {
-            $scope.order.contracts = res;
+          if($scope.order.contracts) {
+            contract.$save(function(res) {
+              $scope.order.contracts = res;
+            }, function(err) {
+              $scope.error = err.data.message;
+            });
+          }
 
-            $uibModalInstance.close($scope.order);
-          }, function(err) {
-            $scope.error = err.data.message;
-          });
+          $uibModalInstance.close($scope.order);
         }, function (err) {
           $scope.error = err.data.message;
         });

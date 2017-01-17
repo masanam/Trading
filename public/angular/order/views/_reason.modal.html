@@ -1,4 +1,4 @@
-<form ng-submit="ok()">
+<form ng-submit="submit()">
   <div class="modal-header" ng-switch="status">
     <h3 class="modal-title" id="modal-title" ng-switch-when="f">Finalize Order</h3>
     <h3 class="modal-title" id="modal-title" ng-switch-when="p">Request for Approval</h3>
@@ -9,12 +9,12 @@
   <div class="modal-body" ng-focus="find()" id="modal-body">
     <div class="row">
       <div class="col-sm-12">
-        <label ng-switch="status">Are you sure you want to 
+        <label ng-switch="status">Are you sure you want to
           <span ng-switch-when="f">Finalize Order</span>
           <span ng-switch-when="p">Request for Approval</span>
           <span ng-switch-default>Cancel Order</span>? Please enter the reason below.
         </label>
-        <textarea ng-model="reason" class="form-control" placeholder="Enter your reason here..." required>
+        <textarea ng-model="order.reason" class="form-control" placeholder="Enter your reason here..." required>
         </textarea>
       </div>
     </div>
@@ -25,7 +25,7 @@
     <span ng-switch-when="f">
       <button class="btn btn-primary" type="submit">Finalize Order</button>
     </span>
-    
+
     <span ng-switch-when="p">
       <button class="btn btn-primary" type="submit">Request For Approval</button>
     </span>
