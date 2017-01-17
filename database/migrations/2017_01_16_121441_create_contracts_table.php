@@ -83,6 +83,7 @@ class CreateContractsTable extends Migration
      */
     public function down()
     {
+        Schema::drop('shipment_history');
         Schema::drop('shipments');
         Schema::drop('contracts');
     }

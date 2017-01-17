@@ -68,4 +68,16 @@ class Company extends Model
   public function orders() {
     return $this->hasMany(Order::class, 'order_additional_costs', 'company_id', 'order_id')->withPivot('label', 'cost');
   }
+
+  public function customer_shipment() {
+    return $this->belongsToMany(Shipment::class, 'customer_id');
+  }
+
+  public function supplier_shipment() {
+    return $this->belongsToMany(Shipment::class, 'supplier_id');
+  }
+
+  public function surveyor_shipment() {
+    return $this->belongsToMany(Shipment::class, 'surveyor_id');
+  }
 }

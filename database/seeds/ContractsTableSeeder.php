@@ -15,14 +15,14 @@ class ContractsTableSeeder extends Seeder
 
       $contracts = array(
         array(
-          'contract_id' => 'afdsfad',
+          'contract_no' => 'afdsfad',
           'order_id' => 3,
-          'num_ship' => 12,
+          'shipment_count' => 12,
           'term' => 'uyuyugy',
           'term_desc' => 'hguyjh',
           'date_from' => new DateTime,
           'date_to' => new DateTime,
-          'status' => 'a' 
+          'status' => 'a'
         )
 
       );

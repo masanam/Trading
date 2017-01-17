@@ -86,6 +86,7 @@ Route::group(['middleware' => ['cors']], function() {
     Route::get('leads/{id}/test', 'LeadController@isSingleLeadInOrder');
 
     Route::resource('contracts', 'ContractController', ['except' => [ 'create', 'edit' ]]);
+    Route::resource('shipments', 'ShipmentController', ['except' => [ 'create', 'edit' ]]);
 
     //roles & permission API
     Route::resource('role','RoleController', ['except' => [ 'create', 'edit' ]]);
