@@ -15,7 +15,7 @@ class CreateSpatialData extends Migration
     {
 		Schema::create('spatial_data', function (Blueprint $table){
 			$table->increments('id');
-            
+            $table->string('name')->nullable();
 			$table->string('restricted_area')->nullable();
 			$table->string('type')->nullable();
 			$table->string('desc')->nullable();
