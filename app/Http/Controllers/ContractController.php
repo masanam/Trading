@@ -9,6 +9,9 @@ use Illuminate\Http\Request;
 
 class ContractController extends Controller
 {
+    public function __construct() {
+      $this->middleware('jwt.auth');
+    }
     /**
      * Display a listing of the resource.
      *

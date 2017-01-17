@@ -11,6 +11,9 @@ use App\Http\Requests;
 
 class ShipmentController extends Controller
 {
+    public function __construct() {
+      $this->middleware('jwt.auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -52,7 +55,7 @@ class ShipmentController extends Controller
 
         $shipment->save();
 
-        $shipment_history = $this->storeHistory($shipment);
+        $shipment_history = $this->storeShipmentHistory($shipment);
 
         return response()->json($shipment, 200);
     }
@@ -65,7 +68,7 @@ class ShipmentController extends Controller
      */
     public function show($id)
     {
-        $shipment = Shipment::find($id);
+        $shipment = Shipment::with('contracts', 'suppliers', 'customers', 'surveyors', 'products')->where('status', 'a')->find($id);
 
         return response()->json($shipment, 200);
     }
@@ -100,12 +103,12 @@ class ShipmentController extends Controller
 
       $shipment->save();
 
-      $shipment_history = $this->storeHistory($shipment);
+      $shipment_history = $this->storeShipmentHistory($shipment);
 
       return response()->json($shipment, 200);
     }
 
-    private function storeHistory($shipment) {
+    private function storeShipmentHistory($shipment) {
       $shipment_history = new ShipmentHistory();
       $shipment_history->shipment_id = $shipment->id;
       $shipment_history->surveyor_id = $shipment->surveyor_id;
@@ -121,6 +124,18 @@ class ShipmentController extends Controller
       $shipment_history->save();
 
       return $shipment_history;
+    }
+
+    public function indexShipmentHistory() {
+      $shipment_histories = ShipmentHistory::with('shipments', 'shipments.contracts', 'shipments.suppliers', 'shipments.customers', 'surveyors', 'shipments.products')->where('status', 'a')->get();
+
+      return response()->json($shipment_histories, 200);
+    }
+
+    public function showShipmentHistory($id) {
+      $shipment_history = ShipmentHistory::with('shipments', 'shipments.contracts', 'shipments.suppliers', 'shipments.customers', 'surveyors', 'shipments.products')->where('status', 'a')->find($id);
+
+      return response()->json($shipment_history, 200);
     }
 
     /**
