@@ -31,13 +31,48 @@ class CreateContractsTable extends Migration
       Schema::create('shipments', function (Blueprint $table) {
           $table->increments('id');
           $table->integer('contract_id')->unsigned();
-
-          /* OTHER ELEMENTS GOES HERE */
-
+          $table->integer('supplier_id')->unsigned();
+          $table->integer('customer_id')->unsigned();
+          $table->integer('product_id')->unsigned();
+          $table->integer('surveyor_id')->unsigned();
+          $table->string('shipment_no');
+          $table->string('vessel');
+          $table->datetime('laycan_start');
+          $table->datetime('laycan_end');
+          $table->datetime('eta');
+          $table->datetime('etd');
+          $table->integer('volume');
+          $table->integer('demurrage_rate');
+          $table->integer('loading_rate');
+          $table->integer('price');
           $table->char('status', 1);
           $table->timestamps();
 
           $table->foreign('contract_id')->references('id')->on('contracts')->onDelete('cascade');
+          $table->foreign('supplier_id')->references('id')->on('companies')->onDelete('cascade');
+          $table->foreign('customer_id')->references('id')->on('companies')->onDelete('cascade');
+          $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+          $table->foreign('surveyor_id')->references('id')->on('companies')->onDelete('cascade');
+      });
+
+      Schema::create('shipment_history', function (Blueprint $table) {
+          $table->increments('id');
+          $table->integer('shipment_id')->unsigned();
+          $table->integer('surveyor_id')->unsigned();
+          $table->string('vessel');
+          $table->datetime('laycan_start');
+          $table->datetime('laycan_end');
+          $table->datetime('eta');
+          $table->datetime('etd');
+          $table->integer('volume');
+          $table->integer('demurrage_rate');
+          $table->integer('loading_rate');
+          $table->integer('price');
+          $table->char('status', 1);
+          $table->timestamps();
+
+          $table->foreign('shipment_id')->references('id')->on('shipments')->onDelete('cascade');
+          $table->foreign('surveyor_id')->references('id')->on('companies')->onDelete('cascade');
       });
     }
 
