@@ -77,13 +77,13 @@ class ContractController extends Controller
         return response()->json(['message' => 'not found'], 404);
       }
       else {
-        $contract->contract_no = $request->contract_no;
-        $contract->order_id = $request->order_id;
-        $contract->shipment_count = $request->shipment_count;
-        $contract->term = $request->term;
-        $contract->term_desc = $request->term_desc;
-        $contract->date_from = $request->date_from;
-        $contract->date_to = $request->date_to;
+        $contract->contract_no = $request->contract_no ? $request->contract_no : $contract->contract_no;
+        $contract->order_id = $request->order_id ? $request->order_id : $contract->order_id;
+        $contract->shipment_count = $request->shipment_count ? $request->shipment_count : $contract->shipment_count;
+        $contract->term = $request->term ? $request->term : $contract->term;
+        $contract->term_desc = $request->term_desc ? $request->term_desc : $contract->term_desc;
+        $contract->date_from = $request->date_from ? $request->date_from : $contract->date_from;
+        $contract->date_to = $request->date_to ? $request->date_to : $contract->date_to;
         $contract->status = $request->status ? $request->status : 'a';
 
         $contract->save();

@@ -13,7 +13,7 @@ class CreateContractsTable extends Migration
      */
     public function up()
     {
-      Schema::create('contracts', function (Blueprint $table) {
+        Schema::create('contracts', function (Blueprint $table) {
           $table->increments('id');
           $table->string('contract_no');
           $table->integer('order_id')->unsigned();

@@ -8,7 +8,7 @@ angular.module('order').controller('OrderReasonModalController', ['$uibModalInst
     $scope.init= function(){
       $scope.order.reason = '';
       $scope.order.contracts = {};
-    }
+    };
 
     $scope.ok = function () {
       console.log($scope.order);

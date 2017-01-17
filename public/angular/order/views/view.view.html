@@ -40,6 +40,9 @@
         <a class="btn btn-default hidden-xs" ui-sref="order.list">
           <i class="glyphicon glyphicon-chevron-left"></i> Back
         </a>
+        <a class="btn btn-success hidden-xs" ng-click="editContract('f');" ng-show="order.status === 'f' && order.user_id === Authentication.user.id">
+          <i class="glyphicon glyphicon-floppy-saved" title="Edit Contract"></i> Edit Contract
+        </a>
         <a class="btn btn-primary hidden-xs" ng-click="print(order);" ng-show="(order.status === 'a' || order.status === 'f') && (order.user_id === Authentication.user.id || approver === true)">
           <i class="glyphicon glyphicon-print" title="Print"></i> Print
         </a>
@@ -48,9 +51,6 @@
         </a>
         <a class="btn btn-success hidden-xs" ng-click="changeStatus('f');" ng-show="order.status === 'a' && order.user_id === Authentication.user.id">
           <i class="glyphicon glyphicon-floppy-saved" title="Finalize Order"></i> Finalize Order
-        </a>
-        <a class="btn btn-success hidden-xs" ng-click="changeStatus('f');" ng-show="order.status === 'f' && order.user_id === Authentication.user.id">
-          <i class="glyphicon glyphicon-floppy-saved" title="Finalize Order"></i> Edit Contract
         </a>
         <a class="btn btn-danger hidden-xs" ng-click="changeStatus('x');" ng-show="(order.status !== 'c' && order.status !== 'x' && order.status !== 'f') && order.user_id === Authentication.user.id">
           <i class="glyphicon glyphicon-trash" title="Cancel Order"></i> Cancel Order
@@ -85,6 +85,11 @@
                 <li>
                   <a  ng-click="changeStatus('f');" ng-show="order.status === 'a' && order.user_id === Authentication.user.id">
                     <i class="glyphicon glyphicon-floppy-saved" title="Finalize Order"></i> Finalize Order
+                  </a>
+                </li>
+                <li>
+                  <a  ng-click="editContract('f');" ng-show="order.status === 'e' && order.user_id === Authentication.user.id">
+                    <i class="glyphicon glyphicon-floppy-saved" title="Edit Contract"></i> Edit Contract
                   </a>
                 </li>
                 <li>

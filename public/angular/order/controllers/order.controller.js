@@ -97,6 +97,25 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
 
     };
 
+    $scope.editContract = function (status) {
+      $scope.error = null;
+      var modalInstance = null;
+      if(status === 'f') {
+        modalInstance = $uibModal.open({
+          windowClass: 'xl-modal',
+          templateUrl: './angular/order/views/_edit-contract-planning.modal.html',
+          controller: 'EditContractModalController',
+          scope: $scope,
+          resolve: {
+            status: function () { return status; },
+          }
+        });
+        modalInstance.result.then(function (order) {
+          $scope.findOne();
+        });
+      }
+    };
+
     $scope.inHouse = function (status) {
       $scope.order.in_house = status || false;
       $scope.update(true);
