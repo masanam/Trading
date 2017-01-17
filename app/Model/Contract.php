@@ -14,4 +14,8 @@ class Contract extends Model
   public function shipments() {
     return $this->hasOne(Shipment::class);
   }
+
+  public function shipment_history() {
+    return $this->hasMany(ShipmentHistory::class);
+  }
 }

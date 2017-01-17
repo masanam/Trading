@@ -80,4 +80,8 @@ class Company extends Model
   public function surveyor_shipment() {
     return $this->hasMany(Shipment::class, 'surveyor_id');
   }
+
+  public function surveyor_shipment_history() {
+    return $this->hasMany(ShipmentHistory::class, 'surveyor_id');
+  }
 }

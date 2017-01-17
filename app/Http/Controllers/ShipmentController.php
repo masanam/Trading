@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Model\Shipment;
+use App\Model\ShipmentHistory;
 
 use Illuminate\Http\Request;
 
@@ -51,6 +52,8 @@ class ShipmentController extends Controller
 
         $shipment->save();
 
+        $shipment_history = $this->storeHistory($shipment);
+
         return response()->json($shipment, 200);
     }
 
@@ -97,7 +100,27 @@ class ShipmentController extends Controller
 
       $shipment->save();
 
+      $shipment_history = $this->storeHistory($shipment);
+
       return response()->json($shipment, 200);
+    }
+
+    private function storeHistory($shipment) {
+      $shipment_history = new ShipmentHistory();
+      $shipment_history->shipment_id = $shipment->id;
+      $shipment_history->surveyor_id = $shipment->surveyor_id;
+      $shipment_history->vessel = $shipment->vessel;
+      $shipment_history->laycan_start = $shipment->laycan_start;
+      $shipment_history->laycan_end = $shipment->laycan_end;
+      $shipment_history->eta = $shipment->eta;
+      $shipment_history->etd = $shipment->etd;
+      $shipment_history->volume = $shipment->volume;
+      $shipment_history->demurrage_rate = $shipment->demurrage_rate;
+      $shipment_history->loading_rate = $shipment->loading_rate;
+      $shipment_history->price = $shipment->price;
+      $shipment_history->save();
+
+      return $shipment_history;
     }
 
     /**
