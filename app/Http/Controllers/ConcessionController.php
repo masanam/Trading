@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Model\Concession;
-use App\Model\Seller;
+use App\Model\Company;
 use App\Model\Product;
 use App\Model\Port;
 use Auth;
@@ -132,6 +132,7 @@ class ConcessionController extends Controller
 
         $concession = new Concession($req->all());
         $concession->polygon = DB::raw('GeomFromText(\'POLYGON('.$concession->polygon.')\')');
+        //dd($concession);
         $concession->status = 'a';
         $concession->save();
 		
@@ -148,7 +149,8 @@ class ConcessionController extends Controller
     public function show($id)
     {
         $concession = Concession::select(
-			'concession_name',
+			'id',
+      'concession_name',
 			'owner',
 			'address',
 			'city',
@@ -219,11 +221,11 @@ class ConcessionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $concession)
+    public function update(Request $req, $concession)
     {
         $concession = Concession::find($concession);
 
-        if (!$request) {
+        if (!$req) {
             return response()->json([
                 'message' => 'Bad Request'
             ], 400);
@@ -235,34 +237,9 @@ class ConcessionController extends Controller
             ] ,404);
         }
 
-        $concession->concession_name = $request->concession_name;
-        $concession->seller_id = $request->seller_id;
-        $concession->owner = $request->owner;
-        $concession->address = $request->address;
-        $concession->city = $request->city;
-        $concession->country = $request->country;
-        $concession->latitude = $request->latitude;
-        $concession->longitude = $request->longitude;
-        $concession->polygon = $request->polygon;
-        $concession->size = $request->size;
-        $concession->stripping_ratio = $request->stripping_ratio;
-        $concession->resource = $request->resource;
-        $concession->reserves = $request->reserves;
-        $concession->contracted_volume = $request->contracted_volume;
-        $concession->remaining_volume = $request->remaining_volume;
-        $concession->annual_production = $request->annual_production;
-        $concession->hauling_road_name = $request->hauling_road_name;
-        $concession->stockpile_capacity = $request->stockpile_capacity;
-        $concession->stockpile_coverage = $request->stockpile_coverage;
-        $concession->stockpile_distance = $request->stockpile_distance;
-        $concession->port_id = $request->port_id;
-        $concession->port_distance = $request->port_distance;
-        $concession->license_expiry_date = date('Y-m-d',strtotime($request->license_expiry_date));
-        $concession->license_type = $request->license_type;
-        $concession->status = 'a';
-        $concession->latitude = floatval($request->latitude);
-        $concession->longitude = floatval($request->longitude);
-        $concession->stripping_ratio = floatval($request->stripping_ratio);
+        $concession->fill($req->except(['company_id', 'polygon', 'license_expiry_date', 'latitude', 'longitude', 'stripping_ratio']));
+
+        $concession->polygon = DB::raw('GeomFromText(\'POLYGON('.$req->polygon.')\')');
 
         $concession->save();
 
@@ -302,7 +279,7 @@ class ConcessionController extends Controller
 
     public function findMyConcession($id)
     {
-        $concession = Concession::where('status', 'a')->where('seller_id', $id)->get();
+        $concession = Concession::where('status', 'a')->where('company_id', $id)->get();
         foreach ($concession as $con) {
           $con->latitude = floatval($con->latitude);
           $con->longitude = floatval($con->longitude);

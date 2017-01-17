@@ -187,6 +187,9 @@ class OrderController extends Controller
     $order->status = 'd';
     $order->save();
 
+    //add user as the admin for the current order
+    $order->users()->attach([ $order->user_id => [ 'role' => 'admin' ]]);
+
     // Check the availability of associated leads
     if(count($req->buys) > 0 && !$req->in_house){
       foreach($req->buys as $buy){
