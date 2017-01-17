@@ -1,0 +1,31 @@
+<div class="row">
+  <div class="col-sm-12">
+  	<label>This is the summary of the contract</label>
+  	<div class="row">
+	  	<div class="col-lg-2">
+	  		<label># CONTRACT ID : </label>
+	  		<span>{{order.contracts.contract_id}}</span>
+	  	</div>
+	  	<div style="border-left: 1px solid gray;" class="col-lg-2">
+	  		<label>Number of Shipment : </label>
+	  		<span>{{order.contracts.num_ship}}</span>
+	  	</div>
+	  	<div style="border-left: 1px solid gray;" class="col-lg-2">
+	  		<label>Date From : </label>
+	  		<span>{{order.contracts.date_from | date: 'mediumDate'}}</span>
+	  	</div>
+	  	<div style="border-left: 1px solid gray;" class="col-lg-2">
+	  		<label>Date To : </label>
+	  		<span>{{order.contracts.date_to | date: 'mediumDate'}}</span>
+	  	</div>
+      <div style="border-left: 1px solid gray;" class="col-lg-2">
+        <label>Customer : </label>
+    		<span ng-repeat="sell in order.sells">{{sell.company.company_name}}</span>
+      </div>
+      <div style="border-left: 1px solid gray;" class="col-lg-2">
+    		<label>Tonnage : </label>
+        <span ng-repeat="sell in order.sells">{{sell.volume}}</span>
+      </div>
+  	</div>
+  </div>
+</div>

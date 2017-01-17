@@ -6,10 +6,10 @@
 
   <div class="modal-body" ng-focus="find()" id="modal-body">
     <section ng-include="'./angular/order/views/_progress.partial.html'"></section>
-    <section ng-if="step === 1" ng-include="'./angular/order/views/_contract-planning-1.partial.html'"></section>
-    <section ng-if="step === 2" ng-include="'./angular/order/views/_contract-planning-2.partial.html'"></section>
-    <section ng-if="step === 3" ng-include="'./angular/order/views/_contract-planning-3.partial.html'"></section>
-    <section ng-if="step === 4" ng-include="'./angular/order/views/_contract-planning-4.partial.html'"></section>
+    <section ng-if="step === 1" ng-include="'./angular/order/views/_contract-planning-reason.partial.html'"></section>
+    <section ng-if="step === 2" ng-include="'./angular/order/views/_contract-planning-contract.partial.html'"></section>
+    <section ng-if="step === 3" ng-include="'./angular/order/views/_contract-planning-shipment.partial.html'"></section>
+    <section ng-if="step === 4" ng-include="'./angular/order/views/_contract-planning-confirm.partial.html'"></section>
   </div>
   <div class="modal-footer" ng-switch="status">
     <button ng-if="step === 1" class="btn btn-default pull-left hidden-xs" type="button" ng-click="cancel()">Cancel</button>

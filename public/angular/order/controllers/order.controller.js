@@ -61,7 +61,7 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
         $scope.error = err.data.message;
       });
     };
-    
+
     // Request for Approval, Cancel Order, Finalize
     $scope.changeStatus = function (status) {
       $scope.error = null;
@@ -94,14 +94,14 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
           $scope.findOne();
         });
       }
-      
+
     };
 
     $scope.inHouse = function (status) {
       $scope.order.in_house = status || false;
       $scope.update(true);
     };
-    
+
     $scope.openReasonModal = function () {
       var modalInstance = $uibModal.open({
         windowClass: 'xl-modal',
@@ -110,7 +110,7 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
         scope: $scope,
       });
     };
-    
+
     // Approve Order
     $scope.approve_reject = function (status) {
       $scope.error = null;
@@ -123,7 +123,7 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
         $scope.error = err.data.message;
       });
     };
-    
+
     $scope.checkOrderUsers = function(){
       $scope.included = false;
       $scope.approver = false;
@@ -146,19 +146,19 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
         }
       }
     };
-    
+
     $scope.checkSubordinates = function(user_id){
       for (var i in Authentication.subordinates){
         if (Authentication.subordinates[i].id === user_id) return true;
       }
       return false;
     };
-    
+
     $scope.print = function(){
       $scope.orderCollapsed = false;
       $scope.financialCollapsed = true;
       $scope.qualityCollapsed = true;
-      
+
       setTimeout(function(){
         var docHead = document.head.outerHTML;
         var orderContent = document.getElementById('order-detail').outerHTML;
@@ -219,4 +219,3 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
     // };
   }
 ]);
-

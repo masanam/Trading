@@ -25,8 +25,8 @@ class Order extends Model
     }
 
   /*
-   * Relations 
-   * 
+   * Relations
+   *
    */
   public function buys() {
       return $this->belongsToMany(Lead::class, 'order_details', 'order_id', 'lead_id')
@@ -37,7 +37,7 @@ class Order extends Model
     return $this->belongsToMany(Lead::class, 'order_details', 'order_id', 'lead_id')
         ->withPivot('id', 'price', 'volume', 'payment_term', 'trading_term')->where('lead_type', 's');
 	}
-  
+
   public function leads()
   {
     return $this->belongsToMany(Lead::class, 'order_details', 'order_id', 'lead_id')
@@ -69,6 +69,9 @@ class Order extends Model
     return $this->belongsToMany(Company::class, 'order_additional_costs', 'order_id', 'company_id')->withPivot('label', 'cost');
   }
 
+  public function contracts() {
+    return $this->hasOne(Contract::class);
+  }
 
   // Model Functions
   public function averageSell() {
@@ -161,7 +164,7 @@ class Order extends Model
     $this->latestLaycan();
 
     // find all averages of the order details.
-    $this->averageSell(); 
+    $this->averageSell();
     $this->averageBuy();
 
     // get latest GC NEWC price
@@ -198,7 +201,7 @@ class Order extends Model
           $this->approvals()->attach($interim->id, $approval_properties);
           // and associate him/her to the order
           $this->users()->sync([$user->id => [ 'role' => 'approver' ]], false);
-        
+
           // Send the email now
           $mail = new ApprovalRequest($this, $approval_properties['approval_token'], $index->price);
           Mail::to($interim->email)->send($mail);

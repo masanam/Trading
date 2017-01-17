@@ -13,6 +13,7 @@ use App\Model\IndexPrice;
 use App\Model\Index;
 use App\Model\OrderNegotiation;
 use App\Model\OrderApprovalLog;
+use App\Model\Contract;
 
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Auth;
@@ -24,7 +25,7 @@ class OrderController extends Controller
     $this->middleware('jwt.auth', [ 'except' => 'approval' ]);
     $this->order = $order;
   }
-  
+
   /*
    *  This is to display the indexPrice inside the orders when loaded for mobile apps
    */
@@ -97,7 +98,7 @@ class OrderController extends Controller
 
     if($req->category == 'subordinates'){
       $subs = Auth::user()->subordinates();
-      $users = $subs->pluck('id')->all(); 
+      $users = $subs->pluck('id')->all();
       $orders = $orders->whereIn('user_id', $users);
     }
     else if($req->category == 'associated'){
@@ -272,10 +273,10 @@ class OrderController extends Controller
    * @return \Illuminate\Http\Response
    */
   public function show($id, Request $req = null)
-  { 
+  {
     $order = Order::with('trader', 'users', 'sells', 'buys',
       'buys.trader', 'sells.trader', 'approvals', 'approvalLogs', 'companies',
-      'sells.company', 'buys.company', 'buys.concession', 'sells.factory')->find($id);
+      'sells.company', 'buys.company', 'buys.concession', 'sells.factory', 'contracts')->find($id);
 
     $this->authorize('view', $order);
 
@@ -287,9 +288,9 @@ class OrderController extends Controller
     $order->latestLaycan();
 
     // find all averages of the order details.
-    $order->averageSell(); 
+    $order->averageSell();
     $order->averageBuy();
-    
+
     if (isset($req)) {
       // IF envelope is requested, get all necessary components
       if($req->envelope == "true"){
@@ -371,7 +372,7 @@ class OrderController extends Controller
       return response()->json([ 'message' => 'Volume not avaliable' ], 400);
     }
 
-    if(count($req->buys) > 0 && !$req->in_house) {      
+    if(count($req->buys) > 0 && !$req->in_house) {
       $message = $this->combineOrder($req->buys, $id);
     }
 
@@ -395,7 +396,7 @@ class OrderController extends Controller
       $order->leadToPartial();
     }
 
-    // if Orders staged for approval, 
+    // if Orders staged for approval,
     else if($order->status == 'p'){
       $order = Order::with(['approvals' => function($q){
         $q->where('user_id', Auth::user()->manager_id);
@@ -427,6 +428,8 @@ class OrderController extends Controller
     return $this->show($id, $req);
   }
 
+
+
   /**
    * Remove the specified resource from storage.
    *
@@ -456,7 +459,7 @@ class OrderController extends Controller
     // we need to try whether they are using approval token
     // or using the JWT token.
     $order = Order::with( 'approvals',
-      'sells', 'sells.trader', 'sells.company', 
+      'sells', 'sells.trader', 'sells.company',
       'buys', 'buys.trader', 'buys.company')->find($id);
 
     if($req->approval_token) $user = $order->getApproverByToken($req->approval_token); // if using token, get the specified approving user
@@ -528,7 +531,7 @@ class OrderController extends Controller
         return response()->json([ 'message' => 'Can\'t add Buy when using House Products' ], 400);
     }
 
-    else if ($lead_type === 'sells') 
+    else if ($lead_type === 'sells')
       if(count($order->buys) > 1 && !$req->notes && count($order->sells))
         return response()->json([ 'message' => 'Can\'t add more Sell on Multiple Buys' ], 400);
 
