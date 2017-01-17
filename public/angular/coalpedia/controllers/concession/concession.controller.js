@@ -25,7 +25,8 @@ angular.module('coalpedia').controller('ConcessionController', ['$scope', '$stat
       });
     };
 
-    $scope.edit = function (concession) {
+    $scope.edit = function (concession) {      
+      //console.log(concession.id);
       var modalInstance = $uibModal.open({
         animation: true,
         ariaLabelledBy: 'modal-title',
@@ -34,12 +35,13 @@ angular.module('coalpedia').controller('ConcessionController', ['$scope', '$stat
         controller: 'ConcessionModalController',
         windowClass: 'xl-modal',
         resolve: {
-          concession: angular.copy(concession),
-          company: $scope.company
-        }
+          concession: Concession.get({ id: concession.id }),
+          company: $scope.company,
+          edit:1        }
       });
 
       modalInstance.result.then(function (res) {
+        $scope.concession=res;
         if(!$scope.company.concessions) $scope.company.concessions = [];
         $scope.company.concessions.splice($scope.company.concessions.indexOf(concession), 1, res);
       });
@@ -58,8 +60,9 @@ angular.module('coalpedia').controller('ConcessionController', ['$scope', '$stat
 
       Concession.get({ id: $scope.concessionId }, function(concession){
         $scope.concession = concession;
+        $scope.concession.polygon = angular.fromJson(concession.polygon);
 
-        switch(concession.company.company_type){
+        switch(concession.company && concession.company.company_type){
           case 'c' : $scope.companyType = 'customer'; break;
           case 's' : $scope.companyType = 'supplier'; break;
           case 't' : $scope.companyType = 'supplier'; break;

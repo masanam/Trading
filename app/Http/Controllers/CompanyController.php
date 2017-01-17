@@ -50,7 +50,10 @@ class CompanyController extends Controller
   */
   public function show($id)
   {
-    $company = Company::with(['contacts','products','factories','ports','concessions','concessions.port','user'])->find($id);
+    $company = Company::with(['contacts','products','factories','ports','user',
+      'concessions' => function ($query) {
+        $query->select('id','concession_name','company_id','owner','reserves','city','country');
+      },'concessions.port'])->find($id);
 
     if($company->status != 'a')
       return response()->json(['message' => 'deactivated record'], 404);

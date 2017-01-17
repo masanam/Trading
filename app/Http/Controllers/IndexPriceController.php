@@ -63,7 +63,7 @@ class IndexPriceController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function update(Request $request, $id)r
+  public function update(Request $request, $id)
   {
     $indexPrice = IndexPrice::find($id);
 
