@@ -8,11 +8,11 @@ class ShipmentHistory extends Model
 {
   protected $table = 'shipment_history';
 
-  public function contracts() {
-    return $this->belongsToMany(Contract::class);
+  public function shipments() {
+    return $this->belongsTo(Shipment::class, 'shipment_id');
   }
 
   public function surveyors() {
-    return $this->belongsToMany(Company::class, 'surveyor_id');
+    return $this->belongsTo(Company::class, 'surveyor_id');
   }
 }

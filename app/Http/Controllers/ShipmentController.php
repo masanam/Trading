@@ -121,6 +121,7 @@ class ShipmentController extends Controller
       $shipment_history->demurrage_rate = $shipment->demurrage_rate;
       $shipment_history->loading_rate = $shipment->loading_rate;
       $shipment_history->price = $shipment->price;
+      $shipment_history->status = 'a';
       $shipment_history->save();
 
       return $shipment_history;
@@ -128,7 +129,6 @@ class ShipmentController extends Controller
 
     public function indexShipmentHistory() {
       $shipment_histories = ShipmentHistory::with('shipments', 'shipments.contracts', 'shipments.suppliers', 'shipments.customers', 'surveyors', 'shipments.products')->where('status', 'a')->get();
-
       return response()->json($shipment_histories, 200);
     }
 

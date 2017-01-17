@@ -25,4 +25,8 @@ class Shipment extends Model
     public function products() {
       return $this->belongsTo(Product::class);
     }
+
+    public function shipment_history() {
+      return $this->hasMany(ShipmentHistory::class);
+    }
 }
