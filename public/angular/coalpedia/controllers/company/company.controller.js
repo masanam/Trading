@@ -54,7 +54,7 @@ angular.module('coalpedia').controller('CompanyController', ['$scope', '$statePa
         controller: 'CompanyModalController',
         windowClass: 'xl-modal',
         resolve: {
-          company: angular.copy($scope.company)
+          company: Company.get({ id: $scope.company.id })
         }
       });
 
