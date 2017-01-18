@@ -17,11 +17,16 @@ class ContractController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $req)
     {
-      $contract = Contract::where('status', 'a')->get();
+      $contracts = Contract::with('shipments')->where('status', 'a');
+      if($req->unscheduled) {
+        $contracts = $contracts->has('shipments', '<' , 1);
+      }
 
-      return response()->json($contract, 200);
+      $contracts = $contracts->get();
+
+      return response()->json($contracts, 200);
     }
 
     /**
