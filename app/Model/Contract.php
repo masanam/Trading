@@ -8,10 +8,10 @@ use App\Model\Order;
 class Contract extends Model
 {
   public function orders() {
-    return $this->belongsTo(Order::class);
+    return $this->belongsTo(Order::class, 'order_id');
   }
 
   public function shipments() {
-    return $this->hasOne(Shipment::class);
+    return $this->hasMany(Shipment::class);
   }
 }
