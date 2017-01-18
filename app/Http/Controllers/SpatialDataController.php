@@ -80,24 +80,22 @@ class SpatialDataController extends Controller
         }
         $data = SpatialData::find($id);
         $data->fill($req->all());
-<<<<<<< HEAD
+
 
         $type_data=substr($req->polygon, 0,strpos($req->polygon, '('));
-
-        echo $type_data;
+        $spatial_data=substr($req->polygon, strpos($req->polygon, '('));
         
-        print_r($req->polygon);
-        // $data->polygon = DB::raw('GeomFromText(\'POLYGON('.$req->polygon.')\')');
+
+        if ($type_data=="POLYGON"){
+            $data->polygon = DB::raw('GeomFromText(\'POLYGON('.$spatial_data.')\')');            
+        }
         
-       // $data->save();
+        
+        
+       $data->save();
 
-       //return response()->json($data, 200);
-=======
-        if($req->polygon) $data->polygon = DB::raw('GeomFromText(\'POLYGON('.$req->polygon.')\')');
-        $data->save();
+       return response()->json($data, 200);
 
-        return $this->show($data->id);
->>>>>>> 6378ab87482da930a94135e37e74c6ae6a3b348b
     }
 
     /**
