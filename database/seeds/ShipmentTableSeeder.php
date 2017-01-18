@@ -2,6 +2,8 @@
 
 use Illuminate\Database\Seeder;
 
+use App\Model\Shipment;
+
 class ShipmentTableSeeder extends Seeder
 {
     /**
