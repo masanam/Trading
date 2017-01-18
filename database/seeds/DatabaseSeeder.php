@@ -24,6 +24,8 @@ class DatabaseSeeder extends Seeder
         $this->call(LeadsTableSeeder::class);
         $this->call(MiningLicenseTableSeeder::class);
         $this->call(SpatialDataTableSeeder::class);
+        $this->call(TonnagesTableSeeder::class);
+        $this->call(TonnagesHistoryTableSeeder::class);
 
         Model::reguard();
     }
