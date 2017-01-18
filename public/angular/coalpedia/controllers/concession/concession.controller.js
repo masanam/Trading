@@ -37,7 +37,8 @@ angular.module('coalpedia').controller('ConcessionController', ['$scope', '$stat
         resolve: {
           concession: Concession.get({ id: concession.id }),
           company: $scope.company,
-          edit:1        }
+          edit:1
+        }
       });
 
       modalInstance.result.then(function (res) {

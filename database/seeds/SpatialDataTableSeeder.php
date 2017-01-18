@@ -13,6 +13,7 @@ class SpatialDataTableSeeder extends Seeder
     public function run()
     {
         SpatialData::create([
+            'name'=> 'Sungai',
             'restricted_area'=> '12947812382132',
             'type'=> 'HTI',
             'desc'=> 'data HTI terjadi',
