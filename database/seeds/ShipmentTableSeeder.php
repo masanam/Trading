@@ -30,7 +30,17 @@ class ShipmentTableSeeder extends Seeder
         'demurrage_rate' => 16425,
         'loading_rate' => 17304,
         'price' => 10,
-        'status' => 'a'
+        'status' => 'a',
+        'fc'=>'FOTP',
+        'stowage_plan'=>'68858',
+        'cargo_suppl'=>0,
+        'cargo_on_board'=>0,
+        'bl_date'=>'2016-07-22',
+        'cargo_bl'=>68858,
+        'destination'=>' ',
+        'status_shipment'=>'completed'
+
+
       ]);
 
       Shipment::create([
@@ -50,7 +60,15 @@ class ShipmentTableSeeder extends Seeder
         'demurrage_rate' => 11087,
         'loading_rate' => 13423,
         'price' => 11,
-        'status' => 'a'
+        'status' => 'a',
+        'fc'=>'FOTP',
+        'stowage_plan'=>'68858',
+        'cargo_suppl'=>0,
+        'cargo_on_board'=>0,
+        'bl_date'=>'2016-07-22',
+        'cargo_bl'=>68858,
+        'destination'=>' ',
+        'status_shipment'=>'completed'
       ]);
 
       Shipment::create([
@@ -70,7 +88,15 @@ class ShipmentTableSeeder extends Seeder
         'demurrage_rate' => 14499,
         'loading_rate' => 15851,
         'price' => 16,
-        'status' => 'a'
+        'status' => 'a',
+        'fc'=>'FOTP',
+        'stowage_plan'=>'68858',
+        'cargo_suppl'=>0,
+        'cargo_on_board'=>0,
+        'bl_date'=>'2016-07-22',
+        'cargo_bl'=>68858,
+        'destination'=>' ',
+        'status_shipment'=>'completed'
       ]);
 
       Shipment::create([
@@ -90,7 +116,15 @@ class ShipmentTableSeeder extends Seeder
         'demurrage_rate' => 13529,
         'loading_rate' => 10293,
         'price' => 13,
-        'status' => 'a'
+        'status' => 'a',
+        'fc'=>'FOTP',
+        'stowage_plan'=>'68858',
+        'cargo_suppl'=>0,
+        'cargo_on_board'=>0,
+        'bl_date'=>'2016-07-22',
+        'cargo_bl'=>68858,
+        'destination'=>' ',
+        'status_shipment'=>'completed'
       ]);
 
       Shipment::create([
@@ -110,7 +144,15 @@ class ShipmentTableSeeder extends Seeder
         'demurrage_rate' => 13529,
         'loading_rate' => 10293,
         'price' => 13,
-        'status' => 'a'
+        'status' => 'a',
+        'fc'=>'FOTP',
+        'stowage_plan'=>'68858',
+        'cargo_suppl'=>0,
+        'cargo_on_board'=>0,
+        'bl_date'=>'2016-07-22',
+        'cargo_bl'=>68858,
+        'destination'=>' ',
+        'status_shipment'=>'completed'
       ]);
 
       Shipment::create([
@@ -130,7 +172,15 @@ class ShipmentTableSeeder extends Seeder
         'demurrage_rate' => 13529,
         'loading_rate' => 10293,
         'price' => 13,
-        'status' => 'a'
+        'status' => 'a',
+        'fc'=>'FOTP',
+        'stowage_plan'=>'68858',
+        'cargo_suppl'=>0,
+        'cargo_on_board'=>0,
+        'bl_date'=>'2016-07-22',
+        'cargo_bl'=>68858,
+        'destination'=>' ',
+        'status_shipment'=>'completed'
       ]);
 
       Shipment::create([
@@ -150,7 +200,15 @@ class ShipmentTableSeeder extends Seeder
         'demurrage_rate' => 13529,
         'loading_rate' => 10293,
         'price' => 13,
-        'status' => 'a'
+        'status' => 'a',
+        'fc'=>'FOTP',
+        'stowage_plan'=>'68858',
+        'cargo_suppl'=>0,
+        'cargo_on_board'=>0,
+        'bl_date'=>'2016-07-22',
+        'cargo_bl'=>68858,
+        'destination'=>' ',
+        'status_shipment'=>'completed'
       ]);
     }
 }

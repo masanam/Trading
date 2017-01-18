@@ -51,6 +51,9 @@ class ShipmentController extends Controller
         $tillDate = new Carbon('last day of ' . $monthTill . ' ' . $yearTill);
         $shipments = $shipments->whereBetween(DB::raw('date(laycan_start)'), [$fromDate, $tillDate])
           ->orWhereBetween(DB::raw('date(laycan_end)'), [$fromDate, $tillDate]);
+      }else if($req->contract_id){
+        $shipments = $shipments
+          ->where( DB::raw('contract_id'), '=', $req->contract_id );
       }
       else
         $shipments = $shipments

@@ -46,6 +46,15 @@ class CreateContractsTable extends Migration
           $table->integer('loading_rate');
           $table->integer('price');
           $table->char('status', 1);
+          $table->string('fc');
+          $table->string('stowage_plan');
+          $table->integer('cargo_suppl');
+          $table->integer('cargo_on_board');
+          $table->datetime('bl_date');
+          $table->integer('cargo_bl');
+          $table->string('destination');
+          $table->string('status_shipment');
+
           $table->timestamps();
 
           $table->foreign('contract_id')->references('id')->on('contracts')->onDelete('cascade');
