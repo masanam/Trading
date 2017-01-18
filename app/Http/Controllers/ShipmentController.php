@@ -41,6 +41,7 @@ class ShipmentController extends Controller
     {
       $range = [];
       $shipments = Shipment::with('contracts', 'contracts.orders', 'contracts.orders.sells', 'suppliers', 'customers', 'surveyors', 'products')->where('status', 'a');
+<<<<<<< HEAD
       if($req->range) {
         $range = explode(',', $req->range);
         $from = explode('-', $range[0]);
@@ -54,11 +55,25 @@ class ShipmentController extends Controller
       }else if($req->contract_id){
         $shipments = $shipments
           ->where( DB::raw('contract_id'), '=', $req->contract_id );
+=======
+      if($req->scheduled) {
+        if($req->range) {
+          $range = explode(',', $req->range);
+          $from = explode('-', $range[0]);
+          $till = explode('-', $range[1]);
+          $monthFrom = $from[0]; $yearFrom = $from[1];
+          $monthTill = $till[0]; $yearTill = $till[1];
+          $fromDate = new Carbon('first day of ' . $monthFrom . ' ' . $yearFrom);
+          $tillDate = new Carbon('last day of ' . $monthTill . ' ' . $yearTill);
+          $shipments = $shipments->whereBetween(DB::raw('date(laycan_start)'), [$fromDate, $tillDate])
+            ->orWhereBetween(DB::raw('date(laycan_end)'), [$fromDate, $tillDate]);
+        }
+        else
+          $shipments = $shipments
+            ->where( DB::raw('MONTH(laycan_start)'), '=', date('n') )
+            ->orWhere( DB::raw('MONTH(laycan_end)'), '=', date('n') );
+>>>>>>> f0e85e09d2eb618ba49cf32162ace3d0785479eb
       }
-      else
-        $shipments = $shipments
-          ->where( DB::raw('MONTH(laycan_start)'), '=', date('n') )
-          ->orWhere( DB::raw('MONTH(laycan_end)'), '=', date('n') );
 
       $shipments = $shipments->get();
 
