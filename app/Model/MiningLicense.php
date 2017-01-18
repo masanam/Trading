@@ -57,4 +57,8 @@ class MiningLicense extends Model {
         return $this->belongsTo('App\Model\Contact');
     }
 
+    public function checked_by() {
+        return $this->belongsTo('App\Model\User','checked_by','id');
+    }
+
 }

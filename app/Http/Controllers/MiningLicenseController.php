@@ -21,7 +21,7 @@ class MiningLicenseController extends Controller
      */
     public function index()
     {
-        $license = MiningLicense::with('Company','Contact')->select('*', DB::raw('ST_AsGeoJSON(polygon, 8) AS polygon'))->where('status', 'a')->get();
+        $license = MiningLicense::with('Company','Contact','checked_by')->select('*', DB::raw('ST_AsGeoJSON(polygon, 8) AS polygon'))->where('status', 'a')->get();
 
         return response()->json($license, 200);
     }
