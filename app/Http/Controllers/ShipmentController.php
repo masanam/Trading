@@ -35,7 +35,7 @@ class ShipmentController extends Controller
     *
     * params:
     * $req->isScheduled = string ['true', 'false']
-    * $req->rangeScheduled = string
+    * $req->range = string
     * (ex: 'dec-2016,feb-2017' -> 'december 2016 to february 2017' , 'nov-2015,may-2017' -> 'november 2015 to may 2017')
     **/
     public function index(Request $req)
@@ -43,14 +43,13 @@ class ShipmentController extends Controller
       $range = [];
       $shipments = Shipment::with('contracts', 'suppliers', 'customers', 'surveyors', 'products')->where('status', 'a');
       if($req->isScheduled == 'true') {
-        if($req->rangeScheduled) {
+        $shipments = $shipments->where('contract_id', 'NOT LIKE', 'NULL');
+        if($req->range) {
           $range = explode(',', $req->rangeScheduled);
           $from = explode('-', $range[0]);
           $till = explode('-', $range[1]);
-          $monthFrom = $from[0];
-          $yearFrom = $from[1];
-          $monthTill = $till[0];
-          $yearTill = $till[1];
+          $monthFrom = $from[0]; $yearFrom = $from[1];
+          $monthTill = $till[0]; $yearTill = $till[1];
           $fromDate = new Carbon('first day of ' . $monthFrom . ' ' . $yearFrom);
           $tillDate = new Carbon('last day of ' . $monthTill . ' ' . $yearTill);
           $shipments = $shipments->whereBetween(DB::raw('date(laycan_start)'), [$fromDate, $tillDate])
