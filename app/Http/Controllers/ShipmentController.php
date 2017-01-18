@@ -9,6 +9,14 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
+use Carbon\Carbon;
+use DB;
+
+/*
+* Aryo Pradipta Gema 17 January 2017 13.00
+*
+* Controller to handle Shipment and Shipment History
+*/
 class ShipmentController extends Controller
 {
     public function __construct() {
@@ -19,11 +27,47 @@ class ShipmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $shipments = Shipment::with('contracts', 'suppliers', 'customers', 'surveyors', 'products')->where('status', 'a')->get();
 
-        return response()->json($shipments, 200);
+
+    /**
+    * Aryo Pradipta Gema 18 January 2017 12.05
+    * This index will handle data retrieval based on request parameter given by the frontend
+    *
+    * params:
+    * $req->isScheduled = string ['true', 'false']
+    * $req->rangeScheduled = string
+    * (ex: 'dec-2016,feb-2017' -> 'december 2016 to february 2017' , 'nov-2015,may-2017' -> 'november 2015 to may 2017')
+    **/
+    public function index(Request $req)
+    {
+      $range = [];
+      $shipments = Shipment::with('contracts', 'suppliers', 'customers', 'surveyors', 'products')->where('status', 'a');
+      if($req->isScheduled == 'true') {
+        if($req->rangeScheduled) {
+          $range = explode(',', $req->rangeScheduled);
+          $from = explode('-', $range[0]);
+          $till = explode('-', $range[1]);
+          $monthFrom = $from[0];
+          $yearFrom = $from[1];
+          $monthTill = $till[0];
+          $yearTill = $till[1];
+          $fromDate = new Carbon('first day of ' . $monthFrom . ' ' . $yearFrom);
+          $tillDate = new Carbon('last day of ' . $monthTill . ' ' . $yearTill);
+          $shipments = $shipments->whereBetween(DB::raw('date(laycan_start)'), [$fromDate, $tillDate])
+            ->orWhereBetween(DB::raw('date(laycan_end)'), [$fromDate, $tillDate]);
+        }
+        else
+        $shipments = $shipments
+          ->where( DB::raw('MONTH(laycan_start)'), '=', date('n') )
+          ->orWhere( DB::raw('MONTH(laycan_end)'), '=', date('n') );
+      } else if($req->isScheduled == 'false') {
+        $shipments = $shipments
+          ->where( DB::raw('MONTH(laycan_start)'), '!=', date('n') )
+          ->orWhere( DB::raw('MONTH(laycan_end)'), '!=', date('n') );
+      }
+      $shipments = $shipments->get();
+
+      return response()->json($shipments, 200);
     }
 
     /**
