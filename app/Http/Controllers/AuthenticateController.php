@@ -26,10 +26,6 @@ class AuthenticateController extends Controller
    {
        $this->middleware('jwt.auth', ['except' => ['authenticate', 'signup', 'helloworld', 'forgotPassword']]);
    }
-   
-   
-   
- 
     /**
      * Display a listing of the resource.
      *
@@ -39,30 +35,11 @@ class AuthenticateController extends Controller
     {
         return "Auth index";
     }
-	
-	public function helloworld(Request $req){
-	   $user = User::with('roles');
-	   
-	   // filter if role is preset in request
-	   if($req->role) $user->where('role',$req->role);
-
-	   // filter if name is present in request
-	   if($req->q) $user->where('name', 'LIKE', '%'.$req->q. '%');
-	   
-	   $user=$user->get();
-	   
-	   
-	   
-	   return response()->json($user,200);
-	   
-	   
-	}
-	
- 
+    
     public function authenticate(Request $request)
     {
         $credentials = $request->only('email', 'password');
- 
+
         try {
             // verify the credentials and create a token for the user
             if (! $token = JWTAuth::attempt($credentials)) {
@@ -110,30 +87,31 @@ class AuthenticateController extends Controller
 
         return response()->json(compact('token', 'user'), 200);
     }
- 
+
     public function getAuthenticatedUser()
     {
         try {
- 
+
             if (! $user = JWTAuth::parseToken()->authenticate()) {
                 return response()->json(['user_not_found'], 404);
             }
- 
+
         } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
- 
+
             return response()->json(['token_expired'], $e->getStatusCode());
- 
+
         } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
- 
+
             return response()->json(['token_invalid'], $e->getStatusCode());
- 
+
         } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
- 
+
             return response()->json(['token_absent'], $e->getStatusCode());
- 
+
         }
-        
+
         $roles=[];
+
         $user = User::with('roles')->where('status', 'a')->find(Auth::user()->id);
         if($user) {
             foreach($user->roles as $r) {
@@ -145,7 +123,7 @@ class AuthenticateController extends Controller
             // dd($user->roles);
             $subordinates = $user->subordinates();
             $managers = $user->managers();
-     
+
             // the token is valid and we have found the user via the sub claim
             return response()->json(compact('user', 'subordinates', 'managers'), 200);
         }

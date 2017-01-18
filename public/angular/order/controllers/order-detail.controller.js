@@ -23,9 +23,9 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
           $scope.totalPriceBuy += $scope.order.sells[i].pivot.price;
           $scope.totalVolumeBuy += $scope.order.sells[i].pivot.volume;
           if ($scope.order.sells[i].additional !== undefined) {
-            $scope.totalSelfBuy += (($scope.order.sells[i].pivot.price + $scope.order.sells[i].additional.freight_cost + 
+            $scope.totalSelfBuy += (($scope.order.sells[i].pivot.price + $scope.order.sells[i].additional.freight_cost +
               $scope.order.sells[i].additional.port_to_factory) * $scope.order.sells[i].pivot.volume);
-            $scope.totalSelfAdditionalBuy += ($scope.order.sells[i].additional.freight_cost + 
+            $scope.totalSelfAdditionalBuy += ($scope.order.sells[i].additional.freight_cost +
               $scope.order.sells[i].additional.port_to_factory) * $scope.order.sells[i].pivot.volume;
           }else{
             $scope.totalSelfBuy += (($scope.order.sells[i].pivot.price) * $scope.order.sells[i].pivot.volume);
@@ -37,9 +37,9 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
           $scope.totalPriceSell += $scope.order.buys[i].pivot.price;
           $scope.totalVolumeSell += $scope.order.buys[i].pivot.volume;
           if ($scope.order.buys[i].additional !== undefined) {
-            $scope.totalSelfSell += (($scope.order.buys[i].pivot.price + $scope.order.buys[i].additional.freight_cost + 
+            $scope.totalSelfSell += (($scope.order.buys[i].pivot.price + $scope.order.buys[i].additional.freight_cost +
               $scope.order.buys[i].additional.port_to_factory) * $scope.order.buys[i].pivot.volume);
-            $scope.totalSelfAdditionalSell += ($scope.order.buys[i].additional.freight_cost + 
+            $scope.totalSelfAdditionalSell += ($scope.order.buys[i].additional.freight_cost +
               $scope.order.buys[i].additional.port_to_factory) * $scope.order.buys[i].pivot.volume;
           }else{
             $scope.totalSelfSell += (($scope.order.buys[i].pivot.price) * $scope.order.buys[i].pivot.volume);
@@ -50,7 +50,7 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
 
     $scope.checkAlike = function (display){
       Lead.query({ lead_id:display.id, matching:'alike', order:true }, function(res){
-        if (display.lead_type === 'b') 
+        if (display.lead_type === 'b')
           $scope.alikeBuys = res;
         else
           $scope.alikeSells = res;
@@ -65,7 +65,7 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
       var reconcile = function () {
         if(sell_index > -1) $scope.order.sells.splice(sell_index, 1);
         if(buy_index > -1) $scope.order.buys.splice(buy_index, 1);
-        
+
         if($scope.display.sell === lead){
           delete $scope.display.sell;
           if($scope.order.sells !== null) $scope.display.sell = $scope.order.sells[0];
@@ -82,12 +82,12 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
       } else {
         Order.update(
           { id: $scope.order.id, action: 'unstage' },
-          { lead_id: lead.id }, 
+          { lead_id: lead.id },
         function (res){
           $scope.order = res;
           reconcile();
         });
-      } 
+      }
     };
 
     $scope.negoBuy = function () {
@@ -103,7 +103,7 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
             return {
               item: $scope.display.buy,
               type: 'buy'
-            }; 
+            };
           }
         }
       });
@@ -135,7 +135,7 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
             return {
               item: $scope.display.sell,
               type: 'sell'
-            }; 
+            };
           }
         }
       });
@@ -177,7 +177,7 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
       modalInstance.result.then(function (selectedItem) {
         if(!$scope.order.buys) $scope.order.buys = [];
         $scope.checkAlike(selectedItem);
-        
+
         if($scope.order.id){
           Order.update(
             { id:$scope.order.id, action: 'stage' },
@@ -222,7 +222,7 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
       modalInstance.result.then(function (selectedItem) {
         if(!$scope.order.buys) $scope.order.buys = [];
         $scope.checkAlike(selectedItem);
-        
+
         if($scope.order.id){
           Order.update(
             { id:$scope.order.id, action: 'stage' },

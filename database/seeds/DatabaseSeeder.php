@@ -26,6 +26,8 @@ class DatabaseSeeder extends Seeder
         $this->call(SpatialDataTableSeeder::class);
         $this->call(TonnagesTableSeeder::class);
         $this->call(TonnagesHistoryTableSeeder::class);
+        $this->call(ContractsTableSeeder::class);
+        $this->call(ShipmentTableSeeder::class);
 
         Model::reguard();
     }

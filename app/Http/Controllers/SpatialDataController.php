@@ -19,6 +19,7 @@ class SpatialDataController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index(Request $req = null)
     {
       $data = SpatialData::with('User')->select('*', DB::raw('ST_AsGeoJSON(polygon, 8) AS polygon'))->where('status', 'a')->get();
@@ -116,7 +117,6 @@ class SpatialDataController extends Controller
       $data->save();
 
       return response()->json($data, 200);
-
     }
 
     /**

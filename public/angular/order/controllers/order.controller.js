@@ -61,32 +61,66 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
         $scope.error = err.data.message;
       });
     };
-    
+
     // Request for Approval, Cancel Order, Finalize
     $scope.changeStatus = function (status) {
       $scope.error = null;
       $scope.reason = '';
-      
-      var modalInstance = $uibModal.open({
-        windowClass: 'xl-modal',
-        templateUrl: './angular/order/views/_reason.modal.html',
-        controller: 'OrderReasonModalController',
-        scope: $scope,
-        resolve: {
-          status: function () { return status; },
-        }
-      });
+      var modalInstance = null;
+      if(status === 'f') {
+        modalInstance = $uibModal.open({
+          windowClass: 'xl-modal',
+          templateUrl: './angular/order/views/_contract-planning.modal.html',
+          controller: 'OrderReasonModalController',
+          scope: $scope,
+          resolve: {
+            status: function () { return status; },
+          }
+        });
+        modalInstance.result.then(function (order) {
+          $scope.findOne();
+        });
+      } else {
+        modalInstance = $uibModal.open({
+          windowClass: 'xl-modal',
+          templateUrl: './angular/order/views/_reason.modal.html',
+          controller: 'OrderReasonModalController',
+          scope: $scope,
+          resolve: {
+            status: function () { return status; },
+          }
+        });
+        modalInstance.result.then(function (order) {
+          $scope.findOne();
+        });
+      }
 
-      modalInstance.result.then(function (order) {
-        $scope.findOne();
-      });
+    };
+
+    $scope.editContract = function (status) {
+      $scope.error = null;
+      var modalInstance = null;
+      if(status === 'f') {
+        modalInstance = $uibModal.open({
+          windowClass: 'xl-modal',
+          templateUrl: './angular/order/views/_edit-contract-planning.modal.html',
+          controller: 'EditContractModalController',
+          scope: $scope,
+          resolve: {
+            status: function () { return status; },
+          }
+        });
+        modalInstance.result.then(function (order) {
+          $scope.findOne();
+        });
+      }
     };
 
     $scope.inHouse = function (status) {
       $scope.order.in_house = status || false;
       $scope.update(true);
     };
-    
+
     $scope.openReasonModal = function () {
       var modalInstance = $uibModal.open({
         windowClass: 'xl-modal',
@@ -95,7 +129,7 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
         scope: $scope,
       });
     };
-    
+
     // Approve Order
     $scope.approve_reject = function (status) {
       $scope.error = null;
@@ -108,7 +142,7 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
         $scope.error = err.data.message;
       });
     };
-    
+
     $scope.checkOrderUsers = function(){
       $scope.included = false;
       $scope.approver = false;
@@ -131,19 +165,19 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
         }
       }
     };
-    
+
     $scope.checkSubordinates = function(user_id){
       for (var i in Authentication.subordinates){
         if (Authentication.subordinates[i].id === user_id) return true;
       }
       return false;
     };
-    
+
     $scope.print = function(){
       $scope.orderCollapsed = false;
       $scope.financialCollapsed = true;
       $scope.qualityCollapsed = true;
-      
+
       setTimeout(function(){
         var docHead = document.head.outerHTML;
         var orderContent = document.getElementById('order-detail').outerHTML;
@@ -204,4 +238,3 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
     // };
   }
 ]);
-
