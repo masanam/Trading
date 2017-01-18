@@ -21,16 +21,9 @@ class SpatialDataController extends Controller
      */
     public function index(Request $req = null)
     {
-      $data = SpatialData::with('User')->select('*', DB::raw('ST_AsGeoJSON(polygon, 8) AS polygon'))->where('status', 'a');
-      // function global search at table
-      if($req->q)
-        $data->where(function ($query) use ($req) {
-          $query->where('name', 'LIKE', '%'.$req->q.'%')
-          ->orWhere('type', 'LIKE', '%'.$req->q.'%')
-          ->orWhere('created_by', 'LIKE', '%'.$req->q.'%')
-          ->orWhere('created_at', 'LIKE', '%'.$req->q.'%');
-        });
-      return response()->json($data->get(), 200);
+      $data = SpatialData::with('User')->select('*', DB::raw('ST_AsGeoJSON(polygon, 8) AS polygon'))->where('status', 'a')->get();
+      
+      return response()->json($data, 200);
     }
 
     /**
@@ -87,7 +80,14 @@ class SpatialDataController extends Controller
       }
       $data = SpatialData::find($id);
       $data->fill($req->all());
-      if($req->polygon) $data->polygon = DB::raw('GeomFromText(\'POLYGON('.$req->polygon.')\')');
+
+      $type_data=substr($req->polygon, 0,strpos($req->polygon, '('));
+      $spatial_data=substr($req->polygon, strpos($req->polygon, '('));
+      
+      if ($type_data=="POLYGON"){
+          $data->polygon = DB::raw('GeomFromText(\'POLYGON('.$spatial_data.')\')');            
+      }
+      
       $data->save();
 
       return $this->show($data->id);
