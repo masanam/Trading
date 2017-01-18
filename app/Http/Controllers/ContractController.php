@@ -19,7 +19,7 @@ class ContractController extends Controller
      */
     public function index(Request $req)
     {
-      $contracts = Contract::with('shipments', 'orders', 'orders.sells', 'orders.sells.company')->where('status', 'a');
+      $contracts = Contract::with('shipments', 'orders', 'orders.sells', 'orders.sells.company', 'orders.sells.product')->where('status', 'a');
       if($req->unscheduled) {
         $contracts = $contracts->has('shipments', '<' , 1);
       }
