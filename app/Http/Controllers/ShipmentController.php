@@ -40,7 +40,7 @@ class ShipmentController extends Controller
     public function index(Request $req)
     {
       $range = [];
-      $shipments = Shipment::with('contracts', 'suppliers', 'customers', 'surveyors', 'products')->where('status', 'a');
+      $shipments = Shipment::with('contracts', 'contracts.orders', 'contracts.orders.sells', 'suppliers', 'customers', 'surveyors', 'products')->where('status', 'a');
       if($req->range) {
         $range = explode(',', $req->range);
         $from = explode('-', $range[0]);
@@ -56,7 +56,7 @@ class ShipmentController extends Controller
         $shipments = $shipments
           ->where( DB::raw('MONTH(laycan_start)'), '=', date('n') )
           ->orWhere( DB::raw('MONTH(laycan_end)'), '=', date('n') );
-          
+
       $shipments = $shipments->get();
 
       return response()->json($shipments, 200);
@@ -104,7 +104,7 @@ class ShipmentController extends Controller
      */
     public function show($id)
     {
-        $shipment = Shipment::with('contracts', 'suppliers', 'customers', 'surveyors', 'products')->where('status', 'a')->find($id);
+        $shipment = Shipment::with('contracts', 'contracts.orders', 'contracts.orders.sells', 'suppliers', 'customers', 'surveyors', 'products')->where('status', 'a')->find($id);
 
         return response()->json($shipment, 200);
     }

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Shipment extends Model
 {
     public function contracts() {
-      return $this->belongsTo(Contract::class);
+      return $this->belongsTo(Contract::class, 'contract_id');
     }
 
     public function suppliers() {
@@ -23,7 +23,7 @@ class Shipment extends Model
     }
 
     public function products() {
-      return $this->belongsTo(Product::class);
+      return $this->belongsTo(Product::class, 'product_id');
     }
 
     public function shipment_history() {
