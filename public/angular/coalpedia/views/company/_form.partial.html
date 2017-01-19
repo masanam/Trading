@@ -5,10 +5,10 @@
 
 <div class="row col-lg-12">
   <div class="form-group pull-left" ng-init="company.company_type = companyType[0]">
-    <label for="company_type">Company:</label><br>
+    <label for="company_type"> {{ companyType }} Type:</label><br>
 
     <div class="btn-group">
-      <label class="btn btn-default" ng-model="company.company_type" uib-btn-radio="'c'" >Customer (End User)</label>
+      <label class="btn btn-default" ng-model="company.company_type" uib-btn-radio="'c'" >End User / Factory</label>
       <label class="btn btn-default" ng-model="company.company_type" uib-btn-radio="'t'">Coal Trader</label>
       <label class="btn btn-default" ng-model="company.company_type" uib-btn-radio="'s'">Supplier</label>
       <label class="btn btn-default" ng-model="company.company_type" uib-btn-radio="'v'">Vendor</label>
@@ -26,7 +26,7 @@
   </div>
 
   <div class="form-group pull-right">
-    <label for="headquarter_location">Main business of Customer:</label><br>
+    <label for="headquarter_location">Main Business of {{ companyType }}:</label><br>
     <div class="btn-group">
       <label ng-if="company.company_type === 'c'" class="btn btn-default"
         ng-model="company.industry" uib-btn-radio="'Cements Industry'">
