@@ -45,9 +45,9 @@ class Company extends Model
     return $this->belongsTo(User::class);
   }
 
-  // public function lead() {
-  //   return $this->belongsTo(Lead::class);
-  // }
+  public function area() {
+    return $this->belongsTo(Area::class);
+  }
 
   public function contacts() {
     return $this->hasMany(Contact::class)->where('status','a');

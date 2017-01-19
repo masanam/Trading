@@ -2,6 +2,8 @@
 
 namespace App\Model;
 
+use App\Model\ShipmentLog;
+
 use Illuminate\Database\Eloquent\Model;
 
 class Shipment extends Model
@@ -32,5 +34,9 @@ class Shipment extends Model
 
     public function shipment_log() {
       return $this->hasMany(ShipmentLog::class);
+    }
+
+    public function latest_log(){
+      return $this->hasMany(ShipmentLog::class)->orderBy('created_at')->first();
     }
 }

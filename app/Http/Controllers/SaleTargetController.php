@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\Tonnage;
-use App\Model\TonnageHistory;
+use App\Model\SalesTarget;
 
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
-class TonnageController extends Controller
+class SaleTargetController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,8 +17,9 @@ class TonnageController extends Controller
      */
     public function index()
     {
-        $tonnage = Tonnage::with('product')->get();
-        return response()->json($tonnage, 200);
+        $sales_target = SalesTarget::with('product')->get();
+        return response()->json($sales_target, 200);
+        
     }
 
     /**
@@ -42,15 +42,15 @@ class TonnageController extends Controller
             ], 400);
         }
 
-        $tonnage = new Tonnage($req->only([
+        $sales_target = new SalesTarget($req->only([
             'product_id', 'month', 'year', 'value', 'updated_by'
         ]));
         
-        $tonnage->status = 'a';
+        $sales_target->status = 'a';
 
-        $tonnage->save();
+        $sales_target->save();
 
-        return response()->json($tonnage, 200);
+        return response()->json($sales_target, 200);
     }
 
     /**
@@ -61,12 +61,12 @@ class TonnageController extends Controller
      */
     public function show($id)
     {
-        $tonnage = Tonnage::with('product')->find($id);
+        $sales_target = SalesTarget::with('product')->find($id);
 
-        if($tonnage->status != 'a')
+        if($sales_target->status != 'a')
           return response()->json(['message' => 'deactivated record'], 404);
         
-        return response()->json($tonnage, 200);
+        return response()->json($sales_target, 200);
     }
 
     /**
@@ -83,16 +83,16 @@ class TonnageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $req, $tonnage)
+    public function update(Request $req, $sales_target)
     {
-        $tonnage = Tonnage::find($tonnage);
+        $sales_target = SalesTarget::find($sales_target);
 
         if (!$req) return response()->json([ 'message' => 'Bad Request' ], 400);
-        if (!$tonnage) return response()->json([ 'message' => 'Not found' ] ,404);
+        if (!$sales_target) return response()->json([ 'message' => 'Not found' ] ,404);
 
-        $tonnage->fill($req->only(['month', 'year', 'value', 'updated_by']))->save();
+        $sales_target->fill($req->only(['month', 'year', 'value', 'updated_by']))->save();
 
-        return response()->json($tonnage, 200);
+        return response()->json($sales_target, 200);
     }
 
     /**
@@ -103,17 +103,17 @@ class TonnageController extends Controller
      */
     public function destroy($id)
     {
-        $tonnage = Tonnage::find($id);
+        $sales_target = SalesTarget::find($id);
 
-        if (!$tonnage) {
+        if (!$sales_target) {
           return response()->json([
             'message' => 'Not found'
           ] ,404);
         }
 
-        $tonnage->status = 'x';
-        $tonnage->save();
+        $sales_target->status = 'x';
+        $sales_target->save();
 
-        return response()->json($tonnage, 200);
+        return response()->json($sales_target, 200);
     }
 }
