@@ -37,23 +37,19 @@ class CreateContractsTable extends Migration
           $table->integer('surveyor_id')->unsigned();
           $table->string('shipment_no');
           $table->string('vessel');
+          $table->string('fc'); //floating crane
           $table->datetime('laycan_start');
+          $table->datetime('eta'); //estimated time of arrival
+          $table->datetime('loaded');
+          $table->datetime('etd'); //estimated time of departure
           $table->datetime('laycan_end');
-          $table->datetime('eta');
-          $table->datetime('etd');
           $table->integer('volume');
           $table->integer('demurrage_rate');
           $table->integer('loading_rate');
           $table->integer('price');
+          $table->datetime('bl_date'); //bill of lading
+          $table->integer('cargo_bl'); //cargo bill of lading
           $table->char('status', 1);
-          $table->string('fc');
-          $table->string('stowage_plan');
-          $table->integer('cargo_suppl');
-          $table->integer('cargo_on_board');
-          $table->datetime('bl_date');
-          $table->integer('cargo_bl');
-          $table->string('destination');
-          $table->string('status_shipment');
 
           $table->timestamps();
 
@@ -69,19 +65,37 @@ class CreateContractsTable extends Migration
           $table->integer('shipment_id')->unsigned();
           $table->integer('surveyor_id')->unsigned();
           $table->string('vessel');
+          $table->string('fc'); //floating crane
           $table->datetime('laycan_start');
+          $table->datetime('eta'); //estimated time of arrival
+          $table->datetime('loaded');
+          $table->datetime('etd'); //estimated time of departure
           $table->datetime('laycan_end');
-          $table->datetime('eta');
-          $table->datetime('etd');
           $table->integer('volume');
           $table->integer('demurrage_rate');
           $table->integer('loading_rate');
           $table->integer('price');
+          $table->datetime('bl_date'); //bill of lading
+          $table->integer('cargo_bl'); //cargo bill of lading
           $table->char('status', 1);
           $table->timestamps();
 
           $table->foreign('shipment_id')->references('id')->on('shipments')->onDelete('cascade');
           $table->foreign('surveyor_id')->references('id')->on('companies')->onDelete('cascade');
+      });
+
+      Schema::create('shipment_log', function (Blueprint $table) {
+          $table->integer('shipment_id')->unsigned();
+          $table->integer('user_id')->unsigned();
+          $table->string('stowage_plan')->nullable();
+          $table->integer('cargo_supply')->nullable(); //cargo supply
+          $table->integer('cargo_on_board')->nullable();
+          $table->text('remark')->nullable();
+          $table->char('status', 1)->nullable();
+          $table->timestamps();
+
+          $table->foreign('shipment_id')->references('id')->on('shipments')->onDelete('cascade');
+          $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
       });
     }
 
@@ -92,6 +106,7 @@ class CreateContractsTable extends Migration
      */
     public function down()
     {
+        Schema::drop('shipment_log');
         Schema::drop('shipment_history');
         Schema::drop('shipments');
         Schema::drop('contracts');

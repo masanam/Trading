@@ -4,9 +4,9 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Tonnage extends Model
+class SaleTarget extends Model
 {
-    protected $table = 'tonnages';
+    protected $table = 'sales_target';
     protected $fillable = [
       'product_id', 'month', 'year', 'value'
     ];
@@ -14,5 +14,4 @@ class Tonnage extends Model
     public function product() {
         return $this->belongsTo('App\Model\Product');
     }
-
 }
