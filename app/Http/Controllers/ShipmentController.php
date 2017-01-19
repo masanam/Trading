@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
+use Auth;
+
 use Carbon\Carbon;
 use DB;
 
@@ -145,7 +147,7 @@ class ShipmentController extends Controller
 
       $shipment_history = $this->storeShipmentHistory($shipment);
 
-      return response()->json($shipment, 200);
+      return response()->json(['shipment' => $shipment, 'shipment_history' => $shipment_history], 200);
     }
 
     /*
@@ -156,6 +158,11 @@ class ShipmentController extends Controller
     private function storeShipmentHistory($shipment) {
       $shipment_history = new ShipmentHistory();
       $shipment_history->shipment_id = $shipment->id;
+      $shipment_history->user_id = Auth::user()->id;
+      $shipment_history->contract_id = $shipment->contract_id;
+      $shipment_history->supplier_id = $shipment->supplier_id;
+      $shipment_history->customer_id = $shipment->customer_id;
+      $shipment_history->product_id = $shipment->product_id;
       $shipment_history->surveyor_id = $shipment->surveyor_id;
       $shipment_history->vessel = $shipment->vessel;
       $shipment_history->laycan_start = $shipment->laycan_start;
@@ -169,7 +176,7 @@ class ShipmentController extends Controller
       $shipment_history->status = $shipment->status;
       $shipment_history->save();
 
-      return response()->json($shipment_history,200);
+      return $shipment_history;
     }
 
     /*
@@ -214,7 +221,7 @@ class ShipmentController extends Controller
     public function storeShipmentLog(Request $request) {
       $shipment_log = new ShipmentLog();
       $shipment_log->shipment_id = $request->shipment_id;
-      $shipment_log->user_id = $request->user_id;
+      $shipment_log->user_id = Auth::user()->id;
       $shipment_log->stowage_plan = $request->stowage_plan;
       $shipment_log->cargo_supply = $request->cargo_supply;
       $shipment_log->cargo_on_board = $request->cargo_on_board;
