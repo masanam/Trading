@@ -56,12 +56,9 @@ class Product extends Model
     	return $this->belongsTo(Concession::class);
     }
 
-    public function tonnage() {
-        return $this->hasMany('App\Model\Tonnage');
+    public function saleTarget() {
+        return $this->hasMany('App\Model\SaleTarget');
     }
-
-    public function tonnageHistory() {
-        return $this->hasMany('App\Model\tonnageHistory');
 
     public function shipment() {
       return $this->hasMany(Shipment::class);

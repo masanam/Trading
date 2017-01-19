@@ -1,11 +1,10 @@
 <?php 
 
-use App\Model\Tonnage;
-use App\Model\TonnageHistory;
+use App\Model\SaleTarget;
 
 use Illuminate\Database\Seeder;
 
-class TonnagesTableSeeder extends Seeder
+class SalesTargetTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,7 +13,7 @@ class TonnagesTableSeeder extends Seeder
      */
     public function run()
     {
-        Tonnage::create([
+        SaleTarget::create([
 	    	'id' => 1,
 	    	'product_id' => '1' ,
 	    	'month' => '2' ,
@@ -22,7 +21,7 @@ class TonnagesTableSeeder extends Seeder
 	    	'value' => '20000' ,
 	    	'status' => 'a' 
         ]) ;
-        Tonnage::create([
+        SaleTarget::create([
 	    	'id' => 2,
 	    	'product_id' => '2' ,
 	    	'month' => '1' ,
@@ -30,7 +29,7 @@ class TonnagesTableSeeder extends Seeder
 	    	'value' => '31142' ,
 	    	'status' => 'a' 
         ]) ;
-        Tonnage::create([
+        SaleTarget::create([
 	    	'id' => 3,
 	    	'product_id' => '1' ,
 	    	'month' => '1' ,
