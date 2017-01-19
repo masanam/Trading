@@ -86,13 +86,14 @@ class ShipmentController extends Controller
         $shipment->laycan_end = $request->laycan_end;
         $shipment->eta = $request->eta;
         $shipment->etd = $request->etd;
+        $shipment->loaded = $request->loaded;
         $shipment->volume = $request->volume;
         $shipment->demurrage_rate = $request->demurrage_rate;
         $shipment->loading_rate = $request->loading_rate;
         $shipment->price = $request->price;
         $shipment->status = 'a';
 
-        $shipment->save();
+        $shipment::with('contracts', 'contracts.orders', 'contracts.orders.sells', 'suppliers', 'customers', 'surveyors', 'products')->save();
 
         $shipment_history = $this->storeShipmentHistory($shipment);
 
@@ -121,7 +122,7 @@ class ShipmentController extends Controller
      */
     public function update(Request $request, $id)
     {
-      $shipment = Shipment::find($id);
+      $shipment = Shipment::with('contracts', 'contracts.orders', 'contracts.orders.sells', 'suppliers', 'customers', 'surveyors', 'products')->find($id);
 
       $shipment->contract_id = $request->contract_id;
       $shipment->supplier_id = $request->supplier_id;
@@ -142,6 +143,8 @@ class ShipmentController extends Controller
 
       $shipment->save();
 
+      $shipment_history = $this->storeShipmentHistory($shipment);
+
       return response()->json($shipment, 200);
     }
 
@@ -150,20 +153,20 @@ class ShipmentController extends Controller
     * to store ShipmentHistory
     * no params
     */
-    public function storeShipmentHistory(Request $request) {
+    private function storeShipmentHistory($shipment) {
       $shipment_history = new ShipmentHistory();
-      $shipment_history->shipment_id = $request->id;
-      $shipment_history->surveyor_id = $request->surveyor_id;
-      $shipment_history->vessel = $request->vessel;
-      $shipment_history->laycan_start = $request->laycan_start;
-      $shipment_history->laycan_end = $request->laycan_end;
-      $shipment_history->eta = $request->eta;
-      $shipment_history->etd = $request->etd;
-      $shipment_history->volume = $request->volume;
-      $shipment_history->demurrage_rate = $request->demurrage_rate;
-      $shipment_history->loading_rate = $request->loading_rate;
-      $shipment_history->price = $request->price;
-      $shipment_history->status = 'a';
+      $shipment_history->shipment_id = $shipment->id;
+      $shipment_history->surveyor_id = $shipment->surveyor_id;
+      $shipment_history->vessel = $shipment->vessel;
+      $shipment_history->laycan_start = $shipment->laycan_start;
+      $shipment_history->laycan_end = $shipment->laycan_end;
+      $shipment_history->eta = $shipment->eta;
+      $shipment_history->etd = $shipment->etd;
+      $shipment_history->volume = $shipment->volume;
+      $shipment_history->demurrage_rate = $shipment->demurrage_rate;
+      $shipment_history->loading_rate = $shipment->loading_rate;
+      $shipment_history->price = $shipment->price;
+      $shipment_history->status = $shipment->status;
       $shipment_history->save();
 
       return response()->json($shipment_history,200);
@@ -175,7 +178,7 @@ class ShipmentController extends Controller
     * no params
     */
     public function indexShipmentHistory() {
-      $shipment_histories = ShipmentHistory::with('shipments', 'shipments.contracts', 'shipments.suppliers', 'shipments.customers', 'surveyors', 'shipments.products')->where('status', 'a')->get();
+      $shipment_histories = ShipmentHistory::with('shipments', 'shipments.contracts', 'shipments.suppliers', 'shipments.customers', 'surveyors', 'shipments.products')->get();
       return response()->json($shipment_histories, 200);
     }
 
@@ -186,7 +189,7 @@ class ShipmentController extends Controller
     * $id from routes is shipment history id
     */
     public function showShipmentHistory($id) {
-      $shipment_history = ShipmentHistory::with('shipments', 'shipments.contracts', 'shipments.suppliers', 'shipments.customers', 'surveyors', 'shipments.products')->where('status', 'a')->find($id);
+      $shipment_history = ShipmentHistory::with('shipments', 'shipments.contracts', 'shipments.suppliers', 'shipments.customers', 'surveyors', 'shipments.products')->find($id);
 
       return response()->json($shipment_history, 200);
     }
@@ -198,7 +201,7 @@ class ShipmentController extends Controller
     * $id from routes is shipment id
     */
     public function showShipmentHistoryByShipment($id) {
-      $shipment_history = ShipmentHistory::with('shipments', 'shipments.contracts', 'surveyors', 'shipments.products')->where([['shipment_id', $id], ['status', 'a']])->get();
+      $shipment_history = ShipmentHistory::with('shipments', 'shipments.contracts', 'surveyors', 'shipments.products')->where('shipment_id', $id)->get();
 
       return response()->json($shipment_history, 200);
     }
@@ -258,6 +261,8 @@ class ShipmentController extends Controller
       $shipment->status = 'x';
 
       $shipment->save();
+
+      $shipment_history = $this->storeShipmentHistory($shipment);
 
       return response()->json($shipment, 200);
     }
