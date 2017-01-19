@@ -3,6 +3,7 @@
 use App\Model\User;
 use App\Model\Company;
 use App\Model\Contact;
+use App\Model\Area;
 
 use Illuminate\Database\Seeder;
 
@@ -15,9 +16,30 @@ class CompaniesTableSeeder extends Seeder
    */
   public function run()
   {
+    Area::create([
+      'id' => 1,
+      'description' => 'Area 1'
+    ]);
+
+    Area::create([
+      'id' => 2,
+      'description' => 'Area 2'
+    ]);
+
+    Area::create([
+      'id' => 3,
+      'description' => 'Area 3'
+    ]);
+
+    Area::create([
+      'id' => 4,
+      'description' => 'Area 4'
+    ]);
+
     Company::create([
       'id' => 1,
       'user_id' => '2' ,
+      'area_id' =>  1,
       'company_name' => 'PT.Wilmar Nabati Indonesia' ,
       'is_affiliated'=>'1',
       'phone' => '(031) 3979414' ,
@@ -38,6 +60,7 @@ class CompaniesTableSeeder extends Seeder
     Company::create([
       'id' => 2,
       'user_id' => '1' ,
+      'area_id' =>  1,
       'company_name' => 'PT.SMART' ,
       'country'=> 'ID',
       'is_affiliated'=>'1',
@@ -58,6 +81,7 @@ class CompaniesTableSeeder extends Seeder
     Company::create([
       'id' => 3,
       'user_id' => 1,
+      'area_id' =>  1,
       'company_name' => 'PT Mitra Bahari Sentosa',
       'country'=> 'ID',
       'is_affiliated'=> 0,
@@ -78,6 +102,7 @@ class CompaniesTableSeeder extends Seeder
       'id'=>4,
       'company_name' => 'Indexim',
       'user_id' => '1',
+      'area_id' =>  2,
       'phone' => '',
       'is_affiliated'=>'1',
       'annual_sales'=>'0',
@@ -100,6 +125,7 @@ class CompaniesTableSeeder extends Seeder
       'id'=>5,
       'company_name' => 'Berau Coal, PT',
       'user_id' => '1',
+      'area_id' =>  2,
       'phone' => '021 29669700',
       'is_affiliated'=>'1',
       'annual_sales'=>'0',
@@ -122,6 +148,7 @@ class CompaniesTableSeeder extends Seeder
       'id'=>6,
       'company_name' => 'PT Borneo Indobara',
       'user_id' => '3',
+      'area_id' =>  2,
       'is_affiliated'=>'1',
       'annual_sales'=>'02',
       'preferred_trading_term'=>'FOB BARGE',
@@ -143,6 +170,7 @@ class CompaniesTableSeeder extends Seeder
       'id'=>7,
       'company_name' => 'Tiger Energy',
       'user_id' => '1',
+      'area_id' =>  2,
       'phone' => '',
       'is_affiliated'=>'1',
       'annual_sales'=>'0',
@@ -165,6 +193,7 @@ class CompaniesTableSeeder extends Seeder
       'id'=>8,
       'company_name' => 'Amanah',
       'user_id' => '1',
+      'area_id' =>  2,
       'phone' => '',
       'is_affiliated'=>'1',
       'annual_sales'=>'0',
@@ -187,6 +216,7 @@ class CompaniesTableSeeder extends Seeder
       'id'=>9,
       'company_name' => 'Bukit Baiduri Energi',
       'user_id' => '2',
+      'area_id' =>  2,
       'phone' => '',
       'is_affiliated'=>'1',
       'annual_sales'=>'0',
@@ -209,6 +239,7 @@ class CompaniesTableSeeder extends Seeder
       'id'=>10,
       'company_name' => 'Arutmin',
       'user_id' => '3',
+      'area_id' =>  2,
       'phone' => '',
       'is_affiliated'=>'1',
       'annual_sales'=>'0',
@@ -236,6 +267,8 @@ class CompaniesTableSeeder extends Seeder
       'phone' => '+62811111111',
       'status' => 'a'
     ]);
+
+    
 
     //1-5
     

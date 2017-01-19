@@ -35,7 +35,6 @@ class AuthenticateController extends Controller
     {
         return "Auth index";
     }
-    
     public function authenticate(Request $request)
     {
         $credentials = $request->only('email', 'password');

@@ -35,7 +35,8 @@ angular.module('coalpedia').controller('CompanyController', ['$scope', '$statePa
         controller: 'CompanyModalController',
         windowClass: 'xl-modal',
         resolve: {
-          company: new Company()
+          company: new Company(),
+          companyType: function (){ return $scope.companyType; }
         }
       });
 
