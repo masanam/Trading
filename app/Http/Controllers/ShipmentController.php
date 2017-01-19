@@ -44,6 +44,8 @@ class ShipmentController extends Controller
     {
       $range = [];
       $shipments = Shipment::with('contracts', 'contracts.orders', 'contracts.orders.sells', 'suppliers', 'customers', 'surveyors', 'products')->where('status', 'a');
+
+
       if($req->scheduled) {
         if($req->range) {
           $range = explode(',', $req->range);
@@ -60,6 +62,8 @@ class ShipmentController extends Controller
           $shipments = $shipments
             ->where( DB::raw('MONTH(laycan_start)'), '=', date('n') )
             ->orWhere( DB::raw('MONTH(laycan_end)'), '=', date('n') );
+
+
       }
 
       $shipments = $shipments->get();
