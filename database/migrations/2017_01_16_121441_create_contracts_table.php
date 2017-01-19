@@ -38,16 +38,11 @@ class CreateContractsTable extends Migration
           $table->string('shipment_no');
           $table->string('vessel');
           $table->string('fc'); //floating crane
-          $table->datetime('actual_laycan_start');
-          $table->datetime('actual_eta'); //estimated time of arrival
-          $table->datetime('actual_loaded');
-          $table->datetime('actual_etd'); //estimated time of departure
-          $table->datetime('actual_laycan_end');
-          $table->datetime('plan_laycan_start');
-          $table->datetime('plan_eta');
-          $table->datetime('plan_loaded');
-          $table->datetime('plan_etd');
-          $table->datetime('plan_laycan_end');
+          $table->datetime('laycan_start');
+          $table->datetime('eta'); //estimated time of arrival
+          $table->datetime('loaded');
+          $table->datetime('etd'); //estimated time of departure
+          $table->datetime('laycan_end');
           $table->integer('volume');
           $table->integer('demurrage_rate');
           $table->integer('loading_rate');
@@ -71,16 +66,11 @@ class CreateContractsTable extends Migration
           $table->integer('surveyor_id')->unsigned();
           $table->string('vessel');
           $table->string('fc'); //floating crane
-          $table->datetime('actual_laycan_start');
-          $table->datetime('actual_eta'); //estimated time of arrival
-          $table->datetime('actual_loaded');
-          $table->datetime('actual_etd'); //estimated time of departure
-          $table->datetime('actual_laycan_end');
-          $table->datetime('plan_laycan_start');
-          $table->datetime('plan_eta');
-          $table->datetime('plan_loaded');
-          $table->datetime('plan_etd');
-          $table->datetime('plan_laycan_end');
+          $table->datetime('laycan_start');
+          $table->datetime('eta'); //estimated time of arrival
+          $table->datetime('loaded');
+          $table->datetime('etd'); //estimated time of departure
+          $table->datetime('laycan_end');
           $table->integer('volume');
           $table->integer('demurrage_rate');
           $table->integer('loading_rate');
