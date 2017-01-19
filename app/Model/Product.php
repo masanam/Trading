@@ -57,12 +57,8 @@ class Product extends Model
     }
 
     public function saleTarget() {
-        return $this->hasMany('App\Model\SaleTarget');
-    }
-
-    public function tonnageHistory() {
-        return $this->hasMany('App\Model\tonnageHistory');
-    }
+        return $this->hasMany(SalesTarget::class);
+    } 
 
     public function shipment() {
         return $this->hasMany(Shipment::class);
