@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\SaleTarget;
+use App\Model\SalesTarget;
 
 use Illuminate\Http\Request;
 
@@ -17,8 +17,9 @@ class SaleTargetController extends Controller
      */
     public function index()
     {
-        $sales_target = SaleTarget::with('product')->get();
+        $sales_target = SalesTarget::with('product')->get();
         return response()->json($sales_target, 200);
+        
     }
 
     /**
@@ -41,7 +42,7 @@ class SaleTargetController extends Controller
             ], 400);
         }
 
-        $sales_target = new SaleTarget($req->only([
+        $sales_target = new SalesTarget($req->only([
             'product_id', 'month', 'year', 'value', 'updated_by'
         ]));
         
@@ -60,7 +61,7 @@ class SaleTargetController extends Controller
      */
     public function show($id)
     {
-        $sales_target = SaleTarget::with('product')->find($id);
+        $sales_target = SalesTarget::with('product')->find($id);
 
         if($sales_target->status != 'a')
           return response()->json(['message' => 'deactivated record'], 404);
@@ -84,7 +85,7 @@ class SaleTargetController extends Controller
      */
     public function update(Request $req, $sales_target)
     {
-        $sales_target = SaleTarget::find($sales_target);
+        $sales_target = SalesTarget::find($sales_target);
 
         if (!$req) return response()->json([ 'message' => 'Bad Request' ], 400);
         if (!$sales_target) return response()->json([ 'message' => 'Not found' ] ,404);
@@ -102,7 +103,7 @@ class SaleTargetController extends Controller
      */
     public function destroy($id)
     {
-        $sales_target = SaleTarget::find($id);
+        $sales_target = SalesTarget::find($id);
 
         if (!$sales_target) {
           return response()->json([
