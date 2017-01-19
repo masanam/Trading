@@ -93,7 +93,6 @@ Route::group(['middleware' => ['cors']], function() {
 
     Route::get('leads/{id}/test', 'LeadController@isSingleLeadInOrder');
 
-    Route::post('shipments/history', 'ShipmentController@storeShipmentHistory');
     Route::get('shipments/history', 'ShipmentController@indexShipmentHistory');
     Route::get('shipments/{id}/history', 'ShipmentController@showShipmentHistoryByShipment');
     Route::post('shipments/log', 'ShipmentController@storeShipmentLog');
