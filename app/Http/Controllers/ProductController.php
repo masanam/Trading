@@ -71,7 +71,9 @@ class ProductController extends Controller
    */
   public function show($id)
   {
-    $product = Product::with('concession', 'company')->find($id);
+    $product = Product::with(['concession'=> function ($query) {
+        $query->select('id','concession_name','company_id','owner','reserves','city','country');
+      }, 'company'])->find($id);
 
     if($product->status != 'a') return response()->json(['message' => 'deactivated record'], 404);
     

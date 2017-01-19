@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Model\Shipment;
 use App\Model\ShipmentHistory;
+use App\Model\ShipmentLog;
 
 use Illuminate\Http\Request;
 
@@ -141,39 +142,107 @@ class ShipmentController extends Controller
 
       $shipment->save();
 
-      $shipment_history = $this->storeShipmentHistory($shipment);
-
       return response()->json($shipment, 200);
     }
 
-    private function storeShipmentHistory($shipment) {
+    /*
+    * Aryo Pradipta Gema 19 January 2017 14.11
+    * to store ShipmentHistory
+    * no params
+    */
+    public function storeShipmentHistory(Request $request) {
       $shipment_history = new ShipmentHistory();
-      $shipment_history->shipment_id = $shipment->id;
-      $shipment_history->surveyor_id = $shipment->surveyor_id;
-      $shipment_history->vessel = $shipment->vessel;
-      $shipment_history->laycan_start = $shipment->laycan_start;
-      $shipment_history->laycan_end = $shipment->laycan_end;
-      $shipment_history->eta = $shipment->eta;
-      $shipment_history->etd = $shipment->etd;
-      $shipment_history->volume = $shipment->volume;
-      $shipment_history->demurrage_rate = $shipment->demurrage_rate;
-      $shipment_history->loading_rate = $shipment->loading_rate;
-      $shipment_history->price = $shipment->price;
+      $shipment_history->shipment_id = $request->id;
+      $shipment_history->surveyor_id = $request->surveyor_id;
+      $shipment_history->vessel = $request->vessel;
+      $shipment_history->laycan_start = $request->laycan_start;
+      $shipment_history->laycan_end = $request->laycan_end;
+      $shipment_history->eta = $request->eta;
+      $shipment_history->etd = $request->etd;
+      $shipment_history->volume = $request->volume;
+      $shipment_history->demurrage_rate = $request->demurrage_rate;
+      $shipment_history->loading_rate = $request->loading_rate;
+      $shipment_history->price = $request->price;
       $shipment_history->status = 'a';
       $shipment_history->save();
 
-      return $shipment_history;
+      return response()->json($shipment_history,200);
     }
 
+    /*
+    * Aryo Pradipta Gema 19 January 2017 14.11
+    * to retrieve ShipmentHistory in bulk where the status is 'a'
+    * no params
+    */
     public function indexShipmentHistory() {
       $shipment_histories = ShipmentHistory::with('shipments', 'shipments.contracts', 'shipments.suppliers', 'shipments.customers', 'surveyors', 'shipments.products')->where('status', 'a')->get();
       return response()->json($shipment_histories, 200);
     }
 
+    /*
+    * Aryo Pradipta Gema 19 January 2017 14.11
+    * to retrieve one ShipmentHistory based on id where the status is 'a'
+    * params :
+    * $id from routes is shipment history id
+    */
     public function showShipmentHistory($id) {
       $shipment_history = ShipmentHistory::with('shipments', 'shipments.contracts', 'shipments.suppliers', 'shipments.customers', 'surveyors', 'shipments.products')->where('status', 'a')->find($id);
 
       return response()->json($shipment_history, 200);
+    }
+
+    /*
+    * Aryo Pradipta Gema 19 January 2017 14.11
+    * to retrieve ShipmentHistory in bulk where the status is 'a' based on their shipment
+    * params:
+    * $id from routes is shipment id
+    */
+    public function showShipmentHistoryByShipment($id) {
+      $shipment_history = ShipmentHistory::with('shipments', 'shipments.contracts', 'surveyors', 'shipments.products')->where([['shipment_id', $id], ['status', 'a']])->get();
+
+      return response()->json($shipment_history, 200);
+    }
+
+    /*
+    * Aryo Pradipta Gema 19 January 2017 14.11
+    * to store ShipmentLog
+    * no params
+    */
+    public function storeShipmentLog(Request $request) {
+      $shipment_log = new ShipmentLog();
+      $shipment_log->shipment_id = $request->shipment_id;
+      $shipment_log->user_id = $request->user_id;
+      $shipment_log->stowage_plan = $request->stowage_plan;
+      $shipment_log->cargo_supply = $request->cargo_supply;
+      $shipment_log->cargo_on_board = $request->cargo_on_board;
+      $shipment_log->remark = $request->remark;
+      $shipment_log->status = 'a';
+      $shipment_log->save();
+      return response()->json($shipment_log,200);
+    }
+
+    /*
+    * Aryo Pradipta Gema 19 January 2017 14.11
+    * to retrieve ShipmentLog in bulk where the status is 'a'
+    * no params
+    */
+    public function indexShipmentLog() {
+      $shipment_log = ShipmentLog::with('shipments', 'shipments.contracts', 'users', 'shipments.products')->get();
+      return response()->json($shipment_log, 200);
+    }
+
+    /*
+    * Aryo Pradipta Gema 19 January 2017 14.11
+    * to retrieve ShipmentLog in bulk based on their shipment
+    * params:
+    * $id from routes is shipment id
+    */
+    public function showShipmentLogByShipment(Request $req, $id) {
+      $shipment_log = ShipmentLog::with('shipments', 'shipments.contracts', 'users', 'shipments.products')->where('shipment_id', $id);
+      if($req->latest) $shipment_log = $shipment_log->orderBy('created_at', 'DESC')->first();
+      else $shipment_log = $shipment_log->get();
+
+      return response()->json($shipment_log, 200);
     }
 
     /**
