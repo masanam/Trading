@@ -231,6 +231,20 @@ class CreateCompaniesTable extends Migration
             $table->date('received_at')->nullable();
             $table->char('status',1);
             $table->timestamps();
+
+            //for advance search
+            $table->boolean('troubled_bupati')->nullable();
+            $table->boolean('operating')->nullable();
+            $table->boolean('close_factory')->nullable();
+            $table->boolean('close_iup')->nullable();
+            $table->boolean('close_river')->nullable();
+            $table->boolean('close_iup_other')->nullable();
+            $table->boolean('located_mining')->nullable();
+            $table->boolean('located_settlement')->nullable();
+            $table->boolean('located_palm')->nullable();
+            $table->boolean('located_farm')->nullable();
+            $table->boolean('overlay_forest')->nullable();
+
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('checked_by')->references('id')->on('users')->onDelete('cascade');
