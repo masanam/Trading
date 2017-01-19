@@ -1,6 +1,6 @@
 <?php 
 
-use App\Model\SaleTarget;
+use App\Model\SalesTarget;
 
 use Illuminate\Database\Seeder;
 
@@ -13,7 +13,7 @@ class SalesTargetTableSeeder extends Seeder
      */
     public function run()
     {
-        SaleTarget::create([
+        SalesTarget::create([
 	    	'id' => 1,
 	    	'product_id' => '1' ,
 	    	'month' => '2' ,
@@ -21,7 +21,7 @@ class SalesTargetTableSeeder extends Seeder
 	    	'value' => '20000' ,
 	    	'status' => 'a' 
         ]) ;
-        SaleTarget::create([
+        SalesTarget::create([
 	    	'id' => 2,
 	    	'product_id' => '2' ,
 	    	'month' => '1' ,
@@ -29,7 +29,7 @@ class SalesTargetTableSeeder extends Seeder
 	    	'value' => '31142' ,
 	    	'status' => 'a' 
         ]) ;
-        SaleTarget::create([
+        SalesTarget::create([
 	    	'id' => 3,
 	    	'product_id' => '1' ,
 	    	'month' => '1' ,
