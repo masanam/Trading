@@ -34,7 +34,7 @@ angular.module('user').factory('Authentication', ['$http', '$auth',
     auth.signup = function (registration, callback){
       $auth.signup(registration).then(function(data) {
         // If signup is successful, redirect to the users state
-        auth.authenticate();
+        auth.authenticate(callback);
         callback();
       }).catch(function(err){
         return callback({ message: err }, undefined);
@@ -44,6 +44,14 @@ angular.module('user').factory('Authentication', ['$http', '$auth',
     auth.logout = function () {
       auth.user = undefined;
       $auth.logout();
+    };
+
+    auth.forgot = function(email, callback) {
+      $http.post('/api/authenticate/forgot', { email: email }).success(function(res) {
+        return callback(res);
+      }).error(function(err){
+        if(callback) return callback(err, undefined);
+      });
     };
 
     return auth;

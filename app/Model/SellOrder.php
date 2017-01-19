@@ -13,6 +13,16 @@ class SellOrder extends Model
 {
     protected $table = 'sell_order';
 
+    public function getCreatedAtAttribute($value)
+    {
+        return date('d-m-Y', strtotime($value));
+    }
+
+    public function getUpdatedAtAttribute($value)
+    {
+        return date('d-m-Y', strtotime($value));
+    }
+
     public function seller() {
     	return $this->belongsTo('App\Model\Seller');
     }

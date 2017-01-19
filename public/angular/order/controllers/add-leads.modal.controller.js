@@ -21,6 +21,7 @@ angular.module('order').controller('AddLeadsModalController', ['$uibModalInstanc
     };
 
     $scope.ok = function () {
+      console.log($scope.selected.item);
       $uibModalInstance.close($scope.selected.item);
     };
 

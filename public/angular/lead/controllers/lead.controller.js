@@ -1,9 +1,10 @@
 'use strict';
-angular.module('lead').controller('LeadController', ['$scope', '$state', '$stateParams', 'Authentication', 'Order', 'Lead', 'Term',
-  function($scope, $state, $stateParams, Authentication, Order, Lead, Term) {
+angular.module('lead').controller('LeadController', ['$scope', '$state', '$stateParams', 'Environment', 'Authentication', 'Order', 'Lead', 'Term',
+  function($scope, $state, $stateParams, Environment, Authentication, Order, Lead, Term) {
     $scope.Authentication = Authentication;
     $scope.tradingTerm = Term.trading;
     $scope.paymentTerm = Term.payment;
+    $scope.showBuy = Environment.showBuy;
     $scope.selected = {};
 
     $scope.findOne = function(id){
@@ -36,6 +37,7 @@ angular.module('lead').controller('LeadController', ['$scope', '$state', '$state
     $scope.init = function () {
       $scope.lead = new Lead();
       if($stateParams.lead_type) $scope.lead.lead_type = $stateParams.lead_type;
+      if(Environment.trx === 'sell') $scope.lead.lead_type = 'sell';
     };
     
     $scope.getUsed = function(lead){
@@ -74,7 +76,14 @@ angular.module('lead').controller('LeadController', ['$scope', '$state', '$state
       var next;
 
       if($state.current.name === 'lead.update') next = 'lead.location';
-      else if($state.current.name === 'lead.location') next = 'lead.port';
+      else if($state.current.name === 'lead.location'){
+        // if location is by country, skip port
+        if(Environment.destinationBy === 'country'){
+          console.log(next);
+          $scope.lead.order_status++;
+          next = 'lead.product';
+        } else next = 'lead.port';
+      }
       else if($state.current.name === 'lead.port') next = 'lead.product';
       else if($state.current.name === 'lead.product') {
         next = 'lead.view';

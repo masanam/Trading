@@ -15,7 +15,7 @@ gulp.task('watch', function () {
   gulp.watch(config.vendorCSSFiles, ['bower-css']);
   gulp.watch(config.vendorFontFiles, ['bower-fonts']);
   gulp.watch(config.appJSFiles, ['jshint', 'app-js']);
-  gulp.watch(config.appSCSSFiles, ['csslint', 'app-sass']);
+  gulp.watch(config.appSCSSFiles, ['app-sass']);
 });
 
 

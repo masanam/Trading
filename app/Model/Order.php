@@ -14,9 +14,19 @@ class Order extends Model
 {
   protected $table = 'orders';
 
+  public function getCreatedAtAttribute($value)
+    {
+        return date('d-m-Y', strtotime($value));
+    }
+
+    public function getUpdatedAtAttribute($value)
+    {
+        return date('d-m-Y', strtotime($value));
+    }
+
   /*
-   * Relations 
-   * 
+   * Relations
+   *
    */
   public function buys() {
       return $this->belongsToMany(Lead::class, 'order_details', 'order_id', 'lead_id')
@@ -27,7 +37,7 @@ class Order extends Model
     return $this->belongsToMany(Lead::class, 'order_details', 'order_id', 'lead_id')
         ->withPivot('id', 'price', 'volume', 'payment_term', 'trading_term')->where('lead_type', 's');
 	}
-  
+
   public function leads()
   {
     return $this->belongsToMany(Lead::class, 'order_details', 'order_id', 'lead_id')
@@ -39,8 +49,12 @@ class Order extends Model
       ->selectRaw('order_id, count(lead_id) as countLeads')->groupBy('order_id');
   }
 
-	public function approvals() {
-		return $this->belongsToMany(User::class, 'order_approvals')->withPivot('status', 'approval_token', 'updated_at');
+  public function approvals() {
+    return $this->belongsToMany(User::class, 'order_approvals')->withPivot('status', 'approval_token', 'updated_at');
+  }
+
+	public function approvalLogs() {
+		return $this->belongsToMany(User::class, 'order_approval_logs')->withPivot('status', 'updated_at');
 	}
 
   public function trader() {
@@ -55,6 +69,9 @@ class Order extends Model
     return $this->belongsToMany(Company::class, 'order_additional_costs', 'order_id', 'company_id')->withPivot('label', 'cost');
   }
 
+  public function contracts() {
+    return $this->hasOne(Contract::class);
+  }
 
   // Model Functions
   public function averageSell() {
@@ -147,7 +164,7 @@ class Order extends Model
     $this->latestLaycan();
 
     // find all averages of the order details.
-    $this->averageSell(); 
+    $this->averageSell();
     $this->averageBuy();
 
     // get latest GC NEWC price
@@ -170,27 +187,29 @@ class Order extends Model
     // Only applied to 1 level directly below
     $interims = $user->interims;
 
-    // add approval, association and email to all associated Users!
-    foreach($interims as $interim){
-      // If current user already inside approval list, don't add
-      if(!$this->approvals()->contains($interim->id)){
-        $approval_properties = [
-          'status' => 'm',
-          'approval_token' => bcrypt(date('Y-m-d H:i:s') . $interim->name)
-        ];
+    if($interims) {
+      // add approval, association and email to all associated Users!
+      foreach($interims as $interim){
+        // If current user already inside approval list, don't add
+        if(!$this->approvals->contains($interim->id)){
+          $approval_properties = [
+            'status' => 'm',
+            'approval_token' => bcrypt(date('Y-m-d H:i:s') . $interim->name)
+          ];
 
-        // add the user to the approval list
-        $this->approvals()->attach($interim->id, $approval_properties);
-        // and associate him/her to the order
-        $this->users()->sync([$user->id => [ 'role' => 'approver' ]], false);
-      
-        // Send the email now
-        $mail = new ApprovalRequest($this, $approval_properties['approval_token'], $index->price);
-        Mail::to($interim->email)->send($mail);
+          // add the user to the approval list
+          $this->approvals()->attach($interim->id, $approval_properties);
+          // and associate him/her to the order
+          $this->users()->sync([$user->id => [ 'role' => 'approver' ]], false);
+
+          // Send the email now
+          $mail = new ApprovalRequest($this, $approval_properties['approval_token'], $index->price);
+          Mail::to($interim->email)->send($mail);
+        }
       }
+      return true;
     }
-
-    return true;
+    else return false;
   }
 
   public function resetApproval(){

@@ -6,8 +6,11 @@ use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Login;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Password;
+
+use App\Mail\ForgotPassword;
 
 use Illuminate\Support\Facades\Config;
 
@@ -21,9 +24,9 @@ class AuthenticateController extends Controller
 {
     public function __construct()
    {
-       $this->middleware('jwt.auth', ['except' => ['authenticate', 'signup']]);
+       $this->middleware('jwt.auth', ['except' => ['authenticate', 'signup', 'forgotPassword']]);
    }
- 
+
     /**
      * Display a listing of the resource.
      *
@@ -33,11 +36,11 @@ class AuthenticateController extends Controller
     {
         return "Auth index";
     }
- 
+
     public function authenticate(Request $request)
     {
         $credentials = $request->only('email', 'password');
- 
+
         try {
             // verify the credentials and create a token for the user
             if (! $token = JWTAuth::attempt($credentials)) {
@@ -73,46 +76,91 @@ class AuthenticateController extends Controller
         $user->name = trim($request->name);
         $user->title = trim($request->title);
         $user->image = trim($request->image);
-        $user->role = $request->role  ? $request->role : 'user';
         $user->status = 'a';
         $user->email = trim(strtolower($request->email));
         $user->phone = trim($request->phone);
         $user->password = bcrypt($request->password);
         $user->save();
 
+        $user->roles()->attach(2);
+
         $token = JWTAuth::fromUser($user);
 
         return response()->json(compact('token', 'user'), 200);
     }
- 
+
     public function getAuthenticatedUser()
     {
         try {
- 
+
             if (! $user = JWTAuth::parseToken()->authenticate()) {
                 return response()->json(['user_not_found'], 404);
             }
- 
+
         } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
- 
+
             return response()->json(['token_expired'], $e->getStatusCode());
- 
+
         } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
- 
+
             return response()->json(['token_invalid'], $e->getStatusCode());
- 
+
         } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
- 
+
             return response()->json(['token_absent'], $e->getStatusCode());
- 
+
         }
-        
-        $user = Auth::user();
-        $subordinates = $user->subordinates();
-        $managers = $user->managers();
- 
-        // the token is valid and we have found the user via the sub claim
-        return response()->json(compact('user', 'subordinates', 'managers'), 200);
+
+        $roles=[];
+
+        $user = User::with('roles')->where('status', 'a')->find(Auth::user()->id);
+        if($user) {
+            foreach($user->roles as $r) {
+                // dd($r->role);
+                $roles[] = $r->role;
+            }
+            $user->role = $roles;
+
+            // dd($user->roles);
+            $subordinates = $user->subordinates();
+            $managers = $user->managers();
+
+            // the token is valid and we have found the user via the sub claim
+            return response()->json(compact('user', 'subordinates', 'managers'), 200);
+        }
+        else {
+            return response()->json(['message' => 'User is deactivated or not found'], 400);
+        }
+    }
+
+    private function randomPassword() {
+        $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*():?><,./;';
+        $pass = array(); //remember to declare $pass as an array
+        $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
+        for ($i = 0; $i < 8; $i++) {
+            $n = rand(0, $alphaLength);
+            $pass[] = $alphabet[$n];
+        }
+        return implode($pass); //turn the array into a string
+    }
+
+    public function forgotPassword(Request $request) {
+        $user = User::where('email', $request->email)->first();
+        if($user) {
+            $randPass = $this->randomPassword();
+            $user->password = bcrypt($randPass);
+            $user->save();
+
+            $mail = new ForgotPassword($request->email, $randPass);
+            Mail::to($request->email)
+                ->send($mail);
+
+            return response()->json(['message' => 'Email Sent'], 200);
+        }
+        else {
+            return response()->json(['message' => 'Not Found'], 404);
+        }
+
     }
 
     public function signing(Request $request)

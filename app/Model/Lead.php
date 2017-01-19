@@ -94,6 +94,16 @@ class Lead extends Model
         'progress_status',
     ];
 
+    public function getCreatedAtAttribute($value)
+    {
+        return date('d-m-Y', strtotime($value));
+    }
+
+    public function getUpdatedAtAttribute($value)
+    {
+        return date('d-m-Y', strtotime($value));
+    }
+
     public function Company() {
     	return $this->belongsTo('App\Model\Company');
     }

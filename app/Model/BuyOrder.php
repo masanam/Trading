@@ -12,6 +12,16 @@ class BuyOrder extends Model
 {
     protected $table = 'buy_order';
 
+    public function getCreatedAtAttribute($value)
+    {
+        return date('d-m-Y', strtotime($value));
+    }
+
+    public function getUpdatedAtAttribute($value)
+    {
+        return date('d-m-Y', strtotime($value));
+    }
+
     public function buyer() {
     	return $this->belongsTo('App\Model\Buyer');
     }

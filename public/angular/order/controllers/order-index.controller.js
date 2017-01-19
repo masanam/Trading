@@ -4,7 +4,11 @@ angular.module('order').controller('OrderIndexController', ['$scope', '$statePar
   function($scope, $stateParams, $state, Index) {
     $scope.getIndices = function () {
       $scope.indices = Index.query({ action: 'single-date' }, function(){
-        $scope.display.index = $scope.indices[$scope.indices.length-1];
+        for(var x=0; x<$scope.indices.length; x++){
+          if($scope.order.index_id === $scope.indices[x].id){
+            $scope.display.index = $scope.indices[x]; continue;
+          }
+        }
 
         $scope.render($scope.display.index);
       });
@@ -61,6 +65,12 @@ angular.module('order').controller('OrderIndexController', ['$scope', '$statePar
             $scope.labels[x] = res[x].date;
           }
         });
+    };
+
+    $scope.saveIndex = function () {
+      $scope.order.index_id = $scope.display.index.id;
+
+      $scope.update();
     };
 
   	// $scope.getSingleIndex = function (index) {

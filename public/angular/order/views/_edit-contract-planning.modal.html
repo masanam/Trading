@@ -1,0 +1,17 @@
+<div>
+  <div class="modal-header">
+    <h3 class="modal-title" id="modal-title">Edit Contract</h3>
+    <button type="button" class="close" ng-click="cancel()" aria-label="Close">x</button>
+  </div>
+
+  <div class="modal-body" ng-focus="find()" id="modal-body">
+    <section ng-include="'./angular/order/views/_contract-planning-contract.partial.html'"></section>
+  </div>
+  <div class="modal-footer" ng-switch="status">
+    <button class="btn btn-default pull-left hidden-xs" type="button" ng-click="cancel()">Cancel</button>
+
+    <span>
+      <button class="btn btn-primary" ng-click="submit()">Submit</button>
+    </span>
+  </div>
+</div>

@@ -1,7 +1,9 @@
 'use strict';
 
-angular.module('lead').controller('LeadLocationController', ['$scope', '$stateParams', '$uibModal', 'Concession', 'Factory', 'Lead',
-  function ($scope, $stateParams, $uibModal, Concession, Factory, Lead) {
+angular.module('lead').controller('LeadLocationController', ['$scope', '$stateParams', '$uibModal', 'Environment', 'Concession', 'Factory', 'Lead',
+  function ($scope, $stateParams, $uibModal, Environment, Concession, Factory, Lead) {
+    $scope.destinationBy = Environment.destinationBy;
+
     //Init select ports
     $scope.find = function(keyword) {
       if ($scope.lead.lead_type === 'b'){

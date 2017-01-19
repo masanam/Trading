@@ -22,6 +22,7 @@ Route::group(['middleware' => ['cors']], function() {
     Route::post('authenticate', 'AuthenticateController@authenticate');
     Route::post('authenticate/signup', 'AuthenticateController@signup');
     Route::get('authenticate/user', 'AuthenticateController@getAuthenticatedUser');
+    Route::post('authenticate/forgot', 'AuthenticateController@forgotPassword');
 
     //S3 Upload file signing API
     Route::post('signing', 'AuthenticateController@signing');
@@ -83,5 +84,14 @@ Route::group(['middleware' => ['cors']], function() {
     Route::resource('orders', 'OrderController', ['except' => [ 'create', 'edit' ]]);
 
     Route::get('leads/{id}/test', 'LeadController@isSingleLeadInOrder');
+
+    Route::get('shipments/history', 'ShipmentController@indexShipmentHistory');
+    Route::get('shipments/history/{id}', 'ShipmentController@showShipmentHistory');
+    Route::resource('contracts', 'ContractController', ['except' => [ 'create', 'edit' ]]);
+    Route::resource('shipments', 'ShipmentController', ['except' => [ 'create', 'edit' ]]);
+
+    //roles & permission API
+    Route::resource('role','RoleController', ['except' => [ 'create', 'edit' ]]);
+    Route::resource('permission','PermissionController', ['except' => [ 'create', 'edit' ]]);
 
 });

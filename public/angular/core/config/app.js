@@ -101,15 +101,14 @@ angular.module(ApplicationConfiguration.applicationModuleName).config(['$urlRout
 
 //initialize application authentication & authorization before starting
 angular.module(ApplicationConfiguration.applicationModuleName).run(function ($rootScope, $state, $http, $uibModalStack, $window, Authentication) {
-  //Load authorization event listener once all authentication done 
-  Authentication.authenticate(function(user){
-    // Always check authentication before changing state
-    $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+  // Always check authentication before changing state
+  $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+    var checkAuthorization = function(user){
       if (toState.roles && toState.roles.length > 0) {
         var allowed = false;
 
         toState.roles.forEach(function (role) {
-          if (role === 'guest' || (Authentication.user !== undefined && (Authentication.user.role === role || Authentication.user.role === 'admin'))){
+          if (role === 'guest' || (Authentication.user !== undefined && Authentication.user.role.indexOf(role) > -1)){
             allowed = true;
             return true;
           }
@@ -126,23 +125,29 @@ angular.module(ApplicationConfiguration.applicationModuleName).run(function ($ro
           }
         }
       }
-    });
-
-    // Always record previous state
-    $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
-      storePreviousState(fromState, fromParams);
-      $uibModalStack.dismissAll();
-    });
-
-        // Blur events can be double-fired, so we'll filter those out with prevEvent tracking
-    $window.onfocus = function (event) {
-      $rootScope.$broadcast('windowFocus', event);
     };
 
-    $window.onblur = function (event) {
-      $rootScope.$broadcast('windowBlur', event);
-    };
+    //Load authorization event listener once all authentication done 
+    if(!Authentication.user) Authentication.authenticate(checkAuthorization);
+    else checkAuthorization(Authentication.user);
   });
+
+  // Always record previous state
+  $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
+    storePreviousState(fromState, fromParams);
+    $uibModalStack.dismissAll();
+  });
+
+      // Blur events can be double-fired, so we'll filter those out with prevEvent tracking
+  $window.onfocus = function (event) {
+    $rootScope.$broadcast('windowFocus', event);
+  };
+
+  $window.onblur = function (event) {
+    $rootScope.$broadcast('windowBlur', event);
+  };
+
+  
 
   // Store previous state
   function storePreviousState(state, params) {

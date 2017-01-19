@@ -22,9 +22,10 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $user = User::where('status', 'a')->get();
+        if($request->status) $user = User::where('status', $request->status)->get();
+        else $user = User::where('status', 'a')->get();
 
         return response()->json($user, 200);
     }
@@ -76,17 +77,13 @@ class UserController extends Controller
      */
     public function show($user)
     {
-        $user = User::find($user);
+        $user = User::with('directSubordinates','directManager','roles')->find($user);
 
         if($user->status == 'a') {
             return response()->json($user, 200);
         } else {
             return response()->json(['message' => 'deactivated record'], 404);
         }    
-    }
-
-    public function currentUser() {
-        return response()->json(Auth::user(), 200);
     }
 
     /**
@@ -96,11 +93,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $user)
+    public function update(Request $req, $id)
     {
-        $user = User::find($user);
+        $user = User::find($id);
 
-        if (!$request) {
+        if (!$req) {
             return response()->json([
                 'message' => 'Bad Request'
             ], 400);
@@ -112,17 +109,36 @@ class UserController extends Controller
             ] ,404);
         }
 
+        if($req->direct_subordinates){
+            foreach ($req->direct_subordinates as $sub) {
+                $temp_sub = User::find($sub['id']);
+                $temp_sub->manager_id = $id;
+                $temp_sub->save();
+            }
+        }
+
         $lastImage = $user->image;
 
-        $user->name = $request->name;
-        $user->image = $request->image;
-        $user->title = $request->title;
-        $user->email = $request->email;
-        $user->phone = $request->phone;
-        $user->password = bcrypt($request->password);
-        $user->employee_id = $request->employee_id;
+        $user->name = $req->name;
+        $user->image = $req->image;
+        $user->title = $req->title;
+        $user->email = $req->email;
+        $user->phone = $req->phone;
+        $user->password = bcrypt($req->password);
+        $user->employee_id = $req->employee_id;
+        $user->manager_id = $req->manager_id;
 
-        $user->role = $request->role ? $request->role : 'user';
+        if($req->roles){
+            $roles = [];
+            foreach($req->roles as $r) {
+                $roles[] = $r['id'];
+            }
+                // if($user->roles[]->id != $r['id'])
+            $user->roles()->sync($roles);
+        }
+
+        // if($req->role_id) $user->roles()->attach($req->role_id);
+        // $user->role = $req->role ? $req->role : 'user';
 
         $user->status = 'a';
 
@@ -136,7 +152,24 @@ class UserController extends Controller
         // regardless of whether they change the photo or not, they still change the profile
         event(new EditUserProfile($user, 'edit'));
 
-        return response()->json($user, 200);
+        return $this->show($id);
+    }
+
+    public function setActing(Request $request, $user) {
+        // find the person who want to give the priviledge of acting role
+        $user = User::find($user);
+
+        if(!$user) 
+            return response()->json([
+                'message' => 'Not found'
+            ] ,404);
+
+        $user->interims()->attach($request->interim_id, [
+            'date_start' => $request->date_start,
+            'date_end' => $request->date_end,
+            'role' => $request->role,
+            'status' => 'a'
+        ]);
     }
 
     /**
@@ -145,8 +178,33 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($user)
+    public function destroy($id, Request $req = null)
     {
+        $user = User::with('directSubordinates')->find($id);
+        
+        if (!$user) {
+            return response()->json([
+                'message' => 'Not found'
+            ] ,404);
+        }
+
+        //remove roles for admin
+        if($req->role_id){
+            $user->roles()->detach($req->role_id);
+        }
+        //general user remove
+        else{
+            //manager remove for admin
+            if($req->manager) $user->manager_id = null;            
+            //general user remove
+            else $user->status = 'x';
+            $user->save();
+        }
+
+        return response()->json($user, 200);
+    }
+
+    public function restore($user) {
         $user = User::find($user);
         
         if (!$user) {
@@ -155,43 +213,9 @@ class UserController extends Controller
             ] ,404);
         }
 
-        $user->status = 'x';
+        $user->status = 'a';
         $user->save();
 
         return response()->json($user, 200);
-    }
-
-    public function broker()
-    {
-        return Password::broker();
-    }
-
-    public function sendResetLinkEmail(Request $request)
-    {
-        // $this->validate($request, ['email' => 'required|email']);
-
-        // We will send the password reset link to this user. Once we have attempted
-        // to send the link, we will examine the response then see the message we
-        // need to show to the user. Finally, we'll send out a proper response.
-        $response = $this->broker()->sendResetLink(
-            $request->only('email'), function (Message $message) {
-                dd($message);
-                $message->subject('Forgot Coaltrade Password');
-                $message->from('noreply-coaltrade@volantech.io', 'Coaltrade');
-
-                $message->to($request->email);
-            }
-        );
-
-        if ($response === Password::RESET_LINK_SENT) {
-            return back()->with('status', trans($response));
-        }
-
-        // If an error was returned by the password broker, we will get this message
-        // translated so we can notify a user of the problem. We'll redirect back
-        // to where the users came from so they can attempt this process again.
-        return back()->withErrors(
-            ['email' => trans($response)]
-        );
     }
 }
