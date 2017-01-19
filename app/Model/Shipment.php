@@ -29,4 +29,8 @@ class Shipment extends Model
     public function shipment_history() {
       return $this->hasMany(ShipmentHistory::class);
     }
+
+    public function shipment_log() {
+      return $this->hasMany(ShipmentLog::class);
+    }
 }
