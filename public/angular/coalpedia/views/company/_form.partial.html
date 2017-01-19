@@ -1,10 +1,10 @@
 <div class="form-group">
-  <label for="company_name">Name of Company:</label>
+  <label for="company_name">Name of  {{ companyType }}:</label>
   <input name="company_name" type="text" class="form-control" id="company_name" ng-model="company.company_name" required>
 </div>
 
 <div class="row col-lg-12">
-  <div class="form-group pull-left">
+  <div class="form-group pull-left" ng-init="company.company_type = companyType[0]">
     <label for="company_type">Company:</label><br>
 
     <div class="btn-group">

@@ -19,13 +19,15 @@
           </div>
 
           <div class="select-box" ng-init="find()">
-            <label for="id">Name of Company :</label>
+            <label for="id">Name of  {{ companyType }} :</label>
             
             <ui-select ng-model="selected.company"
               reset-search-input="false"
               style="min-width: 30px;"
               title="Choose an address">
-              <ui-select-match placeholder="Name of the Company...">{{$select.selected.company_name}}</ui-select-match>
+              <ui-select-match placeholder="Name of the  {{ companyType }}">
+                {{$select.selected.company_name}}
+              </ui-select-match>
 
               <ui-select-choices repeat="company in companies track by $index"
                 refresh="find($select.search)"
@@ -45,7 +47,7 @@
           <br>
           <br>
           <button type="button" class="btn btn-primary btn-block" ng-click="modalCreate()">
-            <b>+</b> Add New Company
+            <b>+</b> Add new {{ companyType }}
           </button>
         </section>
         <br>
