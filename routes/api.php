@@ -24,10 +24,10 @@ Route::group(['middleware' => ['cors']], function() {
     Route::get('authenticate/user', 'AuthenticateController@getAuthenticatedUser');
     Route::post('authenticate/forgot', 'AuthenticateController@forgotPassword');
 
-	
+
 	//testing
 	Route::get('helloworld', 'AuthenticateController@helloworld');
-	
+
     //S3 Upload file signing API
     Route::post('signing', 'AuthenticateController@signing');
 
@@ -37,8 +37,8 @@ Route::group(['middleware' => ['cors']], function() {
     Route::get('user/current', 'UserController@currentUser');
     Route::resource('user', 'UserController', ['except' => [ 'create', 'edit' ]]);
 
-	
-	
+
+
     /*
      * COALPEDIA API GROUP
      * this API contains ALL the things needed by coalpedia to manage
@@ -93,8 +93,12 @@ Route::group(['middleware' => ['cors']], function() {
 
     Route::get('leads/{id}/test', 'LeadController@isSingleLeadInOrder');
 
+    Route::post('shipments/history', 'ShipmentController@storeShipmentHistory');
     Route::get('shipments/history', 'ShipmentController@indexShipmentHistory');
-    Route::get('shipments/history/{id}', 'ShipmentController@showShipmentHistory');
+    Route::get('shipments/{id}/history', 'ShipmentController@showShipmentHistoryByShipment');
+    Route::post('shipments/log', 'ShipmentController@storeShipmentLog');
+    Route::get('shipments/log', 'ShipmentController@indexShipmentLog');
+    Route::get('shipments/{id}/log', 'ShipmentController@showShipmentLogByShipment');
     Route::resource('contracts', 'ContractController', ['except' => [ 'create', 'edit' ]]);
     Route::resource('shipments', 'ShipmentController', ['except' => [ 'create', 'edit' ]]);
 
@@ -103,12 +107,12 @@ Route::group(['middleware' => ['cors']], function() {
     Route::resource('permission','PermissionController', ['except' => [ 'create', 'edit' ]]);
 
     /*
-     * IUP 
+     * IUP
      * By AndezTea
      */
     Route::resource('mining-license', 'MiningLicenseController', ['except' => ['create', 'edit']]);
     Route::resource('spatial-data', 'SpatialDataController', ['except' => ['create', 'edit']]);
-    
+
 
 
 
