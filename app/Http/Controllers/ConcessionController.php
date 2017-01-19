@@ -107,8 +107,8 @@ class ConcessionController extends Controller
         //var_dump($concession->toSql());
         $concession = $concession->where('concessions.status', 'a')->get();
       }else {
-        $concession->with('company', 'products', 'port')
-		  ->where('status', 'a')->limit(20);
+        // kamal deleting eloquent with product
+        $concession->with('company', 'port')->where('status', 'a')->limit(20);
 
         if($req->q) $concession->where('concession_name', 'LIKE', '%' . $req->q . '%');
         $concession = $concession->get();

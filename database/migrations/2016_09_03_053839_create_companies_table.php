@@ -192,14 +192,14 @@ class CreateCompaniesTable extends Migration
         });
         Schema::create('mining_licenses', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('no');
+            $table->string('no')->nullable();
             $table->integer('company_id')->unsigned()->nullable(); //integer unsigned reference
             $table->integer('concession_id')->unsigned()->nullable();
             $table->integer('contact_id')->unsigned()->nullable();
-            $table->string('source');
-            $table->string('type');
+            $table->string('source')->nullable();
+            $table->string('type')->nullable();
             $table->date('expired')->nullable();
-            $table->integer('total_area');
+            $table->integer('total_area')->nullable();
             $table->boolean('overlap_other')->nullable(); 
             $table->string('overlap_other_desc')->nullable();
             $table->boolean('release_after')->nullable();
