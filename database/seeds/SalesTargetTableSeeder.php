@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use App\Model\SalesTarget;
 
@@ -19,7 +19,7 @@ class SalesTargetTableSeeder extends Seeder
 	    	'month' => '2' ,
 	    	'year'=>'2017',
 	    	'value' => '20000' ,
-	    	'status' => 'a' 
+	    	'status' => 'a'
         ]) ;
         SalesTarget::create([
 	    	'id' => 2,
@@ -27,7 +27,7 @@ class SalesTargetTableSeeder extends Seeder
 	    	'month' => '1' ,
 	    	'year'=>'2017',
 	    	'value' => '31142' ,
-	    	'status' => 'a' 
+	    	'status' => 'a'
         ]) ;
         SalesTarget::create([
 	    	'id' => 3,
@@ -35,7 +35,7 @@ class SalesTargetTableSeeder extends Seeder
 	    	'month' => '1' ,
 	    	'year'=>'2017',
 	    	'value' => '23142' ,
-	    	'status' => 'a' 
+	    	'status' => 'a'
         ]) ;
     }
 }

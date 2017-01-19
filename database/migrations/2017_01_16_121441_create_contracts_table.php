@@ -63,7 +63,13 @@ class CreateContractsTable extends Migration
       Schema::create('shipment_history', function (Blueprint $table) {
           $table->increments('id');
           $table->integer('shipment_id')->unsigned();
+          $table->integer('user_id')->unsigned();
+          $table->integer('contract_id')->unsigned();
+          $table->integer('supplier_id')->unsigned();
+          $table->integer('customer_id')->unsigned();
+          $table->integer('product_id')->unsigned();
           $table->integer('surveyor_id')->unsigned();
+          $table->string('shipment_no');
           $table->string('vessel');
           $table->string('fc'); //floating crane
           $table->datetime('laycan_start');
@@ -81,6 +87,11 @@ class CreateContractsTable extends Migration
           $table->timestamps();
 
           $table->foreign('shipment_id')->references('id')->on('shipments')->onDelete('cascade');
+          $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+          $table->foreign('contract_id')->references('id')->on('contracts')->onDelete('cascade');
+          $table->foreign('supplier_id')->references('id')->on('companies')->onDelete('cascade');
+          $table->foreign('customer_id')->references('id')->on('companies')->onDelete('cascade');
+          $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
           $table->foreign('surveyor_id')->references('id')->on('companies')->onDelete('cascade');
       });
 
@@ -91,7 +102,7 @@ class CreateContractsTable extends Migration
           $table->integer('cargo_supply')->nullable(); //cargo supply
           $table->integer('cargo_on_board')->nullable();
           $table->text('remark')->nullable();
-          $table->char('status', 1)->nullable();
+          $table->string('shipment_status')->nullable(); // loading , unloading , loaded , unloaded , not started
           $table->timestamps();
 
           $table->foreign('shipment_id')->references('id')->on('shipments')->onDelete('cascade');
