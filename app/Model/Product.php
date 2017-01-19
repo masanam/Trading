@@ -62,6 +62,7 @@ class Product extends Model
 
     public function tonnageHistory() {
         return $this->hasMany('App\Model\tonnageHistory');
+    }
 
     public function shipment() {
       return $this->hasMany(Shipment::class);

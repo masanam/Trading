@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tonnage extends Model
 {
-    protected $table = 'tonnages';
+    protected $table = 'sales_target';
     protected $fillable = [
       'product_id', 'month', 'year', 'value'
     ];

@@ -87,10 +87,11 @@ class CreateContractsTable extends Migration
       Schema::create('shipment_log', function (Blueprint $table) {
           $table->integer('shipment_id')->unsigned();
           $table->integer('user_id')->unsigned();
-          $table->string('stowage_plan');
-          $table->integer('cargo_supply'); //cargo supply
-          $table->integer('cargo_on_board');
-          $table->char('status', 1);
+          $table->string('stowage_plan')->nullable();
+          $table->integer('cargo_supply')->nullable(); //cargo supply
+          $table->integer('cargo_on_board')->nullable();
+          $table->text('remark')->nullable();
+          $table->char('status', 1)->nullable();
           $table->timestamps();
 
           $table->foreign('shipment_id')->references('id')->on('shipments')->onDelete('cascade');
@@ -105,6 +106,7 @@ class CreateContractsTable extends Migration
      */
     public function down()
     {
+        Schema::drop('shipment_log');
         Schema::drop('shipment_history');
         Schema::drop('shipments');
         Schema::drop('contracts');
