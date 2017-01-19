@@ -43,8 +43,7 @@ angular.module('coalpedia').controller('ConcessionModalController', ['$scope', '
 
      // concession.polygon = $scope.display.polygonString;
       concession.company_id = concession.company_id;
-
-      concession.$update({ id: $stateParams.id} , function(response) {
+      concession.$update({ id: $stateParams.id } , function(response) {
         concession = response;
         $uibModalInstance.close(response);
         $scope.concession=response;

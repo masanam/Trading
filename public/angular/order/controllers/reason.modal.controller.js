@@ -1,25 +1,66 @@
 'use strict';
 
-angular.module('order').controller('OrderReasonModalController', ['$uibModalInstance', '$scope', 'Order', 'status', 'Notification',
-  function($uibModalInstance, $scope, Order, status, Notification) {
+angular.module('order').controller('OrderReasonModalController', ['$uibModalInstance', '$scope', 'Order', 'status', 'Notification', 'Contract',
+  function($uibModalInstance, $scope, Order, status, Notification, Contract) {
+
     $scope.status = status;
+    $scope.step = 1;
+    $scope.init= function(){
+      $scope.order.reason = '';
+      $scope.order.contracts = {};
+    };
 
     $scope.ok = function () {
-      if($scope.reason !== ''){
-        var order = new Order($scope.order);
-        
-        order.status = $scope.status;
-        if($scope.status === 'x') order.cancel_reason = $scope.reason;
-        else if($scope.status === 'f') order.finalize_reason = $scope.reason;
-        else if($scope.status === 'p') order.request_reason = $scope.reason;
+      console.log($scope.order);
+      if($scope.order.reason !== ''){
+        $scope.step++;
+      }else{
+        $scope.error = 'Please enter a reason to proceed';
+      }
+    };
 
+    $scope.back = function () {
+      $scope.step--;
+    };
+
+    $scope.submit = function () {
+      if($scope.order.reason !== ''){
+        var order = new Order($scope.order);
+        var contract = new Contract({
+          'contract_no': $scope.order.contracts.contract_no,
+          'order_id': $scope.order.id,
+          'shipment_count': $scope.order.contracts.shipment_count,
+          'term': $scope.order.contracts.term,
+          'term_desc': $scope.order.contracts.term_desc,
+          'date_from': $scope.order.contracts.date_from,
+          'date_to': $scope.order.contracts.date_to,
+        });
+        order.status = $scope.status;
+        if($scope.status === 'x') order.cancel_reason = $scope.order.reason;
+        else if($scope.status === 'f') order.finalize_reason = $scope.order.reason;
+        else if($scope.status === 'p') order.request_reason = $scope.order.reason;
+
+        console.log(order);
         order.$update({ id:order.id, status:order.status }, function (res) {
           $scope.order = res;
           // if($scope.status === 'x') $scope.order.cancel_reason = $scope.reason;
           // else if($scope.status === 'f') $scope.order.finalize_reason = $scope.reason;
           // else if($scope.status === 'p') $scope.order.request_reason = $scope.reason;
           Notification.sendNotification('request_approval', $scope.order, false, false);
-          $uibModalInstance.close(res);
+
+          /*
+          * Aryo Pradipta Gema 17 - 01 - 2017 12:42 pm
+          * Create contract after finishing an order
+          */
+          if($scope.order.contracts) {
+            contract.$save(function(res) {
+              $scope.order.contracts = res;
+            }, function(err) {
+              $scope.error = err.data.message;
+            });
+          }
+
+          $uibModalInstance.close($scope.order);
         }, function (err) {
           $scope.error = err.data.message;
         });

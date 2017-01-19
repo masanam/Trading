@@ -22,7 +22,7 @@
 <div class="col-lg-8" id="order-detail">
   <style>
     @media print
-    {    
+    {
         .no-print, .no-print *
         {
             display: none !important;
@@ -31,7 +31,7 @@
   </style>
   <div class="box" ng-init="display = {}">
     <div class="box-header with-border" ng-init="findOne();">
-      <h1 class="box-title">ORD #{{ ("10000"+order.id).slice(-4) }} - {{ order.trader.name }}</h1>
+      <h1 class="box-title">ORD#{{ ("10000"+order.id).slice(-4) }} - {{ order.trader.name }}</h1>
 
       <span class="badge badge-primary">
         {{ order.status === 'c' ? 'Combined' : order.status === 'p' ? 'Pending Approval' : order.status === 'd' ? 'Draft' : order.status === 'a' ? 'Approved' : order.status === 'f' ? 'Finalized' : 'Cancelled' }}
@@ -39,6 +39,9 @@
       <div class="box-tools pull-right no-print">
         <a class="btn btn-default hidden-xs" ui-sref="order.list">
           <i class="glyphicon glyphicon-chevron-left"></i> Back
+        </a>
+        <a class="btn btn-success hidden-xs" ng-click="editContract('f');" ng-show="order.status === 'f' && order.user_id === Authentication.user.id">
+          <i class="glyphicon glyphicon-floppy-saved" title="Edit Contract"></i> Edit Contract
         </a>
         <a class="btn btn-primary hidden-xs" ng-click="print(order);" ng-show="(order.status === 'a' || order.status === 'f') && (order.user_id === Authentication.user.id || approver === true)">
           <i class="glyphicon glyphicon-print" title="Print"></i> Print
@@ -64,12 +67,12 @@
                 <span class="sr-only">Toggle Dropdown</span>
             </button>
               <ul class="dropdown-menu" uib-dropdown-menu>
-                <li> 
+                <li>
                   <a ui-sref="order.list">
                       <i class="glyphicon glyphicon-chevron-left"></i> Back
                   </a>
                 </li>
-                <li> 
+                <li>
                   <a  ng-click="print(order);" ng-show="(order.status === 'a' || order.status === 'f') && (order.user_id === Authentication.user.id || approver === true)">
                     <i class="glyphicon glyphicon-print" title="Print"></i> Print
                   </a>
@@ -85,10 +88,16 @@
                   </a>
                 </li>
                 <li>
+                  <a  ng-click="editContract('f');" ng-show="order.status === 'e' && order.user_id === Authentication.user.id">
+                    <i class="glyphicon glyphicon-floppy-saved" title="Edit Contract"></i> Edit Contract
+                  </a>
+                </li>
+                <li>
                   <a ng-click="changeStatus('x');" ng-show="(order.status !== 'c' && order.status !== 'x' && order.status !== 'f') && order.user_id === Authentication.user.id">
                     <i class="glyphicon glyphicon-trash" title="Cancel Order"></i> Cancel Order
                   </a>
                 </li>
+
               </ul>
         </div>
       </div>
