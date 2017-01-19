@@ -56,7 +56,7 @@ Route::group(['middleware' => ['cors']], function() {
     Route::resource('concession', 'ConcessionController', ['except' => [ 'create', 'edit' ]]);
     Route::resource('factory', 'FactoryController', ['except' => [ 'create', 'edit' ]]);
 
-    Route::resource('tonnage', 'TonnageController', ['except' => [ 'create', 'edit' ]]);
+    Route::resource('sales-target', 'SaleTargetController', ['except' => [ 'create', 'edit' ]]);
 
     /*
      * INDEX API GROUP
