@@ -32,15 +32,8 @@ class ShipmentTableSeeder extends Seeder
         'price' => 10,
         'status' => 'a',
         'fc'=>'FOTP',
-        'stowage_plan'=>'68858',
-        'cargo_suppl'=>0,
-        'cargo_on_board'=>0,
         'bl_date'=>'2016-07-22',
         'cargo_bl'=>68858,
-        'destination'=>' ',
-        'status_shipment'=>'completed'
-
-
       ]);
 
       Shipment::create([
@@ -62,13 +55,8 @@ class ShipmentTableSeeder extends Seeder
         'price' => 11,
         'status' => 'a',
         'fc'=>'FOTP',
-        'stowage_plan'=>'68858',
-        'cargo_suppl'=>0,
-        'cargo_on_board'=>0,
         'bl_date'=>'2016-07-22',
         'cargo_bl'=>68858,
-        'destination'=>' ',
-        'status_shipment'=>'completed'
       ]);
 
       Shipment::create([
@@ -90,13 +78,8 @@ class ShipmentTableSeeder extends Seeder
         'price' => 16,
         'status' => 'a',
         'fc'=>'FOTP',
-        'stowage_plan'=>'68858',
-        'cargo_suppl'=>0,
-        'cargo_on_board'=>0,
         'bl_date'=>'2016-07-22',
         'cargo_bl'=>68858,
-        'destination'=>' ',
-        'status_shipment'=>'completed'
       ]);
 
       Shipment::create([
@@ -118,13 +101,8 @@ class ShipmentTableSeeder extends Seeder
         'price' => 13,
         'status' => 'a',
         'fc'=>'FOTP',
-        'stowage_plan'=>'68858',
-        'cargo_suppl'=>0,
-        'cargo_on_board'=>0,
         'bl_date'=>'2016-07-22',
         'cargo_bl'=>68858,
-        'destination'=>' ',
-        'status_shipment'=>'completed'
       ]);
 
       Shipment::create([
@@ -146,13 +124,8 @@ class ShipmentTableSeeder extends Seeder
         'price' => 13,
         'status' => 'a',
         'fc'=>'FOTP',
-        'stowage_plan'=>'68858',
-        'cargo_suppl'=>0,
-        'cargo_on_board'=>0,
         'bl_date'=>'2016-07-22',
         'cargo_bl'=>68858,
-        'destination'=>' ',
-        'status_shipment'=>'completed'
       ]);
 
       Shipment::create([
@@ -174,13 +147,8 @@ class ShipmentTableSeeder extends Seeder
         'price' => 13,
         'status' => 'a',
         'fc'=>'FOTP',
-        'stowage_plan'=>'68858',
-        'cargo_suppl'=>0,
-        'cargo_on_board'=>0,
         'bl_date'=>'2016-07-22',
         'cargo_bl'=>68858,
-        'destination'=>' ',
-        'status_shipment'=>'completed'
       ]);
 
       Shipment::create([
@@ -202,13 +170,8 @@ class ShipmentTableSeeder extends Seeder
         'price' => 13,
         'status' => 'a',
         'fc'=>'FOTP',
-        'stowage_plan'=>'68858',
-        'cargo_suppl'=>0,
-        'cargo_on_board'=>0,
         'bl_date'=>'2016-07-22',
         'cargo_bl'=>68858,
-        'destination'=>' ',
-        'status_shipment'=>'completed'
       ]);
     }
 }

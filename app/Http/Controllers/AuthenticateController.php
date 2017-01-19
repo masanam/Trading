@@ -26,7 +26,6 @@ class AuthenticateController extends Controller
    {
        $this->middleware('jwt.auth', ['except' => ['authenticate', 'signup', 'helloworld', 'forgotPassword']]);
    }
-
     /**
      * Display a listing of the resource.
      *
@@ -36,8 +35,6 @@ class AuthenticateController extends Controller
     {
         return "Auth index";
     }
-
-	
     public function authenticate(Request $request)
     {
         $credentials = $request->only('email', 'password');
