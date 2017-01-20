@@ -13,7 +13,7 @@ angular.module('coalpedia').controller('ConcessionModalController', ['$scope', '
       var query = {};
 
       if(company) query.company_id = company.id;
-      if(keyword) query.q = keyword
+      if(keyword) query.q = keyword;
       query.coalpedia = true;
 
       Concession.query(query, function(res){
