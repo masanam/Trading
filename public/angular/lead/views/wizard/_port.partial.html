@@ -1,29 +1,6 @@
-<div class="select-box" ng-init="find()">
-  <label for="id">Name of Port :</label>
-  
-  <ui-select ng-model="selected.port"
-    reset-search-input="false"
-    style="min-width: 30px;"
-    ng-change="select(selected.port)"
-    title="Choose an port">
-    <ui-select-match placeholder="Name of the Port...">{{$select.selected.port_name}}</ui-select-match>
-
-    <ui-select-choices repeat="port in ports track by $index"
-      refresh="find($select.search)"
-      refresh-delay="1">
-      <div ng-bind-html="port.port_name  | highlight: $select.search | html"></div>
-    </ui-select-choices>
-  </ui-select>
-</div>
-
 <div ng-show="!selected.port">
-  <div class="row">
-    <div class="text-center col-lg-12" style="padding: 20px">
-      OR
-    </div>
-  </div>
   <button type="button" class="btn btn-primary btn-block" ng-click="add()">
-    <b>+</b> Add New Port
+    Select Port
   </button>
 </div>
 

@@ -42,36 +42,9 @@
 </section>
 
 <section ng-if="destinationBy !== 'country'">
-  <div class="select-box" ng-init="find()">
-    <label for="id">Name of {{ lead.lead_type === 'b' ? 'Concession' : 'Factory' }} :</label>
-    
-    <ui-select ng-model="selected.location"
-      reset-search-input="false"
-      style="min-width: 30px;"
-      ng-change="select(selected.location)"
-      title="Choose an location">
-      <ui-select-match placeholder="Name of the {{ lead.lead_type === 'b' ? 'Concession' : 'Factory' }}...">
-        {{$select.selected.concession_name}}
-        {{$select.selected.factory_name}}
-      </ui-select-match>
-
-      <ui-select-choices repeat="location in locations track by $index"
-        refresh="find($select.search)"
-        refresh-delay="1">
-        <div ng-bind-html="location.concession_name  | highlight: $select.search | html"></div>
-        <div ng-bind-html="location.factory_name  | highlight: $select.search | html"></div>
-      </ui-select-choices>
-    </ui-select>
-  </div>
-
   <div ng-show="!selected.location">
-    <div class="row">
-      <div class="text-center col-lg-12" style="padding: 20px">
-        OR
-      </div>
-    </div>
     <button type="button" class="btn btn-primary btn-block" ng-click="add()">
-      <b>+</b> Add New {{ lead.lead_type === 'b' ? 'Concession' : 'Factory' }}
+      Select {{ lead.lead_type === 'b' ? 'Concession' : 'Factory' }}
     </button>
   </div>
 
