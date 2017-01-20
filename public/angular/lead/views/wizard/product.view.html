@@ -30,10 +30,32 @@
         <div class="form-group">
           <label ng-show="error" class="alert bg-red" style="width:100%">{{error}}</label>
         </div>
+        <div class="select-box" ng-init="find()">
+          <label for="id">Name of Product :</label>
+          
+          <ui-select ng-model="selected.product"
+            reset-search-input="false"
+            style="min-width: 30px;"
+            ng-change="select(selected.product)"
+            title="Choose an product">
+            <ui-select-match placeholder="Name of the Product...">{{$select.selected.product_name}}</ui-select-match>
+
+            <ui-select-choices repeat="product in products track by $index"
+              refresh="find($select.search)"
+              refresh-delay="1">
+              <div ng-bind-html="product.product_name  | highlight: $select.search | html"></div>
+            </ui-select-choices>
+          </ui-select>
+        </div>
 
         <div ng-show="!selected.product">
+          <div class="row">
+            <div class="text-center col-lg-12" style="padding: 20px">
+              OR
+            </div>
+          </div>
           <button type="button" class="btn btn-primary btn-block" ng-click="add()">
-            Select Product
+            <b>+</b> Add New Product
           </button>
         </div>
 
