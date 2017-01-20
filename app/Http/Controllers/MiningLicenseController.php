@@ -23,12 +23,19 @@ class MiningLicenseController extends Controller
     /* Kamal 2017-01-19 18:00
      * create All function CRUD
      */
-    public function index()
+    public function index(Request $req = null)
     {
-        $license = MiningLicense::with('Company','Contact','checked_by')->select('company_id','source','contact_id','type','status','checked_by','checked_at','expired','overlap_other','release_after','troubled_bupati','operating','close_factory','close_iup','close_river','close_iup_other','coal_bearing_formation','located_mining','located_settlement','located_palm','located_farm','overlay_forest')->get();
+        $license = MiningLicense::with('Company','Contact','checked_by')->select('id','company_id','source','contact_id','type','status','checked_by','checked_at','expired','overlap_other','release_after','troubled_bupati','operating','close_factory','close_iup','close_river','close_iup_other','coal_bearing_formation','located_mining','located_settlement','located_palm','located_farm','overlay_forest');
+        if($req->draft) $license->whereIn('status',[1, 2, 3]);
+        else $license->whereNotIn('status',[1, 2, 3]);
+        $license = $license->get();
         foreach ($license as $l) {
             if($l->expired > Date('Y-m-d')) $l->filter_expired = 0;
             else $l->filter_expired = 1;
+            if(!$l->coal_bearing_formation) $l->filter_coal_bearing = 0;
+            else $l->filter_coal_bearing = 1;
+            if($l->status == 1 || $l->status == 2 || $l->status == 3) $l->filter_draft = 1;
+            else $l->filter_draft = 0;
         }
 
         return response()->json($license, 200);
