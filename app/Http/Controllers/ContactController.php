@@ -26,7 +26,8 @@ class ContactController extends Controller
     $user_id = Contact::where('status', 'a')->where('company_id', $req->company_id)->pluck('user_id');
     
     if($req->q) $contact->where('name', 'LIKE', '%'.$req->q.'%');
-    if($user_id) $contact->whereNotIn('user_id', $user_id);
+    //cek benar fungsinya? ori if($user_id)
+    if($req->user_id) $contact->whereNotIn('user_id', $user_id);
 
     return response()->json($contact->get(), 200);
   }

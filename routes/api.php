@@ -92,11 +92,11 @@ Route::group(['middleware' => ['cors']], function() {
 
     Route::get('leads/{id}/test', 'LeadController@isSingleLeadInOrder');
 
+    Route::post('shipments/status-log', 'ShipmentController@storeShipmentLog');
+    Route::get('shipments/status-log', 'ShipmentController@indexShipmentLog');
+    Route::get('shipments/{id}/status-log', 'ShipmentController@showShipmentLogByShipment');
     Route::get('shipments/history', 'ShipmentController@indexShipmentHistory');
     Route::get('shipments/{id}/history', 'ShipmentController@showShipmentHistoryByShipment');
-    Route::post('shipments/log', 'ShipmentController@storeShipmentLog');
-    Route::get('shipments/log', 'ShipmentController@indexShipmentLog');
-    Route::get('shipments/{id}/log', 'ShipmentController@showShipmentLogByShipment');
     Route::resource('contracts', 'ContractController', ['except' => [ 'create', 'edit' ]]);
     Route::resource('shipments', 'ShipmentController', ['except' => [ 'create', 'edit' ]]);
 
