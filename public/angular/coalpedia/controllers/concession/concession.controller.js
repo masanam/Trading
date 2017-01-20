@@ -14,7 +14,8 @@ angular.module('coalpedia').controller('ConcessionController', ['$scope', '$stat
         windowClass: 'xl-modal',
         resolve: {
           concession: new Concession(),
-          company: $scope.company
+          company: $scope.company,
+          createNew: false
         }
       });
 
@@ -37,6 +38,7 @@ angular.module('coalpedia').controller('ConcessionController', ['$scope', '$stat
         resolve: {
           concession: Concession.get({ id: concession.id }),
           company: $scope.company,
+          createNew: false,
           edit:1
         }
       });

@@ -19,7 +19,8 @@ angular.module('lead').controller('LeadProductController', ['$scope', '$statePar
         windowClass: 'xl-modal',
         resolve: {
           product: new Product(),
-          company: $scope.lead.company
+          company: $scope.lead.company,
+          createNew: true
         }
       });
 

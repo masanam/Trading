@@ -1,11 +1,11 @@
 'use strict';
 
-angular.module('coalpedia').controller('ConcessionModalController', ['$scope', '$uibModalInstance', '$stateParams', '$timeout', '$interval', 'NgMap', 'Concession', 'Company', 'concession', 'company',
-  function($scope, $uibModalInstance, $stateParams, $timeout, $interval, NgMap, Concession, Company, concession, company) {
+angular.module('coalpedia').controller('ConcessionModalController', ['$scope', '$uibModalInstance', '$stateParams', '$timeout', '$interval', 'NgMap', 'Concession', 'Company', 'concession', 'company', 'createNew',
+  function($scope, $uibModalInstance, $stateParams, $timeout, $interval, NgMap, Concession, Company, concession, company, createNew) {
     $scope.concession = concession;
     $scope.concession.polygon = angular.fromJson(concession.polygon);
 
-    $scope.createNew = false;
+    if(createNew) $scope.createNew = createNew;
     $scope.display = {};
     $scope.selected = {};
 
