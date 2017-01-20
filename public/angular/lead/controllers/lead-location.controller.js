@@ -30,7 +30,8 @@ angular.module('lead').controller('LeadLocationController', ['$scope', '$statePa
           windowClass: 'xl-modal',
           resolve: {
             concession: new Concession(),
-            company: $scope.company
+            company: $scope.company,
+            createNew: true
           }
         });
       else
@@ -43,7 +44,8 @@ angular.module('lead').controller('LeadLocationController', ['$scope', '$statePa
           windowClass: 'xl-modal',
           resolve: {
             factory: new Factory(),
-            company: $scope.company
+            company: $scope.company,
+            createNew: true
           }
         });
 

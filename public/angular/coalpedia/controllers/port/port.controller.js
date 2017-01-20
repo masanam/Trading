@@ -12,7 +12,8 @@ angular.module('coalpedia').controller('PortController', ['$scope', '$stateParam
         windowClass: 'xl-modal',
         resolve: {
           port: new Port(),
-          company: $scope.company
+          company: $scope.company,
+          createNew: false
         }
       });
 
@@ -33,7 +34,8 @@ angular.module('coalpedia').controller('PortController', ['$scope', '$stateParam
         windowClass: 'xl-modal',
         resolve: {
           port: Port.get({ id: port.id }),
-          company: $scope.company
+          company: $scope.company,
+          createNew: false
         }
       });
 

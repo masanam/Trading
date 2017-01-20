@@ -99,9 +99,11 @@ class ShipmentController extends Controller
         $shipment->price = $request->price;
         $shipment->status = 'a';
 
-        $shipment::with('contracts', 'contracts.orders', 'contracts.orders.sells', 'suppliers', 'customers', 'surveyors', 'products')->save();
+        $shipment->save();
 
         $shipment_history = $this->storeShipmentHistory($shipment);
+
+        $shipment = Shipment::with('contracts', 'contracts.orders', 'contracts.orders.sells', 'suppliers', 'customers', 'surveyors', 'products')->find($shipment->id);
 
         return response()->json($shipment, 200);
     }
@@ -225,12 +227,12 @@ class ShipmentController extends Controller
     public function storeShipmentLog(Request $request) {
       $shipment_log = new ShipmentLog();
       $shipment_log->shipment_id = $request->shipment_id;
-      $shipment_log->user_id = Auth::user()->id;
+      $shipment_log->user_id = $request->user_id ? $request->user_id : Auth::user()->id;
       $shipment_log->stowage_plan = $request->stowage_plan;
       $shipment_log->cargo_supply = $request->cargo_supply;
       $shipment_log->cargo_on_board = $request->cargo_on_board;
       $shipment_log->remark = $request->remark;
-      $shipment_log->status = 'a';
+      $shipment_log->shipment_status = $request->shipment_status;
       $shipment_log->save();
       return response()->json($shipment_log,200);
     }
