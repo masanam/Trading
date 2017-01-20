@@ -25,7 +25,7 @@ class MiningLicenseController extends Controller
      */
     public function index(Request $req = null)
     {
-        $license = MiningLicense::with('Company','Contact','checked_by')->select('id','company_id','source','contact_id','type','status','checked_by','checked_at','expired','overlap_other','release_after','troubled_bupati','operating','close_factory','close_iup','close_river','close_iup_other','coal_bearing_formation','located_mining','located_settlement','located_palm','located_farm','overlay_forest');
+        $license = MiningLicense::with('Company','Contact','checked_by')->select('id','company_id','source','contact_id','type','status','checked_by','checked_at','expired','overlap_other','release_after','is_corrupt','is_operating','close_to_sinarmas_factory','close_to_sinarmas_concession','close_to_river','close_to_other_concession','coal_bearing_formation','is_mining_zone','is_settlement_zone','is_palm_plantation','is_farming_zone','is_sinarmas_forestry');
         if($req->draft) $license->whereIn('status',[1, 2, 3]);
         else $license->whereNotIn('status',[1, 2, 3]);
         $license = $license->get();
@@ -61,7 +61,7 @@ class MiningLicenseController extends Controller
         $license->status = '1';
         $license->save();
 
-        return response()->json($license, 200);
+        return $this->show($license->id);
     }
 
     /**
@@ -73,7 +73,7 @@ class MiningLicenseController extends Controller
     public function show($id)
     {
 
-        $license = MiningLicense::with('Company','Contact','Concession','checked_by')->select('*', DB::raw('ST_AsGeoJSON(polygon, 8) AS polygon'))->where('id',$id)->where('status', 'a')->first();
+        $license = MiningLicense::with('Company','Contact','Concession','checked_by')->select('*', DB::raw('ST_AsGeoJSON(polygon, 8) AS polygon'))->where('id',$id)->first();
 
         return response()->json($license, 200);
     }
@@ -98,7 +98,7 @@ class MiningLicenseController extends Controller
         if($req->polygon) $license->polygon = DB::raw('GeomFromText(\'POLYGON('.$req->polygon.')\')');
         $license->save();
 
-        return response()->json($license, 200);
+        return $this->show($license->id);
     }
 
     /**

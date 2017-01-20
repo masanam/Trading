@@ -241,17 +241,17 @@ class CreateCompaniesTable extends Migration
             $table->timestamps();
 
             //for advance search
-            $table->boolean('troubled_bupati')->nullable();
-            $table->boolean('operating')->nullable();
-            $table->boolean('close_factory')->nullable();
-            $table->boolean('close_iup')->nullable();
-            $table->boolean('close_river')->nullable();
-            $table->boolean('close_iup_other')->nullable();
-            $table->boolean('located_mining')->nullable();
-            $table->boolean('located_settlement')->nullable();
-            $table->boolean('located_palm')->nullable();
-            $table->boolean('located_farm')->nullable();
-            $table->boolean('overlay_forest')->nullable();
+            $table->boolean('is_corrupt')->nullable();
+            $table->boolean('is_operating')->nullable();
+            $table->boolean('close_to_sinarmas_factory')->nullable();
+            $table->boolean('close_to_sinarmas_concession')->nullable();
+            $table->boolean('close_to_river')->nullable();
+            $table->boolean('close_to_other_concession')->nullable();
+            $table->boolean('is_mining_zone')->nullable();
+            $table->boolean('is_settlement_zone')->nullable();
+            $table->boolean('is_palm_plantation')->nullable();
+            $table->boolean('is_farming_zone')->nullable();
+            $table->boolean('is_sinarmas_forestry')->nullable();
 
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
