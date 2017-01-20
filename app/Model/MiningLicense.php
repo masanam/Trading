@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use DB;
 
 class MiningLicense extends Model {
 	protected $table = 'mining_licenses';
@@ -56,6 +57,11 @@ class MiningLicense extends Model {
     public function Contact() {
         return $this->belongsTo('App\Model\Contact');
     }
+
+    public function Concession() {
+        return $this->belongsTo('App\Model\Concession')->select('*', DB::raw('ST_AsGeoJSON(polygon, 8) AS polygon'));
+    }
+
 
     public function checked_by() {
         return $this->belongsTo('App\Model\User','checked_by','id');
