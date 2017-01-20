@@ -1,9 +1,10 @@
 'use strict';
 
-angular.module('coalpedia').controller('ProductModalController', ['$scope', '$uibModalInstance', '$timeout', '$interval', 'Product', 'Company', 'product', 'company',
-  function($scope, $uibModalInstance, $timeout, $interval, Product, Company, product, company) {
+angular.module('coalpedia').controller('ProductModalController', ['$scope', '$uibModalInstance', '$timeout', '$interval', 'Product', 'Company', 'product', 'company', 'createNew',
+  function($scope, $uibModalInstance, $timeout, $interval, Product, Company, product, company, createNew) {
     $scope.product = product;
     $scope.company = company;
+    if(createNew) $scope.createNew = createNew;
     $scope.selected = {};
 
     $scope.find = function (keyword) {

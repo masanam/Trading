@@ -203,6 +203,7 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
     // Find list of order
     $scope.find = function () {
       $scope.orders = Order.query({ category: $scope.browse.category, status: $scope.browse.status });
+      console.log('ini disini');
 	  // $scope.orderCollection = $scope.orders;
     };
 

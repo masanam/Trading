@@ -12,7 +12,8 @@ angular.module('coalpedia').controller('ProductController', ['$scope', '$statePa
         windowClass: 'xl-modal',
         resolve: {
           product: new Product(),
-          company: $scope.company
+          company: $scope.company,
+          createNew: false
         }
       });
 
@@ -33,7 +34,8 @@ angular.module('coalpedia').controller('ProductController', ['$scope', '$statePa
         windowClass: 'xl-modal',
         resolve: {
           product: Product.get({ id: product.id }),
-          company: $scope.company
+          company: $scope.company,
+          createNew: false
         }
       });
 

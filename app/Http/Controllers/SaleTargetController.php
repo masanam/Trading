@@ -2,23 +2,36 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\SaleTarget;
-
+use App\Model\SalesTarget;
 use Illuminate\Http\Request;
 
-use App\Http\Requests;
+use Auth;
+
 
 class SaleTargetController extends Controller
 {
+    public function __construct() {
+        $this->middleware(['jwt.auth', 'auth.admin']);
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($year)
     {
-        $sales_target = SaleTarget::with('product')->get();
-        return response()->json($sales_target, 200);
+        $st = SalesTarget::with('product')->where('year', $year)->get();
+        $sales_target = [];
+
+        foreach($st as $s){
+            $sales_target[$s->product_id][$s->month] = $s->value;
+        }        
+  
+        return response()->json([
+            'year' => $year,
+            'sales_target' => $sales_target
+        ], 200);
     }
 
     /**
@@ -33,86 +46,23 @@ class SaleTargetController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $req)
+    public function store(Request $req, $year)
     {
-        if(!$req) {
-            return response()->json([
-                'message' => 'Bad Request'
-            ], 400);
+        foreach($req->sales_target as $product_id => $st){
+            foreach ($st as $month => $value) {
+                $sales_target = new SalesTarget([
+                    'product_id' => $product_id,
+                    'year' => $year,
+                    'month' => $month,
+                    'value' => $value,
+                    'updated_by' => Auth::user()
+                ]);   
+
+                $sales_target->save();
+            }
         }
 
-        $sales_target = new SaleTarget($req->only([
-            'product_id', 'month', 'year', 'value', 'updated_by'
-        ]));
-        
-        $sales_target->status = 'a';
-
-        $sales_target->save();
-
-        return response()->json($sales_target, 200);
+        return $this->index($year);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        $sales_target = SaleTarget::with('product')->find($id);
-
-        if($sales_target->status != 'a')
-          return response()->json(['message' => 'deactivated record'], 404);
-        
-        return response()->json($sales_target, 200);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $req, $sales_target)
-    {
-        $sales_target = SaleTarget::find($sales_target);
-
-        if (!$req) return response()->json([ 'message' => 'Bad Request' ], 400);
-        if (!$sales_target) return response()->json([ 'message' => 'Not found' ] ,404);
-
-        $sales_target->fill($req->only(['month', 'year', 'value', 'updated_by']))->save();
-
-        return response()->json($sales_target, 200);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $sales_target = SaleTarget::find($id);
-
-        if (!$sales_target) {
-          return response()->json([
-            'message' => 'Not found'
-          ] ,404);
-        }
-
-        $sales_target->status = 'x';
-        $sales_target->save();
-
-        return response()->json($sales_target, 200);
-    }
 }

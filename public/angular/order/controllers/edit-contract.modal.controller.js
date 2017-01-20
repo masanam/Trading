@@ -4,7 +4,6 @@ angular.module('order').controller('EditContractModalController', ['$uibModalIns
   function($uibModalInstance, $scope, Order, status, Notification, Contract) {
     console.log('asdasdasd');
     $scope.submit = function () {
-      console.log("kontol");
       var contract = new Contract({
         'contract_no': $scope.order.contracts.contract_no,
         'term': $scope.order.contracts.term,

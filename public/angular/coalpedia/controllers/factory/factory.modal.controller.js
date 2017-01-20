@@ -1,10 +1,10 @@
 'use strict';
 
-angular.module('coalpedia').controller('FactoryModalController', ['$scope', '$uibModalInstance', '$timeout', '$interval', 'Factory', 'Company', 'factory', 'company',
-  function($scope, $uibModalInstance, $timeout, $interval, Factory, Company, factory, company) {
+angular.module('coalpedia').controller('FactoryModalController', ['$scope', '$uibModalInstance', '$timeout', '$interval', 'Factory', 'Company', 'factory', 'company', 'createNew',
+  function($scope, $uibModalInstance, $timeout, $interval, Factory, Company, factory, company, createNew) {
     $scope.factory = factory;
+    if(createNew) $scope.createNew = createNew;
     $scope.selected = {};
-    $scope.createNew = false;
 
     $scope.find = function (keyword) {
       Factory.query({ q: keyword, company_id:company.id, coalpedia:true }, function(res){
