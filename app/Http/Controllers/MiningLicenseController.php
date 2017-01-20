@@ -19,9 +19,17 @@ class MiningLicenseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    /* Kamal 2017-01-19 18:00
+     * create All function CRUD
+     */
     public function index()
     {
-        $license = MiningLicense::with('Company','Contact','checked_by')->select('*', DB::raw('ST_AsGeoJSON(polygon, 8) AS polygon'))->get();
+        $license = MiningLicense::with('Company','Contact','checked_by')->select('company_id','source','contact_id','type','status','checked_by','checked_at','expired','overlap_other','release_after','troubled_bupati','operating','close_factory','close_iup','close_river','close_iup_other','coal_bearing_formation','located_mining','located_settlement','located_palm','located_farm','overlay_forest')->get();
+        foreach ($license as $l) {
+            if($l->expired > Date('Y-m-d')) $l->filter_expired = 0;
+            else $l->filter_expired = 1;
+        }
 
         return response()->json($license, 200);
     }
@@ -43,7 +51,7 @@ class MiningLicenseController extends Controller
         $license = new MiningLicense($req->all());
         $license->created_by = Auth::User()->id;
         if($req->polygon) $license->polygon = DB::raw('GeomFromText(\'POLYGON('.$req->polygon.')\')');
-        $license->status = 'a';
+        $license->status = '1';
         $license->save();
 
         return response()->json($license, 200);
@@ -57,8 +65,8 @@ class MiningLicenseController extends Controller
      */
     public function show($id)
     {
-        $license = MiningLicense::with('Company','Contact','Concession','checked_by')->select('*', DB::raw('ST_AsGeoJSON(polygon, 8) AS polygon'))->where('id',$id)->where('status', 'a')->first();
 
+        $license = MiningLicense::with('Company','Contact','Concession','checked_by')->select('*', DB::raw('ST_AsGeoJSON(polygon, 8) AS polygon'))->where('id',$id)->where('status', 'a')->first();
 
         return response()->json($license, 200);
     }
@@ -79,6 +87,7 @@ class MiningLicenseController extends Controller
         }
         $license = MiningLicense::find($id);
         $license->fill($req->all());
+        if($req->status) $license->status = $req->status;
         if($req->polygon) $license->polygon = DB::raw('GeomFromText(\'POLYGON('.$req->polygon.')\')');
         $license->save();
 

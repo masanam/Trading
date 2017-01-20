@@ -25,9 +25,6 @@ Route::group(['middleware' => ['cors']], function() {
     Route::post('authenticate/forgot', 'AuthenticateController@forgotPassword');
 
 
-	//testing
-	Route::get('helloworld', 'AuthenticateController@helloworld');
-
     //S3 Upload file signing API
     Route::post('signing', 'AuthenticateController@signing');
 
@@ -56,7 +53,9 @@ Route::group(['middleware' => ['cors']], function() {
     Route::resource('concession', 'ConcessionController', ['except' => [ 'create', 'edit' ]]);
     Route::resource('factory', 'FactoryController', ['except' => [ 'create', 'edit' ]]);
 
-    Route::resource('sales-target', 'SaleTargetController', ['except' => [ 'create', 'edit' ]]);
+
+    Route::get('sales-target/{year}', 'SaleTargetController@index');
+    Route::post('sales-target/{year}', 'SaleTargetController@store');
 
     /*
      * INDEX API GROUP
@@ -93,7 +92,6 @@ Route::group(['middleware' => ['cors']], function() {
 
     Route::get('leads/{id}/test', 'LeadController@isSingleLeadInOrder');
 
-    Route::post('shipments/history', 'ShipmentController@storeShipmentHistory');
     Route::get('shipments/history', 'ShipmentController@indexShipmentHistory');
     Route::get('shipments/{id}/history', 'ShipmentController@showShipmentHistoryByShipment');
     Route::post('shipments/log', 'ShipmentController@storeShipmentLog');

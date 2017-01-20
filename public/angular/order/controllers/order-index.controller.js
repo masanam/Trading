@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('order').controller('OrderIndexController', ['$scope', '$stateParams', '$state', 'Index',
-  function($scope, $stateParams, $state, Index) {
+angular.module('order').controller('OrderIndexController', ['$scope', '$stateParams', '$state', '$filter', 'Index',
+  function($scope, $stateParams, $state, $filter, Index) {
     $scope.getIndices = function () {
       $scope.indices = Index.query({ action: 'single-date' }, function(){
         for(var x=0; x<$scope.indices.length; x++){
@@ -62,7 +62,7 @@ angular.module('order').controller('OrderIndexController', ['$scope', '$statePar
               }
               $scope.data[2][x] = buy_price;
             }
-            $scope.labels[x] = res[x].date;
+            $scope.labels[x] = $filter('date')(res[x].date, 'd/M');
           }
         });
     };
