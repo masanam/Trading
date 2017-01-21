@@ -34,7 +34,6 @@ angular.module('order').controller('OrderReasonModalController', ['$uibModalInst
             'order_id': $scope.order.id,
             'shipment_count': $scope.order.contracts.shipment_count,
             'term': $scope.order.contracts.term,
-            order.sells[0].laycan_start
             'term_desc': $scope.order.contracts.term_desc,
             // 'date_from': $scope.order.contracts.date_from,
             // 'date_to': $scope.order.contracts.date_to,

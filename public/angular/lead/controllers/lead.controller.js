@@ -40,7 +40,7 @@ angular.module('lead').controller('LeadController', ['$scope', '$state', '$state
 
     $scope.init = function () {
       $scope.lead = new Lead();
-      $scope.lead_type=$location.search().lead_type;
+      $scope.lead_type=$stateParams.lead_type;
       if($stateParams.lead_type) $scope.lead.lead_type = $stateParams.lead_type;
       if(Environment.trx === 'sell') $scope.lead.lead_type = 'sell';
     };
