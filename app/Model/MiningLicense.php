@@ -47,7 +47,19 @@ class MiningLicense extends Model {
         'checked_by',
 		'checked_at',
 		'received_by',
-		'received_at'
+		'received_at',
+
+        'is_corrupt',
+        'is_operating',
+        'close_to_sinarmas_factory',
+        'close_to_sinarmas_concession',
+        'close_to_river',
+        'close_to_other_concession',
+        'is_mining_zone',
+        'is_settlement_zone',
+        'is_palm_plantation',
+        'is_farming_zone',
+        'is_sinarmas_forestry'
     ];
 
     public function Company() {
