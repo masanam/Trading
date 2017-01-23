@@ -29,6 +29,10 @@ class CreateSpatialData extends Migration
 		Schema::table('spatial_data', function ($table) {
 			DB::statement('ALTER TABLE spatial_data ADD COLUMN polygon geometry;');
 		});
+
+        Schema::table('mining_licenses', function ($table) {
+            $table->foreign('spatial_data_id')->references('id')->on('spatial_data')->onDelete('cascade');
+        });
     }
 
     /**
