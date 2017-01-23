@@ -54,9 +54,13 @@ Route::group(['middleware' => ['cors']], function() {
     Route::resource('concession', 'ConcessionController', ['except' => [ 'create', 'edit' ]]);
     Route::resource('factory', 'FactoryController', ['except' => [ 'create', 'edit' ]]);
 
-
+    //Myr 
     Route::get('sales-target/{year}', 'SaleTargetController@index');
     Route::post('sales-target/{year}', 'SaleTargetController@store');
+
+    Route::resource('quality', 'QualityController', ['except' => [ 'create', 'edit' ]]);
+
+
 
     /*
      * INDEX API GROUP
