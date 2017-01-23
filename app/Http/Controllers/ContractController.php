@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Model\Contract;
 use App\Model\Order;
+use App\Model\Shipment;
 
 use Illuminate\Http\Request;
 
@@ -17,17 +18,61 @@ class ContractController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $req)
-    {
-      $contracts = Contract::with('shipments', 'orders', 'orders.sells', 'orders.sells.company', 'orders.sells.product')->where('status', 'a');
-      if($req->unscheduled) {
-        $contracts = $contracts->has('shipments', '<' , 1);
-      }
 
-      $contracts = $contracts->get();
 
-      return response()->json($contracts, 200);
-    }
+     public function index(Request $req)
+     {
+       $range = [];
+       $contracts = Contract::with('shipments', 'orders', 'orders.sells', 'orders.sells.company', 'orders.sells.product')->where('status', 'a');
+
+       if($req->area_id){
+         $contracts = $contracts->whereHas('orders.sells.company', function($q) use ($req) {
+           $q->whereRaw('area_id = '.$req->area_id);
+
+         });
+       }
+
+       if($req->company_id){
+         $contracts = $contracts->whereHas('orders.sells.company',function($q) use ($req) {
+           $q->whereRaw('company_id  = '.$req->company_id);
+         });
+       }
+      //  if($req->scheduled) {
+      //    if($req->range) {
+      //      $range = explode(',', $req->range);
+      //      $from = explode('-', $range[0]);
+      //      $till = explode('-', $range[1]);
+      //      $monthFrom = $from[0]; $yearFrom = $from[1];
+      //      $monthTill = $till[0]; $yearTill = $till[1];
+      //      $fromDate = new Carbon('first day of ' . $monthFrom . ' ' . $yearFrom);
+      //      $tillDate = new Carbon('last day of ' . $monthTill . ' ' . $yearTill);
+      //      $shipments = $shipments->whereBetween(DB::raw('date(laycan_start)'), [$fromDate, $tillDate])
+      //        ->orWhereBetween(DB::raw('date(laycan_end)'), [$fromDate, $tillDate]);
+      //    }
+      //    else
+      //      $shipments = $shipments
+      //        ->where( DB::raw('MONTH(laycan_start)'), '=', date('n') )
+      //        ->orWhere( DB::raw('MONTH(laycan_end)'), '=', date('n') );
+       //
+       //
+      //  }
+
+       $contracts = $contracts->get();
+
+       return response()->json($contracts, 200);
+     }
+
+    // public function index(Request $req)
+    // {
+    //   $contracts = Contract::with('shipments', 'orders', 'orders.sells', 'orders.sells.company', 'orders.sells.product')->where('status', 'a');
+    //   if($req->unscheduled) {
+    //     $contracts = $contracts->has('shipments', '<' , 1);
+    //   }
+    //
+    //   $contracts = $contracts->get();
+    //
+    //   return response()->json($contracts, 200);
+    // }
 
     /**
      * Store a newly created resource in storage.
