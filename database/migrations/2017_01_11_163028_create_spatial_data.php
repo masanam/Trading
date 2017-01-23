@@ -23,7 +23,7 @@ class CreateSpatialData extends Migration
             $table->char('status',1)->nullable();
             $table->timestamps();
 
-            $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('created_by')->references('id')->on('users')->onDelete('restrict');
 		});
         
 		Schema::table('spatial_data', function ($table) {
@@ -31,7 +31,7 @@ class CreateSpatialData extends Migration
 		});
 
         Schema::table('mining_licenses', function ($table) {
-            $table->foreign('spatial_data_id')->references('id')->on('spatial_data')->onDelete('cascade');
+            $table->foreign('spatial_data_id')->references('id')->on('spatial_data')->onDelete('restrict');
         });
     }
 
