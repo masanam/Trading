@@ -47,11 +47,11 @@ class ShipmentController extends Controller
 
       if($req->area_id){
         $shipments = $shipments->whereHas('suppliers', function($q) use ($req) {
-          $q->whereRaw('area_id = "'.$req->area_id.'"');
+          $q->whereRaw('area_id = '.$req->area_id);
         });
       } 
       if($req->company_id){
-        $shipments = $shipments->whereRaw('supplier_id "'.$req->company_id.'"');
+        $shipments = $shipments->whereRaw('supplier_id = "'.$req->company_id.'"');
       }
 
       if($req->q){
@@ -89,8 +89,7 @@ class ShipmentController extends Controller
 
       }      
 
-      // $shipments = $shipments->paginate(25);
-      $shipments = $shipments->paginate(25);
+      $shipments = $shipments->get();
 
       return response()->json($shipments, 200);
     }
