@@ -112,7 +112,7 @@ class CreateLeadsTable extends Migration
 
             $table->timestamps();
 
-            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('restrict');
         });
     }
 
