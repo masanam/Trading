@@ -186,6 +186,7 @@ return [
         Barryvdh\Cors\ServiceProvider::class,
         Laravel\Passport\PassportServiceProvider::class,
         // Vinkla\Pusher\PusherServiceProvider::class,
+        // Mpociot\Firebase\SyncsWithFirebase::class,
 
         Laravel\Scout\ScoutServiceProvider::class,
     ],
