@@ -10,12 +10,12 @@ class CreateCompaniesTable extends Migration
      * @return void
      */
     public function up()
-    {
+    {   
         Schema::create('areas', function (Blueprint $table){
             $table->increments('id');
             $table->string('description')->nullable();
         });
-        
+
         Schema::create('companies', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
@@ -253,6 +253,9 @@ class CreateCompaniesTable extends Migration
             $table->boolean('is_farming_zone')->nullable();
             $table->boolean('is_sinarmas_forestry')->nullable();
 
+            //for overlay
+            $table->integer('spatial_data_id')->unsigned()->nullable();
+
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('checked_by')->references('id')->on('users')->onDelete('cascade');
@@ -271,7 +274,7 @@ class CreateCompaniesTable extends Migration
             $table->foreign('mining_license_id')->references('id')->on('mining_licenses')->onDelete('cascade');
             $table->foreign('upload_by')->references('id')->on('users')->onDelete('cascade');
         });
-     
+
     }
     /**
      * Reverse the migrations.
@@ -289,7 +292,7 @@ class CreateCompaniesTable extends Migration
         Schema::dropIfExists('products');
         Schema::dropIfExists('concessions');
         Schema::dropIfExists('contacts');
-        Schema::dropIfExists('areas');
         Schema::dropIfExists('companies');
+        Schema::dropIfExists('areas');
     }
 }
