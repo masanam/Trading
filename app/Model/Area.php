@@ -19,4 +19,8 @@ class Area extends Model
   public function companies() {
     return $this->hasMany(Company::class);
   }
+
+  public function users() {
+    return $this->belongsTo(User::class);
+  }
 }

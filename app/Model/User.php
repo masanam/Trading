@@ -48,6 +48,10 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return $this->hasMany('Contact');
     }
 
+    public function areas() {
+        return $this->hasMany('Area');
+    }
+
     public function shipment_log() {
       return $this->hasMany(ShipmentLog::class);
     }

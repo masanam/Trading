@@ -45,6 +45,29 @@ class ShipmentController extends Controller
       $range = [];
       $shipments = Shipment::with('contracts', 'contracts.orders', 'contracts.orders.sells', 'suppliers', 'customers', 'surveyors', 'products')->where('status', 'a');
 
+      if($req->area_id){
+        $shipments = $shipments->whereHas('suppliers', function($q) use ($req) {
+          $q->whereRaw('area_id = '.$req->area_id);
+        });
+      } 
+      if($req->company_id){
+        $shipments = $shipments->whereRaw('supplier_id = "'.$req->company_id.'"');
+      }
+
+      if($req->q){
+        $param = $req->q;
+        $shipments = $shipments->where(function($query) use ($param){
+          return $query->whereHas('contracts', function($q) use ($param) {
+                  $q->whereRaw('`contract_no` LIKE "%'.$param.'%"');
+                })
+                ->orWhereHas('suppliers', function($q) use ($param) {
+                  $q->whereRaw('`company_name` LIKE "%'.$param.'%"');
+                })
+                ->orWhereRaw('laycan_start LIKE "%'.$param.'%"')
+                ->orWhereRaw('laycan_start LIKE "%'.$param.'%"')
+                ->orWhereRaw('shipment_no LIKE "%'.$param.'%"');
+        });
+      }
 
       if($req->scheduled) {
         if($req->range) {
@@ -64,7 +87,7 @@ class ShipmentController extends Controller
             ->orWhere( DB::raw('MONTH(laycan_end)'), '=', date('n') );
 
 
-      }
+      }      
 
       $shipments = $shipments->get();
 
