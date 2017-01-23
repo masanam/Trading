@@ -19,7 +19,8 @@ angular.module('lead').controller('LeadPortController', ['$scope', '$stateParams
         windowClass: 'xl-modal',
         resolve: {
           port: new Port(),
-          company: $scope.lead.company
+          company: $scope.lead.company,
+          createNew: true
         }
       });
 

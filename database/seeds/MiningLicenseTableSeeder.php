@@ -50,17 +50,17 @@ class MiningLicenseTableSeeder extends Seeder
             'status' => 'a',
             'checked_by' => 3,
             'checked_at' => '2017-01-13',
-            'troubled_bupati' => 0,
-            'operating' => 1,
-            'close_factory' => 1,
-            'close_iup' => 0,
-            'close_river' => 1,
-            'close_iup_other' => 1,
-            'located_mining' => 1,
-            'located_settlement' => 0,
-            'located_palm' => 1,
-            'located_farm' => 0,
-            'overlay_forest' => 1
+            'is_corrupt' => 0,
+            'is_operating' => 1,
+            'close_to_sinarmas_factory' => 1,
+            'close_to_sinarmas_concession' => 0,
+            'close_to_river' => 1,
+            'close_to_other_concession' => 1,
+            'is_mining_zone' => 1,
+            'is_settlement_zone' => 0,
+            'is_palm_plantation' => 1,
+            'is_farming_zone' => 0,
+            'is_sinarmas_forestry' => 1
         ]);
 
         MiningLicense::create([

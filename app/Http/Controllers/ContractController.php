@@ -66,7 +66,7 @@ class ContractController extends Controller
     public function show($id)
     {
         //$user = User::with('directSubordinates','directManager','roles')->find($user);
-        $contract = Contract::find($id);
+        $contract = Contract::with('shipments', 'orders', 'orders.buys', 'orders.buys.company', 'orders.buys.product', 'orders.sells', 'orders.sells.company', 'orders.sells.product')->find($id);
         return $contract;
     }
 

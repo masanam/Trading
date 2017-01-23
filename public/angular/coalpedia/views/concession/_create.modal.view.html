@@ -1,7 +1,7 @@
 <div class="box">
   <div class="box-header with-border">
 	  <h4 class="modal-title">
-	  	Create Concession
+	  	Create A Concession
 	  	<i class="fa fa-times pull-right" ng-click="close()"></i>
 	  </h4>
   </div>
@@ -11,7 +11,7 @@
         reset-search-input="false"
         style="min-width: 30px;"
         title="Choose an concession">
-        <ui-select-match placeholder="Name of the Product...">{{$select.selected.concession_name}}</ui-select-match>
+        <ui-select-match placeholder="Name of the Conecssion...">{{$select.selected.concession_name}}</ui-select-match>
 
         <ui-select-choices repeat="concession in concessions track by $index"
           refresh="find($select.search)"

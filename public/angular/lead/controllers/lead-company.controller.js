@@ -23,7 +23,11 @@ angular.module('lead').controller('LeadCompanyController', ['$scope', '$statePar
         controller: 'CompanyModalController',
         windowClass: 'xl-modal',
         resolve: {
-          company: new Company()
+          company: new Company(),
+          companyType: function () {
+            if($scope.lead.lead_type === 'buy') return 'supplier';
+            else return 'customer';
+          }
         }
       });
 

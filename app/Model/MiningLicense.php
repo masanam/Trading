@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use DB;
 
 class MiningLicense extends Model {
 	protected $table = 'mining_licenses';
@@ -46,7 +47,19 @@ class MiningLicense extends Model {
         'checked_by',
 		'checked_at',
 		'received_by',
-		'received_at'
+		'received_at',
+
+        'is_corrupt',
+        'is_operating',
+        'close_to_sinarmas_factory',
+        'close_to_sinarmas_concession',
+        'close_to_river',
+        'close_to_other_concession',
+        'is_mining_zone',
+        'is_settlement_zone',
+        'is_palm_plantation',
+        'is_farming_zone',
+        'is_sinarmas_forestry'
     ];
 
     public function Company() {
@@ -56,6 +69,11 @@ class MiningLicense extends Model {
     public function Contact() {
         return $this->belongsTo('App\Model\Contact');
     }
+
+    public function Concession() {
+        return $this->belongsTo('App\Model\Concession')->select('*', DB::raw('ST_AsGeoJSON(polygon, 8) AS polygon'));
+    }
+
 
     public function checked_by() {
         return $this->belongsTo('App\Model\User','checked_by','id');

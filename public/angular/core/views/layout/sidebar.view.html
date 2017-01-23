@@ -33,7 +33,7 @@
           <li><a ui-sref="company.list({ type:'customer' })"><i class="fa fa-circle-o"></i> Customer</a></li>
           <li><a ui-sref="company.list({ type:'supplier' })"><i class="fa fa-circle-o"></i> Supplier</a></li>
           <li><a ui-sref="company.list({ type:'vendor' })"><i class="fa fa-circle-o"></i> Vendor</a></li>
-          <li><a ui-sref="company.list({ type:'concession' })"><i class="fa fa-circle-o"></i> Concession</a></li>
+          <li><a ui-sref="concession.list"><i class="fa fa-circle-o"></i> Concession</a></li>
         </ul>
       </li>
 
@@ -61,37 +61,6 @@
           <li><a ui-sref="index.list"><i class="fa fa-line-chart"></i> Price Indices</a></li><!--
           <li><a ui-sref="buy-order-management.index"><i class="ion ion-log-in"></i> Buy Order</a></li>
           <li><a ui-sref="sell-order-management.index"><i class="ion ion-log-out"></i> Sell Order</a></li> -->
-        </ul>
-      </li>
-
-      <li class="treeview">
-        <a ng-click="bizdev = !bizdev; openCollapse(4)">
-          <i class="ion ion-earth" style="font-size: 20px; margin-left: -3px;"></i>
-          <span>Coalbizpedia</span>
-          <span class="pull-right"><i ng-class="bizdev ? 'fa fa-caret-down' : 'fa fa-caret-up'"></i></span>
-        </a>
-        <ul class="treeview-menu" ng-class="bizdev ? 'menu-open' : ''" ng-style="{ 'display': style[4] }">
-          <li><a ui-sref="bizdev.dashboard"><i class="fa fa-home"></i> Dashboard</a></li>
-          <li><a ui-sref="bizdev.iup-management"><i class="ion ion-ios-paperplane"></i> IUP Management</a></li>
-          <li><a ui-sref="bizdev.map-index"><i class="fa fa-map"></i>Map Management</a></li>
-        </ul>
-      </li>
-
-      <li class="treeview">
-        <a ng-click="coaltradephase2 = !coaltradephase2; openCollapse(5)">
-          <i class="ion ion-earth" style="font-size: 20px; margin-left: -3px;"></i>
-          <span>Coaltrade Phase 2</span>
-          <span class="pull-right"><i ng-class="coaltradephase2 ? 'fa fa-caret-down' : 'fa fa-caret-up'"></i></span>
-        </a>
-        <ul class="treeview-menu" ng-class="coaltradephase2 ? 'menu-open' : ''" ng-style="{ 'display': style[5] }">
-          <li><a ui-sref="sales.dashboard"><i class="ion ion-ios-paperplane"></i> Sales</a></li>
-          <li><a ui-sref="scheduler.dashboard"><i class="ion ion-ios-paperplane"></i> Scheduler</a></li>
-          <li><a ui-sref="preshipment.dashboard"><i class="ion ion-ios-paperplane"></i> Pre Shipment</a></li>
-          <li><a ui-sref="postshipment.dashboard"><i class="ion ion-ios-paperplane"></i> Post Shipment</a></li>
-          <li><a ui-sref="treasury.dashboard"><i class="ion ion-ios-paperplane"></i> Treasury</a></li>
-          <li><a ui-sref="contract.dashboard"><i class="ion ion-ios-paperplane"></i> Contract Monitoring</a></li>
-          <li><a ui-sref="reports.dashboard"><i class="ion ion-ios-paperplane"></i> Reports</a></li>
-          <li><a ui-sref="usermanagement.index"><i class="ion ion-ios-paperplane"></i> User Management</a></li>
         </ul>
       </li>
 
