@@ -19,7 +19,7 @@ class CreateCompaniesTable extends Migration
         Schema::create('companies', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
-            $table->integer('area_id')->unsigned()->nullable();
+            $table->integer('area_id')->nullable();
             $table->string('company_name');
             $table->boolean('is_affiliated');
             $table->string('phone');
@@ -41,7 +41,7 @@ class CreateCompaniesTable extends Migration
             $table->char('status', 1); // A = Active , X = Deleted
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('area_id')->references('id')->on('areas')->onDelete('cascade');
+            //$table->foreign('area_id')->references('id')->on('areas')->onDelete('cascade');
         });
 
         Schema::create('contacts', function (Blueprint $table) {

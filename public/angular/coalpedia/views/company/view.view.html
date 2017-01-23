@@ -16,7 +16,7 @@
           <!-- Add the bg color to the header using any of the bg-* classes -->
     <div class="widget-user-header bg-aqua-active">
       <h4 class="widget-user-username" ng-switch="company.company_type">
-       
+
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
           {{ company.company_name }}
         </div>
@@ -27,11 +27,11 @@
           <span ng-switch-when="t" class="pull-right label label-danger"><i class='fa fa-tags'></i> TRADER</span>
           <span ng-switch-when="v" class="pull-right label label-success"><i class='fa fa-ship'></i> VENDOR</span>
         </div>
-       
+
       </h3>
       <h5 class="widget-user-desc" ng-switch="company.is_affiliated">
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-        {{ company.industry }}
+        {{ company.industry }} - {{ company.area.description }}
         </div>
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
         <span ng-switch-when=1 class="pull-right label label-info"><i class='fa fa-share-alt'></i> AFFILIATED</span>
@@ -48,9 +48,9 @@
         <div class="col-sm-12 border-right">
           <div class="description-block">
             <h5 class="description-text">{{ company.address }}</h5>
-                
+
           </div>
-        </div> 
+        </div>
       </div>
     </div>
   </div>
