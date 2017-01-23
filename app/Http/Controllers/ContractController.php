@@ -25,6 +25,9 @@ class ContractController extends Controller
        $range = [];
        $contracts = Contract::with('shipments', 'orders', 'orders.sells', 'orders.sells.company', 'orders.sells.product')->where('status', 'a');
 
+       $limit = $req->pageSize ? $req->pageSize : 3;
+       $skip = ( $req->pageSize * $req->page ) ? ( $req->pageSize * $req->page ) : 0;
+
        if($req->area_id){
          $contracts = $contracts->whereHas('orders.sells.company', function($q) use ($req) {
            $q->whereRaw('area_id = '.$req->area_id);
@@ -37,6 +40,44 @@ class ContractController extends Controller
            $q->whereRaw('company_id  = '.$req->company_id);
          });
        }
+
+       if($req->q)
+       {
+         $param = $req->q;
+         $contracts = $contracts->where(function($query) use ($param)
+         {
+          // $query->orWhereHas('orders.sells.company',function($q) use ($param)
+          $query->orWhereHas('orders.sells.company',function($q) use ($param)
+          {
+           $q->where('company_name','LIKE','%'.$param.'%');
+          })
+          ->orWhere('contract_no', 'LIKE', '%'.$param.'%')
+          ->orWhere('date_from','LIKE','%'.$param.'%')
+          ->orWhere('date_to','LIKE','%'.$param.'%');
+         });
+
+       }
+       //
+      //  if($req->q)
+      //  {
+      //    $param = $req->q;
+      //    $shipments = $shipments->where(function($query) use ($param)
+      //    {
+      //      return $query->whereHas('contracts', function($q) use ($param)
+      //      {
+      //        $q->whereRaw('`contract_no` LIKE "%'.$param.'%"');
+      //      })
+      //      ->orWhereHas('suppliers', function($q) use ($param)
+      //      {
+      //        $q->whereRaw('`company_name` LIKE "%'.$param.'%"');
+      //      })
+      //      ->orWhereRaw('laycan_start LIKE "%'.$param.'%"')
+      //      ->orWhereRaw('laycan_start LIKE "%'.$param.'%"')
+      //      ->orWhereRaw('shipment_no LIKE "%'.$param.'%"');
+      //    });
+      //  }
+
+
       //  if($req->scheduled) {
       //    if($req->range) {
       //      $range = explode(',', $req->range);
