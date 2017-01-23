@@ -59,7 +59,9 @@ class MiningLicense extends Model {
         'is_settlement_zone',
         'is_palm_plantation',
         'is_farming_zone',
-        'is_sinarmas_forestry'
+        'is_sinarmas_forestry',
+
+        'spatial_data_id'
     ];
 
     public function Company() {
@@ -77,6 +79,10 @@ class MiningLicense extends Model {
 
     public function checked_by() {
         return $this->belongsTo('App\Model\User','checked_by','id');
+    }
+
+    public function overlay() {
+        return $this->belongsTo('App\Model\SpatialData','spatial_data_id','id')->select('*', DB::raw('ST_AsGeoJSON(polygon, 8) AS polygon'));
     }
 
 }

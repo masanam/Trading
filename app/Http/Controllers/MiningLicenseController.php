@@ -73,7 +73,7 @@ class MiningLicenseController extends Controller
     public function show($id)
     {
 
-        $license = MiningLicense::with('Company','Contact','Concession','Concession.port','checked_by')->select('*', DB::raw('ST_AsGeoJSON(polygon, 8) AS polygon'))->where('id',$id)->first();
+        $license = MiningLicense::with('Company','Contact','Concession','Concession.port','checked_by','overlay')->select('*', DB::raw('ST_AsGeoJSON(polygon, 8) AS polygon'))->where('id',$id)->first();
 
         return response()->json($license, 200);
     }
@@ -95,6 +95,9 @@ class MiningLicenseController extends Controller
         $license = MiningLicense::find($id);
         $license->fill($req->all());
         if($req->status) $license->status = $req->status;
+        $license->expired = date('Y-m-d',strtotime($req->expired));
+        $license->checked_at = date('Y-m-d',strtotime($req->checked_at));
+        $license->updated_at = date('Y-m-d',strtotime($req->updated_at));
         if($req->polygon) $license->polygon = DB::raw('GeomFromText(\'POLYGON('.$req->polygon.')\')');
         $license->save();
 
