@@ -3,11 +3,11 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
-use Mpociot\Firebase\SyncsWithFirebase;
+// use Mpociot\Firebase\SyncsWithFirebase;
 
 class OrderApproval extends Model
 {
-    use SyncsWithFirebase;
+    // use SyncsWithFirebase;
 
     protected $table = 'order_approvals';
 
