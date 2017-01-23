@@ -40,8 +40,8 @@ class CreateCompaniesTable extends Migration
             $table->char('company_type', 1); // b = buyer, s = seller, t = trader, v = vendor
             $table->char('status', 1); // A = Active , X = Deleted
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            //$table->foreign('area_id')->references('id')->on('areas')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
+            //$table->foreign('area_id')->references('id')->on('areas')->onDelete('restrict');
         });
 
         Schema::create('contacts', function (Blueprint $table) {
@@ -54,8 +54,8 @@ class CreateCompaniesTable extends Migration
 
             $table->char('status', 1);
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('restrict');
         });
         Schema::create('concessions', function (Blueprint $table) {
             $table->increments('id');
@@ -85,7 +85,7 @@ class CreateCompaniesTable extends Migration
             $table->char('status', 1); // A = Active , X = Deleted
             // $table->integer('mining_license_id')->unsigned()->nullable();
             $table->timestamps();
-            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('restrict');
         });
         Schema::table('concessions', function ($table) {
             DB::statement('ALTER TABLE concessions ADD COLUMN polygon geometry;');
@@ -126,8 +126,8 @@ class CreateCompaniesTable extends Migration
             $table->integer('aft_max')->nullable();
             $table->char('status', 1); // A = Active , X = Deleted
             $table->timestamps();
-            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
-            $table->foreign('concession_id')->references('id')->on('concessions')->onDelete('cascade');
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('restrict');
+            $table->foreign('concession_id')->references('id')->on('concessions')->onDelete('restrict');
         });
         Schema::create('factories', function (Blueprint $table) {
             $table->increments('id');
@@ -145,7 +145,7 @@ class CreateCompaniesTable extends Migration
             $table->decimal('port_distance', 6, 2)->nullable();
             $table->char('status', 1); // A = Active , X = Deleted
             $table->timestamps();
-            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('restrict');
         });
 
 
@@ -179,8 +179,13 @@ class CreateCompaniesTable extends Migration
             $table->integer('port_id')->unsigned();
             $table->integer('company_id')->unsigned();
 
+<<<<<<< HEAD
             $table->foreign('port_id')->references('id')->on('ports')->onDelete('cascade');
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
+=======
+            $table->foreign('port_id')->references('id')->on('ports')->onDelete('restrict');
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('restrict');
+>>>>>>> 0991c11db687935e5c1d444ee6415ff4d60d91f8
             $table->primary(array('port_id', 'company_id'));
         });
         /*
@@ -196,7 +201,7 @@ class CreateCompaniesTable extends Migration
             $table->increments('id');
             $table->integer('concession_id')->unsigned();
             $table->string('url');
-            $table->foreign('concession_id')->references('id')->on('concessions')->onDelete('cascade');
+            $table->foreign('concession_id')->references('id')->on('concessions')->onDelete('restrict');
         });
         Schema::create('mining_licenses', function (Blueprint $table) {
             $table->increments('id');
@@ -253,13 +258,19 @@ class CreateCompaniesTable extends Migration
             $table->boolean('is_farming_zone')->nullable();
             $table->boolean('is_sinarmas_forestry')->nullable();
 
-            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
-            $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('checked_by')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('received_by')->references('id')->on('users')->onDelete('cascade');
+            //for overlay
+            $table->integer('spatial_data_id')->unsigned()->nullable();
+
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('restrict');
+            $table->foreign('created_by')->references('id')->on('users')->onDelete('restrict');
+            $table->foreign('checked_by')->references('id')->on('users')->onDelete('restrict');
+            $table->foreign('received_by')->references('id')->on('users')->onDelete('restrict');
         });
         Schema::table('mining_licenses', function ($table) {
             DB::statement('ALTER TABLE mining_licenses ADD COLUMN polygon geometry;');
+        });
+        Schema::table('mining_licenses', function ($table) {
+            $table->foreign('spatial_data_id')->references('id')->on('spatial_data')->onDelete('restrict');
         });
         Schema::create('mining_license_files', function (Blueprint $table) {
             $table->increments('id');
@@ -268,8 +279,8 @@ class CreateCompaniesTable extends Migration
             $table->integer('upload_by')->unsigned()->nullable(); //ini foreign key ke user, again, integer unsigned reference
             $table->timestamps();
 
-            $table->foreign('mining_license_id')->references('id')->on('mining_licenses')->onDelete('cascade');
-            $table->foreign('upload_by')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('mining_license_id')->references('id')->on('mining_licenses')->onDelete('restrict');
+            $table->foreign('upload_by')->references('id')->on('users')->onDelete('restrict');
         });
 
     }
@@ -289,7 +300,7 @@ class CreateCompaniesTable extends Migration
         Schema::dropIfExists('products');
         Schema::dropIfExists('concessions');
         Schema::dropIfExists('contacts');
-        Schema::dropIfExists('areas');
         Schema::dropIfExists('companies');
+        Schema::dropIfExists('areas');
     }
 }

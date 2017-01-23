@@ -25,7 +25,7 @@ class CreateContractsTable extends Migration
           $table->char('status', 1);
           $table->timestamps();
 
-          $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
+          $table->foreign('order_id')->references('id')->on('orders')->onDelete('restrict');
       });
 
       Schema::create('shipments', function (Blueprint $table) {
@@ -53,11 +53,11 @@ class CreateContractsTable extends Migration
 
           $table->timestamps();
 
-          $table->foreign('contract_id')->references('id')->on('contracts')->onDelete('cascade');
-          $table->foreign('supplier_id')->references('id')->on('companies')->onDelete('cascade');
-          $table->foreign('customer_id')->references('id')->on('companies')->onDelete('cascade');
-          $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
-          $table->foreign('surveyor_id')->references('id')->on('companies')->onDelete('cascade');
+          $table->foreign('contract_id')->references('id')->on('contracts')->onDelete('restrict');
+          $table->foreign('supplier_id')->references('id')->on('companies')->onDelete('restrict');
+          $table->foreign('customer_id')->references('id')->on('companies')->onDelete('restrict');
+          $table->foreign('product_id')->references('id')->on('products')->onDelete('restrict');
+          $table->foreign('surveyor_id')->references('id')->on('companies')->onDelete('restrict');
       });
 
       Schema::create('shipment_history', function (Blueprint $table) {
@@ -86,13 +86,13 @@ class CreateContractsTable extends Migration
           $table->char('status', 1);
           $table->timestamps();
 
-          $table->foreign('shipment_id')->references('id')->on('shipments')->onDelete('cascade');
-          $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-          $table->foreign('contract_id')->references('id')->on('contracts')->onDelete('cascade');
-          $table->foreign('supplier_id')->references('id')->on('companies')->onDelete('cascade');
-          $table->foreign('customer_id')->references('id')->on('companies')->onDelete('cascade');
-          $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
-          $table->foreign('surveyor_id')->references('id')->on('companies')->onDelete('cascade');
+          $table->foreign('shipment_id')->references('id')->on('shipments')->onDelete('restrict');
+          $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
+          $table->foreign('contract_id')->references('id')->on('contracts')->onDelete('restrict');
+          $table->foreign('supplier_id')->references('id')->on('companies')->onDelete('restrict');
+          $table->foreign('customer_id')->references('id')->on('companies')->onDelete('restrict');
+          $table->foreign('product_id')->references('id')->on('products')->onDelete('restrict');
+          $table->foreign('surveyor_id')->references('id')->on('companies')->onDelete('restrict');
       });
 
       Schema::create('shipment_log', function (Blueprint $table) {
@@ -105,8 +105,8 @@ class CreateContractsTable extends Migration
           $table->string('shipment_status')->nullable(); // loading , unloading , loaded , unloaded , not started
           $table->timestamps();
 
-          $table->foreign('shipment_id')->references('id')->on('shipments')->onDelete('cascade');
-          $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+          $table->foreign('shipment_id')->references('id')->on('shipments')->onDelete('restrict');
+          $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
       });
     }
 

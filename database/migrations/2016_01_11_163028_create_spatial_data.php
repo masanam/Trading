@@ -23,12 +23,14 @@ class CreateSpatialData extends Migration
             $table->char('status',1)->nullable();
             $table->timestamps();
 
-            $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('created_by')->references('id')->on('users')->onDelete('restrict');
 		});
-        
+
 		Schema::table('spatial_data', function ($table) {
 			DB::statement('ALTER TABLE spatial_data ADD COLUMN polygon geometry;');
 		});
+
+        
     }
 
     /**
@@ -41,4 +43,3 @@ class CreateSpatialData extends Migration
         Schema::dropIfExists('spatial_data');
     }
 }
-
