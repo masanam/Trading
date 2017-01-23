@@ -289,6 +289,7 @@ class CreateCompaniesTable extends Migration
         Schema::dropIfExists('products');
         Schema::dropIfExists('concessions');
         Schema::dropIfExists('contacts');
+        Schema::dropIfExists('areas');
         Schema::dropIfExists('companies');
     }
 }

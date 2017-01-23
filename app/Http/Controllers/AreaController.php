@@ -8,6 +8,7 @@ use App\Model\Concession;
 use App\Model\Factory;
 use App\Model\Product;
 use App\Model\Port;
+use App\Model\Area;
 use Auth;
 
 use Illuminate\Http\Request;
@@ -16,7 +17,7 @@ use App\Http\Requests;
 
 use App\Events\InputEditCoalpedia;
 
-class CompanyController extends Controller
+class AreaController extends Controller
 {
   public function __construct() {
     $this->middleware('jwt.auth');
@@ -28,19 +29,10 @@ class CompanyController extends Controller
   */
   public function index(Request $req)
   {
-    $companies = Company::with('user')->where('status', 'a');
+    $areas = Area::get();
 
-    if($req->q) $companies->where('company_name', 'LIKE', '%'.$req->q.'%');
-    if($req->type) {
-      if ($req->type[0] == 'c' || $req->type[0] == 's')
-        $companies->whereIn('company_type', [ $req->type[0], 't' ]);
-      
-      else $companies->where('company_type', $req->type[0]);
-    }
-    if($req->area_id) $companies->where('area_id','=',$req->area_id);
-
-    $companies = $companies->get();
-    return response()->json($companies, 200);
+    
+    return response()->json($areas, 200);
   }
 
   /**
