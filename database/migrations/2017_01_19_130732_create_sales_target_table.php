@@ -22,7 +22,7 @@ class CreateSalesTargetTable extends Migration
             $table->char('status', 1);
             $table->timestamps();
 
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('restrict');
         });
     }
 
