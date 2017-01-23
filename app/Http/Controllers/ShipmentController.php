@@ -45,14 +45,11 @@ class ShipmentController extends Controller
       $range = [];
       $shipments = Shipment::with('contracts', 'contracts.orders', 'contracts.orders.sells', 'suppliers', 'customers', 'surveyors', 'products')->where('status', 'a');
 
-      if($req->area_id){
-        $shipments = $shipments->whereHas('suppliers', function($q) use ($req) {
-          $q->whereRaw('area_id = '.$req->area_id);
-        });
-      } 
-      if($req->company_id){
-        $shipments = $shipments->whereRaw('supplier_id = "'.$req->company_id.'"');
-      }
+      $limit = $req->pageSize ? $req->pageSize : 3;
+      $skip = ( $req->pageSize * $req->page ) ? ( $req->pageSize * $req->page ) : 0;
+
+      if($req->area_id) $shipments = $shipments->whereHas('suppliers', function($q) use ($req) { $q->whereRaw('area_id = '.$req->area_id); });
+      if($req->company_id) $shipments = $shipments->whereRaw('supplier_id = "'.$req->company_id.'"');
 
       if($req->q){
         $param = $req->q;
@@ -89,7 +86,8 @@ class ShipmentController extends Controller
 
       }      
 
-      $shipments = $shipments->get();
+      // $shipments = $shipments->orderBy('laycan_start')->get();
+      $shipments = $shipments->orderBy('laycan_start')->skip($skip)->take($limit)->get();
 
       return response()->json($shipments, 200);
     }
