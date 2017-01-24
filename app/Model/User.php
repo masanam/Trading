@@ -112,7 +112,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     public function roles(){
-        return $this->belongsToMany(Role::class, 'user_role', 'role_id', 'user_id');
+        return $this->belongsToMany(Role::class, 'user_role', 'user_id', 'role_id');
     }
 
     public function isAdmin() {
