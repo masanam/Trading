@@ -254,9 +254,6 @@ class CreateCompaniesTable extends Migration
             $table->boolean('is_farming_zone')->nullable();
             $table->boolean('is_sinarmas_forestry')->nullable();
 
-            //for overlay
-            // $table->integer('spatial_data_id')->unsigned()->nullable();
-
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('restrict');
             $table->foreign('created_by')->references('id')->on('users')->onDelete('restrict');
             $table->foreign('checked_by')->references('id')->on('users')->onDelete('restrict');
