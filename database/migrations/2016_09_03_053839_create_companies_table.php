@@ -10,7 +10,7 @@ class CreateCompaniesTable extends Migration
      * @return void
      */
     public function up()
-    {   
+    {
         Schema::create('areas', function (Blueprint $table){
             $table->increments('id');
             $table->string('description')->nullable();
@@ -20,12 +20,12 @@ class CreateCompaniesTable extends Migration
         Schema::create('companies', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
-            $table->integer('area_id')->unsigned();
+            $table->integer('area_id')->nullable();
             $table->string('company_name');
             $table->boolean('is_affiliated');
             $table->string('phone');
             $table->string('email');
-            $table->string('web')->nullable();;
+            $table->string('web')->nullable();
             $table->string('address');
             $table->string('city');
             $table->string('country');
@@ -40,9 +40,8 @@ class CreateCompaniesTable extends Migration
             $table->text('description');
             $table->char('company_type', 1); // b = buyer, s = seller, t = trader, v = vendor
             $table->char('status', 1); // A = Active , X = Deleted
-            $table->timestamps();            
+            $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
-            $table->foreign('area_id')->references('id')->on('areas')->onDelete('restrict');
         });
 
         Schema::create('contacts', function (Blueprint $table) {
@@ -52,7 +51,7 @@ class CreateCompaniesTable extends Migration
             $table->string('name');
             $table->string('phone');
             $table->string('email');
-            
+
             $table->char('status', 1);
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
@@ -76,7 +75,7 @@ class CreateCompaniesTable extends Migration
             $table->integer('remaining_volume')->nullable();
             $table->integer('annual_production')->nullable();
             $table->string('hauling_road_name')->nullable(); //nama jalanannya
-            $table->integer('stockpile_capacity')->nullable(); //kapasitas 
+            $table->integer('stockpile_capacity')->nullable(); //kapasitas
             $table->integer('stockpile_coverage')->nullable();
             $table->integer('stockpile_distance')->nullable();
             $table->integer('port_id')->nullable();
@@ -91,7 +90,7 @@ class CreateCompaniesTable extends Migration
         Schema::table('concessions', function ($table) {
             DB::statement('ALTER TABLE concessions ADD COLUMN polygon geometry;');
         });
-        
+
         Schema::create('products', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('company_id')->unsigned();
@@ -148,8 +147,8 @@ class CreateCompaniesTable extends Migration
             $table->timestamps();
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('restrict');
         });
-        
-        
+
+
         /*
          * kamal 2017-01-12 16:50
          * added atribut river
@@ -163,7 +162,7 @@ class CreateCompaniesTable extends Migration
             $table->integer('size')->unsigned();
             $table->string('river')->nullable();
             $table->integer('river_capacity')->nullable();
-            $table->integer('open_sea_distance')->nullable(); // 
+            $table->integer('open_sea_distance')->nullable(); //
             $table->decimal('latitude', 10, 8);
             $table->decimal('longitude', 11, 8);
             $table->integer('anchorage_distance')->nullable();
@@ -173,15 +172,16 @@ class CreateCompaniesTable extends Migration
             $table->integer('draft_height')->unsigned();
             $table->integer('daily_discharge_rate')->unsigned()->nullable();
             $table->char('status', 1)->nullable();
-            
+
             $table->timestamps();
         });
         Schema::create('company_port', function (Blueprint $table) {
             $table->integer('port_id')->unsigned();
             $table->integer('company_id')->unsigned();
-            
+
             $table->foreign('port_id')->references('id')->on('ports')->onDelete('restrict');
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('restrict');
+
             $table->primary(array('port_id', 'company_id'));
         });
         /*
@@ -209,14 +209,14 @@ class CreateCompaniesTable extends Migration
             $table->string('type')->nullable();
             $table->date('expired')->nullable();
             $table->integer('total_area')->nullable();
-            $table->boolean('overlap_other')->nullable(); 
+            $table->boolean('overlap_other')->nullable();
             $table->string('overlap_other_desc')->nullable();
             $table->boolean('release_after')->nullable();
             $table->string('release_after_desc')->nullable();
             $table->boolean('already_production')->nullable();
             $table->string('already_production_desc')->nullable();
             $table->string('restricted_area')->nullable();
-            $table->text('description')->nullable(); 
+            $table->text('description')->nullable();
             $table->boolean('overlap_smg')->nullable();
             $table->string('overlap_smg_desc')->nullable();
             $table->boolean('produce_kp')->nullable();
@@ -265,12 +265,15 @@ class CreateCompaniesTable extends Migration
         Schema::table('mining_licenses', function ($table) {
             DB::statement('ALTER TABLE mining_licenses ADD COLUMN polygon geometry;');
         });
+        Schema::table('mining_licenses', function ($table) {
+            $table->foreign('spatial_data_id')->references('id')->on('spatial_data')->onDelete('restrict');
+        });
         Schema::create('mining_license_files', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('mining_license_id')->unsigned()->nullable();
             $table->string('url')->nullable();
             $table->integer('upload_by')->unsigned()->nullable(); //ini foreign key ke user, again, integer unsigned reference
-            $table->timestamps(); 
+            $table->timestamps();
 
             $table->foreign('mining_license_id')->references('id')->on('mining_licenses')->onDelete('restrict');
             $table->foreign('upload_by')->references('id')->on('users')->onDelete('restrict');

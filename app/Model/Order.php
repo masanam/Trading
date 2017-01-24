@@ -7,14 +7,14 @@ use Illuminate\Support\Facades\DB;
 use App\Model\Lead;
 use App\Model\User;
 
-use Mpociot\Firebase\SyncsWithFirebase;
+// use Mpociot\Firebase\SyncsWithFirebase;
 
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ApprovalRequest;
 
 class Order extends Model
 {
-  use SyncsWithFirebase;
+  // use SyncsWithFirebase;
   protected $table = 'orders';
 
   public function getCreatedAtAttribute($value)
