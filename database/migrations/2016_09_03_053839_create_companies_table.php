@@ -14,6 +14,7 @@ class CreateCompaniesTable extends Migration
         Schema::create('areas', function (Blueprint $table){
             $table->increments('id');
             $table->string('description')->nullable();
+            $table->string('status')->nullable();
         });
 
         Schema::create('companies', function (Blueprint $table) {
@@ -253,9 +254,6 @@ class CreateCompaniesTable extends Migration
             $table->boolean('is_farming_zone')->nullable();
             $table->boolean('is_sinarmas_forestry')->nullable();
 
-            //for overlay
-            $table->integer('spatial_data_id')->unsigned()->nullable();
-
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('restrict');
             $table->foreign('created_by')->references('id')->on('users')->onDelete('restrict');
             $table->foreign('checked_by')->references('id')->on('users')->onDelete('restrict');
@@ -263,9 +261,6 @@ class CreateCompaniesTable extends Migration
         });
         Schema::table('mining_licenses', function ($table) {
             DB::statement('ALTER TABLE mining_licenses ADD COLUMN polygon geometry;');
-        });
-        Schema::table('mining_licenses', function ($table) {
-            $table->foreign('spatial_data_id')->references('id')->on('spatial_data')->onDelete('restrict');
         });
         Schema::create('mining_license_files', function (Blueprint $table) {
             $table->increments('id');
@@ -278,6 +273,13 @@ class CreateCompaniesTable extends Migration
             $table->foreign('upload_by')->references('id')->on('users')->onDelete('restrict');
         });
 
+        Schema::create('mining_license_spatial_data', function (Blueprint $table){
+            $table->integer('mining_license_id');
+            $table->integer('spatial_data_id');
+
+            $table->unique(['mining_license_id', 'spatial_data_id'],'overlay_unique');
+        });
+
     }
     /**
      * Reverse the migrations.
@@ -286,6 +288,7 @@ class CreateCompaniesTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('mining_license_spatial_data');
         Schema::dropIfExists('mining_license_files');
         Schema::dropIfExists('mining_licenses');
         Schema::dropIfExists('concession_files');
