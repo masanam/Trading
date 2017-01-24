@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Model\Contract;
 use App\Model\Order;
+use App\Model\Shipment;
 
 use Illuminate\Http\Request;
 
@@ -17,18 +18,56 @@ class ContractController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $req)
-    {
-      $contracts = Contract::with('shipments', 'orders', 'orders.sells', 'orders.sells.company', 'orders.sells.product')->where('status', 'a');
-      if($req->unscheduled) {
-        $contracts = $contracts->has('shipments', '<' , 1);
-      }
 
-      $contracts = $contracts->get();
 
-      return response()->json($contracts, 200);
-    }
+     public function index(Request $req)
+     {
+       $range = [];
+       $contracts = Contract::with('shipments', 'orders', 'orders.sells', 'orders.sells.company', 'orders.sells.product')->where('status', 'a');
 
+       $limit = $req->pageSize ? $req->pageSize : 3;
+       $skip = ( $req->pageSize * $req->page ) ? ( $req->pageSize * $req->page ) : 0;
+
+       if($req->area_id)
+       {
+         $contracts = $contracts->whereHas('orders.sells.company', function($q) use ($req)
+         {
+           $q->whereRaw('area_id = '.$req->area_id);
+         });
+       }
+
+       if($req->company_id)
+       {
+         $contracts = $contracts->whereHas('orders.sells.company',function($q) use ($req)
+         {
+           $q->whereRaw('company_id  = '.$req->company_id);
+         });
+       }
+
+       if($req->q)
+       {
+         $param = $req->q;
+         $contracts = $contracts->where(function($query) use ($param)
+         {
+          $query->orWhereHas('orders.sells.company',function($q) use ($param)
+          {
+           $q->where('company_name','LIKE','%'.$param.'%');
+          })
+          ->orWhere('contract_no', 'LIKE', '%'.$param.'%')
+          ->orWhere('date_from','LIKE','%'.$param.'%')
+          ->orWhere('date_to','LIKE','%'.$param.'%');
+         });
+
+       }
+
+       $contracts = $contracts->orderBy('contract_no')->skip($skip)->take($limit)->get();
+
+       return response()->json($contracts, 200);
+
+      //  $contracts = $contracts->get();
+       //
+      //  return response()->json($contracts, 200);
+     }
     /**
      * Store a newly created resource in storage.
      *

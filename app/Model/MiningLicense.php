@@ -59,7 +59,9 @@ class MiningLicense extends Model {
         'is_settlement_zone',
         'is_palm_plantation',
         'is_farming_zone',
-        'is_sinarmas_forestry'
+        'is_sinarmas_forestry',
+
+        'spatial_data_id'
     ];
 
     public function Company() {
