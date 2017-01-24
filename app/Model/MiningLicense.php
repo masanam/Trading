@@ -81,8 +81,4 @@ class MiningLicense extends Model {
         return $this->belongsTo('App\Model\User','checked_by','id');
     }
 
-    public function overlay() {
-        return $this->belongsTo('App\Model\SpatialData','spatial_data_id','id')->select('*', DB::raw('ST_AsGeoJSON(polygon, 8) AS polygon'));
-    }
-
 }
