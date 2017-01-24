@@ -18,7 +18,7 @@ class Contact extends Model
 
     protected $fillable = ['name', 'phone', 'email'];
 
-    public function getCreatedAtAttribute($value)
+    /*public function getCreatedAtAttribute($value)
     {
         return date('d-m-Y', strtotime($value));
     }
@@ -26,7 +26,7 @@ class Contact extends Model
     public function getUpdatedAtAttribute($value)
     {
         return date('d-m-Y', strtotime($value));
-    }
+    }*/
 
     public function user() {
     	return $this->belongsTo('User');

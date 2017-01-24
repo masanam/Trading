@@ -8,7 +8,7 @@ class Index extends Model
 {
     protected $table = "index";
 
-    public function getCreatedAtAttribute($value)
+    /*public function getCreatedAtAttribute($value)
     {
         return date('d-m-Y', strtotime($value));
     }
@@ -16,5 +16,5 @@ class Index extends Model
     public function getUpdatedAtAttribute($value)
     {
         return date('d-m-Y', strtotime($value));
-    }
+    }*/
 }
