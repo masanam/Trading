@@ -18,22 +18,26 @@ class CompaniesTableSeeder extends Seeder
   {
     Area::create([
       'id' => 1,
-      'description' => 'Area 1'
+      'description' => 'Area 1',
+      'status' => 'a'
     ]);
 
     Area::create([
       'id' => 2,
-      'description' => 'Area 2'
+      'description' => 'Area 2',
+      'status' => 'a'
     ]);
 
     Area::create([
       'id' => 3,
-      'description' => 'Area 3'
+      'description' => 'Area 3',
+      'status' => 'a'
     ]);
 
     Area::create([
       'id' => 4,
-      'description' => 'Area 4'
+      'description' => 'Area 4',
+      'status' => 'a'
     ]);
 
     Company::create([
