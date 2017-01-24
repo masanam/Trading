@@ -21,8 +21,6 @@ angular.module('coalpedia').controller('CompanyController', ['$scope', '$statePa
         $scope.companyId = $stateParams.id;
       }
 
-      console.log($scope.companyId);
-
       $scope.company = Company.get({ id: $scope.companyId });
     };
 
@@ -57,7 +55,8 @@ angular.module('coalpedia').controller('CompanyController', ['$scope', '$statePa
         controller: 'CompanyModalController',
         windowClass: 'xl-modal',
         resolve: {
-          company: Company.get({ id: $scope.company.id })
+          company: Company.get({ id: $scope.company.id }),
+          companyType: function (){ return $scope.companyType; }
         }
       });
 
