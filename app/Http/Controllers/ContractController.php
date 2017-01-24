@@ -28,15 +28,18 @@ class ContractController extends Controller
        $limit = $req->pageSize ? $req->pageSize : 3;
        $skip = ( $req->pageSize * $req->page ) ? ( $req->pageSize * $req->page ) : 0;
 
-       if($req->area_id){
-         $contracts = $contracts->whereHas('orders.sells.company', function($q) use ($req) {
+       if($req->area_id)
+       {
+         $contracts = $contracts->whereHas('orders.sells.company', function($q) use ($req)
+         {
            $q->whereRaw('area_id = '.$req->area_id);
-
          });
        }
 
-       if($req->company_id){
-         $contracts = $contracts->whereHas('orders.sells.company',function($q) use ($req) {
+       if($req->company_id)
+       {
+         $contracts = $contracts->whereHas('orders.sells.company',function($q) use ($req)
+         {
            $q->whereRaw('company_id  = '.$req->company_id);
          });
        }
@@ -46,7 +49,6 @@ class ContractController extends Controller
          $param = $req->q;
          $contracts = $contracts->where(function($query) use ($param)
          {
-          // $query->orWhereHas('orders.sells.company',function($q) use ($param)
           $query->orWhereHas('orders.sells.company',function($q) use ($param)
           {
            $q->where('company_name','LIKE','%'.$param.'%');
@@ -57,64 +59,15 @@ class ContractController extends Controller
          });
 
        }
-       //
-      //  if($req->q)
-      //  {
-      //    $param = $req->q;
-      //    $shipments = $shipments->where(function($query) use ($param)
-      //    {
-      //      return $query->whereHas('contracts', function($q) use ($param)
-      //      {
-      //        $q->whereRaw('`contract_no` LIKE "%'.$param.'%"');
-      //      })
-      //      ->orWhereHas('suppliers', function($q) use ($param)
-      //      {
-      //        $q->whereRaw('`company_name` LIKE "%'.$param.'%"');
-      //      })
-      //      ->orWhereRaw('laycan_start LIKE "%'.$param.'%"')
-      //      ->orWhereRaw('laycan_start LIKE "%'.$param.'%"')
-      //      ->orWhereRaw('shipment_no LIKE "%'.$param.'%"');
-      //    });
-      //  }
 
-
-      //  if($req->scheduled) {
-      //    if($req->range) {
-      //      $range = explode(',', $req->range);
-      //      $from = explode('-', $range[0]);
-      //      $till = explode('-', $range[1]);
-      //      $monthFrom = $from[0]; $yearFrom = $from[1];
-      //      $monthTill = $till[0]; $yearTill = $till[1];
-      //      $fromDate = new Carbon('first day of ' . $monthFrom . ' ' . $yearFrom);
-      //      $tillDate = new Carbon('last day of ' . $monthTill . ' ' . $yearTill);
-      //      $shipments = $shipments->whereBetween(DB::raw('date(laycan_start)'), [$fromDate, $tillDate])
-      //        ->orWhereBetween(DB::raw('date(laycan_end)'), [$fromDate, $tillDate]);
-      //    }
-      //    else
-      //      $shipments = $shipments
-      //        ->where( DB::raw('MONTH(laycan_start)'), '=', date('n') )
-      //        ->orWhere( DB::raw('MONTH(laycan_end)'), '=', date('n') );
-       //
-       //
-      //  }
-
-       $contracts = $contracts->get();
+       $contracts = $contracts->orderBy('contract_no')->skip($skip)->take($limit)->get();
 
        return response()->json($contracts, 200);
+
+      //  $contracts = $contracts->get();
+       //
+      //  return response()->json($contracts, 200);
      }
-
-    // public function index(Request $req)
-    // {
-    //   $contracts = Contract::with('shipments', 'orders', 'orders.sells', 'orders.sells.company', 'orders.sells.product')->where('status', 'a');
-    //   if($req->unscheduled) {
-    //     $contracts = $contracts->has('shipments', '<' , 1);
-    //   }
-    //
-    //   $contracts = $contracts->get();
-    //
-    //   return response()->json($contracts, 200);
-    // }
-
     /**
      * Store a newly created resource in storage.
      *
