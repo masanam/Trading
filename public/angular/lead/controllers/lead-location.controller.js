@@ -4,22 +4,24 @@ angular.module('lead').controller('LeadLocationController', ['$scope', '$statePa
   function ($scope, $stateParams, $uibModal, Environment, Concession, Factory, Lead) {
     $scope.destinationBy = Environment.destinationBy;
 
+    $scope.lead = Lead.get({ id:$stateParams.id });
+
     //Init select ports
     $scope.find = function(keyword) {
       if ($scope.lead.lead_type === 'b'){
         Concession.query({ q: keyword }, function(res){
           if(res.length > 0) $scope.locations = res;
-        }); 
+        });
       } else {
         Factory.query({ q: keyword }, function(res){
           if(res.length > 0) $scope.locations = res;
-        }); 
+        });
       }
     };
 
     $scope.add = function () {
       var modalInstance;
-      
+
       if ($scope.lead.lead_type === 'b')
         modalInstance = $uibModal.open({
           animation: true,
@@ -30,7 +32,7 @@ angular.module('lead').controller('LeadLocationController', ['$scope', '$statePa
           windowClass: 'xl-modal',
           resolve: {
             concession: new Concession(),
-            company: $scope.company,
+            company: $scope.lead.company,
             createNew: true
           }
         });
@@ -44,13 +46,14 @@ angular.module('lead').controller('LeadLocationController', ['$scope', '$statePa
           windowClass: 'xl-modal',
           resolve: {
             factory: new Factory(),
-            company: $scope.company,
+            company: $scope.lead.company,
             createNew: true
           }
         });
 
 
       modalInstance.result.then(function (res) {
+        $scope.locations.push(res);
         $scope.selected.location = res;
       });
     };

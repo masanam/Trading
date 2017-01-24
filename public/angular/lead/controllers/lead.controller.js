@@ -7,6 +7,8 @@ angular.module('lead').controller('LeadController', ['$scope', '$state', '$state
     $scope.showBuy = Environment.showBuy;
     $scope.selected = {};
 
+    $scope.lead = Lead.get({ id:$stateParams.id });
+
     $scope.findOne = function(id){
       if(!id) id = $stateParams.id;
       Lead.get({ id: id }, function(res){
@@ -91,6 +93,8 @@ angular.module('lead').controller('LeadController', ['$scope', '$state', '$state
 
     $scope.update = function () {
       var next;
+
+      console.log($scope.lead);
 
       if($state.current.name === 'lead.update') next = 'lead.location';
       else if($state.current.name === 'lead.location'){

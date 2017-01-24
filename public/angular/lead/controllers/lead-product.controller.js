@@ -2,6 +2,9 @@
 
 angular.module('lead').controller('LeadProductController', ['$scope', '$stateParams', '$uibModal', 'Product', 'Lead',
   function ($scope, $stateParams, $uibModal, Product, Lead) {
+
+    //$scope.lead = Lead.get({ id:$stateParams.id });
+
     //Init select products
     $scope.find = function(keyword) {
       Product.query({ q: keyword }, function(res){
@@ -25,7 +28,11 @@ angular.module('lead').controller('LeadProductController', ['$scope', '$statePar
       });
 
       modalInstance.result.then(function (res) {
-        $scope.lead.product_id = res.id;
+        $scope.products.push(res);
+        $scope.selected.product = res;
+        $scope.select(res);
+
+        /*$scope.lead.product_id = res.id;
         $scope.lead.product_name = res.product_name;
         $scope.lead.typical_quality = res.typical_quality;
 
@@ -54,7 +61,7 @@ angular.module('lead').controller('LeadProductController', ['$scope', '$statePar
         $scope.lead.fe2o3_min = res.fe2o3_min;
         $scope.lead.fe2o3_max = res.fe2o3_max;
         $scope.lead.aft_min = res.aft_min;
-        $scope.lead.aft_max = res.aft_max;
+        $scope.lead.aft_max = res.aft_max;*/
       });
     };
 

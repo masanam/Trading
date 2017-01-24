@@ -2,6 +2,9 @@
 
 angular.module('lead').controller('LeadPortController', ['$scope', '$stateParams', '$uibModal', 'Port', 'Lead',
   function ($scope, $stateParams, $uibModal, Port, Lead) {
+
+    $scope.lead = Lead.get({ id:$stateParams.id });
+
     //Init select ports
     $scope.find = function(keyword) {
       Port.query({ q: keyword }, function(res){
@@ -25,6 +28,7 @@ angular.module('lead').controller('LeadPortController', ['$scope', '$stateParams
       });
 
       modalInstance.result.then(function (res) {
+        $scope.ports.push(res);
         $scope.selected.port = res;
       });
     };

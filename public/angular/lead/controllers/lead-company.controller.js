@@ -2,6 +2,9 @@
 
 angular.module('lead').controller('LeadCompanyController', ['$scope', '$stateParams', '$uibModal', 'Company', 'Lead',
   function ($scope, $stateParams, $uibModal, Company, Lead) {
+
+    $scope.lead = Lead.get({ id:$stateParams.id });
+
     //Init select companies
     $scope.find = function(keyword, type) {
       if(!type){
