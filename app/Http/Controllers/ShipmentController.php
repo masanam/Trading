@@ -45,7 +45,7 @@ class ShipmentController extends Controller
       $range = [];
       $shipments = Shipment::with('contracts', 'contracts.orders', 'contracts.orders.sells', 'suppliers', 'customers', 'surveyors', 'products')->where('status', 'a');
 
-      $limit = $req->pageSize ? $req->pageSize : 3;
+      $limit = $req->pageSize ? $req->pageSize : 10;
       $skip = ( $req->pageSize * $req->page ) ? ( $req->pageSize * $req->page ) : 0;
 
       if($req->area_id) $shipments = $shipments->whereHas('suppliers', function($q) use ($req) { $q->whereRaw('area_id = '.$req->area_id); });

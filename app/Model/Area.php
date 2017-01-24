@@ -12,6 +12,7 @@ class Area extends Model
 
   protected $fillable = [
     'description',
+    'status',
   ];
 
   public $timestamps = false;
