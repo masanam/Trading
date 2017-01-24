@@ -29,8 +29,12 @@ class AreaController extends Controller
   */
   public function index(Request $req)
   {
-    $areas = Area::where('status', 'a')->get();
-
+    $areas = Area::where('status', 'a');
+    if($req->q){
+      $param = $req->q;  
+      $areas = $areas->where('description','LIKE','%'.$param.'%');
+    }
+    $areas = $areas->get();
     
     return response()->json($areas, 200);
   }
