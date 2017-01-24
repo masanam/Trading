@@ -90,11 +90,11 @@ class Lead extends Model
         'payment_term_detail',
         'commercial_term',
         'penalty',
-        
+
         'progress_status',
     ];
 
-    public function getCreatedAtAttribute($value)
+    /*public function getCreatedAtAttribute($value)
     {
         return date('d-m-Y', strtotime($value));
     }
@@ -102,7 +102,7 @@ class Lead extends Model
     public function getUpdatedAtAttribute($value)
     {
         return date('d-m-Y', strtotime($value));
-    }
+    }*/
 
     public function Company() {
     	return $this->belongsTo('App\Model\Company');
@@ -162,7 +162,7 @@ class Lead extends Model
 
         if($this->volume >= $volume) $this->order_status = 's';
         else $this->order_status = 'p';
-        
+
         $this->save();
     }
 

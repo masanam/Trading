@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Role extends Model {
 	protected $table = 'roles';
 
-    public function getCreatedAtAttribute($value)
+    /*public function getCreatedAtAttribute($value)
     {
         return date('d-m-Y', strtotime($value));
     }
@@ -15,6 +15,6 @@ class Role extends Model {
     public function getUpdatedAtAttribute($value)
     {
         return date('d-m-Y', strtotime($value));
-    }
+    }*/
 
 }

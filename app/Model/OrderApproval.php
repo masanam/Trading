@@ -19,7 +19,7 @@ class OrderApproval extends Model
       return $value;
     }
 
-    public function getCreatedAtAttribute($value)
+    /*public function getCreatedAtAttribute($value)
     {
         return date('d-m-Y', strtotime($value));
     }
@@ -27,5 +27,5 @@ class OrderApproval extends Model
     public function getUpdatedAtAttribute($value)
     {
         return date('d-m-Y', strtotime($value));
-    }
+    }*/
 }
