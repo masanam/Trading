@@ -41,7 +41,6 @@ class CreateCompaniesTable extends Migration
             $table->char('status', 1); // A = Active , X = Deleted
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
-            //$table->foreign('area_id')->references('id')->on('areas')->onDelete('restrict');
         });
 
         Schema::create('contacts', function (Blueprint $table) {
@@ -179,13 +178,9 @@ class CreateCompaniesTable extends Migration
             $table->integer('port_id')->unsigned();
             $table->integer('company_id')->unsigned();
 
-<<<<<<< HEAD
-            $table->foreign('port_id')->references('id')->on('ports')->onDelete('cascade');
-            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
-=======
             $table->foreign('port_id')->references('id')->on('ports')->onDelete('restrict');
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('restrict');
->>>>>>> 0991c11db687935e5c1d444ee6415ff4d60d91f8
+
             $table->primary(array('port_id', 'company_id'));
         });
         /*

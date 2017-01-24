@@ -18,8 +18,6 @@ angular.module('coalpedia').factory('Company', ['$resource',
   }
 ]);
 
-'use strict';
-
 angular.module('coalpedia').factory('Area', ['$resource',
   function ($resource) {
     return $resource('api/area/:id/:option', {
