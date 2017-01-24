@@ -76,9 +76,12 @@ class MiningLicense extends Model {
         return $this->belongsTo('App\Model\Concession')->select('*', DB::raw('ST_AsGeoJSON(polygon, 8) AS polygon'));
     }
 
-
     public function checked_by() {
         return $this->belongsTo('App\Model\User','checked_by','id');
+    }
+
+    public function spatial_data(){
+        return $this->belongsToMany(SpatialData::class, 'mining_license_spatial_data', 'mining_license_id', 'spatial_data_id')->select('*', DB::raw('ST_AsGeoJSON(polygon, 8) AS polygon'));
     }
 
 }
