@@ -29,8 +29,12 @@ class AreaController extends Controller
   */
   public function index(Request $req)
   {
-    $areas = Area::get();
-
+    $areas = Area::where('status', 'a');
+    if($req->q){
+      $param = $req->q;  
+      $areas = $areas->where('description','LIKE','%'.$param.'%');
+    }
+    $areas = $areas->get();
     
     return response()->json($areas, 200);
   }
@@ -43,15 +47,9 @@ class AreaController extends Controller
   */
   public function show($id)
   {
-    $company = Company::with(['contacts','products','factories','ports','user',
-      'concessions' => function ($query) {
-        $query->select('id','concession_name','company_id','owner','reserves','city','country');
-      },'concessions.port'])->find($id);
-
-    if($company->status != 'a')
-      return response()->json(['message' => 'deactivated record'], 404);
+    $area = Area::where('status', 'a')->find($id);    
     
-    return response()->json($company, 200);
+    return response()->json($area, 200);
   }
 
   /**
@@ -68,14 +66,11 @@ class AreaController extends Controller
       ], 400);
     }
 
-    $company = new Company($req->all());
-    $company->user_id = Auth::user()->id;
-    $company->status = 'a';
-    $company->save();
+    $area = new Area($req->all());    
+    $area->status = 'a';
+    $area->save();
 
-    event(new InputEditCoalpedia(Auth::user(), $company->id, 'companies', 'create'));
-
-    return response()->json($company, 200);
+    return response()->json($area, 200);
   }
 
   /**
@@ -86,15 +81,15 @@ class AreaController extends Controller
   * @return \Illuminate\Http\Response
   */
   public function update(Request $req, $id)
-  {
-    $company = Company::find($id);
+  { 
+    $area = Area::find($id);
 
     if (!$req) return response()->json([ 'message' => 'Bad Request' ], 400);
-    if (!$company) return response()->json([ 'message' => 'Not found' ] ,404);
+    if (!$area) return response()->json([ 'message' => 'Not found' ] ,404);
 
-    $company->fill($req->all())->save();
+    $area->fill($req->all())->save();
 
-    event(new InputEditCoalpedia(Auth::user(), $company->id, 'companies', 'update'));
+    event(new InputEditCoalpedia(Auth::user(), $area->id, 'areas', 'update'));
     return $this->show($id);
   }
 
@@ -106,111 +101,13 @@ class AreaController extends Controller
   */
   public function destroy($id)
   {
-    $company = Company::find($id);
+    $area = Area::find($id);
 
-    if (!$company) return response()->json([ 'message' => 'Not found' ] ,404);
+    if (!$area) return response()->json([ 'message' => 'Not found' ] ,404);
 
-    $company->status = 'x';
-    $company->save();
+    $area->status = 'x';
+    $area->save();
 
-    return response()->json($company, 200);
-  }
-
-  /**
-  * Attach specified resource to a company
-  *
-  * @param  int  $id
-  * @param  int  $contact_id; $concession_id; $product_id; $factory_id; $port_id
-  * @return \Illuminate\Http\Response
-  */
-  public function attach(Request $req, $id)
-  {
-    if($req->contact_id){
-      $items['contact'] = Contact::find($req->contact_id);
-      
-      if($items['contact']->company_id == $id){
-        $items['contact']->status = 'a';  
-      } else {
-        $items['contact'] = $items['contact']->replicate();  
-        $items['contact']->company_id = $id;
-      }
-      
-      $items['contact']->save();
-    }
-
-    if($req->concession_id){
-      $items['concession'] = Concession::find($req->concession_id);
-      $items['concession']->status = 'a';
-      $items['concession']->company_id = $id;
-      $items['concession']->save();
-    }
-
-    if($req->product_id){
-      $items['product'] = Product::find($req->product_id);
-      
-      if($items['product']->company_id == $id){
-        $items['product']->status = 'a';  
-      } else {
-        $items['product'] = $items['product']->replicate();  
-        $items['product']->company_id = $id;
-      }
-      
-      $items['product']->save();
-    }
-
-    if($req->factory_id){
-      $items['factory'] = Factory::find($req->factory_id);
-      $items['factory']->status = 'a';
-      $items['factory']->company_id = $id;
-      $items['factory']->save();
-    }
-
-    if($req->port_id){
-      $items['port'] = Port::find($req->port_id);
-      $items['port']->companies()->attach($id);
-    }
-
-    return response()->json($items, 200);
-  }
-
-  /**
-  * Detach specified resource from a company
-  *
-  * @param  int  $id
-  * @param  int  $contact_id; $concession_id; $product_id; $factory_id; $port_id
-  * @return \Illuminate\Http\Response
-  */
-  public function detach(Request $req, $id)
-  {
-    if($req->contact_id){
-      $items['contact'] = Contact::find($req->contact_id);
-      $items['contact']->status = 'x';
-      $items['contact']->save();
-    }
-
-    if($req->concession_id){
-      $items['concession'] = Concession::find($req->concession_id);
-      $items['concession']->status = 'x';
-      $items['concession']->save();
-    }
-
-    if($req->product_id){
-      $items['product'] = Product::find($req->product_id);
-      $items['product']->status = 'x';
-      $items['product']->save();
-    }
-
-    if($req->factory_id){
-      $items['factory'] = Factory::find($req->factory_id);
-      $items['factory']->status = 'x';
-      $items['factory']->save();
-    }
-
-    if($req->port_id){
-      $items['port'] = Port::find($req->port_id);
-      $items['port']->companies()->detach($id);
-    }
-
-    return response()->json($items, 200);
+    return response()->json($area, 200);
   }
 }

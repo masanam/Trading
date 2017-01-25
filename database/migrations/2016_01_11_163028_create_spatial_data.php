@@ -17,6 +17,9 @@ class CreateSpatialData extends Migration
 			$table->increments('id');
             $table->string('name')->nullable();
 			$table->string('restricted_area')->nullable();
+            $table->string('island')->nullable();
+            $table->string('province')->nullable();
+            $table->string('city')->nullable();
 			$table->string('type')->nullable();
 			$table->string('desc')->nullable();
             $table->integer('created_by')->unsigned()->nullable();
