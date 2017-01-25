@@ -22,6 +22,7 @@ class CreateCompaniesTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->integer('area_id')->nullable();
             $table->string('company_name');
+            $table->string('company_no');
             $table->boolean('is_affiliated');
             $table->string('phone');
             $table->string('email');

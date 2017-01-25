@@ -45,6 +45,7 @@ class CompaniesTableSeeder extends Seeder
       'user_id' => '2' ,
       'area_id' =>  1,
       'company_name' => 'PT.Wilmar Nabati Indonesia' ,
+      'company_no' => '#17/036-Add 05' ,
       'is_affiliated'=>'1',
       'phone' => '(031) 3979414' ,
       'email' => 'info@wilmar-international.com' ,
@@ -66,6 +67,7 @@ class CompaniesTableSeeder extends Seeder
       'user_id' => '1' ,
       'area_id' =>  1,
       'company_name' => 'PT.SMART' ,
+      'company_no' => '#19/037-Add 05' ,
       'country'=> 'ID',
       'is_affiliated'=>'1',
       'phone' => '(031) 3979414' ,
@@ -87,6 +89,7 @@ class CompaniesTableSeeder extends Seeder
       'user_id' => 1,
       'area_id' =>  1,
       'company_name' => 'PT Mitra Bahari Sentosa',
+      'company_no' => '#27/046-Add 05' ,
       'country'=> 'ID',
       'is_affiliated'=> 0,
       'phone' => '+62712314',
@@ -105,6 +108,7 @@ class CompaniesTableSeeder extends Seeder
     Company::create([
       'id'=>4,
       'company_name' => 'Indexim',
+      'company_no' => '#26/045-Add 05' ,
       'user_id' => '1',
       'area_id' =>  2,
       'phone' => '',
@@ -128,6 +132,7 @@ class CompaniesTableSeeder extends Seeder
     Company::create([
       'id'=>5,
       'company_name' => 'Berau Coal, PT',
+      'company_no' => '#37/036-Add 05' ,
       'user_id' => '1',
       'area_id' =>  2,
       'phone' => '021 29669700',
@@ -151,6 +156,7 @@ class CompaniesTableSeeder extends Seeder
     Company::create([                
       'id'=>6,
       'company_name' => 'PT Borneo Indobara',
+      'company_no' => '#33/032-Add 05' ,
       'user_id' => '3',
       'area_id' =>  2,
       'is_affiliated'=>'1',
@@ -173,6 +179,7 @@ class CompaniesTableSeeder extends Seeder
     Company::create([
       'id'=>7,
       'company_name' => 'Tiger Energy',
+      'company_no' => '#07/030-Add 05' ,
       'user_id' => '1',
       'area_id' =>  2,
       'phone' => '',
@@ -219,6 +226,7 @@ class CompaniesTableSeeder extends Seeder
     Company::create([
       'id'=>9,
       'company_name' => 'Bukit Baiduri Energi',
+      'company_no' => '#10/010-Add 05' ,
       'user_id' => '2',
       'area_id' =>  2,
       'phone' => '',
@@ -242,6 +250,7 @@ class CompaniesTableSeeder extends Seeder
     Company::create([
       'id'=>10,
       'company_name' => 'Arutmin',
+      'company_no' => '#15/015-Add 05' ,
       'user_id' => '3',
       'area_id' =>  2,
       'phone' => '',

@@ -20,6 +20,7 @@
           <tr>
             <th st-sort="id">#</th>
             <th st-sort="company_name">Company</th>
+            <th st-sort="company_no" ng-if="companyType === 'customer'">Cust. No.</th>
             <th st-sort="phone">Phone</th>
             <th st-sort="email">Email</th>
             <th st-sort="user.name">Creator</th>
@@ -30,6 +31,7 @@
           <tr ng-repeat="(idx, company) in displayedCollection">
             <td>{{ company.id }}</td>
             <td>{{ company.company_name }}</td>
+            <td ng-if="companyType === 'customer'">{{ company.company_no }}</td>
             <td>{{ company.phone }}</td>
             <td>{{ company.email }}</td>
             <td>{{ company.user.name }}</td>
