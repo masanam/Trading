@@ -3,6 +3,11 @@
   <input name="company_name" type="text" class="form-control" id="company_name" ng-model="company.company_name" required>
 </div>
 
+<div class="form-group" ng-if="companyType === 'customer'">
+  <label for="company_no">Customer Number:</label>
+  <input name="company_no" type="text" class="form-control" id="company_no" ng-model="company.company_no" required>
+</div>
+
 <div class="form-group" ng-if="companyType === 'Customer'">
   <label for="area_id">Area:</label>
   <select name="area_id" class="form-control" id="area_id" ng-model="company.area_id" ng-init="findAreas()">

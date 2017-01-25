@@ -22,6 +22,7 @@ class CreateCompaniesTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->integer('area_id')->nullable();
             $table->string('company_name');
+            $table->string('company_no');
             $table->boolean('is_affiliated');
             $table->string('phone');
             $table->string('email');
@@ -265,6 +266,7 @@ class CreateCompaniesTable extends Migration
         Schema::create('mining_license_files', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('mining_license_id')->unsigned()->nullable();
+            $table->string('file')->nullable();
             $table->string('url')->nullable();
             $table->integer('upload_by')->unsigned()->nullable(); //ini foreign key ke user, again, integer unsigned reference
             $table->timestamps();
