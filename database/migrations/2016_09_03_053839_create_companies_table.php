@@ -232,7 +232,6 @@ class CreateCompaniesTable extends Migration
             $table->string('geological_ts')->nullable();
             $table->string('geological_ash')->nullable();
             $table->boolean('geological_reserve')->nullable();
-            $table->string('geological_stripping_ratio')->nullable();
             $table->text('notes')->nullable(); //notes dan description bedanya apa?
             $table->integer('created_by')->unsigned()->nullable(); // ini reference ke user
             $table->integer('checked_by')->unsigned()->nullable(); // ini reference ke user
