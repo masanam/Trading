@@ -13,8 +13,7 @@ class SalesTargetTableSeeder extends Seeder
      */
     public function run()
     {
-        SalesTarget::create([
-	    	'id' => 1,
+        SalesTarget::create([	    	
 	    	'product_id' => '1' ,
 	    	'month' => '2' ,
 	    	'year'=>'2017',
@@ -22,7 +21,6 @@ class SalesTargetTableSeeder extends Seeder
 	    	'status' => 'a'
         ]) ;
         SalesTarget::create([
-	    	'id' => 2,
 	    	'product_id' => '2' ,
 	    	'month' => '1' ,
 	    	'year'=>'2017',
@@ -30,7 +28,6 @@ class SalesTargetTableSeeder extends Seeder
 	    	'status' => 'a'
         ]) ;
         SalesTarget::create([
-	    	'id' => 3,
 	    	'product_id' => '1' ,
 	    	'month' => '1' ,
 	    	'year'=>'2017',

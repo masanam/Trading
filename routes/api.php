@@ -55,8 +55,8 @@ Route::group(['middleware' => ['cors']], function() {
     Route::resource('factory', 'FactoryController', ['except' => [ 'create', 'edit' ]]);
 
     //Myr 
-    Route::get('sales-target/{year}', 'SaleTargetController@index');
-    Route::post('sales-target/{year}', 'SaleTargetController@store');
+    Route::get('sales-target/{year}', 'SalesTargetController@index');
+    Route::post('sales-target/{year}', 'SalesTargetController@store');
 
     Route::resource('quality', 'QualityController', ['except' => [ 'create', 'edit' ]]);
 
