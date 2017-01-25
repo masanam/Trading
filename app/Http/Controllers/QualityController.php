@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Model\Quality;
 use App\Model\QualityDetail;
 use App\Model\Lead;
+use App\Model\Contract;
+use App\Model\Order;
+use App\Model\Shipment;
 
 use Illuminate\Http\Request;
 
@@ -12,6 +15,8 @@ use App\Http\Requests;
 
 class QualityController extends Controller
 {
+
+
     /**
      * Display a listing of the resource.
      *
@@ -19,8 +24,14 @@ class QualityController extends Controller
      */
      public function index()
     {
-        $quality = Quality::with('qualityDetail')->get();
+        // $quality = Quality::with('qualityDetail','shipments')->get();
+        // return response()->json($quality, 200);
 
+        /*
+         * hasapu 25-01-2017
+         */
+
+        $quality = Shipment::with('contracts','customers')->get();
         return response()->json($quality, 200);
     }
 
@@ -51,5 +62,17 @@ class QualityController extends Controller
 
         $quality->save();
     }
+
+    /*
+     * hasapu 25-01-2017
+     */
+
+    public function show($id)
+    {
+      //$user = User::with('directSubordinates','directManager','roles')->find($user);
+      $quality = Shipment::with('contracts','customers')->find($id);
+      return $quality;
+    }
+
 
 }

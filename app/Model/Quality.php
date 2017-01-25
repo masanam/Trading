@@ -14,4 +14,5 @@ class Quality extends Model
     public function qualityDetail() {
       return $this->hasMany(QualityDetail::class);
     }
+
 }
