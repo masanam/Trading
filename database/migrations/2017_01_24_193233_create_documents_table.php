@@ -13,14 +13,15 @@ class CreateDocumentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('document_details', function (Blueprint $table) {
+        Schema::create('templates', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('document_id')->unsigned();
-            $table->string('field');
-            $table->text('value');
+            $table->string('template_name');
+            $table->string('desc');
+            $table->string('category');
+            $table->integer('sequence');
+            $table->text('fields');
+            $table->char('status', 1);
             $table->timestamps();
-
-            $table->foreign('document_id')->references('id')->on('documents')->onDelete('cascade');
         });
 
         Schema::create('documents', function (Blueprint $table) {
@@ -42,16 +43,16 @@ class CreateDocumentsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
 
-        Schema::create('templates', function (Blueprint $table) {
+        Schema::create('document_details', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('template_name');
-            $table->string('desc');
-            $table->string('category');
-            $table->integer('sequence');
-            $table->text('fields');
-            $table->char('status', 1);
+            $table->integer('document_id')->unsigned();
+            $table->string('field');
+            $table->text('value');
             $table->timestamps();
+
+            $table->foreign('document_id')->references('id')->on('documents')->onDelete('cascade');
         });
+        
     }
 
     /**

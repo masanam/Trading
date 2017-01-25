@@ -28,7 +28,7 @@
           <span ng-switch-when="v" class="pull-right label label-success"><i class='fa fa-ship'></i> VENDOR</span>
         </div>
 
-      </h3>
+      </h4>
       <h5 class="widget-user-desc" ng-switch="company.is_affiliated">
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
         {{ company.industry }} - {{ company.area.description }}
@@ -69,6 +69,7 @@
           <div class="row-fluid">
             <div class="table-responsive">
               <table class="table table-striped">
+                <tr ng-if="companyType === 'customer'"><td>No. Customer:</td><td>{{ company.company_no }}</td></tr>
                 <tr><td>Country:</td><td>{{ company.country }}</td></tr>
                 <tr><td>Address:</td><td>{{ company.address }}</td></tr>
                 <tr><td>City:</td><td>{{ company.city }}</td></tr>
