@@ -52,7 +52,7 @@ class CreateDocumentsTable extends Migration
 
             $table->foreign('document_id')->references('id')->on('documents')->onDelete('cascade');
         });
-        
+
     }
 
     /**
