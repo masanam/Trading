@@ -115,7 +115,7 @@ Route::group(['middleware' => ['cors']], function() {
      */
     Route::resource('mining-license', 'MiningLicenseController', ['except' => ['create', 'edit']]);
     Route::resource('spatial-data', 'SpatialDataController', ['except' => ['create', 'edit']]);
-
+    Route::resource('mining-license-file','MiningLicenseFileController', ['except' => ['create', 'edit']]);
 
 
 
