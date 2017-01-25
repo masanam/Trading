@@ -81,4 +81,8 @@ class MiningLicense extends Model {
         return $this->belongsTo('App\Model\User','checked_by','id');
     }
 
+    public function MiningLicenseFile() {
+        return $this->hasMany('App\Model\MiningLicenseFile');
+    }
+
 }
