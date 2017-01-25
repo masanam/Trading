@@ -113,10 +113,10 @@ class CreateLeadsTable extends Migration
             $table->timestamps();
 
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('restrict');
+        });
 
-            Schema::table('concessions', function ($table) {
-                DB::statement('ALTER TABLE leads ADD COLUMN polygon geometry;');
-            });
+        Schema::table('leads', function ($table) {
+            DB::statement('ALTER TABLE leads ADD COLUMN polygon geometry;');
         });
     }
 
