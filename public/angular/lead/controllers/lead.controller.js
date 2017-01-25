@@ -7,10 +7,12 @@ angular.module('lead').controller('LeadController', ['$scope', '$state', '$state
     $scope.showBuy = Environment.showBuy;
     $scope.selected = {};
 
+    $scope.lead = Lead.get({ id:$stateParams.id });
+
     $scope.findOne = function(id){
       if(!id) id = $stateParams.id;
       Lead.get({ id: id }, function(res){
-        $scope.lead = res;  
+        $scope.lead = res;
 
         if($scope.lead.user_id === Authentication.user.id && $state.current.name !== 'lead.view'){
           if($scope.lead.company_id) $scope.selected.company = $scope.lead.company;
@@ -28,7 +30,7 @@ angular.module('lead').controller('LeadController', ['$scope', '$state', '$state
       if(!lead_type) lead_type = $stateParams.lead_type;
       $scope.leads = Lead.query({ status: status, type: lead_type });
     };
-    
+
     $scope.findStatus = function($order_status, $lead_type) {
       $scope.leads = Lead.query({ lead_type: $lead_type, order_status: $order_status });
     };
@@ -44,7 +46,7 @@ angular.module('lead').controller('LeadController', ['$scope', '$state', '$state
       if($stateParams.lead_type) $scope.lead.lead_type = $stateParams.lead_type;
       if(Environment.trx === 'sell') $scope.lead.lead_type = 'sell';
     };
-    
+
     $scope.getUsed = function(lead){
       $scope.used = 0;
       if (lead.used) {
@@ -118,8 +120,8 @@ angular.module('lead').controller('LeadController', ['$scope', '$state', '$state
 
       //number logics
       switch($scope.lead.order_status){
-        case 1 : 
-        case 2 : 
+        case 1 :
+        case 2 :
           $scope.lead.order_status++;
           break;
         case 3 : $scope.lead.order_status = 'l';

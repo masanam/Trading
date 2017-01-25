@@ -17,7 +17,7 @@ class Order extends Model
   // use SyncsWithFirebase;
   protected $table = 'orders';
 
-  public function getCreatedAtAttribute($value)
+  /*public function getCreatedAtAttribute($value)
     {
         return date('d-m-Y', strtotime($value));
     }
@@ -25,7 +25,7 @@ class Order extends Model
     public function getUpdatedAtAttribute($value)
     {
         return date('d-m-Y', strtotime($value));
-    }
+    }*/
 
   /*
    * Relations

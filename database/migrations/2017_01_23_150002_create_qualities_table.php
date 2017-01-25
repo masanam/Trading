@@ -50,8 +50,8 @@ class CreateQualitiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('qualities');
-        Schema::dropIfExists('quality_details');
         Schema::dropIfExists('quality_metrics');
+        Schema::dropIfExists('quality_details');
+        Schema::dropIfExists('qualities');
     }
 }

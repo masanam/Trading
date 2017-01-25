@@ -42,7 +42,7 @@ class Concession extends Model
         'stripping_ratio'
     ];
 
-    public function getCreatedAtAttribute($value)
+    /*public function getCreatedAtAttribute($value)
     {
         return date('d-m-Y', strtotime($value));
     }
@@ -50,12 +50,12 @@ class Concession extends Model
     public function getUpdatedAtAttribute($value)
     {
         return date('d-m-Y', strtotime($value));
-    }
+    }*/
 
     public function company() {
     	return $this->belongsTo(Company::class);
     }
-    
+
     public function products() {
         return $this->hasMany(Product::class);
     }

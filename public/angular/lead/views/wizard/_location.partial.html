@@ -44,7 +44,7 @@
 <section ng-if="destinationBy !== 'country'">
   <div class="select-box" ng-init="find()">
     <label for="id">Name of {{ lead.lead_type === 'b' ? 'Concession' : 'Factory' }} :</label>
-    
+
     <ui-select ng-model="selected.location"
       reset-search-input="false"
       style="min-width: 30px;"
@@ -94,7 +94,7 @@
       <label>Distance to Port</label>
       <input type="number" min="0" class="form-control" ng-model="lead.port_distance">
     </div></div>
-    <div class="row"><div class="col-lg-12">
+    <div class="row" ng-if="lead.latitude && lead.longitude && !lead.polygon"><div class="col-lg-12">
       <label>Coordinate</label>
       <div class="input-group">
         <span class="input-group-addon">Lat</span>
@@ -103,11 +103,34 @@
         <input type="number" step="any" class="form-control" ng-model="lead.longitude">
       </div>
     </div></div>
-    <div class="row"><div class="col-lg-12" ng-if="lead.latitude && lead.longitude">
-      <ng-map center="[{{ lead.latitude }}, {{ lead.longitude }}]" on-click="changePosition()" id="location">
-        <marker draggable="true" on-dragend="changePosition()"
-          position="{{lead.latitude}}, {{lead.longitude}}" id="location-{{selected.location.id}}"></marker>
+    <div class="row">
+		<div class="col-lg-12" ng-if="lead.latitude && lead.longitude && !lead.polygon">
+		  <ng-map center="[{{ lead.latitude }}, {{ lead.longitude }}]" on-click="changePosition()" id="location">
+			<marker draggable="true" on-dragend="changePosition()"
+			  position="{{lead.latitude}}, {{lead.longitude}}" id="location-{{selected.location.id}}"></marker>
+		  </ng-map>
+		</div>
+		<div class="col-lg-12" ng-if="lead.polygon">
+      <ng-map zoom="4" center="Indonesia" id="location">
+        <shape id="polygon" name="polygon"
+          paths="{{display.polygonArray}}"
+          stroke-color="#FF0000"
+          stroke-opacity="1.0"
+          stroke-weight="3">
+        </shape>
+        <drawing-manager
+          on-overlaycomplete="updatePolygonString()"
+          drawing-control-options="{position: 'TOP_CENTER',drawingModes:['polygon']}"
+          polygonOptions="{fillColor:'#01539f', strokeColor: '#01539f', editable: true}"
+          drawingControl="true"
+          drawingMode="polygon">
+        </drawing-manager>
       </ng-map>
-    </div></div>
+		  <!--ng-map center="[{{ lead.latitude }}, {{ lead.longitude }}]" on-click="changePositionPolygon()" id="location">
+			<marker draggable="true" on-dragend="changePosition()"
+			  position="{{lead.latitude}}, {{lead.longitude}}" id="location-{{selected.location.id}}"></marker>
+		  </ng-map-->
+		</div>
+	</div>
   </div>
 </div>

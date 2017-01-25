@@ -13,7 +13,7 @@ class SellOrder extends Model
 {
     protected $table = 'sell_order';
 
-    public function getCreatedAtAttribute($value)
+    /*public function getCreatedAtAttribute($value)
     {
         return date('d-m-Y', strtotime($value));
     }
@@ -21,7 +21,7 @@ class SellOrder extends Model
     public function getUpdatedAtAttribute($value)
     {
         return date('d-m-Y', strtotime($value));
-    }
+    }*/
 
     public function seller() {
     	return $this->belongsTo('App\Model\Seller');
@@ -56,7 +56,7 @@ class SellOrder extends Model
         return $this->morphToMany(Order::class, 'orderable', 'order_details')
             ->selectRaw('sum(order_details.volume) as volume')->whereIn('orders.status', ['a', 'f', 'p'])->groupBy('orderable_id', 'orderable_type');
     }
-    
+
     public function isAvailable($volume){
       $used_data = $this->used();
       return $this->volume >= $used_data[0]['volume'];
