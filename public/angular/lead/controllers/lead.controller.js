@@ -94,8 +94,6 @@ angular.module('lead').controller('LeadController', ['$scope', '$state', '$state
     $scope.update = function () {
       var next;
 
-      console.log($scope.lead);
-
       if($state.current.name === 'lead.update') next = 'lead.location';
       else if($state.current.name === 'lead.location'){
         // if location is by country, skip port
