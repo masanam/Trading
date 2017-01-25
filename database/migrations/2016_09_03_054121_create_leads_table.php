@@ -106,13 +106,17 @@ class CreateLeadsTable extends Migration
             $table->string('payment_term_detail')->nullable();
             $table->longText('commercial_term')->nullable();
             $table->longText('penalty')->nullable();
-            $table->char('lead_type', 1)->nullable(); // buy(b), sell(s) 
+            $table->char('lead_type', 1)->nullable(); // buy(b), sell(s)
             $table->char('order_status', 1); // customer(0), factory(1), product(2), port(3), summary(4), lead(l), staged(s), partial(p), deleted(x), verified(v)
             $table->char('progress_status', 1)->nullable();
 
             $table->timestamps();
 
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('restrict');
+
+            Schema::table('concessions', function ($table) {
+                DB::statement('ALTER TABLE leads ADD COLUMN polygon geometry;');
+            });
         });
     }
 
