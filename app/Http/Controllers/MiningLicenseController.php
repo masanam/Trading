@@ -75,6 +75,7 @@ class MiningLicenseController extends Controller
 
 
         $license = MiningLicense::with('Company','Contact','Concession','Concession.port','checked_by','MiningLicenseFile','spatial_data')->select('*', DB::raw('ST_AsGeoJSON(polygon, 8) AS polygon'))->where('id',$id)->first();
+            
 
         return response()->json($license, 200);
     }
@@ -108,6 +109,15 @@ class MiningLicenseController extends Controller
         $license->save();
 
         return $this->show($license->id);
+    }
+
+    public function approve($id)
+    {
+        $license = MiningLicenseFile::find($id);
+
+        $license = DB::table('mining_license_files')->where('id', $id)->update(['status' => 'a']);
+
+        return response()->json($license, 200);
     }
 
     /**
