@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Model\Quality;
 use App\Model\QualityDetail;
+use App\Model\QualityMetric;
 use App\Model\Lead;
+use App\Model\Contract;
+use App\Model\Order;
+use App\Model\Shipment;
 
 use Illuminate\Http\Request;
 
@@ -12,15 +16,20 @@ use App\Http\Requests;
 
 class QualityController extends Controller
 {
+
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-     public function index()
+     public function index(Request $req)
     {
-        $quality = Quality::with('qualityDetail')->get();
+        /*
+         * hasapu 25-01-2017
+         */
 
+        $quality = Shipment::with('contracts','customers','qualities')->get();
         return response()->json($quality, 200);
     }
 
@@ -30,26 +39,24 @@ class QualityController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+
+    public function store(Request $req)
     {
-        $lead_id = $request->lead_id;
-        $shipment_id = $request->shipment_id;
-        $type = $request->type;
+      $qualities = new QualityDetail();
+      $qualities->quality_id = $req->quality_id;
+      $qualities->value = $req->value;
+      $qualities->quality = $req->quality;
+      $qualities->save();
+    }
 
-        $quality = Quality::where([
-            'lead_id' => $lead_id,
-            'shipment_id' => $shipment_id,
-            'type' => $type
-        ])->first();
+    /*
+     * hasapu 25-01-2017
+     */
 
-        if(!$quality) $quality = new QualityDetails();
-
-        $quality->fill($request->only([
-            'value', 'quality'
-
-        ]));
-
-        $quality->save();
+      public function show($id)
+    {
+      $quality = Shipment::with('contracts','customers','qualities')->find($id);
+      return $quality;
     }
 
 }

@@ -35,6 +35,7 @@ class AreaController extends Controller
       $areas = $areas->where('description','LIKE','%'.$param.'%');
     }
     $areas = $areas->get();
+    // $areas = $areas->paginate(5);
     
     return response()->json($areas, 200);
   }

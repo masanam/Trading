@@ -54,11 +54,11 @@ Route::group(['middleware' => ['cors']], function() {
     Route::resource('concession', 'ConcessionController', ['except' => [ 'create', 'edit' ]]);
     Route::resource('factory', 'FactoryController', ['except' => [ 'create', 'edit' ]]);
 
-    //Myr 
-    Route::get('sales-target/{year}', 'SaleTargetController@index');
-    Route::post('sales-target/{year}', 'SaleTargetController@store');
+    //Myr
+    Route::get('sales-target/{year}', 'SalesTargetController@index');
+    Route::post('sales-target/{year}', 'SalesTargetController@store');
 
-    Route::resource('quality', 'QualityController', ['except' => [ 'create', 'edit' ]]);
+    Route::resource('qualities', 'QualityController', ['except' => [ 'create', 'edit' ]]);
 
 
 
@@ -116,7 +116,9 @@ Route::group(['middleware' => ['cors']], function() {
     Route::resource('mining-license', 'MiningLicenseController', ['except' => ['create', 'edit']]);
     Route::resource('spatial-data', 'SpatialDataController', ['except' => ['create', 'edit']]);
 
-
+    //hasapu 25-01-2017
+    Route::resource('metrics', 'QualityMetricController', ['except' => [ 'create', 'edit' ]]);
+    Route::resource('mining-license-file','MiningLicenseFileController', ['except' => ['create', 'edit']]);
 
 
 });
