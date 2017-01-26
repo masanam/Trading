@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Model\Quality;
 use App\Model\QualityDetail;
+use App\Model\QualityMetric;
 use App\Model\Lead;
 use App\Model\Contract;
 use App\Model\Order;
@@ -22,16 +23,13 @@ class QualityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-     public function index()
+     public function index(Request $req)
     {
-        // $quality = Quality::with('qualityDetail','shipments')->get();
-        // return response()->json($quality, 200);
-
         /*
          * hasapu 25-01-2017
          */
 
-        $quality = Shipment::with('contracts','customers')->get();
+        $quality = Shipment::with('contracts','customers','qualities')->get();
         return response()->json($quality, 200);
     }
 
@@ -41,38 +39,24 @@ class QualityController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+
+    public function store(Request $req)
     {
-        $lead_id = $request->lead_id;
-        $shipment_id = $request->shipment_id;
-        $type = $request->type;
-
-        $quality = Quality::where([
-            'lead_id' => $lead_id,
-            'shipment_id' => $shipment_id,
-            'type' => $type
-        ])->first();
-
-        if(!$quality) $quality = new QualityDetails();
-
-        $quality->fill($request->only([
-            'value', 'quality'
-
-        ]));
-
-        $quality->save();
+      $qualities = new QualityDetail();
+      $qualities->quality_id = $req->quality_id;
+      $qualities->value = $req->value;
+      $qualities->quality = $req->quality;
+      $qualities->save();
     }
 
     /*
      * hasapu 25-01-2017
      */
 
-    public function show($id)
+      public function show($id)
     {
-      //$user = User::with('directSubordinates','directManager','roles')->find($user);
-      $quality = Shipment::with('contracts','customers')->find($id);
+      $quality = Shipment::with('contracts','customers','qualities')->find($id);
       return $quality;
     }
-
 
 }

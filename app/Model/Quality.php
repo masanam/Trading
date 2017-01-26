@@ -12,7 +12,11 @@ class Quality extends Model
     ];
 
     public function qualityDetail() {
-      return $this->hasMany(QualityDetail::class);
+      return $this->belongsTo(QualityDetail::class, 'quality_id');
+    }
+
+    public function shipments() {
+      return $this->belongsTo(Shipment::class);
     }
 
 }
