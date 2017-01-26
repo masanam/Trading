@@ -23,7 +23,8 @@ class ContractController extends Controller
      public function index(Request $req)
      {
        $range = [];
-       $contracts = Contract::with('shipments', 'orders', 'orders.sells', 'orders.sells.company', 'orders.sells.product')->where('status', 'a');
+       $contracts = Contract::with('shipments', 'orders', 'orders.sells', 'orders.sells.company', 'orders.sells.product')
+       ->where('status', 'a');
 
        $limit = $req->pageSize ? $req->pageSize : 3;
        $skip = ( $req->pageSize * $req->page ) ? ( $req->pageSize * $req->page ) : 0;
@@ -56,6 +57,19 @@ class ContractController extends Controller
           ->orWhere('contract_no', 'LIKE', '%'.$param.'%')
           ->orWhere('date_from','LIKE','%'.$param.'%')
           ->orWhere('date_to','LIKE','%'.$param.'%');
+
+          // $query->orWhereHas('orders.sells.pivot',function($q) use ($param)
+          // {
+          //  $q->where('volume','LIKE','%'.$param.'%');
+          // });
+          // $query->orWhereHas('orders.sells',function($q) use ($param)
+          // {
+          //  $q->where('company.company_name','LIKE','%'.$param.'%');
+          // })
+          // ->orWhere('company.contract_no', 'LIKE', '%'.$param.'%')
+          // // ->orWhere('date_from','LIKE','%'.$param.'%')
+          // // ->orWhere('date_to','LIKE','%'.$param.'%')
+          // ->orWhere('pivot.volume','LIKE','%'.$param.'%');
          });
        }
 
@@ -112,7 +126,7 @@ class ContractController extends Controller
      */
     public function update(Request $request, $id)
     {
-      $contract = Contract::find($id);
+      $contract = Contract::with('shipments', 'orders', 'orders.sells', 'orders.sells.company', 'orders.sells.product')->find($id);
 
       if(!$contract) {
         return response()->json(['message' => 'not found'], 404);
