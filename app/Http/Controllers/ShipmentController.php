@@ -57,7 +57,7 @@ class ShipmentController extends Controller
       if($req->q){
         $param = $req->q;
         $shipments = $shipments->where(function($query) use ($param){
-          return $query->whereHas('customers', function($q) use ($param) {
+          return $query->whereHas('suppliers', function($q) use ($param) {
                   $q->whereRaw('`company_name` LIKE "%'.$param.'%"');
                 })
                 ->orWhereHas('products', function($q) use ($param) {
