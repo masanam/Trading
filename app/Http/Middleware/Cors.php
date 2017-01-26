@@ -13,12 +13,6 @@ class Cors
      * @param  \Closure  $next
      * @return mixed
      */
-<<<<<<< HEAD
-    public function handle($request, Closure $next)
-    {
-        return $next($request);
-    }
-=======
 
     public function handle($request, Closure $next)
     {
@@ -37,7 +31,5 @@ class Cors
     //     }
     //     return $next($request);
     // }
-
-
->>>>>>> ff5a859325d4e4ec4ea5fc7dd6c06646c2c9c9b3
+    
 }
