@@ -10,6 +10,14 @@
       </a>
     </h4>
   </div>
+  <div class="callout callout-warning" ng-if="order.status === 'r' && approving === false">
+    <h4>
+      Do you want to undo your rejection?
+      <a class="btn btn-success" ng-click="approve_reject('a');">
+        <i class="glyphicon glyphicon-thumbs-up" title="Approve Order"></i> Approve Order
+      </a>
+    </h4>
+  </div>
   <div class="callout callout-warning" ng-if="approving === true">
     <h4>
       Do you want to undo your approval?
