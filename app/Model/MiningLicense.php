@@ -60,7 +60,7 @@ class MiningLicense extends Model {
         'is_palm_plantation',
         'is_farming_zone',
         'is_sinarmas_forestry',
-
+				'status',
     ];
 
     public function Company() {
@@ -86,5 +86,5 @@ class MiningLicense extends Model {
     public function spatial_data(){
         return $this->belongsToMany(SpatialData::class,'mining_license_spatial_data','mining_license_id','spatial_data_id')->select('*', DB::raw('ST_AsGeoJSON(polygon, 8) AS polygon'));
     }
-    
+
 }
