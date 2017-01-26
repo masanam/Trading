@@ -114,7 +114,7 @@ Route::group(['middleware' => ['cors']], function() {
      * By AndezTea
      */
     Route::resource('mining-license', 'MiningLicenseController', ['except' => ['create', 'edit']]);
-    Route::put('mining-license/{id}/approval', 'MiningLicenseController@approve');
+    Route::match(['get','put'], 'mining-license/{id}/approval', 'MiningLicenseController@approval');
     Route::resource('spatial-data', 'SpatialDataController', ['except' => ['create', 'edit']]);
 
     //hasapu 25-01-2017
