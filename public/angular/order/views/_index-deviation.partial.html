@@ -9,9 +9,11 @@
         {{ display.index.index_provider }} {{ display.index.index_name }} <span class="caret"></span>
       </button>
       <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
-        <li role="menuitem" ng-repeat="index in indices"><a ng-click="render(display.index = index)">
-		  		{{ index.index_provider }} {{ index.index_name }}
-        </a></li>
+        <li role="menuitem" ng-repeat="index in indices">
+					<a ng-click="render(display.index = index)">
+			  		{{ index.index_provider }} {{ index.index_name }}
+	        </a>
+				</li>
       </ul>
     </span>
 	</div>
@@ -35,7 +37,7 @@
 		<div class="col-sm-12 col-md-6 description-block" id="lineChart">
       <canvas id="line" class="chart chart-line" chart-data="data" chart-dataset-override="datasetOverride"
         chart-labels="labels" chart-series="series" chart-colors="colors" style="min-height:20px;">
-      </canvas> 
+      </canvas>
   	</div>
 	</div>
 
