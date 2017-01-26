@@ -14,6 +14,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         Commands\Chat::class,
+        Commands\shp::class,
     ];
 
     /**
