@@ -232,7 +232,6 @@ class CreateCompaniesTable extends Migration
             $table->string('geological_ts')->nullable();
             $table->string('geological_ash')->nullable();
             $table->boolean('geological_reserve')->nullable();
-            $table->string('geological_stripping_ratio')->nullable();
             $table->text('notes')->nullable(); //notes dan description bedanya apa?
             $table->integer('created_by')->unsigned()->nullable(); // ini reference ke user
             $table->integer('checked_by')->unsigned()->nullable(); // ini reference ke user
@@ -266,13 +265,13 @@ class CreateCompaniesTable extends Migration
         Schema::create('mining_license_files', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('mining_license_id')->unsigned()->nullable();
-            $table->string('file')->nullable();
+            $table->string('label')->nullable();
             $table->string('url')->nullable();
-            $table->integer('upload_by')->unsigned()->nullable(); //ini foreign key ke user, again, integer unsigned reference
+            $table->integer('created_by')->unsigned()->nullable(); //ini foreign key ke user, again, integer unsigned reference
             $table->timestamps();
 
             $table->foreign('mining_license_id')->references('id')->on('mining_licenses')->onDelete('restrict');
-            $table->foreign('upload_by')->references('id')->on('users')->onDelete('restrict');
+            $table->foreign('created_by')->references('id')->on('users')->onDelete('restrict');
         });
 
         Schema::create('mining_license_spatial_data', function (Blueprint $table){

@@ -64,7 +64,7 @@ class ConcessionTableSeeder extends Seeder
                 'stockpile_coverage' => NULL,
                 'stockpile_distance' => NULL,
                 'port_id' => 2,
-                'port_distance' => NULL,
+                'port_distance' => 15,
                 'license_type' => NULL,
                 'license_expiry_date' => NULL,
                 'status' => 'a'

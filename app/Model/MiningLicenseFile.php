@@ -9,7 +9,8 @@ class MiningLicenseFile extends Model {
 	protected $table = 'mining_license_files';
 	protected $fillable = [
         'id',
-        'mining_licenses_id',
+        'mining_license_id',
+        'label',
     	'url',
         'upload_by',
         'created_by',
