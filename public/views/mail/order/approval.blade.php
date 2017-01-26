@@ -19,7 +19,7 @@
         font-size: 14px;
         line-height: 1.4;
         margin: 0;
-        padding: 0; 
+        padding: 0;
         -ms-text-size-adjust: 100%;
         -webkit-text-size-adjust: 100%; }
       table {
@@ -149,12 +149,12 @@
       /* -------------------------------------
           OTHER STYLES THAT MIGHT BE USEFUL
       ------------------------------------- */
-      
+
       .table-bordered th,
       .table-bordered td {
         border: 1px solid #eee !important;
         padding: 5px;
-        vertical-align: middle; 
+        vertical-align: middle;
       }
       .last {
         margin-bottom: 0; }
@@ -242,7 +242,7 @@
           font-size: inherit !important;
           font-weight: inherit !important;
           line-height: inherit !important;
-          text-decoration: none !important; } 
+          text-decoration: none !important; }
         .btn-primary table td:hover {
           background-color: #34495e !important; }
         .btn-primary a:hover {
@@ -281,7 +281,7 @@
                                       Reason: {{ $order->request_reason }}
                                     </td>
                                   </tr>
-                                  <tr align="center">  
+                                  <tr align="center">
                                     <td style="font-size:18pt">
                                       <p>Typical Quality</p>
                                       <p style="font-size:18pt">{{ $order->buys[0]->typical_quality }}</p>
@@ -313,8 +313,8 @@
                                       <small>{{ round(($order->average_sell_price-$index_price)*100 / $index_price, 2) }} %</small>
                                     </td>
                                   </tr>
-                                  
-                                  <tr>
+
+                                  <!--tr>
                                     <td colspan=3>
                                       <table border="0" cellpadding="0" cellspacing="0" class="table-bordered">
                                         @foreach ($order->buys as $buy)
@@ -358,7 +358,7 @@
                                         @endforeach
                                       </table>
                                     </td>
-                                  </tr>
+                                  </tr-->
                                 </tbody>
                               </table>
                             </td></tr>
@@ -417,7 +417,7 @@
             </div>
 
             <!-- END FOOTER -->
-            
+
 <!-- END CENTERED WHITE CONTAINER --></div>
         </td>
         <td>&nbsp;</td>
