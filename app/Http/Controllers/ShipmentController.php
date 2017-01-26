@@ -60,6 +60,9 @@ class ShipmentController extends Controller
           return $query->whereHas('suppliers', function($q) use ($param) {
                   $q->whereRaw('`company_name` LIKE "%'.$param.'%"');
                 })
+                ->orWhereHas('customers', function($q) use ($param) {
+                  $q->whereRaw('`company_no` LIKE "%'.$param.'%"');
+                })
                 ->orWhereHas('products', function($q) use ($param) {
                   $q->whereRaw('`product_name` LIKE "%'.$param.'%"');
                 })

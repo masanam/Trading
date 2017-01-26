@@ -49,7 +49,7 @@ class MiningLicenseFileController extends Controller
         $license->created_by = Auth::User()->id;
         $license->save();
 
-        return $this->show($license->id);
+        return response()->json($license, 200);
     }
 
     /**
