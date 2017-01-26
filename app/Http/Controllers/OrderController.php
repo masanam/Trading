@@ -325,13 +325,15 @@ class OrderController extends Controller
    */
 
   private function checkAvailable($order, $lead){
+    //var_dump($order);die;
+    //var_dump($lead);die;
     // If this is invoked from UPDATE, instead of using lead from params, do get its volumes from pivot
     // Get from the current volume IF this is a staging order
     if(!$lead->lead_id) $volume = $lead->pivot->volume;
     else $volume = $lead->volume;
 
     // Get all orders associated with this current lead to know its standing
-    $lead_to_stage = Lead::with('orders')->find($lead->lead_id);
+    $lead_to_stage = Lead::with('orders')->find($lead->id);
 
     // get total of the used volume
     // IF THEY ARE confirmed leads
