@@ -56,7 +56,7 @@ class Product extends Model
     	return $this->belongsTo(Concession::class);
     }
 
-    public function saleTarget() {
+    public function sales_target() {
         return $this->hasMany(SalesTarget::class);
     }
 

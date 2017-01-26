@@ -8,6 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Shipment extends Model
 {
+  //hasapu
+    public function qualities(){
+      return $this->hasMany(Quality::class);
+    }
+  //------
+
     public function contracts() {
       return $this->belongsTo(Contract::class, 'contract_id');
     }
@@ -39,4 +45,7 @@ class Shipment extends Model
     public function latest_log(){
       return $this->hasMany(ShipmentLog::class)->orderBy('created_at')->first();
     }
+
+
+
 }

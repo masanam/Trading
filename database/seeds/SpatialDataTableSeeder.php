@@ -134,7 +134,7 @@ class SpatialDataTableSeeder extends Seeder
         SpatialData::create([
             'name'=> 'Sungai Multi Poly 4',
             'restricted_area'=> '12947812382132',
-            'type'=> 'HTI',
+            'type'=> 'River',
             'desc'=> 'data HTI terjadi',
             'island' => 'Kalimantan',
             'province' => 'Kal-Bar',

@@ -57,16 +57,10 @@ class ContractController extends Controller
           ->orWhere('date_from','LIKE','%'.$param.'%')
           ->orWhere('date_to','LIKE','%'.$param.'%');
          });
-
        }
 
        $contracts = $contracts->orderBy('contract_no')->skip($skip)->take($limit)->get();
-
        return response()->json($contracts, 200);
-
-      //  $contracts = $contracts->get();
-       //
-      //  return response()->json($contracts, 200);
      }
     /**
      * Store a newly created resource in storage.
