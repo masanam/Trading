@@ -25,7 +25,7 @@
             + Add Additional Cost
           </button>
         </td>
-        <td ng-if="!order.in_house">
+        <td ng-if="!order.in_house && showBuy">
           <button ng-show="order.status !== 'x' && order.status !== 'a' && order.status !== 'f' && order.status !== 'p'"
             class="btn btn-default hidden-xs hidden-sm" ng-click="addBuy()"  ng-if="showBuy"
             ng-disabled=" order.buys.length > 1 && order.sells.length===1">
@@ -54,7 +54,7 @@
       </tr>
 			<tr>
 				<th width="{{ order.in_house ? '40%' : '20%' }}"></th>
-    		<th ng-if="!order.in_house"  width=40% ng-if="!order.in_house">
+    		<th ng-if="!order.in_house && showBuy"  width=40% ng-if="!order.in_house && showBuy">
 					<span style="font-size:20pt">Buy</span>
           <span uib-dropdown ng-init="checkAlike(display.buy)" ng-if="alikeBuys.length > 0">
             <a class="glyphicon glyphicon-exclamation-sign" style="color:orange;" uib-dropdown-toggle
@@ -67,7 +67,7 @@
             </ul>
           </span>
 
-          <span ng-if="order.buys.length" uib-dropdown class="pull-right" ng-init="display.buy = order.buys[0]; display.buy.index = 0">
+          <span ng-if="order.buys.length && showBuy" uib-dropdown class="pull-right" ng-init="display.buy = order.buys[0]; display.buy.index = 0">
             <button type="button" ng-show="order.status !== 'x' && order.status !== 'f'" class="btn btn-default" uib-dropdown-toggle>
               {{ display.buy.company.company_name }} ({{ order.buys.length }})<span class="caret"></span>
             </button>
@@ -125,7 +125,7 @@
 			<tr>
 				<td>Company</td>
 
-        <td ng-switch="display.buy && (display.buy.user_id === Authentication.user.id || checkSubordinates(display.buy.user_id)) || !display.buy" ng-if="!order.in_house">
+        <td ng-switch="display.buy && (display.buy.user_id === Authentication.user.id || checkSubordinates(display.buy.user_id)) || !display.buy" ng-if="!order.in_house && showBuy">
           <span ng-switch-when="true">
             {{ display.buy.company.company_name }}
           </span>
@@ -151,7 +151,7 @@
 			</tr>
 			<tr>
 				<td>Volume (mt) - Price (USD)</td>
-				<td ng-if="!order.in_house">
+				<td ng-if="!order.in_house && showBuy">
           <span ng-if="display.buy">
             {{ display.buy.pivot.volume | number }}mt - US$ {{ display.buy.pivot.price | number }}
             <a ng-if="order.id && order.status !== 'a' && order.status !== 'x'" ng-if="display.buy.user_id === Authentication.user.id && order.id"
@@ -172,30 +172,30 @@
 			</tr>
 			<tr>
 				<td>Input Date</td>
-        <td ng-if="!order.in_house">{{ display.buy.order_date | date:'mediumDate' }}</td>
+        <td ng-if="!order.in_house && showBuy">{{ display.buy.order_date | date:'mediumDate' }}</td>
   			<td>{{ display.sell.order_date | date:'mediumDate' }}</td>
 			</tr>
 			<tr>
 				<td>LayCan</td>
-        <td ng-if="!order.in_house">
+        <td ng-if="!order.in_house && showBuy">
           {{ display.buy.laycan_start | date:'mediumDate' }} - {{ display.buy.laycan_end | date:'mediumDate' }}
         </td>
 				<td>{{ display.sell.laycan_start | date:'mediumDate' }} - {{ display.sell.laycan_end | date:'mediumDate' }}</td>
 			</tr>
       <tr>
 				<td>Shipping Term</td>
-				<td ng-if="!order.in_house">{{ display.buy.pivot.trading_term }}</td>
+				<td ng-if="!order.in_house && showBuy">{{ display.buy.pivot.trading_term }}</td>
         <td>{{ display.sell.pivot.trading_term }}</td>
 			</tr>
       <tr>
 				<td>Payment Term</td>
-				<td ng-if="!order.in_house">{{ display.buy.pivot.payment_term }}</td>
+				<td ng-if="!order.in_house && showBuy">{{ display.buy.pivot.payment_term }}</td>
         <td>{{ display.sell.pivot.payment_term }}</td>
 			</tr>
 			<tr>
 				<td>Location</td>
 				<td ng-switch="display.buy.user_id === Authentication.user.id || checkSubordinates(display.buy.user_id) || !display.buy"
-          ng-if="!order.in_house">
+          ng-if="!order.in_house && showBuy">
 					<span ng-switch-when="true">{{ display.buy.concession.city }}</span>
 					<i ng-switch-default style="color:green">-Contact {{ display.buy.trader.name }}-</i>
 				</td>
@@ -207,7 +207,7 @@
 			<tr>
 				<td>Port</td>
         <td ng-switch="display.buy.user_id === Authentication.user.id || checkSubordinates(display.buy.user_id) || !display.buy"
-          ng-if="!order.in_house">
+          ng-if="!order.in_house && showBuy">
           <span ng-switch-when="true">{{ display.buy.port_name }}</span>
           <i ng-switch-default style="color:green">-Contact {{ display.buy.trader.name }}-</i>
         </td>
@@ -335,7 +335,7 @@
     <tbody id="financial-section" uib-collapse="!financialCollapsed">
       <tr>
 				<th>Total Price / mt</th>
-        <td ng-if="!order.in_house">
+        <td ng-if="!order.in_house && showBuy">
 					<span ng-if="display.buy">
 					<h4>US${{ display.buy.pivot.price | number }}</h4>
 					from {{ order.buys.length }} Customers
@@ -371,7 +371,7 @@
       </tr>
       <tr>
 				<th>Coal Price</th>
-        <td ng-if="!order.in_house">
+        <td ng-if="!order.in_house && showBuy">
 					<span ng-if="display.buy">
 					<h3>US${{ (totalSelfSell + totalSelfAdditionalBuy) / totalVolumeSell | number }}</h3>
 					from {{ order.buys.length }} Customers

@@ -57,25 +57,14 @@ class ShipmentController extends Controller
       if($req->q){
         $param = $req->q;
         $shipments = $shipments->where(function($query) use ($param){
-          return $query->whereHas('customers', function($q) use ($param) {
-                  $q->whereRaw('`company_name` LIKE "%'.$param.'%"');
-                })
-                ->orWhereHas('products', function($q) use ($param) {
-                  $q->whereRaw('`product_name` LIKE "%'.$param.'%"');
-                })
-                ->orWhereHas('surveyors', function($q) use ($param) {
-                  $q->whereRaw('`company_name` LIKE "%'.$param.'%"');
-                })
-                ->orWhereHas('contracts', function($q) use ($param) {
+          return $query->whereHas('contracts', function($q) use ($param) {
                   $q->whereRaw('`contract_no` LIKE "%'.$param.'%"');
                 })
-                ->orWhereRaw('eta LIKE "%'.$param.'%"')
-                ->orWhereRaw('etd LIKE "%'.$param.'%"')
-                ->orWhereRaw('vessel LIKE "%'.$param.'%"')
-                ->orWhereRaw('demurrage_rate LIKE "%'.$param.'%"')
-                ->orWhereRaw('loading_rate LIKE "%'.$param.'%"')
-                ->orWhereRaw('price LIKE "%'.$param.'%"')
-                ->orWhereRaw('volume LIKE "%'.$param.'%"')
+                ->orwhereHas('suppliers', function($q) use ($param) {
+                  $q->whereRaw('`company_name` LIKE "%'.$param.'%"');
+                })
+                ->orWhereRaw('laycan_start LIKE "%'.$param.'%"')
+                ->orWhereRaw('laycan_end LIKE "%'.$param.'%"')
                 ->orWhereRaw('shipment_no LIKE "%'.$param.'%"');
         });
       }

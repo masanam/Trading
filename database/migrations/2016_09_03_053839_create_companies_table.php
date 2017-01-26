@@ -267,11 +267,13 @@ class CreateCompaniesTable extends Migration
             $table->integer('mining_license_id')->unsigned()->nullable();
             $table->string('label')->nullable();
             $table->string('url')->nullable();
-            $table->integer('created_by')->unsigned()->nullable(); //ini foreign key ke user, again, integer unsigned reference
+            $table->integer('created_by')->unsigned()->nullable(); 
+            $table->char('status', 1);
             $table->timestamps();
 
             $table->foreign('mining_license_id')->references('id')->on('mining_licenses')->onDelete('restrict');
             $table->foreign('created_by')->references('id')->on('users')->onDelete('restrict');
+
         });
 
         Schema::create('mining_license_spatial_data', function (Blueprint $table){

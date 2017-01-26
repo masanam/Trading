@@ -72,13 +72,14 @@ class SalesTargetController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $req, $year)
+    public function store(Request $req)
     {
         dd($req);
-        
 
-        $sales_target = new SalesTarget($req->all());            
-        $sales_target->save();
+        $year = $req->year;
+
+        /*$sales_target = new SalesTarget($req->all());            
+        $sales_target->save();*/
         // foreach($req->sales_target as $product_id => $st){
         //     foreach ($st as $month => $value) {
         //         $sales_target = new SalesTarget([

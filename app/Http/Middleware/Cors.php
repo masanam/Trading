@@ -31,6 +31,5 @@ class Cors
     //     }
     //     return $next($request);
     // }
-
-
+    
 }
