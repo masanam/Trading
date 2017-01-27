@@ -32,7 +32,7 @@ class ApprovalRequest extends Mailable
      */
     public function build()
     {
-      var_dump($this->order);die;
+      var_dump($this->index_price);die;
         /*return $this->from('noreply@volantech.io')
             ->view('mail.order.approval')
             ->with([
