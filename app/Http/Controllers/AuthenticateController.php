@@ -80,6 +80,7 @@ class AuthenticateController extends Controller
         $user->password = bcrypt($request->password);
         $user->save();
 
+
         $user->roles()->attach(2);
 
         $token = JWTAuth::fromUser($user);
