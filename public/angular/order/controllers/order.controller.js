@@ -136,7 +136,9 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
 
       Order.get({ id: $scope.order.id, action: 'approval', status : status }, function (res) {
         $scope.order = res;
+        $scope.order.status = status;
         if(status === 'r') $scope.approving = false;
+        else $scope.approving = true;
         Notification.sendNotification(status, $scope.order, false, false);
       }, function (err) {
         $scope.error = err.data.message;
@@ -203,8 +205,6 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
     // Find list of order
     $scope.find = function () {
       $scope.orders = Order.query({ category: $scope.browse.category, status: $scope.browse.status });
-      console.log('ini disini');
-	  // $scope.orderCollection = $scope.orders;
     };
 
     // Find existing order

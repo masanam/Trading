@@ -20,7 +20,7 @@ class MiningLicenseFileController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    /* Kamal 2017-01-19 18:00
+    /* AndezTea 2017-01-19 18:00
      * create All function CRUD
      */
     public function index(Request $req = null)
@@ -47,6 +47,7 @@ class MiningLicenseFileController extends Controller
 
         $license = new MiningLicenseFile($req->all());
         $license->created_by = Auth::User()->id;
+        $license->status = 'a';
         $license->save();
 
         return response()->json($license, 200);
@@ -61,10 +62,10 @@ class MiningLicenseFileController extends Controller
     public function show($id)
     {
 
-        $license = MiningLicenseFile::with('mining_license')->select('*', DB::raw('ST_AsGeoJSON(polygon, 8) AS polygon'))->where('mining_lisense_id',$id)->first();
-
-        return response()->json($license, 200);
+       
     }
+
+    
 
     /**
      * Update the specified resource in storage.
@@ -86,6 +87,11 @@ class MiningLicenseFileController extends Controller
      */
     public function destroy($id)
     {
+        $license = MiningLicenseFile::where('status', 'a')->find($id);
+
+        $license = DB::table('mining_license_files')->where('id', $id)->update(['status' => 'x']);
+
+        return response()->json($license, 200);
         
     }
 }
