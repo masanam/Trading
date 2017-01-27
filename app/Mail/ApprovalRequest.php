@@ -21,7 +21,6 @@ class ApprovalRequest extends Mailable
     public function __construct(Order $order, $approval_token, $index_price)
     {
         $this->order = $order;
-        var_dump($this->order);die;
         $this->approval_token = $approval_token;
         $this->index_price = $index_price;
     }
@@ -33,13 +32,14 @@ class ApprovalRequest extends Mailable
      */
     public function build()
     {
-        return $this->from('noreply@volantech.io')
+      var_dump($this->order);die;
+        /*return $this->from('noreply@volantech.io')
             ->view('mail.order.approval')
             ->with([
                 'order' => $this->order,
                 'approval_token' => $this->approval_token,
                 'index_price' => $this->index_price
-            ]);
+            ]);*/
             //->text('mail.order.detail');
     }
 }
