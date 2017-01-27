@@ -10,7 +10,7 @@ class MiningLicense extends Model {
 	protected $fillable = [
         'no',
         'company_id',
-    	'concession_id',
+    		'concession_id',
         'contact_id',
         'source',
         'type',
@@ -45,9 +45,9 @@ class MiningLicense extends Model {
         'notes',
 
         'checked_by',
-		'checked_at',
-		'received_by',
-		'received_at',
+				'checked_at',
+				'received_by',
+				'received_at',
 
         'is_corrupt',
         'is_operating',

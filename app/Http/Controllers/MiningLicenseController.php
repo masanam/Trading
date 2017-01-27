@@ -121,6 +121,8 @@ class MiningLicenseController extends Controller
       //dd($req->status);
       $license = MiningLicense::find($id);
       $license ->status = $req->status;
+      $license ->approval_main_reason = $req->approval_main_reason;
+      $license ->approval_reason_description = $req->approval_reason_description;
       $license->save();
 
       return $this->show($license->id);

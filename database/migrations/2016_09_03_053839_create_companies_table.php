@@ -233,6 +233,8 @@ class CreateCompaniesTable extends Migration
             $table->string('geological_ash')->nullable();
             $table->boolean('geological_reserve')->nullable();
             $table->text('notes')->nullable(); //notes dan description bedanya apa?
+            $table->integer('approval_main_reason')->unsigned()->nullable(); // reason utama decline
+            $table->text('approval_reason_description')->nullable(); //penjelasan dari reason
             $table->integer('created_by')->unsigned()->nullable(); // ini reference ke user
             $table->integer('checked_by')->unsigned()->nullable(); // ini reference ke user
             $table->date('checked_at')->nullable();
@@ -267,7 +269,7 @@ class CreateCompaniesTable extends Migration
             $table->integer('mining_license_id')->unsigned()->nullable();
             $table->string('label')->nullable();
             $table->string('url')->nullable();
-            $table->integer('created_by')->unsigned()->nullable(); 
+            $table->integer('created_by')->unsigned()->nullable();
             $table->char('status', 1);
             $table->timestamps();
 
