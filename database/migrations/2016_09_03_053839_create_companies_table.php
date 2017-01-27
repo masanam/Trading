@@ -267,7 +267,7 @@ class CreateCompaniesTable extends Migration
             $table->integer('mining_license_id')->unsigned()->nullable();
             $table->string('label')->nullable();
             $table->string('url')->nullable();
-            $table->integer('created_by')->unsigned()->nullable(); 
+            $table->integer('created_by')->unsigned()->nullable();
             $table->char('status', 1);
             $table->timestamps();
 
@@ -283,6 +283,25 @@ class CreateCompaniesTable extends Migration
             $table->unique(['mining_license_id', 'spatial_data_id'],'overlay_unique');
         });
 
+        /*
+         * hasapu 2017-01-27
+         * added mining license history table
+         */
+
+        Schema::create('mining_license_history', function (Blueprint $table){
+            $table->increments('id');
+            $table->integer('mining_license_id')->unsigned()->nullable();
+            $table->integer('user_id')->unsigned()->nullable();
+            $table->string('old_value')->nullable();
+            $table->string('new_value')->nullable();
+            $table->string('description')->nullable();
+            $table->timestamps();
+            $table->foreign('mining_license_id')->references('id')->on('mining_licenses')->onDelete('restrict');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
+
+
+        });
+
     }
     /**
      * Reverse the migrations.
@@ -291,6 +310,7 @@ class CreateCompaniesTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('mining_license_history');
         Schema::dropIfExists('mining_license_spatial_data');
         Schema::dropIfExists('mining_license_files');
         Schema::dropIfExists('mining_licenses');
