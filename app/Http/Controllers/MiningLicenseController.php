@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Model\MiningLicense;
+use App\Model\MiningLicenseHistory;
 use Auth;
 
 use App\Http\Requests;
@@ -61,7 +62,6 @@ class MiningLicenseController extends Controller
         $license->status = '1';
         $license->save();
 
-        return $this->show($license->id);
     }
 
     /**
@@ -118,12 +118,20 @@ class MiningLicenseController extends Controller
           'message' => 'Bad Request'
         ], 400);
       }
-      //dd($req->status);
+
       $license = MiningLicense::find($id);
       $license ->status = $req->status;
       $license ->approval_main_reason = $req->approval_main_reason;
       $license ->approval_reason_description = $req->approval_reason_description;
       $license->save();
+      //hasapu
+      $iuphistory = new MiningLicenseHistory();
+      $iuphistory->mining_license_id = $req->id;
+      $iuphistory->new_value = $req->status;
+      $iuphistory->old_value = $req->old_status;
+      $iuphistory->user_id = $req->user_id;
+      $iuphistory->save();
+
 
       return $this->show($license->id);
     }
