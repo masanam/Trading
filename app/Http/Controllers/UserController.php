@@ -143,7 +143,7 @@ class UserController extends Controller
             foreach($req->roles as $r) {
                 $roles[] = $r['id'];
             }
-                // if($user->roles[]->id != $r['id'])
+
             $user->roles()->sync($roles);
         }
 
