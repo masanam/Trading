@@ -10,7 +10,7 @@ class MiningLicense extends Model {
 	protected $fillable = [
         'no',
         'company_id',
-    	'concession_id',
+    		'concession_id',
         'contact_id',
         'source',
         'type',
@@ -45,9 +45,9 @@ class MiningLicense extends Model {
         'notes',
 
         'checked_by',
-		'checked_at',
-		'received_by',
-		'received_at',
+				'checked_at',
+				'received_by',
+				'received_at',
 
         'is_corrupt',
         'is_operating',
@@ -85,6 +85,14 @@ class MiningLicense extends Model {
 
     public function spatial_data(){
         return $this->belongsToMany(SpatialData::class,'mining_license_spatial_data','mining_license_id','spatial_data_id')->select('*', DB::raw('ST_AsGeoJSON(polygon, 8) AS polygon'));
+    }
+
+		/*
+		 * hasapu 2017-01-27
+		 */
+
+		public function mininglicensehistories() {
+        return $this->belongsTo(MiningLicenseHistory::class);
     }
 
 }

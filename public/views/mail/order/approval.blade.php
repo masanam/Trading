@@ -284,7 +284,11 @@
                                   <tr align="center">
                                     <td style="font-size:18pt">
                                       <p>Typical Quality</p>
+                                      @if (count($order->buys) > 0)
                                       <p style="font-size:18pt">{{ $order->buys[0]->typical_quality }}</p>
+                                      @elseif (count($order->sells) > 0)
+                                      <p style="font-size:18pt">{{ $order->sells[0]->typical_quality }}</p>
+                                      @endif
                                     </td>
                                     <td>
                                       <p>GC NEWC</p>
