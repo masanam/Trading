@@ -166,6 +166,7 @@ class AuthenticateController extends Controller
     {
         $aws = config('filesystems.disks.s3');
         $s3 = Storage::disk('s3');
+        
 
         $s3Url = 'https://' . $aws['bucket'] . '.s3-' . $aws['region'] . '.amazonaws.com';
         $filename = $request->filename;
