@@ -32,6 +32,7 @@ Route::group(['middleware' => ['cors']], function() {
     //Forgot Password API
     Route::post('user/password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
     Route::get('user/current', 'UserController@currentUser');
+    Route::put('user/{id}/restore', 'UserController@restore');
     Route::resource('user', 'UserController', ['except' => [ 'create', 'edit' ]]);
 
 
