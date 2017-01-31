@@ -62,6 +62,7 @@ class MiningLicenseController extends Controller
         $license->status = '1';
         $license->save();
 
+        return response()->json($license, 200);
     }
 
     /**
