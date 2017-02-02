@@ -62,6 +62,7 @@ class MiningLicenseController extends Controller
         $license->status = '1';
         $license->save();
 
+        return response()->json($license, 200);
     }
 
     /**
@@ -96,10 +97,11 @@ class MiningLicenseController extends Controller
         }
         $license = MiningLicense::find($id);
         $license->fill($req->all());
-        if($req->status) $license->status = $req->status;
+        if($req->status) {
+            if($license->status !== 'p') $license->status = $req->status;
+        }
         $license->expired = date('Y-m-d',strtotime($req->expired));
         $license->checked_at = date('Y-m-d',strtotime($req->checked_at));
-        $license->updated_at = date('Y-m-d',strtotime($req->updated_at));
         if($req->polygon) $license->polygon = DB::raw('GeomFromText(\'POLYGON('.$req->polygon.')\')');
 
         if($req->overlay){
