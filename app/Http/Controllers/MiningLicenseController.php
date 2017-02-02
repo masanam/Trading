@@ -118,18 +118,23 @@ class MiningLicenseController extends Controller
           'message' => 'Bad Request'
         ], 400);
       }
-
+      
       $license = MiningLicense::find($id);
+      $old_status = $license->status;
       $license ->status = $req->status;
       $license ->approval_main_reason = $req->approval_main_reason;
       $license ->approval_reason_description = $req->approval_reason_description;
       $license->save();
       //hasapu
       $iuphistory = new MiningLicenseHistory();
+      $iuphistory->user_id = Auth::User()->id;
       $iuphistory->mining_license_id = $req->id;
       $iuphistory->new_value = $req->status;
-      $iuphistory->old_value = $req->old_status;
-      $iuphistory->user_id = $req->user_id;
+      $iuphistory->old_value = $old_status;
+      if ($req->description){
+        $iuphistory->description = $req->description;  
+      }
+
       $iuphistory->save();
 
 
