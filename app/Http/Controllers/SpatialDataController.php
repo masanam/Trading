@@ -22,7 +22,7 @@ class SpatialDataController extends Controller
 
     public function index(Request $req = null)
     {
-      $data = SpatialData::with('User')->select('*', DB::raw('ST_AsGeoJSON(polygon, 8) AS polygon'))
+      $data = SpatialData::with('User')->select('id', 'type', 'name', 'created_by', 'created_at', DB::raw('ST_AsGeoJSON(polygon, 8) AS polygon'))
       ->where('status', 'a');
       if($req->island) $data->where('island',$req->island);
       if($req->province) $data->where('province',$req->province);

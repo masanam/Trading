@@ -72,7 +72,6 @@ angular.module('order').controller('OrderIndexController', ['$scope', '$statePar
 
     $scope.saveIndex = function () {
       $scope.order.index_id = $scope.display.index.id;
-
       $scope.update();
     };
 

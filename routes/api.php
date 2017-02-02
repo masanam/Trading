@@ -32,6 +32,7 @@ Route::group(['middleware' => ['cors']], function() {
     //Forgot Password API
     Route::post('user/password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
     Route::get('user/current', 'UserController@currentUser');
+    Route::put('user/{id}/restore', 'UserController@restore');
     Route::resource('user', 'UserController', ['except' => [ 'create', 'edit' ]]);
 
 
@@ -114,6 +115,7 @@ Route::group(['middleware' => ['cors']], function() {
      * By AndezTea
      */
     Route::resource('mining-license', 'MiningLicenseController', ['except' => ['create', 'edit']]);
+    Route::match(['get','put'], 'mining-license/{id}/approval', 'MiningLicenseController@approval');
     Route::resource('spatial-data', 'SpatialDataController', ['except' => ['create', 'edit']]);
 
     //hasapu 25-01-2017

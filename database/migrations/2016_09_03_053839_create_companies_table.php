@@ -22,23 +22,23 @@ class CreateCompaniesTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->integer('area_id')->nullable();
             $table->string('company_name');
-            $table->string('company_no');
-            $table->boolean('is_affiliated');
-            $table->string('phone');
-            $table->string('email');
+            $table->string('company_no')->nullable();
+            $table->boolean('is_affiliated')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('email')->nullable();
             $table->string('web')->nullable();
-            $table->string('address');
-            $table->string('city');
-            $table->string('country');
-            $table->string('industry'); //cement, powerplant, pulp paper, general
+            $table->string('address')->nullable();
+            $table->string('city')->nullable();
+            $table->string('country')->nullable();
+            $table->string('industry')->nullable(); //cement, powerplant, pulp paper, general
             $table->integer('annual_demand')->nullable();
             $table->integer('annual_sales')->nullable();
             $table->string('preferred_trading_term')->nullable();
             $table->string('preferred_trading_term_detail')->nullable();
             $table->string('preferred_payment_term')->nullable();
             $table->string('preferred_payment_term_detail')->nullable();
-            $table->string('purchasing_countries');
-            $table->text('description');
+            $table->string('purchasing_countries')->nullable();
+            $table->text('description')->nullable();
             $table->char('company_type', 1); // b = buyer, s = seller, t = trader, v = vendor
             $table->char('status', 1); // A = Active , X = Deleted
             $table->timestamps();
@@ -233,6 +233,8 @@ class CreateCompaniesTable extends Migration
             $table->string('geological_ash')->nullable();
             $table->boolean('geological_reserve')->nullable();
             $table->text('notes')->nullable(); //notes dan description bedanya apa?
+            $table->integer('approval_main_reason')->unsigned()->nullable(); // reason utama decline
+            $table->text('approval_reason_description')->nullable(); //penjelasan dari reason
             $table->integer('created_by')->unsigned()->nullable(); // ini reference ke user
             $table->integer('checked_by')->unsigned()->nullable(); // ini reference ke user
             $table->date('checked_at')->nullable();
@@ -267,7 +269,7 @@ class CreateCompaniesTable extends Migration
             $table->integer('mining_license_id')->unsigned()->nullable();
             $table->string('label')->nullable();
             $table->string('url')->nullable();
-            $table->integer('created_by')->unsigned()->nullable(); 
+            $table->integer('created_by')->unsigned()->nullable();
             $table->char('status', 1);
             $table->timestamps();
 
@@ -283,6 +285,25 @@ class CreateCompaniesTable extends Migration
             $table->unique(['mining_license_id', 'spatial_data_id'],'overlay_unique');
         });
 
+        /*
+         * hasapu 2017-01-27
+         * added mining license history table
+         */
+
+        Schema::create('mining_license_history', function (Blueprint $table){
+            $table->increments('id');
+            $table->integer('mining_license_id')->unsigned()->nullable();
+            $table->integer('user_id')->unsigned()->nullable();
+            $table->string('old_value')->nullable();
+            $table->string('new_value')->nullable();
+            $table->string('description')->nullable();
+            $table->timestamps();
+            $table->foreign('mining_license_id')->references('id')->on('mining_licenses')->onDelete('restrict');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
+
+
+        });
+
     }
     /**
      * Reverse the migrations.
@@ -291,6 +312,7 @@ class CreateCompaniesTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('mining_license_history');
         Schema::dropIfExists('mining_license_spatial_data');
         Schema::dropIfExists('mining_license_files');
         Schema::dropIfExists('mining_licenses');

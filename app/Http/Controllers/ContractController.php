@@ -47,15 +47,15 @@ class ContractController extends Controller
        if($req->q)
        {
          $param = $req->q;
-         $contracts = $contracts->where(function($query) use ($param)
-         {
-          $query->orWhereHas('orders.sells.company',function($q) use ($param)
-          {
-           $q->where('company_name','LIKE','%'.$param.'%');
-          })
-          ->orWhere('contract_no', 'LIKE', '%'.$param.'%')
-          ->orWhere('date_from','LIKE','%'.$param.'%')
-          ->orWhere('date_to','LIKE','%'.$param.'%');
+         $contracts = $contracts->where(function($query) use ($param){
+           return $query->WhereHas('orders.sells.company',function($q) use ($param) {
+                    $q->where('company_name','LIKE','%'.$param.'%');
+                  })
+                  ->orWhere('contract_no', 'LIKE', '%'.$param.'%')
+                  ->orWhere('date_from','LIKE','%'.$param.'%')
+                  ->orWhere('date_to','LIKE','%'.$param.'%')
+                  ->orWhere('date_to','LIKE','%'.$param.'%');
+
          });
        }
 
@@ -112,7 +112,7 @@ class ContractController extends Controller
      */
     public function update(Request $request, $id)
     {
-      $contract = Contract::find($id);
+      $contract = Contract::with('shipments', 'orders', 'orders.buys', 'orders.buys.company', 'orders.buys.product', 'orders.sells', 'orders.sells.company', 'orders.sells.product')->find($id);
 
       if(!$contract) {
         return response()->json(['message' => 'not found'], 404);

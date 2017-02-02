@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Model\MiningLicense;
+use App\Model\MiningLicenseHistory;
 use Auth;
 
 use App\Http\Requests;
@@ -61,7 +62,7 @@ class MiningLicenseController extends Controller
         $license->status = '1';
         $license->save();
 
-        return $this->show($license->id);
+        return response()->json($license, 200);
     }
 
     /**
@@ -75,6 +76,7 @@ class MiningLicenseController extends Controller
 
 
         $license = MiningLicense::with('Company','Contact','Concession','Concession.port','checked_by','MiningLicenseFile','spatial_data')->select('*', DB::raw('ST_AsGeoJSON(polygon, 8) AS polygon'))->where('id',$id)->first();
+
 
         return response()->json($license, 200);
     }
@@ -95,10 +97,11 @@ class MiningLicenseController extends Controller
         }
         $license = MiningLicense::find($id);
         $license->fill($req->all());
-        if($req->status) $license->status = $req->status;
+        if($req->status) {
+            if($license->status !== 'p') $license->status = $req->status;
+        }
         $license->expired = date('Y-m-d',strtotime($req->expired));
         $license->checked_at = date('Y-m-d',strtotime($req->checked_at));
-        $license->updated_at = date('Y-m-d',strtotime($req->updated_at));
         if($req->polygon) $license->polygon = DB::raw('GeomFromText(\'POLYGON('.$req->polygon.')\')');
 
         if($req->overlay){
@@ -108,6 +111,31 @@ class MiningLicenseController extends Controller
         $license->save();
 
         return $this->show($license->id);
+    }
+
+    public function approval(Request $req, $id)
+    {
+      if(!$req) {
+        return response()->json([
+          'message' => 'Bad Request'
+        ], 400);
+      }
+
+      $license = MiningLicense::find($id);
+      $license ->status = $req->status;
+      $license ->approval_main_reason = $req->approval_main_reason;
+      $license ->approval_reason_description = $req->approval_reason_description;
+      $license->save();
+      //hasapu
+      $iuphistory = new MiningLicenseHistory();
+      $iuphistory->mining_license_id = $req->id;
+      $iuphistory->new_value = $req->status;
+      $iuphistory->old_value = $req->old_status;
+      $iuphistory->user_id = $req->user_id;
+      $iuphistory->save();
+
+
+      return $this->show($license->id);
     }
 
     /**

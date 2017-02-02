@@ -400,6 +400,7 @@ class OrderController extends Controller
     }
 
 
+    $order->index_id = $req->index_id;
     $order->request_reason = $req->request_reason;
     $order->finalize_reason = $req->finalize_reason;
     $order->cancel_reason = $req->cancel_reason;
