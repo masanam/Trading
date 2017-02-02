@@ -44,6 +44,9 @@ angular.module('order').factory('Term', function (){
     ],
     additionalCost : [
       'Survey', 'Pit-to-Port', 'Transshipment', 'Freight', 'Port-to-Factory', 'Others'
+    ],
+    carrierTypes : [
+      'Geared', 'Gearless', 'Geared & Gearless'
     ]
   };
 });

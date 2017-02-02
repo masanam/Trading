@@ -71,4 +71,11 @@
     <label>Penalty : </label>
     <textarea class="form-control" ng-model="lead.penalty"></textarea>
   </div>
+  <div class="col-lg-6">
+    <label>Carrier Type : </label>
+      <select class="form-control" ng-model="lead.carrier_type" 
+        ng-options="o as o for o in carrierTypes" required>
+        <option value="">-- Not Specified --</option>
+      </select>
+  </div>
 </div>

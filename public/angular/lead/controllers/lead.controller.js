@@ -4,6 +4,7 @@ angular.module('lead').controller('LeadController', ['$scope', '$state', '$state
     $scope.Authentication = Authentication;
     $scope.tradingTerm = Term.trading;
     $scope.paymentTerm = Term.payment;
+    $scope.carrierTypes = Term.carrierTypes;
     $scope.showBuy = Environment.showBuy;
     $scope.selected = {};
 
