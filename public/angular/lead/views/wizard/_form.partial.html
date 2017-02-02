@@ -41,7 +41,7 @@
   <div class="col-lg-6">
     <label>Shipping Term : </label>
     <p class="input-group">
-      <select class="form-control" ng-model="lead.trading_term" 
+      <select class="form-control" ng-model="lead.trading_term"
         ng-options="o as o for o in tradingTerm" required>
         <option value="">-- Select Trading Term --</option>
       </select>
@@ -52,7 +52,7 @@
   <div class="col-lg-6">
     <label>Payment Terms : </label>
     <p class="input-group">
-      <select class="form-control" ng-model="lead.payment_term" 
+      <select class="form-control" ng-model="lead.payment_term"
         ng-options="o as o for o in paymentTerm" required>
         <option value="">-- Select Payment Term --</option>
       </select>
@@ -64,11 +64,7 @@
 
 <div class="row">
   <div class="col-lg-6">
-    <label>Commercial Terms : </label>
-    <textarea class="form-control" ng-model="lead.commercial_term"></textarea>
-  </div>
-  <div class="col-lg-6">
-    <label>Penalty : </label>
-    <textarea class="form-control" ng-model="lead.penalty"></textarea>
+    <label>Remarks : </label>
+    <textarea class="form-control" ng-model="lead.remarks"></textarea>
   </div>
 </div>

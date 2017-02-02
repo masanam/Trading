@@ -7,7 +7,7 @@
         <button type="button" class="btn btn-default" ui-sref="lead.list">
           <i class="glyphicon glyphicon-arrow-left"></i> Back
         </button>
-       
+
         <button ng-disabled="!lead.lead_type" type="submit" class="btn btn-success">
           Next <i class="glyphicon glyphicon-arrow-right"></i>
         </button>
@@ -37,7 +37,7 @@
           <div ng-show="!selected.company">
             <div class="select-box" ng-init="find()" ng-click="find()">
               <label for="id">Name of Company :</label>
-              
+
               <ui-select ng-model="selected.company"
                 reset-search-input="false"
                 style="min-width: 30px;"
@@ -64,8 +64,8 @@
           </div>
 
           <div ng-include="'/angular/coalpedia/views/company/wizard/_company.partial.html'" ng-show="selected.company"></div>
-        </div>  
-      </div>  
+        </div>
+      </div>
     </div>
   </div>
 </form>

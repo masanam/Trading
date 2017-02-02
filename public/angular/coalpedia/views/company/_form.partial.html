@@ -10,7 +10,7 @@
     <div class="btn-group">
       <label class="btn btn-default" ng-model="company.company_type" uib-btn-radio="'c'" >Customer (End User)</label>
       <label class="btn btn-default" ng-model="company.company_type" uib-btn-radio="'t'">Coal Trader</label>
-      <label class="btn btn-default" ng-model="company.company_type" uib-btn-radio="'s'">Supplier</label>
+      <label class="btn btn-default" ng-model="company.company_type" uib-btn-radio="'s'" ng-show='showBuy'>Supplier</label>
       <label class="btn btn-default" ng-model="company.company_type" uib-btn-radio="'v'">Vendor</label>
     </div>
   </div>
@@ -149,7 +149,7 @@
 
 <div class="form-group"  ng-if="company.company_type !== 'v'">
   <label for="headquarter_location">Preferred Buying Term:</label>
-  
+
   <div class="input-group">
     <select name="preferred_payment_term" id="preferred_payment_term" class="form-control"
       ng-model="company.preferred_payment_term"  ng-options="term for term in term.payment" required></select>
