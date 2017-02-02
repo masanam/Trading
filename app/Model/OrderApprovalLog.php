@@ -13,7 +13,7 @@ class OrderApprovalLog extends Model
     	'status'
     ];
 
-    public function getCreatedAtAttribute($value)
+    /*public function getCreatedAtAttribute($value)
     {
         return date('d-m-Y', strtotime($value));
     }
@@ -21,5 +21,5 @@ class OrderApprovalLog extends Model
     public function getUpdatedAtAttribute($value)
     {
         return date('d-m-Y', strtotime($value));
-    }
+    }*/
 }

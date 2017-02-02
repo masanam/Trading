@@ -1,7 +1,7 @@
 <div class="box">
   <div class="box-header with-border">
     <h4 class="modal-title">
-      Create Contact
+      Create A Contact
       <i class="fa fa-times pull-right" ng-click="close()"></i>
     </h4>
   </div>
@@ -45,7 +45,7 @@
       <br><br>
     </div>
 
-    <form name="createContact" ng-show="createNew" role="form" ng-submit="create(createContact)" ng-init="contact = {}">
+    <form name="createContact" ng-show="createNew" role="form" ng-submit="create(createContact)">
       <div ng-include="'/angular/coalpedia/views/contact/_form.partial.html'"></div>
     </form>
   </div>

@@ -12,11 +12,11 @@
 	  	</div>
 	  	<div style="border-left: 1px solid gray;" class="col-lg-2">
 	  		<label>Date From : </label>
-	  		<span>{{order.contracts.date_from | date: 'mediumDate'}}</span>
+	  		<span>{{order.sells[0].laycan_start | date: 'mediumDate'}}</span>
 	  	</div>
 	  	<div style="border-left: 1px solid gray;" class="col-lg-2">
 	  		<label>Date To : </label>
-	  		<span>{{order.contracts.date_to | date: 'mediumDate'}}</span>
+	  		<span>{{order.sells[0].laycan_end | date: 'mediumDate'}}</span>
 	  	</div>
       <div style="border-left: 1px solid gray;" class="col-lg-2">
         <label>Customer : </label>

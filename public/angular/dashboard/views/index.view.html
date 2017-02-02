@@ -5,8 +5,8 @@
         <h3 class="box-title">Filters</h3>
       </div>
       <div class="box-body">
-        <div class="col-lg-3">
-          <label>Frequency</label>
+        <div class="col-lg-4">
+          <label style="margin-right: 5px;">Frequency</label>
           <div class="btn-group">
             <label class="btn btn-default" ng-model="frequency" uib-btn-radio="'daily'" uib-tooltip="Daily">D</label>
             <label class="btn btn-default" ng-model="frequency" uib-btn-radio="'weekly'" uib-tooltip="Weekly">W</label>
@@ -15,21 +15,17 @@
         </div>
 
         <div class="col-lg-1">
-          <label>Date Start</label>
+          <label style="margin-top: 7px;">Date Start</label>
         </div>
         <div class="col-lg-3">
           <input type="date" class="form-control" ng-model="dateStart">
         </div>
 
         <div class="col-lg-1">
-          <label>Date End</label>
+          <label style="margin-top: 7px;">Date End</label>
         </div>
         <div class="col-lg-3">
           <input type="date" class="form-control" ng-model="dateEnd" min="{{ dateStart | date:'yyyy-MM-dd' }}">
-        </div>
-
-        <div class="col-lg-1">
-          <button class="btn btn-primary" ng-click="getIndexPrices()">Apply Filter</button>
         </div>
 
         <div class="col-lg-12">
@@ -41,6 +37,9 @@
               {{ index.index_provider }} - {{ index.index_name }}
             </label>
           </div>
+        </div>
+        <div class="col-lg-1" style="margin-top: 20px;">
+          <button class="btn btn-primary" ng-click="getIndexPrices()">Apply Filter</button>
         </div>
       </div>
     </div>

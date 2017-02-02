@@ -12,6 +12,7 @@ class Company extends Model
 
   protected $fillable = [
     'company_name',
+    'company_no',
     'is_affiliated',
     'phone',
     'email',
@@ -31,7 +32,7 @@ class Company extends Model
     'description',
   ];
 
-  public function getCreatedAtAttribute($value)
+  /*public function getCreatedAtAttribute($value)
     {
         return date('d-m-Y', strtotime($value));
     }
@@ -39,10 +40,14 @@ class Company extends Model
     public function getUpdatedAtAttribute($value)
     {
         return date('d-m-Y', strtotime($value));
-    }
+    }*/
 
   public function user() {
     return $this->belongsTo(User::class);
+  }
+
+  public function area() {
+    return $this->belongsTo(Area::class);
   }
 
   public function contacts() {

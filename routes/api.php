@@ -24,6 +24,7 @@ Route::group(['middleware' => ['cors']], function() {
     Route::get('authenticate/user', 'AuthenticateController@getAuthenticatedUser');
     Route::post('authenticate/forgot', 'AuthenticateController@forgotPassword');
 
+
     //S3 Upload file signing API
     Route::post('signing', 'AuthenticateController@signing');
 
@@ -31,7 +32,10 @@ Route::group(['middleware' => ['cors']], function() {
     //Forgot Password API
     Route::post('user/password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
     Route::get('user/current', 'UserController@currentUser');
+    Route::put('user/{id}/restore', 'UserController@restore');
     Route::resource('user', 'UserController', ['except' => [ 'create', 'edit' ]]);
+
+
 
     /*
      * COALPEDIA API GROUP
@@ -44,11 +48,20 @@ Route::group(['middleware' => ['cors']], function() {
     Route::get('company/{id}/detach', 'CompanyController@detach'); //port, concession, factory, product
     Route::resource('company', 'CompanyController', ['except' => [ 'create', 'edit' ]]);
 
+    Route::resource('area', 'AreaController', ['except' => [ 'create', 'edit' ]]);
     Route::resource('contact', 'ContactController', ['except' => [ 'create', 'edit' ]]);
     Route::resource('port', 'PortController', ['except' => [ 'create', 'edit' ]]);
     Route::resource('product', 'ProductController', ['except' => [ 'create', 'edit' ]]);
     Route::resource('concession', 'ConcessionController', ['except' => [ 'create', 'edit' ]]);
     Route::resource('factory', 'FactoryController', ['except' => [ 'create', 'edit' ]]);
+
+    //Myr
+    Route::get('sales-target/{year}', 'SalesTargetController@index');
+    Route::resource('sales-target', 'SalesTargetController', ['except' => [ 'create', 'edit' ]]);
+
+    Route::resource('qualities', 'QualityController', ['except' => [ 'create', 'edit' ]]);
+
+
 
     /*
      * INDEX API GROUP
@@ -85,13 +98,29 @@ Route::group(['middleware' => ['cors']], function() {
 
     Route::get('leads/{id}/test', 'LeadController@isSingleLeadInOrder');
 
+    Route::post('shipments/status-log', 'ShipmentController@storeShipmentLog');
+    Route::get('shipments/status-log', 'ShipmentController@indexShipmentLog');
+    Route::get('shipments/{id}/status-log', 'ShipmentController@showShipmentLogByShipment');
     Route::get('shipments/history', 'ShipmentController@indexShipmentHistory');
-    Route::get('shipments/history/{id}', 'ShipmentController@showShipmentHistory');
+    Route::get('shipments/{id}/history', 'ShipmentController@showShipmentHistoryByShipment');
     Route::resource('contracts', 'ContractController', ['except' => [ 'create', 'edit' ]]);
     Route::resource('shipments', 'ShipmentController', ['except' => [ 'create', 'edit' ]]);
 
     //roles & permission API
     Route::resource('role','RoleController', ['except' => [ 'create', 'edit' ]]);
     Route::resource('permission','PermissionController', ['except' => [ 'create', 'edit' ]]);
+
+    /*
+     * IUP
+     * By AndezTea
+     */
+    Route::resource('mining-license', 'MiningLicenseController', ['except' => ['create', 'edit']]);
+    Route::match(['get','put'], 'mining-license/{id}/approval', 'MiningLicenseController@approval');
+    Route::resource('spatial-data', 'SpatialDataController', ['except' => ['create', 'edit']]);
+
+    //hasapu 25-01-2017
+    Route::resource('metrics', 'QualityMetricController', ['except' => [ 'create', 'edit' ]]);
+    Route::resource('mining-license-file','MiningLicenseFileController', ['except' => ['create', 'edit']]);
+
 
 });

@@ -2,6 +2,9 @@
 
 angular.module('lead').controller('LeadCompanyController', ['$scope', '$stateParams', '$uibModal', 'Company', 'Lead',
   function ($scope, $stateParams, $uibModal, Company, Lead) {
+
+    $scope.lead = Lead.get({ id:$stateParams.id });
+
     //Init select companies
     $scope.find = function(keyword, type) {
       if(!type){
@@ -23,7 +26,11 @@ angular.module('lead').controller('LeadCompanyController', ['$scope', '$statePar
         controller: 'CompanyModalController',
         windowClass: 'xl-modal',
         resolve: {
-          company: new Company()
+          company: new Company(),
+          companyType: function () {
+            if($scope.lead.lead_type === 'buy') return 'supplier';
+            else return 'customer';
+          }
         }
       });
 

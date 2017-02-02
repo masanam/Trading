@@ -196,8 +196,10 @@ class LeadController extends Controller
   * @return \Illuminate\Http\Response
   */
   public function show(Request $req, $id){
-
-    $lead = Lead::with('company','port','concession','product','used','orders');
+    $lead = Lead::with(['company','port','product','used','orders',
+      'concession' => function ($q){
+        return $q->select('concession_name');
+      }]);
     if ($req->lead_type === 'buy'){
       $lead->where('lead_type', 'b');
     }

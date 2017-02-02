@@ -1,21 +1,31 @@
 <div class="form-group">
-  <label for="company_name">Name of Company:</label>
+  <label for="company_name">Name of  {{ companyType }}:</label>
   <input name="company_name" type="text" class="form-control" id="company_name" ng-model="company.company_name" required>
 </div>
 
+<div class="form-group" ng-if="companyType === 'customer'">
+  <label for="company_no">Customer Number:</label>
+  <input name="company_no" type="text" class="form-control" id="company_no" ng-model="company.company_no" required>
+</div>
+
+<div class="form-group" ng-if="companyType === 'Customer'">
+  <label for="area_id">Area:</label>
+  <select name="area_id" class="form-control" id="area_id" ng-model="company.area_id" ng-init="findAreas()">
+	   <option ng-repeat="area in areas" value="{{area.id}}">{{area.description}}</option>
+  </select>
+</div>
+
 <div class="row col-lg-12">
-  <div class="form-group pull-left">
-    <label for="company_type">Company:</label><br>
+  <div class="form-group pull-left" ng-init="company.company_type = companyType[0]">
+    <label for="company_type"> {{ companyType }} Type:</label><br>
 
     <div class="btn-group">
-      <label class="btn btn-default" ng-model="company.company_type" uib-btn-radio="'c'" >Customer (End User)</label>
+      <label class="btn btn-default" ng-model="company.company_type" uib-btn-radio="'c'" >End User / Factory</label>
       <label class="btn btn-default" ng-model="company.company_type" uib-btn-radio="'t'">Coal Trader</label>
       <label class="btn btn-default" ng-model="company.company_type" uib-btn-radio="'s'" ng-show='showBuy'>Supplier</label>
       <label class="btn btn-default" ng-model="company.company_type" uib-btn-radio="'v'">Vendor</label>
     </div>
   </div>
-
-
 
   <div class="form-group pull-left" style="margin-left:30px;">
     <label for="company_name">Affiliation Status:</label><br>
@@ -25,8 +35,8 @@
     </div>
   </div>
 
-  <div class="form-group pull-right">
-    <label for="headquarter_location">Main business of Customer:</label><br>
+  <div class="form-group pull-left" style="margin-left:30px;">
+    <label for="headquarter_location">Main Business of {{ companyType }}:</label><br>
     <div class="btn-group">
       <label ng-if="company.company_type === 'c'" class="btn btn-default"
         ng-model="company.industry" uib-btn-radio="'Cements Industry'">
@@ -75,7 +85,6 @@
         Vessel
       </label>
 
-
       <label class="btn btn-default" ng-model="company.industry" uib-btn-radio="'General Industry'">
         General Industry
       </label>
@@ -94,7 +103,7 @@
 </div>
 
 <div class="form-group">
-  <label for="web">Web:</label>
+  <label for="web">Website:</label>
   <input name="web" type="text" class="form-control" id="web" ng-model="company.web">
 </div>
 

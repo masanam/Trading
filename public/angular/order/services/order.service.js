@@ -40,10 +40,13 @@ angular.module('order').factory('Term', function (){
       'FOT', 'FOB BARGE', 'FOB MV', 'CNF', 'CIF', 'FRANCO'
     ],
     payment : [
-      'TT', 'LC', 'LC USANCE'
+      'TT', 'LC', 'USANCE LC'
     ],
     additionalCost : [
       'Survey', 'Pit-to-Port', 'Transshipment', 'Freight', 'Port-to-Factory', 'Others'
+    ],
+    carrierTypes : [
+      'Geared', 'Gearless', 'Geared & Gearless'
     ]
   };
 });

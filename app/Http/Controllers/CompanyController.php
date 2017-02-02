@@ -28,15 +28,16 @@ class CompanyController extends Controller
   */
   public function index(Request $req)
   {
-    $companies = Company::with('user')->where('status', 'a');
+    $companies = Company::with('user', 'area')->where('status', 'a');
 
     if($req->q) $companies->where('company_name', 'LIKE', '%'.$req->q.'%');
     if($req->type) {
       if ($req->type[0] == 'c' || $req->type[0] == 's')
         $companies->whereIn('company_type', [ $req->type[0], 't' ]);
-      
+
       else $companies->where('company_type', $req->type[0]);
     }
+    if($req->area_id) $companies->where('area_id','=',$req->area_id);
 
     $companies = $companies->get();
     return response()->json($companies, 200);
@@ -50,11 +51,14 @@ class CompanyController extends Controller
   */
   public function show($id)
   {
-    $company = Company::with(['contacts','products','factories','ports','concessions','concessions.port','user'])->find($id);
+    $company = Company::with(['contacts','products','factories','ports','user','area',
+      'concessions' => function ($query) {
+        $query->select('id','concession_name','company_id','owner','reserves','city','country');
+      },'concessions.port'])->find($id);
 
     if($company->status != 'a')
       return response()->json(['message' => 'deactivated record'], 404);
-    
+
     return response()->json($company, 200);
   }
 
@@ -131,14 +135,14 @@ class CompanyController extends Controller
   {
     if($req->contact_id){
       $items['contact'] = Contact::find($req->contact_id);
-      
+
       if($items['contact']->company_id == $id){
-        $items['contact']->status = 'a';  
+        $items['contact']->status = 'a';
       } else {
-        $items['contact'] = $items['contact']->replicate();  
+        $items['contact'] = $items['contact']->replicate();
         $items['contact']->company_id = $id;
       }
-      
+
       $items['contact']->save();
     }
 
@@ -151,14 +155,14 @@ class CompanyController extends Controller
 
     if($req->product_id){
       $items['product'] = Product::find($req->product_id);
-      
+
       if($items['product']->company_id == $id){
-        $items['product']->status = 'a';  
+        $items['product']->status = 'a';
       } else {
-        $items['product'] = $items['product']->replicate();  
+        $items['product'] = $items['product']->replicate();
         $items['product']->company_id = $id;
       }
-      
+
       $items['product']->save();
     }
 

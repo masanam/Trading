@@ -12,7 +12,7 @@ class BuyOrder extends Model
 {
     protected $table = 'buy_order';
 
-    public function getCreatedAtAttribute($value)
+    /*public function getCreatedAtAttribute($value)
     {
         return date('d-m-Y', strtotime($value));
     }
@@ -20,7 +20,7 @@ class BuyOrder extends Model
     public function getUpdatedAtAttribute($value)
     {
         return date('d-m-Y', strtotime($value));
-    }
+    }*/
 
     public function buyer() {
     	return $this->belongsTo('App\Model\Buyer');

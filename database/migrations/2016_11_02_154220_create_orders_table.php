@@ -24,8 +24,8 @@ class CreateOrdersTable extends Migration
             $table->char('status', 1);
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('index_id')->references('id')->on('index')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
+            $table->foreign('index_id')->references('id')->on('index')->onDelete('restrict');
         });
 
         Schema::create('order_approvals', function (Blueprint $table) {
@@ -35,8 +35,8 @@ class CreateOrdersTable extends Migration
             $table->char('status', 1); // A = Approved ; R = Reject
             $table->timestamps();
 
-            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('order_id')->references('id')->on('orders')->onDelete('restrict');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
             $table->unique(['order_id', 'user_id']);
         });
 
@@ -47,8 +47,8 @@ class CreateOrdersTable extends Migration
             $table->char('status', 1); // A = Approved ; R = Reject
             $table->timestamps();
 
-            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('order_id')->references('id')->on('orders')->onDelete('restrict');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
         });
 
         Schema::create('order_users', function (Blueprint $table) {
@@ -56,8 +56,8 @@ class CreateOrdersTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->string('role'); // A = Approved ; R = Reject
 
-            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('order_id')->references('id')->on('orders')->onDelete('restrict');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
             $table->unique(['order_id', 'user_id']);
         });
 
@@ -71,8 +71,8 @@ class CreateOrdersTable extends Migration
             $table->string('payment_term');
             $table->timestamps();
 
-            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
-            $table->foreign('lead_id')->references('id')->on('leads')->onDelete('cascade');
+            $table->foreign('order_id')->references('id')->on('orders')->onDelete('restrict');
+            $table->foreign('lead_id')->references('id')->on('leads')->onDelete('restrict');
             $table->unique(['order_id', 'lead_id']);
         });
 
@@ -94,8 +94,8 @@ class CreateOrdersTable extends Migration
             $table->decimal('port_to_factory', 15, 3)->nullable();
             $table->timestamps();
 
-            $table->foreign('order_detail_id')->references('id')->on('order_details')->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('order_detail_id')->references('id')->on('order_details')->onDelete('restrict');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
         });
 
         Schema::create('order_additional_costs', function (Blueprint $table) {
@@ -104,8 +104,8 @@ class CreateOrdersTable extends Migration
             $table->string('label');
             $table->decimal('cost', 15, 3);
 
-            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
-            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
+            $table->foreign('order_id')->references('id')->on('orders')->onDelete('restrict');
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('restrict');
         });
     }
 

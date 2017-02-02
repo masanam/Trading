@@ -2,6 +2,9 @@
   <table st-table="displayedCollection" st-safe-src="leads" class="table table-striped">
     <thead>
       <tr>
+        <th colspan="11" style="padding: 20px;"><input st-search="" class="form-control" placeholder="Search ..." type="text"/></th>
+      </tr>
+      <tr>
         <th st-sort="id">#</th>
         <th st-sort="user.name">PIC</th>
         <th st-sort="order_date">Input Date</th>
@@ -9,7 +12,7 @@
         <th st-sort="product_name">Quality</th>
         <th st-sort="volume">Qty</th>
         <th st-sort="lead.volume - getUsed(lead)">Qty Remaining</th>
-        <th st-sort="order_expired">Valid Until</th>
+        <th st-sort="order_expired">Validity</th>
         <th st-sort="price">Price / Tonnes</th>
         <th st-sort="city">Location</th>
         <th st-sort="order_status">Status</th>

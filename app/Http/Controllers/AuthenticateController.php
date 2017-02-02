@@ -24,9 +24,8 @@ class AuthenticateController extends Controller
 {
     public function __construct()
    {
-       $this->middleware('jwt.auth', ['except' => ['authenticate', 'signup', 'forgotPassword']]);
+       $this->middleware('jwt.auth', ['except' => ['authenticate', 'signup', 'helloworld', 'forgotPassword']]);
    }
-
     /**
      * Display a listing of the resource.
      *
@@ -36,7 +35,6 @@ class AuthenticateController extends Controller
     {
         return "Auth index";
     }
-
     public function authenticate(Request $request)
     {
         $credentials = $request->only('email', 'password');
@@ -81,6 +79,7 @@ class AuthenticateController extends Controller
         $user->phone = trim($request->phone);
         $user->password = bcrypt($request->password);
         $user->save();
+
 
         $user->roles()->attach(2);
 
@@ -167,6 +166,7 @@ class AuthenticateController extends Controller
     {
         $aws = config('filesystems.disks.s3');
         $s3 = Storage::disk('s3');
+        
 
         $s3Url = 'https://' . $aws['bucket'] . '.s3-' . $aws['region'] . '.amazonaws.com';
         $filename = $request->filename;

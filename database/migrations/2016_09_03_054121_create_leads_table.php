@@ -100,6 +100,7 @@ class CreateLeadsTable extends Migration
 
             $table->integer('volume')->nullable();
             $table->integer('price')->nullable();
+            $table->string('carrier_type')->nullable(); // not specified, gear, gearless, gear & gearless
             $table->string('trading_term')->nullable();
             $table->string('trading_term_detail')->nullable();
             $table->string('payment_term')->nullable();
@@ -111,7 +112,11 @@ class CreateLeadsTable extends Migration
 
             $table->timestamps();
 
-            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('restrict');
+        });
+
+        Schema::table('leads', function ($table) {
+            DB::statement('ALTER TABLE leads ADD COLUMN polygon geometry;');
         });
     }
 

@@ -38,7 +38,7 @@ class Product extends Model
         'aft_max',
     ];
 
-    public function getCreatedAtAttribute($value)
+    /*public function getCreatedAtAttribute($value)
     {
         return date('d-m-Y', strtotime($value));
     }
@@ -46,7 +46,7 @@ class Product extends Model
     public function getUpdatedAtAttribute($value)
     {
         return date('d-m-Y', strtotime($value));
-    }
+    }*/
 
     public function company() {
     	return $this->belongsTo(Company::class);
@@ -56,8 +56,12 @@ class Product extends Model
     	return $this->belongsTo(Concession::class);
     }
 
+    public function sales_target() {
+        return $this->hasMany(SalesTarget::class);
+    }
+
     public function shipment() {
-      return $this->hasMany(Shipment::class);
+        return $this->hasMany(Shipment::class);
     }
 
     public function difference($compare, $company_type){

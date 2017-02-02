@@ -12,7 +12,7 @@
           <li ng-if="items.length < 1">There is no lead, you can create a new one</li>
           <li ng-repeat="item in items">
             <a href="#" ng-click="$event.preventDefault(); selected.item = item">
-              {{ item.company.company_name }} ({{ item.city }})
+              {{ item.company.company_name }} ({{ item.city }}, {{ item.country }})
               <span ng-if="
                 (item.gcv_adb_min_diff<=150&&item.gcv_adb_max_diff<=150) ||
                 (item.gcv_arb_min_diff<=150&&item.gcv_arb_max_diff<=150) ||
