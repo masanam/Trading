@@ -17,7 +17,7 @@
       <section ng-include="'/angular/lead/views/_lead-port.partial.html'"></section>
     </div>
     <div class="col-lg-4">
-      <section ng-include="'/angular/lead/views/_lead-recommendations.partial.html'"></section>
+      <section ng-if="showBuy" ng-include="'/angular/lead/views/_lead-recommendations.partial.html'"></section>
       <section ng-include="'/angular/lead/views/_lead-product.partial.html'"></section>
     </div>
   </div>

@@ -17,3 +17,16 @@ angular.module('coalpedia').factory('Company', ['$resource',
     });
   }
 ]);
+
+angular.module('coalpedia').factory('Area', ['$resource',
+  function ($resource) {
+    return $resource('api/area/:id/:option', {
+      id: '@id',
+      option: undefined
+    }, {
+      update: {
+        method: 'PUT'
+      }
+    });
+  }
+]);

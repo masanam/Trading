@@ -120,8 +120,8 @@
             <td ng-if="order.status === 'p'">Pending</td>
             <td ng-if="order.status === 'f'">Finalized</td>-->
 
-            <td>{{ order.created_at | date:'d/M/yy' }}</td>
-            <td>{{ order.updated_at | date:'d/M/yy' }}</td>
+            <td>{{ order.created_at | date }}</td>
+            <td>{{ order.updated_at | date }}</td>
             <td>
               <div ng-repeat="app in order.approvals.slice().reverse()">
                 {{ app.name | firstWord }} [{{ app.pivot.status }}]

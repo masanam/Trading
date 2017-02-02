@@ -1,9 +1,12 @@
 <div class="box box-primary">
   <div class="box-header">
     <h3 class="box-title" style="font-size: 25px">{{ selected.company.company_name }}</h3>
+    <br/>
+    <br/>
+    <h4 class="box-title">{{ selected.company.area.description }}</h4>
 
     <span class="pull-right">
-      <button class="btn btn-danger" ng-click="selected.company = undefined"> Choose another company</button>
+      <i class="fa fa-times" ng-click="selected.company = undefined"></i>
     </span>
   </div>
   <div class="box-body box-profile">
@@ -29,7 +32,7 @@
         <b>Email</b> <span class="pull-right">{{selected.company.email}}</span>
       </li>
       <li class="list-group-item" style="overflow:hidden;">
-        <b>Web</b> <span class="pull-right">{{selected.company.web}}</span>
+        <b>Website</b> <span class="pull-right">{{selected.company.web}}</span>
       </li>
       <li class="list-group-item" style="overflow:hidden;">
         <b>City</b> <span class="pull-right">{{selected.company.city}}</span>

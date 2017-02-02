@@ -1,8 +1,14 @@
 <div class="box box-info">
   <div class="box-header with-border" ng-click="isCollapsed = !isCollapsed" style="cursor: pointer">
     <h3 class="box-title">{{ lead.lead_type === 'b' ? 'Buy' : 'Sell' }} Lead</h3>
-    <span class="glyphicon glyphicon-triangle-bottom pull-right" ng-if="isCollapsed"></span> 
-    <span class="glyphicon glyphicon-triangle-top pull-right" ng-if="!isCollapsed"></span> 
+    <h3 class="box-title" class="pull-right" ng-switch="lead.order_status">
+      <span ng-switch-when="l" class="pull-right label label-info" style="margin-bottom: -4px; margin-left: 5px;">Lead</span>
+      <span ng-switch-when="v" class="pull-right label label-info" style="margin-bottom: -4px; margin-left: 5px;"">Verified</span>
+      <span ng-switch-when="s" class="pull-right label label-info" style="margin-bottom: -4px; margin-left: 5px;">Staged</span>
+      <span ng-switch-when="p" class="pull-right label label-info" style="margin-bottom: -4px; margin-left: 5px;">Partially Staged</span>
+    </h3>
+    <div class="glyphicon glyphicon-triangle-bottom pull-right" ng-if="isCollapsed"></div> 
+    <div class="glyphicon glyphicon-triangle-top pull-right" ng-if="!isCollapsed"></div> 
   </div>
   <div class="box-body" uib-collapse="isCollapsed">
     <!-- Button show on large screen -->
@@ -50,7 +56,7 @@
         <p>{{ lead.laycan_start | date : 'd MMMM yyyy' }} - {{ lead.laycan_end | date : 'd MMMM yyyy' }}</p>
       </div>
       <div class="col-xs-12" style="padding-left:0">
-        <label>Valid Until : </label>
+        <label>Validity : </label>
         <p>{{ lead.order_expired | date : 'd MMMM yyyy' }}</p>
       </div>
       <div class="col-xs-6" style="padding-left:0">
@@ -58,7 +64,7 @@
         <p>{{ lead.trading_term }} {{ lead.trading_term_detail }}</p>
       </div>
       <div class="col-xs-6" style="padding-left:0">
-        <label>Payment Terms : </label>
+        <label>Payment Term : </label>
         <p>{{ lead.payment_term }}</p>
       </div>
       <label>Penalty : </label>

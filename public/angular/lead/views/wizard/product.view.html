@@ -5,10 +5,7 @@
         <div class="box-header with-border">
         <h1 class="box-title"></h1>
         <div class="pull-left">
-          <a class="btn btn-default" ui-sref="lead.location({ id: lead.id })" ng-if="destinationBy==='country'">
-            <i class="glyphicon glyphicon-arrow-left"></i> Back
-          </a>
-          <a class="btn btn-default" ui-sref="lead.location({ id: lead.id })" ng-if="destinationBy!=='country'">
+          <a class="btn btn-default" ui-sref="lead.location({ id: lead.id })">
             <i class="glyphicon glyphicon-arrow-left"></i> Back
           </a>
         </div>
@@ -32,7 +29,7 @@
         </div>
         <div class="select-box" ng-init="find()">
           <label for="id">Name of Product :</label>
-          
+
           <ui-select ng-model="selected.product"
             reset-search-input="false"
             style="min-width: 30px;"

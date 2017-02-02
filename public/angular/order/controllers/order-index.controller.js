@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('order').controller('OrderIndexController', ['$scope', '$stateParams', '$state', 'Index',
-  function($scope, $stateParams, $state, Index) {
+angular.module('order').controller('OrderIndexController', ['$scope', '$stateParams', '$state', '$filter', 'Index',
+  function($scope, $stateParams, $state, $filter, Index) {
     $scope.getIndices = function () {
       $scope.indices = Index.query({ action: 'single-date' }, function(){
         for(var x=0; x<$scope.indices.length; x++){
@@ -34,42 +34,44 @@ angular.module('order').controller('OrderIndexController', ['$scope', '$statePar
 
       date.setDate(date.getDate()-5);
 
-      Index.query({ submodel:'price', indexId:$scope.display.index.id, date:date, latest:'7' },
-        function (res){
-          $scope.series = [ index.index_provider + ' ' + index.index_name, 'buy', 'sell' ];
-          
-          var mid = Math.round(res.length/2);
+      if($scope.display.index){
 
-          for(x = 0; x<res.length; x++){
-            $scope.data[0][x] = res[x].price;  
-            if($scope.display.sell){
-              var sell_price = parseFloat($scope.display.sell.pivot.price);
-              if(parseFloat($scope.order.pit_to_port)){
-                sell_price += parseFloat($scope.order.pit_to_port);
+        Index.query({ submodel:'price', indexId:$scope.display.index.id, date:date, latest:'7' },
+          function (res){
+            $scope.series = [ index.index_provider + ' ' + index.index_name, 'buy', 'sell' ];
+
+            var mid = Math.round(res.length/2);
+
+            for(x = 0; x<res.length; x++){
+              $scope.data[0][x] = res[x].price;
+              if($scope.display.sell){
+                var sell_price = parseFloat($scope.display.sell.pivot.price);
+                if(parseFloat($scope.order.pit_to_port)){
+                  sell_price += parseFloat($scope.order.pit_to_port);
+                }
+                if(parseFloat($scope.order.transhipment)){
+                  sell_price += parseFloat($scope.order.transhipment);
+                }
+                $scope.data[1][x] = sell_price;
               }
-              if(parseFloat($scope.order.transhipment)){
-                sell_price += parseFloat($scope.order.transhipment);
+              if($scope.display.buy){
+                var buy_price = parseFloat($scope.display.buy.pivot.price);
+                if(parseFloat($scope.order.port_to_factory)){
+                  buy_price -= parseFloat($scope.order.port_to_factory);
+                }
+                if(parseFloat($scope.order.freight_cost)){
+                  buy_price -= parseFloat($scope.order.freight_cost);
+                }
+                $scope.data[2][x] = buy_price;
               }
-              $scope.data[1][x] = sell_price;
+              $scope.labels[x] = $filter('date')(res[x].date, 'd/M');
             }
-            if($scope.display.buy){
-              var buy_price = parseFloat($scope.display.buy.pivot.price);
-              if(parseFloat($scope.order.port_to_factory)){
-                buy_price -= parseFloat($scope.order.port_to_factory);
-              }
-              if(parseFloat($scope.order.freight_cost)){
-                buy_price -= parseFloat($scope.order.freight_cost);
-              }
-              $scope.data[2][x] = buy_price;
-            }
-            $scope.labels[x] = res[x].date;
-          }
-        });
+          });
+      }
     };
 
     $scope.saveIndex = function () {
       $scope.order.index_id = $scope.display.index.id;
-
       $scope.update();
     };
 

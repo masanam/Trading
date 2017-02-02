@@ -1,21 +1,35 @@
 'use strict';
 
-angular.module('coalpedia').controller('ConcessionModalController', ['$scope', '$uibModalInstance', '$timeout', '$interval', 'NgMap', 'Concession', 'Company', 'concession', 'company',
-  function($scope, $uibModalInstance, $timeout, $interval, NgMap, Concession, Company, concession, company) {
+angular.module('coalpedia').controller('ConcessionModalController', ['$scope', '$uibModalInstance', '$stateParams', '$timeout', '$interval', 'NgMap', 'Concession', 'Company', 'concession', 'company', 'createNew',
+  function($scope, $uibModalInstance, $stateParams, $timeout, $interval, NgMap, Concession, Company, concession, company, createNew) {
     $scope.concession = concession;
-    $scope.createNew = false;
+    $scope.concession.polygon = angular.fromJson(concession.polygon);
+
+    if(createNew) $scope.createNew = createNew;
     $scope.display = {};
     $scope.selected = {};
 
     $scope.find = function (keyword) {
-      Concession.query({ q: keyword, company_id:company.id, coalpedia:true }, function(res){
+      var query = {};
+
+      if(company) query.company_id = company.id;
+      if(keyword) query.q = keyword;
+      query.coalpedia = true;
+
+      Concession.query(query, function(res){
         if(res.length > 0) $scope.concessions = res;
       });
     };
 
     $scope.create = function(concession) {
       concession = new Concession(concession);
-      concession.polygon = $scope.display.polygonString;
+
+      if($scope.display.polygonArray[0] !== $scope.display.polygonArray[$scope.display.polygonArray.length-1])
+        $scope.display.polygonArray.push($scope.display.polygonArray[0]);
+
+      $scope.display.polygonString = angular.toJson($scope.display.polygonArray);
+      concession.polygon = $scope.display.polygonString.split(',').join(' ').split('[[').join('(').split(']]').join(')');
+      concession.polygon = concession.polygon.split('] [').join(', ');
       concession.company_id = company.id;
 
       concession.$save(function(response) {
@@ -24,20 +38,28 @@ angular.module('coalpedia').controller('ConcessionModalController', ['$scope', '
     };
 
     $scope.update = function() {
-      concession = new Concession($scope.concession);
-      concession.polygon = $scope.display.polygonString;
-      concession.company_id = company.id;
+      concession = $scope.concession;
 
-      concession.$update(function(response) {
+      if($scope.display.polygonArray[0] !== $scope.display.polygonArray[$scope.display.polygonArray.length-1])
+        $scope.display.polygonArray.push($scope.display.polygonArray[0]);
+
+      $scope.display.polygonString = angular.toJson($scope.display.polygonArray);
+      concession.polygon = $scope.display.polygonString.split(',').join(' ').split('[[').join('(').split(']]').join(')');
+      concession.polygon = concession.polygon.split('] [').join(', ');
+
+     // concession.polygon = $scope.display.polygonString;
+      concession.company_id = concession.company_id;
+      concession.$update({ id: $stateParams.id } , function(response) {
         concession = response;
         $uibModalInstance.close(response);
+        $scope.concession=response;
       });
     };
 
     // Reset the polygon to the original inside the model
     $scope.resetPolygon = function () {
-      $scope.display.polygonString = $scope.concession.polygon;
-      $scope.display.polygonArray = angular.fromJson($scope.concession.polygon);
+      $scope.display.polygonArray = $scope.concession.polygon.coordinates[0];
+      $scope.display.polygonString = angular.toJson($scope.display.polygonArray);
     };
 
     // Clear displayed polygon to restart adding new ones
