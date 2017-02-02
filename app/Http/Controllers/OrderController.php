@@ -188,6 +188,9 @@ class OrderController extends Controller
     $order->status = 'd';
     $order->save();
 
+    //add user as the admin for the current order
+    $order->users()->attach([ $order->user_id => [ 'role' => 'admin' ]]);
+
     // Check the availability of associated leads
     if(count($req->buys) > 0 && !$req->in_house){
       foreach($req->buys as $buy){
@@ -274,9 +277,13 @@ class OrderController extends Controller
    */
   public function show($id, Request $req = null)
   {
-    $order = Order::with('trader', 'users', 'sells', 'buys',
-      'buys.trader', 'sells.trader', 'approvals', 'approvalLogs', 'companies',
-      'sells.company', 'buys.company', 'buys.concession', 'sells.factory', 'contracts')->find($id);
+    $order = Order::with(['trader', 'users', 'sells', 'buys',
+        'buys.trader', 'sells.trader', 'approvals', 'approvalLogs', 'companies',
+        'sells.company', 'buys.company', 'sells.factory', 'contracts',
+        'buys.concession' => function ($q) {
+          return $q->select('concession_name');
+        }
+      ])->find($id);
 
     $this->authorize('view', $order);
 
@@ -309,6 +316,40 @@ class OrderController extends Controller
     return response()->json($json, 200);
   }
 
+
+  /**
+   * Check if current order CAN stage the lead
+   *
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
+
+  private function checkAvailable($order, $lead){
+    //var_dump($order);die;
+    //var_dump($lead);die;
+    // If this is invoked from UPDATE, instead of using lead from params, do get its volumes from pivot
+    // Get from the current volume IF this is a staging order
+    if(!$lead->lead_id) $volume = $lead->pivot->volume;
+    else $volume = $lead->volume;
+
+    // Get all orders associated with this current lead to know its standing
+    $lead_to_stage = Lead::with('orders')->find($lead->id);
+
+    // get total of the used volume
+    // IF THEY ARE confirmed leads
+    if(count($lead_to_stage->orders)>0){
+      foreach($lead_to_stage->orders as $associated_orders) {
+        // exclude draft and one that is current order
+        if($associated_orders->status != 'd' && $associated_orders->id != $order->id)
+          $volume += $associated_orders->pivot->volume;
+      }
+    }
+
+    if ($volume > $lead_to_stage->volume) {
+      $order->available_volume = 'error';
+    }
+  }
+
   /**
    * edit the specified resource.
    *
@@ -316,31 +357,9 @@ class OrderController extends Controller
    * @return \Illuminate\Http\Response
    */
 
-  private function checkAvailable($order, $lead){
-    // if update
-    if(!$lead->lead_id) $lead = $lead->pivot;
-
-    $item = Lead::with('ordersSpecific','orders')->find($lead->lead_id);
-    if(count($item->orders)>0){
-      foreach($item->orders as $o) {
-        $volume = $o->pivot->volume;
-      }
-    }
-    else $volume = $lead->volume;
-
-    $item->used = 0;
-    foreach ($item->ordersSpecific as $used) {
-      $item->used += $used->pivot->volume;
-    }
-
-    if ($volume > ($item->volume - $item->used)) {
-      $order->avaliable_volume = 'error';
-    }
-  }
-
   public function update(Request $req, $id)
   {
-    $order = Order::with('buys','sells','buys.ordersSpecific','sells.ordersSpecific')->find($id);
+    $order = Order::with('buys','sells')->find($id);
 
     // Validations
     if(!$req) return response()->json([ 'message' => 'Bad Request' ], 400);
@@ -368,7 +387,7 @@ class OrderController extends Controller
     }
 
     // Check available volume
-    if ($order->avaliable_volume === 'error') {
+    if ($order->available_volume === 'error') {
       return response()->json([ 'message' => 'Volume not avaliable' ], 400);
     }
 
@@ -381,6 +400,7 @@ class OrderController extends Controller
     }
 
 
+    $order->index_id = $req->index_id;
     $order->request_reason = $req->request_reason;
     $order->finalize_reason = $req->finalize_reason;
     $order->cancel_reason = $req->cancel_reason;
@@ -511,11 +531,11 @@ class OrderController extends Controller
    */
   public function stage(Request $req, $id)
   {
-    $order = Order::with('buys', 'sells', 'approvals', 'trader','buys.ordersSpecific','sells.ordersSpecific')->find($id);
+    $order = Order::with('buys', 'sells', 'approvals', 'trader')->find($id);
 
     // Check available volume
     $this->checkAvailable($order, $req);
-    if ($order->avaliable_volume === 'error') {
+    if ($order->available_volume === 'error') {
       return response()->json([ 'message' => 'Volume not avaliable' ], 400);
     }
 

@@ -22,6 +22,9 @@ class DatabaseSeeder extends Seeder
         $this->call(FactoryTableSeeder::class);
         $this->call(IndexTableSeeder::class);
         $this->call(LeadsTableSeeder::class);
+        $this->call(MiningLicenseTableSeeder::class);
+        $this->call(SpatialDataTableSeeder::class);
+        $this->call(SalesTargetTableSeeder::class);
         $this->call(ContractsTableSeeder::class);
         $this->call(ShipmentTableSeeder::class);
 

@@ -26,7 +26,7 @@ class OrderNegotiation extends Model
 			'port_to_factory'
     ];
 
-    public function getCreatedAtAttribute($value)
+    /*public function getCreatedAtAttribute($value)
     {
         return date('d-m-Y', strtotime($value));
     }
@@ -34,5 +34,5 @@ class OrderNegotiation extends Model
     public function getUpdatedAtAttribute($value)
     {
         return date('d-m-Y', strtotime($value));
-    }
+    }*/
 }

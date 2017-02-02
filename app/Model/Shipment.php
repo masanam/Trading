@@ -2,10 +2,18 @@
 
 namespace App\Model;
 
+use App\Model\ShipmentLog;
+
 use Illuminate\Database\Eloquent\Model;
 
 class Shipment extends Model
 {
+  //hasapu
+    public function qualities(){
+      return $this->hasMany(Quality::class);
+    }
+  //------
+
     public function contracts() {
       return $this->belongsTo(Contract::class, 'contract_id');
     }
@@ -29,4 +37,15 @@ class Shipment extends Model
     public function shipment_history() {
       return $this->hasMany(ShipmentHistory::class);
     }
+
+    public function shipment_log() {
+      return $this->hasMany(ShipmentLog::class);
+    }
+
+    public function latest_log(){
+      return $this->hasMany(ShipmentLog::class)->orderBy('created_at')->first();
+    }
+
+
+
 }

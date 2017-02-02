@@ -100,19 +100,24 @@ class CreateLeadsTable extends Migration
 
             $table->integer('volume')->nullable();
             $table->integer('price')->nullable();
+            $table->string('carrier_type')->nullable(); // not specified, gear, gearless, gear & gearless
             $table->string('trading_term')->nullable();
             $table->string('trading_term_detail')->nullable();
             $table->string('payment_term')->nullable();
             $table->string('payment_term_detail')->nullable();
             $table->longText('commercial_term')->nullable();
             $table->longText('penalty')->nullable();
-            $table->char('lead_type', 1)->nullable(); // buy(b), sell(s) 
+            $table->char('lead_type', 1)->nullable(); // buy(b), sell(s)
             $table->char('order_status', 1); // customer(0), factory(1), product(2), port(3), summary(4), lead(l), staged(s), partial(p), deleted(x), verified(v)
             $table->char('progress_status', 1)->nullable();
 
             $table->timestamps();
 
-            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('restrict');
+        });
+
+        Schema::table('leads', function ($table) {
+            DB::statement('ALTER TABLE leads ADD COLUMN polygon geometry;');
         });
     }
 

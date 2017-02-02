@@ -58,7 +58,7 @@ class UsersTableSeeder extends Seeder
                 'password' => bcrypt('secret'),
                 'role' => $user['role'],
                 'manager_id' => $user['manager_id'],
-                'status' => 'a' 
+                'status' => 'a'
             ]);
         }
 
@@ -71,9 +71,18 @@ class UsersTableSeeder extends Seeder
 		Role::create([
 			'role'=>'manager',
 		]);
-		
-        
+		Role::create([
+			'role'=>'bizdev',
+		]);
+		Role::create([
+			'role'=>'bizdev-approver',
+		]);
+
+
         User::find(1)->roles()->attach(1);
+        User::find(1)->roles()->attach(2);
+        User::find(1)->roles()->attach(3);
+        User::find(1)->roles()->attach(4);
         User::find(2)->roles()->attach(2);
 		User::find(3)->roles()->attach(3);
 		User::find(3)->roles()->attach(2);

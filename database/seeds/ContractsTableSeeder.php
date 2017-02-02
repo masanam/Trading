@@ -25,7 +25,7 @@ class ContractsTableSeeder extends Seeder
           'status' => 'a'
         ),
         array(
-          'contract_no' => '	065.PJ/061/NFW/2008',
+          'contract_no' => '065.PJ/061/NFW/2008',
           'order_id' => 1,
           'shipment_count' => 6,
           'term' => 'spot',

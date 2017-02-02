@@ -34,7 +34,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
     protected $table = 'users';
 
-    public function getCreatedAtAttribute($value)
+    /*public function getCreatedAtAttribute($value)
     {
         return date('d-m-Y', strtotime($value));
     }
@@ -42,10 +42,18 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public function getUpdatedAtAttribute($value)
     {
         return date('d-m-Y', strtotime($value));
-    }
+    }*/
 
     public function contacts() {
         return $this->hasMany('Contact');
+    }
+
+    public function areas() {
+        return $this->hasMany('Area');
+    }
+
+    public function shipment_log() {
+      return $this->hasMany(ShipmentLog::class);
     }
 
     public function activities() {
@@ -104,7 +112,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     public function roles(){
-        return $this->belongsToMany(Role::class, 'user_role', 'role_id', 'user_id');
+        return $this->belongsToMany(Role::class, 'user_role', 'user_id', 'role_id');
     }
 
     public function isAdmin() {
