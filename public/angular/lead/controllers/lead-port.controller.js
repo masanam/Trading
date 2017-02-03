@@ -1,8 +1,7 @@
 'use strict';
 
-angular.module('lead').controller('LeadPortController', ['$scope', '$stateParams', '$uibModal', 'Port', 'Lead',
+angular.module('lead').controller('LeadPortController', ['$scope', '$stateParams', '$uibModal', 'Port', 'Lead', 
   function ($scope, $stateParams, $uibModal, Port, Lead) {
-
     $scope.lead = Lead.get({ id:$stateParams.id });
 
     //Init select ports

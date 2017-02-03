@@ -6,8 +6,9 @@ angular.module('lead').controller('LeadController', ['$scope', '$state', '$state
     $scope.paymentTerm = Term.payment;
     $scope.carrierTypes = Term.carrierTypes;
     $scope.showBuy = Environment.showBuy;
+    $scope.destinationBy = Environment.destinationBy;
     $scope.selected = {};
-    
+
     $scope.today = $filter('date')(Date.now(), 'yyyy-MM-dd');
 
     $scope.lead = Lead.get({ id:$stateParams.id });

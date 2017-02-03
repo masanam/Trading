@@ -10,11 +10,11 @@
       </button>
     </div>
   </div>
-  
+
   <div class="row">
     <div class="col-lg-8">
       <section ng-include="'/angular/lead/views/_lead-details.partial.html'"></section>
-      <section ng-include="'/angular/lead/views/_lead-port.partial.html'"></section>
+      <section ng-if="destinationBy != 'country'" ng-include="'/angular/lead/views/_lead-port.partial.html'"></section>
     </div>
     <div class="col-lg-4">
       <section ng-if="showBuy" ng-include="'/angular/lead/views/_lead-recommendations.partial.html'"></section>
@@ -22,4 +22,3 @@
     </div>
   </div>
 </div>
-  
