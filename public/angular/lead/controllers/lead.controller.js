@@ -7,6 +7,7 @@ angular.module('lead').controller('LeadController', ['$scope', '$state', '$state
     $scope.carrierTypes = Term.carrierTypes;
     $scope.showBuy = Environment.showBuy;
     $scope.destinationBy = Environment.destinationBy;
+    $scope.productQuality = Environment.productQuality;
     $scope.selected = {};
 
     $scope.today = $filter('date')(Date.now(), 'yyyy-MM-dd');
@@ -103,7 +104,6 @@ angular.module('lead').controller('LeadController', ['$scope', '$state', '$state
       else if($state.current.name === 'lead.location'){
         // if location is by country, skip port
         if(Environment.destinationBy === 'country'){
-          console.log(next);
           $scope.lead.order_status++;
           next = 'lead.product';
         } else next = 'lead.port';
@@ -111,10 +111,12 @@ angular.module('lead').controller('LeadController', ['$scope', '$state', '$state
       else if($state.current.name === 'lead.port') next = 'lead.product';
       else if($state.current.name === 'lead.product') {
         next = 'lead.view';
+        console.log($scope.lead);
         if (
-          !(($scope.lead.gcv_adb_bonus && $scope.lead.gcv_adb_reject) ||
+          (!(($scope.lead.gcv_adb_bonus && $scope.lead.gcv_adb_reject) ||
           ($scope.lead.gcv_arb_bonus && $scope.lead.gcv_arb_reject) ||
-          ($scope.lead.ncv_bonus && $scope.lead.ncv_reject))
+          ($scope.lead.ncv_bonus && $scope.lead.ncv_reject))) &&
+          Environment.productQuality !== 'typical'
           ) {
           $scope.error = 'Please Fill Contract Bonus & Reject';
           return false;

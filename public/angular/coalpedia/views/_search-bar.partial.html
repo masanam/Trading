@@ -13,7 +13,7 @@
           uib-btn-radio="'customer'" ng-click="search('customer')">
           Customer
         </label>
-        <label class="btn btn-sm btn-default" ng-model="searchType"
+        <label ng-if="showBuy==true" class="btn btn-sm btn-default" ng-model="searchType"
           uib-btn-radio="'supplier'" ng-click="search('supplier')">
           Supplier
         </label>

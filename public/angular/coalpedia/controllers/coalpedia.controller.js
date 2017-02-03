@@ -1,9 +1,11 @@
 'use strict';
 
-angular.module('coalpedia').controller('CoalpediaController', ['$scope', '$stateParams', '$state', 'Coalpedia', 
-  function($scope, $stateParams, $state, Coalpedia) {
+angular.module('coalpedia').controller('CoalpediaController', ['$scope', '$stateParams', '$state', 'Coalpedia', 'Environment', 
+  function($scope, $stateParams, $state, Coalpedia, Environment) {
     $scope.searchType = $state.current.name === 'concession.list' ? 'concession' : $stateParams.type || 'customer';
     $scope.keyword = $stateParams.keyword;
+    $scope.showBuy = Environment.showBuy;
+
 
     $scope.search = function(searchType, keyword) {
       if(searchType) $scope.searchType = searchType;

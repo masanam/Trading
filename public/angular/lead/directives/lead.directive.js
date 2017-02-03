@@ -11,7 +11,8 @@ angular.module('lead').directive('leadQuality', function() {
       max: '=max',
       reject: '=reject',
       bonus: '=bonus',
-      quality: '=quality'
+      quality: '=quality',
+      productQuality: '=typical'
     },
     templateUrl: './angular/lead/directives/lead-quality.html'
   };
