@@ -49,6 +49,7 @@ Route::group(['middleware' => ['cors']], function() {
     Route::resource('company', 'CompanyController', ['except' => [ 'create', 'edit' ]]);
 
     Route::resource('area', 'AreaController', ['except' => [ 'create', 'edit' ]]);
+    Route::resource('country', 'CountryController', ['except' => [ 'create', 'edit' ]]);
     Route::resource('contact', 'ContactController', ['except' => [ 'create', 'edit' ]]);
     Route::resource('port', 'PortController', ['except' => [ 'create', 'edit' ]]);
     Route::resource('product', 'ProductController', ['except' => [ 'create', 'edit' ]]);

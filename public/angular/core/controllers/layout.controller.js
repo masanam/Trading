@@ -6,7 +6,6 @@ angular.module('index').controller('LayoutController', ['$scope', '$state', 'Aut
     $scope.showBuy = Environment.showBuy;
     $scope.deployment = Environment.deployment;
 
-    console.log($scope.showBuy);
     
     $scope.init = function(){
       $scope.style=[];
