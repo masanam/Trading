@@ -6,6 +6,7 @@ use App\Model\User;
 
 use Illuminate\Http\Request;
 use Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 
 use App\Events\EditUserProfile;
@@ -129,12 +130,16 @@ class UserController extends Controller
 
         $lastImage = $user->image;
 
+        if($req->old_password && $req->password){
+            if(Hash::check($req->old_password, $user->password)) $user->password = bcrypt($req->password);
+            else return response()->json(['message' => 'wrong old password'], 400);
+        }
+
         $user->name = $req->name;
         $user->image = $req->image;
         $user->title = $req->title;
         $user->email = $req->email;
         $user->phone = $req->phone;
-        $user->password = bcrypt($req->password);
         $user->employee_id = $req->employee_id;
         $user->manager_id = $req->manager_id;
 
