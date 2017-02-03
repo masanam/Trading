@@ -225,17 +225,17 @@ class Order extends Model
   public function leadToPartial(){
     $buy_ids = $this->buys()->pluck('leads.id');
     Lead::whereIn('id', $buy_ids)->update(['order_status' => 'p']);
-    if(isset($buy_ids)) {
+    /*if(isset($buy_ids)) {
       foreach ($buy_ids as $id) {
         $this->buys()->detach($id);
       }
-    }
+    }*/
     $sell_ids = $this->sells()->pluck('leads.id');
     Lead::whereIn('id', $sell_ids)->update(['order_status' => 'p']);
-    if(isset($sell_ids)) {
+    /*if(isset($sell_ids)) {
       foreach ($sell_ids as $id) {
         $this->sells()->detach($id);
       }
-    }
+    }*/
   }
 }

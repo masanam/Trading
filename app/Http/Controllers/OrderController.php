@@ -340,7 +340,7 @@ class OrderController extends Controller
     if(count($lead_to_stage->orders)>0){
       foreach($lead_to_stage->orders as $associated_orders) {
         // exclude draft and one that is current order
-        if($associated_orders->status != 'd' && $associated_orders->id != $order->id)
+        if($associated_orders->status != 'd' && $associated_orders->status != 'x' && $associated_orders->status != 'c' && $associated_orders->id != $order->id)
           $volume += $associated_orders->pivot->volume;
       }
     }

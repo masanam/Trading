@@ -18,7 +18,7 @@
 <div class="table-responsive">
 	<table st-table="" class="table table-bordered table-striped">
 		<thead>
-      <tr ng-if="!order.user_id || order.user_id === Authentication.user.id"  class="no-print">
+      <tr ng-if="!order.user_id || order.user_id === Authentication.user.id && order.status === 'd' "  class="no-print">
         <td>
           <button ng-show="order.status !== 'x' && order.status !== 'a' && order.status !== 'f' && order.status !== 'p'"
             class="btn btn-primary" ng-click="addCostModal()" flex>
@@ -53,8 +53,8 @@
         </td>
       </tr>
 			<tr>
-				<th width="{{ order.in_house ? '40%' : '20%' }}"></th>
-    		<th ng-if="!order.in_house"  width=40% ng-if="!order.in_house">
+				<th width="{{ (order.in_house && !showBuy) ? '40%' : '20%' }}"></th>
+    		<th width=40% ng-if="!order.in_house && showBuy">
 					<span style="font-size:20pt">Buy</span>
           <span uib-dropdown ng-init="checkAlike(display.buy)" ng-if="alikeBuys.length > 0">
             <a class="glyphicon glyphicon-exclamation-sign" style="color:orange;" uib-dropdown-toggle
@@ -67,7 +67,7 @@
             </ul>
           </span>
 
-          <span ng-if="order.buys.length" uib-dropdown class="pull-right" ng-init="display.buy = order.buys[0]; display.buy.index = 0">
+          <span ng-if="order.buys.length > 0" uib-dropdown class="pull-right" ng-init="display.buy = order.buys[0]; display.buy.index = 0">
             <button type="button" ng-show="order.status !== 'x' && order.status !== 'f'" class="btn btn-default" uib-dropdown-toggle>
               {{ display.buy.company.company_name }} ({{ order.buys.length }})<span class="caret"></span>
             </button>
@@ -76,11 +76,10 @@
               {{ buy.company.company_name }} : {{ buy.pivot.volume | number }}mt, US${{ buy.pivot.price | number }}
               </a></li>
             </ul>
+
           </span>
-
-
 				</th>
-				<th width="{{ order.in_house ? '60%' : '40%' }}">
+				<th width="{{ (order.in_house && !showBuy) ? '60%' : '40%' }}">
 					<span style="font-size:20pt">{{ order.in_house ? 'Order Details' : 'Sell' }}</span>
 
           <span uib-dropdown ng-init="checkAlike(display.sell)" ng-if="alikeSells.length > 0">
@@ -94,9 +93,7 @@
             </ul>
           </span>
 
-
-
-          <span ng-if="order.sells.length" uib-dropdown class="pull-right" ng-init="display.sell = order.sells[0]; display.sell.index = 0">
+          <span ng-if="order.sells.length > 0" uib-dropdown class="pull-right" ng-init="display.sell = order.sells[0]; display.sell.index = 0">
             <button type="button" ng-show="order.status !== 'x' && order.status !== 'f'" class="btn btn-default" uib-dropdown-toggle>
               {{display.sell.company.company_name}} ({{ order.sells.length }}) <span class="caret"></span>
             </button>
@@ -125,7 +122,7 @@
 			<tr>
 				<td>Company</td>
 
-        <td ng-switch="display.buy && (display.buy.user_id === Authentication.user.id || checkSubordinates(display.buy.user_id)) || !display.buy" ng-if="!order.in_house">
+        <td ng-switch="display.buy && (display.buy.user_id === Authentication.user.id || checkSubordinates(display.buy.user_id)) || !display.buy" ng-if="!order.in_house && order.buys.length > 0">
           <span ng-switch-when="true">
             {{ display.buy.company.company_name }}
           </span>
@@ -151,7 +148,7 @@
 			</tr>
 			<tr>
 				<td>Volume (mt) - Price (USD)</td>
-				<td ng-if="!order.in_house">
+				<td ng-if="!order.in_house && order.buys.length > 0">
           <span ng-if="display.buy">
             {{ display.buy.pivot.volume | number }}mt - US$ {{ display.buy.pivot.price | number }}
             <a ng-if="order.id && order.status !== 'a' && order.status !== 'x'" ng-if="display.buy.user_id === Authentication.user.id && order.id"
@@ -172,30 +169,30 @@
 			</tr>
 			<tr>
 				<td>Input Date</td>
-        <td ng-if="!order.in_house">{{ display.buy.order_date | date:'mediumDate' }}</td>
+        <td ng-if="!order.in_house && order.buys.length > 0">{{ display.buy.order_date | date:'mediumDate' }}</td>
   			<td>{{ display.sell.order_date | date:'mediumDate' }}</td>
 			</tr>
 			<tr>
 				<td>LayCan</td>
-        <td ng-if="!order.in_house">
+        <td ng-if="!order.in_house && order.buys.length > 0">
           {{ display.buy.laycan_start | date:'mediumDate' }} - {{ display.buy.laycan_end | date:'mediumDate' }}
         </td>
 				<td>{{ display.sell.laycan_start | date:'mediumDate' }} - {{ display.sell.laycan_end | date:'mediumDate' }}</td>
 			</tr>
       <tr>
 				<td>Shipping Term</td>
-				<td ng-if="!order.in_house">{{ display.buy.pivot.trading_term }}</td>
+				<td ng-if="!order.in_house && order.buys.length > 0">{{ display.buy.pivot.trading_term }}</td>
         <td>{{ display.sell.pivot.trading_term }}</td>
 			</tr>
       <tr>
 				<td>Payment Term</td>
-				<td ng-if="!order.in_house">{{ display.buy.pivot.payment_term }}</td>
+				<td ng-if="!order.in_house && order.buys.length > 0">{{ display.buy.pivot.payment_term }}</td>
         <td>{{ display.sell.pivot.payment_term }}</td>
 			</tr>
 			<tr>
 				<td>Location</td>
 				<td ng-switch="display.buy.user_id === Authentication.user.id || checkSubordinates(display.buy.user_id) || !display.buy"
-          ng-if="!order.in_house">
+          ng-if="!order.in_house && order.buys.length > 0">
 					<span ng-switch-when="true">{{ display.buy.concession.city }}</span>
 					<i ng-switch-default style="color:green">-Contact {{ display.buy.trader.name }}-</i>
 				</td>
@@ -207,7 +204,7 @@
 			<tr>
 				<td>Port</td>
         <td ng-switch="display.buy.user_id === Authentication.user.id || checkSubordinates(display.buy.user_id) || !display.buy"
-          ng-if="!order.in_house">
+          ng-if="!order.in_house && order.buys.length > 0">
           <span ng-switch-when="true">{{ display.buy.port_name }}</span>
           <i ng-switch-default style="color:green">-Contact {{ display.buy.trader.name }}-</i>
         </td>
@@ -229,91 +226,91 @@
 			</tr>
     </tbody>
     <tbody id="quality-section" uib-collapse="!qualityCollapsed">
-      <tr order-quality ng-if="display.buy.gcv_adb_min && display.buy.gcv_adb_max && display.sell.gcv_adb_min && display.sell.gcv_adb_max" inhouse="order.in_house" quality="'GCV ADB'"
+      <tr order-quality ng-if="(display.buy.gcv_adb_min && display.buy.gcv_adb_max) || (display.sell.gcv_adb_min && display.sell.gcv_adb_max)" inhouse="order.in_house" quality="'GCV ADB'"
       buymin="display.buy.gcv_adb_min" buymax="display.buy.gcv_adb_max"
       buybonus="display.buy.gcv_adb_bonus" buyreject="display.buy.gcv_adb_reject"
       sellmin="display.sell.gcv_adb_min" sellmax="display.sell.gcv_adb_max"
       sellbonus="display.sell.gcv_adb_bonus" sellreject="display.sell.gcv_adb_reject"
       >
       </tr>
-      <tr order-quality ng-if="display.buy.gcv_arb_min && display.buy.gcv_arb_max && display.sell.gcv_arb_min && display.sell.gcv_arb_max" inhouse="order.in_house" quality="'GCV ARB'"
+      <tr order-quality ng-if="(display.buy.gcv_arb_min && display.buy.gcv_arb_max) || (display.sell.gcv_arb_min && display.sell.gcv_arb_max)" inhouse="order.in_house" quality="'GCV ARB'"
       buymin="display.buy.gcv_arb_min" buymax="display.buy.gcv_arb_max"
       buybonus="display.buy.gcv_arb_bonus" buyreject="display.buy.gcv_arb_reject"
       sellmin="display.sell.gcv_arb_min" sellmax="display.sell.gcv_arb_max"
       sellbonus="display.sell.gcv_arb_bonus" sellreject="display.sell.gcv_arb_reject"
       >
       </tr>
-      <tr order-quality ng-if="display.buy.ncv_min && display.buy.ncv_max && display.sell.ncv_min && display.sell.ncv_max" inhouse="order.in_house" quality="'NCV ARB'"
+      <tr order-quality ng-if="(display.buy.ncv_min && display.buy.ncv_max) || (display.sell.ncv_min && display.sell.ncv_max)" inhouse="order.in_house" quality="'NCV ARB'"
       buymin="display.buy.ncv_min" buymax="display.buy.ncv_max"
       buybonus="display.buy.ncv_bonus" buyreject="display.buy.ncv_reject"
       sellmin="display.sell.ncv_min" sellmax="display.sell.ncv_max"
       sellbonus="display.sell.ncv_bonus" sellreject="display.sell.ncv_reject"
       >
       </tr>
-      <tr order-quality ng-if="display.buy.tm_min && display.buy.tm_max && display.sell.tm_min && display.sell.tm_max" inhouse="order.in_house" quality="'Total Moisture (ARB)'"
+      <tr order-quality ng-if="(display.buy.tm_min && display.buy.tm_max) || (display.sell.tm_min && display.sell.tm_max)" inhouse="order.in_house" quality="'Total Moisture (ARB)'"
       buymin="display.buy.tm_min" buymax="display.buy.tm_max"
       buybonus="display.buy.tm_bonus" buyreject="display.buy.tm_reject"
       sellmin="display.sell.tm_min" sellmax="display.sell.tm_max"
       sellbonus="display.sell.tm_bonus" sellreject="display.sell.tm_reject"
       >
       </tr>
-      <tr order-quality ng-if="display.buy.im_min && display.buy.im_max && display.sell.im_min && display.sell.im_max" inhouse="order.in_house" quality="'Inherent Moisture (ADB)'"
+      <tr order-quality ng-if="(display.buy.im_min && display.buy.im_max) || (display.sell.im_min && display.sell.im_max)" inhouse="order.in_house" quality="'Inherent Moisture (ADB)'"
       buymin="display.buy.im_min" buymax="display.buy.im_max"
       buybonus="display.buy.im_bonus" buyreject="display.buy.im_reject"
       sellmin="display.sell.im_min" sellmax="display.sell.im_max"
       sellbonus="display.sell.im_bonus" sellreject="display.sell.im_reject"
       >
       </tr>
-      <tr order-quality ng-if="display.buy.vm_min && display.buy.vm_max && display.sell.vm_min && display.sell.vm_max" inhouse="order.in_house" quality="'Volatile Matter (ADB)'"
+      <tr order-quality ng-if="(display.buy.vm_min && display.buy.vm_max) || (display.sell.vm_min && display.sell.vm_max)" inhouse="order.in_house" quality="'Volatile Matter (ADB)'"
       buymin="display.buy.vm_min" buymax="display.buy.vm_max"
       buybonus="display.buy.vm_bonus" buyreject="display.buy.vm_reject"
       sellmin="display.sell.vm_min" sellmax="display.sell.vm_max"
       sellbonus="display.sell.vm_bonus" sellreject="display.sell.vm_reject"
       >
       </tr>
-      <tr order-quality ng-if="display.buy.ash_min && display.buy.ash_max && display.sell.ash_min && display.sell.ash_max" inhouse="order.in_house" quality="'Ash (ADB)'"
+      <tr order-quality ng-if="(display.buy.ash_min && display.buy.ash_max) || (display.sell.ash_min && display.sell.ash_max)" inhouse="order.in_house" quality="'Ash (ADB)'"
       buymin="display.buy.ash_min" buymax="display.buy.ash_max"
       buybonus="display.buy.ash_bonus" buyreject="display.buy.ash_reject"
       sellmin="display.sell.ash_min" sellmax="display.sell.ash_max"
       sellbonus="display.sell.ash_bonus" sellreject="display.sell.ash_reject"
       >
       </tr>
-      <tr order-quality ng-if="display.buy.fc_min && display.buy.fc_max && display.sell.fc_min && display.sell.fc_max" inhouse="order.in_house" quality="'Fixed Carbon (ADB)'"
+      <tr order-quality ng-if="(display.buy.fc_min && display.buy.fc_max) || (display.sell.fc_min && display.sell.fc_max)" inhouse="order.in_house" quality="'Fixed Carbon (ADB)'"
       buymin="display.buy.fc_min" buymax="display.buy.fc_max"
       buybonus="display.buy.fc_bonus" buyreject="display.buy.fc_reject"
       sellmin="display.sell.fc_min" sellmax="display.sell.fc_max"
       sellbonus="display.sell.fc_bonus" sellreject="display.sell.fc_reject"
       >
       </tr>
-      <tr order-quality ng-if="display.buy.ts_min && display.buy.ts_max && display.sell.ts_min && display.sell.ts_max" inhouse="order.in_house" quality="'Total Sulphur (ADB)'"
+      <tr order-quality ng-if="(display.buy.ts_min && display.buy.ts_max) || (display.sell.ts_min && display.sell.ts_max)" inhouse="order.in_house" quality="'Total Sulphur (ADB)'"
       buymin="display.buy.ts_min" buymax="display.buy.ts_max"
       buybonus="display.buy.ts_bonus" buyreject="display.buy.ts_reject"
       sellmin="display.sell.ts_min" sellmax="display.sell.ts_max"
       sellbonus="display.sell.ts_bonus" sellreject="display.sell.ts_reject"
       >
       </tr>
-      <tr order-quality ng-if="display.buy.hgi_min && display.buy.hgi_max && display.sell.hgi_min && display.sell.hgi_max" inhouse="order.in_house" quality="'HGI'"
+      <tr order-quality ng-if="(display.buy.hgi_min && display.buy.hgi_max) || (display.sell.hgi_min && display.sell.hgi_max)" inhouse="order.in_house" quality="'HGI'"
       buymin="display.buy.hgi_min" buymax="display.buy.hgi_max"
       buybonus="display.buy.hgi_bonus" buyreject="display.buy.hgi_reject"
       sellmin="display.sell.hgi_min" sellmax="display.sell.hgi_max"
       sellbonus="display.sell.hgi_bonus" sellreject="display.sell.hgi_reject"
       >
       </tr>
-      <tr order-quality ng-if="display.buy.size_min && display.buy.size_max && display.sell.size_min && display.sell.size_max" inhouse="order.in_house" quality="'SIZE (0-50mm)'"
+      <tr order-quality ng-if="(display.buy.size_min && display.buy.size_max) || (display.sell.size_min && display.sell.size_max)" inhouse="order.in_house" quality="'SIZE (0-50mm)'"
       buymin="display.buy.size_min" buymax="display.buy.size_max"
       buybonus="display.buy.size_bonus" buyreject="display.buy.size_reject"
       sellmin="display.sell.size_min" sellmax="display.sell.size_max"
       sellbonus="display.sell.size_bonus" sellreject="display.sell.size_reject"
       >
       </tr>
-      <tr order-quality ng-if="display.buy.fe2o3_min && display.buy.fe2o3_max && display.sell.fe2o3_min && display.sell.fe2o3_max" inhouse="order.in_house" quality="'Fe2O3'"
+      <tr order-quality ng-if="(display.buy.fe2o3_min && display.buy.fe2o3_max) || (display.sell.fe2o3_min && display.sell.fe2o3_max)" inhouse="order.in_house" quality="'Fe2O3'"
       buymin="display.buy.fe2o3_min" buymax="display.buy.fe2o3_max"
       buybonus="display.buy.fe2o3_bonus" buyreject="display.buy.fe2o3_reject"
       sellmin="display.sell.fe2o3_min" sellmax="display.sell.fe2o3_max"
       sellbonus="display.sell.fe2o3_bonus" sellreject="display.sell.fe2o3_reject"
       >
       </tr>
-      <tr order-quality ng-if="display.buy.aft_min && display.buy.aft_max && display.sell.aft_min && display.sell.aft_max" inhouse="order.in_house" quality="'AFT'"
+      <tr order-quality ng-if="(display.buy.aft_min && display.buy.aft_max) || (display.sell.aft_min && display.sell.aft_max)" inhouse="order.in_house" quality="'AFT'"
       buymin="display.buy.aft_min" buymax="display.buy.aft_max"
       buybonus="display.buy.aft_bonus" buyreject="display.buy.aft_reject"
       sellmin="display.sell.aft_min" sellmax="display.sell.aft_max"
@@ -335,7 +332,7 @@
     <tbody id="financial-section" uib-collapse="!financialCollapsed">
       <tr>
 				<th>Total Price / mt</th>
-        <td ng-if="!order.in_house">
+        <td ng-if="!order.in_house && order.buys.length > 0">
 					<span ng-if="display.buy">
 					<h4>US${{ display.buy.pivot.price | number }}</h4>
 					from {{ order.buys.length }} Customers
@@ -371,7 +368,7 @@
       </tr>
       <tr>
 				<th>Coal Price</th>
-        <td ng-if="!order.in_house">
+        <td ng-if="!order.in_house && order.buys.length > 0">
 					<span ng-if="display.buy">
 					<h3>US${{ (totalSelfSell + totalSelfAdditionalBuy) / totalVolumeSell | number }}</h3>
 					from {{ order.buys.length }} Customers
@@ -391,8 +388,7 @@
 			</tr>
 		</tbody>
 
-
-    <tbody>
+    <tbody ng-if="order.contracts">
       <tr>
 				<th colspan=3 style="text-align:center; background: #efefef;">
           <a ng-href="" ng-click="ContractsCollapsed = !ContractsCollapsed">
@@ -403,7 +399,7 @@
         </th>
 			</tr>
     </tbody>
-    <tbody id="detail-section" uib-collapse="ContractsCollapsed">
+    <tbody ng-if="order.contracts" id="detail-section" uib-collapse="ContractsCollapsed">
 			<tr>
 				<td>Contract ID</td>
         <td>{{order.contracts.contract_no}}</td>

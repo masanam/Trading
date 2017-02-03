@@ -19,7 +19,7 @@
 	</div>
 
 	<div class="box-body">
-		<div class="col-sm-12 col-md-2 description-block border-right">
+		<div class="col-sm-12 col-md-2 description-block border-right" ng-if="showBuy">
   		<p>BUY PRICE</p>
   		<h3>$ {{ ( display.buy.pivot.price ) | number:2 }}</h3>
   		<small class="text-muted" ng-if="inHouse == true">deviation: {{ (( display.buy.pivot.price )/display.index.price)*100 | number:2 }}%</small>

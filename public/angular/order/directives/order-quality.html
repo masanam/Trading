@@ -1,7 +1,7 @@
 
   <td  ng-if="buymin !== null || buymax !== null || buyreject !== null || buybonus !== null || sellmin !== null || sellmax !== null || sellreject !== null || sellbonus !== null"><b>{{quality}}
   </b></td>
-	<td  ng-if="( buymin !== null || buymax !== null || buyreject !== null || buybonus !== null || sellmin !== null || sellmax !== null || sellreject !== null || sellbonus !== null ) && !inhouse">
+	<td  ng-if="( buymin !== null || buymax !== null || buyreject !== null || buybonus !== null || sellmin !== null || sellmax !== null || sellreject !== null || sellbonus !== null ) && !inhouse && showBuy">
 		<span ng-if="buymin || buymax || buyreject || buybonus">
     <section ng-if="buymin !== null && buymax !== null">{{ buymin || 'N/A' }} ~ {{ buymax || 'N/A' }} kcal</section>
     <section ng-if="buymin !== null && buymax === null">{{ buymin || 'N/A' }} kcal</section>
