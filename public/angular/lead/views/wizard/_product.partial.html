@@ -99,8 +99,8 @@
       <td ng-if="productQuality === 'typical'">
         <input type="number" step="any" class="form-control" placeholder="%" ng-model="lead.tm_min" ng-init="lead.tm_max = lead.tm_min" ng-change="lead.tm_max = lead.tm_min">
       </td>
+      <td ng-if="productQuality !== 'typical'">
         <input type="number" step="any" class="form-control" placeholder="%" ng-model="lead.tm_min">
-        <td ng-if="productQuality !== 'typical'">
       </td>
       <td ng-if="productQuality !== 'typical'">
         <input type="number" step="any" class="form-control" placeholder="%" ng-model="lead.tm_max">
