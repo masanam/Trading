@@ -96,9 +96,8 @@ class LeadsTableSeeder extends Seeder
       'trading_term' => 'FOB',
       'trading_term_detail' => 'MV',
       'payment_term' => 'LC on Sight',
-      'commercial_term' => NULL,
+      'remarks' => NULL,
       'carrier_type' => 'Geared',
-      'penalty' => NULL,
       'lead_type' => 'b',
       'order_status' => 's',
       'progress_status' => NULL
@@ -185,9 +184,8 @@ class LeadsTableSeeder extends Seeder
       'trading_term' => 'FOB',
       'trading_term_detail' => 'Barge',
       'payment_term' => 'TT',
-      'commercial_term' => NULL,
+      'remarks' => NULL,
       'carrier_type' => 'Gearless',
-      'penalty' => NULL,
       'lead_type' => 's',
       'order_status' => 's',
       'progress_status' => NULL
@@ -274,9 +272,8 @@ class LeadsTableSeeder extends Seeder
       'trading_term' => 'FOB',
       'trading_term_detail' => 'Barge',
       'payment_term' => 'TT',
-      'commercial_term' => NULL,
+      'remarks' => NULL,
       'carrier_type' => 'Gearless',
-      'penalty' => NULL,
       'lead_type' => 's',
       'order_status' => 's',
       'progress_status' => NULL
@@ -363,9 +360,8 @@ class LeadsTableSeeder extends Seeder
       'trading_term' => 'FOB',
       'trading_term_detail' => 'Barge',
       'payment_term' => 'TT',
-      'commercial_term' => NULL,
+      'remarks' => NULL,
       'carrier_type' => 'Gearless',
-      'penalty' => NULL,
       'lead_type' => 'b',
       'order_status' => 'l',
       'progress_status' => NULL
@@ -452,9 +448,8 @@ class LeadsTableSeeder extends Seeder
       'trading_term' => 'FOB',
       'trading_term_detail' => 'Barge',
       'payment_term' => 'TT',
-      'commercial_term' => NULL,
+      'remarks' => NULL,
       'carrier_type' => 'Geared',
-      'penalty' => NULL,
       'lead_type' => 'b',
       'order_status' => 'v',
       'progress_status' => NULL
@@ -541,9 +536,8 @@ class LeadsTableSeeder extends Seeder
       'trading_term' => 'FOB',
       'trading_term_detail' => 'Barge',
       'payment_term' => 'TT',
-      'commercial_term' => NULL,
+      'remarks' => NULL,
       'carrier_type' => 'Geared',
-      'penalty' => NULL,
       'lead_type' => 'b',
       'order_status' => 'p',
       'progress_status' => NULL
@@ -631,9 +625,8 @@ class LeadsTableSeeder extends Seeder
       'trading_term' => 'FOB',
       'trading_term_detail' => 'Barge',
       'payment_term' => 'TT',
-      'commercial_term' => NULL,
+      'remarks' => NULL,
       'carrier_type' => 'Geared',
-      'penalty' => NULL,
       'lead_type' => 's',
       'order_status' => 'l',
       'progress_status' => NULL
@@ -721,9 +714,8 @@ class LeadsTableSeeder extends Seeder
       'trading_term' => 'FOB',
       'trading_term_detail' => 'Barge',
       'payment_term' => 'TT',
-      'commercial_term' => NULL,
+      'remarks' => NULL,
       'carrier_type' => 'Geared',
-      'penalty' => NULL,
       'lead_type' => 's',
       'order_status' => 'v',
       'progress_status' => NULL
@@ -811,9 +803,8 @@ class LeadsTableSeeder extends Seeder
       'trading_term' => 'FOB',
       'trading_term_detail' => 'Barge',
       'payment_term' => 'TT',
-      'commercial_term' => NULL,
+      'remarks' => NULL,
       'carrier_type' => 'Geared',
-      'penalty' => NULL,
       'lead_type' => 's',
       'order_status' => 'p',
       'progress_status' => NULL
@@ -825,7 +816,7 @@ class LeadsTableSeeder extends Seeder
       'order' => [ 'id' => 1, 'user_id' => 3, 'index_id' => 3, 'status' => 'p', 'in_house' => false ],
       'leads' => [
           1 => [ 'volume' => 1000, 'price' => 25, 'trading_term' => 'FOB MV', 'payment_term' => 'TT' ],
-          2 => [ 'volume' => 1000, 'price' => 53, 'trading_term' => 'FOB MV', 'payment_term' => 'TT' ] 
+          2 => [ 'volume' => 1000, 'price' => 53, 'trading_term' => 'FOB MV', 'payment_term' => 'TT' ]
       ],
       'user' => [ 1 => [ 'role' => 'approver' ], 2 => [ 'role' => 'associated' ], 3 => [ 'role' => 'admin' ] ],
       'approval' => [ 1 => [ 'status' => 'p', 'approval_token' => 'aaa' ], 2 => [ 'status' => 'a', 'approval_token' => 'bbb' ] ],
@@ -834,7 +825,7 @@ class LeadsTableSeeder extends Seeder
      [
       'order' => [ 'id' => 2, 'user_id' => 3, 'index_id' => 3, 'status' => 'a', 'in_house' => true ],
       'leads' => [
-          3 => [ 'volume' => 1000, 'price' => 51, 'trading_term' => 'FOB MV', 'payment_term' => 'TT' ] 
+          3 => [ 'volume' => 1000, 'price' => 51, 'trading_term' => 'FOB MV', 'payment_term' => 'TT' ]
       ],
       'user' => [ 1 => [ 'role' => 'approver' ], 2 => [ 'role' => 'associated' ], 3 => [ 'role' => 'admin' ] ],
       'approval' => [ 1 => [ 'status' => 'a', 'approval_token' => 'aaa' ], 2 => [ 'status' => 'a', 'approval_token' => 'bbb' ] ],
@@ -844,7 +835,7 @@ class LeadsTableSeeder extends Seeder
       'order' => [ 'id' => 3, 'user_id' => 2, 'index_id' => 2, 'status' => 'f', 'in_house' => false ],
       'leads' => [
           4 => [ 'volume' => 2000, 'price' => 35, 'trading_term' => 'FOB MV', 'payment_term' => 'TT' ],
-          7 => [ 'volume' => 1600, 'price' => 55, 'trading_term' => 'FOB MV', 'payment_term' => 'TT' ] 
+          7 => [ 'volume' => 1600, 'price' => 55, 'trading_term' => 'FOB MV', 'payment_term' => 'TT' ]
       ],
       'user' => [ 4 => [ 'role' => 'associated' ], 3 => [ 'role' => 'associated' ], 1 => [ 'role' => 'approver' ] ],
       'approval' => [ 1 => [ 'status' => 'a', 'approval_token' => 'aaa' ], 2 => [ 'status' => 'a', 'approval_token' => 'bbb' ] ],
@@ -854,7 +845,7 @@ class LeadsTableSeeder extends Seeder
       'order' => [ 'id' => 4, 'user_id' => 3, 'index_id' => 3, 'status' => 'd', 'in_house' => false ],
       'leads' => [
           3 => [ 'volume' => 1300, 'price' => 45, 'trading_term' => 'FOB MV', 'payment_term' => 'TT' ],
-          6 => [ 'volume' => 1800, 'price' => 55, 'trading_term' => 'FOB MV', 'payment_term' => 'TT' ] 
+          6 => [ 'volume' => 1800, 'price' => 55, 'trading_term' => 'FOB MV', 'payment_term' => 'TT' ]
       ],
       'companies' => [ 1 => [ 'cost' => 3 ] ]
      ]

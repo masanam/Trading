@@ -1,12 +1,14 @@
 'use strict';
-angular.module('lead').controller('LeadController', ['$scope', '$state', '$stateParams', 'Environment', 'Authentication', 'Order', 'Lead', 'Term',
-  function($scope, $state, $stateParams, Environment, Authentication, Order, Lead, Term) {
+angular.module('lead').controller('LeadController', ['$scope', '$state', '$stateParams', '$filter', 'Environment', 'Authentication', 'Order', 'Lead', 'Term',
+  function($scope, $state, $stateParams, $filter, Environment, Authentication, Order, Lead, Term) {
     $scope.Authentication = Authentication;
     $scope.tradingTerm = Term.trading;
     $scope.paymentTerm = Term.payment;
     $scope.carrierTypes = Term.carrierTypes;
     $scope.showBuy = Environment.showBuy;
     $scope.selected = {};
+    
+    $scope.today = $filter('date')(Date.now(), 'yyyy-MM-dd');
 
     $scope.lead = Lead.get({ id:$stateParams.id });
 
@@ -60,6 +62,7 @@ angular.module('lead').controller('LeadController', ['$scope', '$state', '$state
 
     $scope.create = function (lead) {
       lead = new Lead(lead);
+      console.log(lead);
       lead.company_id = $scope.selected.company.id;
 
       lead.$save(function(res) {

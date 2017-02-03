@@ -25,12 +25,12 @@ class LeadController extends Controller
    * Requests $req components
    * lead_type --> the type of the leads itself buy or sell
    * order_status --> the status of the leads in corporate order point of view
-   * 
+   *
    */
   public function index(Request $req){
     // get all subordinate of current users
     $subs = Auth::user()->subordinates();
-    $users = $subs->pluck('id')->all(); 
+    $users = $subs->pluck('id')->all();
     $users[] = Auth::User()->id;
 
     // this is the basic loading query of all leads
@@ -78,7 +78,7 @@ class LeadController extends Controller
       }
     }
 
-    // choose lead type, for view lead recomend using right condition 
+    // choose lead type, for view lead recomend using right condition
     if ($lead_type === 'buy' || $req->lead_type === 's') $query->where('lead_type', 'b');
     else if ($lead_type === 'sell' || $req->lead_type === 'b') $query->where('lead_type', 's');
 
@@ -110,7 +110,7 @@ class LeadController extends Controller
     // To list recommended leads in lead.view
     // Find difference of each of the lead quality
     // in list to reference lead
-    if($req->lead_id && $req->matching === 'leads') 
+    if($req->lead_id && $req->matching === 'leads')
       foreach ($leads as $lead) {
         $lead->difference($ref);
       }
@@ -166,11 +166,11 @@ class LeadController extends Controller
     $lead->order_expired = date('Y-m-d',strtotime($req->order_expired));
     $lead->laycan_start = date('Y-m-d',strtotime($req->laycan_start));
     $lead->laycan_end = date('Y-m-d',strtotime($req->laycan_end));
-    
+
     $lead->order_status = '1';
-    
+    $lead->remarks = $req->remarks;
     $lead->save();
-    
+
     if ($req->lead_type === 'buy') {
       $seller = Company::find($req->seller_id);
       $lead->seller = $seller;
@@ -196,7 +196,6 @@ class LeadController extends Controller
   * @return \Illuminate\Http\Response
   */
   public function show(Request $req, $id){
-    
     $lead = Lead::with(['company','port','product','used','orders',
       'concession' => function ($q){
         return $q->select('concession_name');
@@ -209,9 +208,9 @@ class LeadController extends Controller
     }
 
     $lead = $lead->where('id', $id)->first();
-      
+
     $subs = Auth::user()->subordinates();
-    $all_access = $subs->pluck('id')->all(); 
+    $all_access = $subs->pluck('id')->all();
     $all_access[] = Auth::User()->id;
 
     if(!$lead) return response()->json(['message' => 'Bad Request'], 404);
