@@ -17,7 +17,7 @@
             <a ui-sref="company.list({ type:'customer' })" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
 
-          <div class="small-box bg-aqua">
+          <div class="small-box bg-aqua" ng-if="showBuy==true">
             <div class="inner">
               <h4>{{ total.supplier }} Records </h4>
 
@@ -72,7 +72,7 @@
                   <label class="btn btn-sm btn-default" ng-model="searchType" uib-btn-radio="'customer'">
                     Customer
                   </label>
-                  <label class="btn btn-sm btn-default" ng-model="searchType" uib-btn-radio="'seller'">
+                  <label class="btn btn-sm btn-default" ng-model="searchType" uib-btn-radio="'seller'" ng-if="showBuy==true">
                     Supplier
                   </label>
                   <label class="btn btn-sm btn-default" ng-model="searchType" uib-btn-radio="'vendor'">
@@ -97,7 +97,7 @@
                   </div>
                   <select ng-model="searchType" class="form-control">
                       <option value="costumer">Costumer</option>
-                      <option value="seller">Supplier</option>
+                      <option value="seller" ng-if="showBuy==true">Supplier</option>
                       <option value="vendor">Vendors</option>
                       <option value="concession">Concessions</option>
                   </select>
