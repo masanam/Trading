@@ -1,11 +1,12 @@
 'use strict';
-angular.module('lead').controller('LeadController', ['$scope', '$state', '$stateParams', 'Environment', 'Authentication', 'Order', 'Lead', 'Term',
-  function($scope, $state, $stateParams, Environment, Authentication, Order, Lead, Term) {
+angular.module('lead').controller('LeadController', ['$scope', '$state', '$stateParams', 'Environment', 'Authentication', 'Order', 'Lead', 'Term', 'Country',
+  function($scope, $state, $stateParams, Environment, Authentication, Order, Lead, Term, Country) {
     $scope.Authentication = Authentication;
     $scope.tradingTerm = Term.trading;
     $scope.paymentTerm = Term.payment;
     $scope.carrierTypes = Term.carrierTypes;
     $scope.showBuy = Environment.showBuy;
+    $scope.countries = Country.query();
     $scope.selected = {};
 
     if(!$stateParams.lead_type) $scope.lead = Lead.get({ id:$stateParams.id });
