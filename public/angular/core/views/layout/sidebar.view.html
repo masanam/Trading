@@ -31,8 +31,8 @@
           <li><a ui-sref="map.index"><i class="fa fa-map"></i> Map</a></li>
           <li><a ui-sref="dashboard.index"><i class="fa fa-line-chart"></i> Index</a></li>
           <li><a ui-sref="company.list({ type:'customer' })"><i class="fa fa-circle-o"></i> Customer</a></li>
-          <li><a ui-sref="company.list({ type:'supplier' })"><i class="fa fa-circle-o"></i> Supplier</a></li>
-          <li><a ui-sref="company.list({ type:'vendor' })"><i class="fa fa-circle-o"></i> Vendor</a></li>
+          <li ng-if="deployment !== 'berau'"><a ui-sref="company.list({ type:'supplier' })"><i class="fa fa-circle-o"></i> Supplier</a></li>
+          <li ng-if="deployment !== 'berau'"><a ui-sref="company.list({ type:'vendor' })"><i class="fa fa-circle-o"></i> Vendor</a></li>
           <li><a ui-sref="concession.list"><i class="fa fa-circle-o"></i> Concession</a></li>
         </ul>
       </li>

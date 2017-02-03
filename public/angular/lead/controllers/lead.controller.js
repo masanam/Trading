@@ -8,7 +8,7 @@ angular.module('lead').controller('LeadController', ['$scope', '$state', '$state
     $scope.showBuy = Environment.showBuy;
     $scope.selected = {};
 
-    $scope.lead = Lead.get({ id:$stateParams.id });
+    $scope.lead = Lead.query({ id:$stateParams.id });
 
     $scope.findOne = function(id){
       if(!id) id = $stateParams.id;
