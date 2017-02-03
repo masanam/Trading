@@ -7,7 +7,7 @@
   <div class="row"><div class="col-lg-12">
     <label>Country*</label>
     <select name="country" id="country" class="form-control"
-      ng-model="lead.country" required>
+      ng-model="lead.country">
       <option value="">-- Select Country --</option>
       <option value="country.code" ng-repeat="country in countries | orderBy:'name'">{{ country.name }}</option>
     </select>
