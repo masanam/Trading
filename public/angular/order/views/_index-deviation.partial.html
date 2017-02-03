@@ -19,11 +19,13 @@
 	</div>
 
 	<div class="box-body">
-		<div class="col-sm-12 col-md-2 description-block border-right" ng-if="showBuy">
+		<div class="col-sm-12 col-md-2 description-block border-right" ng-hide="order.in_house">
   		<p>BUY PRICE</p>
   		<h3>$ {{ ( display.buy.pivot.price ) | number:2 }}</h3>
-  		<small class="text-muted" ng-if="inHouse == true">deviation: {{ (( display.buy.pivot.price )/display.index.price)*100 | number:2 }}%</small>
-      <small class="text-muted" ng-if="inHouse != true">Recovery Factor: {{ (( display.buy.pivot.price )/display.index.price)*100 | number:2 }}%</small>
+  		<small class="text-muted">
+        Deviation:
+        {{ (( display.buy.pivot.price - display.index.price )/display.index.price)*100 | number:2 }}%
+      </small>
   	</div>
 		<div ng-hide=" display.totalSellPrice === 0 || display.totalBuyPrice === 0 " class="col-sm-12 col-md-2 description-block border-right">
   		<p>{{ display.index.index_provider }} {{ display.index.index_name }}</p>
@@ -33,8 +35,10 @@
 		<div class="col-sm-12 col-md-2 description-block border-right">
   		<p>SELL PRICE</p>
   		<h3>$ {{ (display.sell.pivot.price) | number:2 }}</h3>
-      <small class="text-muted" ng-if="inHouse == true">deviation: {{ (( display.buy.pivot.price )/display.index.price)*100 | number:2 }}%</small>
-  		<small class="text-muted" ng-if="inHouse != true">Recovery Factor: {{ ((display.sell.pivot.price)/display.index.price)*100 | number:2 }}%</small>
+  		<small class="text-muted">
+        {{ order.in_house ? 'Recovery Factor' : 'Deviation' }} :
+        {{ ((display.sell.pivot.price - display.index.price)/display.index.price)*100 | number:2 }}%
+      </small>
   	</div>
 		<div class="col-sm-12 col-md-6 description-block" id="lineChart">
       <canvas id="line" class="chart chart-line" chart-data="data" chart-dataset-override="datasetOverride"

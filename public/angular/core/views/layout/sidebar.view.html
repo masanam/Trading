@@ -4,14 +4,7 @@
   <section class="sidebar" ng-init="init()">
     <!-- Sidebar user panel -->
     <div class="user-panel" ui-sref="user.edit">
-      <div class="pull-left image">
-        <div style="background-image:url({{ Authentication.user.image }});"
-          class="img-circle div-img-circle small" alt="User Image"></div>
-      </div>
-      <div class="pull-left info">
-        <p>{{ Authentication.user.name }}</p>
-        <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-      </div>
+     
     </div>
     <!-- sidebar menu: : style can be found in sidebar.less -->
     <ul class="sidebar-menu">
@@ -31,7 +24,7 @@
           <li><a ui-sref="map.index"><i class="fa fa-map"></i> Map</a></li>
           <li><a ui-sref="dashboard.index"><i class="fa fa-line-chart"></i> Index</a></li>
           <li><a ui-sref="company.list({ type:'customer' })"><i class="fa fa-circle-o"></i> Customer</a></li>
-          <li><a ui-sref="company.list({ type:'supplier' })"><i class="fa fa-circle-o"></i> Supplier</a></li>
+          <li ng-if="showBuy==true"><a ui-sref="company.list({ type:'supplier' })"><i class="fa fa-circle-o"></i> Supplier</a></li>
           <li><a ui-sref="company.list({ type:'vendor' })"><i class="fa fa-circle-o"></i> Vendor</a></li>
           <li><a ui-sref="concession.list"><i class="fa fa-circle-o"></i> Concession</a></li>
         </ul>

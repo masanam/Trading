@@ -39,9 +39,14 @@ angular.module('user').controller('UserController', ['$scope', '$http', '$stateP
           $scope.loading = false;
           $scope.success = 'Your profile has been updated successfully';
           $scope.error = undefined;
-          console.log($scope.success);
         });
+      } else if ($scope.user.password && !$scope.user.old_password) {
+        $scope.success = undefined;
+        $scope.error = 'Enter old password if you want to change password!';
       } else {
+        delete $scope.user.password;
+        delete $scope.user.cpassword;
+        delete $scope.user.old_password;
         $scope.success = undefined;
         $scope.error = 'Password does not match!';
       }

@@ -1,9 +1,10 @@
 'use strict';
 
-angular.module('dashboard').controller('OrderDashboardController', ['$scope', '$uibModal', '$state', '$log','Index','Order','Authentication',
-  function($scope, $uibModal, $state, $log, Index, Order, Authentication) {
+angular.module('dashboard').controller('OrderDashboardController', ['$scope', '$uibModal', '$state', '$log','Index','Order','Authentication','Environment',
+  function($scope, $uibModal, $state, $log, Index, Order, Authentication, Environment) {
     $scope.Authentication = Authentication;
-
+    $scope.showBuy = Environment.showBuy;
+    console.log($scope.showBuy);
     //find list of order in dashboard
     $scope.find = function () {
       var possession;
