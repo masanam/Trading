@@ -30,6 +30,7 @@ return [
     'defaultTrx' => env('DEFAULT_TRANSACTION', 'trade'),
     'showBuy' => env('SHOW_BUY', 'trade'),
     'destinationBy' => env('DESTINATION_BY', 'factory'),
+    'productQuality' => env('PRODUCT_QUALITY', 'productQuality'),
 
     /*
     |--------------------------------------------------------------------------

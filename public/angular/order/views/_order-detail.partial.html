@@ -120,7 +120,7 @@
     </tbody>
     <tbody id="detail-section" uib-collapse="isCollapsed">
 			<tr>
-				<td>Company {{order.buys.length}}</td>
+				<td>Company</td>
 
         <td ng-switch="display.buy && (display.buy.user_id === Authentication.user.id || checkSubordinates(display.buy.user_id)) || !display.buy" ng-if="!order.in_house && order.buys.length > 0">
           <span ng-switch-when="true">

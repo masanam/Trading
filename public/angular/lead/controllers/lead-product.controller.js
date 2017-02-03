@@ -1,9 +1,7 @@
 'use strict';
 
-angular.module('lead').controller('LeadProductController', ['$scope', '$stateParams', '$uibModal', 'Product', 'Lead',
+angular.module('lead').controller('LeadProductController', ['$scope', '$stateParams', '$uibModal', 'Product', 'Lead', 
   function ($scope, $stateParams, $uibModal, Product, Lead) {
-
-    //$scope.lead = Lead.get({ id:$stateParams.id });
 
     //Init select products
     $scope.find = function(keyword) {

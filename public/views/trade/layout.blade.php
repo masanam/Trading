@@ -16,7 +16,7 @@
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
   <!-- Ionicons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
 
   <script type="text/javascript">
     var deployment = "{{ Config::get('app.deployment') }}";
@@ -25,6 +25,7 @@
     var trx = "{{ Config::get('app.defaultTrx') }}";
     var showBuy = "{{ Config::get('app.showBuy') }}";
     var destinationBy = "{{ Config::get('app.destinationBy') }}";
+    var productQuality = "{{ Config::get('app.productQuality') }}";
   </script>
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->

@@ -14,13 +14,16 @@
       <th>
         Characteristics
       </th>
-      <th style="min-width:120px">
+      <th style="min-width:120px" ng-if="productQuality === 'typical'">
+        Typical
+      </th>
+      <th style="min-width:120px" ng-if="productQuality !== 'typical'">
         Min
       </th>
-      <th style="min-width:120px">
+      <th style="min-width:120px" ng-if="productQuality !== 'typical'">
         Max
       </th>
-      <th style="min-width:120px">
+      <th style="min-width:120px" ng-if="productQuality !== 'typical'">
         Bonus
       </th>
       <th style="min-width:120px">
@@ -31,13 +34,16 @@
       <td>
         Gross Caloric ADB
       </td>
-      <td>
+      <td ng-if="productQuality === 'typical'">
+        <input type="number" class="form-control" placeholder="kcal" ng-model="lead.gcv_adb_min" ng-init="lead.gcv_adb_max = lead.gcv_adb_min" ng-change="lead.gcv_adb_max = lead.gcv_adb_min">
+      </td>
+      <td ng-if="productQuality !== 'typical'">
         <input type="number" class="form-control" placeholder="kcal" ng-model="lead.gcv_adb_min">
       </td>
-      <td>
+      <td ng-if="productQuality !== 'typical'">
         <input type="number" class="form-control" placeholder="kcal" ng-model="lead.gcv_adb_max">
       </td>
-      <td>
+      <td ng-if="productQuality !== 'typical'">
         <input type="text" class="form-control" placeholder="Ex : > 5700" ng-model="lead.gcv_adb_bonus">
       </td>
       <td>
@@ -48,123 +54,143 @@
       <td>
         Gross Caloric ARB
       </td>
-      <td>
+      <td ng-if="productQuality === 'typical'">
+        <input type="number" class="form-control" placeholder="kcal" ng-model="lead.gcv_arb_min" ng-init="lead.gcv_arb_max = lead.gcv_arb_min" ng-change="lead.gcv_arb_max = lead.gcv_arb_min">
+      </td>
+      <td ng-if="productQuality !== 'typical'">
         <input type="number" class="form-control" placeholder="kcal" ng-model="lead.gcv_arb_min">
       </td>
-      <td>
+      <td ng-if="productQuality !== 'typical'">
         <input type="number" class="form-control" placeholder="kcal" ng-model="lead.gcv_arb_max">
       </td>
-      <td>
+      <td ng-if="productQuality !== 'typical'">
         <input type="text" class="form-control" placeholder="Ex : > 5700" ng-model="lead.gcv_arb_bonus">
       </td>
       <td>
         <input type="text" class="form-control" placeholder="Ex : < 5500" ng-model="lead.gcv_arb_reject">
       </td>
-      
+
     </tr>
     <tr>
       <td>
         Nett Caloric Value ARB
       </td>
-      <td>
+      <td ng-if="productQuality === 'typical'">
+        <input type="number" class="form-control" placeholder="kcal" ng-model="lead.ncv_min" ng-init="lead.ncv_max = lead.ncv_min" ng-change="lead.ncv_max = lead.ncv_min">
+      </td>
+      <td ng-if="productQuality !== 'typical'">
         <input type="number" class="form-control" placeholder="kcal" ng-model="lead.ncv_min">
       </td>
-      <td>
+      <td ng-if="productQuality !== 'typical'">
         <input type="number" class="form-control" placeholder="kcal" ng-model="lead.ncv_max">
       </td>
-      <td>
+      <td ng-if="productQuality !== 'typical'">
         <input type="text" class="form-control" placeholder="Ex : > 5700" ng-model="lead.ncv_bonus">
       </td>
       <td>
         <input type="text" class="form-control" placeholder="Ex : < 5500" ng-model="lead.ncv_reject">
       </td>
-      
+
     </tr>
     <tr>
       <td>
         Total Moisture (ARB)
       </td>
-      <td>
-        <input type="number" step="any" class="form-control" placeholder="%" ng-model="lead.tm_min">
+      <td ng-if="productQuality === 'typical'">
+        <input type="number" step="any" class="form-control" placeholder="%" ng-model="lead.tm_min" ng-init="lead.tm_max = lead.tm_min" ng-change="lead.tm_max = lead.tm_min">
       </td>
-      <td>
+        <input type="number" step="any" class="form-control" placeholder="%" ng-model="lead.tm_min">
+        <td ng-if="productQuality !== 'typical'">
+      </td>
+      <td ng-if="productQuality !== 'typical'">
         <input type="number" step="any" class="form-control" placeholder="%" ng-model="lead.tm_max">
       </td>
-      <td>
+      <td ng-if="productQuality !== 'typical'">
         <input type="text" class="form-control" placeholder="Ex : > 15%" ng-model="lead.tm_bonus">
       </td>
-
       <td>
         <input type="text" class="form-control" placeholder="Ex : < 5%" ng-model="lead.tm_reject">
       </td>
-      
+
     </tr>
     <tr>
       <td>
         Inherent Moisture (ADB)
       </td>
-      <td>
+      <td ng-if="productQuality === 'typical'">
+        <input type="number" step="any" class="form-control" placeholder="%" ng-model="lead.im_min" ng-init="lead.im_max = lead.im_min" ng-change="lead.im_max = lead.im_min">
+      </td>
+      <td ng-if="productQuality !== 'typical'">
         <input type="number" step="any" class="form-control" placeholder="%" ng-model="lead.im_min">
       </td>
-      <td>
+      <td ng-if="productQuality !== 'typical'">
         <input type="number" step="any" class="form-control" placeholder="%" ng-model="lead.im_max">
       </td>
-      <td>
+      <td ng-if="productQuality !== 'typical'">
         <input type="text" class="form-control" placeholder="Ex : > 15%" ng-model="lead.im_bonus">
       </td>
       <td>
         <input type="text" class="form-control" placeholder="Ex : < 5%" ng-model="lead.im_reject">
       </td>
-    
+
     </tr>
     <tr>
       <td>
         Volatile Matter (ADB)
       </td>
-      <td>
+      <td ng-if="productQuality === 'typical'">
+        <input type="number" step="any" class="form-control" placeholder="%" ng-model="lead.vm_min" ng-init="lead.vm_max = lead.vm_min" ng-change="lead.vm_max = lead.vm_min">
+      </td>
+      <td ng-if="productQuality !== 'typical'">
         <input type="number" step="any" class="form-control" placeholder="%" ng-model="lead.vm_min">
       </td>
-      <td>
+      <td ng-if="productQuality !== 'typical'">
         <input type="number" step="any" class="form-control" placeholder="%" ng-model="lead.vm_max">
       </td>
-      <td>
+      <td ng-if="productQuality !== 'typical'">
         <input type="text" class="form-control" placeholder="Ex : > 15%" ng-model="lead.vm_bonus">
       </td>
 
       <td>
         <input type="text" class="form-control" placeholder="Ex : < 5%" ng-model="lead.vm_reject">
       </td>
-      
+
     </tr>
     <tr>
       <td>
         Ash (ADB)
       </td>
-      <td>
+      <td ng-if="productQuality === 'typical'">
+        <input type="number" step="any" class="form-control" placeholder="%" ng-model="lead.ash_min" ng-init="lead.ash_max = lead.ash_min" ng-change="lead.ash_min = lead.ash_max">
+      </td>
+      <td ng-if="productQuality !== 'typical'">
         <input type="number" step="any" class="form-control" placeholder="%" ng-model="lead.ash_min">
       </td>
-      <td>
+      <td ng-if="productQuality !== 'typical'">
         <input type="number" step="any" class="form-control" placeholder="%" ng-model="lead.ash_max">
       </td>
-      <td>
+      <td ng-if="productQuality !== 'typical'">
         <input type="text" class="form-control" placeholder="Ex : > 15%" ng-model="lead.ash_bonus">
       </td>
       <td>
         <input type="text" class="form-control" placeholder="Ex : < 5%" ng-model="lead.ash_reject">
       </td>
-      
+
     </tr>
     <tr>
       <td>
         Fixed Carbon (ADB)
       </td>
-      <td>
+      <td ng-if="productQuality === 'typical'">
+        <input type="number" step="any" class="form-control" placeholder="%" ng-model="lead.fc_min" ng-init="lead.fc_max = lead.fc_min" ng-change="lead.fc_max = lead.fc_min">
+      </td>
+      <td ng-if="productQuality !== 'typical'">
         <input type="number" step="any" class="form-control" placeholder="%" ng-model="lead.fc_min">
       </td>
-      <td>
+      <td ng-if="productQuality !== 'typical'">
         <input type="number" step="any" class="form-control" placeholder="%" ng-model="lead.fc_max">
       </td>
-      <td>
+      <td ng-if="productQuality !== 'typical'">
         <input type="text" class="form-control" placeholder="Ex : > 15%" ng-model="lead.fc_bonus">
       </td>
       <td>
@@ -175,13 +201,16 @@
       <td>
         Total Sulphur (ADB)
       </td>
-      <td>
+      <td ng-if="productQuality === 'typical'">
+        <input type="number" step="any" class="form-control" placeholder="%" ng-model="lead.ts_min" ng-init="lead.ts_max = lead.ts_min" ng-change="lead.ts_max = lead.ts_min">
+      </td>
+      <td ng-if="productQuality !== 'typical'">
         <input type="number" step="any" class="form-control" placeholder="%" ng-model="lead.ts_min">
       </td>
-      <td>
+      <td ng-if="productQuality !== 'typical'">
         <input type="number" step="any" class="form-control" placeholder="%" ng-model="lead.ts_max">
       </td>
-      <td>
+      <td ng-if="productQuality !== 'typical'">
         <input type="text" class="form-control" placeholder="Ex : > 15%" ng-model="lead.ts_bonus">
       </td>
       <td>
@@ -192,73 +221,85 @@
       <td>
         HGI
       </td>
-      <td>
+      <td ng-if="productQuality === 'typical'">
+        <input type="number" step="any" class="form-control" placeholder="" ng-model="lead.hgi_min" ng-init="lead.hgi_max = lead.hgi_min" ng-change="lead.hgi_max = lead.hgi_min">
+      </td>
+      <td ng-if="productQuality !== 'typical'">
         <input type="number" step="any" class="form-control" placeholder="" ng-model="lead.hgi_min">
       </td>
-      <td>
+      <td ng-if="productQuality !== 'typical'">
         <input type="number" step="any" class="form-control" placeholder="" ng-model="lead.hgi_max">
       </td>
-      <td>
+      <td ng-if="productQuality !== 'typical'">
         <input type="text" class="form-control" placeholder="Ex : > 15" ng-model="lead.hgi_bonus">
       </td>
       <td>
         <input type="text" class="form-control" placeholder="Ex : < 5" ng-model="lead.hgi_reject">
       </td>
-      
+
     </tr>
     <tr>
       <td>
         SIZE (0-50mm)
       </td>
-      <td>
+      <td ng-if="productQuality === 'typical'">
+        <input type="number" step="any" class="form-control" placeholder="%" ng-model="lead.size_min" ng-init="lead.size_max = lead.size_min" ng-change="lead.size_max = lead.size_min">
+      </td>
+      <td ng-if="productQuality !== 'typical'">
         <input type="number" step="any" class="form-control" placeholder="%" ng-model="lead.size_min">
       </td>
-      <td>
+      <td ng-if="productQuality !== 'typical'">
         <input type="number" step="any" class="form-control" placeholder="%" ng-model="lead.size_max">
       </td>
-      <td>
+      <td ng-if="productQuality !== 'typical'">
         <input type="text" class="form-control" placeholder="Ex : > 15%" ng-model="lead.size_bonus">
       </td>
       <td>
         <input type="text" class="form-control" placeholder="Ex : < 5%" ng-model="lead.size_reject">
       </td>
-      
+
     </tr>
     <tr>
       <td>
         Fe2o3
       </td>
-      <td>
+      <td ng-if="productQuality === 'typical'">
+        <input type="number" step="any" class="form-control" placeholder="%" ng-model="lead.fe2o3_min" ng-init="lead.fe2o3_max = lead.fe2o3_min" ng-change="lead.fe2o3_max = lead.fe2o3_min">
+      </td>
+      <td ng-if="productQuality !== 'typical'">
         <input type="number" step="any" class="form-control" placeholder="%" ng-model="lead.fe2o3_min">
       </td>
-      <td>
+      <td ng-if="productQuality !== 'typical'">
         <input type="number" step="any" class="form-control" placeholder="%" ng-model="lead.fe2o3_max">
       </td>
-      <td>
+      <td ng-if="productQuality !== 'typical'">
         <input type="text" class="form-control" placeholder="Ex : > 15%" ng-model="lead.fe2o3_bonus">
       </td>
       <td>
         <input type="text" class="form-control" placeholder="Ex : < 5%" ng-model="lead.fe2o3_reject">
       </td>
-      
+
     </tr>
     <tr>
       <td>
         AFT
       </td>
-      <td>
+      <td ng-if="productQuality === 'typical'">
+        <input type="number" step="any" class="form-control" placeholder="&#176" ng-model="lead.aft_min" ng-init="lead.aft_max = lead.aft_min" ng-change="lead.aft_max = lead.aft_min">
+      </td>
+      <td ng-if="productQuality !== 'typical'">
         <input type="number" step="any" class="form-control" placeholder="&#176" ng-model="lead.aft_min">
       </td>
-      <td>
+      <td ng-if="productQuality !== 'typical'">
         <input type="number" step="any" class="form-control" placeholder="&#176" ng-model="lead.aft_max">
       </td>
-      <td>
+      <td ng-if="productQuality !== 'typical'">
         <input type="text" class="form-control" placeholder="Ex : > 15&#176" ng-model="lead.aft_bonus">
       </td>
       <td>
         <input type="text" class="form-control" placeholder="Ex : < 5&#176" ng-model="lead.aft_reject">
       </td>
-      
+
     </tr>
   </table>
   </div>
