@@ -94,12 +94,12 @@
 
 <div class="form-group">
   <label for="phone">Phone Number:</label>
-  <input name="phone" type="text" class="form-control" id="phone" ng-model="company.phone" required>
+  <input name="phone" type="text" class="form-control" id="phone" ng-model="company.phone">
 </div>
 
 <div class="form-group">
   <label for="contact">Email:</label>
-  <input name="email" type="text" class="form-control" id="email" ng-model="company.email" required>
+  <input name="email" type="text" class="form-control" id="email" ng-model="company.email">
 </div>
 
 <div class="form-group">
@@ -109,12 +109,12 @@
 
 <div class="form-group">
   <label for="headquarter_location">Address:</label>
-  <input name="address" type="text" class="form-control" id="address" ng-model="company.address" required>
+  <input name="address" type="text" class="form-control" id="address" ng-model="company.address">
 </div>
 
 <div class="form-group">
   <label for="city">City:</label>
-  <input name="city" type="text" class="form-control" id="city" ng-model="company.city" required>
+  <input name="city" type="text" class="form-control" id="city" ng-model="company.city">
 </div>
 
 <div class="form-group">
@@ -125,19 +125,19 @@
 <div class="form-group" ng-if="company.company_type === 'c'">
   <label for="annual_demand">Annual Demand (Million Metric Ton):</label>
   <input name="annual_demand" type="number" step="any" class="form-control"
-    id="annual_demand" ng-model="company.annual_demand" required>
+    id="annual_demand" ng-model="company.annual_demand">
 </div>
 
 <div class="form-group" ng-if="company.company_type !== 'c'">
   <label for="annual_sales">Annual Sales (Million USD):</label>
   <input name="annual_sales" type="number" step="any" class="form-control"
-    id="annual_sales" ng-model="company.annual_sales" required>
+    id="annual_sales" ng-model="company.annual_sales">
 </div>
 
 <div class="form-group" ng-if="company.company_type !== 'c'">
   <label for="purchasing_countries">Purchasing Countries:</label>
   <input name="purchasing_countries" type="text" class="form-control"
-    id="purchasing_countries" ng-model="company.purchasing_countries" required>
+    id="purchasing_countries" ng-model="company.purchasing_countries">
 </div>
 
 <div class="form-group"  ng-if="company.company_type !== 'v'">
@@ -152,7 +152,7 @@
     </span>
 
     <input name="preferred_trading_term_detail" type="text" class="form-control"
-      id="preferred_trading_term_detail" ng-model="company.preferred_trading_term_detail" placeholder="Detail">
+      id="preferred_trading_term_detail" ng-model="company.preferred_trading_term_detail" placeholder="ex: pakai tongkang">
   </div>
 </div>
 
@@ -168,13 +168,13 @@
     </span>
 
     <input name="preferred_payment_term_detail" type="text" class="form-control"
-      id="preferred_payment_term_detail" ng-model="company.preferred_payment_term_detail" placeholder="Detail">
+      id="preferred_payment_term_detail" ng-model="company.preferred_payment_term_detail" placeholder="ex: 30 days">
   </div>
 </div>
 
 <div class="form-group">
   <label for="description">Description:</label>
-  <textarea name="description" class="form-control" id="description" ng-model="company.description" required></textarea>
+  <textarea name="description" class="form-control" id="description" ng-model="company.description"></textarea>
 </div>
 
 <button type="submit" class="btn btn-primary">Submit</button>
