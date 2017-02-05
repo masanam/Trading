@@ -6,6 +6,7 @@ angular.module('lead').controller('LeadController', ['$scope', '$state', '$state
     $scope.paymentTerm = Term.payment;
     $scope.carrierTypes = Term.carrierTypes;
     $scope.showBuy = Environment.showBuy;
+    $scope.deployment = Environment.deployment;
     $scope.destinationBy = Environment.destinationBy;
     $scope.productQuality = Environment.productQuality;
     $scope.selected = {};

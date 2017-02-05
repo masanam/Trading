@@ -71,8 +71,14 @@
         <label>Payment Term : </label>
         <p>{{ lead.payment_term }}</p>
       </div>
-      <label>Penalty : </label>
-      <p>{{ lead.penalty }}</p>
+      <div class="col-xs-12" style="padding-left:0" ng-if="deployment === 'bib'">
+        <label>Penalty : </label>
+        <p>{{ lead.penalty }}</p>
+      </div>
+      <div class="col-xs-12" style="padding-left:0" ng-if="deployment === 'berau'">
+        <label>Remarks : </label>
+        <p>{{ lead.remarks }}</p>
+      </div>
     </div>
   </div>
 </div>
