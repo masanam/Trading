@@ -388,7 +388,7 @@
 			</tr>
 		</tbody>
 
-    <tbody ng-if="order.contracts">
+    <tbody ng-if="order.contracts && order.status === 'f'">
       <tr>
 				<th colspan=3 style="text-align:center; background: #efefef;">
           <a ng-href="" ng-click="ContractsCollapsed = !ContractsCollapsed">
@@ -399,7 +399,7 @@
         </th>
 			</tr>
     </tbody>
-    <tbody ng-if="order.contracts" id="detail-section" uib-collapse="ContractsCollapsed">
+    <tbody ng-if="order.contracts && order.status === 'f'" id="detail-section" uib-collapse="ContractsCollapsed">
 			<tr>
 				<td>Contract ID</td>
         <td colspan=2>{{order.contracts.contract_no}}</td>
