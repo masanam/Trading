@@ -42,7 +42,7 @@
       <h1 class="box-title">ORD#{{ ("10000"+order.id).slice(-4) }} - {{ order.trader.name }}</h1>
 
       <span class="badge badge-primary">
-        {{ order.status === 'c' ? 'Combined' : order.status === 'p' ? 'Pending Approval' : order.status === 'd' ? 'Draft' : order.status === 'a' ? 'Approved' : order.status === 'f' ? 'Finalized' : 'Cancelled' }}
+        {{ order.status === 'c' ? 'Combined' : order.status === 'p' ? 'Pending Approval' : order.status === 'd' ? 'Draft' : order.status === 'a' ? 'Approved' : order.status === 'f' ? 'In Shipment' : 'Cancelled' }}
       </span>
       <div class="box-tools pull-right no-print">
         <a class="btn btn-default hidden-xs" ui-sref="order.list">
@@ -58,7 +58,7 @@
           <i class="glyphicon glyphicon-send" title="Request for Approval"></i> Request Approval
         </a>
         <a class="btn btn-success hidden-xs" ng-click="changeStatus('f');" ng-show="order.status === 'a' && order.user_id === Authentication.user.id">
-          <i class="glyphicon glyphicon-floppy-saved" title="Finalize Order"></i> Finalize Order
+          <i class="glyphicon glyphicon-floppy-saved" title="Finalize Order"></i> In Shipment
         </a>
         <a class="btn btn-danger hidden-xs" ng-click="changeStatus('x');" ng-show="(order.status !== 'c' && order.status !== 'x' && order.status !== 'f') && order.user_id === Authentication.user.id">
           <i class="glyphicon glyphicon-trash" title="Cancel Order"></i> Cancel Order
@@ -92,7 +92,7 @@
                 </li>
                 <li>
                   <a  ng-click="changeStatus('f');" ng-show="order.status === 'a' && order.user_id === Authentication.user.id">
-                    <i class="glyphicon glyphicon-floppy-saved" title="Finalize Order"></i> Finalize Order
+                    <i class="glyphicon glyphicon-floppy-saved" title="Finalize Order"></i> In Shipment
                   </a>
                 </li>
                 <li>
