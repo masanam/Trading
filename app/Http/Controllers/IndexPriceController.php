@@ -13,6 +13,9 @@ use App\Http\Requests;
 
 class IndexPriceController extends Controller
 {
+  public function __construct() {
+      $this->middleware('jwt.auth');
+  }
 
   /**
    * Store a newly created resource in storage.
@@ -29,6 +32,7 @@ class IndexPriceController extends Controller
     }
 
     $indexPrice = new IndexPrice();
+    $this->authorize('create', $indexPrice);
     
     $indexPrice->date = $request->date;
     $indexPrice->index_id = $request->index_id;
@@ -66,6 +70,7 @@ class IndexPriceController extends Controller
   public function update(Request $request, $id)
   {
     $indexPrice = IndexPrice::find($id);
+    $this->authorize('update', $indexPrice);
 
     if (!$request) {
       return response()->json([

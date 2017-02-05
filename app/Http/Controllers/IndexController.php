@@ -9,10 +9,15 @@ use App\Model\Index;
 use App\Model\IndexPrice;
 
 use App\Http\Requests;
-
+use Auth;
 
 class IndexController extends Controller
 {
+  public function __construct(Index $index) {
+    $this->middleware('jwt.auth');
+    $this->index = $index;
+  }
+
   /**
    * Display a listing of the resource.
    *
@@ -20,6 +25,7 @@ class IndexController extends Controller
    */
   public function index(){
     $indices = Index::get();
+
     return response()->json($indices, 200);
   }
 
@@ -38,6 +44,7 @@ class IndexController extends Controller
     }
 
     $index = new Index();
+    $this->authorize('create', $index);
     
     $index->index_provider = $req->index_provider;
     $index->index_name = $req->index_name;
@@ -75,6 +82,7 @@ class IndexController extends Controller
   public function update(Request $req, $id)
   {
     $index = Index::find($id);
+    $this->authorize('update', $index);
 
     if (!$req) {
       return response()->json([
@@ -106,7 +114,9 @@ class IndexController extends Controller
    * @return \Illuminate\Http\Response
    */
   public function destroy($id){
-    $index = DB::table('index')->where('id', $id)->update(['status' => 'x']);
+    $index = DB::table('index')->where('id', $id);
+    $this->authorize('update', $index);
+    $index->update(['status' => 'x']);
 
     return response()->json(['message' => 'successfully deleted'], 200);
   }

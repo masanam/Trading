@@ -43,6 +43,8 @@ class UsersTableSeeder extends Seeder
             [ 'name' => 'Prasetyo Nugraha Gema', 'email' => 'pras@volantech.io', 'title' => 'Admin', 'image' => './images/default.png', 'phone'=> '1234567890', 'role'=>'admin', 'manager_id'=>null],
             [ 'name' => 'Martin', 'email' => 'dev@volantech.io', 'title' => 'Admin', 'image' => './images/default.png', 'phone'=> '1234567890', 'role'=>'', 'manager_id'=>1],
             [ 'name' => 'Giovanny Sientoro', 'email' => 'giovanny.sientoro@borneo-indobara.com', 'title' => 'Supervisor', 'image' => './images/default.png', 'phone'=> '1234567890', 'role'=>'', 'manager_id'=>2],
+            [ 'name' => 'Yudhi', 'email' => 'yudhi@berau.com', 'title' => 'Scheduler', 'image' => './images/default.png', 'phone'=> '1234567890', 'role'=>'scheduler', 'manager_id'=>2],
+            [ 'name' => 'Rori', 'email' => 'rori@berau.com', 'title' => 'Intel', 'image' => './images/default.png', 'phone'=> '1234567890', 'role'=>'intel', 'manager_id'=>4],
 
             [ 'name' => 'Aryo Pradipta Gema', 'email' => 'aryo@volantech.io', 'title' => 'Admin', 'image' => './images/default.png', 'phone'=> '1234567890', 'role'=>'', 'manager_id'=>1],
         ];
@@ -68,11 +70,17 @@ class UsersTableSeeder extends Seeder
         Role::create([
             'role' => 'trader',
         ]);
+        Role::create([
+            'role'=>'manager',
+        ]);
 		Role::create([
-			'role'=>'manager',
+			'role'=>'intel',
 		]);
+        Role::create([
+            'role'=>'bizdev',
+        ]);
 		Role::create([
-			'role'=>'bizdev',
+			'role'=>'scheduler',
 		]);
 		Role::create([
 			'role'=>'bizdev-approver',
@@ -83,12 +91,15 @@ class UsersTableSeeder extends Seeder
         User::find(1)->roles()->attach(2);
         User::find(1)->roles()->attach(3);
         User::find(1)->roles()->attach(4);
+        User::find(1)->roles()->attach(5);
         User::find(2)->roles()->attach(2);
 		User::find(3)->roles()->attach(3);
 		User::find(3)->roles()->attach(2);
-		User::find(4)->roles()->attach(1);
+        User::find(4)->roles()->attach(4);
+        User::find(5)->roles()->attach(6);
+		User::find(6)->roles()->attach(1);
 
-        User::find(4)->actings()->attach(1, [
+        User::find(1)->actings()->attach(4, [
             'role' => 'a',
             'status' => 'a',
             'date_start' => date('Y-m-d'),
