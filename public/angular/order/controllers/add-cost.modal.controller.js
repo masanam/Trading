@@ -37,7 +37,17 @@ angular.module('order').controller('AddCostModalController', ['$uibModalInstance
     };
 
     $scope.cancel = function () {
-      $uibModalInstance.dismiss('cancel');
+      var emptyAdditionals = 0;
+      var i = 0;
+      for(i = 0; i < $scope.additionals.length; i++){
+        if($scope.additionals.label === undefined && $scope.additionals.cost === undefined) emptyAdditionals++;
+      }
+      if(emptyAdditionals > 0){
+        $scope.error = 'Please fill the empty additional cost, or remove it to proceed.';
+      }else{
+        $scope.error = undefined;
+        $uibModalInstance.dismiss('cancel');
+      }
     };
   }
 ]);
