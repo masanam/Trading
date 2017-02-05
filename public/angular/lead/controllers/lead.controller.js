@@ -101,18 +101,22 @@ angular.module('lead').controller('LeadController', ['$scope', '$state', '$state
     $scope.update = function () {
       var next;
 
+      console.log($scope.lead);
+
       if($state.current.name === 'lead.update') next = 'lead.location';
       else if($state.current.name === 'lead.location'){
         // if location is by country, skip port
         if(Environment.destinationBy === 'country'){
-          $scope.lead.order_status++;
+          $scope.lead.order_status+=2;
           next = 'lead.product';
-        } else next = 'lead.port';
+        } else {
+          $scope.lead.order_status++;
+          next = 'lead.port';
+        }
       }
       else if($state.current.name === 'lead.port') next = 'lead.product';
       else if($state.current.name === 'lead.product') {
         next = 'lead.view';
-        console.log($scope.lead);
         if (
           (!(($scope.lead.gcv_adb_bonus && $scope.lead.gcv_adb_reject) ||
           ($scope.lead.gcv_arb_bonus && $scope.lead.gcv_arb_reject) ||
@@ -121,6 +125,20 @@ angular.module('lead').controller('LeadController', ['$scope', '$state', '$state
           ) {
           $scope.error = 'Please Fill Contract Bonus & Reject';
           return false;
+        }else if(Environment.productQuality === 'typical'){
+          $scope.lead.gcv_adb_max = $scope.lead.gcv_adb_min;
+          $scope.lead.gcv_arb_max = $scope.lead.gcv_arb_min;
+          $scope.lead.ncv_max = $scope.lead.ncv_min;
+          $scope.lead.tm_max = $scope.lead.tm_min;
+          $scope.lead.im_max = $scope.lead.im_min;
+          $scope.lead.vm_max = $scope.lead.vm_min;
+          $scope.lead.ash_max = $scope.lead.ash_min;
+          $scope.lead.fc_max = $scope.lead.fc_min;
+          $scope.lead.ts_max = $scope.lead.ts_min;
+          $scope.lead.hgi_max = $scope.lead.hgi_min;
+          $scope.lead.size_max = $scope.lead.size_min;
+          $scope.lead.fe2o3_max = $scope.lead.fe2o3_min;
+          $scope.lead.aft_max = $scope.lead.aft_min;
         }
         else $scope.error = null;
       }

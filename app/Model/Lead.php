@@ -10,6 +10,7 @@ class Lead extends Model
     protected $table = 'leads';
     protected $fillable = [
         'factory_id',
+        'carrier_type',
         'concession_id',
     	'address',
         'city',
