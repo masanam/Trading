@@ -19,7 +19,7 @@ angular.module('user').controller('UserController', ['$scope', '$http', '$stateP
           var fileUrl = config.url + '/' + folder + '/' + filename;
           var profile = new User(Authentication.user);
           profile.image = fileUrl;
-          
+
           profile.$update({ id: profile.id }, function () {
             $scope.user.image = Authentication.user.image = fileUrl;
           }, function (errorResponse) {
@@ -31,18 +31,26 @@ angular.module('user').controller('UserController', ['$scope', '$http', '$stateP
 
     $scope.update = function() {
       $scope.loading = true;
-      
-      if($scope.user.password === $scope.user.cpassword){
-        
+
+      if ($scope.user.password && !$scope.user.old_password) {
+        $scope.success = undefined;
+        $scope.error = 'Enter old password if you want to change password!';
+      }
+
+      else if($scope.user.password === $scope.user.cpassword){
+
         $scope.user.$update({ id: $scope.user.id }, function(response) {
           //$state.go('user.index');
           $scope.loading = false;
-          $scope.success = 'Your profile has been updated successfully';
           $scope.error = undefined;
+          if(response.message){
+            $scope.error = response.message;
+          }else{
+            $scope.success = 'Your profile has been updated successfully';
+          }
+        }, function(response){
+          $scope.error = response.data.message;
         });
-      } else if ($scope.user.password && !$scope.user.old_password) {
-        $scope.success = undefined;
-        $scope.error = 'Enter old password if you want to change password!';
       } else {
         delete $scope.user.password;
         delete $scope.user.cpassword;
@@ -50,7 +58,7 @@ angular.module('user').controller('UserController', ['$scope', '$http', '$stateP
         $scope.success = undefined;
         $scope.error = 'Password does not match!';
       }
-      
+
     };
 
     $scope.resetPassword = function() {
