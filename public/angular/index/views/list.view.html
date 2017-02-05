@@ -1,14 +1,14 @@
 
 <div class="box-header with-border">
   <h1 class="box-title " style="font-size: 25px">Index</h1>
-  <div class="box-tools pull-right btn-group">
+  <div class="box-tools pull-right btn-group" ng-if="Authentication.user.role.indexOf('intel') !== -1">
     <button ui-sref="index.today-price" class="btn btn-primary hidden-xs">+ Add Today Price</button>
     <button ui-sref="index.create" class="btn btn-primary hidden-xs">+ Create New Index</button>
   </div>
 </div>
 <div class="box-body" ng-init="find()">
-  <button ui-sref="index.today-price" class="btn btn-primary btn-block hidden-sm hidden-md hidden-lg">+ Add Today Price</button>
-  <button ui-sref="index.create" class="btn btn-primary hidden-sm btn-block hidden-md hidden-lg">+ Create New Index</button><hr>
+  <button ui-sref="index.today-price" class="btn btn-primary btn-block hidden-sm hidden-md hidden-lg" ng-if="Authentication.user.role.indexOf('intel') !== -1">+ Add Today Price</button>
+  <button ui-sref="index.create" class="btn btn-primary hidden-sm btn-block hidden-md hidden-lg" ng-if="Authentication.user.role.indexOf('intel') !== -1">+ Create New Index</button><hr>
  <div class="table-responsive">
   <table st-table="indices" st-safe-src="indexCollection" class="table table-striped">
     <thead>
@@ -34,7 +34,7 @@
         <td>{{ index.updated_at | date:'short' }}</td>
         <td>
           <a ui-sref="index.view({ indexId: index.id })"><i class="glyphicon glyphicon-eye-open"></i></a>
-          <a ui-sref="index.edit({ indexId: index.id })"><i class="glyphicon glyphicon-pencil"></i></a>
+          <a ng-if="Authentication.user.role.indexOf('intel') !== -1" ui-sref="index.edit({ indexId: index.id })"><i class="glyphicon glyphicon-pencil"></i></a>
           <!-- <a ng-click="remove(index)"><i class="glyphicon glyphicon-trash"></i></a> -->
         </td>
       </tr>
@@ -55,6 +55,5 @@
 
   <div class="callout callout-warning text-center" ng-if="indices.$resolved && !indices.length">
     No indices yet, why don't you <a ui-sref="index.create">create one</a>?
-  </div>  
+  </div>
 </div>
-

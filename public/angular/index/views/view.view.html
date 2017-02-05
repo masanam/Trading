@@ -8,10 +8,10 @@
     <a class="btn btn-default hidden-xs" ui-sref="index.list">
       <i class="glyphicon glyphicon-chevron-left"></i> Back
     </a>
-    <a class="btn btn-primary hidden-xs" ui-sref="index.edit({indexId: index.id})">
+    <a class="btn btn-primary hidden-xs" ui-sref="index.edit({indexId: index.id})" ng-if="Authentication.user.role.indexOf('intel') !== -1">
       <i class="glyphicon glyphicon-edit"></i>
     </a>
-    <a class="btn btn-primary hidden-xs" ng-click="remove(index);">
+    <a class="btn btn-primary hidden-xs" ng-click="remove(index);" ng-if="Authentication.user.role.indexOf('intel') !== -1">
       <i class="glyphicon glyphicon-trash"></i>
     </a>
   </div>
@@ -20,10 +20,10 @@
     <a class="btn btn-default btn-block" ui-sref="index.list">
       <i class="glyphicon glyphicon-chevron-left"></i> Back
     </a>
-    <a class="btn btn-primary btn-block" ui-sref="index.edit({indexId: index.id})">
+    <a class="btn btn-primary btn-block" ui-sref="index.edit({indexId: index.id})" ng-if="Authentication.user.role.indexOf('intel') !== -1">
       <i class="glyphicon glyphicon-edit"></i>
     </a>
-    <a class="btn btn-primary btn-block" ng-click="remove(index);">
+    <a class="btn btn-primary btn-block" ng-click="remove(index);" ng-if="Authentication.user.role.indexOf('intel') !== -1">
       <i class="glyphicon glyphicon-trash"></i>
     </a>
   </div>
@@ -38,5 +38,5 @@
   </small>
 </div>
 <div class="box-body" ng-include="'/angular/index/views/_prices.partial.html'">
-  
+
 </div>
