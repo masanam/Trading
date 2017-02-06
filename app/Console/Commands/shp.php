@@ -14,7 +14,7 @@ class shp extends Command
      *
      * @var string
      */
-    protected $signature = 'shp:populate';
+    protected $signature = 'shp:populate {--path=}';
 
     /**
      * The console command description.
@@ -40,7 +40,26 @@ class shp extends Command
      */
     public function handle()
     {
-      $result = shell_exec("python ./app/Console/Commands/python/shp_parser.py ");
-      echo $result;
+      $path = $this->option('path');
+      // $result = exec("python ./app/Console/Commands/python/shp_parser.py $path");
+      // echo $result;
+      $handle = popen("python ./app/Console/Commands/python/shp_parser.py $path", 'r');
+      while(!feof($handle)) {
+          $buffer = fgets($handle);
+      }
+      pclose($handle);
+      // pclose($result);
+      $csvs = scandir($path."csv/");
+      foreach($csvs as $csv) {
+        $query = sprintf("LOAD DATA 
+        INFILE '%s' INTO TABLE spatial_data
+        FIELDS TERMINATED BY ','
+        OPTIONALLY ENCLOSED BY '\"'
+        ESCAPED BY '\"'
+        LINES TERMINATED BY '\\n'
+        IGNORE 0 LINES (`firstname`, `lastname`, `username`, `gender`, `email`, `country`, `ethnicity`, `education`  )",
+        $csv);
+      }
+      return DB::connection()->getpdo()->exec($query);
     }
 }
