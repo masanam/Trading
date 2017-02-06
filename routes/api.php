@@ -32,6 +32,7 @@ Route::group(['middleware' => ['cors']], function() {
     //Forgot Password API
     Route::post('user/password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
     Route::get('user/current', 'UserController@currentUser');
+    Route::put('user/{id}/restore', 'UserController@restore');
     Route::resource('user', 'UserController', ['except' => [ 'create', 'edit' ]]);
 
 
@@ -48,6 +49,7 @@ Route::group(['middleware' => ['cors']], function() {
     Route::resource('company', 'CompanyController', ['except' => [ 'create', 'edit' ]]);
 
     Route::resource('area', 'AreaController', ['except' => [ 'create', 'edit' ]]);
+    Route::resource('country', 'CountryController', ['except' => [ 'create', 'edit' ]]);
     Route::resource('contact', 'ContactController', ['except' => [ 'create', 'edit' ]]);
     Route::resource('port', 'PortController', ['except' => [ 'create', 'edit' ]]);
     Route::resource('product', 'ProductController', ['except' => [ 'create', 'edit' ]]);
@@ -56,7 +58,7 @@ Route::group(['middleware' => ['cors']], function() {
 
     //Myr
     Route::get('sales-target/{year}', 'SalesTargetController@index');
-    Route::post('sales-target/{year}', 'SalesTargetController@store');
+    Route::resource('sales-target', 'SalesTargetController', ['except' => [ 'create', 'edit' ]]);
 
     Route::resource('qualities', 'QualityController', ['except' => [ 'create', 'edit' ]]);
 
@@ -114,6 +116,7 @@ Route::group(['middleware' => ['cors']], function() {
      * By AndezTea
      */
     Route::resource('mining-license', 'MiningLicenseController', ['except' => ['create', 'edit']]);
+    Route::match(['get','put'], 'mining-license/{id}/approval', 'MiningLicenseController@approval');
     Route::resource('spatial-data', 'SpatialDataController', ['except' => ['create', 'edit']]);
 
     //hasapu 25-01-2017

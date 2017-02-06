@@ -3,13 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Model\MiningLicenseFile;
-use Auth;
+use App\Model\Country;
 
-use App\Http\Requests;
-use DB;
-
-class MiningLicenseFileController extends Controller
+class CountryController extends Controller
 {
     public function __construct() {
         $this->middleware('jwt.auth');
@@ -20,15 +16,11 @@ class MiningLicenseFileController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    /* AndezTea 2017-01-19 18:00
-     * create All function CRUD
-     */
     public function index(Request $req = null)
     {
-        $license = MiningLicenseFile::with('mining_license_files')->select('id','mining_license','url','upload_by','create_at','update_at');
+      $data = Country::get();
       
-
-        return response()->json($license, 200);
+      return response()->json($data, 200);
     }
 
     /**
@@ -39,18 +31,7 @@ class MiningLicenseFileController extends Controller
      */
     public function store(Request $req)
     {
-        if(!$req) {
-          return response()->json([
-            'message' => 'Bad Request'
-          ], 400);
-        }
-
-        $license = new MiningLicenseFile($req->all());
-        $license->created_by = Auth::User()->id;
-        $license->status = 'a';
-        $license->save();
-
-        return response()->json($license, 200);
+    
     }
 
     /**
@@ -61,11 +42,8 @@ class MiningLicenseFileController extends Controller
      */
     public function show($id)
     {
-
-       
-    }
-
     
+    }
 
     /**
      * Update the specified resource in storage.
@@ -76,7 +54,7 @@ class MiningLicenseFileController extends Controller
      */
     public function update(Request $req, $id)
     {
-       
+      
     }
 
     /**
@@ -87,11 +65,7 @@ class MiningLicenseFileController extends Controller
      */
     public function destroy($id)
     {
-        $license = MiningLicenseFile::where('status', 'a')->find($id);
-
-        $license = DB::table('mining_license_files')->where('id', $id)->update(['status' => 'x']);
-
-        return response()->json($license, 200);
-        
+    	
     }
+
 }

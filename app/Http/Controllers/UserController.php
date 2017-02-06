@@ -12,6 +12,16 @@ use App\Events\EditUserProfile;
 
 use App\Http\Requests;
 
+use JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Illuminate\Auth\Events\Login;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
+
+use App\Mail\ForgotPassword;
+
+use Illuminate\Support\Facades\Config;
+
 class UserController extends Controller
 {
     public function __construct() {
@@ -39,34 +49,34 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $user = User::where(['email' => $request->email])->get();
-        
+        foreach ($user as  $users) {
+            $users=$users['id'];
+        }
         if(!$request) {
             return response()->json([
                 'message' => 'Bad Request'
             ], 400);
         }
-        else if(!empty($user)){
+        else if(!empty($users)){
             return response()->json([
                 'message' => 'Your email is already registered. If you forgot your password, please send an enquiry to info@volantech.io'
             ], 400);
         }
 
-        $user = new User();
-        $user->name = $request->name;
-        $user->image = $request->image;
-        $user->title = $request->title;
-        $user->email = $request->email;
-        $user->phone = $request->phone;
-        $user->password = bcrypt($request->password);
-
-        $user->employee_id = $request->employee_id;
-        $user->role = 'user';
-
+        $user = new User;
+        $user->name = trim($request->name);
+        $user->title = trim($request->title);
+        $user->image = trim($request->image);
         $user->status = 'a';
-
+        $user->email = trim(strtolower($request->email));
+        $user->phone = trim($request->phone);
+        $user->password = bcrypt($request->password);
         $user->save();
 
-        return response()->json($user, 200);
+        $user->roles()->attach($request->role);
+        
+
+        return response()->json(compact('user'), 200);
     }
 
     /**
@@ -133,7 +143,7 @@ class UserController extends Controller
             foreach($req->roles as $r) {
                 $roles[] = $r['id'];
             }
-                // if($user->roles[]->id != $r['id'])
+
             $user->roles()->sync($roles);
         }
 
@@ -218,4 +228,6 @@ class UserController extends Controller
 
         return response()->json($user, 200);
     }
+
+
 }

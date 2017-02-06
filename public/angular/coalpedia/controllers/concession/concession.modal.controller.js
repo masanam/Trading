@@ -31,7 +31,6 @@ angular.module('coalpedia').controller('ConcessionModalController', ['$scope', '
       concession.polygon = $scope.display.polygonString.split(',').join(' ').split('[[').join('(').split(']]').join(')');
       concession.polygon = concession.polygon.split('] [').join(', ');
       concession.company_id = company.id;
-
       concession.$save(function(response) {
         $uibModalInstance.close(response);
       });
