@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 
 use Auth;
+use DB;
 
 
 class SalesTargetController extends Controller
@@ -74,26 +75,38 @@ class SalesTargetController extends Controller
      */
     public function store(Request $req)
     {
-        dd($req);
-
         $year = $req->year;
+        $sales_target = $req->target;
+        foreach($req->target as $st){
+            foreach ($st['sales'] as $s) {
+                // $sales_target = new SalesTarget();
+                // $sales_target->product_id = $st['id'];
+                // $sales_target->month = $s['month'];
+                // $sales_target->year = $req->year;
+                // $sales_target->value = $s['value'];
+                // $sales_target->save();
+                // SalesTarget::updateOrCreate(['product_id' => $st['id'],
+                //         'month' => $s['month'],
+                //         'year' => $req->year,
+                //         'value' => $s['value']], [
+                //             'product_id' => $st['id'],
+                //             'month' => $s['month'],
+                //             'year' => $req->year
+                //         ]); 
 
-        /*$sales_target = new SalesTarget($req->all());            
-        $sales_target->save();*/
-        // foreach($req->sales_target as $product_id => $st){
-        //     foreach ($st as $month => $value) {
-        //         $sales_target = new SalesTarget([
-        //             'product_id' => $product_id,
-        //             'year' => $year,
-        //             'month' => $month,
-        //             'value' => $value,
-        //             'updated_by' => Auth::user()
-        //         ]);   
+                // DB::statement('insert into sales_target (product_id, month, year, value) values ('.$st['id'].','.$s['month'].','.$req->year.','.$s->value.') ON DUPLICATE update sales_target set value='.$s->value.' where product_id='.$st['id'].', month='.$s['month'].', year='.$req->year);
+                DB::statement('
+                    insert into sales_target (`product_id`, `month`, `year`, `value`) 
+                    values ('.$st['id'].','.$s['month'].','.$req->year.','.$s['value'].')
+                    ON DUPLICATE KEY UPDATE `value`='.$s['value'].';');
 
-        //         $sales_target->save();
-        //     }
-        // }
 
+
+
+
+
+            }
+        }
         return $this->index($year);
     }
 

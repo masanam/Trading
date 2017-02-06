@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::group(['middleware' => ['cors']], function() {
+Route::group(['middleware' => 'cors'], function() {
     /*
      * USER API GROUP
      * this API contains ALL the things needed by coalpedia to manage

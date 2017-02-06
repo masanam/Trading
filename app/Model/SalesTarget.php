@@ -11,6 +11,9 @@ class SalesTarget extends Model
       'product_id', 'month', 'year', 'value'
     ];
 
+    protected $primaryKey = 'product_id';
+    public $incrementing = false;
+
     public function product() {
         return $this->belongsTo(Product::class);
     }
