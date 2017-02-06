@@ -6,6 +6,7 @@ use App\Model\User;
 
 use Illuminate\Http\Request;
 use Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 
 use App\Events\EditUserProfile;
@@ -74,7 +75,7 @@ class UserController extends Controller
         $user->save();
 
         $user->roles()->attach($request->role);
-        
+
 
         return response()->json(compact('user'), 200);
     }
@@ -93,7 +94,7 @@ class UserController extends Controller
             return response()->json($user, 200);
         } else {
             return response()->json(['message' => 'deactivated record'], 404);
-        }    
+        }
     }
 
     /**
@@ -115,7 +116,7 @@ class UserController extends Controller
 
         if (!$user) {
             return response()->json([
-                'message' => 'Not found'
+                'message' => 'User Not found'
             ] ,404);
         }
 
@@ -129,12 +130,16 @@ class UserController extends Controller
 
         $lastImage = $user->image;
 
+        if($req->old_password && $req->password){
+            if(Hash::check($req->old_password, $user->password)) $user->password = bcrypt($req->password);
+            else return response()->json(['message' => 'You entered a wrong old password.'], 400);
+        }
+
         $user->name = $req->name;
         $user->image = $req->image;
         $user->title = $req->title;
         $user->email = $req->email;
         $user->phone = $req->phone;
-        $user->password = bcrypt($req->password);
         $user->employee_id = $req->employee_id;
         $user->manager_id = $req->manager_id;
 
@@ -169,7 +174,7 @@ class UserController extends Controller
         // find the person who want to give the priviledge of acting role
         $user = User::find($user);
 
-        if(!$user) 
+        if(!$user)
             return response()->json([
                 'message' => 'Not found'
             ] ,404);
@@ -191,7 +196,7 @@ class UserController extends Controller
     public function destroy($id, Request $req = null)
     {
         $user = User::with('directSubordinates')->find($id);
-        
+
         if (!$user) {
             return response()->json([
                 'message' => 'Not found'
@@ -205,7 +210,7 @@ class UserController extends Controller
         //general user remove
         else{
             //manager remove for admin
-            if($req->manager) $user->manager_id = null;            
+            if($req->manager) $user->manager_id = null;
             //general user remove
             else $user->status = 'x';
             $user->save();
@@ -216,7 +221,7 @@ class UserController extends Controller
 
     public function restore($user) {
         $user = User::find($user);
-        
+
         if (!$user) {
             return response()->json([
                 'message' => 'Not found'

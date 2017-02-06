@@ -1,7 +1,9 @@
 'use strict';
 
-angular.module('order').controller('OrderDetailController', ['$scope', '$uibModal', 'Lead', 'Order',
-  function($scope,$uibModal, Lead, Order) {
+angular.module('order').controller('OrderDetailController', ['$scope', '$uibModal', 'Lead', 'Order', 'Environment',
+  function($scope,$uibModal, Lead, Order, Environment) {
+
+    $scope.productQuality = Environment.productQuality;
 
     $scope.init = function () {
       $scope.totalPriceBuy = 0;

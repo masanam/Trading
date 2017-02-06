@@ -7,8 +7,8 @@
       <span ng-switch-when="s" class="pull-right label label-info" style="margin-bottom: -4px; margin-left: 5px;">Staged</span>
       <span ng-switch-when="p" class="pull-right label label-info" style="margin-bottom: -4px; margin-left: 5px;">Partially Staged</span>
     </h3>
-    <div class="glyphicon glyphicon-triangle-bottom pull-right" ng-if="isCollapsed"></div> 
-    <div class="glyphicon glyphicon-triangle-top pull-right" ng-if="!isCollapsed"></div> 
+    <div class="glyphicon glyphicon-triangle-bottom pull-right" ng-if="isCollapsed"></div>
+    <div class="glyphicon glyphicon-triangle-top pull-right" ng-if="!isCollapsed"></div>
   </div>
   <div class="box-body" uib-collapse="isCollapsed">
     <!-- Button show on large screen -->
@@ -59,6 +59,10 @@
         <label>Validity : </label>
         <p>{{ lead.order_expired | date : 'd MMMM yyyy' }}</p>
       </div>
+      <div class="col-xs-12" style="padding-left:0">
+        <label>Carrier Type : </label>
+        <p>{{ lead.carrier_type }}</p>
+      </div>
       <div class="col-xs-6" style="padding-left:0">
         <label>Shipping Term : </label>
         <p>{{ lead.trading_term }} {{ lead.trading_term_detail }}</p>
@@ -67,8 +71,14 @@
         <label>Payment Term : </label>
         <p>{{ lead.payment_term }}</p>
       </div>
-      <label>Penalty : </label>
-      <p>{{ lead.penalty }}</p>
+      <div class="col-xs-12" style="padding-left:0" ng-if="deployment === 'bib'">
+        <label>Penalty : </label>
+        <p>{{ lead.penalty }}</p>
+      </div>
+      <div class="col-xs-12" style="padding-left:0" ng-if="deployment === 'berau'">
+        <label>Remarks : </label>
+        <p>{{ lead.remarks }}</p>
+      </div>
     </div>
   </div>
 </div>

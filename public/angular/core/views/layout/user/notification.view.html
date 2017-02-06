@@ -1,0 +1,50 @@
+<section class="content">
+  <section ng-controller="NotificationController" class="col-lg-8 col-lg-offset-2">
+    <div ng-init="findNotificationsByUser()" class="content-wrapper">
+    <!-- Content Header (Page header) -->
+      <section class="content-header">
+        <h1>
+          Notification
+        </h1>
+      </section>
+
+      <!-- Main content -->
+      <section class="content">
+
+        <!-- row -->
+        <div class="row">
+          <div class="col-md-12">
+            <!-- The time line -->
+            <ul class="timeline">
+              <!-- /.timeline-label -->
+              <!-- timeline item -->
+              <li ng-if="!notifications.length">
+                <div class="timeline-item">
+                  <div class="timeline-body">
+                    There is no notification !
+                  </div>
+                </div>
+              </li>
+
+              <li ng-if="notifications.length" ng-repeat="notif in notifications.slice().reverse()" ng-click="readNotification(notif.$id)">
+                
+                <i class="fa fa-envelope bg-blue" ng-if="notif.notification.indexOf('ORD') < 0"></i>
+                <i class="fa fa-user bg-red" ng-if="notif.notification.indexOf('ORD') >= 0"></i>
+
+                <div class="timeline-item">
+                  <span class="time"><i class="fa fa-clock-o"></i> {{ notif.created_at | date:'medium' }}</span>
+
+                  <div class="timeline-body">
+                    {{ notif.notification }}
+                  </div>
+                </div>
+              </li>
+              <!-- END timeline item -->
+              <!-- timeline item -->
+            </ul>
+          </div>
+        </div>
+      </section>
+    </div>
+  </section>
+</section>

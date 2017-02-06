@@ -1,8 +1,8 @@
 <div class="box box-default">
   <div class="box-header with-border" ng-click="isCollapsed2 = !isCollapsed2" style="cursor: pointer">
     <h3 class="box-title">Product Quality</h3>
-    <span class="glyphicon glyphicon-triangle-bottom pull-right" ng-if="isCollapsed2"></span> 
-    <span class="glyphicon glyphicon-triangle-top pull-right" ng-if="!isCollapsed2"></span> 
+    <span class="glyphicon glyphicon-triangle-bottom pull-right" ng-if="isCollapsed2"></span>
+    <span class="glyphicon glyphicon-triangle-top pull-right" ng-if="!isCollapsed2"></span>
   </div>
   <div class="box-body" uib-collapse="isCollapsed2">
     <div class="row-fluid" style="margin:10px">
@@ -13,74 +13,74 @@
             <tr style="background-color: darkgray"}>
               <th style="width:30%">Quality </th>
               <th>Typical</th>
-              <th>Bonus</th>
+              <th ng-if="productQuality !== 'typical'">Bonus</th>
               <th>Reject</th>
             </tr>
           </thead>
           <tbody>
             <tr lead-quality ng-if="lead.gcv_adb_min != null && lead.gcv_adb_max != null"
             min="lead.gcv_adb_min" max="lead.gcv_adb_max"
-            bonus="lead.gcv_adb_bonus" reject="lead.gcv_adb_reject" quality="'GCV ADB'"
+            bonus="lead.gcv_adb_bonus" reject="lead.gcv_adb_reject" quality="'GCV ADB'" typical="productQuality"
             >
             </tr>
             <tr lead-quality ng-if="lead.gcv_arb_min != null && lead.gcv_arb_max != null"
             min="lead.gcv_arb_min" max="lead.gcv_arb_max"
-            bonus="lead.gcv_arb_bonus" reject="lead.gcv_arb_reject" quality="'GCV ARB'"
+            bonus="lead.gcv_arb_bonus" reject="lead.gcv_arb_reject" quality="'GCV ARB'" typical="productQuality"
             >
             </tr>
-            <tr lead-quality ng-if="lead.ncv_min != null && lead.ncv_max != null" 
+            <tr lead-quality ng-if="lead.ncv_min != null && lead.ncv_max != null"
             min="lead.ncv_min" max="lead.ncv_max"
-            bonus="lead.ncv_bonus" reject="lead.ncv_reject" quality="'NCV ARB'"
+            bonus="lead.ncv_bonus" reject="lead.ncv_reject" quality="'NCV ARB'" typical="productQuality"
             >
             </tr>
-            <tr lead-quality ng-if="lead.tm_min != null && lead.tm_max != null" 
+            <tr lead-quality ng-if="lead.tm_min != null && lead.tm_max != null"
             min="lead.tm_min" max="lead.tm_max"
-            bonus="lead.tm_bonus" reject="lead.tm_reject" quality="'Total Moisture (ARB)'"
+            bonus="lead.tm_bonus" reject="lead.tm_reject" quality="'Total Moisture (ARB)'" typical="productQuality"
             >
             </tr>
-            <tr lead-quality ng-if="lead.im_min != null && lead.im_max != null" 
+            <tr lead-quality ng-if="lead.im_min != null && lead.im_max != null"
             min="lead.im_min" max="lead.im_max"
-            bonus="lead.im_bonus" reject="lead.im_reject" quality="'Inherent Moisture (ADB)'"
+            bonus="lead.im_bonus" reject="lead.im_reject" quality="'Inherent Moisture (ADB)'" typical="productQuality"
             >
             </tr>
-            <tr lead-quality ng-if="lead.vm_min != null && lead.vm_max != null" 
+            <tr lead-quality ng-if="lead.vm_min != null && lead.vm_max != null"
             min="lead.vm_min" max="lead.vm_max"
-            bonus="lead.vm_bonus" reject="lead.vm_reject" quality="'Volatile Matter (ADB)'"
+            bonus="lead.vm_bonus" reject="lead.vm_reject" quality="'Volatile Matter (ADB)'" typical="productQuality"
             >
             </tr>
-            <tr lead-quality ng-if="lead.ash_min != null && lead.ash_max != null" 
+            <tr lead-quality ng-if="lead.ash_min != null && lead.ash_max != null"
             min="lead.ash_min" max="lead.ash_max"
-            bonus="lead.ash_bonus" reject="lead.ash_reject" quality="'Ash (ADB)'"
+            bonus="lead.ash_bonus" reject="lead.ash_reject" quality="'Ash (ADB)'" typical="productQuality"
             >
             </tr>
-            <tr lead-quality ng-if="lead.fc_min != null && lead.fc_max != null" 
+            <tr lead-quality ng-if="lead.fc_min != null && lead.fc_max != null"
             min="lead.fc_min" max="lead.fc_max"
-            bonus="lead.fc_bonus" reject="lead.fc_reject" quality="'Fixed Carbon (ADB)'"
+            bonus="lead.fc_bonus" reject="lead.fc_reject" quality="'Fixed Carbon (ADB)'" typical="productQuality"
             >
             </tr>
-            <tr lead-quality ng-if="lead.ts_min != null && lead.ts_max != null" 
+            <tr lead-quality ng-if="lead.ts_min != null && lead.ts_max != null"
             min="lead.ts_min" max="lead.ts_max"
-            bonus="lead.ts_bonus" reject="lead.ts_reject" quality="'Total Sulphur (ADB)'"
+            bonus="lead.ts_bonus" reject="lead.ts_reject" quality="'Total Sulphur (ADB)'" typical="productQuality"
             >
             </tr>
-            <tr lead-quality ng-if="lead.hgi_min != null && lead.hgi_max != null" 
+            <tr lead-quality ng-if="lead.hgi_min != null && lead.hgi_max != null"
             min="lead.hgi_min" max="lead.hgi_max"
-            bonus="lead.hgi_bonus" reject="lead.hgi_reject" quality="'HGI'"
+            bonus="lead.hgi_bonus" reject="lead.hgi_reject" quality="'HGI'" typical="productQuality"
             >
             </tr>
-            <tr lead-quality ng-if="lead.size_min != null && lead.size_max != null" 
+            <tr lead-quality ng-if="lead.size_min != null && lead.size_max != null"
             min="lead.size_min" max="lead.size_max"
-            bonus="lead.size_bonus" reject="lead.size_reject" quality="'SIZE (0-50mm)'"
+            bonus="lead.size_bonus" reject="lead.size_reject" quality="'SIZE (0-50mm)'" typical="productQuality"
             >
             </tr>
-            <tr lead-quality ng-if="lead.fe2o3_min != null && lead.fe2o3_max != null" 
+            <tr lead-quality ng-if="lead.fe2o3_min != null && lead.fe2o3_max != null"
             min="lead.fe2o3_min" max="lead.fe2o3_max"
-            bonus="lead.fe2o3_bonus" reject="lead.fe2o3_reject" quality="'Fe2O3'"
+            bonus="lead.fe2o3_bonus" reject="lead.fe2o3_reject" quality="'Fe2O3'" typical="productQuality"
             >
             </tr>
-            <tr lead-quality ng-if="lead.aft_min != null && lead.aft_max != null" 
+            <tr lead-quality ng-if="lead.aft_min != null && lead.aft_max != null"
             min="lead.aft_min" max="lead.aft_max"
-            bonus="lead.aft_bonus" reject="lead.aft_reject" quality="'AFT'"
+            bonus="lead.aft_bonus" reject="lead.aft_reject" quality="'AFT'" typical="productQuality"
             >
             </tr>
           </tbody>

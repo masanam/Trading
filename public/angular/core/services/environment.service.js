@@ -11,6 +11,7 @@ angular.module('index').factory('Environment', ['$window',
     env.trx = $window.trx;
     env.showBuy = $window.showBuy;
     env.destinationBy = $window.destinationBy;
+    env.productQuality = $window.productQuality;
 
     return env;
   }

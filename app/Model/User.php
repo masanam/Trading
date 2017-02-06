@@ -44,6 +44,15 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return date('d-m-Y', strtotime($value));
     }*/
 
+    public function getRoleAttribute($value) {
+        $value = [];
+        // dd($this->roles()->get());
+        foreach($this->roles()->get() as $r) {
+            $value[] = $r->role;
+        }
+        return $value;
+    }
+
     public function contacts() {
         return $this->hasMany('Contact');
     }
