@@ -418,12 +418,12 @@ class OrderController extends Controller
 
     // if Orders staged for approval,
     else if($order->status == 'p'){
+      // add the added manager to the order_user to associate the order
       $order = Order::with(['approvals' => function($q){
         $q->where('user_id', Auth::user()->manager_id);
       }, 'users' => function($q){
         $q->where('user_id', Auth::user()->manager_id);
       }])->find($id);
-
 
       if($order->users->count() == 0){
         foreach (Auth::user()->managers() as $user_id) {
@@ -475,16 +475,18 @@ class OrderController extends Controller
    */
   public function approval(Request $req, $id)
   {
-    // since approval does not use jwt middleware,
-    // we need to try whether they are using approval token
-    // or using the JWT token.
     $order = Order::with( 'approvals',
       'sells', 'sells.trader', 'sells.company',
       'buys', 'buys.trader', 'buys.company')->find($id);
 
-    if($req->approval_token) $user = $order->getApproverByToken($req->approval_token); // if using token, get the specified approving user
-    else {
-      $user = JWTAuth::parseToken()->authenticate(); // or simply load the user if using Auth only.
+    // since approval does not use jwt middleware,
+    // we need to try whether they are using approval token
+    // or using the JWT token.
+
+    // if using token, get the specified approving user
+    if($req->approval_token) $user = $order->getApproverByToken($req->approval_token); 
+    else {  // or simply load the user if using Auth only.
+      $user = JWTAuth::parseToken()->authenticate();
       $this->authorize('approve', $order);
     }
 
@@ -494,33 +496,25 @@ class OrderController extends Controller
     // put the user's approval status to replace old one
     $order->approvals()->sync([ $user->id => [ 'status' => $req->status ] ], false);
 
+    // find out the order's current approval scheme
 
-    // if this user has manager, add approval on top of it
-    if($user->manager_id && $req->status == 'a'){
-      $order->requestApproval(User::find(Auth::user()->manager_id));
-    }
+    // find out the order's approval scheme sequence
 
-    /*
-     * Interim Logic
-     *
-     * Approval statuses:
-     * [p] --> pending ;    [m] --> pending, but acting
-     * [a] --> approved ;   [y] --> automatically approved
-     * [r] --> rejected ;   [n] --> automatically rejected
-     */
+    // find out whether or not this order fulfills condition of current sequence
 
-    $interims = $user->interims;
-    $actings = $user->actings;
+    // find out whether or not this order require next sequence of approval
+    // if true, elevate the sequence, send approval to each users. add the database & send the email
 
-    if(count($interims) || count($actings)){
-      if($req->status == 'a') $status = 'y';
-      else if($req->status == 'r') $status = 'n';
+    // if false, this is its last sequence of the scheme
+    // which means, the order status will be rendered 'a' (approved)
 
-      foreach($interims as $interim) $order->approvals()->sync([ $interim->id => [ 'status' => $status ] ], false);
-      foreach($actings as $actings) $order->approvals()->sync([ $acting->id => [ 'status' => $status ] ], false);
-    }
+
 
     return $this->show($id, $req);
+    // // if this user has manager, add approval on top of it
+    // if($user->manager_id && $req->status == 'a'){
+    //   $order->requestApproval(User::find(Auth::user()->manager_id));
+    // }
   }
 
   /**
