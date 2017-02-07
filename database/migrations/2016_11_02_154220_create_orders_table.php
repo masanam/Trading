@@ -21,6 +21,8 @@ class CreateOrdersTable extends Migration
             $table->string('cancel_reason')->nullable();
             $table->string('request_reason')->nullable();
             $table->string('finalize_reason')->nullable();
+            
+            $table->integer('approval_sequence')->unsigned()->default(0);
             $table->char('status', 1);
             $table->timestamps();
 
