@@ -104,6 +104,14 @@ class Order extends Model
     foreach($this->buys as &$buy) $buy->pivot->negotiations = OrderNegotiation::where('order_detail_id', '=', $buy->pivot->id)->get();
   }
 
+  public function leadToPartial(){
+    $buy_ids = $this->buys()->pluck('leads.id');
+    Lead::whereIn('id', $buy_ids)->update(['order_status' => 'p']);
+
+    $sell_ids = $this->sells()->pluck('leads.id');
+    Lead::whereIn('id', $sell_ids)->update(['order_status' => 'p']);
+  }
+
   public function addAdditionalCosts($additional) {
     if(count($additional) > 0) {
       $this->companies()->detach();
