@@ -34,6 +34,6 @@ class CreateSalesTargetTable extends Migration
      */
     public function down()
     {
-        Schema::drop('sales_target');
+        Schema::dropIfExists('sales_target');
     }
 }

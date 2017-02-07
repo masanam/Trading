@@ -34,7 +34,7 @@ class CreateOrderApprovalSchemesTable extends Migration
             $table->char('approval_scheme', 1); // [a] AND, [o] OR, [integer] number of approval, [s] direct supervisor
             $table->timestamps();
 
-            $table->primary(['order_approval_scheme_id', 'sequence']);
+            $table->primary(['order_approval_scheme_id', 'sequence'], 'orderapprovalseq_primary');
             $table->foreign('order_approval_scheme_id')->references('id')->on('order_approval_schemes')->onDelete('restrict');
             $table->foreign('role_id')->references('id')->on('roles')->onDelete('restrict');
         });
@@ -47,7 +47,7 @@ class CreateOrderApprovalSchemesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('order_approval_scheme_sequence');
-        Schema::dropIfExists('order_approval_scheme');
+        Schema::dropIfExists('order_approval_scheme_sequences');
+        Schema::dropIfExists('order_approval_schemes');
     }
 }

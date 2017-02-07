@@ -15,14 +15,14 @@ class OrderApprovalSchemesTableSeeder extends Seeder
     public function run()
     {
         OrderApprovalScheme::create([
-        	'id' => 1
-					'order_approval_scheme_name' => 'Area 1 Trade Approval Sequence'
+        	'id' => 1,
+					'order_approval_scheme_name' => 'Area 1 Trade Approval Sequence',
 					'area_id' => 1
         ]);
 
         OrderApprovalScheme::create([
-        	'id' => 2
-					'order_approval_scheme_name' => 'Area 1 Trade Approval Sequence'
+        	'id' => 2,
+					'order_approval_scheme_name' => 'Area 2 Trade Approval Sequence',
 					'area_id' => 2
         ]);
 
@@ -37,7 +37,7 @@ class OrderApprovalSchemesTableSeeder extends Seeder
         	['order_approval_scheme_id' => 2,'sequence' => 1,'role_id' => 23, 'approval_scheme' => 'a'], // manager area 2, all
         	['order_approval_scheme_id' => 2,'sequence' => 2,'role_id' => 21, 'approval_scheme' => 'a'], // cmo, all
         	['order_approval_scheme_id' => 2,'sequence' => 3,'role_id' => 11, 'approval_scheme' => 'a'], // ceo, all
-				]
+				];
 
 				foreach($seq as $s) OrderApprovalSchemeSequence::create($s);	
     }

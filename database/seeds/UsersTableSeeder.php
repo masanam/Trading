@@ -49,7 +49,7 @@ class UsersTableSeeder extends Seeder
             [ 'name' => 'Rori', 'email' => 'rori@berau.com', 'title' => 'Intel', 'image' => './images/default.png', 'phone'=> '1234567890', 'role'=>'intel', 'employee_no'=>'EMP-123', 'manager_id'=>4],
             [ 'name' => 'Andez', 'email' => 'andez@volantech.io', 'title' => 'Supervisor', 'image' => './images/default.png', 'phone'=> '1234567890', 'role'=>'intel', 'employee_no'=>'EMP-123', 'manager_id'=>5],
             [ 'name' => 'Kamal', 'email' => 'kamal@volantech.io', 'title' => 'Staff', 'image' => './images/default.png', 'phone'=> '1234567890', 'role'=>'intel', 'employee_no'=>'EMP-123', 'manager_id'=>6],
-            [ 'name' => 'Sakti', 'email' => 'kamal@volantech.io', 'title' => 'Staff', 'image' => './images/default.png', 'phone'=> '1234567890', 'role'=>'intel', 'employee_no'=>'EMP-123', 'manager_id'=>7],
+            [ 'name' => 'Sakti', 'email' => 'hasapu@volantech.io', 'title' => 'Staff', 'image' => './images/default.png', 'phone'=> '1234567890', 'role'=>'intel', 'employee_no'=>'EMP-123', 'manager_id'=>7],
 
         ];
 
@@ -70,7 +70,6 @@ class UsersTableSeeder extends Seeder
         // RESERVED ADMIN ROLES
         Role::create(['id' => 1,    'role' => 'root']);
         Role::create(['id' => 2,    'role' => 'admin']);
-        Role::create(['id' => 2,    'role' => 'compliance']);
         Role::create(['id' => 3,    'role' => 'trade-admin']);
         Role::create(['id' => 4,    'role' => 'index-admin']);
         Role::create(['id' => 5,    'role' => 'bd-admin']);
