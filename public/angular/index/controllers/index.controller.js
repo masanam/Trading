@@ -59,6 +59,7 @@ angular.module('index').controller('IndexController', ['$scope', '$stateParams',
       $scope.indices = Index.query();
     };
 
+
     // Find existing Article
     $scope.findOne = function () {
       $scope.index = Index.get({
