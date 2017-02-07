@@ -83,6 +83,10 @@ class MiningLicense extends Model {
         return $this->hasMany('App\Model\MiningLicenseFile')->where('status', 'a');
     }
 
+    public function MiningLicenseHistory() {
+        return $this->hasMany('App\Model\MiningLicenseHistory');
+    }
+
     public function spatial_data(){
         return $this->belongsToMany(SpatialData::class,'mining_license_spatial_data','mining_license_id','spatial_data_id')->select('*', DB::raw('ST_AsGeoJSON(polygon, 8) AS polygon'));
     }
