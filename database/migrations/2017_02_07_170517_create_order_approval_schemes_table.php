@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateOrderApprovalsTable extends Migration
+class CreateOrderApprovalSchemesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class CreateOrderApprovalsTable extends Migration
     public function up()
     {
         //role
-        Schema::create('order_approval_scheme', function (Blueprint $table) {
+        Schema::create('order_approval_schemes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('order_approval_scheme_name');
             $table->integer('area_id')->unsigned()->nullable();
@@ -23,9 +23,11 @@ class CreateOrderApprovalsTable extends Migration
             // $table->integer('min_sell_value');
             // $table->integer('max_sell_value');
             $table->timestamps();
+
+            $table->foreign('area_id')->references('id')->on('areas')->onDelete('restrict');
         });
 
-        Schema::create('order_approval_scheme_sequence', function (Blueprint $table) {
+        Schema::create('order_approval_scheme_sequences', function (Blueprint $table) {
             $table->integer('order_approval_scheme_id')->unsigned();
             $table->integer('sequence')->unsigned();
             $table->integer('role_id')->unsigned();

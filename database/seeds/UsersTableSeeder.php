@@ -41,8 +41,9 @@ class UsersTableSeeder extends Seeder
             // [ 'name' => 'Fahmi Andrian', 'email' => 'fahmi.andrian@sinarmasmining.com', 'title' => 'MDP', 'image' => './images/default.png', 'phone'=> '1234567890', 'role'=>'user', 'manager_id'=>12],
 
             [ 'name' => 'Prasetyo Nugraha Gema', 'email' => 'pras@volantech.io', 'title' => 'Admin', 'image' => './images/default.png', 'phone'=> '1234567890', 'role'=>'admin', 'employee_no'=>'EMP-123', 'manager_id'=>null],
-            [ 'name' => 'Martin', 'email' => 'dev@volantech.io', 'title' => 'Admin', 'image' => './images/default.png', 'phone'=> '1234567890', 'role'=>'', 'employee_no'=>'EMP-123', 'manager_id'=>1],
+            [ 'name' => 'Martin', 'email' => 'martin@volantech.io', 'title' => 'Admin', 'image' => './images/default.png', 'phone'=> '1234567890', 'role'=>'', 'employee_no'=>'EMP-123', 'manager_id'=>1],
             [ 'name' => 'Aryo Pradipta Gema', 'email' => 'aryo@volantech.io', 'title' => 'Admin', 'image' => './images/default.png', 'phone'=> '1234567890', 'role'=>'', 'employee_no'=>'EMP-123', 'manager_id'=>1],
+            [ 'name' => 'Fahmi', 'email' => 'fahmi@volantech.io', 'title' => 'Admin', 'image' => './images/default.png', 'phone'=> '1234567890', 'role'=>'', 'employee_no'=>'EMP-123', 'manager_id'=>1],
             [ 'name' => 'Giovanny Sientoro', 'email' => 'giovanny.sientoro@borneo-indobara.com', 'title' => 'Supervisor', 'image' => './images/default.png', 'phone'=> '1234567890', 'role'=>'', 'employee_no'=>'EMP-123', 'manager_id'=>2],
             [ 'name' => 'Yudhi', 'email' => 'yudhi@berau.com', 'title' => 'Scheduler', 'image' => './images/default.png', 'phone'=> '1234567890', 'role'=>'scheduler', 'employee_no'=>'EMP-123', 'manager_id'=>3],
             [ 'name' => 'Rori', 'email' => 'rori@berau.com', 'title' => 'Intel', 'image' => './images/default.png', 'phone'=> '1234567890', 'role'=>'intel', 'employee_no'=>'EMP-123', 'manager_id'=>4],
@@ -102,14 +103,15 @@ class UsersTableSeeder extends Seeder
         Role::create(['id' => 26,   'role' => 'trade-supervisor']);
 
         User::find(1)->roles()->attach([1, 11]); // Pras: root, executive
-        User::find(2)->roles()->attach(21); // Aryo: cmo
-        User::find(3)->roles()->attach(21); // Martin: cmo
-		User::find(4)->roles()->attach(22); // Gio: trade-manager-area-1
-		User::find(5)->roles()->attach(23); // Yudhi: trade-manager-area-2
-        User::find(6)->roles()->attach(26); // Rori: trade-supervisor
-        User::find(7)->roles()->attach(26); // Andez: trade-supervisor
-        User::find(8)->roles()->attach(15); // Kamal: trader
-		User::find(9)->roles()->attach(25); // Sakti: trader
+        User::find(2)->roles()->attach([11]); // Martin: executive
+        User::find(3)->roles()->attach(21); // Aryo: cmo
+        User::find(4)->roles()->attach(21); // Fahmi: cmo
+		User::find(5)->roles()->attach(22); // Gio: trade-manager-area-1
+		User::find(6)->roles()->attach(23); // Yudhi: trade-manager-area-2
+        User::find(7)->roles()->attach(26); // Rori: trade-supervisor
+        User::find(8)->roles()->attach(26); // Andez: trade-supervisor
+        User::find(9)->roles()->attach(15); // Kamal: trader
+		User::find(10)->roles()->attach(25); // Sakti: trader
 
         User::find(1)->actings()->attach(4, [
             'role' => 'a',
