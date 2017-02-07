@@ -17,16 +17,6 @@ class Order extends Model
   // use SyncsWithFirebase;
   protected $table = 'orders';
 
-  /*public function getCreatedAtAttribute($value)
-    {
-        return date('d-m-Y', strtotime($value));
-    }
-
-    public function getUpdatedAtAttribute($value)
-    {
-        return date('d-m-Y', strtotime($value));
-    }*/
-
   /*
    * Relations
    *
@@ -114,17 +104,6 @@ class Order extends Model
     foreach($this->buys as &$buy) $buy->pivot->negotiations = OrderNegotiation::where('order_detail_id', '=', $buy->pivot->id)->get();
   }
 
-  public function getApproverByToken($approval_token){
-    foreach($this->approvals as $a)
-      if($a->pivot->approval_token == $approval_token) return $a;
-  }
-
-  public function getApproverByUserId($user_id){
-    foreach($this->approvals as $a){
-      if($a->id == $user_id) return $a;
-    }
-  }
-
   public function addAdditionalCosts($additional) {
     if(count($additional) > 0) {
       $this->companies()->detach();
@@ -138,104 +117,4 @@ class Order extends Model
     }
   }
 
-  public function requestApproval($user){
-    // You can only add approval record from a user
-    // that HAS NOT YET been here before
-    // if($this->getApproverByUserId($user->id)) return false;
-
-    /*
-     * UPDATE DATA NOW!
-     */
-
-    // Add new approval request
-    $approval_properties = [
-      'status' => 'p',
-      'approval_token' => bcrypt(date('Y-m-d H:i:s') . $user->name)
-    ];
-    $this->approvals()->sync([$user->id => $approval_properties], false);
-
-    // add new associated user in the request
-    $this->users()->sync([$user->id => [ 'role' => 'approver' ]], false);
-
-
-    /*
-     * FIND ALL NECESSARY ELEMENTS TO SEND EMAILS
-     */
-
-    // get the earliest laycan and latest one
-    $this->earliestLaycan();
-    $this->latestLaycan();
-
-    // find all averages of the order details.
-    $this->averageSell();
-    $this->averageBuy();
-
-    // get latest GC NEWC price
-    $index = IndexPrice::orderBy('date', 'DESC')->where('index_id', 10)->first();
-
-    $mail = new ApprovalRequest($this, $approval_properties['approval_token'], $index->price);
-    Mail::to($user->email)->send($mail);
-
-
-    /*
-     * Interim Logic
-     *
-     * Approval statuses:
-     * [p] --> pending ;    [m] --> pending, but acting
-     * [a] --> approved ;   [y] --> automatically approved
-     * [r] --> rejected ;   [n] --> automatically rejected
-     */
-
-    // Interim roles is non-descendable
-    // Only applied to 1 level directly below
-    $interims = $user->interims;
-
-    if($interims) {
-      // add approval, association and email to all associated Users!
-      foreach($interims as $interim){
-        // If current user already inside approval list, don't add
-        if(!$this->approvals->contains($interim->id)){
-          $approval_properties = [
-            'status' => 'm',
-            'approval_token' => bcrypt(date('Y-m-d H:i:s') . $interim->name)
-          ];
-
-          // add the user to the approval list
-          $this->approvals()->attach($interim->id, $approval_properties);
-          // and associate him/her to the order
-          $this->users()->sync([$user->id => [ 'role' => 'approver' ]], false);
-
-          // Send the email now
-          $mail = new ApprovalRequest($this, $approval_properties['approval_token'], $index->price);
-          Mail::to($interim->email)->send($mail);
-        }
-      }
-      return true;
-    }
-    else return false;
-  }
-
-  public function resetApproval(){
-    // delete all approval, then
-    // add new approval starting from second level manager
-    $this->approvals()->detach();
-    $this->requestApproval(User::find($this->trader->manager_id));
-  }
-
-  public function leadToPartial(){
-    $buy_ids = $this->buys()->pluck('leads.id');
-    Lead::whereIn('id', $buy_ids)->update(['order_status' => 'p']);
-    /*if(isset($buy_ids)) {
-      foreach ($buy_ids as $id) {
-        $this->buys()->detach($id);
-      }
-    }*/
-    $sell_ids = $this->sells()->pluck('leads.id');
-    Lead::whereIn('id', $sell_ids)->update(['order_status' => 'p']);
-    /*if(isset($sell_ids)) {
-      foreach ($sell_ids as $id) {
-        $this->sells()->detach($id);
-      }
-    }*/
-  }
 }

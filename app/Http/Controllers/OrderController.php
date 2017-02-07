@@ -159,6 +159,141 @@ class OrderController extends Controller
     }
   }
 
+
+  // public function getApproverByToken($approval_token){
+  //   foreach($this->approvals as $a)
+  //     if($a->pivot->approval_token == $approval_token) return $a;
+  // }
+
+  // public function getApproverByUserId($user_id){
+  //   foreach($this->approvals as $a){
+  //     if($a->id == $user_id) return $a;
+  //   }
+  // }
+
+  // public function requestApproval($user){
+  //   // You can only add approval record from a user
+  //   // that HAS NOT YET been here before
+  //   // if($this->getApproverByUserId($user->id)) return false;
+
+  //   /*
+  //    * UPDATE DATA NOW!
+  //    */
+
+  //   // Add new approval request
+  //   $approval_properties = [
+  //     'status' => 'p',
+  //     'approval_token' => bcrypt(date('Y-m-d H:i:s') . $user->name)
+  //   ];
+  //   $this->approvals()->sync([$user->id => $approval_properties], false);
+
+  //   // add new associated user in the request
+  //   $this->users()->sync([$user->id => [ 'role' => 'approver' ]], false);
+
+
+  //   /*
+  //    * FIND ALL NECESSARY ELEMENTS TO SEND EMAILS
+  //    */
+
+  //   // get the earliest laycan and latest one
+  //   $this->earliestLaycan();
+  //   $this->latestLaycan();
+
+  //   // find all averages of the order details.
+  //   $this->averageSell();
+  //   $this->averageBuy();
+
+  //   // get latest GC NEWC price
+  //   $index = IndexPrice::orderBy('date', 'DESC')->where('index_id', 10)->first();
+
+  //   $mail = new ApprovalRequest($this, $approval_properties['approval_token'], $index->price);
+  //   Mail::to($user->email)->send($mail);
+
+
+  //   /*
+  //    * Interim Logic
+  //    *
+  //    * Approval statuses:
+  //    * [p] --> pending ;    [m] --> pending, but acting
+  //    * [a] --> approved ;   [y] --> automatically approved
+  //    * [r] --> rejected ;   [n] --> automatically rejected
+  //    */
+
+  //   // Interim roles is non-descendable
+  //   // Only applied to 1 level directly below
+  //   $interims = $user->interims;
+
+  //   if($interims) {
+  //     // add approval, association and email to all associated Users!
+  //     foreach($interims as $interim){
+  //       // If current user already inside approval list, don't add
+  //       if(!$this->approvals->contains($interim->id)){
+  //         $approval_properties = [
+  //           'status' => 'm',
+  //           'approval_token' => bcrypt(date('Y-m-d H:i:s') . $interim->name)
+  //         ];
+
+  //         // add the user to the approval list
+  //         $this->approvals()->attach($interim->id, $approval_properties);
+  //         // and associate him/her to the order
+  //         $this->users()->sync([$user->id => [ 'role' => 'approver' ]], false);
+
+  //         // Send the email now
+  //         $mail = new ApprovalRequest($this, $approval_properties['approval_token'], $index->price);
+  //         Mail::to($interim->email)->send($mail);
+  //       }
+  //     }
+  //     return true;
+  //   }
+  //   else return false;
+  // }
+
+  // public function resetApproval(){
+  //   // delete all approval, then
+  //   // add new approval starting from second level manager
+  //   $this->approvals()->detach();
+  //   $this->requestApproval(User::find($this->trader->manager_id));
+  // }
+
+  // public function leadToPartial(){
+  //   $buy_ids = $this->buys()->pluck('leads.id');
+  //   Lead::whereIn('id', $buy_ids)->update(['order_status' => 'p']);
+  //   /*if(isset($buy_ids)) {
+  //     foreach ($buy_ids as $id) {
+  //       $this->buys()->detach($id);
+  //     }
+  //   }*/
+  //   $sell_ids = $this->sells()->pluck('leads.id');
+  //   Lead::whereIn('id', $sell_ids)->update(['order_status' => 'p']);
+  //   /*if(isset($sell_ids)) {
+  //     foreach ($sell_ids as $id) {
+  //       $this->sells()->detach($id);
+  //     }
+  //   }*/
+  // }
+
+  private function approvalRequest () {
+    // 
+  }
+
+  private function approvalSequence ($order, $user) {
+    // find out the order's current approval scheme
+
+    // find out the order's approval scheme sequence
+
+    // find out whether or not this order fulfills condition of current sequence
+
+    // find out whether or not this order require next sequence of approval
+    // if true, elevate the sequence
+    // send approval to each users. add the database & send the email
+    // put user as the associated user in the order
+
+    // if false, this is its last sequence of the scheme
+    // which means, the order status will be rendered 'a' (approved)
+
+
+  }
+
   //////////////////////////////////////
   //
   // COMMON CRUD ACTIONS
@@ -439,33 +574,9 @@ class OrderController extends Controller
     // If this is a delete operation, release all partials
     if($order->status == 'x'){
       $order->leadToPartial();
-    }
-
-    // if Orders staged for approval,
-    else if($order->status == 'p'){
-      // add the added manager to the order_user to associate the order
-      $order = Order::with(['approvals' => function($q){
-        $q->where('user_id', Auth::user()->manager_id);
-      }, 'users' => function($q){
-        $q->where('user_id', Auth::user()->manager_id);
-      }])->find($id);
-
-      if($order->users->count() == 0){
-        foreach (Auth::user()->managers() as $user_id) {
-          $order_user = new OrderUser();
-          $order_user->order_id = $id;
-          $order_user->user_id = $user_id->id;
-          $order_user->role = 'approver';
-          $order_user->save();
-        }
-      }
-
-      // add manager to approve this order
-      if(Auth::user()->manager_id){
-        $order->requestApproval(User::find(Auth::user()->manager_id));
-      } else {
-        $order->status = 'a'; $order->save();
-      }
+    } else if($order->status == 'p') {
+      // begin/continue approval sequence
+      $this->approvalSequence($order, Auth::user());
     }
 
     $req['envelope'] = 'true';
@@ -521,25 +632,10 @@ class OrderController extends Controller
     // put the user's approval status to replace old one
     $order->approvals()->sync([ $user->id => [ 'status' => $req->status ] ], false);
 
-    // find out the order's current approval scheme
-
-    // find out the order's approval scheme sequence
-
-    // find out whether or not this order fulfills condition of current sequence
-
-    // find out whether or not this order require next sequence of approval
-    // if true, elevate the sequence, send approval to each users. add the database & send the email
-
-    // if false, this is its last sequence of the scheme
-    // which means, the order status will be rendered 'a' (approved)
-
-
-
+    // Begin/Continue/End approval sequence
+    $this->approvalSequence($order, Auth::user());
+    
     return $this->show($id, $req);
-    // // if this user has manager, add approval on top of it
-    // if($user->manager_id && $req->status == 'a'){
-    //   $order->requestApproval(User::find(Auth::user()->manager_id));
-    // }
   }
 
   /**
