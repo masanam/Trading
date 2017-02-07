@@ -54,7 +54,6 @@ class CreateUsersTable extends Migration
         //role
         Schema::create('roles', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('supervisor_role_id')->unsigned();
             $table->string('role');
             $table->timestamps();
         });
@@ -86,24 +85,6 @@ class CreateUsersTable extends Migration
 
             $table->unique(['privilege_id', 'role_id']);
             $table->foreign('privilege_id')->references('id')->on('privileges')->onDelete('restrict');
-            $table->foreign('role_id')->references('id')->on('roles')->onDelete('restrict');
-        });
-
-        //areas
-        Schema::create('areas', function (Blueprint $table){
-            $table->increments('id');
-            $table->string('area_name')->nullable();
-            $table->string('description')->nullable();
-            $table->string('status')->nullable();
-        });
-
-        Schema::create('area_role', function (Blueprint $table){
-            $table->integer('area_id')->unsigned();
-            $table->integer('role_id')->unsigned();
-            $table->timestamps();
-
-            $table->unique(['area_id', 'role_id']);
-            $table->foreign('area_id')->references('id')->on('areas')->onDelete('restrict');
             $table->foreign('role_id')->references('id')->on('roles')->onDelete('restrict');
         });
 
@@ -144,11 +125,13 @@ class CreateUsersTable extends Migration
     {
         Schema::dropIfExists('activities');
         Schema::dropIfExists('login_user');
-        Schema::dropIfExists('roles');
-        Schema::dropIfExists('user_role');
         Schema::dropIfExists('permissions');
         Schema::dropIfExists('permission_role');
         Schema::dropIfExists('password_resets');
+        Schema::dropIfExists('privilege_role');
+        Schema::dropIfExists('privileges');
+        Schema::dropIfExists('user_role');
+        Schema::dropIfExists('roles');
         Schema::dropIfExists('acting_users');
         Schema::dropIfExists('users');
     }

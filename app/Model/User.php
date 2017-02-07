@@ -34,24 +34,29 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
     protected $table = 'users';
 
-    /*public function getCreatedAtAttribute($value)
-    {
-        return date('d-m-Y', strtotime($value));
+    public function roles(){
+        return $this->belongsToMany(Role::class, 'user_role', 'user_id', 'role_id');
     }
-
-    public function getUpdatedAtAttribute($value)
-    {
-        return date('d-m-Y', strtotime($value));
-    }*/
 
     public function getRoleAttribute($value) {
         $value = [];
-        // dd($this->roles()->get());
         foreach($this->roles()->get() as $r) {
             $value[] = $r->role;
         }
         return $value;
     }
+
+    // public function privileges(){
+    //     return $this->belongsToMany(Role::class, 'user_role', 'user_id', 'role_id');
+    // }
+
+    // public function getPrivilegeAttribute($value) {
+    //     $value = [];
+    //     foreach($this->privileges()->get() as $r) {
+    //         $value[] = $r->role;
+    //     }
+    //     return $value;
+    // }
 
     public function contacts() {
         return $this->hasMany('Contact');
@@ -118,10 +123,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             $sups = $sups->merge($upper);
         }
         return $sups;
-    }
-
-    public function roles(){
-        return $this->belongsToMany(Role::class, 'user_role', 'user_id', 'role_id');
     }
 
     public function isAdmin() {
