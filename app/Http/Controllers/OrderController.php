@@ -32,10 +32,16 @@ class OrderController extends Controller
   // the reusable functions are designed
   // only for business logic of orders
   //
-  // indexPrice     --> get the latest index price from Index database
-  // combineOrder   --> function to combine two existing orders
-  // funnel         --> re-routed action from index(), which displays only statistical number
-  // checkAvailable --> Check whether one lead is available to be staged to the order
+  // indexPrice       --> get the latest index price from Index database
+  // combineOrder     --> function to combine two existing orders
+  // funnel           --> re-routed action from index(), which displays only statistical number
+  // checkAvailable   --> Check whether one lead is available to be staged to the order
+  // approvalMailSend --> send mail (3)
+  // approvalRequest  --> requests approval for single user,
+  //                      calls approvalMailSend to send mail notifications
+  // approvalSequence --> gets approval sequence & get designated users,
+  //                      calls approvalRequest to add approval to designated user
+  // approvalReset    --> detach all approval in an order, calls approvalSequence after succession
   // 
   //////////////////////////////////////
 
@@ -157,19 +163,7 @@ class OrderController extends Controller
     }
   }
 
-  private function approvalRequest (&$order) {
-    // Add approval request to current user
-
-    //   // Add new approval request
-    //   $approval_properties = [
-    //     'status' => 'p',
-    //     'approval_token' => bcrypt(date('Y-m-d H:i:s') . $user->name)
-    //   ];
-    //   $this->approvals()->sync([$user->id => $approval_properties], false);
-
-    //   // add new associated user in the request
-    //   $this->users()->sync([$user->id => [ 'role' => 'approver' ]], false);
-
+  private function approvalMailSend (&$order) {
     // SEND EMAIL
 
     //   // get the earliest laycan and latest one
@@ -185,11 +179,26 @@ class OrderController extends Controller
 
     //   $mail = new ApprovalRequest($this, $approval_properties['approval_token'], $index->price);
     //   Mail::to($user->email)->send($mail);
+  }
 
+  private function approvalRequest (&$order) {
+    // Add approval request to current user
+
+    //   // Add new approval request
+    //   $approval_properties = [
+    //     'status' => 'p',
+    //     'approval_token' => bcrypt(date('Y-m-d H:i:s') . $user->name)
+    //   ];
+    //   $this->approvals()->sync([$user->id => $approval_properties], false);
+
+    //   // add new associated user in the request
+    //   $this->users()->sync([$user->id => [ 'role' => 'approver' ]], false);
+
+    $this->approvalMailSend($order);
   }
 
   private function approvalSequence (&$order) {
-    // this logic invoked under 2 conditions:
+    // this logic invoked under 3 possible conditions:
     // 1. updating order, request first approval
     // 2. approving order, continuing approval sequence
     // 3. changing things, reset approval, re-request first approval
