@@ -55,13 +55,28 @@ Route::group(['middleware' => ['cors']], function() {
     Route::resource('concession', 'ConcessionController', ['except' => [ 'create', 'edit' ]]);
     Route::resource('factory', 'FactoryController', ['except' => [ 'create', 'edit' ]]);
 
-    //Myr
+    /*
+     * SALES TARGET API GROUP - By Myrtyl
+     * this API contains ALL the things needed to manage
+     * all sales target data
+     */
     Route::get('sales-target/{year}', 'SalesTargetController@index');
     Route::resource('sales-target', 'SalesTargetController', ['except' => [ 'create', 'edit' ]]);
-
+    /*
+     * QUALITIES API GROUP - By Myrtyl
+     * this API contains ALL the things needed to manage
+     * all qualities
+     */
     Route::resource('qualities', 'QualityController', ['except' => [ 'create', 'edit' ]]);
 
-
+    /*
+     * DOCUMENT API GROUP - By Myrtyl
+     * this API contains ALL the things needed to manage
+     * all documents
+     */
+    Route::get('document', 'DocumentController@index');
+    Route::resource('document', 'DocumentController', ['except' => [ 'create', 'edit' ]]);
+    Route::resource('template', 'TemplateController', ['except' => [ 'create', 'edit' ]]);
 
     /*
      * INDEX API GROUP
