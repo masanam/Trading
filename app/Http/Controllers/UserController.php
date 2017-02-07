@@ -140,7 +140,7 @@ class UserController extends Controller
         $user->title = $req->title;
         $user->email = $req->email;
         $user->phone = $req->phone;
-        $user->employee_id = $req->employee_id;
+        $user->employee_no = $req->employee_no;
         $user->manager_id = $req->manager_id;
 
         if($req->roles){
