@@ -26,6 +26,19 @@ class OrderController extends Controller
     $this->order = $order;
   }
 
+  //////////////////////////////////////
+  //
+  // REUSABLE FUNCTIONS
+  // the reusable functions are designed
+  // only for business logic of orders
+  //
+  // indexPrice     --> get the latest index price from Index database
+  // combineOrder   --> function to combine two existing orders
+  // funnel         --> re-routed action from index(), which displays only statistical number
+  // checkAvailable --> Check whether one lead is available to be staged to the order
+  // 
+  //////////////////////////////////////
+
   /*
    *  This is to display the indexPrice inside the orders when loaded for mobile apps
    */
@@ -145,6 +158,18 @@ class OrderController extends Controller
       $order->available_volume = 'error';
     }
   }
+
+  //////////////////////////////////////
+  //
+  // COMMON CRUD ACTIONS
+  // common create-read-update-delete
+  // operations for RESTful API
+  //
+  // index / store / show / update / destroy
+  // approval --> manage the approval status of current user towards the order
+  // stage    --> stage one lead to the order
+  // 
+  //////////////////////////////////////
 
   /**
    * Display a listing of the resource.
