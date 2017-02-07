@@ -44,6 +44,37 @@ class OrderController extends Controller
     return $query->get();
   }
 
+  private function combineOrder($items, $id) {
+    $message = 'error';
+    foreach($items as $item){
+      if($item['order_status'] != 'p' && $item['order_status'] != 's') { $message = 'error'; continue; }
+      else {
+        $order_id = DB::table('order_details')
+                    ->where('lead_id', $item['id'])
+                    ->where('order_id', '!=', $id)->pluck('order_id');
+        if(count($order_id) != 1) { $message = 'error'; continue; }
+        else {
+          $oldOrder = Order::with('leads')->find($order_id);
+          if($oldOrder->leads->count() > 1) { $message = 'error'; continue; }
+          else {
+            if($oldOrder->status == 'a') {
+              foreach($oldOrder->leads as $lead) {
+                if($lead->pivot['volume'] == $item['pivot']['volume']) {
+                  $oldOrder->status = 'c';
+                  $oldOrder->save();
+                  $message = 'success';
+                }
+                else { $message = 'error'; continue; }
+              }
+            }
+            else { $message = 'error'; continue; }
+          }
+        }
+      }
+    }
+    return $message;
+  }
+
   /*
    * Instead of returning a list of order, get a funnel and number of total orders
    */
@@ -80,6 +111,39 @@ class OrderController extends Controller
     }
 
     return response()->json($funnel,200);
+  }
+
+  /**
+   * Check if current order CAN stage the lead
+   *
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
+
+  private function checkAvailable($order, $lead){
+    //var_dump($order);die;
+    //var_dump($lead);die;
+    // If this is invoked from UPDATE, instead of using lead from params, do get its volumes from pivot
+    // Get from the current volume IF this is a staging order
+    if(!$lead->lead_id) $volume = $lead->pivot->volume;
+    else $volume = $lead->volume;
+
+    // Get all orders associated with this current lead to know its standing
+    $lead_to_stage = Lead::with('orders')->find($lead->id);
+
+    // get total of the used volume
+    // IF THEY ARE confirmed leads
+    if(count($lead_to_stage->orders)>0){
+      foreach($lead_to_stage->orders as $associated_orders) {
+        // exclude draft and one that is current order
+        if($associated_orders->status != 'd' && $associated_orders->status != 'x' && $associated_orders->status != 'c' && $associated_orders->id != $order->id)
+          $volume += $associated_orders->pivot->volume;
+      }
+    }
+
+    if ($volume > $lead_to_stage->volume) {
+      $order->available_volume = 'error';
+    }
   }
 
   /**
@@ -238,37 +302,6 @@ class OrderController extends Controller
     return response()->json($order, 200);
   }
 
-  private function combineOrder($items, $id) {
-    $message = 'error';
-    foreach($items as $item){
-      if($item['order_status'] != 'p' && $item['order_status'] != 's') { $message = 'error'; continue; }
-      else {
-        $order_id = DB::table('order_details')
-                    ->where('lead_id', $item['id'])
-                    ->where('order_id', '!=', $id)->pluck('order_id');
-        if(count($order_id) != 1) { $message = 'error'; continue; }
-        else {
-          $oldOrder = Order::with('leads')->find($order_id);
-          if($oldOrder->leads->count() > 1) { $message = 'error'; continue; }
-          else {
-            if($oldOrder->status == 'a') {
-              foreach($oldOrder->leads as $lead) {
-                if($lead->pivot['volume'] == $item['pivot']['volume']) {
-                  $oldOrder->status = 'c';
-                  $oldOrder->save();
-                  $message = 'success';
-                }
-                else { $message = 'error'; continue; }
-              }
-            }
-            else { $message = 'error'; continue; }
-          }
-        }
-      }
-    }
-    return $message;
-  }
-
   /**
    * Display the specified resource.
    *
@@ -316,39 +349,6 @@ class OrderController extends Controller
     return response()->json($json, 200);
   }
 
-
-  /**
-   * Check if current order CAN stage the lead
-   *
-   * @param  int  $id
-   * @return \Illuminate\Http\Response
-   */
-
-  private function checkAvailable($order, $lead){
-    //var_dump($order);die;
-    //var_dump($lead);die;
-    // If this is invoked from UPDATE, instead of using lead from params, do get its volumes from pivot
-    // Get from the current volume IF this is a staging order
-    if(!$lead->lead_id) $volume = $lead->pivot->volume;
-    else $volume = $lead->volume;
-
-    // Get all orders associated with this current lead to know its standing
-    $lead_to_stage = Lead::with('orders')->find($lead->id);
-
-    // get total of the used volume
-    // IF THEY ARE confirmed leads
-    if(count($lead_to_stage->orders)>0){
-      foreach($lead_to_stage->orders as $associated_orders) {
-        // exclude draft and one that is current order
-        if($associated_orders->status != 'd' && $associated_orders->status != 'x' && $associated_orders->status != 'c' && $associated_orders->id != $order->id)
-          $volume += $associated_orders->pivot->volume;
-      }
-    }
-
-    if ($volume > $lead_to_stage->volume) {
-      $order->available_volume = 'error';
-    }
-  }
 
   /**
    * edit the specified resource.
