@@ -11,10 +11,25 @@ use Illuminate\Database\Eloquent\Model;
 
 class MiningLicenseHistory extends Model
 {
- protected $table = 'mining_license_history';
+ 	protected $table = 'mining_license_history';
+ 	protected $fillable = [
+        'id',
+        'mining_license_id',
+        'user_id',
+    	'old_value',
+        'new_value',
+        'description',
+        'created_at',
+        'updated_at',
+    ];
 
- public function mininglicenses() {
-   return $this->hasMany(MiningLicense::class);
- }
+  	public function MiningLicense() {
+        return $this->belongsTo('App\Model\MiningLicense');
+
+  	}
+
+  	public function User() {
+        return $this->belongsTo('App\Model\User','user_id','id');
+    }
 
 }

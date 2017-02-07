@@ -95,6 +95,10 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return  $this->belongsTo('App\Model\User', 'manager_id');
     }
 
+    public function MiningLicenseHistories() {
+        return  $this->hasMany('App\Model\MiningLicenseHistory');
+    }
+
     public function subordinates($user = false)
     {
         if(!$user) $user = $this;
