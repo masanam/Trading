@@ -11,12 +11,6 @@ class CreateCompaniesTable extends Migration
      */
     public function up()
     {
-        Schema::create('areas', function (Blueprint $table){
-            $table->increments('id');
-            $table->string('description')->nullable();
-            $table->string('status')->nullable();
-        });
-
         Schema::create('companies', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
