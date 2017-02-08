@@ -6,11 +6,15 @@
   </div></div>
   <div class="row"><div class="col-lg-12">
     <label>Country*</label>
-    <input type="text" class="form-control" ng-model="lead.country">
+    <select name="country" id="country" class="form-control"
+      ng-model="lead.country">
+      <option value="">-- Select Country --</option>
+      <option value="country.code" ng-repeat="country in countries | orderBy:'name'">{{ country.name }}</option>
+    </select>
   </div></div>
 
   <br>
-  <button ng-click="showDetails = !showDetails" class="btn btn-primary">Add More Details</button>
+  <a ng-click="showDetails = !showDetails" class="btn btn-primary">Add More Details</a>
   <br>
   <br>
 

@@ -17,8 +17,13 @@ angular.module('index').controller('IndexTodayController', ['$scope', '$state', 
       Index.query({ action: 'single-date', date: date }, function (res){
         $scope.indexPrices = res;
         for(x = 0; x<res.length; x++) $scope.prices.value[res[x].id] = parseFloat(res[x].price);
-
         $scope.successDate = res.date;
+        if (res.length === 0) Index.query({ action: 'single-date', date: date, last_price:true }, function(res){
+          $scope.indexPrices = res;
+          for(x = 0; x<res.length; x++) $scope.prices.value[res[x].id] = parseFloat(res[x].price);
+          $scope.successDate = res.date;
+        });
+
       });
     };
 

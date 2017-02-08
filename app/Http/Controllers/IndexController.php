@@ -274,6 +274,9 @@ class IndexController extends Controller
 
     $result = $query->get();
     if($req->envelope) $result = [ 'indices' => $result ];
+
+    // kamal 08-02-2017 get last price today index
+    if ($req->last_price) $result = $this->getLastPrice($req);
     
     return response()->json($result, 200);
   }
@@ -308,6 +311,20 @@ class IndexController extends Controller
     }
 
     return response()->json($req,200);
+  }
+
+  public function getLastPrice(Request $req){
+    $index = Index::get();
+    $price = [];
+    foreach ($index as $i) {
+      $query = DB::table('index_price AS ip1')
+      ->select('index.id', 'index_provider', 'index_name', 'ip1.date', 'ip1.price')
+      ->join('index', 'ip1.index_id', '=', 'index.id')
+      ->orderBy('index.id');
+      $price[] = $query->where('date','<',$req->date)->where('index_id',$i->id)->orderBy('date','desc')->first();
+    }
+    
+    return $price;
   }
 }
 
