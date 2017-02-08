@@ -27,19 +27,8 @@ class DocumentController extends Controller
         /*
          * Myrtyl 06/02/2017
          */
-
-        $document = Shipment::with('documents')->get();
+        $document = Document::all()->where('status', 'a');
         return response()->json($document, 200);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -48,9 +37,28 @@ class DocumentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $req)
     {
-        //
+        // $document = new Document();
+        // $document->template_id = $req->template_id;
+        // $document->shipment_id = $req->shipment_id;
+        // $document->user_id = $req->user_id;
+        // // $document->user_id = Auth::User()->id;
+        // $document->title = $req->title;
+        // $document->remarks = $req->remarks;
+        // $document->status = 'a';
+
+        // $document->save();
+
+        // foreach ($document_detail as $document_details) {
+        //     $document_detail = new DocumentDetails();
+        //     $document_detail->document_id = 'document.id';
+        //     $document_detail->field = $req->field;
+        //     $document_detail->content = $req->content;
+
+        //     $document->save();
+        // }        
+
     }
 
     /**
@@ -61,18 +69,8 @@ class DocumentController extends Controller
      */
     public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        $document = Document::with(['documentDetails'])->find($id);
+        return $document;
     }
 
     /**
@@ -95,6 +93,17 @@ class DocumentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $document = Document::find($id);
+
+        if(!$document) {
+          return response()->json(['message' => 'not found'], 404);
+        }
+        else {
+          $document->status = 'x';
+
+          $document->save();
+
+          return response()->json($document, 200);
+        }
     }
 }

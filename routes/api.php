@@ -74,9 +74,8 @@ Route::group(['middleware' => 'cors'], function() {
      * this API contains ALL the things needed to manage
      * all documents
      */
-    Route::get('document', 'DocumentController@index');
-    Route::resource('document', 'DocumentController', ['except' => [ 'create', 'edit' ]]);
-    Route::resource('template', 'TemplateController', ['except' => [ 'create', 'edit' ]]);
+    Route::resource('documents', 'DocumentController', ['except' => [ 'create', 'edit' ]]);
+    Route::get('templates', 'TemplateController@index');
 
     /*
      * INDEX API GROUP
