@@ -9,9 +9,6 @@ use App\Model\User;
 
 // use Mpociot\Firebase\SyncsWithFirebase;
 
-use Illuminate\Support\Facades\Mail;
-use App\Mail\ApprovalRequest;
-
 class Order extends Model
 {
   // use SyncsWithFirebase;

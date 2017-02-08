@@ -18,6 +18,9 @@ use App\Model\Contract;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Auth;
 
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ApprovalRequest;
+
 class OrderController extends Controller
 {
   public function __construct(Order $order)
@@ -36,12 +39,12 @@ class OrderController extends Controller
   // combineOrder     --> function to combine two existing orders
   // funnel           --> re-routed action from index(), which displays only statistical number
   // checkAvailable   --> Check whether one lead is available to be staged to the order
-  // approvalMailSend --> send mail (3)
-  // approvalRequest  --> requests approval for single user,
-  //                      calls approvalMailSend to send mail notifications
-  // approvalSequence --> gets approval sequence & get designated users,
-  //                      calls approvalRequest to add approval to designated user
-  // approvalReset    --> detach all approval in an order, calls approvalSequence after succession
+  // mailApproval     --> send mail (3)
+  // requestApproval  --> requests approval for single user,
+  //                      calls mailApproval to send mail notifications
+  // sequenceApproval --> gets approval sequence & get designated users,
+  //                      calls requestApproval to add approval to designated user
+  // resetApproval    --> detach all approval in an order, calls sequenceApproval after succession
   // 
   //////////////////////////////////////
 
@@ -163,41 +166,37 @@ class OrderController extends Controller
     }
   }
 
-  private function approvalMailSend (&$order) {
-    // SEND EMAIL
+  private function mailApproval (&$order) {
+    // get the earliest laycan and latest one
+    $order->earliestLaycan();
+    $order->latestLaycan();
 
-    //   // get the earliest laycan and latest one
-    //   $this->earliestLaycan();
-    //   $this->latestLaycan();
+    // find all averages of the order details.
+    $order->averageSell();
+    $order->averageBuy();
 
-    //   // find all averages of the order details.
-    //   $this->averageSell();
-    //   $this->averageBuy();
+    // get latest GC NEWC price
+    $index = $this->indexPrice();
 
-    //   // get latest GC NEWC price
-    //   $index = IndexPrice::orderBy('date', 'DESC')->where('index_id', 10)->first();
-
-    //   $mail = new ApprovalRequest($this, $approval_properties['approval_token'], $index->price);
-    //   Mail::to($user->email)->send($mail);
+    $mail = new requestApproval($this, $approval_properties['approval_token'], $index->price);
+    Mail::to($user->email)->send($mail);
   }
 
-  private function approvalRequest (&$order) {
-    // Add approval request to current user
+  private function requestApproval (&$order, $user) {
+    // Add approval request to specific user
+    $approval_properties = [
+      'status' => 'p',
+      'approval_token' => bcrypt(date('Y-m-d H:i:s') . $user->name)
+    ];
+    $this->approvals()->sync([$user->id => $approval_properties], false);
 
-    //   // Add new approval request
-    //   $approval_properties = [
-    //     'status' => 'p',
-    //     'approval_token' => bcrypt(date('Y-m-d H:i:s') . $user->name)
-    //   ];
-    //   $this->approvals()->sync([$user->id => $approval_properties], false);
+    // add new associated user in the request
+    $this->users()->sync([$user->id => [ 'role' => 'approver' ]], false);
 
-    //   // add new associated user in the request
-    //   $this->users()->sync([$user->id => [ 'role' => 'approver' ]], false);
-
-    $this->approvalMailSend($order);
+    $this->mailApproval($order);
   }
 
-  private function approvalSequence (&$order) {
+  private function sequenceApproval (&$order) {
     // this logic invoked under 3 possible conditions:
     // 1. updating order, request first approval
     // 2. approving order, continuing approval sequence
@@ -214,7 +213,7 @@ class OrderController extends Controller
     // if true, elevate the sequence
     // send approval to each users. add the database & send the email
     // put user as the associated user in the order
-    $this->approvalRequest($order);
+    $this->requestApproval($order);
 
     // if false, this is its last sequence of the scheme
     // which means, the order status will be rendered 'a' (approved)
@@ -222,10 +221,10 @@ class OrderController extends Controller
 
   }
 
-  public function approvalReset(&$order){
+  public function resetApproval(&$order){
     $order->approvals()->detach();
 
-    $this->approvalSequence($order);
+    $this->sequenceApproval($order);
   }
 
   //////////////////////////////////////
@@ -510,7 +509,7 @@ class OrderController extends Controller
       $order->leadToPartial();
     } else if($order->status == 'p') {
       // begin/continue approval sequence
-      $this->approvalSequence($order);
+      $this->sequenceApproval($order);
     }
 
     return $this->show($id, $req);
@@ -565,7 +564,7 @@ class OrderController extends Controller
     $order->approvals()->sync([ $user->id => [ 'status' => $req->status ] ], false);
 
     // Begin/Continue/End approval sequence
-    $this->approvalSequence($order);
+    $this->sequenceApproval($order);
     
     return $this->show($id, $req);
   }
@@ -617,7 +616,7 @@ class OrderController extends Controller
     Lead::find($req->lead_id)->reconcile();
 
     // when details are changed, reset all approval
-    $this->approvalReset($order);
+    $this->resetApproval($order);
 
     // add negotiation log to the staged lead
     $order_detail_id = $order->leads()->find($req->lead_id)->pivot->id; // find the ID of the order details
@@ -649,7 +648,7 @@ class OrderController extends Controller
     Lead::find($req->lead_id)->reconcile();
 
     // when details are changed, reset all approval
-    $this->approvalReset($order);
+    $this->resetApproval($order);
 
     return $this->show($id, $req);
   }
