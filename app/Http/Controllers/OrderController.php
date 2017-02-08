@@ -510,10 +510,8 @@ class OrderController extends Controller
       $order->leadToPartial();
     } else if($order->status == 'p') {
       // begin/continue approval sequence
-      $this->approvalSequence($order, Auth::user());
+      $this->approvalSequence($order);
     }
-
-    $req['envelope'] = 'true';
 
     return $this->show($id, $req);
   }
@@ -567,7 +565,7 @@ class OrderController extends Controller
     $order->approvals()->sync([ $user->id => [ 'status' => $req->status ] ], false);
 
     // Begin/Continue/End approval sequence
-    $this->approvalSequence($order, Auth::user());
+    $this->approvalSequence($order);
     
     return $this->show($id, $req);
   }
@@ -619,7 +617,7 @@ class OrderController extends Controller
     Lead::find($req->lead_id)->reconcile();
 
     // when details are changed, reset all approval
-    $this->approvalReset();
+    $this->approvalReset($order);
 
     // add negotiation log to the staged lead
     $order_detail_id = $order->leads()->find($req->lead_id)->pivot->id; // find the ID of the order details
@@ -651,7 +649,7 @@ class OrderController extends Controller
     Lead::find($req->lead_id)->reconcile();
 
     // when details are changed, reset all approval
-    $this->approvalReset();
+    $this->approvalReset($order);
 
     return $this->show($id, $req);
   }
