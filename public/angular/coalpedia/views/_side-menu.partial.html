@@ -24,7 +24,7 @@
      <a ui-sref="company.list({ type: 'supplier' })" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
   </div>
 
-  <div class="small-box bg-aqua">
+  <div class="small-box bg-aqua" ng-if="deployment !== 'berau'">
     <div class="inner">
       <h4>{{ total.vendor }} Records</h4>
 

@@ -16,23 +16,26 @@ class CreateQualitiesTable extends Migration
         Schema::create('qualities', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('shipment_id')->unsigned();  
-            $table->integer('lead_id')->unsigned();
+            // $table->integer('lead_id')->unsigned();
             $table->char('status', 1);
             $table->char('type', 1);
             $table->timestamps();
 
             $table->foreign('shipment_id')->references('id')->on('shipments')->onDelete('cascade');
-            $table->foreign('lead_id')->references('id')->on('leads')->onDelete('cascade');
+
+            $table->unique('shipment_id');
+            // $table->foreign('lead_id')->references('id')->on('leads')->onDelete('cascade');
         });
 
         Schema::create('quality_details', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('quality_id')->unsigned();
             $table->integer('value');
-            $table->string('quality');
+            $table->integer('quality_metrics_id');
             $table->timestamps();
 
             $table->foreign('quality_id')->references('id')->on('qualities')->onDelete('cascade');
+            $table->unique(['quality_id', 'quality_metrics_id']);
         });
 
         Schema::create('quality_metrics', function (Blueprint $table) {
@@ -40,6 +43,8 @@ class CreateQualitiesTable extends Migration
             $table->string('quality');
             $table->string('metric');
             $table->timestamps();
+
+            $table->unique(['quality', 'metric']);
         });
     }
 

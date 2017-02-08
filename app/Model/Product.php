@@ -64,6 +64,8 @@ class Product extends Model
         return $this->hasMany(Shipment::class);
     }
 
+    
+
     public function difference($compare, $company_type){
         if($this->company->company_type = $company_type){
             $this->gcv_adb_min_diff = abs($this->gcv_adb_min - $compare->gcv_adb_min);
