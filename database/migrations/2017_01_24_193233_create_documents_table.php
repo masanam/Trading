@@ -47,7 +47,7 @@ class CreateDocumentsTable extends Migration
             $table->increments('id');
             $table->integer('document_id')->unsigned();
             $table->string('field');
-            $table->text('value');
+            $table->text('content');
             $table->timestamps();
 
             $table->foreign('document_id')->references('id')->on('documents')->onDelete('cascade');

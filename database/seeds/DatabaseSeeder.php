@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
         $this->call(SalesTargetTableSeeder::class);
         $this->call(ContractsTableSeeder::class);
         $this->call(ShipmentTableSeeder::class);
+        $this->call(DocumentTableSeeder::class);
 
         Model::reguard();
     }

@@ -45,6 +45,11 @@ class ShipmentController extends Controller
       $range = [];
       $shipments = Shipment::with('contracts', 'contracts.orders', 'contracts.orders.sells', 'suppliers', 'customers', 'surveyors', 'products')->where('status', 'a');
 
+      // Document Controller
+      // Created by Myrtyl
+      // 07/02/2017
+      if($req->documents) $shipments->with('documents');
+
       $limit = $req->pageSize ? $req->pageSize : 10;
       $skip = ( $req->pageSize * $req->page ) ? ( $req->pageSize * $req->page ) : 0;
 
