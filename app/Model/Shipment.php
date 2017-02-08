@@ -8,9 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Shipment extends Model
 {
+  //For Documents - By Myrtyl - 06/02/2017
+    public function documents(){
+      return $this->hasMany(Document::class);
+    }
+
   //hasapu
     public function qualities(){
-      return $this->hasMany(Quality::class);
+      return $this->hasOne(Quality::class);
     }
   //------
 

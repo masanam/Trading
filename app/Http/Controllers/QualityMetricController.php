@@ -31,7 +31,17 @@ class QualityMetricController extends Controller
   public function index(Request $req)
   {
     $quality_metrics = QualityMetric::all();
+    
     return response()->json($quality_metrics, 200);
+  }
+
+  public function store(Request $req){
+    $metric = new QualityMetric();
+    $metric->quality = $req->quality;
+    $metric->metric = $req->metric;
+    $metric->save();
+
+    return response()->json($metric, 200);
   }
 
   /**

@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('coalpedia').controller('CompanyModalController', ['$scope', '$uibModalInstance', '$timeout', '$interval', 'Environment', 'Company', 'Term', 'company', 'companyType', 'Area',
-  function($scope, $uibModalInstance, $timeout, $interval, Environment, Company, Term, company, companyType, Area) {
+angular.module('coalpedia').controller('CompanyModalController', ['$scope', '$uibModalInstance', '$timeout', '$interval', 'Environment', 'Company', 'Term', 'company', 'companyType', 'Area', 'Country',
+  function($scope, $uibModalInstance, $timeout, $interval, Environment, Company, Term, company, companyType, Area, Country) {
     $scope.showBuy = Environment.showBuy;
     $scope.company = company;
     $scope.companyType = companyType;
@@ -17,6 +17,10 @@ angular.module('coalpedia').controller('CompanyModalController', ['$scope', '$ui
       company.$save({ type: company.company_type }, function(response) {
         $uibModalInstance.close(response);
       });
+    };
+
+    $scope.findCountries = function(){
+      $scope.countries = Country.query();
     };
 
     $scope.findAreas = function(){

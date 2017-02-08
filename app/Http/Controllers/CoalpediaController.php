@@ -11,9 +11,9 @@ use App\Http\Requests;
 
 class CoalpediaController extends Controller
 {
-    // public function __construct() {
-    //     $this->middleware('jwt.auth');
-    // }
+    public function __construct() {
+        $this->middleware('jwt.auth');
+    }
     /**
      * Display a listing of the resource.
      *

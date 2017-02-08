@@ -1,6 +1,8 @@
 'use strict';
-angular.module('lead').controller('LeadController', ['$scope', '$state', '$stateParams', '$filter', 'Environment', 'Authentication', 'Order', 'Lead', 'Term',
-  function($scope, $state, $stateParams, $filter, Environment, Authentication, Order, Lead, Term) {
+
+angular.module('lead').controller('LeadController', ['$scope', '$state', '$stateParams', '$filter', 'Environment', 'Authentication', 'Order', 'Lead', 'Term', 'Country',
+  function($scope, $state, $stateParams, $filter, Environment, Authentication, Order, Lead, Term, Country) {
+
     $scope.Authentication = Authentication;
     $scope.tradingTerm = Term.trading;
     $scope.paymentTerm = Term.payment;
@@ -9,11 +11,13 @@ angular.module('lead').controller('LeadController', ['$scope', '$state', '$state
     $scope.deployment = Environment.deployment;
     $scope.destinationBy = Environment.destinationBy;
     $scope.productQuality = Environment.productQuality;
-    $scope.selected = {};
 
     $scope.today = $filter('date')(Date.now(), 'yyyy-MM-dd');
 
-    $scope.lead = Lead.get({ id:$stateParams.id });
+    $scope.countries = Country.query();
+    $scope.selected = {};
+
+    if(!$stateParams.lead_type) $scope.lead = Lead.get({ id:$stateParams.id });
 
     $scope.findOne = function(id){
       if(!id) id = $stateParams.id;
