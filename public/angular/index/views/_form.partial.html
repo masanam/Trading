@@ -1,4 +1,4 @@
-<fieldset ng-init="init()">
+<fieldset>
   <div class="form-group col-lg-12" show-errors>
     <label for="index_provider">Provider</label>
     <input name="index_provider" type="text" ng-model="index.index_provider" id="index_provider" class="form-control" placeholder="Provider" required>
@@ -16,6 +16,7 @@
 
   <div show-errors>
     <label for="frequency">Frequency</label>
+    <div></div>
     <div class="btn-group hidden-xs">
         <label class="btn btn-default" ng-model="index.frequency" uib-btn-radio="'m'">Monthly</label>
         <label class="btn btn-default" ng-model="index.frequency" uib-btn-radio="'w'">Weekly</label>
@@ -29,7 +30,6 @@
   </div>
 
   <hr>
-
   <div class="pull-right">
     <input type="submit" class="btn btn-primary" value="Submit" />
   </div>

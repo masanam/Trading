@@ -14,9 +14,9 @@
 			  </div>
 
 			  <div class="form-group col-lg-12" ng-repeat="index in indices" show-errors>
-			    <label for="price">{{ index.index_provider }} {{ index.index_name }}</label>
+			    <label for="price">{{ index.index_provider }} {{ index.index_name }} (Ex: $5000)</label>
 			    <input name="price" type="number" step="any" ng-model="prices.value[index.id]"
-			    	id="price" class="form-control" placeholder="Price">
+			    	id="price" class="form-control" placeholder="Ex: 5000 ">
 			  </div>
 
 			  <hr>
