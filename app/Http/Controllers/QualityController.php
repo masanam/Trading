@@ -30,7 +30,7 @@ class QualityController extends Controller
        * kamal 7-02-2017 if shipement_id
        */
       if($req->shipment_id) $quality = Quality::with('qualityDetail','qualityDetail.qualityMetric')->where('shipment_id', $req->shipment_id)->first();
-      else $quality = Shipment::with('contracts','customers','qualities')->get();
+      else $quality = Shipment::with('contracts','customers','qualities','contracts.orders.leads')->get();
 
       return response()->json($quality, 200);
     }
