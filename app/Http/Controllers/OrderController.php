@@ -184,14 +184,16 @@ class OrderController extends Controller
 
   private function requestApproval (&$order, $user) {
     // Add approval request to specific user
+
+    // Add new approval request
     $approval_properties = [
       'status' => 'p',
       'approval_token' => bcrypt(date('Y-m-d H:i:s') . $user->name)
     ];
-    $this->approvals()->sync([$user->id => $approval_properties], false);
+    $order->approvals()->sync([$user->id => $approval_properties], false);
 
     // add new associated user in the request
-    $this->users()->sync([$user->id => [ 'role' => 'approver' ]], false);
+    $order->users()->sync([$user->id => [ 'role' => 'approver' ]], false);
 
     $this->mailApproval($order);
   }

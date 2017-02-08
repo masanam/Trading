@@ -186,7 +186,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Barryvdh\Cors\ServiceProvider::class,
         Laravel\Passport\PassportServiceProvider::class,
-        GrahamCampbell\Throttle\ThrottleServiceProvider::class,
+        //GrahamCampbell\Throttle\ThrottleServiceProvider::class,
         // Vinkla\Pusher\PusherServiceProvider::class,
         // Mpociot\Firebase\SyncsWithFirebase::class,
 
@@ -239,7 +239,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'JWTAuth'   => Tymon\JWTAuth\Facades\JWTAuth::class,
         'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
-        'Throttle' => GrahamCampbell\Throttle\Facades\Throttle::class,
+        //'Throttle' => GrahamCampbell\Throttle\Facades\Throttle::class,
     ],
 
 ];
