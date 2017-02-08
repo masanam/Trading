@@ -17,14 +17,15 @@ class CreateOrderApprovalSchemesTable extends Migration
         Schema::create('order_approval_schemes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('order_approval_scheme_name');
-            $table->integer('area_id')->unsigned()->nullable();
+            // $table->integer('buy_area_id')->unsigned()->nullable();
+            $table->integer('sell_area_id')->unsigned()->nullable();
             // $table->integer('min_buy_value');
             // $table->integer('max_buy_value');
             // $table->integer('min_sell_value');
             // $table->integer('max_sell_value');
             $table->timestamps();
 
-            $table->foreign('area_id')->references('id')->on('areas')->onDelete('restrict');
+            $table->foreign('sell_area_id')->references('id')->on('areas')->onDelete('restrict');
         });
 
         Schema::create('order_approval_scheme_sequences', function (Blueprint $table) {

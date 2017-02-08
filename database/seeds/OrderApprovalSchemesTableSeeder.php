@@ -17,13 +17,13 @@ class OrderApprovalSchemesTableSeeder extends Seeder
         OrderApprovalScheme::create([
         	'id' => 1,
 					'order_approval_scheme_name' => 'Area 1 Trade Approval Sequence',
-					'area_id' => 1
+					'sell_area_id' => 1
         ]);
 
         OrderApprovalScheme::create([
         	'id' => 2,
 					'order_approval_scheme_name' => 'Area 2 Trade Approval Sequence',
-					'area_id' => 2
+					'sell_area_id' => 2
         ]);
 
         $seq = [
