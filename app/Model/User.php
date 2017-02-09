@@ -14,6 +14,8 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 {
     use Authenticatable, CanResetPassword, Notifiable;
 
+    protected $appends = ['privileges'];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -46,27 +48,15 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return $value;
     }
 
-    public function getPrivilegeAttribute($value) {
+    public function getPrivilegesAttribute($value) {
         $value = [];
         foreach($this->roles()->get() as $r) {
             foreach($r->privileges()->get() as $p){
                 $value[] = $p->menu;    
             }
         }
-        return $value;
+        return array_unique($value);
     }
-
-    // public function privileges(){
-    //     return $this->belongsToMany(Role::class, 'user_role', 'user_id', 'role_id');
-    // }
-
-    // public function getPrivilegeAttribute($value) {
-    //     $value = [];
-    //     foreach($this->privileges()->get() as $r) {
-    //         $value[] = $r->role;
-    //     }
-    //     return $value;
-    // }
 
     public function contacts() {
         return $this->hasMany('Contact');
