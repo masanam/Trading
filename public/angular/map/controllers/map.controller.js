@@ -6,13 +6,8 @@
 
 'use strict';
 
-<<<<<<< HEAD
-angular.module('map').controller('MapController', ['$scope','$http', '$stateParams', '$state', 'Map', 'Concession', 'Port', 'NgMap','Environment','Company',
-  function($scope,$http, $stateParams, $state, Map, Concession, Port, NgMap, Environment, Company) {
-=======
-angular.module('map').controller('MapController', ['$scope', '$http', '$stateParams', '$state', 'Map', 'Concession', 'Port', 'NgMap', 'Country',
-  function($scope, $http, $stateParams, $state, Map, Concession, Port, NgMap, Country) {
->>>>>>> 018ebeeb04a27954cf32d1b83c5a63db2a1d4baf
+angular.module('map').controller('MapController', ['$scope','$http', '$stateParams', '$state', 'Map', 'Concession', 'Port', 'NgMap','Environment','Company','Country',
+  function($scope,$http, $stateParams, $state, Map, Concession, Port, NgMap, Environment, Company, Country) {
     //$scope.filters = [{ field:'gcv_arb', operand: '>=', number: 5000 }];
     $scope.showBuy = Environment.showBuy;
     $scope.filters = [];
@@ -21,13 +16,10 @@ angular.module('map').controller('MapController', ['$scope', '$http', '$statePar
     $scope.concessions = [];
     $scope.ports = [];
     $scope.product = undefined;
-<<<<<<< HEAD
 
-=======
     $scope.countries = Country.query();
     $scope.country = 'Indonesia';
 
->>>>>>> 018ebeeb04a27954cf32d1b83c5a63db2a1d4baf
     $scope.customIcon = {
       scaledSize: [32, 32],
       url: 'http://www.cliparthut.com/clip-arts/823/arrowhead-clip-art-823528.png'
@@ -38,6 +30,7 @@ angular.module('map').controller('MapController', ['$scope', '$http', '$statePar
     });
 
     $scope.find = function(showBuy) {
+      var params = {};
       if (showBuy) {
         $scope.filters_gt = [];
         $scope.filters_lt = [];
@@ -52,7 +45,6 @@ angular.module('map').controller('MapController', ['$scope', '$http', '$statePar
 
         var temp_search = [];
 
-        var params = {};
 
         if($scope.search || $scope.filters.length > 0){
           if($scope.search){
@@ -102,8 +94,9 @@ angular.module('map').controller('MapController', ['$scope', '$http', '$statePar
         $scope.concessions = Concession.query(params);
       }
       else {
-        $scope.companies = Company.query({company_type: 'c'});
+        $scope.companies = Company.query({ company_type: 'c' });
         console.log($scope.companies);
+        // var params = {};
       }
       params.action = 'filter';
       params.country = $scope.country;
