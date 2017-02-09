@@ -46,7 +46,10 @@
 		    <span class="input-group-addon" style="width: 100px;">City*</span>
 		    <input type="text" class="form-control" placeholder="City" ng-model="factory.city" required>
 		    <span class="input-group-addon" style="width: 100px;">Country*</span>
-		    <input type="text" class="form-control" placeholder="Country" ng-model="factory.country" required>
+		    <select class="form-control" ng-model="factory.country" required>
+		      <option value="">-- Select Country --</option>
+		      <option ng-value="c.name" ng-repeat="c in countries">{{ c.name }}</option>
+		    </select>
 		  </div>
 		  <div class="input-group col-md-12" style="margin-bottom: 5px;">
 		    <span class="input-group-addon" style="width: 100px;">Latitude</span>

@@ -18,7 +18,10 @@
     <span class="input-group-addon" style="width: 200px;">City*</span>
     <input type="text" class="form-control" placeholder="City" ng-model="concession.city" required>
     <span class="input-group-addon">Country*</span>
-    <input type="text" class="form-control" placeholder="Country" ng-model="concession.country" required>
+    <select class="form-control" ng-model="concession.country" required>
+      <option value="">-- Select Country --</option>
+      <option ng-value="c.name" ng-repeat="c in countries">{{ c.name }}</option>
+    </select>
   </div>
 </div>
 
