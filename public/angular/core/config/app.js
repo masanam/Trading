@@ -106,11 +106,9 @@ angular.module(ApplicationConfiguration.applicationModuleName).run(function ($ro
     var checkAuthorization = function(user){
       var allowed = false;
 
-      if(toState.login) allowed = Authentication.user;
-
       if (toState.privileges && toState.privileges.length > 0) {
         toState.privileges.forEach(function (privilege) {
-          if (privilege === 'guest' || (Authentication.user !== undefined && Authentication.user.privilege.indexOf(privilege) > -1)){
+          if (privilege === 'guest' || (Authentication.user !== undefined && (Authentication.user.privilege.indexOf(privilege) > -1 || Authentication.user.roles.indexOf('root') > -1))){
             allowed = true;
             return true;
           }
