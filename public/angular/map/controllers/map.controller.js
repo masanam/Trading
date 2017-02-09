@@ -6,8 +6,13 @@
 
 'use strict';
 
+<<<<<<< HEAD
 angular.module('map').controller('MapController', ['$scope','$http', '$stateParams', '$state', 'Map', 'Concession', 'Port', 'NgMap','Environment','Company',
   function($scope,$http, $stateParams, $state, Map, Concession, Port, NgMap, Environment, Company) {
+=======
+angular.module('map').controller('MapController', ['$scope', '$http', '$stateParams', '$state', 'Map', 'Concession', 'Port', 'NgMap', 'Country',
+  function($scope, $http, $stateParams, $state, Map, Concession, Port, NgMap, Country) {
+>>>>>>> 018ebeeb04a27954cf32d1b83c5a63db2a1d4baf
     //$scope.filters = [{ field:'gcv_arb', operand: '>=', number: 5000 }];
     $scope.showBuy = Environment.showBuy;
     $scope.filters = [];
@@ -16,7 +21,13 @@ angular.module('map').controller('MapController', ['$scope','$http', '$statePara
     $scope.concessions = [];
     $scope.ports = [];
     $scope.product = undefined;
+<<<<<<< HEAD
 
+=======
+    $scope.countries = Country.query();
+    $scope.country = 'Indonesia';
+
+>>>>>>> 018ebeeb04a27954cf32d1b83c5a63db2a1d4baf
     $scope.customIcon = {
       scaledSize: [32, 32],
       url: 'http://www.cliparthut.com/clip-arts/823/arrowhead-clip-art-823528.png'
@@ -24,7 +35,6 @@ angular.module('map').controller('MapController', ['$scope','$http', '$statePara
 
     NgMap.getMap().then(function(map) {
       $scope.map = map;
-      console.log($scope.map);
     });
 
     $scope.find = function(showBuy) {
@@ -95,7 +105,16 @@ angular.module('map').controller('MapController', ['$scope','$http', '$statePara
         $scope.companies = Company.query({company_type: 'c'});
         console.log($scope.companies);
       }
+      params.action = 'filter';
+      params.country = $scope.country;
+      // console.log(params);
 
+      Concession.query(params, function(res){
+        for (var i = res.length - 1; i >= 0; i--) {
+          res[i].polygon = angular.fromJson(res[i].polygon);
+        }
+        $scope.concessions = res;
+      });
     };
 
     //   $scope.filters_gt = [];
@@ -176,9 +195,10 @@ angular.module('map').controller('MapController', ['$scope','$http', '$statePara
       $scope.find();
     };
 
-    $scope.showDetail = function(event, concession) {
-      $scope.concession = Concession.get({ id: concession.id }, function(concession) {
-        $scope.concession = concession;
+    $scope.showDetail = function(event, concession_id) {
+      $scope.concession = Concession.get({ id: concession_id }, function(res) {
+        res.polygon = angular.fromJson(res.polygon);
+        $scope.concession = res;
         $scope.map.showInfoWindow('info-window', event.latLng);
 
         $scope.product = undefined;

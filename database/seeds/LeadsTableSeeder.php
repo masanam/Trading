@@ -3,6 +3,7 @@
 use App\Model\Lead;
 use App\Model\Order;
 use App\Model\OrderNegotiation;
+use App\Model\ExchangeRate;
 
 use Illuminate\Database\Seeder;
 
@@ -810,13 +811,25 @@ class LeadsTableSeeder extends Seeder
       'progress_status' => NULL
     ]);
 
+    ExchangeRate::create([
+      'buy' => 'USD',
+      'sell' => 'IDR',
+      'value' => 13500
+    ]);
+
+    ExchangeRate::create([
+      'buy' => 'IDR',
+      'sell' => 'USD',
+      'value' => 0.00007407407
+    ]);
+
 
    $orders = [
      [
       'order' => [ 'id' => 1, 'user_id' => 3, 'index_id' => 3, 'status' => 'p', 'in_house' => false ],
       'leads' => [
-          1 => [ 'volume' => 1000, 'price' => 25, 'trading_term' => 'FOB MV', 'payment_term' => 'TT' ],
-          2 => [ 'volume' => 1000, 'price' => 53, 'trading_term' => 'FOB MV', 'payment_term' => 'TT' ]
+          1 => [ 'volume' => 1000, 'price' => 25, 'trading_term' => 'FOB MV', 'payment_term' => 'TT', 'base_currency_id' => 'IDR', 'base_price' => 50000, 'deal_currency_id' => 'USD', 'deal_price' => 50, 'exchange_rate' => 10000 ],
+          2 => [ 'volume' => 1000, 'price' => 53, 'trading_term' => 'FOB MV', 'payment_term' => 'TT', 'base_currency_id' => 'IDR', 'base_price' => 50000, 'deal_currency_id' => 'USD', 'deal_price' => 50, 'exchange_rate' => 10000  ]
       ],
       'user' => [ 1 => [ 'role' => 'approver' ], 2 => [ 'role' => 'associated' ], 3 => [ 'role' => 'admin' ] ],
       'approval' => [ 1 => [ 'status' => 'p', 'approval_token' => 'aaa' ], 2 => [ 'status' => 'a', 'approval_token' => 'bbb' ] ],
@@ -825,7 +838,7 @@ class LeadsTableSeeder extends Seeder
      [
       'order' => [ 'id' => 2, 'user_id' => 3, 'index_id' => 3, 'status' => 'a', 'in_house' => true ],
       'leads' => [
-          3 => [ 'volume' => 1000, 'price' => 51, 'trading_term' => 'FOB MV', 'payment_term' => 'TT' ]
+          3 => [ 'volume' => 1000, 'price' => 51, 'trading_term' => 'FOB MV', 'payment_term' => 'TT', 'base_currency_id' => 'IDR', 'base_price' => 50000, 'deal_currency_id' => 'USD', 'deal_price' => 50, 'exchange_rate' => 10000  ]
       ],
       'user' => [ 1 => [ 'role' => 'approver' ], 2 => [ 'role' => 'associated' ], 3 => [ 'role' => 'admin' ] ],
       'approval' => [ 1 => [ 'status' => 'a', 'approval_token' => 'aaa' ], 2 => [ 'status' => 'a', 'approval_token' => 'bbb' ] ],
@@ -834,8 +847,8 @@ class LeadsTableSeeder extends Seeder
      [
       'order' => [ 'id' => 3, 'user_id' => 2, 'index_id' => 2, 'status' => 'f', 'in_house' => false ],
       'leads' => [
-          4 => [ 'volume' => 2000, 'price' => 35, 'trading_term' => 'FOB MV', 'payment_term' => 'TT' ],
-          7 => [ 'volume' => 1600, 'price' => 55, 'trading_term' => 'FOB MV', 'payment_term' => 'TT' ]
+          4 => [ 'volume' => 2000, 'price' => 35, 'trading_term' => 'FOB MV', 'payment_term' => 'TT', 'base_currency_id' => 'IDR', 'base_price' => 50000, 'deal_currency_id' => 'USD', 'deal_price' => 50, 'exchange_rate' => 10000  ],
+          7 => [ 'volume' => 1600, 'price' => 55, 'trading_term' => 'FOB MV', 'payment_term' => 'TT', 'base_currency_id' => 'IDR', 'base_price' => 50000, 'deal_currency_id' => 'USD', 'deal_price' => 50, 'exchange_rate' => 10000  ]
       ],
       'user' => [ 4 => [ 'role' => 'associated' ], 3 => [ 'role' => 'associated' ], 1 => [ 'role' => 'approver' ] ],
       'approval' => [ 1 => [ 'status' => 'a', 'approval_token' => 'aaa' ], 2 => [ 'status' => 'a', 'approval_token' => 'bbb' ] ],
@@ -844,8 +857,8 @@ class LeadsTableSeeder extends Seeder
      [
       'order' => [ 'id' => 4, 'user_id' => 3, 'index_id' => 3, 'status' => 'd', 'in_house' => false ],
       'leads' => [
-          3 => [ 'volume' => 1300, 'price' => 45, 'trading_term' => 'FOB MV', 'payment_term' => 'TT' ],
-          6 => [ 'volume' => 1800, 'price' => 55, 'trading_term' => 'FOB MV', 'payment_term' => 'TT' ]
+          3 => [ 'volume' => 1300, 'price' => 45, 'trading_term' => 'FOB MV', 'payment_term' => 'TT', 'base_currency_id' => 'IDR', 'base_price' => 50000, 'deal_currency_id' => 'USD', 'deal_price' => 50, 'exchange_rate' => 10000  ],
+          6 => [ 'volume' => 1800, 'price' => 55, 'trading_term' => 'FOB MV', 'payment_term' => 'TT', 'base_currency_id' => 'IDR', 'base_price' => 50000, 'deal_currency_id' => 'USD', 'deal_price' => 50, 'exchange_rate' => 10000  ]
       ],
       'companies' => [ 1 => [ 'cost' => 3 ] ]
      ]

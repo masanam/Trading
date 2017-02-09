@@ -17,6 +17,12 @@ class CreateCompaniesTable extends Migration
             $table->string('status')->nullable();
         });
 
+        Schema::create('countries', function($table) {
+            $table->increments('id');
+            $table->string('code');
+            $table->string('name');
+        });
+
         Schema::create('companies', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
@@ -325,6 +331,7 @@ class CreateCompaniesTable extends Migration
         Schema::dropIfExists('concessions');
         Schema::dropIfExists('contacts');
         Schema::dropIfExists('companies');
+        Schema::dropIfExists('countries');
         Schema::dropIfExists('areas');
     }
 }

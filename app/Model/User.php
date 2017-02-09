@@ -73,6 +73,11 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return $this->hasMany('LoginUser');
     }
 
+    //For Documents - By Myrtyl - 06/02/2017
+    public function documents(){
+      return $this->hasMany(Document::class);
+    }
+
     public function actings() { // who you're act for
         return $this->belongsToMany(User::class, 'acting_users', 'user_id', 'acting_as')
             ->where('acting_users.status', 'a')
@@ -93,6 +98,10 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
     public function directManager() {
         return  $this->belongsTo('App\Model\User', 'manager_id');
+    }
+
+    public function MiningLicenseHistories() {
+        return  $this->hasMany('App\Model\MiningLicenseHistory');
     }
 
     public function subordinates($user = false)

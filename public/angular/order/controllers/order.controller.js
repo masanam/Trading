@@ -203,8 +203,8 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
     };
 
     // Find list of order
-    $scope.find = function () {
-      $scope.orders = Order.query({ category: $scope.browse.category, status: $scope.browse.status });
+    $scope.find = function (search) {
+      $scope.orders = Order.query({ q:search, category: $scope.browse.category, status: $scope.browse.status });
     };
 
     // Find existing order

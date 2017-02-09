@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call(UsersTableSeeder::class);
         $this->call(CompaniesTableSeeder::class);
+        $this->call(CountriesTableSeeder::class);
         $this->call(ConcessionTableSeeder::class);
         $this->call(ProductTableSeeder::class);
         $this->call(PortTableSeeder::class);
@@ -27,6 +28,7 @@ class DatabaseSeeder extends Seeder
         $this->call(SalesTargetTableSeeder::class);
         $this->call(ContractsTableSeeder::class);
         $this->call(ShipmentTableSeeder::class);
+        $this->call(DocumentTableSeeder::class);
 
         Model::reguard();
     }

@@ -8,15 +8,15 @@ class Quality extends Model
 {
     protected $table = 'qualities';
     protected $fillable = [
-      'shipment_id' ,'lead_id', 'status', 'type'
+      'shipment_id' , 'status', 'type'
     ];
 
     public function qualityDetail() {
-      return $this->belongsTo(QualityDetail::class, 'quality_id');
+      return $this->hasMany(QualityDetail::class);
     }
 
     public function shipments() {
-      return $this->belongsTo(Shipment::class);
+      return $this->belongsTo(Shipment::class, 'shipment_id');
     }
 
 }

@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 
 use App\Model\Shipment;
+use App\Model\QualityMetric;
 
 class ShipmentTableSeeder extends Seeder
 {
@@ -173,5 +174,21 @@ class ShipmentTableSeeder extends Seeder
         'bl_date'=>'2016-07-22',
         'cargo_bl'=>68858,
       ]);
+
+      QualityMetric::create([
+        'quality' => 'NCV',
+        'metric' => 'Kcal'
+      ]);
+
+      QualityMetric::create([
+        'quality' => 'GCV ADB',
+        'metric' => 'Kcal'
+      ]);
+
+      QualityMetric::create([
+        'quality' => 'GCV ARB',
+        'metric' => 'Kcal'
+      ]);
+
     }
 }

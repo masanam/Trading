@@ -141,9 +141,13 @@ selesai
   <input name="city" type="text" class="form-control" id="city" ng-model="company.city">
 </div>
 
-<div class="form-group">
+<div class="form-group" ng-init="findCountries()">
   <label for="country">Company origin (Country):</label>
-  <input name="country" type="text" class="form-control" id="country" ng-model="company.country" required>
+  <select name="country" id="country" class="form-control"
+    ng-model="company.country" required>
+    <option value="country.code" ng-repeat="country in countries | orderBy:'name'">{{ country.name }}</option>  
+  </select>
+  
 </div>
 
 <div class="form-group" ng-if="company.company_type === 'c'">

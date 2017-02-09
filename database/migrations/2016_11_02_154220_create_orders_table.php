@@ -61,6 +61,18 @@ class CreateOrdersTable extends Migration
             $table->unique(['order_id', 'user_id']);
         });
 
+        Schema::create('currency', function (Blueprint $table) {
+            $table->char('id',3);
+            $table->integer('value');
+        });
+
+        Schema::create('exchange_rates', function (Blueprint $table) {
+            $table->char('buy',3);
+            $table->char('sell',3);
+            $table->decimal('value', 20, 10);
+            $table->timestamps();
+        });
+
         Schema::create('order_details', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('order_id')->unsigned();
@@ -69,6 +81,11 @@ class CreateOrdersTable extends Migration
             $table->integer('volume');
             $table->string('trading_term');
             $table->string('payment_term');
+            $table->char('base_currency_id',3);
+            $table->integer('base_price');
+            $table->char('deal_currency_id',3);
+            $table->integer('deal_price');
+            $table->decimal('exchange_rate', 20, 10);
             $table->timestamps();
 
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('restrict');
@@ -118,7 +135,9 @@ class CreateOrdersTable extends Migration
     {
         Schema::drop('order_additional_costs');
         Schema::drop('order_negotiations');
+        Schema::drop('currency');
         Schema::drop('order_details');
+        Schema::drop('exchange_rates');
         Schema::drop('order_users');
         Schema::drop('order_approvals');
         Schema::drop('order_approval_logs');

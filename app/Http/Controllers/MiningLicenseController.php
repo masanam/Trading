@@ -74,8 +74,7 @@ class MiningLicenseController extends Controller
     public function show($id)
     {
 
-
-        $license = MiningLicense::with('Company','Contact','Concession','Concession.port','checked_by','MiningLicenseFile','spatial_data')->select('*', DB::raw('ST_AsGeoJSON(polygon, 8) AS polygon'))->where('id',$id)->first();
+        $license = MiningLicense::with('Company','Contact','Concession','Concession.port','checked_by','MiningLicenseFile','spatial_data','MiningLicenseHistory', 'MiningLicenseHistory.User')->select('*', DB::raw('ST_AsGeoJSON(polygon, 8) AS polygon'))->where('id',$id)->first();
 
 
         return response()->json($license, 200);
@@ -99,6 +98,14 @@ class MiningLicenseController extends Controller
         $license->fill($req->all());
         if($req->status) {
             if($license->status !== 'p') $license->status = $req->status;
+            // make reason decline null if status change to pending
+            if($license->status === 'p'){
+                $license->approval_main_reason = null;
+                $license->approval_reason_description = null;
+            }else if($license->status === 'd'){
+                $license->approval_main_reason = null;
+                $license->approval_reason_description = null;
+            }
         }
         $license->expired = date('Y-m-d',strtotime($req->expired));
         $license->checked_at = date('Y-m-d',strtotime($req->checked_at));

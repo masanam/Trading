@@ -4,8 +4,9 @@
 </div>
 
 <div class="form-group">
-  <label for="email">Email :</label>
-  <input type="text" class="form-control" id="email" ng-model="user.email" required>
+  <label for="email">Email:</label>
+  <input type="text" class="form-control" id="email" ng-model="user.email" ng-if="deployment !== 'berau'">
+  <input type="text" class="form-control" id="email" ng-model="user.email" disabled ng-if="deployment === 'berau'">
 </div>
 
 <div class="form-group">
