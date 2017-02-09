@@ -18,7 +18,7 @@ angular.module('map').controller('MapController', ['$scope','$http', '$statePara
     $scope.product = undefined;
 
     $scope.countries = Country.query();
-    $scope.country = 'Indonesia';
+    $scope.filter_country = 'Indonesia';
 
     $scope.customIcon = {
       scaledSize: [32, 32],
@@ -29,9 +29,10 @@ angular.module('map').controller('MapController', ['$scope','$http', '$statePara
       $scope.map = map;
     });
 
-    $scope.find = function(showBuy) {
+    $scope.find = function() {
       var params = {};
-      if (showBuy) {
+      
+      if ($scope.showBuy) {
         $scope.filters_gt = [];
         $scope.filters_lt = [];
         $scope.filters_bet = [];
@@ -94,16 +95,16 @@ angular.module('map').controller('MapController', ['$scope','$http', '$statePara
         $scope.concessions = Concession.query(params);
       }
       else {
-        console.log($scope.search.category);
+        // console.log($scope.search.category);
         $scope.companies = Company.query({ company_type: 'c' });
-        console.log($scope.companies);
-
+        // console.log($scope.companies);
+        console.log($scope.filter_country);
 
 
       }
       params.action = 'filter';
-      params.country = $scope.country;
-      // console.log(params);
+      params.country = $scope.filter_country;
+      console.log(params);
 
       Concession.query(params, function(res){
         for (var i = res.length - 1; i >= 0; i--) {
