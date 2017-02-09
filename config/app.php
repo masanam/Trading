@@ -31,6 +31,7 @@ return [
     'showBuy' => env('SHOW_BUY', 'trade'),
     'destinationBy' => env('DESTINATION_BY', 'factory'),
     'productQuality' => env('PRODUCT_QUALITY', 'productQuality'),
+    'defaultArea' => env('DEFAULT_AREA', 4),
 
     /*
     |--------------------------------------------------------------------------
@@ -186,7 +187,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Barryvdh\Cors\ServiceProvider::class,
         Laravel\Passport\PassportServiceProvider::class,
-        GrahamCampbell\Throttle\ThrottleServiceProvider::class,
+        //GrahamCampbell\Throttle\ThrottleServiceProvider::class,
         // Vinkla\Pusher\PusherServiceProvider::class,
         // Mpociot\Firebase\SyncsWithFirebase::class,
 
@@ -239,7 +240,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'JWTAuth'   => Tymon\JWTAuth\Facades\JWTAuth::class,
         'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
-        'Throttle' => GrahamCampbell\Throttle\Facades\Throttle::class,
+        //'Throttle' => GrahamCampbell\Throttle\Facades\Throttle::class,
     ],
 
 ];

@@ -13,10 +13,16 @@ use App\Model\IndexPrice;
 use App\Model\Index;
 use App\Model\OrderNegotiation;
 use App\Model\OrderApprovalLog;
+use App\Model\OrderApprovalScheme;
+use App\Model\OrderApprovalSchemeSequence;
 use App\Model\Contract;
+use App\Model\Role;
 
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Auth;
+
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ApprovalRequest;
 
 class OrderController extends Controller
 {
@@ -25,6 +31,25 @@ class OrderController extends Controller
     $this->middleware('jwt.auth', [ 'except' => 'approval' ]);
     $this->order = $order;
   }
+
+  //////////////////////////////////////
+  //
+  // REUSABLE FUNCTIONS
+  // the reusable functions are designed
+  // only for business logic of orders
+  //
+  // indexPrice       --> get the latest index price from Index database
+  // combineOrder     --> function to combine two existing orders
+  // funnel           --> re-routed action from index(), which displays only statistical number
+  // checkAvailable   --> Check whether one lead is available to be staged to the order
+  // mailApproval     --> send mail (3)
+  // requestApproval  --> requests approval for single user,
+  //                      calls mailApproval to send mail notifications
+  // sequenceApproval --> gets approval sequence & get designated users,
+  //                      calls requestApproval to add approval to designated user
+  // resetApproval    --> detach all approval in an order, calls sequenceApproval after succession
+  // 
+  //////////////////////////////////////
 
   /*
    *  This is to display the indexPrice inside the orders when loaded for mobile apps
@@ -42,6 +67,37 @@ class OrderController extends Controller
         });
 
     return $query->get();
+  }
+
+  private function combineOrder($items, $id) {
+    $message = 'error';
+    foreach($items as $item){
+      if($item['order_status'] != 'p' && $item['order_status'] != 's') { $message = 'error'; continue; }
+      else {
+        $order_id = DB::table('order_details')
+                    ->where('lead_id', $item['id'])
+                    ->where('order_id', '!=', $id)->pluck('order_id');
+        if(count($order_id) != 1) { $message = 'error'; continue; }
+        else {
+          $oldOrder = Order::with('leads')->find($order_id);
+          if($oldOrder->leads->count() > 1) { $message = 'error'; continue; }
+          else {
+            if($oldOrder->status == 'a') {
+              foreach($oldOrder->leads as $lead) {
+                if($lead->pivot['volume'] == $item['pivot']['volume']) {
+                  $oldOrder->status = 'c';
+                  $oldOrder->save();
+                  $message = 'success';
+                }
+                else { $message = 'error'; continue; }
+              }
+            }
+            else { $message = 'error'; continue; }
+          }
+        }
+      }
+    }
+    return $message;
   }
 
   /*
@@ -81,6 +137,198 @@ class OrderController extends Controller
 
     return response()->json($funnel,200);
   }
+
+  /**
+   * Check if current order CAN stage the lead
+   *
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
+
+  private function checkAvailable($order, $lead){
+    // If this is invoked from UPDATE, instead of using lead from params, do get its volumes from pivot
+    // Get from the current volume IF this is a staging order
+    if(!$lead->lead_id) $volume = $lead->pivot->volume;
+    else $volume = $lead->volume;
+
+    // Get all orders associated with this current lead to know its standing
+    $lead_to_stage = Lead::with('orders')->find($lead->id);
+
+    // get total of the used volume
+    // IF THEY ARE confirmed leads
+    if(count($lead_to_stage->orders)>0){
+      foreach($lead_to_stage->orders as $associated_orders) {
+        // exclude draft and one that is current order
+        if($associated_orders->status != 'd' && $associated_orders->status != 'x' && $associated_orders->status != 'c' && $associated_orders->id != $order->id)
+          $volume += $associated_orders->pivot->volume;
+      }
+    }
+
+    if ($volume > $lead_to_stage->volume) {
+      $order->available_volume = 'error';
+    }
+  }
+
+  private function mailApproval (&$order) {
+    // get the earliest laycan and latest one
+    $order->earliestLaycan();
+    $order->latestLaycan();
+
+    // find all averages of the order details.
+    $order->averageSell();
+    $order->averageBuy();
+
+    // get latest GC NEWC price
+    $index = $this->indexPrice();
+
+    $mail = new requestApproval($this, $approval_properties['approval_token'], $index->price);
+    Mail::to($user->email)->send($mail);
+  }
+
+  private function requestApproval (&$order, $user) {
+    // Add approval request to specific user
+
+    // Add new approval request
+    $approval_properties = [
+      'status' => 'p',
+      'approval_token' => bcrypt(date('Y-m-d H:i:s') . $user->name)
+    ];
+    $order->approvals()->sync([$user->id => $approval_properties], false);
+
+    // add new associated user in the request
+    $order->users()->sync([$user->id => [ 'role' => 'approver' ]], false);
+
+    $this->mailApproval($order);
+  }
+
+  /* The function to find out current order's approval scheme &
+   * & do appropriate next action after these 3 possible scenario:
+   * 1. updating order, request first approval
+   * 2. approving order, continuing approval sequence
+   * 3. changing things, reset approval, re-request first approval
+   * 
+   @ order : the order that needs to be approved
+   #
+   */
+
+  private function sequenceApproval (&$order) {
+    // LIST OF IMPORTANT VARIABLES:
+    // * $app_scheme (Object) : the scheme of the approval, complete with its sequences
+    // * $curr_seq (Object)   : current sequence of the approval that is now
+    // * $next_seq (Object)   : the next sequence of the approval that is now
+    // * $elevate (Bool)      : whether it passes condition to elevate the sequence
+
+    // LEVEL 1: get approval scheme by area
+    $areas = [];
+    foreach($order->sells as $sell) $areas[] = $sell->company->area_id; // get all area to know 
+
+    if(count(array_unique($areas)) === 1) $sell_area = $areas[0]; // if area are homogenous, go on
+    else $sell_area = config('app.default_area');                 // if not, get the default area
+
+    // NEXT LEVEL OF FILTERING GOES HERE //
+
+
+    // GET THE APPROVAL SCHEME TOGETHER WITH THE SEQUENCES IT HAS
+    $q = OrderApprovalScheme::with('sequences');
+    if($sell_area) $q->where('sell_area_id', $sell_area); // get only approval that has sell area id specified
+    // add more validation here
+    $app_scheme = $q->first();
+
+    // GET THE ORDER'S CURRENT APPROVAL SEQUENCE
+    foreach($app_scheme->sequences as $s){
+      if($s->sequence == $order->approval_sequence) $curr_seq = $s;
+      if($s->sequence == $order->approval_sequence+1) $next_seq = $s;
+    }
+
+    // find out whether or not this order fulfills condition of current sequence
+    // $curr_seq is the current sequence of approval which has all the necessary rules
+    $elevate = false;
+    $count_approvers = $curr_seq->approval_scheme; // by default, number of approver is defined by approval_scheme attribute
+                                                   // this is only changed IF case is A. but overall logic is matching the count
+
+    switch($curr_seq->approval_scheme){
+      case 'd' : 
+      case 'o' : // approval scheme 'OR' or 'DIRECT SUPERVISOR', 1 guy ok and pass
+        foreach($order->approvals as $a) foreach($a->roles as $r) if($r->id == $curr_seq->role_id) $elevate = true;
+        break;
+
+      case 'a' : // get all users with such role, and make sure count is correct
+        $approver_role = Role::with('users')->find($curr_seq->role_id);
+        $count_approvers = count($approvers->users);
+      default : // if it is a number
+        $count_actual = 0;
+        foreach($order->approvals as $a) foreach($a->roles as $r) if($r->id == $curr_seq->role_id) $count_actual++;
+        break;
+    }
+
+    // find out whether or not this order require next sequence of approval
+    // if true, elevate the sequence
+    if($count_actual < $count_approvers) $elevate = true;
+
+    // send approval to each users. add the database & send the email
+    // do nothing if no elevation needed
+    if($elevate){
+      if($next_seq){
+        // if there's a next sequence, request for approval
+        $order->status = $next_seq->sequence;
+        $order->save();
+
+        if($next_seq->approval_scheme === 'd'){
+          // if the next sequence is asking for a direct supervisor, typically you will simply add manager_id from user
+          // but before that, do a check whether user's direct supervisor is in the correct role.
+          // assume everyone approved if direct supervisor is not in that list
+          $found = false;
+          $supervisor = $user;
+
+          // get supervisor/manager with correct role
+          do {
+            $supervisor = User::with('roles')->find($user->manager_id);
+            foreach($supervisor->roles as $r) if($r->id == $next_seq->role_id) $found = true;
+          } while (!$found && $supervisor);
+
+          // IF FOUND, request the approval from that supervisor
+          if($found) $this->requestApproval($order, $supervisor);
+          else {
+            // however, if not found, add the sequence, redo the approval sequence check
+            $order->status = $next_seq->sequence + 1;
+            $order->save();
+
+            $this->sequenceApproval($order);
+          }
+        } else {
+          // else, request approval from ALL guys in that role
+          $approver_role = Role::with('users')->find($next_seq->role_id);
+
+          foreach($approver_role->users as $approver) $this->requestApproval($order, $approver);
+        }
+      } else {
+        // without next sequence, this is the last sequence of the scheme
+        // which means, the order status will be rendered 'a' (approved) 
+        $order->status = 'a';
+        $order->save();
+      }
+    } 
+
+    return true;
+  }
+
+  public function resetApproval(&$order){
+    $order->approvals()->detach();
+
+    $this->sequenceApproval($order);
+  }
+
+  //////////////////////////////////////
+  //
+  // COMMON CRUD ACTIONS
+  // common create-read-update-delete
+  // operations for RESTful API
+  //
+  // index / store / show / update / destroy
+  // approval --> manage the approval status of current user towards the order
+  // stage    --> stage one lead to the order
+  // 
+  //////////////////////////////////////
 
   /**
    * Display a listing of the resource.
@@ -258,37 +506,6 @@ class OrderController extends Controller
     return response()->json($order, 200);
   }
 
-  private function combineOrder($items, $id) {
-    $message = 'error';
-    foreach($items as $item){
-      if($item['order_status'] != 'p' && $item['order_status'] != 's') { $message = 'error'; continue; }
-      else {
-        $order_id = DB::table('order_details')
-                    ->where('lead_id', $item['id'])
-                    ->where('order_id', '!=', $id)->pluck('order_id');
-        if(count($order_id) != 1) { $message = 'error'; continue; }
-        else {
-          $oldOrder = Order::with('leads')->find($order_id);
-          if($oldOrder->leads->count() > 1) { $message = 'error'; continue; }
-          else {
-            if($oldOrder->status == 'a') {
-              foreach($oldOrder->leads as $lead) {
-                if($lead->pivot['volume'] == $item['pivot']['volume']) {
-                  $oldOrder->status = 'c';
-                  $oldOrder->save();
-                  $message = 'success';
-                }
-                else { $message = 'error'; continue; }
-              }
-            }
-            else { $message = 'error'; continue; }
-          }
-        }
-      }
-    }
-    return $message;
-  }
-
   /**
    * Display the specified resource.
    *
@@ -298,7 +515,8 @@ class OrderController extends Controller
   public function show($id, Request $req = null)
   {
     $order = Order::with(['trader', 'users', 'sells', 'buys',
-        'buys.trader', 'sells.trader', 'approvals', 'approvalLogs', 'companies',
+        'buys.trader', 'sells.trader',
+        'approvals', 'approvals.roles', 'approvalLogs', 'companies',
         'sells.company', 'buys.company', 'sells.factory', 'contracts',
         'buys.concession' => function ($q) {
           return $q->select('concession_name');
@@ -336,39 +554,6 @@ class OrderController extends Controller
     return response()->json($json, 200);
   }
 
-
-  /**
-   * Check if current order CAN stage the lead
-   *
-   * @param  int  $id
-   * @return \Illuminate\Http\Response
-   */
-
-  private function checkAvailable($order, $lead){
-    //var_dump($order);die;
-    //var_dump($lead);die;
-    // If this is invoked from UPDATE, instead of using lead from params, do get its volumes from pivot
-    // Get from the current volume IF this is a staging order
-    if(!$lead->lead_id) $volume = $lead->pivot->volume;
-    else $volume = $lead->volume;
-
-    // Get all orders associated with this current lead to know its standing
-    $lead_to_stage = Lead::with('orders')->find($lead->id);
-
-    // get total of the used volume
-    // IF THEY ARE confirmed leads
-    if(count($lead_to_stage->orders)>0){
-      foreach($lead_to_stage->orders as $associated_orders) {
-        // exclude draft and one that is current order
-        if($associated_orders->status != 'd' && $associated_orders->status != 'x' && $associated_orders->status != 'c' && $associated_orders->id != $order->id)
-          $volume += $associated_orders->pivot->volume;
-      }
-    }
-
-    if ($volume > $lead_to_stage->volume) {
-      $order->available_volume = 'error';
-    }
-  }
 
   /**
    * edit the specified resource.
@@ -434,36 +619,10 @@ class OrderController extends Controller
     // If this is a delete operation, release all partials
     if($order->status == 'x'){
       $order->leadToPartial();
+    } else if($order->status == 'p') {
+      // begin/continue approval sequence
+      $this->sequenceApproval($order);
     }
-
-    // if Orders staged for approval,
-    else if($order->status == 'p'){
-      $order = Order::with(['approvals' => function($q){
-        $q->where('user_id', Auth::user()->manager_id);
-      }, 'users' => function($q){
-        $q->where('user_id', Auth::user()->manager_id);
-      }])->find($id);
-
-
-      if($order->users->count() == 0){
-        foreach (Auth::user()->managers() as $user_id) {
-          $order_user = new OrderUser();
-          $order_user->order_id = $id;
-          $order_user->user_id = $user_id->id;
-          $order_user->role = 'approver';
-          $order_user->save();
-        }
-      }
-
-      // add manager to approve this order
-      if(Auth::user()->manager_id){
-        $order->requestApproval(User::find(Auth::user()->manager_id));
-      } else {
-        $order->status = 'a'; $order->save();
-      }
-    }
-
-    $req['envelope'] = 'true';
 
     return $this->show($id, $req);
   }
@@ -495,16 +654,18 @@ class OrderController extends Controller
    */
   public function approval(Request $req, $id)
   {
-    // since approval does not use jwt middleware,
-    // we need to try whether they are using approval token
-    // or using the JWT token.
-    $order = Order::with( 'approvals',
+    $order = Order::with( 'approvals', 'approvals.roles',
       'sells', 'sells.trader', 'sells.company',
       'buys', 'buys.trader', 'buys.company')->find($id);
 
-    if($req->approval_token) $user = $order->getApproverByToken($req->approval_token); // if using token, get the specified approving user
-    else {
-      $user = JWTAuth::parseToken()->authenticate(); // or simply load the user if using Auth only.
+    // since approval does not use jwt middleware,
+    // we need to try whether they are using approval token
+    // or using the JWT token.
+
+    // if using token, get the specified approving user
+    if($req->approval_token) $user = $order->getApproverByToken($req->approval_token); 
+    else {  // or simply load the user if using Auth only.
+      $user = JWTAuth::parseToken()->authenticate();
       $this->authorize('approve', $order);
     }
 
@@ -514,32 +675,9 @@ class OrderController extends Controller
     // put the user's approval status to replace old one
     $order->approvals()->sync([ $user->id => [ 'status' => $req->status ] ], false);
 
-
-    // if this user has manager, add approval on top of it
-    if($user->manager_id && $req->status == 'a'){
-      $order->requestApproval(User::find(Auth::user()->manager_id));
-    }
-
-    /*
-     * Interim Logic
-     *
-     * Approval statuses:
-     * [p] --> pending ;    [m] --> pending, but acting
-     * [a] --> approved ;   [y] --> automatically approved
-     * [r] --> rejected ;   [n] --> automatically rejected
-     */
-
-    $interims = $user->interims;
-    $actings = $user->actings;
-
-    if(count($interims) || count($actings)){
-      if($req->status == 'a') $status = 'y';
-      else if($req->status == 'r') $status = 'n';
-
-      foreach($interims as $interim) $order->approvals()->sync([ $interim->id => [ 'status' => $status ] ], false);
-      foreach($actings as $actings) $order->approvals()->sync([ $acting->id => [ 'status' => $status ] ], false);
-    }
-
+    // Begin/Continue/End approval sequence
+    $this->sequenceApproval($order);
+    
     return $this->show($id, $req);
   }
 
@@ -551,7 +689,7 @@ class OrderController extends Controller
    */
   public function stage(Request $req, $id)
   {
-    $order = Order::with('buys', 'sells', 'approvals', 'trader')->find($id);
+    $order = Order::with('buys', 'sells', 'approvals', 'approvals.roles', 'trader')->find($id);
 
     // Check available volume
     $this->checkAvailable($order, $req);
@@ -590,7 +728,7 @@ class OrderController extends Controller
     Lead::find($req->lead_id)->reconcile();
 
     // when details are changed, reset all approval
-    $order->resetApproval();
+    $this->resetApproval($order);
 
     // add negotiation log to the staged lead
     $order_detail_id = $order->leads()->find($req->lead_id)->pivot->id; // find the ID of the order details
@@ -615,14 +753,14 @@ class OrderController extends Controller
    * @return \Illuminate\Http\Response
    */
   public function unstage(Request $req, $id){
-    $order = Order::with('approvals', 'trader')->find($id);
+    $order = Order::with('approvals', 'approvals.roles', 'trader')->find($id);
     $this->authorize('update', $order);
 
     $order->leads()->detach($req->lead_id);
     Lead::find($req->lead_id)->reconcile();
 
     // when details are changed, reset all approval
-    $order->resetApproval();
+    $this->resetApproval($order);
 
     return $this->show($id, $req);
   }

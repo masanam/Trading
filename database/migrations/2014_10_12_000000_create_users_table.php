@@ -26,8 +26,7 @@ class CreateUsersTable extends Migration
             $table->string('phone');
             $table->string('password');
 
-            $table->string('role');
-            $table->string('employee_id')->nullable();
+            $table->string('employee_no')->nullable();
             $table->string('manager_id')->nullable();
 
             $table->datetime('last_login')->nullable();
@@ -37,20 +36,7 @@ class CreateUsersTable extends Migration
             $table->timestamps();
         });
 
-
-        Schema::create('acting_users', function (Blueprint $table) {
-            $table->integer('user_id')->unsigned();
-            $table->integer('acting_as')->unsigned();
-            $table->datetime('date_start')->nullable();
-            $table->datetime('date_end')->nullable();
-            
-            $table->char('role', 1); // t = trade_approval
-            $table->char('status', 1); // a = Active , x = Deleted
-
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
-            $table->foreign('acting_as')->references('id')->on('users')->onDelete('restrict');
-        });
-
+        //role
         Schema::create('roles', function (Blueprint $table) {
             $table->increments('id');
             $table->string('role');
@@ -58,11 +44,33 @@ class CreateUsersTable extends Migration
         });
 
         Schema::create('user_role', function (Blueprint $table) {
-            $table->integer('user_id');
-            $table->integer('role_id');
+            $table->integer('user_id')->unsigned();
+            $table->integer('role_id')->unsigned();
+            $table->datetime('date_start')->nullable();
+            $table->datetime('date_end')->nullable();
+
             $table->timestamps();
 
             $table->unique(['user_id', 'role_id']);
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
+            $table->foreign('role_id')->references('id')->on('roles')->onDelete('restrict');
+        });
+
+        //privileges
+        Schema::create('privileges', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('menu'); //module.view  e.g: order.view
+            $table->timestamps();
+        });
+
+        Schema::create('privilege_role', function (Blueprint $table) {
+            $table->integer('privilege_id')->unsigned();
+            $table->integer('role_id')->unsigned();
+            $table->timestamps();
+
+            $table->unique(['privilege_id', 'role_id']);
+            $table->foreign('privilege_id')->references('id')->on('privileges')->onDelete('restrict');
+            $table->foreign('role_id')->references('id')->on('roles')->onDelete('restrict');
         });
 
         Schema::create('password_resets', function (Blueprint $table) {
@@ -102,11 +110,13 @@ class CreateUsersTable extends Migration
     {
         Schema::dropIfExists('activities');
         Schema::dropIfExists('login_user');
-        Schema::dropIfExists('roles');
-        Schema::dropIfExists('user_role');
         Schema::dropIfExists('permissions');
         Schema::dropIfExists('permission_role');
         Schema::dropIfExists('password_resets');
+        Schema::dropIfExists('privilege_role');
+        Schema::dropIfExists('privileges');
+        Schema::dropIfExists('user_role');
+        Schema::dropIfExists('roles');
         Schema::dropIfExists('acting_users');
         Schema::dropIfExists('users');
     }

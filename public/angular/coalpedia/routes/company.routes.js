@@ -13,17 +13,17 @@ angular.module('coalpedia').config(['$stateProvider',
       .state('company.list', {
         url: '?keyword',
         templateUrl: '/angular/coalpedia/views/company/list.view.html',
-        roles: ['user', 'trader', 'manager']
+        privileges: ['coalpedia.view', 'coalpedia.edit']
       })
       .state('company.create', {
         url: '/create',
         templateUrl: '/angular/coalpedia/views/company/wizard/create.view.html',
-        roles: ['user', 'trader', 'manager']
+        privileges: ['coalpedia.edit']
       })
       .state('company.view', {
         url: '/:id',
         views: { '@': { templateUrl: '/angular/coalpedia/views/company/view.view.html' } },
-        roles: ['user', 'trader', 'manager']
+        privileges: ['coalpedia.edit']
       })
 
       //Wizard states
@@ -35,17 +35,17 @@ angular.module('coalpedia').config(['$stateProvider',
       .state('company.wizard.connection', {
         url: '/connection',
         templateUrl: '/angular/coalpedia/views/company/wizard/connection.view.html',
-        roles: ['user', 'trader', 'manager']
+        privileges: ['coalpedia.edit']
       })
       .state('company.wizard.operation', {
         url: '/operation',
         templateUrl: '/angular/coalpedia/views/company/wizard/operation.view.html',
-        roles: ['user', 'trader', 'manager']
+        privileges: ['coalpedia.edit']
       })
       .state('company.wizard.product', {
         url: '/product',
         templateUrl: '/angular/coalpedia/views/company/wizard/product.view.html',
-        roles: ['user', 'trader', 'manager']
+        privileges: ['coalpedia.edit']
       });
   }
 ]);

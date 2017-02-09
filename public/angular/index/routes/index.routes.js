@@ -19,7 +19,7 @@ angular.module('index').config(['$stateProvider',
       .state('index.create', {
         url: '/create',
         templateUrl: '/angular/index/views/create.view.html',
-        roles: ['intel']
+        roles: ['index.edit']
       })
       .state('index.view', {
         url: '/:indexId',
@@ -28,20 +28,27 @@ angular.module('index').config(['$stateProvider',
       .state('index.edit', {
         url: '/:indexId/edit',
         templateUrl: '/angular/index/views/edit.view.html',
-        roles: ['intel']
+        roles: ['index.edit']
       })
 
       // Update Index Price
       .state('index.today-price', {
         url: '/price/today',
         templateUrl: '/angular/index/views/index-price/today.view.html',
+        roles: ['index.edit']
+      })
+
+      // Update Index Price
+      .state('index.edit_previous-price', {
+        url: '/price/edit_previous',
+        templateUrl: '/angular/index/views/index-price/edit_previous-price.view.html',
         roles: ['intel']
       })
       // Update Index Price
       .state('index.edit-price', {
         url: '/:indexId/price/:indexPriceId/edit',
         templateUrl: '/angular/index/views/index-price/edit.view.html',
-        roles: ['intel']
+        roles: ['index.edit']
       });
   }
 ]);

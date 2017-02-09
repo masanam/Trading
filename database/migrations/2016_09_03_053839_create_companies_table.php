@@ -11,8 +11,10 @@ class CreateCompaniesTable extends Migration
      */
     public function up()
     {
+        //areas
         Schema::create('areas', function (Blueprint $table){
             $table->increments('id');
+            $table->string('area_name')->nullable();
             $table->string('description')->nullable();
             $table->string('status')->nullable();
         });
@@ -35,6 +37,8 @@ class CreateCompaniesTable extends Migration
             $table->string('address')->nullable();
             $table->string('city')->nullable();
             $table->string('country')->nullable();
+            $table->decimal('latitude', 10, 8)->nullable();
+            $table->decimal('longitude', 11, 8)->nullable();
             $table->string('industry')->nullable(); //cement, powerplant, pulp paper, general
             $table->integer('annual_demand')->nullable();
             $table->integer('annual_sales')->nullable();
