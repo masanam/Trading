@@ -23,6 +23,7 @@ angular.module('chat').controller('ChatController', ['$scope', '$stateParams', '
     });
   };
 
+
   $scope.findRelatedUsers = function() {
     $scope.user = Authentication.user;
 
@@ -39,7 +40,7 @@ angular.module('chat').controller('ChatController', ['$scope', '$stateParams', '
     var message = $scope.message;
     if(message !== ''){
       $scope.chat.key = Chat.sendChat($stateParams.id, $scope.order.users, message);
-      
+
       $scope.initialize();
     }
   };
