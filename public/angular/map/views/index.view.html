@@ -1,4 +1,4 @@
-<section class="content" ng-controller="MapController" ng-init="find(showBuy)">
+<section class="content" ng-controller="MapController" ng-init="find()">
     <div class="col-lg-5">
       <!-- Search box -->
       <div class="row">
@@ -40,53 +40,18 @@
       </div>
       <br/>
       <!-- Filter box -->
-      <div ng-if="showBuy==true">
+      <div ng-show="showBuy==true">
         <div class="row">
           <div class="col-lg-12">
             <h3>Filters</h3>
+          </div>
         </div>
-      </div>
         <div class="row">
-        <div class="col-lg-12" style="padding:15px">
-          <select class="form-control" ng-model="country" ng-change="find()">
-            <option value="">-- Select Country --</option>
-            <option ng-value="country.name" ng-repeat="country in countries">{{ country.name }}</option>
-          </select>
-        </div>
-      </div>
-        <div class="row" ng-repeat="filter in filters">
-        <div class="col-lg-12">
-          <div class="filter-container">
-            <span class="col-lg-5">
-              <select ng-model="filter.field" class="form-control">
-                <option value="gcv_arb">GCV ARB</option>
-                <option value="gcv_adb">GCV ADB</option>
-                <option value="ncv">NCV</option>
-                <option value="ash">Ash</option>
-                <option value="ts">Total Sulphur</option>
-                <option value="tm">Total Moisture</option>
-                <option value="im">Inherent Moisture</option>
-                <option value="fc">Fixed Carbon</option>
-                <option value="vm">Volatile Matter</option>
-                <option value="hgi">Hardness</option>
-                <option value="size">Size</option>
-                <option value="fe203">Iron</option>
-                <option value="aft">Ash Fusion Temperature</option>
-              </select>
-            </span>
-            <span class="col-lg-3">
-              <select ng-model="filter.operand" class="form-control col-lg-2">
-                <option value=">=">&ge;</option>
-                <option value="<=">&le;</option>
-                <option value="=">&asymp;</option>
-              </select>
-            </span>
-            <span class="col-lg-3">
-              <input type="text" class="form-control col-lg-5" ng-model="filter.number" />
-            </span>
-            <span class="col-lg-1">
-              <button class="btn btn-danger" ng-click="deleteFilter(filter)">x</button>
-            </span>
+          <div class="col-lg-12" style="padding:15px">
+            <select class="form-control" ng-model="filter_country" ng-change="find()">
+              <option value="">-- Select Country --</option>
+              <option ng-value="country.name" ng-repeat="country in countries">{{ country.name }}</option>
+            </select>
           </div>
         </div>
         <div class="row" ng-repeat="filter in filters">
@@ -124,32 +89,67 @@
               </span>
             </div>
           </div>
-          &nbsp;
-        </div>
-        <div class="row hidden-xs">
-          <div class="col-lg-12">
-            <button class="btn btn-success" ng-click="addFilter()">+ Add Filter</button>
-            <button class="btn btn-danger" ng-click="resetFilter()">Reset Filter</button>
-            <button class="btn btn-info" ng-click="find()">Apply Filter</button>
+          <div class="row" ng-repeat="filter in filters">
+            <div class="col-lg-12">
+              <div class="filter-container">
+                <span class="col-lg-5">
+                  <select ng-model="filter.field" class="form-control">
+                    <option value="gcv_arb">GCV ARB</option>
+                    <option value="gcv_adb">GCV ADB</option>
+                    <option value="ncv">NCV</option>
+                    <option value="ash">Ash</option>
+                    <option value="ts">Total Sulphur</option>
+                    <option value="tm">Total Moisture</option>
+                    <option value="im">Inherent Moisture</option>
+                    <option value="fc">Fixed Carbon</option>
+                    <option value="vm">Volatile Matter</option>
+                    <option value="hgi">Hardness</option>
+                    <option value="size">Size</option>
+                    <option value="fe203">Iron</option>
+                    <option value="aft">Ash Fusion Temperature</option>
+                  </select>
+                </span>
+                <span class="col-lg-3">
+                  <select ng-model="filter.operand" class="form-control col-lg-2">
+                    <option value=">=">&ge;</option>
+                    <option value="<=">&le;</option>
+                    <option value="=">&asymp;</option>
+                  </select>
+                </span>
+                <span class="col-lg-3">
+                  <input type="text" class="form-control col-lg-5" ng-model="filter.number" />
+                </span>
+                <span class="col-lg-1">
+                  <button class="btn btn-danger" ng-click="deleteFilter(filter)">x</button>
+                </span>
+              </div>
+            </div>
+            &nbsp;
           </div>
-        </div>
-        <div class="row hidden-sm hidden-md hidden-lg">
-          <div class="col-sm-12">
-            <div class="btn-group" uib-dropdown >
-              <button type="button" class="btn btn-primary">Action</button>
-              <button type="button" class="btn dropdown-toggle btn-primary" data-toggle="dropdown" uib-dropdown-toggle>
-                <span class="caret"></span>
-                  <span class="sr-only">Toggle Dropdown</span>
-              </button>
-              <ul class="dropdown-menu" uib-dropdown-menu>
-                <li><a ng-click="addFilter()" >+ Add Filter</a></li>
-                <li><a ng-click="resetFilter()" >+ Reset Filter</a></li>
-                <li><a ng-click="find()" >+ Apply Filter</a></li>
-              </ul>
+          <div class="row hidden-xs">
+            <div class="col-lg-12">
+              <button class="btn btn-success" ng-click="addFilter()">+ Add Filter</button>
+              <button class="btn btn-danger" ng-click="resetFilter()">Reset Filter</button>
+              <button class="btn btn-info" ng-click="find()">Apply Filter</button>
+            </div>
+          </div>
+          <div class="row hidden-sm hidden-md hidden-lg">
+            <div class="col-sm-12">
+              <div class="btn-group" uib-dropdown >
+                <button type="button" class="btn btn-primary">Action</button>
+                <button type="button" class="btn dropdown-toggle btn-primary" data-toggle="dropdown" uib-dropdown-toggle>
+                  <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <ul class="dropdown-menu" uib-dropdown-menu>
+                  <li><a ng-click="addFilter()" >+ Add Filter</a></li>
+                  <li><a ng-click="resetFilter()" >+ Reset Filter</a></li>
+                  <li><a ng-click="find()" >+ Apply Filter</a></li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
-      </div>
       </div>
     </div>
     <div class="col-lg-7">
