@@ -92,32 +92,52 @@ class OrderController extends Controller
     if($req->funnel == true) return $this->funnel();
 
     //DB::enableQueryLog();
-    $orders = Order::with('trader', 'approvals');
+    $orders = Order::with('trader', 'approvals','users');
 
     if($req->status != '') $orders = $orders->where('status', $req->status);
 
+    if($req->q) $param = $req->q; else $param = '';
+
     if($req->category == 'subordinates'){
       $subs = Auth::user()->subordinates();
+    
       $users = $subs->pluck('id')->all();
-      $orders = $orders->whereIn('user_id', $users);
+      $orders->whereIn('user_id', $users);
+        
+      $orders->whereHas('trader', function ($query) use ($req){
+        $query->where('name', 'like', '%'.$req.'%');
+      });
     }
     else if($req->category == 'associated'){
-      $orders->whereHas('users', function($query){
+      $orders->whereHas('users', function($query) use ($req){
         $query->where('user_id', Auth::user()->id);
+        $query->where('name', 'like', '%'.$req.'%');
       });
+      /*if($req->q){
+        $param = $req->q;
+                  $query->orwhereHas('name LIKE "%'.$param.'%"');
+      }*/
     }
     else if($req->category == 'approval'){
       $orders->whereHas('approvals', function ($query) use ($req){
         $query->where('users.id', Auth::user()->id);
+        $query->where('name', 'like', '%'.$req.'%');
 
         if($req->approval_status){
           $query->where('order_approvals.status', substr($req->approval_status,0,1));
         }
+                
       });
+    
     }
     else{
-      $orders->where('user_id', Auth::user()->id);
+      $orders->whereHas('trader', function($query) use ($param){
+        $query->where('id', Auth::user()->id);
+        $query->where('name', 'like', '%'.$param.'%');
+      });
     }
+
+    //var_dump($orders->toSql());
 
     //limit order
     if (!$req->limit) $req->limit = 50;
