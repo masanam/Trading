@@ -95,6 +95,7 @@ angular.module('map').controller('MapController', ['$scope','$http', '$statePara
       }
       else {
         console.log($scope.search.category);
+
         $scope.companies = Company.query({ company_type: 'c' });
         console.log($scope.companies);
 
@@ -143,7 +144,7 @@ angular.module('map').controller('MapController', ['$scope','$http', '$statePara
         $scope.port = Port.get({ id: port.id }, function(port) {
           $scope.event = event;
           $scope.port = port;
-          $scope.map.showInfoWindow('port-info-window', event.latLng);
+            $scope.map.showInfoWindow('port-info-window', event.latLng);
           $scope.product = undefined;
         });
       }

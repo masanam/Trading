@@ -9,19 +9,19 @@ angular.module('coalpedia').controller('CompanyModalController', ['$scope', '$ui
     $scope.term = Term;
 
     $scope.address = function() {
-        // var geocoder = new google.maps.Geocoder();
-        // if (geocoder) {
-        //   geocoder.geocode({
-        //     'address': $scope.company.address
-        //   }, function (results, status) {
-        //     if (status === google.maps.GeocoderStatus.OK) {
-        //       var loc = results[0];
-        //       $scope.company.latitude = loc.geometry.location.lat();
-        //       $scope.company.longitude = loc.geometry.location.lng();
-        //       console.log($scope.company.latitude);
-        //     }
-        //   });
-        // }
+        var geocoder = new google.maps.Geocoder();
+        if (geocoder) {
+          geocoder.geocode({
+            'address': $scope.company.address
+          }, function (results, status) {
+            if (status === google.maps.GeocoderStatus.OK) {
+              var loc = results[0];
+              $scope.company.latitude = loc.geometry.location.lat();
+              $scope.company.longitude = loc.geometry.location.lng();
+              console.log($scope.company.latitude);
+            }
+          });
+        }
     };
 
     $scope.changePosition = function(e) {
