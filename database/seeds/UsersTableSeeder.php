@@ -62,7 +62,6 @@ class UsersTableSeeder extends Seeder
                 'email' => $user['email'],
                 'phone' => $user['phone'],
                 'password' => bcrypt('secret'),
-                'role' => $user['role'],
                 'status' => 'a'
             ]);
         }

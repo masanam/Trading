@@ -104,11 +104,11 @@ angular.module(ApplicationConfiguration.applicationModuleName).run(function ($ro
   // Always check authentication before changing state
   $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
     var checkAuthorization = function(user){
-      if (toState.roles && toState.roles.length > 0) {
+      if (toState.privileges && toState.privileges.length > 0) {
         var allowed = false;
 
-        toState.roles.forEach(function (role) {
-          if (role === 'guest' || (Authentication.user !== undefined && Authentication.user.role.indexOf(role) > -1)){
+        toState.privileges.forEach(function (privilege) {
+          if (privilege === 'guest' || (Authentication.user !== undefined && Authentication.user.privilege.indexOf(privilege) > -1)){
             allowed = true;
             return true;
           }
