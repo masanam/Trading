@@ -36,20 +36,6 @@ class CreateUsersTable extends Migration
             $table->timestamps();
         });
 
-
-        Schema::create('acting_users', function (Blueprint $table) {
-            $table->integer('user_id')->unsigned();
-            $table->integer('acting_as')->unsigned();
-            $table->datetime('date_start')->nullable();
-            $table->datetime('date_end')->nullable();
-            
-            $table->char('role', 1); // t = trade_approval
-            $table->char('status', 1); // a = Active , x = Deleted
-
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
-            $table->foreign('acting_as')->references('id')->on('users')->onDelete('restrict');
-        });
-
         //role
         Schema::create('roles', function (Blueprint $table) {
             $table->increments('id');
