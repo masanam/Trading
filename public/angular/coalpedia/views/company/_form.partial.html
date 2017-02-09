@@ -109,7 +109,7 @@
 <div class="form-group">
   <label for="headquarter_location">Address:</label>
   <input name="address" type="text" class="form-control" id="address" ng-change="address()"  ng-model="company.address">
-  <p>{{ company.latitude }} , {{ company.longitude }} </p>
+  
 </div>
 
 <!-- hasapu 08-02-2017
@@ -117,7 +117,7 @@ Penambahan fungsi maps untuk addres customer
 mulai
  -->
 <div class="form-group">
-  <div class="input-group col-md-12" style="margin-bottom: 5px;">
+  <div class="input-group col-md-12 hidden" style="margin-bottom: 5px;">
     <span class="input-group-addon" style="width: 100px;">Latitude</span>
     <input type="number" min="-90" max="90" step="any" string-to-number class="form-control" id="Latitude" placeholder="Latitude" ng-model="company.latitude" required>
     <span class="input-group-addon" style="width: 100px;">Longitude</span>
@@ -145,9 +145,9 @@ selesai
   <label for="country">Company origin (Country):</label>
   <select name="country" id="country" class="form-control"
     ng-model="company.country" required>
-    <option value="country.code" ng-repeat="country in countries | orderBy:'name'">{{ country.name }}</option>  
+    <option value="country.code" ng-repeat="country in countries | orderBy:'name'">{{ country.name }}</option>
   </select>
-  
+
 </div>
 
 <div class="form-group" ng-if="company.company_type === 'c'">
