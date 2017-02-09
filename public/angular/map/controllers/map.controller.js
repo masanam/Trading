@@ -145,7 +145,7 @@ angular.module('map').controller('MapController', ['$scope','$http', '$statePara
         $scope.port = Port.get({ id: port.id }, function(port) {
           $scope.event = event;
           $scope.port = port;
-            $scope.map.showInfoWindow('port-info-window', event.latLng);
+          $scope.map.showInfoWindow('port-info-window', event.latLng);
           $scope.product = undefined;
         });
       }

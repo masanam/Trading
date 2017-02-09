@@ -33,7 +33,7 @@
 				<div class="col-sm-1">
 				</div>
 				<div class="col-sm-3">
-				<h4>Mounthly</h4>
+				<h4>Monthly</h4>
 				<div class="form-group" ng-repeat="index in indices | filter:{frequency : 'm'}" show-errors>
 					<label for="price">{{ index.index_provider }} {{ index.index_name }} (${{ lastprices.value[index.id] }} updated at {{ lastprices.date[index.id] | date:'yyyy-MM-dd' }})</label>
 				    <input name="price" type="number" step="any" ng-model="prices.value[index.id]"
