@@ -17,4 +17,11 @@ class Role extends Model {
         return date('d-m-Y', strtotime($value));
     }*/
 
+  public function privileges() {
+    return $this->belongsToMany(Privilege::class);
+	}
+
+  public function users() {
+    return $this->hasMany(User::class);
+	}
 }

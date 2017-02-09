@@ -24,7 +24,7 @@ class AuthenticateController extends Controller
 {
     public function __construct()
    {
-       $this->middleware('jwt.auth', ['except' => ['authenticate', 'signup', 'helloworld', 'forgotPassword']]);
+       $this->middleware('jwt.auth', ['except' => ['authenticate', 'signup', 'forgotPassword']]);
    }
     /**
      * Display a listing of the resource.

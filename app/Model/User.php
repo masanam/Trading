@@ -46,6 +46,16 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return $value;
     }
 
+    public function getPrivilegeAttribute($value) {
+        $value = [];
+        foreach($this->roles()->get() as $r) {
+            foreach($r->privileges()->get() as $p){
+                $value[] = $p->menu;    
+            }
+        }
+        return $value;
+    }
+
     // public function privileges(){
     //     return $this->belongsToMany(Role::class, 'user_role', 'user_id', 'role_id');
     // }

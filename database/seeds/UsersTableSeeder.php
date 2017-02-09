@@ -2,7 +2,7 @@
 
 use App\Model\User;
 use App\Model\Role;
-use App\Model\Permission;
+use App\Model\Privilege;
 
 use Illuminate\Database\Seeder;
 
@@ -110,7 +110,7 @@ class UsersTableSeeder extends Seeder
         User::find(7)->roles()->attach(26); // Rori: trade-supervisor
         User::find(8)->roles()->attach(26); // Andez: trade-supervisor
         User::find(9)->roles()->attach(15); // Kamal: trader
-		User::find(10)->roles()->attach(25); // Sakti: trader
+		User::find(10)->roles()->attach(15); // Sakti: trader
 
         User::find(1)->actings()->attach(4, [
             'role' => 'a',
@@ -118,5 +118,30 @@ class UsersTableSeeder extends Seeder
             'date_start' => date('Y-m-d'),
             'date_end' => '2017-03-01'
         ]);
+
+        Privilege::create([ 'id' => 1, 'menu' => 'order.view' ]);
+        Privilege::create([ 'id' => 2, 'menu' => 'order.edit' ]);
+        Privilege::create([ 'id' => 3, 'menu' => 'lead.view' ]);
+        Privilege::create([ 'id' => 4, 'menu' => 'lead.edit' ]);
+        Privilege::create([ 'id' => 5, 'menu' => 'index.view' ]);
+        Privilege::create([ 'id' => 6, 'menu' => 'index.edit' ]);
+        Privilege::create([ 'id' => 7, 'menu' => 'coalpedia.view' ]);
+        Privilege::create([ 'id' => 8, 'menu' => 'coalpedia.edit' ]);
+
+        Role::find(11)->privileges()->attach(2); // executive
+
+        Role::find(15)->privileges()->attach(2); // traders
+        Role::find(15)->privileges()->attach(4);
+        Role::find(15)->privileges()->attach(8); 
+
+        Role::find(21)->privileges()->attach(2); // cmo
+        
+        Role::find(22)->privileges()->attach(2); // trade-manager-area-1
+        
+        Role::find(23)->privileges()->attach(2); // trade-manager-area-2
+
+        Role::find(26)->privileges()->attach(2); // trade-supervisor
+        Role::find(26)->privileges()->attach(4); 
+        Role::find(26)->privileges()->attach(6); 
     }
 }
