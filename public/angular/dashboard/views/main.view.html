@@ -4,7 +4,7 @@
       <div class="box-header with-border">
         <h3 class="box-title">Index Prices</h3>
 
-        <div class="box-tools pull-right btn-group hidden-xs">
+        <!-- <div class="box-tools pull-right btn-group hidden-xs">
           <button class="btn btn-default" ng-click="indexPage = indexPage-1" ng-disabled="indexPage==0">Prev</button>
           <button class="btn btn-default" ng-click="indexPage = indexPage+1" ng-disabled="indexPage>(indices.length/6)-1">Next</button>
         </div>
@@ -13,10 +13,28 @@
         <div class="box-tools pull-right btn-group hidden-md hidden-xs hidden-lg ">
           <button class="btn btn-default" ng-click="indexPage = indexPage-1" ng-disabled="indexPage==0">Prev</button>
           <button class="btn btn-default" ng-click="indexPage = indexPage+1" ng-disabled="indexPage>(indices.length/3)-1">Next</button>
+        </div> -->
+
+      </div>
+
+      <div class="box-body" ng-init="getIndices()">
+        <div ng-repeat="index in indices" ng-if=" index.index_name === 'HBA' || index.index_provider === 'GC'" class="col-sm-6 col-xs-12 description-block border-right">
+          <p>{{ index.index_provider }} {{ index.index_name }}</p>
+          <h1>$ {{ index.price }}</h1>
+          <small class="text-muted">last updated: {{ index.date | date }}</small>
+          <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" chart-series="series" style="min-height:20px;">
+          </canvas>
+          <div class="row">
+            <button class="btn btn-default">Prev</button>
+            <p>   {{ index.date | date: 'yyyy' }}   </p>
+            <button class="btn btn-default">Next</button>
+          </div>
         </div>
       </div>
 
-      <div class="btn-group  pull-right hidden-md hidden-sm hidden-lg">
+      
+
+      <!-- <div class="btn-group  pull-right hidden-md hidden-sm hidden-lg">
           <button class="col-sm-6 btn btn-default" ng-click="indexPage = indexPage-1" ng-disabled="indexPage==0">Prev</button>
           <button class="col-sm-6 btn btn-default" ng-click="indexPage = indexPage+1" ng-disabled="indexPage>(indices.length/1)-1">Next</button>
       </div>
@@ -45,7 +63,8 @@
           <h1>$ {{ index.price | number:2 }}</h1>
           <small class="text-muted">last updated: {{ index.date | date }}</small>
         </div>
-      </div>
+      </div> -->
+
     </div>
   </div>
 
