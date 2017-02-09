@@ -9,7 +9,7 @@
     <select name="country" id="country" class="form-control"
       ng-model="lead.country">
       <option value="">-- Select Country --</option>
-      <option value="country.code" ng-repeat="country in countries | orderBy:'name'">{{ country.name }}</option>
+      <option ng-value="country.name" ng-repeat="country in countries | orderBy:'name'">{{ country.name }}</option>
     </select>
   </div></div>
 
