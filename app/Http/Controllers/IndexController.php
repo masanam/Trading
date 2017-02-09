@@ -260,7 +260,7 @@ class IndexController extends Controller
    */
   public function singleDate(Request $req){
     $query = DB::table('index_price AS ip1')
-      ->select('index.id', 'index_provider', 'index_name', 'frequency', 'ip1.date', 'ip1.price')
+      ->select('index.id', 'index_provider', 'index_name', 'frequency', 'ip1.updated_at', 'ip1.date', 'ip1.price')
       ->join('index', 'ip1.index_id', '=', 'index.id')
       ->orderBy('index.id');
 

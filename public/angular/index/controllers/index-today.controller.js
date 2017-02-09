@@ -39,9 +39,9 @@ angular.module('index').controller('IndexTodayController', ['$scope', '$state', 
         for(x = 0; x<res.length; x++){
           $scope.lastprices.value[res[x].id] = parseFloat(res[x].price);                    
           $scope.lastprices.frequency[res[x].id] = res[x].frequency;
-          $scope.lastprices.date[res[x].id] = res[x].date;
+          $scope.lastprices.date[res[x].id] = res[x].updated_at;
         } 
-        console.log($scope.lastprices);
+        console.log(res);
         $scope.successDate = res.date;
       });
     };    
