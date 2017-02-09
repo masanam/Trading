@@ -16,6 +16,7 @@ use App\Model\OrderApprovalLog;
 use App\Model\OrderApprovalScheme;
 use App\Model\OrderApprovalSchemeSequence;
 use App\Model\Contract;
+use App\Model\Role;
 
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Auth;
