@@ -40,16 +40,16 @@ class UsersTableSeeder extends Seeder
             // [ 'name' => 'Hilla', 'email' => 'hilla.sholihah@sinarmasmining.com', 'title' => 'MDP', 'image' => './images/default.png', 'phone'=> '1234567890', 'role'=>'user', 'manager_id'=>7],
             // [ 'name' => 'Fahmi Andrian', 'email' => 'fahmi.andrian@sinarmasmining.com', 'title' => 'MDP', 'image' => './images/default.png', 'phone'=> '1234567890', 'role'=>'user', 'manager_id'=>12],
 
-            [ 'name' => 'Prasetyo Nugraha Gema', 'email' => 'pras@volantech.io', 'title' => 'Admin', 'image' => './images/default.png', 'phone'=> '1234567890', 'role'=>'admin', 'employee_no'=>'EMP-123', 'manager_id'=>null],
-            [ 'name' => 'Martin', 'email' => 'martin@volantech.io', 'title' => 'Admin', 'image' => './images/default.png', 'phone'=> '1234567890', 'role'=>'', 'employee_no'=>'EMP-123', 'manager_id'=>1],
-            [ 'name' => 'Aryo Pradipta Gema', 'email' => 'aryo@volantech.io', 'title' => 'Admin', 'image' => './images/default.png', 'phone'=> '1234567890', 'role'=>'', 'employee_no'=>'EMP-123', 'manager_id'=>1],
-            [ 'name' => 'Fahmi', 'email' => 'fahmi@volantech.io', 'title' => 'Admin', 'image' => './images/default.png', 'phone'=> '1234567890', 'role'=>'', 'employee_no'=>'EMP-123', 'manager_id'=>1],
-            [ 'name' => 'Giovanny Sientoro', 'email' => 'giovanny.sientoro@borneo-indobara.com', 'title' => 'Supervisor', 'image' => './images/default.png', 'phone'=> '1234567890', 'role'=>'', 'employee_no'=>'EMP-123', 'manager_id'=>2],
-            [ 'name' => 'Yudhi', 'email' => 'yudhi@berau.com', 'title' => 'Scheduler', 'image' => './images/default.png', 'phone'=> '1234567890', 'role'=>'scheduler', 'employee_no'=>'EMP-123', 'manager_id'=>3],
-            [ 'name' => 'Rori', 'email' => 'rori@berau.com', 'title' => 'Intel', 'image' => './images/default.png', 'phone'=> '1234567890', 'role'=>'intel', 'employee_no'=>'EMP-123', 'manager_id'=>4],
-            [ 'name' => 'Andez', 'email' => 'andez@volantech.io', 'title' => 'Supervisor', 'image' => './images/default.png', 'phone'=> '1234567890', 'role'=>'intel', 'employee_no'=>'EMP-123', 'manager_id'=>5],
-            [ 'name' => 'Kamal', 'email' => 'kamal@volantech.io', 'title' => 'Staff', 'image' => './images/default.png', 'phone'=> '1234567890', 'role'=>'intel', 'employee_no'=>'EMP-123', 'manager_id'=>6],
-            [ 'name' => 'Sakti', 'email' => 'hasapu@volantech.io', 'title' => 'Staff', 'image' => './images/default.png', 'phone'=> '1234567890', 'role'=>'intel', 'employee_no'=>'EMP-123', 'manager_id'=>7],
+            [ 'name' => 'Prasetyo Nugraha Gema', 'email' => 'pras@volantech.io', 'title' => 'Admin', 'image' => './images/default.png', 'phone'=> '1234567890', 'employee_no'=>'EMP-123', 'manager_id'=>null],
+            [ 'name' => 'Martin', 'email' => 'martin@volantech.io', 'title' => 'Admin', 'image' => './images/default.png', 'phone'=> '1234567890', 'employee_no'=>'EMP-123', 'manager_id'=>1],
+            [ 'name' => 'Aryo Pradipta Gema', 'email' => 'aryo@volantech.io', 'title' => 'Admin', 'image' => './images/default.png', 'phone'=> '1234567890', 'employee_no'=>'EMP-123', 'manager_id'=>1],
+            [ 'name' => 'Fahmi', 'email' => 'fahmi@volantech.io', 'title' => 'Admin', 'image' => './images/default.png', 'phone'=> '1234567890', 'employee_no'=>'EMP-123', 'manager_id'=>1],
+            [ 'name' => 'Giovanny Sientoro', 'email' => 'giovanny.sientoro@borneo-indobara.com', 'title' => 'Supervisor', 'image' => './images/default.png', 'phone'=> '1234567890', 'employee_no'=>'EMP-123', 'manager_id'=>2],
+            [ 'name' => 'Yudhi', 'email' => 'yudhi@berau.com', 'title' => 'Scheduler', 'image' => './images/default.png', 'phone'=> '1234567890', 'employee_no'=>'EMP-123', 'manager_id'=>3],
+            [ 'name' => 'Rori', 'email' => 'rori@berau.com', 'title' => 'Intel', 'image' => './images/default.png', 'phone'=> '1234567890', 'employee_no'=>'EMP-123', 'manager_id'=>4],
+            [ 'name' => 'Andez', 'email' => 'andez@volantech.io', 'title' => 'Supervisor', 'image' => './images/default.png', 'phone'=> '1234567890', 'employee_no'=>'EMP-123', 'manager_id'=>5],
+            [ 'name' => 'Kamal', 'email' => 'kamal@volantech.io', 'title' => 'Staff', 'image' => './images/default.png', 'phone'=> '1234567890', 'employee_no'=>'EMP-123', 'manager_id'=>6],
+            [ 'name' => 'Sakti', 'email' => 'hasapu@volantech.io', 'title' => 'Staff', 'image' => './images/default.png', 'phone'=> '1234567890', 'employee_no'=>'EMP-123', 'manager_id'=>7],
 
         ];
 
