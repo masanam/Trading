@@ -247,7 +247,8 @@ class OrderController extends Controller
                                                    // this is only changed IF case is A. but overall logic is matching the count
 
     switch($curr_seq->approval_scheme){
-      case 'o' : // approval scheme 'OR', 1 guy ok and pass
+      case 'd' : 
+      case 'o' : // approval scheme 'OR' or 'DIRECT SUPERVISOR', 1 guy ok and pass
         foreach($order->approvals as $a) foreach($a->roles as $r) if($r->id == $curr_seq->role_id) $elevate = true;
         break;
 
@@ -269,9 +270,37 @@ class OrderController extends Controller
     if($elevate){
       if($next_seq){
         // if there's a next sequence, request for approval
-        $approver_role = Role::with('users')->find($next_seq->role_id);
+        $order->status = $next_seq->sequence;
+        $order->save();
 
-        foreach($approver_role->users as $approver) $this->requestApproval($order, $approver);
+        if($next_seq->approval_scheme === 'd'){
+          // if the next sequence is asking for a direct supervisor, typically you will simply add manager_id from user
+          // but before that, do a check whether user's direct supervisor is in the correct role.
+          // assume everyone approved if direct supervisor is not in that list
+          $found = false;
+          $supervisor = $user;
+
+          // get supervisor/manager with correct role
+          do {
+            $supervisor = User::with('roles')->find($user->manager_id);
+            foreach($supervisor->roles as $r) if($r->id == $next_seq->role_id) $found = true;
+          } while (!$found && $supervisor);
+
+          // IF FOUND, request the approval from that supervisor
+          if($found) $this->requestApproval($order, $supervisor);
+          else {
+            // however, if not found, add the sequence, redo the approval sequence check
+            $order->status = $next_seq->sequence + 1;
+            $order->save();
+
+            $this->sequenceApproval($order);
+          }
+        } else {
+          // else, request approval from ALL guys in that role
+          $approver_role = Role::with('users')->find($next_seq->role_id);
+
+          foreach($approver_role->users as $approver) $this->requestApproval($order, $approver);
+        }
       } else {
         // without next sequence, this is the last sequence of the scheme
         // which means, the order status will be rendered 'a' (approved) 
