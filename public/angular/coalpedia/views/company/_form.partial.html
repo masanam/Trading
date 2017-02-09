@@ -106,20 +106,48 @@
   <label for="web">Website:</label>
   <input name="web" type="text" class="form-control" id="web" ng-model="company.web">
 </div>
-
 <div class="form-group">
   <label for="headquarter_location">Address:</label>
-  <input name="address" type="text" class="form-control" id="address" ng-model="company.address">
+  <input name="address" type="text" class="form-control" id="address" ng-change="address()"  ng-model="company.address">
+  
 </div>
+
+<!-- hasapu 08-02-2017
+Penambahan fungsi maps untuk addres customer
+mulai
+ -->
+<div class="form-group">
+  <div class="input-group col-md-12 hidden" style="margin-bottom: 5px;">
+    <span class="input-group-addon" style="width: 100px;">Latitude</span>
+    <input type="number" min="-90" max="90" step="any" string-to-number class="form-control" id="Latitude" placeholder="Latitude" ng-model="company.latitude" required>
+    <span class="input-group-addon" style="width: 100px;">Longitude</span>
+    <input type="number" min="-180" max="180" step="any" string-to-number class="form-control" placeholder="Longitude" ng-model="company.longitude" required>
+  </div>
+</div>
+<div class="form-group">
+  <ng-map zoom="4" center="Indonesia" on-click="changePosition()" default-style="false" style="width:100%; height:300px;">
+    <marker draggable="true" on-dragend="changePosition()"  id="mark{{factory.id}}"
+      position="{{company.latitude}}, {{company.longitude}}"></marker>
+  </ng-map>
+</div>
+<!-- hasapu 08-02-2017
+Penambahan fungsi maps untuk addres customer
+selesai
+ -->
+
 
 <div class="form-group">
   <label for="city">City:</label>
   <input name="city" type="text" class="form-control" id="city" ng-model="company.city">
 </div>
 
-<div class="form-group">
+<div class="form-group" ng-init="findCountries()">
   <label for="country">Company origin (Country):</label>
-  <input name="country" type="text" class="form-control" id="country" ng-model="company.country" required>
+  <select name="country" id="country" class="form-control"
+    ng-model="company.country" required>
+    <option value="country.code" ng-repeat="country in countries | orderBy:'name'">{{ country.name }}</option>
+  </select>
+
 </div>
 
 <div class="form-group" ng-if="company.company_type === 'c'">

@@ -104,6 +104,7 @@ class ConcessionController extends Controller
                                   $q->where([['ports.port_name', 'LIKE' , '%'.$port_param.'%']]);
                                 });
         }
+        if($req['country']) $concession->where('country',$req['country']);
         //var_dump($concession->toSql());
         $concession = $concession->where('concessions.status', 'a')->get();
       }else {

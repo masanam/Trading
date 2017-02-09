@@ -1,7 +1,7 @@
 <section class="content" ng-controller="CoalpediaController">
       <!-- Small boxes (Stat box) -->
       <div class="row" ng-init="total()">
-  
+
 
         <div class="col-xs-3 col-lg-3 hidden-xs hidden-sm">
           <!-- small box -->
@@ -29,7 +29,7 @@
              <a ui-sref="company.list({ type:'supplier' })" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
 
-          <div class="small-box bg-teal">
+          <div class="small-box bg-teal" ng-if="deployment !== 'berau'">
             <div class="inner">
               <h4>{{ total.vendor }} Records</h4>
 
@@ -39,6 +39,18 @@
               <i class="fa fa-ship"></i>
             </div>
              <a ui-sref="company.list({ type:'vendor' })" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+
+          <div class="small-box bg-olive" ng-if="deployment === 'berau'">
+            <div class="inner"> 
+              <h4>{{ total.concession }} Records</h4>
+
+              <p>CONCESSION</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-gears"></i>
+            </div>
+             <a ui-sref="concession.list" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
           </div>
 
         </div>
@@ -52,7 +64,7 @@
               <h3 class="box-title">COALPEDIA</h3>
               <!-- tools box -->
               <div class="pull-right box-tools">
-                
+
               </div>
               <!-- /. tools -->
             </div>
@@ -75,7 +87,7 @@
                   <label class="btn btn-sm btn-default" ng-model="searchType" uib-btn-radio="'seller'" ng-if="showBuy==true">
                     Supplier
                   </label>
-                  <label class="btn btn-sm btn-default" ng-model="searchType" uib-btn-radio="'vendor'">
+                  <label class="btn btn-sm btn-default" ng-model="searchType" uib-btn-radio="'vendor'" ng-if="deployment !== 'berau'">
                     Vendors
                   </label>
                   <label class="btn btn-sm btn-default" ng-model="searchType" uib-btn-radio="'concession'">
@@ -90,7 +102,7 @@
                 <div class="input-group col-xs-12">
                   <input type="text" class="form-control" placeholder="example: Wilmar" ng-model="keyword">
                 </div>
-                
+
                 <div class="input-group">
                   <div class="input-group-btn">
                     <button type="button" class="btn btn-danger">Filter By</button>
@@ -107,8 +119,8 @@
               </form>
                <!--For mobile-->
             </div>
-    
-        </div>      
+
+        </div>
       </div>
 
       <div class="col-xs-3 col-lg-3 hidden-sm hidden-xs">
@@ -137,7 +149,7 @@
         </div>
 
         <div class="small-box bg-olive" ng-if="showBuy==true">
-          <div class="inner"> 
+          <div class="inner">
             <h4>{{ total.concession }} Records</h4>
 
             <p>CONCESSION</p>
@@ -149,6 +161,6 @@
         </div>
       </div>
     </div>
-    
-     
-</section>      
+
+
+</section>

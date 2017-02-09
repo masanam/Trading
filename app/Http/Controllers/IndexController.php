@@ -13,10 +13,10 @@ use Auth;
 
 class IndexController extends Controller
 {
-  public function __construct(Index $index) {
-    $this->middleware('jwt.auth');
-    $this->index = $index;
-  }
+  // public function __construct(Index $index) {
+  //   $this->middleware('jwt.auth');
+  //   $this->index = $index;
+  // }
 
   /**
    * Display a listing of the resource.
@@ -299,7 +299,7 @@ class IndexController extends Controller
 
     $result = $query->get();
     if($req->envelope) $result = [ 'indices' => $result ];
-    
+        
     return response()->json($result, 200);
   }
 
