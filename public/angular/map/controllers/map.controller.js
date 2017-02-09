@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('map').controller('MapController', ['$scope', '$http', '$stateParams', '$state', 'Map', 'Concession', 'Port', 'NgMap',
-  function($scope, $http, $stateParams, $state, Map, Concession, Port, NgMap) {
+angular.module('map').controller('MapController', ['$scope', '$http', '$stateParams', '$state', 'Map', 'Concession', 'Port', 'NgMap', 'Country',
+  function($scope, $http, $stateParams, $state, Map, Concession, Port, NgMap, Country) {
     //$scope.filters = [{ field:'gcv_arb', operand: '>=', number: 5000 }];
     $scope.filters = [];
     $scope.search = {};
@@ -9,6 +9,8 @@ angular.module('map').controller('MapController', ['$scope', '$http', '$statePar
     $scope.concessions = [];
     $scope.ports = [];
     $scope.product = undefined;
+    $scope.countries = Country.query();
+    $scope.country = 'Indonesia';
     
     $scope.customIcon = {
       scaledSize: [32, 32],
@@ -17,7 +19,6 @@ angular.module('map').controller('MapController', ['$scope', '$http', '$statePar
     
     NgMap.getMap().then(function(map) {
       $scope.map = map;
-      console.log($scope.map);
     });
 
     $scope.find = function() {
@@ -80,10 +81,15 @@ angular.module('map').controller('MapController', ['$scope', '$http', '$statePar
       }
       
       params.action = 'filter';
-      console.log(params);
+      params.country = $scope.country;
+      // console.log(params);
       
-      $scope.concessions = Concession.query(params);
-      console.log($scope.concessions);
+      Concession.query(params, function(res){
+        for (var i = res.length - 1; i >= 0; i--) {
+          res[i].polygon = angular.fromJson(res[i].polygon);
+        }
+        $scope.concessions = res;
+      });
     };
     
     $scope.addFilter = function(){
@@ -100,9 +106,10 @@ angular.module('map').controller('MapController', ['$scope', '$http', '$statePar
       $scope.find();
     };
 
-    $scope.showDetail = function(event, concession) {
-      $scope.concession = Concession.get({ id: concession.id }, function(concession) {
-        $scope.concession = concession;
+    $scope.showDetail = function(event, concession_id) {
+      $scope.concession = Concession.get({ id: concession_id }, function(res) {
+        res.polygon = angular.fromJson(res.polygon);
+        $scope.concession = res;
         $scope.map.showInfoWindow('info-window', event.latLng);
         
         $scope.product = undefined;

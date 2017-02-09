@@ -38,6 +38,14 @@
           <h3>Filters</h3>
         </div>
       </div>
+      <div class="row">
+        <div class="col-lg-12" style="padding:15px">
+          <select class="form-control" ng-model="country" ng-change="find()">
+            <option value="">-- Select Country --</option>
+            <option ng-value="country.name" ng-repeat="country in countries">{{ country.name }}</option>
+          </select>
+        </div>
+      </div>
       <div class="row" ng-repeat="filter in filters">
         <div class="col-lg-12">
           <div class="filter-container">
@@ -109,9 +117,9 @@
               <marker icon="{
                   url: '/images/dig.png'
                 }" ng-if="pos.polygon === ''" position="{{pos.latitude}}, {{pos.longitude}}" id="mark{{pos.id}}" on-click="showDetail({{pos}})"></marker>
-              <shape name="polygon" ng-if="pos.polygon !== ''" on-click="showDetail({{pos}})"
+              <shape name="polygon" ng-if="pos.polygon" on-click="showDetail({{pos.id}})"
                  id="mark{{pos.id}}"
-                 paths="{{pos.polygon}}"
+                 paths="{{pos.polygon.coordinates[0]}}"
                  stroke-color="#FF0000"
                  stroke-opacity="0.8"
                  stroke-weight="2"
