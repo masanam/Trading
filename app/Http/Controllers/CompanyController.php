@@ -28,7 +28,7 @@ class CompanyController extends Controller
   */
   public function index(Request $req)
   {
-    $companies = Company::with('user', 'area')->where('status', 'a');
+    $companies = Company::with('user', 'area', 'ports', 'factories')->where('status', 'a');
 
     if($req->q) $companies->where('company_name', 'LIKE', '%'.$req->q.'%');
     if($req->type) {
@@ -38,6 +38,10 @@ class CompanyController extends Controller
       else $companies->where('company_type', $req->type[0]);
     }
     if($req->area_id) $companies->where('area_id','=',$req->area_id);
+
+//hasapu add 09-02-2017
+    if($req->company_type) $companies->where('company_type','=',$req->company_type);
+//hasapu add end
 
     $companies = $companies->get();
     return response()->json($companies, 200);

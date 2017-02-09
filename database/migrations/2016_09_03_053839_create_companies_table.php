@@ -29,6 +29,8 @@ class CreateCompaniesTable extends Migration
             $table->string('address')->nullable();
             $table->string('city')->nullable();
             $table->string('country')->nullable();
+            $table->decimal('latitude', 10, 8)->nullable();
+            $table->decimal('longitude', 11, 8)->nullable();
             $table->string('industry')->nullable(); //cement, powerplant, pulp paper, general
             $table->integer('annual_demand')->nullable();
             $table->integer('annual_sales')->nullable();

@@ -20,6 +20,8 @@ class Company extends Model
     'address',
     'city',
     'country',
+    'latitude',
+    'longitude',
     'industry',
     'annual_demand',
     'annual_sales',

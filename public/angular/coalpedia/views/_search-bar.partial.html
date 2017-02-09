@@ -21,7 +21,7 @@
           uib-btn-radio="'vendor'" ng-click="search('vendor')">
           Vendors
         </label>
-        <label class="btn btn-sm btn-default" ng-model="searchType"
+        <label ng-if="showBuy==true" class="btn btn-sm btn-default" ng-model="searchType"
           uib-btn-radio="'concession'" ng-click="search('concession')">
           Concessions
         </label>
@@ -33,7 +33,7 @@
       <div class="input-group col-xs-12">
         <input type="text" class="form-control" placeholder="example: Wilmar" ng-model="keyword">
       </div>
-                
+
       <div class="input-group">
         <div class="input-group-btn">
            <button type="button" class="btn btn-danger">Filter By</button>
