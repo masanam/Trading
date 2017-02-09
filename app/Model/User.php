@@ -83,20 +83,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
       return $this->hasMany(Document::class);
     }
 
-    public function actings() { // who you're act for
-        return $this->belongsToMany(User::class, 'acting_users', 'user_id', 'acting_as')
-            ->where('acting_users.status', 'a')
-            ->whereRaw('\'' . date('Y-m-d') . '\' BETWEEN date_start AND date_end')
-            ->withPivot('role', 'date_start', 'date_end', 'status');
-    }
-
-    public function interims() { // who acted for you
-        return $this->belongsToMany(User::class, 'acting_users', 'acting_as', 'user_id')
-            ->where('acting_users.status', 'a')
-            ->whereRaw('\'' . date('Y-m-d') . '\' BETWEEN date_start AND date_end')
-            ->withPivot('role', 'date_start', 'date_end', 'status');
-    }
-
     public function directSubordinates() {
         return  $this->hasMany('App\Model\User', 'manager_id');
     }
