@@ -268,9 +268,11 @@ class OrderController extends Controller
 
     // GET THE ORDER'S CURRENT APPROVAL SEQUENCE
     foreach($app_scheme->sequences as $s){
-      if(!$s->sequence || $s->sequence == $order->approval_sequence) $curr_seq = $s;
+      if($s->sequence == $order->approval_sequence) $curr_seq = $s;
       if($s->sequence == $order->approval_sequence+1) $next_seq = $s;
     }
+
+    if(!$s->sequence) $curr_seq = 0;
 
     // find out whether or not this order fulfills condition of current sequence
     // $curr_seq is the current sequence of approval which has all the necessary rules
