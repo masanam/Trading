@@ -836,7 +836,7 @@ class LeadsTableSeeder extends Seeder
       'companies' => [ 1 => [ 'cost' => 3 ] ]
      ],
      [
-      'order' => [ 'id' => 2, 'user_id' => 3, 'index_id' => 3, 'status' => 'a', 'approval_sequence' => 2, 'in_house' => true ],
+      'order' => [ 'id' => 2, 'user_id' => 9, 'index_id' => 3, 'status' => 'a', 'approval_sequence' => 2, 'in_house' => true ],
       'leads' => [
           3 => [ 'volume' => 1000, 'price' => 51, 'trading_term' => 'FOB MV', 'payment_term' => 'TT', 'base_currency_id' => 'IDR', 'base_price' => 50000, 'deal_currency_id' => 'USD', 'deal_price' => 50, 'exchange_rate' => 10000  ]
       ],
@@ -845,7 +845,7 @@ class LeadsTableSeeder extends Seeder
       'companies' => [ 1 => [ 'cost' => 3 ] ]
      ],
      [
-      'order' => [ 'id' => 3, 'user_id' => 2, 'index_id' => 2, 'status' => 'f', 'approval_sequence' => 3, 'in_house' => false ],
+      'order' => [ 'id' => 3, 'user_id' => 10, 'index_id' => 2, 'status' => 'f', 'approval_sequence' => 3, 'in_house' => false ],
       'leads' => [
           4 => [ 'volume' => 2000, 'price' => 35, 'trading_term' => 'FOB MV', 'payment_term' => 'TT', 'base_currency_id' => 'IDR', 'base_price' => 50000, 'deal_currency_id' => 'USD', 'deal_price' => 50, 'exchange_rate' => 10000  ],
           7 => [ 'volume' => 1600, 'price' => 55, 'trading_term' => 'FOB MV', 'payment_term' => 'TT', 'base_currency_id' => 'IDR', 'base_price' => 50000, 'deal_currency_id' => 'USD', 'deal_price' => 50, 'exchange_rate' => 10000  ]
@@ -855,7 +855,7 @@ class LeadsTableSeeder extends Seeder
       'companies' => [ 1 => [ 'cost' => 3 ] ]
      ],
      [
-      'order' => [ 'id' => 4, 'user_id' => 3, 'index_id' => 3, 'status' => 'd', 'approval_sequence' => 1, 'in_house' => false ],
+      'order' => [ 'id' => 4, 'user_id' => 9, 'index_id' => 3, 'status' => 'd', 'approval_sequence' => 1, 'in_house' => false ],
       'leads' => [
           3 => [ 'volume' => 1300, 'price' => 45, 'trading_term' => 'FOB MV', 'payment_term' => 'TT', 'base_currency_id' => 'IDR', 'base_price' => 50000, 'deal_currency_id' => 'USD', 'deal_price' => 50, 'exchange_rate' => 10000  ],
           6 => [ 'volume' => 1800, 'price' => 55, 'trading_term' => 'FOB MV', 'payment_term' => 'TT', 'base_currency_id' => 'IDR', 'base_price' => 50000, 'deal_currency_id' => 'USD', 'deal_price' => 50, 'exchange_rate' => 10000  ]

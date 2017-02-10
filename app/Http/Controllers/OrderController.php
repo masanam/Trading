@@ -174,7 +174,7 @@ class OrderController extends Controller
     }
   }
 
-  private function mailApproval (&$order) {
+  private function mailApproval (&$order, $approval_properties, $user) {
     // get the earliest laycan and latest one
     $order->earliestLaycan();
     $order->latestLaycan();
@@ -186,7 +186,7 @@ class OrderController extends Controller
     // get latest GC NEWC price
     $index = $this->indexPrice();
 
-    $mail = new requestApproval($this, $approval_properties['approval_token'], $index->price);
+    $mail = new ApprovalRequest($order, $approval_properties['approval_token'], $index[0]->price);
     Mail::to($user->email)->send($mail);
   }
 
@@ -213,7 +213,7 @@ class OrderController extends Controller
 
     $this->saveToFirebase($manager_notification, $user->id);
 
-    $this->mailApproval($order);
+    $this->mailApproval($order, $approval_properties, $user);
   }
 
   /* The function to send the notification to firebase
@@ -272,13 +272,14 @@ class OrderController extends Controller
       if($s->sequence == $order->approval_sequence+1) $next_seq = $s;
     }
 
-    if(!$s->sequence) $curr_seq = 0;
+    if(!$order->approval_sequence) $curr_seq = $app_scheme->sequences[0];
 
     // find out whether or not this order fulfills condition of current sequence
     // $curr_seq is the current sequence of approval which has all the necessary rules
     $elevate = false;
     $count_approvers = $curr_seq->approval_scheme; // by default, number of approver is defined by approval_scheme attribute
                                                    // this is only changed IF case is A. but overall logic is matching the count
+    $count_actual = 0;
 
     switch($curr_seq->approval_scheme){
       case 'd' :
@@ -290,21 +291,20 @@ class OrderController extends Controller
         $approver_role = Role::with('users')->find($curr_seq->role_id);
         $count_approvers = count($approvers->users);
       default : // if it is a number
-        $count_actual = 0;
         foreach($order->approvals as $a) foreach($a->roles as $r) if($r->id == $curr_seq->role_id) $count_actual++;
         break;
     }
 
     // find out whether or not this order require next sequence of approval
     // if true, elevate the sequence
-    if($count_actual < $count_approvers) $elevate = true;
+    if($count_actual > $count_approvers) $elevate = true;
 
     // send approval to each users. add the database & send the email
     // do nothing if no elevation needed
-    if($elevate){
+    if($elevate || !$order->approval_sequence){
       if($next_seq){
         // if there's a next sequence, request for approval
-        $order->status = $next_seq->sequence;
+        $order->approval_sequence = $next_seq->sequence;
         $order->save();
 
         if($next_seq->approval_scheme === 'd'){
@@ -312,12 +312,20 @@ class OrderController extends Controller
           // but before that, do a check whether user's direct supervisor is in the correct role.
           // assume everyone approved if direct supervisor is not in that list
           $found = false;
-          $supervisor = $user;
+          $supervisor = Auth::user();
 
           // get supervisor/manager with correct role
           do {
-            $supervisor = User::with('roles')->find($user->manager_id);
-            foreach($supervisor->roles as $r) if($r->id == $next_seq->role_id) $found = true;
+            $supervisor = User::with('roles')->find(Auth::user()->manager_id);
+
+            if($supervisor == null) break;
+            else{
+              foreach($supervisor->roles as $r){
+                if($r->id == $next_seq->role_id){
+                  $found = true; break;
+                }
+              }
+            }
           } while (!$found && $supervisor);
 
           // IF FOUND, request the approval from that supervisor
