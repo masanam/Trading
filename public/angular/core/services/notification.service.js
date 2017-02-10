@@ -69,30 +69,30 @@ angular.module('notification').factory('Notification', ['Authentication', 'Fireb
           mainApp.database().ref('notification/' + order.user_id).push(user_notification);
         }
         if(action === 'new_order') {
-          manager_notification = {
-            'url': 'order/' + order.id,
-            'notification': 'ORD #' + ('10000'+order.id).slice(-4) + ' is waiting for your approval',
-            'created_at': Date.now(),
-            'isRead': false
-          };
-
-          leads_notification = {
-            'url': 'order/' + order.id,
-            'notification': 'ORD #' + ('10000'+order.id).slice(-4) + ' used your leads',
-            'created_at': Date.now(),
-            'isRead': false
-          };
-
-          manager_leads_notification = {
-            'url': 'order/' + order.id,
-            'notification': 'ORD #' + ('10000'+order.id).slice(-4) + ' used your leads',
-            'created_at': Date.now(),
-            'isRead': false
-          };
-
-          mainApp.database().ref('notification/' + Authentication.user.managerId).push(manager_notification);
-          mainApp.database().ref('notification/' + leadsUserId).push(leads_notification);
-          mainApp.database().ref('notification/' + managerLeadsUserId).push(manager_leads_notification);
+          // manager_notification = {
+          //   'url': 'order/' + order.id,
+          //   'notification': 'ORD #' + ('10000'+order.id).slice(-4) + ' is waiting for your approval',
+          //   'created_at': Date.now(),
+          //   'isRead': false
+          // };
+          //
+          // leads_notification = {
+          //   'url': 'order/' + order.id,
+          //   'notification': 'ORD #' + ('10000'+order.id).slice(-4) + ' used your leads',
+          //   'created_at': Date.now(),
+          //   'isRead': false
+          // };
+          //
+          // manager_leads_notification = {
+          //   'url': 'order/' + order.id,
+          //   'notification': 'ORD #' + ('10000'+order.id).slice(-4) + ' used your leads',
+          //   'created_at': Date.now(),
+          //   'isRead': false
+          // };
+          //
+          // mainApp.database().ref('notification/' + Authentication.user.managerId).push(manager_notification);
+          // mainApp.database().ref('notification/' + leadsUserId).push(leads_notification);
+          // mainApp.database().ref('notification/' + managerLeadsUserId).push(manager_leads_notification);
         }
         if(action === 'cancel_order') {
           manager_notification = {
