@@ -141,6 +141,7 @@ angular.module('map').controller('MapController', ['$scope','$http', '$statePara
       });
     };
 
+
     $scope.showPortDetail = function(event, port) {
       $scope.connectedConcessions = Port.get({ id: port.id });
       $scope.port = Port.get({ id: port.id }, function(port) {

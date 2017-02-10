@@ -11,8 +11,10 @@ class CreateCompaniesTable extends Migration
      */
     public function up()
     {
+        //areas
         Schema::create('areas', function (Blueprint $table){
             $table->increments('id');
+            $table->string('area_name')->nullable();
             $table->string('description')->nullable();
             $table->string('status')->nullable();
         });

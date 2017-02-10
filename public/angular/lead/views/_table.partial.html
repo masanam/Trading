@@ -2,7 +2,7 @@
   <table st-table="displayedCollection" st-safe-src="leads" class="table table-striped">
     <thead>
       <tr>
-        <th colspan="11" style="padding: 20px;"><input st-search="" class="form-control" placeholder="Search ..." type="text"/></th>
+        <th colspan="11" style="padding: 20px;"> <input type="text" ng-model="search" ng-keyup="find(status, search)" placeholder="search" class="input-sm form-control" /></th>
       </tr>
       <tr>
         <th st-sort="id">#</th>

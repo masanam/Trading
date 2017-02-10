@@ -13,16 +13,41 @@ class IndexTableSeeder extends Seeder
    */
   public function run()
   {
-    Index::create(['id'=>1, 'index_provider' => 'PLATTS', 'index_name' => 'GAR 5000', 'quality' => 'GAR 5000', 'frequency'=>'w']);
-		Index::create(['id'=>2, 'index_provider' => 'PLATTS', 'index_name' => 'GAR 4200', 'quality' => 'GAR 4200', 'frequency'=>'w']);
-		Index::create(['id'=>3, 'index_provider' => 'ARGUS', 'index_name' => 'ICI-1', 'quality' => 'GAR 6500', 'frequency'=>'d']);
-		Index::create(['id'=>4, 'index_provider' => 'ARGUS', 'index_name' => 'ICI-2', 'quality' => 'GAR 5800', 'frequency'=>'d']);
-		Index::create(['id'=>5, 'index_provider' => 'ARGUS', 'index_name' => 'ICI-3', 'quality' => 'GAR 5000', 'frequency'=>'d']);
-		Index::create(['id'=>6, 'index_provider' => 'ARGUS', 'index_name' => 'ICI-4', 'quality' => 'GAR 4200', 'frequency'=>'d']);
-		Index::create(['id'=>7, 'index_provider' => 'ARGUS', 'index_name' => 'ICI-5', 'quality' => 'GAR 3400', 'frequency'=>'d']);
-		Index::create(['id'=>8, 'index_provider' => 'HPB', 'index_name' => 'HBA', 'quality' => 'GAR 6322', 'frequency'=>'m']);
-		Index::create(['id'=>9, 'index_provider' => 'HPB', 'index_name' => 'ECO', 'quality' => 'EcoCoal', 'frequency'=>'m']);
-		Index::create(['id'=>10, 'index_provider' => 'GC', 'index_name' => 'NEWC', 'quality' => 'NAR 55', 'frequency'=>'w']);
+  //   Index::create(['id'=>1, 'index_provider' => 'PLATTS', 'index_name' => 'GAR 5000', 'quality' => 'GAR 5000', 'frequency'=>'w']);
+		// Index::create(['id'=>2, 'index_provider' => 'PLATTS', 'index_name' => 'GAR 4200', 'quality' => 'GAR 4200', 'frequency'=>'w']);
+		// Index::create(['id'=>3, 'index_provider' => 'ARGUS', 'index_name' => 'ICI-1', 'quality' => 'GAR 6500', 'frequency'=>'d']);
+		// Index::create(['id'=>4, 'index_provider' => 'ARGUS', 'index_name' => 'ICI-2', 'quality' => 'GAR 5800', 'frequency'=>'d']);
+		// Index::create(['id'=>5, 'index_provider' => 'ARGUS', 'index_name' => 'ICI-3', 'quality' => 'GAR 5000', 'frequency'=>'d']);
+		// Index::create(['id'=>6, 'index_provider' => 'ARGUS', 'index_name' => 'ICI-4', 'quality' => 'GAR 4200', 'frequency'=>'d']);
+		// Index::create(['id'=>7, 'index_provider' => 'ARGUS', 'index_name' => 'ICI-5', 'quality' => 'GAR 3400', 'frequency'=>'d']);
+		// Index::create(['id'=>8, 'index_provider' => 'HPB', 'index_name' => 'HBA', 'quality' => 'GAR 6322', 'frequency'=>'m']);
+		// Index::create(['id'=>9, 'index_provider' => 'HPB', 'index_name' => 'ECO', 'quality' => 'EcoCoal', 'frequency'=>'m']);
+		// Index::create(['id'=>10, 'index_provider' => 'GC', 'index_name' => 'NEWC', 'quality' => 'NAR 55', 'frequency'=>'w']);
+		Index::create(['id'=>1, 'index_provider' => 'HPB', 'index_name' => 'Ebony High Sulfur', 'quality' => 'Ebony High Sulfur', 'frequency'=>'d']);
+		Index::create(['id'=>2, 'index_provider' => 'HPB', 'index_name' => 'Mahoni', 'quality' => 'Mahoni', 'frequency'=>'d']);
+		Index::create(['id'=>3, 'index_provider' => 'HPB', 'index_name' => 'Mahoni B', 'quality' => 'Mahoni B', 'frequency'=>'d']);
+		Index::create(['id'=>4, 'index_provider' => 'HPB', 'index_name' => 'Agathis', 'quality' => 'Agathis', 'frequency'=>'d']);
+		Index::create(['id'=>5, 'index_provider' => 'HPB', 'index_name' => 'Sungkai', 'quality' => 'Sungkai', 'frequency'=>'d']);
+		Index::create(['id'=>6, 'index_provider' => 'HPB', 'index_name' => 'Sungkai MS', 'quality' => 'Sungkai MS', 'frequency'=>'d']);
+		Index::create(['id'=>7, 'index_provider' => 'HPB', 'index_name' => 'Sungkai HS', 'quality' => 'Sungkai HS', 'frequency'=>'d']);
+		Index::create(['id'=>8, 'index_provider' => 'HPB', 'index_name' => 'Sungkai LS', 'quality' => 'Sungkai LS', 'frequency'=>'d']);
+		Index::create(['id'=>9, 'index_provider' => 'HPB', 'index_name' => 'Ebony High Sulfur', 'quality' => 'Ebony High Sulfur', 'frequency'=>'w']);
+		Index::create(['id'=>10, 'index_provider' => 'HPB', 'index_name' => 'Mahoni', 'quality' => 'Mahoni', 'frequency'=>'w']);
+		Index::create(['id'=>11, 'index_provider' => 'HPB', 'index_name' => 'Mahoni B', 'quality' => 'Mahoni B', 'frequency'=>'w']);
+		Index::create(['id'=>12, 'index_provider' => 'HPB', 'index_name' => 'Agathis', 'quality' => 'Agathis', 'frequency'=>'w']);
+		Index::create(['id'=>13, 'index_provider' => 'HPB', 'index_name' => 'Sungkai', 'quality' => 'Sungkai', 'frequency'=>'w']);
+		Index::create(['id'=>14, 'index_provider' => 'HPB', 'index_name' => 'Sungkai MS', 'quality' => 'Sungkai MS', 'frequency'=>'w']);
+		Index::create(['id'=>15, 'index_provider' => 'HPB', 'index_name' => 'Sungkai HS', 'quality' => 'Sungkai HS', 'frequency'=>'w']);
+		Index::create(['id'=>16, 'index_provider' => 'HPB', 'index_name' => 'Sungkai LS', 'quality' => 'Sungkai LS', 'frequency'=>'w']);
+		Index::create(['id'=>17, 'index_provider' => 'HPB', 'index_name' => 'Ebony High Sulfur', 'quality' => 'Ebony High Sulfur', 'frequency'=>'m']);
+		Index::create(['id'=>18, 'index_provider' => 'HPB', 'index_name' => 'Mahoni', 'quality' => 'Mahoni', 'frequency'=>'m']);
+		Index::create(['id'=>19, 'index_provider' => 'HPB', 'index_name' => 'Mahoni B', 'quality' => 'Mahoni B', 'frequency'=>'m']);
+		Index::create(['id'=>20, 'index_provider' => 'HPB', 'index_name' => 'Agathis', 'quality' => 'Agathis', 'frequency'=>'m']);
+		Index::create(['id'=>21, 'index_provider' => 'HPB', 'index_name' => 'Sungkai', 'quality' => 'Sungkai', 'frequency'=>'m']);
+		Index::create(['id'=>22, 'index_provider' => 'HPB', 'index_name' => 'Sungkai MS', 'quality' => 'Sungkai MS', 'frequency'=>'m']);
+		Index::create(['id'=>23, 'index_provider' => 'HPB', 'index_name' => 'Sungkai HS', 'quality' => 'Sungkai HS', 'frequency'=>'m']);
+		Index::create(['id'=>24, 'index_provider' => 'HPB', 'index_name' => 'Sungkai LS', 'quality' => 'Sungkai LS', 'frequency'=>'m']);
+
 
 		IndexPrice::create(['index_id'=>1, 'date' => '2016-01-04', 'day_of_year' => 4, 'day_of_month' => 4, 'day_of_week' => 1, 'week' => 2, 'month' => 1, 'year' => 2016, 'price' => 37.5]);
 		IndexPrice::create(['index_id'=>1, 'date' => '2016-01-05', 'day_of_year' => 5, 'day_of_month' => 5, 'day_of_week' => 2, 'week' => 2, 'month' => 1, 'year' => 2016, 'price' => 37.5]);

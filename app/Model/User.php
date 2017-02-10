@@ -14,6 +14,8 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 {
     use Authenticatable, CanResetPassword, Notifiable;
 
+    protected $appends = ['privilege', 'role'];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -34,23 +36,26 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
     protected $table = 'users';
 
-    /*public function getCreatedAtAttribute($value)
-    {
-        return date('d-m-Y', strtotime($value));
+    public function roles(){
+        return $this->belongsToMany(Role::class, 'user_role', 'user_id', 'role_id');
     }
-
-    public function getUpdatedAtAttribute($value)
-    {
-        return date('d-m-Y', strtotime($value));
-    }*/
 
     public function getRoleAttribute($value) {
         $value = [];
-        // dd($this->roles()->get());
         foreach($this->roles()->get() as $r) {
             $value[] = $r->role;
         }
         return $value;
+    }
+
+    public function getPrivilegeAttribute($value) {
+        $value = [];
+        foreach($this->roles()->get() as $r) {
+            foreach($r->privileges()->get() as $p){
+                $value[] = $p->menu;    
+            }
+        }
+        return array_unique($value);
     }
 
     public function contacts() {
@@ -76,20 +81,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     //For Documents - By Myrtyl - 06/02/2017
     public function documents(){
       return $this->hasMany(Document::class);
-    }
-
-    public function actings() { // who you're act for
-        return $this->belongsToMany(User::class, 'acting_users', 'user_id', 'acting_as')
-            ->where('acting_users.status', 'a')
-            ->whereRaw('\'' . date('Y-m-d') . '\' BETWEEN date_start AND date_end')
-            ->withPivot('role', 'date_start', 'date_end', 'status');
-    }
-
-    public function interims() { // who acted for you
-        return $this->belongsToMany(User::class, 'acting_users', 'acting_as', 'user_id')
-            ->where('acting_users.status', 'a')
-            ->whereRaw('\'' . date('Y-m-d') . '\' BETWEEN date_start AND date_end')
-            ->withPivot('role', 'date_start', 'date_end', 'status');
     }
 
     public function directSubordinates() {
@@ -127,10 +118,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             $sups = $sups->merge($upper);
         }
         return $sups;
-    }
-
-    public function roles(){
-        return $this->belongsToMany(Role::class, 'user_role', 'user_id', 'role_id');
     }
 
     public function isAdmin() {

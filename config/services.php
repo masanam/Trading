@@ -43,6 +43,15 @@ return [
         'database_url' => 'https://coal-trade.firebaseio.com',
         'secret' => 'HDhmUXlH4E85A3PdxbfQGw0yCiqy0Bjvugbuqs8t',
         'storage_bucket' => 'coal-trade.appspot.com',
-    ]
+    ],
+
+    'firebase_dev' => [
+        'api_key' => 'AIzaSyASD5vZNA-DeS93cFU8oz40nycp1CIZ3bg',
+        'auth_domain' => 'coal-trade-dev.firebaseapp.com',
+        'database_url' => 'https://coal-trade-dev.firebaseio.com',
+        'secret' => 'f8wEJWpGWfTw9n3oOZdVjw95woQrnzPQR5csRR35',
+        'storage_bucket' => 'coal-trade-dev.appspot.com',
+        'messaging_sender_id' => '328150955221'
+    ],
 
 ];

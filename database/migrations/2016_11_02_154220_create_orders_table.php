@@ -21,6 +21,8 @@ class CreateOrdersTable extends Migration
             $table->string('cancel_reason')->nullable();
             $table->string('request_reason')->nullable();
             $table->string('finalize_reason')->nullable();
+            
+            $table->integer('approval_sequence')->unsigned()->default(0);
             $table->char('status', 1);
             $table->timestamps();
 
@@ -133,14 +135,14 @@ class CreateOrdersTable extends Migration
      */
     public function down()
     {
-        Schema::drop('order_additional_costs');
-        Schema::drop('order_negotiations');
-        Schema::drop('currency');
-        Schema::drop('order_details');
-        Schema::drop('exchange_rates');
-        Schema::drop('order_users');
-        Schema::drop('order_approvals');
-        Schema::drop('order_approval_logs');
-        Schema::drop('orders');
+        Schema::dropIfExists('order_additional_costs');
+        Schema::dropIfExists('order_negotiations');
+        Schema::dropIfExists('currency');
+        Schema::dropIfExists('order_details');
+        Schema::dropIfExists('exchange_rates');
+        Schema::dropIfExists('order_users');
+        Schema::dropIfExists('order_approvals');
+        Schema::dropIfExists('order_approval_logs');
+        Schema::dropIfExists('orders');
     }
 }

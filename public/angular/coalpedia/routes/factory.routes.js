@@ -13,12 +13,16 @@ angular.module('coalpedia').config(['$stateProvider',
       .state('factory.list', {
         url: '?keyword',
         templateUrl: '/angular/coalpedia/views/factory/list.view.html',
-        roles: ['user', 'trader', 'manager']
+        privileges: [
+          'coalpedia.view', 'coalpedia.edit',
+        ]
       })
       .state('factory.view', {
         url: '/:id',
         views: { '@': { templateUrl: '/angular/coalpedia/views/factory/view.view.html' } },
-        roles: ['user', 'trader', 'manager']
+        privileges: [
+          'coalpedia.view', 'coalpedia.edit',
+        ]
       });
   }
 ]);
