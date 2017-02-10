@@ -279,34 +279,39 @@ class OrderController extends Controller
     $elevate = false;
     $count_approvers = $curr_seq->approval_scheme; // by default, number of approver is defined by approval_scheme attribute
                                                    // this is only changed IF case is A. but overall logic is matching the count
-    $count_actual = 0;
+    $count_actual_approved = 0;
+    $count_requested_approvers = 0;
 
     switch($curr_seq->approval_scheme){
       case 'd' :
       case 'o' : // approval scheme 'OR' or 'DIRECT SUPERVISOR', 1 guy ok and pass
         foreach($order->approvals as $a)
-          if($a->pivot->approval_status == 'a')
             foreach($a->roles as $r)
-              if($r->id == $curr_seq->role_id) $elevate = true;
+              if($r->id == $curr_seq->role_id){
+                if($a->pivot->status == 'a') $elevate = true;
+                else $count_requested_approvers;
+              }
         break;
 
       case 'a' : // get all users with such role, and make sure count is correct
         $approver_role = Role::with('users')->find($curr_seq->role_id);
-        $count_approvers = count($approvers->users);
+        $count_approvers = count($approver_role->users);
       default : // if it is a number
         foreach($order->approvals as $a)
-          if($a->pivot->approval_status == 'a')
             foreach($a->roles as $r)
-              if($r->id == $curr_seq->role_id) $count_actual++;
+              if($r->id == $curr_seq->role_id){
+                if($a->pivot->status == 'a') $count_actual_approved++;
+                else $count_requested_approvers;
+              }
         break;
     }
 
     // find out whether or not this order require next sequence of approval
     // if true, elevate the sequence
-    if($count_actual > $count_approvers) $elevate = true;
+    if($count_actual_approved > $count_approvers) $elevate = true;
 
     // in case where approvals are nonexistent, add new ones
-    if(!count($order->approvals) && $order->approval_sequence){
+    if(!$count_requested_approvers && $order->approval_sequence){
       $elevate = true;
       $next_seq = $curr_seq;
     }
@@ -353,7 +358,8 @@ class OrderController extends Controller
           // else, request approval from ALL guys in that role
           $approver_role = Role::with('users')->find($next_seq->role_id);
 
-          foreach($approver_role->users as $approver) $this->requestApproval($order, $approver);
+          foreach($approver_role->users as $approver)
+            $this->requestApproval($order, $approver);
         }
       } else {
         // without next sequence, this is the last sequence of the scheme
