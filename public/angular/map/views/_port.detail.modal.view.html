@@ -1,0 +1,158 @@
+<h3>Port Name: {{port.port_name}}</h3>
+<hr/>
+<div class="nav-tabs-custom">
+  <uib-tabset active="active">
+    <uib-tab index="0" heading="Port Details">
+      <div id="port">
+        <div class="row">
+          <div class="col-lg-12">
+            &nbsp;
+            <div>
+              <section class="col-lg-12">
+              <div class="table-responsive">
+                <table>
+                  <tr>
+                    <td>Location  </td>
+                    <td>  : {{port.location || 'N/A'}}  </td>
+                  </tr>
+                  <tr>
+                    <td>Owner </td>
+                    <td>  : {{port.owner || 'N/A'}} </td>
+                  </tr>
+                  <tr>
+                    <td>Position  </td>
+                    <td>  : {{port.latitude || 'N/A'}}, {{port.longitude || 'N/A'}} </td>
+                  </tr>
+                  <tr>
+                    <td>River Capacity  </td>
+                    <td>  : {{port.river_capacity || 'N/A'}}  </td>
+                  </tr>
+                  <tr>
+                    <td>Anchorage Distance  </td>
+                    <td>  : {{port.anchorage_distance || 'N/A'}}  </td>
+                  </tr>
+                  <tr>
+                    <td>Has Conveyor  </td>
+                    <td>  : {{port.has_conveyor || 'N/A'}}  </td>
+                  </tr>
+                  <tr>
+                    <td>Has Crusher </td>
+                    <td>  : {{port.has_crusher || 'N/A'}} </td>
+                  </tr>
+                  <tr>
+                    <td>Has Blending  </td>
+                    <td>  : {{port.has_blending || 'N/A'}}  </td>
+                  </tr>
+                  <tr>
+                    <td>Draft Height  </td>
+                    <td>  : {{port.draft_height || 'N/A'}}  </td>
+                  </tr>
+                </table>
+                </div>
+              </section>
+            </div>
+          </div>
+          &nbsp;
+        </div>
+      </div>
+    </uib-tab>
+    <uib-tab index="1" heading="Product">
+      <div id="product">
+        &nbsp;
+        <div class="row">
+          <div class="col-lg-3">
+            <uib-tabset active="activePill" vertical="true" type="pills">
+              <uib-tab ng-repeat="(idx, prod) in concession.products" index="idx" ng-click="showProduct(prod)" heading="{{prod.product_name || 'Coal'}}"></uib-tab>
+            </uib-tabset>
+          </div>
+          <div class="col-lg-9">
+            <h3 ng-show="!product">Click the Product on the left to show product details</h3>
+              <div ng-show="product">
+                <div class="row">
+                  <div class="col-lg-4 col-sm-4">
+                    <h4>
+                      GCV ARB
+                    </h4>
+                    <h5>
+                     {{product.gcv_arb_min}} - {{product.gcv_arb_max}} kcal
+                    </h5>
+                  </div>
+                  <div class="col-lg-4">
+                    <h4>
+                      GCV ADB
+                    </h4>
+                    <h5>
+                     {{product.gcv_adb_min}} - {{product.gcv_adb_max}} kcal
+                    </h5>
+                  </div>
+                  <div class="col-lg-4">
+                    <h4>
+                      NCV
+                    </h4>
+                    <h5>
+                     {{product.ncv_min}} - {{product.ncv_max}} kcal
+                    </h5>
+                  </div>
+                </div>
+                <div class="row">
+                <div class="table-responsive">
+                  <table class="table table-striped">
+                    <tbody>
+                      <tr>
+                        <td>Ash</td>
+                        <td>{{product.ash_min}} - {{product.ash_max}} %</td>
+                        <td>Total Sulphur</td>
+                        <td>{{product.ts_min}} - {{product.ts_max}} %</td>
+                      </tr>
+                      <tr>
+                        <td>Total Moisture</td>
+                        <td>{{product.tm_min}} - {{product.tm_max}} %</td>
+                        <td>Inherent Moisture</td>
+                        <td>{{product.im_min}} - {{product.im_max}} %</td>
+                      </tr>
+                      <tr>
+                        <td>Fixed Carbon</td>
+                        <td>{{product.fc_min}} - {{product.fc_max}} %</td>
+                        <td>Volatile Matter</td>
+                        <td>{{product.vm_min}} - {{product.vm_max}} %</td>
+                      </tr>
+                      <tr>
+                        <td>Hardness</td>
+                        <td>{{product.hgi_min}} - {{product.hgi_max}}</td>
+                        <td>Size</td>
+                        <td>{{product.size_min}} - {{product.size_max}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </uib-tab>
+    <uib-tab index="2" heading="Factory">
+      <div id="factory" ng-repeat="factory in port.factories">
+        <div class="row">
+          <div class="col-lg-12">
+            &nbsp;
+            <div>
+              <section class="col-lg-12">
+              <div class="table-responsive">
+                <table>
+                  <tr>
+                    <td><span class="col-lg-6">{{ factory.factory_name }}</span> </td>
+                    <td><span class="col-lg-6"><button class="btn btn-info btn-sm" ng-show="factory.factory_name" ng-click="showFactoryDetails($event, factory)">Show</button></span><br/> </td>
+                  </tr>
+                  </div>
+                </table>
+                </div>
+              </section>
+            </div>
+          </div>
+          &nbsp;
+        </div>
+      </div>
+    </uib-tab>
+  </uib-tabset>
+</div>
