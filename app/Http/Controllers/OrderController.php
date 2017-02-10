@@ -284,14 +284,20 @@ class OrderController extends Controller
     switch($curr_seq->approval_scheme){
       case 'd' :
       case 'o' : // approval scheme 'OR' or 'DIRECT SUPERVISOR', 1 guy ok and pass
-        foreach($order->approvals as $a) foreach($a->roles as $r) if($r->id == $curr_seq->role_id) $elevate = true;
+        foreach($order->approvals as $a)
+          if($a->pivot->approval_status == 'a')
+            foreach($a->roles as $r)
+              if($r->id == $curr_seq->role_id) $elevate = true;
         break;
 
       case 'a' : // get all users with such role, and make sure count is correct
         $approver_role = Role::with('users')->find($curr_seq->role_id);
         $count_approvers = count($approvers->users);
       default : // if it is a number
-        foreach($order->approvals as $a) foreach($a->roles as $r) if($r->id == $curr_seq->role_id) $count_actual++;
+        foreach($order->approvals as $a)
+          if($a->pivot->approval_status == 'a')
+            foreach($a->roles as $r)
+              if($r->id == $curr_seq->role_id) $count_actual++;
         break;
     }
 

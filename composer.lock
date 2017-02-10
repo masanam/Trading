@@ -60,16 +60,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.22.0",
+            "version": "3.22.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "7ef8e6b785d7b522c478ce4e13630b2b93eea87b"
+                "reference": "db6711a3f82e8dc3486ae9b3a51ed3b4a58f939d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/7ef8e6b785d7b522c478ce4e13630b2b93eea87b",
-                "reference": "7ef8e6b785d7b522c478ce4e13630b2b93eea87b",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/db6711a3f82e8dc3486ae9b3a51ed3b4a58f939d",
+                "reference": "db6711a3f82e8dc3486ae9b3a51ed3b4a58f939d",
                 "shasum": ""
             },
             "require": {
@@ -136,7 +136,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2017-02-08 01:00:51"
+            "time": "2017-02-09 21:01:18"
         },
         {
             "name": "barryvdh/laravel-cors",
@@ -1408,16 +1408,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "1.0.34",
+            "version": "1.0.35",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "469ad53c13ea19a0e54e3e5d70f61227ddcc0299"
+                "reference": "dda7f3ab94158a002d9846a97dc18ebfb7acc062"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/469ad53c13ea19a0e54e3e5d70f61227ddcc0299",
-                "reference": "469ad53c13ea19a0e54e3e5d70f61227ddcc0299",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/dda7f3ab94158a002d9846a97dc18ebfb7acc062",
+                "reference": "dda7f3ab94158a002d9846a97dc18ebfb7acc062",
                 "shasum": ""
             },
             "require": {
@@ -1487,7 +1487,7 @@
                 "sftp",
                 "storage"
             ],
-            "time": "2017-01-30 17:41:17"
+            "time": "2017-02-09 11:33:58"
         },
         {
             "name": "league/flysystem-aws-s3-v3",
@@ -3587,67 +3587,6 @@
                 "fixtures"
             ],
             "time": "2016-04-29 12:21:54"
-        },
-        {
-            "name": "graham-campbell/throttle",
-            "version": "v5.3.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/GrahamCampbell/Laravel-Throttle.git",
-                "reference": "a6df8ca608304f8149275be392a43d070b20d0eb"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/GrahamCampbell/Laravel-Throttle/zipball/a6df8ca608304f8149275be392a43d070b20d0eb",
-                "reference": "a6df8ca608304f8149275be392a43d070b20d0eb",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/cache": "5.1.*|5.2.*|5.3.*|5.4.*",
-                "illuminate/contracts": "5.1.*|5.2.*|5.3.*|5.4.*",
-                "illuminate/http": "5.1.*|5.2.*|5.3.*|5.4.*",
-                "illuminate/support": "5.1.*|5.2.*|5.3.*|5.4.*",
-                "php": ">=5.5.9"
-            },
-            "require-dev": {
-                "graham-campbell/testbench": "^3.1",
-                "mockery/mockery": "^0.9.4",
-                "phpunit/phpunit": "^4.8|^5.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "5.3-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "GrahamCampbell\\Throttle\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Graham Campbell",
-                    "email": "graham@alt-three.com"
-                }
-            ],
-            "description": "Throttle Is A Rate Limiter For Laravel 5",
-            "keywords": [
-                "Graham Campbell",
-                "GrahamCampbell",
-                "Laravel Throttle",
-                "Laravel-Throttle",
-                "framework",
-                "laravel",
-                "rate limit",
-                "throttle",
-                "throttling"
-            ],
-            "time": "2017-01-01 13:34:57"
         },
         {
             "name": "hamcrest/hamcrest-php",
