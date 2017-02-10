@@ -6,8 +6,8 @@
 
 'use strict';
 
-angular.module('map').controller('MapController', ['$scope','$http', '$stateParams', '$state', 'google', 'Map', 'Concession', 'Port', 'NgMap','Environment','Company','Country','Factory',
-  function($scope,$http, $stateParams, $state, google, Map, Concession, Port, NgMap, Environment, Company, Country, Factory) {
+angular.module('map').controller('MapController', ['$scope','$http', '$stateParams', '$state', 'Map', 'Concession', 'Port', 'NgMap','Environment','Company','Country','Factory',
+  function($scope,$http, $stateParams, $state, Map, Concession, Port, NgMap, Environment, Company, Country, Factory) {
     //$scope.filters = [{ field:'gcv_arb', operand: '>=', number: 5000 }];
     $scope.showBuy = Environment.showBuy;
     $scope.filters = [];
@@ -25,9 +25,25 @@ angular.module('map').controller('MapController', ['$scope','$http', '$statePara
       url: 'http://www.cliparthut.com/clip-arts/823/arrowhead-clip-art-823528.png'
     };
 
+    // $scope.$watch('filterArea', function (value){
+    //   $scope.find();
+    //   $scope.filterCompany = false;
+    //   if(value) $scope.findCompany(value.id);
+    // });
+    // $scope.$watch('filterCompany', function (value){ $scope.find(); });
+    // $scope.$watch('search', function (){ $scope.find(); });
+
     NgMap.getMap().then(function(map) {
       $scope.map = map;
     });
+
+    $scope.$watch('search.category', function (value){
+      $scope.value = value;
+    });
+    $scope.$watch('search.keyword', function (res){
+      $scope.res = res;
+    });
+
 
     $scope.find = function() {
       var params = {};
@@ -96,14 +112,28 @@ angular.module('map').controller('MapController', ['$scope','$http', '$statePara
         console.log($scope.concessions);
       }
       else {
-        console.log($scope.search.category);
-
-        $scope.companies = Company.query({ company_type: 'c' });
-        $scope.factories = Factory.query();
-        $scope.ports = Port.query();
-        //console.log($scope.companies);
-        //console.log($scope.factories);
-        //console.log($scope.ports);
+        console.log($scope.value);
+        if($scope.value=="port") {
+          var search = $scope.res;
+          if($scope.res.length > 0) {
+            $scope.ports = Port.query({ q:search  });
+            console.log($scope.ports);
+          }
+        }
+        else if($scope.value=="factory") {
+          var search = $scope.res;
+          if($scope.res.length > 0) {
+            $scope.factories = Factory.query({ q:search  });
+            console.log($scope.factories);
+          }
+        }
+        else if($scope.value=="custumer") {
+          var search = $scope.res;
+          if($scope.res.length > 0) {
+            $scope.companies = Company.query({ company_type: 'c', q:search });
+            console.log($scope.companies);
+          }
+        }
       }
       params.action = 'filter';
       params.country = $scope.filter_country;
@@ -169,7 +199,7 @@ angular.module('map').controller('MapController', ['$scope','$http', '$statePara
         console.log($scope.company.latitude);
         console.log($scope.company.longitude);
         console.log(event.latLng);
-        $scope.map.showInfoWindow('company-info-window', new google.maps.LatLng(res.latitude, res.longitude));
+        $scope.map.showInfoWindow('company-info-window', [res.latitude, res.longitude]);
       });
     };
 
