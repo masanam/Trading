@@ -18,7 +18,7 @@
       </a>
     </h4>
   </div>
-  <div class="callout callout-warning" ng-if="approving === true">
+  <div class="callout callout-warning" ng-if="order.status !== 'a' && approving === true">
     <h4>
       Do you want to undo your approval?
       <a class="btn btn-danger" ng-click="approve_reject('r');">

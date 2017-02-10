@@ -266,6 +266,7 @@ class OrderController extends Controller
     // add more validation here
     $app_scheme = $q->first();
 
+    $next_seq = false;
     // GET THE ORDER'S CURRENT APPROVAL SEQUENCE
     foreach($app_scheme->sequences as $s){
       if($s->sequence == $order->approval_sequence) $curr_seq = $s;
@@ -285,30 +286,35 @@ class OrderController extends Controller
     switch($curr_seq->approval_scheme){
       case 'd' :
       case 'o' : // approval scheme 'OR' or 'DIRECT SUPERVISOR', 1 guy ok and pass
-        foreach($order->approvals as $a)
-            foreach($a->roles as $r)
-              if($r->id == $curr_seq->role_id){
-                if($a->pivot->status == 'a') $elevate = true;
-                else $count_requested_approvers;
-              }
+        $count_approvers = 1;
         break;
 
       case 'a' : // get all users with such role, and make sure count is correct
         $approver_role = Role::with('users')->find($curr_seq->role_id);
         $count_approvers = count($approver_role->users);
-      default : // if it is a number
-        foreach($order->approvals as $a)
-            foreach($a->roles as $r)
-              if($r->id == $curr_seq->role_id){
-                if($a->pivot->status == 'a') $count_actual_approved++;
-                else $count_requested_approvers;
-              }
         break;
+    }
+
+    foreach($order->approvals as $a){
+      $count_requested_approvers++;
+      if($a->pivot->status == 'a') {
+        foreach($a->roles as $r)
+          if($r->id == $curr_seq->role_id) $count_actual_approved++;
+      }
     }
 
     // find out whether or not this order require next sequence of approval
     // if true, elevate the sequence
-    if($count_actual_approved > $count_approvers) $elevate = true;
+    if(is_numeric($count_approvers) && $count_actual_approved >= $count_approvers){
+      $elevate = true;
+
+      // in case this qualifies for elevation, mark other approval as auto-approved
+      foreach($order->approvals as $a)
+        if($a->pivot->status == 'p')
+          foreach($a->roles as $r)
+            if($r->id == $curr_seq->role_id)
+              $order->approvals()->sync([$a->id => ['status' => 'y']], false);
+    }
 
     // in case where approvals are nonexistent, add new ones
     if(!$count_requested_approvers && $order->approval_sequence){
@@ -756,6 +762,11 @@ class OrderController extends Controller
 
     // put the user's approval status to replace old one
     $order->approvals()->sync([ $user->id => [ 'status' => $req->status ] ], false);
+
+    // laravel belongsToMany sync bug, need to reload the order
+    $order = Order::with( 'approvals', 'approvals.roles',
+      'sells', 'sells.trader', 'sells.company',
+      'buys', 'buys.trader', 'buys.company')->find($id);
 
     // Begin/Continue/End approval sequence
     $this->sequenceApproval($order);
