@@ -4,14 +4,12 @@ angular.module('dashboard').controller('OrderDashboardController', ['$scope', '$
   function($scope, $uibModal, $state, $log, Index, Order, Authentication, Environment) {
     $scope.Authentication = Authentication;
     $scope.showBuy = Environment.showBuy;
-    console.log($scope.showBuy);
+    
     //find list of order in dashboard
     $scope.find = function () {
       var possession;
 
-      if(Authentication.user.role === 'manager') possession = 'subordinates';
-      else if(Authentication.user.role === 'trader') possession = 'my';
-      $scope.orders = Order.query({ possession: possession, status: 'p' });
+      $scope.orders = Order.query({ possession: 'my', status: 'p' });
     };
 
     $scope.remove = function (order) {

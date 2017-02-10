@@ -7,7 +7,6 @@ angular.module('dashboard').controller('MainDashboardController', ['$scope', '$s
       $scope.date = new Date();
       $scope.indexPage = 0;
       $scope.indices = Index.query({ action: 'single-date' });
-      $scope.render($scope.indices);
     };
 
     $scope.labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
