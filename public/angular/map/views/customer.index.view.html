@@ -7,7 +7,7 @@
           url: '/images/building.png'
         }"
         position="{{company.latitude}}, {{company.longitude}}"
-        id="markport{{company.id}}" on-click="showCompanyDetail(company.id)">
+        id="comp{{company.id}}" on-click="showCompanyDetail(company.id)">
       </marker>
     </div>
     <div ng-repeat="factory in factories">
@@ -16,7 +16,7 @@
           url: '/images/building.png'
         }"
         position="{{factory.latitude}}, {{factory.longitude}}"
-        id="markport{{factory.id}}" on-click="showFactoryDetails(factory)">
+        id="fact{{factory.id}}" on-click="showFactoryDetails(factory)">
       </marker>
     </div>
     <div ng-repeat="port in ports">
@@ -25,7 +25,7 @@
           url: '/images/boat.png'
         }"
         position="{{port.latitude}}, {{port.longitude}}"
-        id="markport{{port.id}}" on-click="showPortDetail($event, port)">
+        id="port{{port.id}}" on-click="showPortDetail($event, port)">
       </marker>
     </div>
     <directions
@@ -35,19 +35,11 @@
       origin="{{company.latitude}} , {{company.latitude}}"
       destination="{{company.latitude}} , {{company.longitude}}">
     </directions>
-    <info-window id="company-info-window" default-style="false" maxWidth="800px">
+    <info-window id="info-window" default-style="false" maxWidth="800px">
       <div ng-non-bindable="" style="width:500px" class="no-gutter">
-        <div ng-include="'/angular/map/views/_company.detail.modal.view.html'"></div>
-      </div>
-    </info-window>
-    <info-window id="factory-info-window" default-style="false" maxWidth="800px">
-      <div ng-non-bindable="" style="width:500px" class="no-gutter">
-        <div ng-include="'/angular/map/views/_factory.detail.modal.view.html'"></div>
-      </div>
-    </info-window>
-    <info-window id="port-info-window" default-style="false" maxWidth="800px">
-      <div ng-non-bindable="" style="width:500px" class="no-gutter">
-        <div ng-include="'/angular/map/views/_port.detail.modal.view.html'"></div>
+        <div ng-if="company" ng-include="'/angular/map/views/_company.detail.modal.view.html'"></div>
+        <div ng-if="factory" ng-include="'/angular/map/views/_factory.detail.modal.view.html'"></div>
+        <div ng-if="port" ng-include="'/angular/map/views/_port.detail.modal.view.html'"></div>
       </div>
     </info-window>
   </ng-map>

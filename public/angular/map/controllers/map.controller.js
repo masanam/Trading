@@ -139,27 +139,6 @@ angular.module('map').controller('MapController', ['$scope','$http', '$statePara
       $scope.find();
     };
 
-    $scope.showDetail = function(event, concession_id) {
-      $scope.concession = Concession.get({ id: concession_id }, function(res) {
-        res.polygon = angular.fromJson(res.polygon);
-        $scope.concession = res;
-        $scope.map.showInfoWindow('info-window', event.latLng);
-
-        $scope.product = undefined;
-      });
-    };
-
-
-    $scope.showPortDetail = function(event, port) {
-      $scope.connectedConcessions = Port.get({ id: port.id });
-      $scope.port = Port.get({ id: port.id }, function(port) {
-        $scope.event = event;
-        $scope.port = port;
-        $scope.map.showInfoWindow('port-info-window', event.latLng);
-        $scope.product = undefined;
-      });
-    };
-
     $scope.showProduct = function(event,product) {
       $scope.product = product;
     };
@@ -168,32 +147,36 @@ angular.module('map').controller('MapController', ['$scope','$http', '$statePara
       $scope.selectedPill = index;
     };
 
+    $scope.showDetail = function(event, concession_id) {
+      $scope.concession = Concession.get({ id: concession_id }, function(res) {
+        res.polygon = angular.fromJson(res.polygon);
+        $scope.concession = res;
+        $scope.map.showInfoWindow('info-window', event.latLng);
+      });
+    };
+
+    $scope.showPortDetail = function(event, port) {
+      $scope.port = Port.get({ id: port }, function(port) {
+        $scope.map.hideInfoWindow('info-window');
+        $scope.map.showInfoWindow('info-window', 'port'+port.id);
+        $scope.company = undefined; $scope.factory = undefined;
+      });
+    };
+
     // hasapu add function 10-02-2017
     $scope.showCompanyDetail = function(event, company) {
       $scope.company = Company.get({ id: company }, function(res) {
-        console.log($scope.map);
-        $scope.map.hideInfoWindow('company-info-window', 'factory-info-window');
-        $scope.event = event;
-        console.log($scope.company.latitude);
-        console.log($scope.company.longitude);
-        console.log(event.latLng);
-        $scope.map.showInfoWindow('company-info-window', event.latLng);
+        $scope.map.hideInfoWindow('info-window');
+        $scope.map.showInfoWindow('info-window', 'comp'+company);
+        $scope.port = undefined; $scope.factory = undefined;
       });
     };
 
     $scope.showFactoryDetails = function(event, factory) {
       $scope.factory = Factory.get({ id: factory.id }, function(res) {
-        $scope.map.hideInfoWindow('company-info-window', 'factory-info-window');
-        $scope.event = event;
-        if(event){
-          $scope.latLng = event.latLng;
-        }
-        else{
-          $scope.latLng = {};
-        }
-        console.log(res.latitude);
-        console.log(res.longitude);
-        $scope.map.showInfoWindow('factory-info-window', $scope.latLng);
+        $scope.map.hideInfoWindow('info-window');
+        $scope.map.showInfoWindow('info-window', 'fact'+factory.id);
+        $scope.company = undefined; $scope.port = undefined;
       });
     };
 
