@@ -305,6 +305,12 @@ class OrderController extends Controller
     // if true, elevate the sequence
     if($count_actual > $count_approvers) $elevate = true;
 
+    // in case where approvals are nonexistent, add new ones
+    if(!count($order->approvals) && $order->approval_sequence){
+      $elevate = true;
+      $next_seq = $curr_seq;
+    }
+
     // send approval to each users. add the database & send the email
     // do nothing if no elevation needed
     if($elevate || !$order->approval_sequence){
