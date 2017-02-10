@@ -48,7 +48,7 @@ class OrderController extends Controller
   // sequenceApproval --> gets approval sequence & get designated users,
   //                      calls requestApproval to add approval to designated user
   // resetApproval    --> detach all approval in an order, calls sequenceApproval after succession
-  // 
+  //
   //////////////////////////////////////
 
   /*
@@ -206,7 +206,7 @@ class OrderController extends Controller
    * 1. updating order, request first approval
    * 2. approving order, continuing approval sequence
    * 3. changing things, reset approval, re-request first approval
-   * 
+   *
    @ order : the order that needs to be approved
    #
    */
@@ -220,7 +220,7 @@ class OrderController extends Controller
 
     // LEVEL 1: get approval scheme by area
     $areas = [];
-    foreach($order->sells as $sell) $areas[] = $sell->company->area_id; // get all area to know 
+    foreach($order->sells as $sell) $areas[] = $sell->company->area_id; // get all area to know
 
     if(count(array_unique($areas)) === 1) $sell_area = $areas[0]; // if area are homogenous, go on
     else $sell_area = config('app.default_area');                 // if not, get the default area
@@ -247,7 +247,7 @@ class OrderController extends Controller
                                                    // this is only changed IF case is A. but overall logic is matching the count
 
     switch($curr_seq->approval_scheme){
-      case 'd' : 
+      case 'd' :
       case 'o' : // approval scheme 'OR' or 'DIRECT SUPERVISOR', 1 guy ok and pass
         foreach($order->approvals as $a) foreach($a->roles as $r) if($r->id == $curr_seq->role_id) $elevate = true;
         break;
@@ -303,11 +303,11 @@ class OrderController extends Controller
         }
       } else {
         // without next sequence, this is the last sequence of the scheme
-        // which means, the order status will be rendered 'a' (approved) 
+        // which means, the order status will be rendered 'a' (approved)
         $order->status = 'a';
         $order->save();
       }
-    } 
+    }
 
     return true;
   }
@@ -327,7 +327,7 @@ class OrderController extends Controller
   // index / store / show / update / destroy
   // approval --> manage the approval status of current user towards the order
   // stage    --> stage one lead to the order
-  // 
+  //
   //////////////////////////////////////
 
   /**
@@ -348,10 +348,10 @@ class OrderController extends Controller
 
     if($req->category == 'subordinates'){
       $subs = Auth::user()->subordinates();
-    
+
       $users = $subs->pluck('id')->all();
       $orders->whereIn('user_id', $users);
-        
+
       $orders->whereHas('trader', function ($query) use ($req){
         $query->where('name', 'like', '%'.$req.'%');
       });
@@ -374,9 +374,9 @@ class OrderController extends Controller
         if($req->approval_status){
           $query->where('order_approvals.status', substr($req->approval_status,0,1));
         }
-                
+
       });
-    
+
     }
     else{
       $orders->whereHas('trader', function($query) use ($param){
@@ -663,7 +663,7 @@ class OrderController extends Controller
     // or using the JWT token.
 
     // if using token, get the specified approving user
-    if($req->approval_token) $user = $order->getApproverByToken($req->approval_token); 
+    if($req->approval_token) $user = $order->getApproverByToken($req->approval_token);
     else {  // or simply load the user if using Auth only.
       $user = JWTAuth::parseToken()->authenticate();
       $this->authorize('approve', $order);
@@ -677,7 +677,7 @@ class OrderController extends Controller
 
     // Begin/Continue/End approval sequence
     $this->sequenceApproval($order);
-    
+
     return $this->show($id, $req);
   }
 
