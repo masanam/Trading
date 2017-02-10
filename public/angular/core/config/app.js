@@ -93,7 +93,7 @@ angular.module(ApplicationConfiguration.applicationModuleName).config(['$urlRout
     $authProvider.signupUrl = '/api/authenticate/signup';
 
     // Redirect to the auth state if any other states
-    // are requested other than users 
+    // are requested other than users
     // $urlRouterProvider.otherwise('/auth/signin');
   }
 ]);
@@ -127,7 +127,7 @@ angular.module(ApplicationConfiguration.applicationModuleName).run(function ($ro
       }
     };
 
-    //Load authorization event listener once all authentication done 
+    //Load authorization event listener once all authentication done
     if(!Authentication.user) Authentication.authenticate(checkAuthorization);
     else checkAuthorization(Authentication.user);
   });
@@ -147,11 +147,11 @@ angular.module(ApplicationConfiguration.applicationModuleName).run(function ($ro
     $rootScope.$broadcast('windowBlur', event);
   };
 
-  
+
 
   // Store previous state
   function storePreviousState(state, params) {
-    // only store this state if it shouldn't be ignored 
+    // only store this state if it shouldn't be ignored
     if (!state || !state.ignoreState) {
       $state.previous = {
         state: state,

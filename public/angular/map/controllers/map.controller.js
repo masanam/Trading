@@ -6,8 +6,8 @@
 
 'use strict';
 
-angular.module('map').controller('MapController', ['$scope','$http', '$stateParams', '$state', 'google', 'Map', 'Concession', 'Port', 'NgMap','Environment','Company','Country','Factory',
-  function($scope,$http, $stateParams, $state, google, Map, Concession, Port, NgMap, Environment, Company, Country, Factory) {
+angular.module('map').controller('MapController', ['$scope','$http', '$stateParams', '$state', 'Map', 'Concession', 'Port', 'NgMap','Environment','Company','Country','Factory',
+  function($scope,$http, $stateParams, $state, Map, Concession, Port, NgMap, Environment, Company, Country, Factory) {
     //$scope.filters = [{ field:'gcv_arb', operand: '>=', number: 5000 }];
     $scope.showBuy = Environment.showBuy;
     $scope.filters = [];
@@ -17,6 +17,15 @@ angular.module('map').controller('MapController', ['$scope','$http', '$statePara
     $scope.ports = [];
     $scope.product = undefined;
 
+    // Initialize map as early use
+    $scope.initMap = function(){
+      NgMap.getMap().then(function(map) {
+        $scope.map = map;
+      }, function(res){
+        console.log(res);
+      });
+    };
+
     $scope.countries = Country.query();
     $scope.filter_country = 'Indonesia';
 
@@ -25,9 +34,11 @@ angular.module('map').controller('MapController', ['$scope','$http', '$statePara
       url: 'http://www.cliparthut.com/clip-arts/823/arrowhead-clip-art-823528.png'
     };
 
-    NgMap.getMap().then(function(map) {
+    /*NgMap.getMap().then(function(map) {
       $scope.map = map;
-    });
+    }, function(res){
+      console.log(res);
+    });*/
 
     $scope.find = function() {
       var params = {};
@@ -93,10 +104,8 @@ angular.module('map').controller('MapController', ['$scope','$http', '$statePara
         params.action = 'filter';
 
         $scope.concessions = Concession.query(params);
-        console.log($scope.concessions);
       }
       else {
-        console.log($scope.search.category);
 
         $scope.companies = Company.query({ company_type: 'c' });
         $scope.factories = Factory.query();
@@ -107,7 +116,6 @@ angular.module('map').controller('MapController', ['$scope','$http', '$statePara
       }
       params.action = 'filter';
       params.country = $scope.filter_country;
-      console.log(params);
 
       Concession.query(params, function(res){
         for (var i = res.length - 1; i >= 0; i--) {
@@ -169,17 +177,23 @@ angular.module('map').controller('MapController', ['$scope','$http', '$statePara
         console.log($scope.company.latitude);
         console.log($scope.company.longitude);
         console.log(event.latLng);
-        $scope.map.showInfoWindow('company-info-window', new google.maps.LatLng(res.latitude, res.longitude));
+        $scope.map.showInfoWindow('company-info-window', event.latLng);
       });
     };
 
     $scope.showFactoryDetails = function(event, factory) {
       $scope.factory = Factory.get({ id: factory.id }, function(res) {
-        console.log($scope.map);
         $scope.map.hideInfoWindow('company-info-window', 'factory-info-window');
-        console.log(event.latLng);
         $scope.event = event;
-        $scope.map.showInfoWindow('factory-info-window', event.latLng);
+        if(event){
+          $scope.latLng = event.latLng;
+        }
+        else{
+          $scope.latLng = {};
+        }
+        console.log(res.latitude);
+        console.log(res.longitude);
+        $scope.map.showInfoWindow('factory-info-window', $scope.latLng);
       });
     };
 

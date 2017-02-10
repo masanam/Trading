@@ -412,14 +412,14 @@ class OrderController extends Controller
       $users = $subs->pluck('id')->all();
       $orders->whereIn('user_id', $users);
 
-      $orders->whereHas('trader', function ($query) use ($req){
-        $query->where('name', 'like', '%'.$req.'%');
-      });
+      /*$orders->whereHas('trader', function ($query) use ($req){
+        $query->where('name', 'like', '%'.$req->q.'%');
+      });*/
     }
     else if($req->category == 'associated'){
       $orders->whereHas('users', function($query) use ($req){
         $query->where('user_id', Auth::user()->id);
-        $query->where('name', 'like', '%'.$req.'%');
+        //$query->where('name', 'like', '%'.$req->q.'%');
       });
       /*if($req->q){
         $param = $req->q;
@@ -429,7 +429,7 @@ class OrderController extends Controller
     else if($req->category == 'approval'){
       $orders->whereHas('approvals', function ($query) use ($req){
         $query->where('users.id', Auth::user()->id);
-        $query->where('name', 'like', '%'.$req.'%');
+        //$query->where('name', 'like', '%'.$req->q.'%');
 
         if($req->approval_status){
           $query->where('order_approvals.status', substr($req->approval_status,0,1));
@@ -439,11 +439,14 @@ class OrderController extends Controller
 
     }
     else{
-      $orders->whereHas('trader', function($query) use ($param){
+      $orders->whereHas('trader', function($query) use ($req){
         $query->where('id', Auth::user()->id);
-        $query->where('name', 'like', '%'.$param.'%');
       });
     }
+
+    $orders->whereHas('trader', function ($query) use ($req){
+      $query->where('name', 'like', '%'.$req->q.'%');
+    });
 
     //var_dump($orders->toSql());
 
