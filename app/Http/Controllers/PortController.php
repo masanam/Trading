@@ -29,9 +29,10 @@ class PortController extends Controller
     {
         $limit = $req->limit | 10;
 
-        $port = Port::with(['concessions' => function ($query) {
-            $query->select('id','concession_name','company_id','owner','reserves','city','country');
-          }])->limit($limit);
+        $port = Port::with(['companies' => function ($query) {
+            // $query->select('id','company_name','company_id','owner','reserves','city','country');
+            $query->where('company_type', 'c');
+          }])->with('factories')->limit($limit);
         $port_id = Company::with('ports')->where('id', $req->company_id)->get();
         $port_id = $port_id->pluck('ports');
         foreach ($port_id as $p) {
@@ -78,17 +79,22 @@ class PortController extends Controller
      */
     public function show($id)
     {
-        $port = Port::with(['concessions'=> function ($query) {
-            $query->select('id','concession_name','company_id','owner','reserves','city','country');
-          }])->find($id);
+        // $port = Port::with(['concessions'=> function ($query) {
+        //     $query->select('id','concession_name','company_id','owner','reserves','city','country');
+        //   }])->find($id);
+
+        $port = Port::with(['companies' => function ($query) {
+            // $query->select('id','company_name','company_id','owner','reserves','city','country');
+            $query->where('company_type', 'c');
+          }])->with('factories')->find($id);
 
         return response()->json($port, 200);
-    }
+    //}
 
-    public function connectedConcessions($id) {
-        $connectedConcessions = Concession::where('port_id', $id)->get();
-
-        return response()->json($connectedConcessions, 200);
+    // public function connectedConcessions($id) {
+    //     $connectedConcessions = Concession::where('port_id', $id)->get();
+    //
+    //     return response()->json($connectedConcessions, 200);
     }
 
     /**

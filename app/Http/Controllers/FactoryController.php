@@ -6,6 +6,7 @@ use App\Model\Factory;
 use App\Model\Buyer;
 use App\Model\Product;
 use App\Model\Port;
+use App\Model\Company;
 use Auth;
 
 use Illuminate\Http\Request;
@@ -28,19 +29,21 @@ class FactoryController extends Controller
      */
     public function index(Request $req)
     {
+      $factory = Factory::with('company','port');
+
       if($req->company_id){
         if($req->coalpedia)
-            $factory = Factory::where('status', 'a')->where('company_id', '!=', $req->company_id)->get();
+            $factory = $factory->where('status', 'a')->where('company_id', '!=', $req->company_id)->get();
         else
-            $factory = Factory::where('status', 'a')->where('company_id', $req->company_id)->get();
+            $factory = $factory->where('status', 'a')->where('company_id', $req->company_id)->get();
         foreach ($factory as $fac) {
           $fac->latitude = floatval($fac->latitude);
           $fac->longitude = floatval($fac->longitude);
         }
       }
       else{
-        $factory = Factory::where('status', 'a');
-        if($req->q) $factory->where('factory_name', 'LIKE', '%' . $req->q . '%');
+        $factory = $factory->where('status', 'a');
+        if($req->q) $factory = $factory->where('factory_name', 'LIKE', '%' . $req->q . '%');
         $factory = $factory->get();
       }
 
@@ -88,7 +91,7 @@ class FactoryController extends Controller
 
         return response()->json($factory, 200);
     }
-    
+
     /**
      * Update the specified resource in storage.
      *
@@ -115,7 +118,7 @@ class FactoryController extends Controller
 
         return response()->json($factory, 200);
     }
-    
+
     /**
      * Remove the specified resource from storage.
      *
@@ -125,7 +128,7 @@ class FactoryController extends Controller
     public function destroy($id)
     {
         $factory = Factory::find($id);
-      
+
         if (!$id) {
             return response()->json([
                 'message' => 'Not found'
@@ -141,7 +144,7 @@ class FactoryController extends Controller
 
     public function getTotalFactory() {
         $total = Factory::count();
-        $status = array('count' => $total);        
+        $status = array('count' => $total);
         return response()->json($status, 200);
     }
 

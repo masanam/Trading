@@ -6,8 +6,8 @@
 
 'use strict';
 
-angular.module('map').controller('MapController', ['$scope','$http', '$stateParams', '$state', 'Map', 'Concession', 'Port', 'NgMap','Environment','Company','Country',
-  function($scope,$http, $stateParams, $state, Map, Concession, Port, NgMap, Environment, Company, Country) {
+angular.module('map').controller('MapController', ['$scope','$http', '$stateParams', '$state', 'google', 'Map', 'Concession', 'Port', 'NgMap','Environment','Company','Country','Factory',
+  function($scope,$http, $stateParams, $state, google, Map, Concession, Port, NgMap, Environment, Company, Country, Factory) {
     //$scope.filters = [{ field:'gcv_arb', operand: '>=', number: 5000 }];
     $scope.showBuy = Environment.showBuy;
     $scope.filters = [];
@@ -31,7 +31,7 @@ angular.module('map').controller('MapController', ['$scope','$http', '$statePara
 
     $scope.find = function() {
       var params = {};
-      
+
       if ($scope.showBuy) {
         $scope.filters_gt = [];
         $scope.filters_lt = [];
@@ -93,15 +93,17 @@ angular.module('map').controller('MapController', ['$scope','$http', '$statePara
         params.action = 'filter';
 
         $scope.concessions = Concession.query(params);
+        console.log($scope.concessions);
       }
       else {
-        // console.log($scope.search.category);
+        console.log($scope.search.category);
 
         $scope.companies = Company.query({ company_type: 'c' });
-        // console.log($scope.companies);
-        console.log($scope.filter_country);
-
-
+        $scope.factories = Factory.query();
+        $scope.ports = Port.query();
+        //console.log($scope.companies);
+        //console.log($scope.factories);
+        //console.log($scope.ports);
       }
       params.action = 'filter';
       params.country = $scope.filter_country;
@@ -139,41 +141,48 @@ angular.module('map').controller('MapController', ['$scope','$http', '$statePara
       });
     };
 
-    $scope.showPortDetail = function(event, port, showBuy) {
-      if(showBuy){
-        $scope.connectedConcessions = Port.get({ id: port.id });
-        $scope.port = Port.get({ id: port.id }, function(port) {
-          $scope.event = event;
-          $scope.port = port;
-            $scope.map.showInfoWindow('port-info-window', event.latLng);
-          $scope.product = undefined;
-        });
-      }
-      else{
-        $scope.company = Company.get({ id: port }, function(port) {
-          $scope.event = event;
-          $scope.map.showInfoWindow('company-info-window', event.latLng);
-        });
-      }
-
-
+    $scope.showPortDetail = function(event, port) {
+      $scope.connectedConcessions = Port.get({ id: port.id });
+      $scope.port = Port.get({ id: port.id }, function(port) {
+        $scope.event = event;
+        $scope.port = port;
+        $scope.map.showInfoWindow('port-info-window', event.latLng);
+        $scope.product = undefined;
+      });
     };
 
-    $scope.showProduct = function(event,product,showBuy) {
-      if(showBuy) {
-        $scope.product = product;
-      }
-      else {
-        console.log('disini');
-        console.log(product);
-        $scope.map.showInfoWindow('factory-info-window', event.latLng);
-      }
-
+    $scope.showProduct = function(event,product) {
+      $scope.product = product;
     };
 
     $scope.selectPill = function(index){
       $scope.selectedPill = index;
     };
+
+    // hasapu add function 10-02-2017
+    $scope.showCompanyDetail = function(event, company) {
+      $scope.company = Company.get({ id: company }, function(res) {
+        console.log($scope.map);
+        $scope.map.hideInfoWindow('company-info-window', 'factory-info-window');
+        $scope.event = event;
+        console.log($scope.company.latitude);
+        console.log($scope.company.longitude);
+        console.log(event.latLng);
+        $scope.map.showInfoWindow('company-info-window', new google.maps.LatLng(res.latitude, res.longitude));
+      });
+    };
+
+    $scope.showFactoryDetails = function(event, factory) {
+      $scope.factory = Factory.get({ id: factory.id }, function(res) {
+        console.log($scope.map);
+        $scope.map.hideInfoWindow('company-info-window', 'factory-info-window');
+        console.log(event.latLng);
+        $scope.event = event;
+        $scope.map.showInfoWindow('factory-info-window', event.latLng);
+      });
+    };
+
+    // hasapu add function end
 
   }
 ]);
