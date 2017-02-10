@@ -19,7 +19,12 @@ use App\Model\Contract;
 use App\Model\Role;
 
 use Tymon\JWTAuth\Facades\JWTAuth;
+use Ixudra\Curl\Facades\Curl;
+use Firebase\FirebaseInterface;
+use Firebase\FirebaseLib;
 use Auth;
+
+use Carbon\Carbon;
 
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ApprovalRequest;
@@ -198,7 +203,34 @@ class OrderController extends Controller
     // add new associated user in the request
     $order->users()->sync([$user->id => [ 'role' => 'approver' ]], false);
 
+    //send notif to firebase
+    $manager_notification = [
+      'url' => 'order/' . $order->id,
+      'notification' => 'ORD #' . sprintf("%02d",$order->id) . ' is waiting for your approval',
+      'created_at' => Carbon::now()->toDateTimeString(),
+      'isRead' => false
+    ];
+
+    $this->saveToFirebase($manager_notification, $user->id);
+
     $this->mailApproval($order);
+  }
+
+  /* The function to send the notification to firebase
+   *
+   *
+   @ orderId = id of the order as the notification
+   @ user = user that will get the notification
+   #
+   */
+  private function saveToFirebase($notification, $user) {
+    // $response = Curl::to(config('services.firebase.database_url') . 'notification/'. $user)
+    //     ->withData($notification)
+    //     ->post();
+
+    $firebaseClient = new FirebaseLib(config('services.firebase_dev.database_url'), config('services.firebase_dev.secret'));
+    $path = 'notification/' . $user;
+    $res = $firebaseClient->push($path, $notification);
   }
 
   /* The function to find out current order's approval scheme &
@@ -502,6 +534,25 @@ class OrderController extends Controller
     }
 
     $order->addAdditionalCosts($req->additional);
+
+    $leads_notification = [
+      'url' => 'order/' . $order->id,
+      'notification' => 'ORD #' . sprintf("%02d",$order->id) . ' used your leads',
+      'created_at' => Carbon::now()->toDateTimeString(),
+      'isRead' => false
+    ];
+
+    foreach ($req->sells as $s) {
+      $manager = User::where('id', $s['user_id'])->pluck('manager_id');
+      $this->saveToFirebase($leads_notification, $s['user_id']);
+      $this->saveToFirebase($leads_notification, $manager);
+    }
+
+    foreach ($req->buys as $b) {
+      $manager = User::where('id', $b['user_id'])->pluck('manager_id');
+      $this->saveToFirebase($leads_notification, $b['user_id']);
+      $this->saveToFirebase($leads_notification, $manager);
+    }
 
     return response()->json($order, 200);
   }

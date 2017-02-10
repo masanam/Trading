@@ -45,7 +45,7 @@ angular.module('lead').controller('LeadController', ['$scope', '$state', '$state
 
     $scope.findStatus = function($order_status, $lead_type) {
       $scope.status = $order_status;
-      $scope.leads = Lead.query({ lead_type: $lead_type, order_status: $order_status});
+      $scope.leads = Lead.query({ lead_type: $lead_type, order_status: $order_status });
     };
 
     $scope.findRecommendations = function () {
