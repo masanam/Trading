@@ -234,5 +234,11 @@ class UserController extends Controller
         return response()->json($user, 200);
     }
 
+    public function approveUser($id) {
+      $user = User::find($id);
+
+      $user->status = 'a';
+      return response()->json($user, 200);
+    }
 
 }
