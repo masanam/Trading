@@ -1,6 +1,8 @@
 <div class="register-box" ng-controller="AuthController">
   <div class="register-logo">
-    <img src="./images/sinarmas.png" style="width:40px; margin-top:-10px;"><b> Coaltrade</b></a>
+    <img src="./images/berau.jpg" style="width:40px; margin-right: 10px;" ng-if="deployment === 'berau'">
+    <img src="./images/sinarmas.png" style="width:40px; margin-right: 10px;" ng-if="deployment === 'bib'">
+    <b> Coaltrade</b></a>
   </div>
 
   <div class="register-box-body">
