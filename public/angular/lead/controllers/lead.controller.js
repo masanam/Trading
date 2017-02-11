@@ -34,13 +34,16 @@ angular.module('lead').controller('LeadController', ['$scope', '$state', '$state
       });
     };
 
-    $scope.find = function(status, lead_type) {
+    $scope.find = function(status, $search) {
       if(!status) status = $stateParams.status;
-      if(!lead_type) lead_type = $stateParams.lead_type;
-      $scope.leads = Lead.query({ status: status, type: lead_type });
+      console.log($stateParams.lead_type);
+      var lead_type = $stateParams.lead_type;
+      console.log(lead_type);
+      $scope.leads = Lead.query({ order_status: $scope.status, lead_type: $stateParams.lead_type, q:$search });
     };
 
     $scope.findStatus = function($order_status, $lead_type) {
+      $scope.status = $order_status;
       $scope.leads = Lead.query({ lead_type: $lead_type, order_status: $order_status });
     };
 

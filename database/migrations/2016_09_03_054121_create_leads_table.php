@@ -128,6 +128,6 @@ class CreateLeadsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('leads');
+        Schema::dropIfExists('leads');
     }
 }

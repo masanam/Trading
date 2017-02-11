@@ -29,6 +29,10 @@ class Port extends Model {
     return $this->hasMany(Concession::class);
   }
 
+  public function factories() {
+    return $this->hasMany(Factory::class);
+  }
+
   public function companies() {
     return $this->belongsToMany(Company::class, 'company_port');
   }

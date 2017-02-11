@@ -1,0 +1,376 @@
+<div class="col-lg-12">
+  <ng-map zoom="4" center="Indonesia" default-style="false" style="width:100%; height:500px;">
+    <span ng-repeat="pos in concessions">
+      <marker icon="{
+          url: '/images/dig.png'
+        }" ng-if="pos.polygon === ''" position="{{pos.latitude}}, {{pos.longitude}}" id="mark{{pos.id}}" on-click="showDetail({{pos}})"></marker>
+      <shape name="polygon" ng-if="pos.polygon" on-click="showDetail({{pos.id}})"
+         id="mark{{pos.id}}"
+         paths="{{pos.polygon.coordinates[0]}}"
+         stroke-color="#FF0000"
+         stroke-opacity="0.8"
+         stroke-weight="2"
+         fill-color="#FF0000"
+         fill-opacity="0.35">
+      </shape>
+      <marker
+        icon="{
+          url: '/images/boat.png'
+        }"
+        position="{{pos.port.latitude}}, {{pos.port.longitude}}"
+        id="markport{{pos.port.id}}" on-click="showPortDetail($event, pos.port)">
+      </marker>
+      <directions
+        draggable="true"
+        panel="directions-panel"
+        travel-mode="DRIVING"
+        origin="{{pos.latitude}} , {{pos.latitude}}"
+        destination="{{pos.port.latitude}} , {{pos.port.longitude}}">
+      </directions>
+    </span>
+    <info-window id="info-window" default-style="false" maxWidth="800px">
+      <div ng-non-bindable="" style="width:500px" class="no-gutter">
+        <h3>Name: {{concession.concession_name}}</h3>
+        <hr/>
+        <div class="nav-tabs-custom">
+          <uib-tabset active="active">
+            <uib-tab index="0" heading="Concession">
+              <div id="concession">
+                <div class="row">
+                  <!--div class="col-lg-4">
+                    <uib-tabset active="activePill" vertical="true" type="pills">
+                      <uib-tab index="0" ng-click="selectPill(0)" heading="Location"></uib-tab>
+                      <uib-tab index="1" ng-click="selectPill(1)" heading="Resources"></uib-tab>
+                      <uib-tab index="2" ng-click="selectPill(2)" heading="Licenses"></uib-tab>
+                    </uib-tabset>
+                  </div-->
+                  <div class="col-lg-12">
+                    &nbsp;
+                    <div>
+                      <section class="col-lg-6">
+                        <div class="row">
+                          <span class="col-lg-6">Address:</span>
+                          <span class="col-lg-6">{{concession.address || 'N/A'}}</span><br/>
+                        </div>
+                        <div class="row">
+                          <span class="col-lg-6">City:</span>
+                          <span class="col-lg-6">{{concession.city || 'N/A'}}</span><br/>
+                        </div>
+                        <div class="row">
+                          <span class="col-lg-6">Position:</span>
+                          <span class="col-lg-6">{{concession.latitude || 'N/A'}}, {{concession.longitude || 'N/A'}}</span><br/>
+                        </div>
+                        <div class="row">
+                          <span class="col-lg-6">Hauling Road Name:</span>
+                          <span class="col-lg-6">{{concession.hauling_road_name || 'N/A'}}</span><br/>
+                        </div>
+                        <div class="row">
+                          <span class="col-lg-6">Port Name:</span>
+                          <span class="col-lg-6">{{concession.port.port_name || 'N/A'}}<button class="btn btn-info btn-sm" ng-show="concession.port.port_name" ng-click="showPortDetail($event, concession.port)">Show</button></span><br/>
+                        </div>
+                        <div class="row">
+                          <span class="col-lg-6">Port Distance:</span>
+                          <span class="col-lg-6">{{concession.port_distance | number : 3 || 'N/A'}}</span><br/>
+                        </div>
+                        <div class="row">
+                          <span class="col-lg-6">License Type:</span>
+                          <span class="col-lg-6">{{concession.license_type || 'N/A'}}</span><br/>
+                        </div>
+                        <div class="row">
+                          <span class="col-lg-6">Expiry Date:</span>
+                          <span class="col-lg-6">{{concession.license_expiry_date | date : 'dd-MM-yyyy' || 'N/A'}}</span><br/>
+                        </div>
+                      </section>
+                      <section class="col-lg-6">
+                        <div class="row">
+                          <span class="col-lg-6">Size:</span>
+                          <span class="col-lg-6">{{concession.size | number : 3 || 'N/A'}}</span><br/>
+                        </div>
+                        <div class="row">
+                          <span class="col-lg-6">Stripping Ratio:</span>
+                          <span class="col-lg-6">{{concession.stripping_ratio | number : 3 || 'N/A'}}</span><br/>
+                        </div>
+                        <div class="row">
+                          <span class="col-lg-6">Resource:</span>
+                          <span class="col-lg-6">{{concession.resource | number : 3 || 'N/A'}}</span><br/>
+                        </div>
+                        <div class="row">
+                          <span class="col-lg-6">Reserves:</span>
+                          <span class="col-lg-6">{{concession.reserves | number : 3 || 'N/A'}}</span><br/>
+                        </div>
+                        <div class="row">
+                          <span class="col-lg-6">Contracted Volume:</span>
+                          <span class="col-lg-6">{{concession.contracted_volume | number : 3 || 'N/A'}}</span><br/>
+                        </div>
+                        <div class="row">
+                          <span class="col-lg-6">Remaining Volume:</span>
+                          <span class="col-lg-6">{{concession.remaining_volume | number : 3 || 'N/A'}}</span><br/>
+                        </div>
+                        <div class="row">
+                          <span class="col-lg-6">Annual Production:</span>
+                          <span class="col-lg-6">{{concession.annual_production | number : 3 || 'N/A'}}</span><br/>
+                        </div>
+                      </section>
+                    </div>
+                  </div>
+                  &nbsp;
+                </div>
+              </div>
+            </uib-tab>
+          </uib-tabset>
+        </div>
+      </div>
+    </info-window>
+    <info-window id="port-info-window" default-style="false" maxWidth="800px">
+      <div ng-non-bindable="" style="width:500px" class="no-gutter">
+        <h3>Port Name: {{port.port_name}}</h3>
+        <hr/>
+        <div class="nav-tabs-custom">
+          <uib-tabset active="active">
+            <uib-tab index="0" heading="Concession">
+              <div id="concession">
+                <div class="row">
+                  <!--div class="col-lg-4">
+                    <uib-tabset active="activePill" vertical="true" type="pills">
+                      <uib-tab index="0" ng-click="selectPill(0)" heading="Location"></uib-tab>
+                      <uib-tab index="1" ng-click="selectPill(1)" heading="Resources"></uib-tab>
+                      <uib-tab index="2" ng-click="selectPill(2)" heading="Licenses"></uib-tab>
+                    </uib-tabset>
+                  </div-->
+                  <div class="col-lg-12">
+                    &nbsp;
+                    <div>
+                      <section class="col-lg-6">
+                        <div class="row">
+                          <span class="col-lg-6">Address:</span>
+                          <span class="col-lg-6">{{concession.address || 'N/A'}}</span><br/>
+                        </div>
+                        <div class="row">
+                          <span class="col-lg-6">City:</span>
+                          <span class="col-lg-6">{{concession.city || 'N/A'}}</span><br/>
+                        </div>
+                        <div class="row">
+                          <span class="col-lg-6">Position:</span>
+                          <span class="col-lg-6">{{concession.latitude || 'N/A'}}, {{concession.longitude || 'N/A'}}</span><br/>
+                        </div>
+                        <div class="row">
+                          <span class="col-lg-6">Hauling Road Name:</span>
+                          <span class="col-lg-6">{{concession.hauling_road_name || 'N/A'}}</span><br/>
+                        </div>
+                        <div class="row">
+                          <span class="col-lg-6">Port Name:</span>
+                          <span class="col-lg-6">{{concession.port.port_name || 'N/A'}}<button class="btn btn-info btn-sm" ng-show="concession.port.port_name" ng-click="showPortDetail($event, concession.port)">Show</button></span><br/>
+                        </div>
+                        <div class="row">
+                          <span class="col-lg-6">Port Distance:</span>
+                          <span class="col-lg-6">{{concession.port_distance | number : 3 || 'N/A'}}</span><br/>
+                        </div>
+                        <div class="row">
+                          <span class="col-lg-6">License Type:</span>
+                          <span class="col-lg-6">{{concession.license_type || 'N/A'}}</span><br/>
+                        </div>
+                        <div class="row">
+                          <span class="col-lg-6">Expiry Date:</span>
+                          <span class="col-lg-6">{{concession.license_expiry_date | date : 'dd-MM-yyyy' || 'N/A'}}</span><br/>
+                        </div>
+                      </section>
+                      <section class="col-lg-6">
+                        <div class="row">
+                          <span class="col-lg-6">Size:</span>
+                          <span class="col-lg-6">{{concession.size | number : 3 || 'N/A'}}</span><br/>
+                        </div>
+                        <div class="row">
+                          <span class="col-lg-6">Stripping Ratio:</span>
+                          <span class="col-lg-6">{{concession.stripping_ratio | number : 3 || 'N/A'}}</span><br/>
+                        </div>
+                        <div class="row">
+                          <span class="col-lg-6">Resource:</span>
+                          <span class="col-lg-6">{{concession.resource | number : 3 || 'N/A'}}</span><br/>
+                        </div>
+                        <div class="row">
+                          <span class="col-lg-6">Reserves:</span>
+                          <span class="col-lg-6">{{concession.reserves | number : 3 || 'N/A'}}</span><br/>
+                        </div>
+                        <div class="row">
+                          <span class="col-lg-6">Contracted Volume:</span>
+                          <span class="col-lg-6">{{concession.contracted_volume | number : 3 || 'N/A'}}</span><br/>
+                        </div>
+                        <div class="row">
+                          <span class="col-lg-6">Remaining Volume:</span>
+                          <span class="col-lg-6">{{concession.remaining_volume | number : 3 || 'N/A'}}</span><br/>
+                        </div>
+                        <div class="row">
+                          <span class="col-lg-6">Annual Production:</span>
+                          <span class="col-lg-6">{{concession.annual_production | number : 3 || 'N/A'}}</span><br/>
+                        </div>
+                      </section>
+                    </div>
+                  </div>
+                  &nbsp;
+                </div>
+              </div>
+            </uib-tab>
+            <uib-tab index="1" heading="Product">
+              <div id="product">
+                &nbsp;
+                <div class="row">
+                  <div class="col-lg-3">
+                    <uib-tabset active="activePill" vertical="true" type="pills">
+                      <uib-tab ng-repeat="(idx, prod) in concession.products" index="idx" ng-click="showProduct(prod)" heading="{{prod.product_name || 'Coal'}}"></uib-tab>
+                    </uib-tabset>
+                  </div>
+                  <div class="col-lg-9">
+                    <h3 ng-show="!product">Click the Product on the left to show product details</h3>
+                      <div ng-show="product">
+                        <div class="row">
+                          <div class="col-lg-4 col-sm-4">
+                            <h4>
+                              GCV ARB
+                            </h4>
+                            <h5>
+                             {{product.gcv_arb_min}} - {{product.gcv_arb_max}} kcal
+                            </h5>
+                          </div>
+                          <div class="col-lg-4">
+                            <h4>
+                              GCV ADB
+                            </h4>
+                            <h5>
+                             {{product.gcv_adb_min}} - {{product.gcv_adb_max}} kcal
+                            </h5>
+                          </div>
+                          <div class="col-lg-4">
+                            <h4>
+                              NCV
+                            </h4>
+                            <h5>
+                             {{product.ncv_min}} - {{product.ncv_max}} kcal
+                            </h5>
+                          </div>
+                        </div>
+                        <div class="row">
+                        <div class="table-responsive">
+                          <table class="table table-striped">
+                            <tbody>
+                              <tr>
+                                <td>Ash</td>
+                                <td>{{product.ash_min}} - {{product.ash_max}} %</td>
+                                <td>Total Sulphur</td>
+                                <td>{{product.ts_min}} - {{product.ts_max}} %</td>
+                              </tr>
+                              <tr>
+                                <td>Total Moisture</td>
+                                <td>{{product.tm_min}} - {{product.tm_max}} %</td>
+                                <td>Inherent Moisture</td>
+                                <td>{{product.im_min}} - {{product.im_max}} %</td>
+                              </tr>
+                              <tr>
+                                <td>Fixed Carbon</td>
+                                <td>{{product.fc_min}} - {{product.fc_max}} %</td>
+                                <td>Volatile Matter</td>
+                                <td>{{product.vm_min}} - {{product.vm_max}} %</td>
+                              </tr>
+                              <tr>
+                                <td>Hardness</td>
+                                <td>{{product.hgi_min}} - {{product.hgi_max}}</td>
+                                <td>Size</td>
+                                <td>{{product.size_min}} - {{product.size_max}}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+              </div>
+              &nbsp;
+            </uib-tab>
+          </uib-tabset>
+        </div>
+        <div class="nav-tabs-custom">
+          <uib-tabset active="active">
+            <uib-tab index="0" heading="Port">
+              <div id="port">
+                <div class="row">
+                  <!--div class="col-lg-4">
+                    <uib-tabset active="activePill" vertical="true" type="pills">
+                      <uib-tab index="0" ng-click="selectPill(0)" heading="Location"></uib-tab>
+                      <uib-tab index="1" ng-click="selectPill(1)" heading="Resources"></uib-tab>
+                      <uib-tab index="2" ng-click="selectPill(2)" heading="Licenses"></uib-tab>
+                    </uib-tabset>
+                  </div-->
+                  <div class="col-lg-12">
+                    &nbsp;
+                    <div>
+                      <section class="col-lg-12">
+                      <div class="table-responsive">
+                        <table>
+                          <tr>
+                            <td>Location  </td>
+                            <td>  : {{port.location || 'N/A'}}  </td>
+                          </tr>
+                          <tr>
+                            <td>Owner </td>
+                            <td>  : {{port.owner || 'N/A'}} </td>
+                          </tr>
+                          <tr>
+                            <td>Position  </td>
+                            <td>  : {{port.latitude || 'N/A'}}, {{port.longitude || 'N/A'}} </td>
+                          </tr>
+                          <tr>
+                            <td>River Capacity  </td>
+                            <td>  : {{port.river_capacity || 'N/A'}}  </td>
+                          </tr>
+                          <tr>
+                            <td>Anchorage Distance  </td>
+                            <td>  : {{port.anchorage_distance || 'N/A'}}  </td>
+                          </tr>
+                          <tr>
+                            <td>Has Conveyor  </td>
+                            <td>  : {{port.has_conveyor || 'N/A'}}  </td>
+                          </tr>
+                          <tr>
+                            <td>Has Crusher </td>
+                            <td>  : {{port.has_crusher || 'N/A'}} </td>
+                          </tr>
+                          <tr>
+                            <td>Has Blending  </td>
+                            <td>  : {{port.has_blending || 'N/A'}}  </td>
+                          </tr>
+                          <tr>
+                            <td>Draft Height  </td>
+                            <td>  : {{port.draft_height || 'N/A'}}  </td>
+                          </tr>
+                        </table>
+                        </div>
+                      </section>
+                    </div>
+                  </div>
+                  &nbsp;
+                </div>
+              </div>
+            </uib-tab>
+            <uib-tab index="1" heading="Connected Concessions">
+              <div id="port">
+                <div class="row">
+                  <!--div class="col-lg-4">
+                    <uib-tabset active="activePill" vertical="true" type="pills">
+                      <uib-tab index="0" ng-click="selectPill(0)" heading="Location"></uib-tab>
+                      <uib-tab index="1" ng-click="selectPill(1)" heading="Resources"></uib-tab>
+                      <uib-tab index="2" ng-click="selectPill(2)" heading="Licenses"></uib-tab>
+                    </uib-tabset>
+                  </div-->
+                    <uib-tabset class="col-lg-12" active="activePill" vertical="true" type="pills">
+                      <uib-tab ng-repeat="connectedConcession in port.concessions" ng-click="showDetail(event, connectedConcession); map.hideInfoWindow('port-info-window');" heading="{{connectedConcession.concession_name}}"></uib-tab>
+                    </uib-tabset>
+                  &nbsp;
+                </div>
+              </div>
+            </uib-tab>
+          </uib-tabset>
+        </div>
+      </div>
+    </info-window>
+  </ng-map>
+</div>

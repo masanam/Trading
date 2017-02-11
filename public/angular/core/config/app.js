@@ -93,7 +93,7 @@ angular.module(ApplicationConfiguration.applicationModuleName).config(['$urlRout
     $authProvider.signupUrl = '/api/authenticate/signup';
 
     // Redirect to the auth state if any other states
-    // are requested other than users 
+    // are requested other than users
     // $urlRouterProvider.otherwise('/auth/signin');
   }
 ]);
@@ -104,11 +104,11 @@ angular.module(ApplicationConfiguration.applicationModuleName).run(function ($ro
   // Always check authentication before changing state
   $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
     var checkAuthorization = function(user){
-      if (toState.roles && toState.roles.length > 0) {
-        var allowed = false;
+      var allowed = false;
 
-        toState.roles.forEach(function (role) {
-          if (role === 'guest' || (Authentication.user !== undefined && Authentication.user.role.indexOf(role) > -1)){
+      if (toState.privileges && toState.privileges.length > 0) {
+        toState.privileges.forEach(function (privilege) {
+          if (privilege === 'guest' || (Authentication.user !== undefined && (Authentication.user.privilege.indexOf(privilege) > -1 || Authentication.user.role.indexOf('root') > -1))){
             allowed = true;
             return true;
           }
@@ -127,7 +127,7 @@ angular.module(ApplicationConfiguration.applicationModuleName).run(function ($ro
       }
     };
 
-    //Load authorization event listener once all authentication done 
+    //Load authorization event listener once all authentication done
     if(!Authentication.user) Authentication.authenticate(checkAuthorization);
     else checkAuthorization(Authentication.user);
   });
@@ -147,11 +147,11 @@ angular.module(ApplicationConfiguration.applicationModuleName).run(function ($ro
     $rootScope.$broadcast('windowBlur', event);
   };
 
-  
+
 
   // Store previous state
   function storePreviousState(state, params) {
-    // only store this state if it shouldn't be ignored 
+    // only store this state if it shouldn't be ignored
     if (!state || !state.ignoreState) {
       $state.previous = {
         state: state,

@@ -140,7 +140,7 @@ class UserController extends Controller
         $user->title = $req->title;
         $user->email = $req->email;
         $user->phone = $req->phone;
-        $user->employee_id = $req->employee_id;
+        $user->employee_no = $req->employee_no;
         $user->manager_id = $req->manager_id;
 
         if($req->roles){
@@ -172,19 +172,19 @@ class UserController extends Controller
 
     public function setActing(Request $request, $user) {
         // find the person who want to give the priviledge of acting role
-        $user = User::find($user);
+        // $user = User::find($user);
 
-        if(!$user)
-            return response()->json([
-                'message' => 'Not found'
-            ] ,404);
+        // if(!$user)
+        //     return response()->json([
+        //         'message' => 'Not found'
+        //     ] ,404);
 
-        $user->interims()->attach($request->interim_id, [
-            'date_start' => $request->date_start,
-            'date_end' => $request->date_end,
-            'role' => $request->role,
-            'status' => 'a'
-        ]);
+        // $user->interims()->attach($request->interim_id, [
+        //     'date_start' => $request->date_start,
+        //     'date_end' => $request->date_end,
+        //     'role' => $request->role,
+        //     'status' => 'a'
+        // ]);
     }
 
     /**

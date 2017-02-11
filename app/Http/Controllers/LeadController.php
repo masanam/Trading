@@ -35,7 +35,7 @@ class LeadController extends Controller
 
     // this is the basic loading query of all leads
     $query = Lead::with('Company','User','trader','used', 'Product');
-
+    if($req->q) $param = $req->q; else $param = '';
     // lowercasing lead_type
     $lead_type = strtolower($req->lead_type);
 
@@ -44,6 +44,23 @@ class LeadController extends Controller
     else if($req->order_status=='all') $status = ['v', 'l', 's', 'p'];
     else if($req->order_status=='draft') { $status = ['0', '1', '2', '3', '4']; $user_id = true; }
     else if($req->order_status!=null) $query->where('order_status', $req->order_status);
+    
+    //$query->orWhere('city', 'like', '%'.$param.'%');
+
+    $query->where(
+      function($q) use ($param){
+        $q->whereHas('trader', function ($q) use ($param){
+          $q->where('name', 'like', '%'.$param.'%');
+          $q->orWhere('typical_quality', 'like', '%'.$param.'%');
+          $q->orWhere('city', 'like', '%'.$param.'%');
+        })->orWhereHas('Company', function ($q) use ($param){
+          $q->where('company_name', 'like', '%'.$param.'%');
+
+        });
+      }
+    );
+   
+    
 
     if (isset($status)) $query->whereIn('order_status', $status);
 
@@ -65,8 +82,9 @@ class LeadController extends Controller
           ->where(function ($q) use ($ref){
             return $q->whereRaw('\'' . $ref->laycan_start . '\' BETWEEN laycan_start AND laycan_end')
               ->orWhereRaw('laycan_start BETWEEN \'' . $ref->laycan_start . '\' AND \'' . $ref->laycan_end . '\'');
-          });
 
+          });
+        
         return response()->json($query->get(), 200);
       }
 
@@ -104,7 +122,7 @@ class LeadController extends Controller
       if ($lead_type === 'buy' || $req->lead_type === 's') $query->where('lead_type', 'b');
       else if ($lead_type === 'sell' || $req->lead_type === 'b') $query->where('lead_type', 's');
     }
-
+    //var_dump($query->toSql());
     $leads = $query->limit($req->limit)->get();
 
     // To list recommended leads in lead.view

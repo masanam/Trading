@@ -13,17 +13,32 @@ angular.module('dashboard').config(['$stateProvider',
       .state('dashboard.main', {
         url: '/main',
         templateUrl: '/angular/dashboard/views/main.view.html',
-        roles: ['trader', 'manager']
+        privileges: [
+          'order.view', 'order.edit',
+          'lead.view', 'lead.edit',
+          'coalpedia.view', 'coalpedia.edit',
+          'index.view', 'index.edit',
+        ]
       })
       .state('dashboard.map', {
         url: '/map',
         templateUrl: '/angular/dashboard/views/map.view.html',
-        roles: ['trader', 'manager']
+        privileges: [
+          'order.view', 'order.edit',
+          'lead.view', 'lead.edit',
+          'coalpedia.view', 'coalpedia.edit',
+          'index.view', 'index.edit',
+        ]
       })
       .state('dashboard.index', {
         url: '/index',
         templateUrl: '/angular/dashboard/views/index.view.html',
-        roles: ['trader', 'manager']
+        privileges: [
+          'order.view', 'order.edit',
+          'lead.view', 'lead.edit',
+          'coalpedia.view', 'coalpedia.edit',
+          'index.view', 'index.edit',
+        ]
       });
   }
 ]);

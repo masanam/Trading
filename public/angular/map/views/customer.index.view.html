@@ -1,0 +1,49 @@
+<!-- hasapu 08-02-2017 untuk customer maps -->
+<div class="col-lg-12">
+  <ng-map zoom="4" center="Indonesia" default-style="false" style="width:100%; height:500px;" ng-init="initMap();">
+    <div ng-repeat="company in companies">
+      <marker
+        icon="{
+          url: '/images/building.png'
+        }"
+        position="{{company.latitude}}, {{company.longitude}}"
+        id="comp{{company.id}}" on-click="showCompanyDetail(company.id)">
+      </marker>
+    </div>
+    <div ng-repeat="factory in factories">
+      <marker
+        icon="{
+          url: '/images/building.png'
+        }"
+        position="{{factory.latitude}}, {{factory.longitude}}"
+        id="fact{{factory.id}}" on-click="showFactoryDetails(factory)">
+      </marker>
+    </div>
+    <div ng-repeat="port in ports">
+      <marker
+        icon="{
+          url: '/images/boat.png'
+        }"
+        position="{{port.latitude}}, {{port.longitude}}"
+        id="port{{port.id}}" on-click="showPortDetail($event, port)">
+      </marker>
+    </div>
+    <directions
+      draggable="true"
+      panel="directions-panel"
+      travel-mode="DRIVING"
+      origin="{{company.latitude}} , {{company.latitude}}"
+      destination="{{company.latitude}} , {{company.longitude}}">
+    </directions>
+    <info-window id="info-window" default-style="false" maxWidth="800px">
+      <div ng-non-bindable="" style="width:500px" class="no-gutter">
+        <div ng-if="company" ng-include="'/angular/map/views/_company.detail.modal.view.html'"></div>
+        <div ng-if="factory" ng-include="'/angular/map/views/_factory.detail.modal.view.html'"></div>
+        <div ng-if="port" ng-include="'/angular/map/views/_port.detail.modal.view.html'"></div>
+      </div>
+    </info-window>
+  </ng-map>
+</div>
+
+
+      <!-- hasapu akhir tambahan untuk custumer maps -->
