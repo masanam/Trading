@@ -4,6 +4,7 @@ use App\Model\Lead;
 use App\Model\Order;
 use App\Model\OrderNegotiation;
 use App\Model\ExchangeRate;
+use App\Model\Currency;
 
 use Illuminate\Database\Seeder;
 
@@ -94,6 +95,7 @@ class LeadsTableSeeder extends Seeder
       'aft_bonus' => NULL,
       'volume' => 7500,
       'price' => 52,
+      'currency' => 'USD',
       'trading_term' => 'FOB',
       'trading_term_detail' => 'MV',
       'payment_term' => 'LC on Sight',
@@ -182,6 +184,7 @@ class LeadsTableSeeder extends Seeder
       'aft_bonus' => NULL,
       'volume' => 7500,
       'price' => 60,
+      'currency' => 'USD',
       'trading_term' => 'FOB',
       'trading_term_detail' => 'Barge',
       'payment_term' => 'TT',
@@ -270,6 +273,7 @@ class LeadsTableSeeder extends Seeder
       'aft_bonus' => NULL,
       'volume' => 7500,
       'price' => 60,
+      'currency' => 'USD',
       'trading_term' => 'FOB',
       'trading_term_detail' => 'Barge',
       'payment_term' => 'TT',
@@ -358,6 +362,7 @@ class LeadsTableSeeder extends Seeder
       'aft_bonus' => NULL,
       'volume' => 7500,
       'price' => 60,
+      'currency' => 'USD',
       'trading_term' => 'FOB',
       'trading_term_detail' => 'Barge',
       'payment_term' => 'TT',
@@ -446,6 +451,7 @@ class LeadsTableSeeder extends Seeder
       'aft_bonus' => NULL,
       'volume' => 7500,
       'price' => 60,
+      'currency' => 'USD',
       'trading_term' => 'FOB',
       'trading_term_detail' => 'Barge',
       'payment_term' => 'TT',
@@ -534,6 +540,7 @@ class LeadsTableSeeder extends Seeder
       'aft_bonus' => NULL,
       'volume' => 7500,
       'price' => 60,
+      'currency' => 'USD',
       'trading_term' => 'FOB',
       'trading_term_detail' => 'Barge',
       'payment_term' => 'TT',
@@ -623,6 +630,7 @@ class LeadsTableSeeder extends Seeder
       'aft_bonus' => NULL,
       'volume' => 7500,
       'price' => 60,
+      'currency' => 'USD',
       'trading_term' => 'FOB',
       'trading_term_detail' => 'Barge',
       'payment_term' => 'TT',
@@ -712,6 +720,7 @@ class LeadsTableSeeder extends Seeder
       'aft_bonus' => NULL,
       'volume' => 7500,
       'price' => 60,
+      'currency' => 'USD',
       'trading_term' => 'FOB',
       'trading_term_detail' => 'Barge',
       'payment_term' => 'TT',
@@ -801,6 +810,7 @@ class LeadsTableSeeder extends Seeder
       'aft_bonus' => NULL,
       'volume' => 7500,
       'price' => 60,
+      'currency' => 'USD',
       'trading_term' => 'FOB',
       'trading_term_detail' => 'Barge',
       'payment_term' => 'TT',
@@ -821,6 +831,16 @@ class LeadsTableSeeder extends Seeder
       'buy' => 'IDR',
       'sell' => 'USD',
       'value' => 0.00007407407
+    ]);
+
+    Currency::create([
+      'id' => 'USD',
+      'value' => 'United States Dollar'
+    ]);
+
+     Currency::create([
+      'id' => 'IDR',
+      'value' => 'Indonesian Rupiah'
     ]);
 
 
