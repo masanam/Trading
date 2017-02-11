@@ -3,7 +3,7 @@
 		Price Comparision
 		<span uib-dropdown class="pull-right" ng-init="getIndices()">
       <button class="btn btn-default" ng-click="saveIndex()"
-        ng-if="display.index.id !== order.index_id && Authentication.user.id === order.user_id">Save</button>
+        ng-if="display.index.id !== order.index_id && Authentication.user.id === order.user_id && order.status !== 'a'">Save</button>
 
       <button type="button" class="btn btn-default" uib-dropdown-toggle>
         {{ display.index.index_provider }} {{ display.index.index_name }} <span class="caret"></span>

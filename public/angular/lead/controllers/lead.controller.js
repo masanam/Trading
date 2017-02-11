@@ -23,7 +23,6 @@ angular.module('lead').controller('LeadController', ['$scope', '$state', '$state
       if(!id) id = $stateParams.id;
       Lead.get({ id: id }, function(res){
         $scope.lead = res;
-
         if($scope.lead.user_id === Authentication.user.id && $state.current.name !== 'lead.view'){
           if($scope.lead.company_id) $scope.selected.company = $scope.lead.company;
           if($scope.lead.port_id) $scope.selected.port = $scope.lead.port;

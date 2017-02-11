@@ -241,7 +241,6 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
           $scope.display.sell.index = $scope.order.sells.length-1;
           $scope.calculateTotal();
         }
-        console.log($scope.order);
       }, function () {
         console.log('Modal dismissed at: ' + new Date());
       });

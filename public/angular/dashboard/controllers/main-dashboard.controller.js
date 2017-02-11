@@ -6,7 +6,7 @@ angular.module('dashboard').controller('MainDashboardController', ['$scope', '$s
     $scope.getIndices = function () {
       $scope.date = new Date();
       $scope.indexPage = 0;
-      $scope.indices = Index.query({ action: 'single-date' });
+      $scope.indices = Index.query({ action: 'single-date', previousPrice: true });
     };
 
     $scope.labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
@@ -16,5 +16,7 @@ angular.module('dashboard').controller('MainDashboardController', ['$scope', '$s
       [28, 48, 40, 19, 86, 27, 90]
     ];
 
+
+    $scope.ConnectionFlowByMonths = [12,13,14,12,13,14,13,12,12,3,18,9,13,12];
   }
 ]);

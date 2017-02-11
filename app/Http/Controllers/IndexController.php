@@ -299,6 +299,18 @@ class IndexController extends Controller
 
     $result = $query->get();
     if($req->envelope) $result = [ 'indices' => $result ];
+
+    if($req->previousPrice){
+      foreach($result as $r){
+        $latest = DB::table('index_price')
+          ->select('price')
+          ->where('index_id', $r->id)
+          ->orderBy('date', 'DESC')
+          ->limit(50)
+          ->get();
+        $r->latest = $latest->pluck('price');
+      }
+    }
         
     return response()->json($result, 200);
   }

@@ -20,34 +20,21 @@
       </div>
 
 
-      <div class="box-body hidden-xs hidden-sm" ng-init="getIndices()">
+      <div class="box-body" ng-init="getIndices()">
       	<div ng-repeat="index in indices | startFrom:indexPage*6 | limitTo:6"
       		class="col-lg-2 col-sm-4 col-xs-12 description-block border-right">
-      		<p>{{ index.index_provider }} {{ index.index_name }}</p>
-      		<h1>$ {{ index.price | number:2 }}</h1>
-      		<small class="text-muted">last updated: {{ index.date | date }}</small>
+          <div>
+        		<p>{{ index.index_provider }} {{ index.index_name }}</p>
+        		<h1>$ {{ index.price | number:2 }}</h1>
+        		<small class="text-muted">last updated: {{ index.date | date }}</small>
+          </div>
+          <div style="margin-top:-100px; vertical-align: top">
+            <spark-line-chart data="index.latest.reverse()"></spark-line-chart>
+          </div>
       	</div>
       </div>
-       <div class="box-body hidden-md hidden-sm hidden-lg" ng-init="getIndices()">
-        <div ng-repeat="index in indices | startFrom:indexPage*1 | limitTo:1"
-          class="col-lg-2 col-sm-4 col-xs-12 description-block border-right">
-          <p>{{ index.index_provider }} {{ index.index_name }}</p>
-          <h1>$ {{ index.price | number:2 }}</h1>
-          <small class="text-muted">last updated: {{ index.date | date }}</small>
-        </div>
-      </div>
-      <div class="box-body hidden-md hidden-xs hidden-lg" ng-init="getIndices()">
-        <div ng-repeat="index in indices | startFrom:indexPage*3 | limitTo:3"
-          class="col-lg-2 col-sm-4 col-xs-12 description-block border-right">
-          <p>{{ index.index_provider }} {{ index.index_name }}</p>
-          <h1>$ {{ index.price | number:2 }}</h1>
-          <small class="text-muted">last updated: {{ index.date | date }}</small>
-        </div>
-      </div>
-
     </div>
   </div>
-
 
   <div ng-static-include="'/angular/dashboard/views/_orders.partial.html'"></div>
 </section>

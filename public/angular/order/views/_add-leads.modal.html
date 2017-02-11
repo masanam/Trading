@@ -34,7 +34,12 @@
           <div class="col-sm-6 form-group" ng-init="selected.item.pivot.volume = selected.item.volume - getUsed(selected.item)">
             <input type="number" ng-model="selected.item.pivot.volume" class="form-control" placeholder="Volume (MT)" required>
           </div>
-          <div class="col-sm-6 form-group" ng-init="selected.item.pivot.price = ( selected.item.price )">
+          <div class="col-sm-2 form-group" ng-init="selected.item.pivot.deal_currency_id = selected.item.deal_currency_id">
+            <select class="form-control" ng-model="selected.item.deal_currency_id"
+              ng-options="o as o for o in currencies" required>              
+            </select>
+          </div>
+          <div class="col-sm-3 form-group" ng-init="selected.item.pivot.price = ( selected.item.price )">
             <input type="number" ng-model="selected.item.pivot.price" class="form-control" placeholder="Price (USD)" required>
           </div>
         </div>
