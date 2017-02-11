@@ -50,3 +50,11 @@ angular.module('order').factory('Term', function (){
     ]
   };
 });
+
+angular.module('order').factory('Currency', function (){
+  return {
+    currencies : [
+      'USD', 'IDR'
+    ]
+  };
+});

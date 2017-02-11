@@ -61,9 +61,10 @@ class CreateOrdersTable extends Migration
             $table->unique(['order_id', 'user_id']);
         });
 
-        Schema::create('currency', function (Blueprint $table) {
+        Schema::create('currencies', function (Blueprint $table) {
             $table->char('id',3);
-            $table->integer('value');
+            $table->string('value');
+            $table->timestamps();
         });
 
         Schema::create('exchange_rates', function (Blueprint $table) {

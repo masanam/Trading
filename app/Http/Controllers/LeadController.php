@@ -149,8 +149,8 @@ class LeadController extends Controller
         'message' => 'Bad Request'
       ], 400);
     }
-
     $lead = new Lead($req->all());
+
 
     $lead->user_id = Auth::User()->id;
     $lead->company_id = $req->company_id;

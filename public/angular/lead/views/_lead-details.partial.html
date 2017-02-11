@@ -51,7 +51,7 @@
         <label>Country : </label>
         <p>{{ lead.country }}</p>
         <label>Asking Price : </label>
-        <p>$ {{ lead.price }}</p>
+        <p>{{ lead.currency }} {{ lead.price | number:2}}</p>
         <label>Laycan Schedule : </label>
         <p>{{ lead.laycan_start | date : 'd MMMM yyyy' }} - {{ lead.laycan_end | date : 'd MMMM yyyy' }}</p>
       </div>

@@ -176,6 +176,8 @@ class OrderController extends Controller
    */
   public function store(Request $req)
   {
+    return response()->json($req, 200);
+    dd();
     // Check the availability of volume lead
     if(count($req->buys) > 0){
       foreach($req->buys as $buy){
@@ -231,7 +233,6 @@ class OrderController extends Controller
         ]);
       }
     }
-
     if(count($req->sells) > 0) {
       foreach($req->sells as $sell){
         $order->sells()->attach([ $sell['id'] => $sell['pivot'] ]);
@@ -251,8 +252,7 @@ class OrderController extends Controller
           'user_id' => Auth::user()->id,
         ]);
       }
-    }
-
+    }        
     $order->addAdditionalCosts($req->additional);
 
     return response()->json($order, 200);

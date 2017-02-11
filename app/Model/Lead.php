@@ -85,6 +85,7 @@ class Lead extends Model
 
         'volume',
         'price',
+        'currency',
         'trading_term',
         'trading_term_detail',
         'payment_term',
@@ -135,13 +136,13 @@ class Lead extends Model
 
     public function orders() {
         return $this->belongsToMany(Order::class, 'order_details')
-            ->withPivot('id', 'price', 'volume', 'payment_term', 'trading_term');
+            ->withPivot('id', 'price', 'deal_currency_id', 'deal_price', 'volume', 'payment_term', 'trading_term');
     }
 
     public function ordersSpecific($status = 'd') {
         return $this->belongsToMany(Order::class, 'order_details')
             ->where('status','!=',$status)
-            ->withPivot('id', 'price', 'volume', 'payment_term', 'trading_term');
+            ->withPivot('id', 'price', 'deal_currency_id', 'deal_price', 'volume', 'payment_term', 'trading_term');
     }
 
     public function countInOrders() {
