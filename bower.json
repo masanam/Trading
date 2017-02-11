@@ -29,8 +29,7 @@
     "firebase": "^3.5.0",
     "angularfire": "^2.0.2",
     "angular-scroll-glue": "^2.0.7",
-    "angular-ui-select": "^0.19.4",
-    "sparky": "https://github.com/Adslot/sparky.git"
+    "angular-ui-select": "^0.19.4"
   },
   "resolutions": {
     "angular": "1.5.8"

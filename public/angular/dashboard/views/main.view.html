@@ -44,9 +44,22 @@
           <small class="text-muted">last updated: {{ index.date | date }}</small>
         </div>
       </div>
-
     </div>
   </div>
+
+  <div class="col-lg-12">
+    <div class="box box-info">
+      <div class="box-header with-border">
+        <h3 class="box-title">Sparkline {{ConnectionFlowByMonths}}</h3>
+      </div>
+      <div class="box-body hidden-xs hidden-sm">
+        <div>
+          <spark-line-chart data="{{ConnectionFlowByMonths}}"></spark-line-chart>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
 
   <div ng-static-include="'/angular/dashboard/views/_orders.partial.html'"></div>
