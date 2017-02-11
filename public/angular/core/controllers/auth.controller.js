@@ -1,9 +1,14 @@
 'use strict';
 
-angular.module('auth').controller('AuthController', ['$scope', '$state', '$urlRouter', 'Authentication',
-  function AuthController($scope, $state, $urlRouter, Authentication) {
+angular.module('auth').controller('AuthController', ['$scope', '$state', '$urlRouter', 'Authentication', 'Role',
+  function AuthController($scope, $state, $urlRouter, Authentication, Role) {
+    $scope.selectedRoles = [];
     // route the JWT should be retrieved from
     $scope.Authentication = Authentication;
+
+    $scope.findRoles = function() {
+      $scope.roles = Role.query();
+    };
 
     $scope.login = function() {
       var credentials = {
@@ -25,6 +30,7 @@ angular.module('auth').controller('AuthController', ['$scope', '$state', '$urlRo
         var registration = {
           name: $scope.registration.name,
           email: $scope.registration.email,
+          role_id: $scope.selectedRoles,
           phone: $scope.registration.phone,
           password: $scope.registration.password
         };
@@ -32,7 +38,7 @@ angular.module('auth').controller('AuthController', ['$scope', '$state', '$urlRo
           email: registration.email,
           password: registration.password
         };
-        
+
         // Use Satellizer's $auth service to login
         Authentication.signup(registration, function(res){
           // if(err) $scope.err = err.message.data.message;
@@ -53,7 +59,7 @@ angular.module('auth').controller('AuthController', ['$scope', '$state', '$urlRo
     $scope.forgot = function() {
       $scope.err = '';
       $scope.success = '';
-    
+
       $scope.loading = true;
       var email= $scope.forgot.email;
 

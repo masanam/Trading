@@ -11,7 +11,7 @@ use Auth;
 class RoleController extends Controller
 {
     public function __construct() {
-        $this->middleware(['jwt.auth', 'auth.admin']);
+        $this->middleware(['jwt.auth', 'auth.admin'], ['except' => 'index']);
     }
 
     /**

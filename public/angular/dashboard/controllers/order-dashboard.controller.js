@@ -4,7 +4,7 @@ angular.module('dashboard').controller('OrderDashboardController', ['$scope', '$
   function($scope, $uibModal, $state, $log, Index, Order, Authentication, Environment) {
     $scope.Authentication = Authentication;
     $scope.showBuy = Environment.showBuy;
-    
+
     //find list of order in dashboard
     $scope.find = function () {
       var possession;
@@ -57,6 +57,7 @@ angular.module('dashboard').controller('OrderDashboardController', ['$scope', '$
         $scope.funnel=res;
         $scope.labels = ['Leads', 'Pending', 'Approve', 'Finalized'];
         $scope.series = ['Buy', 'Sell', 'Order'];
+        // $scope.series = ['Order'];
         $scope.data= [
           [res['lead-sell'],0,0,0],
           [res['lead-buy'],0,0,0],

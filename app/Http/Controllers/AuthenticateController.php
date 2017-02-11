@@ -74,14 +74,15 @@ class AuthenticateController extends Controller
         $user->name = trim($request->name);
         $user->title = trim($request->title);
         $user->image = trim($request->image);
-        $user->status = 'a';
+        $user->status = 'p';
         $user->email = trim(strtolower($request->email));
         $user->phone = trim($request->phone);
         $user->password = bcrypt($request->password);
         $user->save();
 
-
-        $user->roles()->attach(2);
+        foreach($request->role_id as $rid) {
+          $user->roles()->attach($rid['id']);
+        }
 
         $token = JWTAuth::fromUser($user);
 
@@ -159,7 +160,7 @@ class AuthenticateController extends Controller
     {
         $aws = config('filesystems.disks.s3');
         $s3 = Storage::disk('s3');
-        
+
 
         $s3Url = 'https://' . $aws['bucket'] . '.s3-' . $aws['region'] . '.amazonaws.com';
         $filename = $request->filename;
