@@ -583,7 +583,7 @@ class OrderController extends Controller
       foreach($req->sells as $sell){
         $order->sells()->attach([ $sell['id'] => $sell['pivot'] ]);
         Lead::find($sell['id'])->reconcile();
-
+        var_dump($sell['pivot']);
         // add negotiation log to the staged lead
         $order_detail_id = $order->sells()->find($sell['id'])->pivot->id;
 
