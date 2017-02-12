@@ -107,9 +107,9 @@ angular.module('map').controller('MapController', ['$scope','$http', '$statePara
       }
       else {
 
-        $scope.companies = Company.query({ company_type: 'c' });
-        $scope.factories = Factory.query();
-        $scope.ports = Port.query();
+        $scope.companies = Company.query({ q: $scope.search.keyword, company_type: 'c' });
+        $scope.factories = Factory.query({ q: $scope.search.keyword });
+        $scope.ports = Port.query({ q: $scope.search.keyword });
         //console.log($scope.companies);
         //console.log($scope.factories);
         //console.log($scope.ports);
