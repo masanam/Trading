@@ -1,5 +1,5 @@
  </br>
- <section ng-controller="UserController" ng-init="findOne()" >
+ <section ng-controller="UserController" ng-init="findOne(); findRoles()">
   <div class="col-md-4">
   </div>
 
@@ -20,17 +20,21 @@
               <div class="row">
 
                <div class="col-md-12">
-                <div class="row">
-                  <div class="col-md-8">
-                    <h1>Update Profile</h1>
-                  </div>
-                  <div class="col-md-4" style="margin-top:20px;">
-                    <button class="btn btn-primary" ui-sref="user.edit-role" type="button" name="edit_role">Edit Role</button>
-                  </div>
+                <h1>Update Role</h1>
+                <div class="callout callout-danger">
+                  <span style="">If you submit the new role,<br/> You will be logged out and cannot log in until your request of changes are approved by the admin.<br/>So you need to be sure before you click the submit button.</span>
                 </div>
-
-                <form role="form" ng-submit="update()">
-                  <div ng-include="'./angular/core/views/user/form.view.html'"></div>
+                <form role="form" ng-submit="updateRole(selectedRoles)">
+                  <div class="form-group has-feedback" ng-repeat="selectedRole in selectedRoles track by $index">
+                    <select ng-model="selectedRole.id" placeholder="Role" flex>
+                      <option value="" disabled selected>Role</option>
+                      <option ng-repeat="role in roles" value="{{role.id}}">{{role.role}}</option>
+                    </select>
+                    <button type="button" ng-click="selectedRoles.splice(selectedRoles.indexOf(selectedRole),1)" flex>X</button>
+                  </div>
+                  <div class="form-group has-feedback">
+                    <button type="button" ng-click="selectedRoles.push({})"> + Add a new role</button>
+                  </div>
                   <div class="callout callout-danger" ng-show="error">{{error}}</div>
                   <div class="callout callout-success" ng-show="success">{{success}}</div>
                   <button type="submit" class="btn btn-default">Submit</button>
