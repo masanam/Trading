@@ -7,7 +7,12 @@ angular.module('auth').controller('AuthController', ['$scope', '$state', '$urlRo
     $scope.Authentication = Authentication;
 
     $scope.findRoles = function() {
-      $scope.roles = Role.query();
+      $scope.roles = Role.query(function (res){
+        for(var x in res){
+          if(Authentication.user.role.indexOf(res[x].role) > -1)
+            $scope.selectedRoles.push({ id: res[x].id.toString() });
+        }
+      });
     };
 
     $scope.login = function() {
