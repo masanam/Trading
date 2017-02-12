@@ -20,16 +20,6 @@ angular.module('dashboard').config(['$stateProvider',
           'index.view', 'index.edit',
         ]
       })
-      .state('dashboard.map', {
-        url: '/map',
-        templateUrl: '/angular/dashboard/views/map.view.html',
-        privileges: [
-          'order.view', 'order.edit',
-          'lead.view', 'lead.edit',
-          'coalpedia.view', 'coalpedia.edit',
-          'index.view', 'index.edit',
-        ]
-      })
       .state('dashboard.index', {
         url: '/index',
         templateUrl: '/angular/dashboard/views/index.view.html',
