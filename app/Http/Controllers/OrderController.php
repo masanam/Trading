@@ -520,8 +520,6 @@ class OrderController extends Controller
    */
   public function store(Request $req)
   {
-    return response()->json($req, 200);
-    dd();
     // Check the availability of volume lead
     if(count($req->buys) > 0){
       foreach($req->buys as $buy){
@@ -585,7 +583,7 @@ class OrderController extends Controller
       foreach($req->sells as $sell){
         $order->sells()->attach([ $sell['id'] => $sell['pivot'] ]);
         Lead::find($sell['id'])->reconcile();
-
+        
         // add negotiation log to the staged lead
         $order_detail_id = $order->sells()->find($sell['id'])->pivot->id;
 
@@ -604,7 +602,7 @@ class OrderController extends Controller
           'user_id' => Auth::user()->id,
         ]);
       }
-    }        
+    }
     $order->addAdditionalCosts($req->additional);
 
     $leads_notification = [

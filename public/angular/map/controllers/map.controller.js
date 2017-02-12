@@ -113,7 +113,7 @@ angular.module('map').controller('MapController', ['$scope','$http', '$statePara
       }
       //hasapu add function 10-02-2017
       else {
-        if($scope.value==="port") {
+        if($scope.value==='port') {
           if($scope.res.length > 0) {
             $scope.ports = Port.query({ q:$scope.res });
             $scope.factories = undefined;
@@ -121,7 +121,7 @@ angular.module('map').controller('MapController', ['$scope','$http', '$statePara
             $scope.search.keyword='';
           }
         }
-        else if($scope.value==="factory") {
+        else if($scope.value==='factory') {
           if($scope.res.length > 0) {
             $scope.factories = Factory.query({ q:$scope.res });
             $scope.ports = undefined;
@@ -129,7 +129,7 @@ angular.module('map').controller('MapController', ['$scope','$http', '$statePara
             $scope.search.keyword='';
           }
         }
-        else if($scope.value==="custumer") {
+        else if($scope.value==='custumer') {
           if($scope.res.length > 0) {
             $scope.companies = Company.query({ company_type: 'c', q:$scope.res });
             $scope.factories = undefined;
@@ -137,7 +137,8 @@ angular.module('map').controller('MapController', ['$scope','$http', '$statePara
             $scope.search.keyword='';
           }
         }
-        else if ($scope.value==="all" || $scope.value===undefined) {
+
+        else if ($scope.value==='all' || $scope.value===undefined) {
           $scope.ports = Port.query();
           $scope.factories = Factory.query();
           $scope.companies = Company.query({ company_type: 'c' });

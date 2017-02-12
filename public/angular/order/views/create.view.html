@@ -22,18 +22,18 @@
             <li><a ui-sref="order.list" ><i class="glyphicon glyphicon-chevron-left"></i> Back </a></li>
             <li><a ng-click="create()" > Submit Order</a></li>
           </ul>
-        </div>    
+        </div>
       </div>
 
 	    <div class="no-padding">
         <div class="col-lg-10" ng-include="'/angular/order/views/_order-detail.partial.html'"></div>
-        
+
         <div class="col-lg-2" ng-controller="OrderIndexController" ng-init="getIndices()">
           Price Index Reference
           <div class="btn-group-vertical">
             <label class="btn btn-default" ng-repeat="index in indices"
               ng-model="order.index_id" uib-btn-radio="index.id">
-              <small>{{ index.index_provider }}    
+              <small>{{ index.index_provider }}
               {{ index.index_name }} - </small>
               {{ index.price }}
             </label>
