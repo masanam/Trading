@@ -115,7 +115,7 @@ angular.module('map').controller('MapController', ['$scope','$http', '$statePara
       else {
         if($scope.value==="port") {
           if($scope.res.length > 0) {
-            $scope.ports = Port.query({ q:$scope.res  });
+            $scope.ports = Port.query({ q:$scope.res });
             $scope.factories = undefined;
             $scope.companies = undefined;
             $scope.search.keyword='';
@@ -123,7 +123,7 @@ angular.module('map').controller('MapController', ['$scope','$http', '$statePara
         }
         else if($scope.value==="factory") {
           if($scope.res.length > 0) {
-            $scope.factories = Factory.query({ q:$scope.res  });
+            $scope.factories = Factory.query({ q:$scope.res });
             $scope.ports = undefined;
             $scope.companies = undefined;
             $scope.search.keyword='';
@@ -137,7 +137,7 @@ angular.module('map').controller('MapController', ['$scope','$http', '$statePara
             $scope.search.keyword='';
           }
         }
-        else if ($scope.value==="all" || $scope.value===undefined ) {
+        else if ($scope.value==="all" || $scope.value===undefined) {
           $scope.ports = Port.query();
           $scope.factories = Factory.query();
           $scope.companies = Company.query({ company_type: 'c' });
