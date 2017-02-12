@@ -113,7 +113,11 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
       modalInstance.result.then(function (negotiation) {
         Order.update(
           { id:$scope.order.id, action: 'stage' },
-          { lead_type:'buy', lead_id:negotiation.id, negotiation:true, volume:negotiation.volume, price:negotiation.price, trading_term:negotiation.trading_term, payment_term:negotiation.payment_term, notes:negotiation.notes },
+          { lead_type:'buy', lead_id:negotiation.id, negotiation:true, volume:negotiation.volume,
+            base_currency_id: negotiation.base_currency_id, base_price: negotiation.base_price,
+            deal_currency_id: negotiation.deal_currency_id, deal_price: negotiation.deal_price,
+            exchange_rate: negotiation.exchange_rate, trading_term:negotiation.trading_term, payment_term:negotiation.payment_term,
+            notes:negotiation.notes },
           function (res){
             $scope.order.buys = res.buys;
             negotiation.created_at = new Date();
@@ -145,7 +149,11 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
       modalInstance.result.then(function (negotiation) {
         Order.update(
           { id:$scope.order.id, action: 'stage' },
-          { lead_type:'sell', lead_id:negotiation.id, negotiation:true, volume:negotiation.volume, price:negotiation.price, trading_term:negotiation.trading_term, payment_term:negotiation.payment_term, notes:negotiation.notes },
+          { lead_type:'sell', lead_id:negotiation.id, negotiation:true, volume:negotiation.volume,
+            base_currency_id: negotiation.base_currency_id, base_price: negotiation.base_price,
+            deal_currency_id: negotiation.deal_currency_id, deal_price: negotiation.deal_price,
+            exchange_rate: negotiation.exchange_rate, trading_term:negotiation.trading_term, payment_term:negotiation.payment_term,
+            notes:negotiation.notes },
           function (res){
             $scope.order.sells = res.sells;
             negotiation.created_at = new Date();
@@ -180,10 +188,14 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
         if(!$scope.order.buys) $scope.order.buys = [];
         $scope.checkAlike(selectedItem);
 
+
         if($scope.order.id){
           Order.update(
             { id:$scope.order.id, action: 'stage' },
-            { lead_type:'buy', lead_id:selectedItem.id, volume:selectedItem.pivot.volume, price:selectedItem.pivot.price, trading_term:selectedItem.pivot.trading_term, payment_term:selectedItem.pivot.payment_term },
+            { lead_type:'buy', lead_id:selectedItem.id, volume:selectedItem.pivot.volume,
+              base_currency_id: selectedItem.pivot.base_currency_id, base_price: selectedItem.pivot.base_price,
+              deal_currency_id: selectedItem.pivot.deal_currency_id, deal_price: selectedItem.pivot.deal_price,
+              exchange_rate: selectedItem.pivot.exchange_rate, trading_term:selectedItem.pivot.trading_term, payment_term:selectedItem.pivot.payment_term },
             function (res){
               $scope.order.buys = res.buys;
               $scope.display.buy = selectedItem;
@@ -228,7 +240,10 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
         if($scope.order.id){
           Order.update(
             { id:$scope.order.id, action: 'stage' },
-            { lead_type:'sell', lead_id:selectedItem.id, volume:selectedItem.pivot.volume, price:selectedItem.pivot.price, trading_term:selectedItem.pivot.trading_term, payment_term:selectedItem.pivot.payment_term },
+            { lead_type:'sell', lead_id:selectedItem.id, volume:selectedItem.pivot.volume,
+              base_currency_id: selectedItem.pivot.base_currency_id, base_price: selectedItem.pivot.base_price,
+              deal_currency_id: selectedItem.pivot.deal_currency_id, deal_price: selectedItem.pivot.deal_price,
+              exchange_rate: selectedItem.pivot.exchange_rate, trading_term:selectedItem.pivot.trading_term, payment_term:selectedItem.pivot.payment_term },
             function (res){
               $scope.order.sells = res.sells;
               $scope.display.sell = selectedItem;

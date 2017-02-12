@@ -73,7 +73,7 @@
             </button>
             <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
               <li role="menuitem" ng-repeat="buy in order.buys"><a ng-click="display.buy = buy; display.buy.index = $index;checkAlike(display.buy);">
-              {{ buy.company.company_name }} : {{ buy.pivot.volume | number }}mt, {{order.currency}}{{ buy.pivot.price | number }}
+              {{ buy.company.company_name }} : {{ buy.pivot.volume | number }}mt, US${{ buy.pivot.price | number }}
               </a></li>
             </ul>
 
@@ -100,7 +100,7 @@
             <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
               <li role="menuitem" ng-repeat="sell in order.sells">
               <a ng-click="display.sell = sell; display.sell.index = $index;checkAlike(display.sell);">
-              {{ sell.company.company_name }} : {{ sell.pivot.volume | number }}mt, {{order.currency}}{{ sell.pivot.price | number }}
+              {{ sell.company.company_name }} : {{ sell.pivot.volume | number }}mt, US${{ sell.pivot.price | number }}
               </a></li>
             </ul>
           </span>
@@ -150,7 +150,7 @@
 				<td>Volume (mt) - Price (USD)</td>
 				<td ng-if="!order.in_house">
           <span ng-if="display.buy">
-            {{ display.buy.pivot.volume | number }}mt - {{order.currency}} {{ display.buy.pivot.price | number }}
+            {{ display.buy.pivot.volume | number }}mt - US$ {{ display.buy.pivot.price | number }}
             <a ng-if="order.id && order.status !== 'a' && order.status !== 'x'" ng-if="display.buy.user_id === Authentication.user.id && order.id"
               ng-click="negoBuy()" class="pull-right">
               Nego
@@ -159,7 +159,7 @@
 				</td>
 				<td>
           <span ng-if="display.sell">
-            {{ display.sell.pivot.volume | number }}mt - {{order.currency}} {{ display.sell.pivot.price | number }}
+            {{ display.sell.pivot.volume | number }}mt - US$ {{ display.sell.pivot.price | number }}
             <a ng-if="order.id && order.status !== 'a' && order.status !== 'x'" ng-if="display.sell.user_id === Authentication.user.id && order.id"
               ng-click="negoSell()" class="pull-right">
               Nego
@@ -334,13 +334,13 @@
 				<th>Total Price / mt</th>
         <td ng-if="!order.in_house">
 					<span ng-if="display.buy">
-					<h4>{{order.currency}}{{ display.buy.pivot.price | number }}</h4>
+					<h4>US${{ display.buy.pivot.price | number }}</h4>
 					from {{ order.buys.length }} Customers
 					</span>
 				</td>
         <td>
           <span ng-if="display.sell">
-          <h4>{{order.currency}}{{ display.sell.pivot.price | number }}</h4>
+          <h4>US${{ display.sell.pivot.price | number }}</h4>
           from {{ order.sells.length }} Suppliers
           </span>
         </td>
@@ -354,7 +354,7 @@
 				</td>
         <td>
           <span ng-show="order.additional && !order.companies">
-          <h4>{{order.currency}}{{additional.cost | number}}</h4>
+          <h4>US${{additional.cost | number}}</h4>
           </span>
         </td>
 			</tr>
@@ -362,7 +362,7 @@
         <th>{{additional.pivot.label}} / mt</th>
         <td colspan="{{ order.in_house ? '1' : '2' }}">
           <span ng-show="!order.additional && order.companies">
-            {{order.currency}}{{additional.pivot.cost | number}} ( {{additional.company_name}} )
+            US${{additional.pivot.cost | number}} ( {{additional.company_name}} )
           </span>
         </td>
       </tr>
@@ -370,21 +370,21 @@
 				<th>Coal Price</th>
         <td ng-if="!order.in_house">
 					<span ng-if="display.buy">
-					<h3>{{order.currency}}{{ (totalSelfSell + totalSelfAdditionalBuy) / totalVolumeSell | number }}</h3>
+					<h3>US${{ (totalSelfSell + totalSelfAdditionalBuy) / totalVolumeSell | number }}</h3>
 					from {{ order.buys.length }} Customers
 					</span>
 				</td>
         <td>
           <span ng-if="display.sell">
-          <h3>{{order.currency}}{{ (totalSelfBuy + totalSelfAdditionalSell) / totalVolumeBuy | number }}</h3>
+          <h3>US${{ (totalSelfBuy + totalSelfAdditionalSell) / totalVolumeBuy | number }}</h3>
           from {{ order.sells.length }} Suppliers
           </span>
         </td>
 			</tr>
 			<tr ng-if="display.buy && display.sell">
-				<td ng-if="(((totalSelfSell + totalSelfAdditionalBuy) / totalVolumeSell) - ((totalSelfBuy + totalSelfAdditionalSell) / totalVolumeBuy)) >= 0" colspan=3 style="text-align:center; "><h3 style="color: green">Expected Margin / mt: {{order.currency}}{{ ((totalSelfSell + totalSelfAdditionalBuy) / totalVolumeSell) -
+				<td ng-if="(((totalSelfSell + totalSelfAdditionalBuy) / totalVolumeSell) - ((totalSelfBuy + totalSelfAdditionalSell) / totalVolumeBuy)) >= 0" colspan=3 style="text-align:center; "><h3 style="color: green">Expected Margin / mt: US${{ ((totalSelfSell + totalSelfAdditionalBuy) / totalVolumeSell) -
         ((totalSelfBuy + totalSelfAdditionalSell) / totalVolumeBuy) | number }}</h3></td>
-				<td ng-if="(((totalSelfSell + totalSelfAdditionalBuy) / totalVolumeSell) - ((totalSelfBuy + totalSelfAdditionalSell) / totalVolumeBuy)) < 0" colspan=3 style="text-align:center; "><h3 style="color: red">Expected Margin / mt: {{order.currency}}{{ ((totalSelfBuy + totalSelfAdditionalSell) / totalVolumeBuy) - ((totalSelfSell + totalSelfAdditionalBuy) / totalVolumeSell) | number }}</h3></td>
+				<td ng-if="(((totalSelfSell + totalSelfAdditionalBuy) / totalVolumeSell) - ((totalSelfBuy + totalSelfAdditionalSell) / totalVolumeBuy)) < 0" colspan=3 style="text-align:center; "><h3 style="color: red">Expected Margin / mt: US${{ ((totalSelfBuy + totalSelfAdditionalSell) / totalVolumeBuy) - ((totalSelfSell + totalSelfAdditionalBuy) / totalVolumeSell) | number }}</h3></td>
 			</tr>
 		</tbody>
 
