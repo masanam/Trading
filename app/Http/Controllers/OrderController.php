@@ -604,7 +604,7 @@ class OrderController extends Controller
           'user_id' => Auth::user()->id,
         ]);
       }
-    }        
+    }
     $order->addAdditionalCosts($req->additional);
 
     $leads_notification = [
