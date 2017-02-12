@@ -21,11 +21,10 @@ angular.module('order').controller('CreateOrderController', ['$scope', '$state',
 
       // Redirect after save
       order.$save(function (res) {
-        console.log(res);
-        //$state.go('order.view', { id: res.id });
+        $state.go('order.view', { id: res.id });
 
         // // Clear form fields
-        //$scope.order = new Order();
+        $scope.order = new Order();
       }, function (err) {
         $scope.error = err;
       });
