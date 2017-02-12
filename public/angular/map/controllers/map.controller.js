@@ -146,9 +146,6 @@ angular.module('map').controller('MapController', ['$scope','$http', '$statePara
 
       //hasapu add function end
 
-
-
-
       params.action = 'filter';
       params.country = $scope.filter_country;
 
