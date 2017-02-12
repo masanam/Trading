@@ -23,12 +23,12 @@
       <div class="box-body" ng-init="getIndices()">
       	<div ng-repeat="index in indices | startFrom:indexPage*6 | limitTo:6"
       		class="col-lg-2 col-sm-4 col-xs-12 description-block border-right">
-          <div>
+          <div style="min-height: 100px;">
         		<p>{{ index.index_provider }} {{ index.index_name }}</p>
         		<h1>$ {{ index.price | number:2 }}</h1>
         		<small class="text-muted">last updated: {{ index.date | date }}</small>
           </div>
-          <div style="margin-top:-100px; vertical-align: top">
+          <div style="margin-top:-100px; min-height: 100px; vertical-align: top">
             <spark-line-chart data="index.latest.reverse()"></spark-line-chart>
           </div>
       	</div>
