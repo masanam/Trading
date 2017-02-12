@@ -32,7 +32,8 @@
       <div class="col-sm-9" ng-if="selected.item">
         <div class="row">
           <div class="col-sm-4 form-group" ng-init="selected.item.pivot.volume = selected.item.volume - getUsed(selected.item)">
-            <input type="number" ng-model="selected.item.pivot.volume" class="form-control" placeholder="Volume (MT)" required>
+            <input type="number" min="0" ng-model="selected.item.pivot.volume"
+              class="form-control" placeholder="Volume (MT)" required>
           </div>
           <div class="col-sm-4 form-group" ng-init="selected.item.pivot.trading_term = selected.item.trading_term">
             <select class="form-control" ng-model="selected.item.pivot.trading_term"
