@@ -51,12 +51,12 @@ class IndexTableSeeder extends Seeder
 		// Index::create(['id'=>23, 'index_provider' => 'HPB', 'index_name' => 'Sungkai HS', 'quality' => 'Sungkai HS', 'frequency'=>'m']);
 		// Index::create(['id'=>24, 'index_provider' => 'HPB', 'index_name' => 'Sungkai LS', 'quality' => 'Sungkai LS', 'frequency'=>'m']);
 
-    Index::create(['id'=>1, 'index_provider' => 'HBA', 'index_name' => '', 'quality' => 'GAR 6322', 'frequency'=>'d']);
-		Index::create(['id'=>2, 'index_provider' => 'HBA*', 'index_name' => 'Mahoni', 'quality' => 'GAR 6322', 'frequency'=>'d']);
-		Index::create(['id'=>3, 'index_provider' => 'GCI', 'index_name' => 'Mahoni B', 'quality' => 'GAR 6322', 'frequency'=>'d']);
-		Index::create(['id'=>4, 'index_provider' => 'Coalfax Index', 'index_name' => 'Agathis', 'quality' => 'GAR 6322', 'frequency'=>'d']);
-		Index::create(['id'=>5, 'index_provider' => 'ICI 1 Index', 'index_name' => 'Sungkai', 'quality' => 'GAR 6322', 'frequency'=>'d']);
-		Index::create(['id'=>6, 'index_provider' => 'Platts (FOB Kalimantan)', 'index_name' => 'Sungkai MS', 'quality' => 'GAR 6322', 'frequency'=>'d']);
+    Index::create(['id'=>1, 'index_provider' => 'HBA', 'index_name' => 'GAR 6322', 'quality' => 'GAR 6322', 'frequency'=>'d']);
+		Index::create(['id'=>2, 'index_provider' => 'HBA*', 'index_name' => 'GAR 6322', 'quality' => 'GAR 6322', 'frequency'=>'d']);
+		Index::create(['id'=>3, 'index_provider' => 'GCI', 'index_name' => 'GAR 6322', 'quality' => 'GAR 6322', 'frequency'=>'d']);
+		Index::create(['id'=>4, 'index_provider' => 'Coalfax Index', 'index_name' => 'GAR 6322', 'quality' => 'GAR 6322', 'frequency'=>'d']);
+		Index::create(['id'=>5, 'index_provider' => 'ICI 1 Index', 'index_name' => 'GAR 6322', 'quality' => 'GAR 6322', 'frequency'=>'d']);
+		Index::create(['id'=>6, 'index_provider' => 'Platts (FOB Kalimantan)', 'index_name' => 'GAR 6322', 'quality' => 'GAR 6322', 'frequency'=>'d']);
 
 		IndexPrice::create(['index_id'=>1, 'date' => '2016-01-04', 'day_of_year' => 4, 'day_of_month' => 4, 'day_of_week' => 1, 'week' => 2, 'month' => 1, 'year' => 2016, 'price' => 37.5]);
 		IndexPrice::create(['index_id'=>1, 'date' => '2016-01-05', 'day_of_year' => 5, 'day_of_month' => 5, 'day_of_week' => 2, 'week' => 2, 'month' => 1, 'year' => 2016, 'price' => 37.5]);
