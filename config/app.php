@@ -32,6 +32,7 @@ return [
     'destinationBy' => env('DESTINATION_BY', 'factory'),
     'productQuality' => env('PRODUCT_QUALITY', 'productQuality'),
     'defaultArea' => env('DEFAULT_AREA', 4),
+    'defaultCurrency' => env('DEFAULT_CURRENCY', 'USD'),
 
     /*
     |--------------------------------------------------------------------------

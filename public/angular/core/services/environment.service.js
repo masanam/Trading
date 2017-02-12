@@ -12,6 +12,7 @@ angular.module('index').factory('Environment', ['$window',
     env.showBuy = $window.showBuy;
     env.destinationBy = $window.destinationBy;
     env.productQuality = $window.productQuality;
+    env.defaultCurrency = $window.defaultCurrency;
 
     return env;
   }
