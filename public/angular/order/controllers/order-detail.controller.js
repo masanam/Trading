@@ -22,29 +22,29 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
 
       if ($scope.order.sells)
         for (i = 0; i < $scope.order.sells.length; i++) {
-          $scope.totalPriceBuy += $scope.order.sells[i].pivot.price;
+          $scope.totalPriceBuy += $scope.order.sells[i].pivot.base_price;
           $scope.totalVolumeBuy += $scope.order.sells[i].pivot.volume;
           if ($scope.order.sells[i].additional !== undefined) {
-            $scope.totalSelfBuy += (($scope.order.sells[i].pivot.price + $scope.order.sells[i].additional.freight_cost +
+            $scope.totalSelfBuy += (($scope.order.sells[i].pivot.base_price + $scope.order.sells[i].additional.freight_cost +
               $scope.order.sells[i].additional.port_to_factory) * $scope.order.sells[i].pivot.volume);
             $scope.totalSelfAdditionalBuy += ($scope.order.sells[i].additional.freight_cost +
               $scope.order.sells[i].additional.port_to_factory) * $scope.order.sells[i].pivot.volume;
           }else{
-            $scope.totalSelfBuy += (($scope.order.sells[i].pivot.price) * $scope.order.sells[i].pivot.volume);
+            $scope.totalSelfBuy += (($scope.order.sells[i].pivot.base_price) * $scope.order.sells[i].pivot.volume);
             $scope.totalSelfAdditionalBuy += $scope.order.sells[i].pivot.volume;
           }
         }
       if ($scope.order.buys)
         for (i = 0; i < $scope.order.buys.length; i++) {
-          $scope.totalPriceSell += $scope.order.buys[i].pivot.price;
+          $scope.totalPriceSell += $scope.order.buys[i].pivot.base_price;
           $scope.totalVolumeSell += $scope.order.buys[i].pivot.volume;
           if ($scope.order.buys[i].additional !== undefined) {
-            $scope.totalSelfSell += (($scope.order.buys[i].pivot.price + $scope.order.buys[i].additional.freight_cost +
+            $scope.totalSelfSell += (($scope.order.buys[i].pivot.base_price + $scope.order.buys[i].additional.freight_cost +
               $scope.order.buys[i].additional.port_to_factory) * $scope.order.buys[i].pivot.volume);
             $scope.totalSelfAdditionalSell += ($scope.order.buys[i].additional.freight_cost +
               $scope.order.buys[i].additional.port_to_factory) * $scope.order.buys[i].pivot.volume;
           }else{
-            $scope.totalSelfSell += (($scope.order.buys[i].pivot.price) * $scope.order.buys[i].pivot.volume);
+            $scope.totalSelfSell += (($scope.order.buys[i].pivot.base_price) * $scope.order.buys[i].pivot.volume);
             $scope.totalSelfAdditionalSell += $scope.order.buys[i].pivot.volume;
           }
         }
