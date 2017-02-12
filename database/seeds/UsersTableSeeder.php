@@ -100,17 +100,18 @@ class UsersTableSeeder extends Seeder
         Role::create(['id' => 24,   'role' => 'trade-manager-area-3']);
         Role::create(['id' => 25,   'role' => 'trade-manager-area-4']);
         Role::create(['id' => 26,   'role' => 'trade-supervisor']);
+        Role::create(['id' => 27,   'role' => 'general-manager']);
 
         User::find(1)->roles()->attach([1, 11]); // Pras: root, executive
-        User::find(2)->roles()->attach([11]); // Martin: executive
+        User::find(2)->roles()->attach(21); // Martin: cmo
         User::find(3)->roles()->attach(21); // Aryo: cmo
         User::find(4)->roles()->attach(21); // Fahmi: cmo
-		User::find(5)->roles()->attach(22); // Gio: trade-manager-area-1
-		User::find(6)->roles()->attach(23); // Yudhi: trade-manager-area-2
-        User::find(7)->roles()->attach(26); // Rori: trade-supervisor
-        User::find(8)->roles()->attach(26); // Andez: trade-supervisor
+        User::find(5)->roles()->attach(27); // Gio: General Manager
+	      User::find(6)->roles()->attach(27); // Yudhi: General Manager
+        User::find(7)->roles()->attach(22); // Rori: trade-manager-area-1
+        User::find(8)->roles()->attach(23); // Andez: trade-manager-area-2
         User::find(9)->roles()->attach(15); // Kamal: trader
-		User::find(10)->roles()->attach(15); // Sakti: trader
+        User::find(10)->roles()->attach(15); // Sakti: trader
 
         Privilege::create([ 'id' => 1, 'menu' => 'order.view' ]);
         Privilege::create([ 'id' => 2, 'menu' => 'order.edit' ]);
@@ -136,5 +137,9 @@ class UsersTableSeeder extends Seeder
         Role::find(26)->privileges()->attach(2); // trade-supervisor
         Role::find(26)->privileges()->attach(4);
         Role::find(26)->privileges()->attach(6);
+
+        Role::find(27)->privileges()->attach(2); // general-manager
+        Role::find(27)->privileges()->attach(4);
+        Role::find(27)->privileges()->attach(6);
     }
 }
