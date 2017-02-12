@@ -43,9 +43,9 @@ angular.module('order').controller('OrderIndexController', ['$scope', '$statePar
             var mid = Math.round(res.length/2);
 
             for(x = 0; x<res.length; x++){
-              $scope.data[0][x] = res[x].price;
+              $scope.data[0][x] = res[x].base_price;
               if($scope.display.sell){
-                var sell_price = parseFloat($scope.display.sell.pivot.price);
+                var sell_price = parseFloat($scope.display.sell.pivot.base_price);
                 if(parseFloat($scope.order.pit_to_port)){
                   sell_price += parseFloat($scope.order.pit_to_port);
                 }
@@ -55,7 +55,7 @@ angular.module('order').controller('OrderIndexController', ['$scope', '$statePar
                 $scope.data[1][x] = sell_price;
               }
               if($scope.display.buy){
-                var buy_price = parseFloat($scope.display.buy.pivot.price);
+                var buy_price = parseFloat($scope.display.buy.pivot.base_price);
                 if(parseFloat($scope.order.port_to_factory)){
                   buy_price -= parseFloat($scope.order.port_to_factory);
                 }
@@ -93,7 +93,7 @@ angular.module('order').controller('OrderIndexController', ['$scope', '$statePar
    //        for(x in res){
    //          if(!$scope.singleData[index.id][indexSequence]) $scope.singleData[index.id][indexSequence] = [];
    //          for(y=0; y<res[x].length; y++){
-   //            $scope.singleData[index.id][indexSequence][res[x].length-y-1] = parseFloat(res[x][y].price);
+   //            $scope.singleData[index.id][indexSequence][res[x].length-y-1] = parseFloat(res[x][y].base_price);
    //          }
    //          indexSequence++;
    //        }
