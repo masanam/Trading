@@ -139,7 +139,5 @@ class UsersTableSeeder extends Seeder
         Role::find(26)->privileges()->attach(6);
 
         Role::find(27)->privileges()->attach(2); // general-manager
-        Role::find(27)->privileges()->attach(4);
-        Role::find(27)->privileges()->attach(6);
     }
 }
