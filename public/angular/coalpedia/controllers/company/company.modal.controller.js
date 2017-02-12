@@ -1,12 +1,13 @@
 'use strict';
 
-angular.module('coalpedia').controller('CompanyModalController', ['$scope', '$uibModalInstance', '$timeout', '$interval', 'Environment', 'Company', 'Term', 'company', 'companyType', 'Area', 'Country',
-  function($scope, $uibModalInstance, $timeout, $interval, Environment, Company, Term, company, companyType, Area, Country) {
+angular.module('coalpedia').controller('CompanyModalController', ['$scope', '$uibModalInstance', '$timeout','NgMap', '$interval', 'Environment', 'Company', 'Term', 'company', 'companyType', 'Area', 'Country','NavigatorGeolocation', 'GeoCoder',
+  function($scope, $uibModalInstance, $timeout,NgMap, $interval, Environment, Company, Term, company, companyType, Area, Country, NavigatorGeolocation, GeoCoder) {
     $scope.showBuy = Environment.showBuy;
     $scope.company = company;
     $scope.companyType = companyType;
     $scope.selected = {};
     $scope.term = Term;
+
 
     $scope.address = function() {
         // var geocoder = new google.maps.Geocoder();
@@ -22,6 +23,15 @@ angular.module('coalpedia').controller('CompanyModalController', ['$scope', '$ui
         //     }
         //   });
         // }
+        GeoCoder.geocode({ address: $scope.company.address })
+        .then(function (result) {
+          $scope.company.latitude  = result[0].geometry.location.lat();
+          $scope.company.longitude  = result[0].geometry.location.lng();
+
+        });
+        //console.log($scope.company.latitude);
+        //console.log($scope.company.longitude);
+        //});
     };
 
     $scope.changePosition = function(e) {
