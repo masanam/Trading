@@ -101,7 +101,7 @@ class LeadsTableSeeder extends Seeder
       'payment_term' => 'LC on Sight',
       'remarks' => NULL,
       'carrier_type' => 'Geared',
-      'lead_type' => 'b',
+      'lead_type' => config('app.showBuy') ? 'b' : 's' ,
       'order_status' => 's',
       'progress_status' => NULL
     ]);
@@ -368,7 +368,7 @@ class LeadsTableSeeder extends Seeder
       'payment_term' => 'TT',
       'remarks' => NULL,
       'carrier_type' => 'Gearless',
-      'lead_type' => 'b',
+      'lead_type' => config('app.showBuy') ? 'b' : 's' ,
       'order_status' => 'l',
       'progress_status' => NULL
     ]);
@@ -457,7 +457,7 @@ class LeadsTableSeeder extends Seeder
       'payment_term' => 'TT',
       'remarks' => NULL,
       'carrier_type' => 'Geared',
-      'lead_type' => 'b',
+      'lead_type' => config('app.showBuy') ? 'b' : 's' ,
       'order_status' => 'v',
       'progress_status' => NULL
     ]);
@@ -546,7 +546,7 @@ class LeadsTableSeeder extends Seeder
       'payment_term' => 'TT',
       'remarks' => NULL,
       'carrier_type' => 'Geared',
-      'lead_type' => 'b',
+      'lead_type' => config('app.showBuy') ? 'b' : 's' ,
       'order_status' => 'p',
       'progress_status' => NULL
     ]);
