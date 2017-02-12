@@ -15,6 +15,7 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
       $scope.totalSelfSell = 0;
       $scope.totalSelfAdditionalSell = 0;
       $scope.calculateTotal();
+      if(Environment.trx === 'sell') $scope.order.in_house = true;
     };
 
     $scope.calculateTotal = function(){
