@@ -34,11 +34,16 @@ angular.module('map').controller('MapController', ['$scope','$http', '$statePara
       url: 'http://www.cliparthut.com/clip-arts/823/arrowhead-clip-art-823528.png'
     };
 
-    /*NgMap.getMap().then(function(map) {
-      $scope.map = map;
-    }, function(res){
-      console.log(res);
-    });*/
+
+    //hasapu add
+    $scope.$watch('search.category', function (value){
+      $scope.value = value;
+    });
+    $scope.$watch('search.keyword', function (res){
+      $scope.res = res;
+    });
+    //hasapu add end
+
 
     $scope.find = function() {
       var params = {};
@@ -104,16 +109,43 @@ angular.module('map').controller('MapController', ['$scope','$http', '$statePara
         params.action = 'filter';
 
         $scope.concessions = Concession.query(params);
+        $scope.companies = Company.query({ company_type: 'c' });
       }
+      //hasapu add function 10-02-2017
       else {
-
-        $scope.companies = Company.query({ q: $scope.search.keyword, company_type: 'c' });
-        $scope.factories = Factory.query({ q: $scope.search.keyword });
-        $scope.ports = Port.query({ q: $scope.search.keyword });
-        //console.log($scope.companies);
-        //console.log($scope.factories);
-        //console.log($scope.ports);
+        if($scope.value==="port") {
+          if($scope.res.length > 0) {
+            $scope.ports = Port.query({ q:$scope.res  });
+            $scope.factories = undefined;
+            $scope.companies = undefined;
+            $scope.search.keyword='';
+          }
+        }
+        else if($scope.value==="factory") {
+          if($scope.res.length > 0) {
+            $scope.factories = Factory.query({ q:$scope.res  });
+            $scope.ports = undefined;
+            $scope.companies = undefined;
+            $scope.search.keyword='';
+          }
+        }
+        else if($scope.value==="custumer") {
+          if($scope.res.length > 0) {
+            $scope.companies = Company.query({ company_type: 'c', q:$scope.res });
+            $scope.factories = undefined;
+            $scope.ports = undefined;
+            $scope.search.keyword='';
+          }
+        }
+        else if ($scope.value==="all" || $scope.value===undefined ) {
+          $scope.ports = Port.query();
+          $scope.factories = Factory.query();
+          $scope.companies = Company.query({ company_type: 'c' });
+        }
       }
+
+      //hasapu add function end
+
       params.action = 'filter';
       params.country = $scope.filter_country;
 
@@ -156,6 +188,7 @@ angular.module('map').controller('MapController', ['$scope','$http', '$statePara
     };
 
     $scope.showPortDetail = function(event, port) {
+      //$scope.port = Port.get({ id: port.id }, function(res) {
       Port.get({ id: port }, function(res) {
         $scope.map.hideInfoWindow('info-window');
         $scope.map.showInfoWindow('info-window', 'port'+port);

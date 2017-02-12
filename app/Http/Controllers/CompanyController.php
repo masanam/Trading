@@ -30,7 +30,12 @@ class CompanyController extends Controller
   {
     $companies = Company::with('user', 'area', 'ports', 'factories')->where('status', 'a');
 
-    if($req->q) $companies->where('company_name', 'LIKE', '%'.$req->q.'%');
+    // if($req->q) $companies->where('company_name', 'LIKE', '%'.$req->q.'%')
+    //   ->orWhere('address', 'LIKE', '%'.$req->q.'%')
+    //   ->orWhere('city', 'LIKE', '%'.$req->q.'%')
+    //   ->orWhere('country', 'LIKE', '%'.$req->q.'%')
+    //   ->orWhere('industry', 'LIKE', '%'.$req->q.'%');
+
     if($req->type) {
       if ($req->type[0] == 'c' || $req->type[0] == 's')
         $companies->whereIn('company_type', [ $req->type[0], 't' ]);
@@ -40,7 +45,16 @@ class CompanyController extends Controller
     if($req->area_id) $companies->where('area_id','=',$req->area_id);
 
 //hasapu add 09-02-2017
-    if($req->company_type) $companies->where('company_type','=',$req->company_type);
+    if($req->company_type){
+      $companies->where('company_type','=',$req->company_type);
+      if($companies){
+        if($req->q) $companies->where('company_name', 'LIKE', '%'.$req->q.'%')->where('company_type','c')
+          ->orWhere('address', 'LIKE', '%'.$req->q.'%')->where('company_type','c')
+          ->orWhere('city', 'LIKE', '%'.$req->q.'%')->where('company_type','c')
+          ->orWhere('country', 'LIKE', '%'.$req->q.'%')->where('company_type','c')
+          ->orWhere('industry', 'LIKE', '%'.$req->q.'%')->where('company_type','c');
+      }
+    }
 //hasapu add end
 
     $companies = $companies->get();

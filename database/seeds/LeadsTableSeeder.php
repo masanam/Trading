@@ -897,7 +897,7 @@ class LeadsTableSeeder extends Seeder
       'order_detail_id' => 1,
       'user_id' => 3,
       'volume' => 1000,
-      'base_currency_id' => 'IDR', 'base_price' => 50000, 'deal_currency_id' => 'USD', 'deal_price' => 50, 'exchange_rate' => 10000
+      'base_currency_id' => 'IDR', 'base_price' => 50000, 'deal_currency_id' => 'USD', 'deal_price' => 50, 'exchange_rate' => 10000,
       'trading_term' => 'FOB MV',
       'payment_term' => 'NET30',
       'notes' => 'Initial Deal',
@@ -906,7 +906,7 @@ class LeadsTableSeeder extends Seeder
       'order_detail_id' => 1,
       'user_id' => 3,
       'volume' => 1000,
-      'base_currency_id' => 'IDR', 'base_price' => 50000, 'deal_currency_id' => 'USD', 'deal_price' => 50, 'exchange_rate' => 10000
+      'base_currency_id' => 'IDR', 'base_price' => 50000, 'deal_currency_id' => 'USD', 'deal_price' => 50, 'exchange_rate' => 10000,
       'trading_term' => 'FOB MV',
       'payment_term' => 'TT',
       'notes' => 'Price decreased, they agreed, but need to wire as fast as possible',

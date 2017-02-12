@@ -4,7 +4,7 @@
     <div ng-repeat="company in companies">
       <marker
         icon="{
-          url: '/images/building.png'
+          url: '/images/Buildings.png'
         }"
         position="{{company.latitude}}, {{company.longitude}}"
         id="comp{{company.id}}" on-click="showCompanyDetail(company.id)">
@@ -13,7 +13,8 @@
     <div ng-repeat="factory in factories">
       <marker
         icon="{
-          url: '/images/building.png'
+          url: '/images/factories.png',
+          scaledSize: [48, 48]
         }"
         position="{{factory.latitude}}, {{factory.longitude}}"
         id="fact{{factory.id}}" on-click="showFactoryDetails(factory)">
@@ -22,10 +23,11 @@
     <div ng-repeat="port in ports">
       <marker
         icon="{
-          url: '/images/boat.png'
+          url: '/images/boat.png',
+          scaledSize: [48, 48]
         }"
         position="{{port.latitude}}, {{port.longitude}}"
-        id="port{{port.id}}" on-click="showPortDetail($event, port)">
+        id="port{{port.id}}" on-click="showPortDetail(port)">
       </marker>
     </div>
     <directions
