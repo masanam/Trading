@@ -51,7 +51,6 @@ class IndexTableSeeder extends Seeder
 		// Index::create(['id'=>23, 'index_provider' => 'HPB', 'index_name' => 'Sungkai HS', 'quality' => 'Sungkai HS', 'frequency'=>'m']);
 		// Index::create(['id'=>24, 'index_provider' => 'HPB', 'index_name' => 'Sungkai LS', 'quality' => 'Sungkai LS', 'frequency'=>'m']);
 
-
 		IndexPrice::create(['index_id'=>1, 'date' => '2016-01-04', 'day_of_year' => 4, 'day_of_month' => 4, 'day_of_week' => 1, 'week' => 2, 'month' => 1, 'year' => 2016, 'price' => 37.5]);
 		IndexPrice::create(['index_id'=>1, 'date' => '2016-01-05', 'day_of_year' => 5, 'day_of_month' => 5, 'day_of_week' => 2, 'week' => 2, 'month' => 1, 'year' => 2016, 'price' => 37.5]);
 		IndexPrice::create(['index_id'=>1, 'date' => '2016-01-06', 'day_of_year' => 6, 'day_of_month' => 6, 'day_of_week' => 3, 'week' => 2, 'month' => 1, 'year' => 2016, 'price' => 37.5]);
@@ -602,7 +601,7 @@ class IndexTableSeeder extends Seeder
 		IndexPrice::create(['index_id'=>8, 'date' => '2016-07-01', 'day_of_year' => 183, 'day_of_month' => 1, 'day_of_week' => 5, 'week' => 27, 'month' => 7, 'year' => 2016, 'price' => 53]);
 		IndexPrice::create(['index_id'=>8, 'date' => '2016-08-01', 'day_of_year' => 214, 'day_of_month' => 1, 'day_of_week' => 1, 'week' => 32, 'month' => 8, 'year' => 2016, 'price' => 58.37]);
 		IndexPrice::create(['index_id'=>8, 'date' => '2016-09-01', 'day_of_year' => 245, 'day_of_month' => 1, 'day_of_week' => 4, 'week' => 36, 'month' => 9, 'year' => 2016, 'price' => 63.93]);
-		IndexPrice::create(['index_id'=>9, 'date' => '2010-02-01', 'day_of_year' => 32, 'day_of_month' => 1, 'day_of_week' => 1, 'week' => 6, 'month' => 2, 'year' => 2010, 'price' => 46.4]);
+		/*IndexPrice::create(['index_id'=>9, 'date' => '2010-02-01', 'day_of_year' => 32, 'day_of_month' => 1, 'day_of_week' => 1, 'week' => 6, 'month' => 2, 'year' => 2010, 'price' => 46.4]);
 		IndexPrice::create(['index_id'=>9, 'date' => '2010-03-01', 'day_of_year' => 60, 'day_of_month' => 1, 'day_of_week' => 1, 'week' => 10, 'month' => 3, 'year' => 2010, 'price' => 45.86]);
 		IndexPrice::create(['index_id'=>9, 'date' => '2010-04-01', 'day_of_year' => 91, 'day_of_month' => 1, 'day_of_week' => 4, 'week' => 14, 'month' => 4, 'year' => 2010, 'price' => 45.83]);
 		IndexPrice::create(['index_id'=>9, 'date' => '2010-05-01', 'day_of_year' => 121, 'day_of_month' => 1, 'day_of_week' => 6, 'week' => 18, 'month' => 5, 'year' => 2010, 'price' => 48.41]);
@@ -1389,6 +1388,6 @@ class IndexTableSeeder extends Seeder
 		IndexPrice::create(['index_id'=>10, 'date' => '2016-07-01', 'day_of_year' => 183, 'day_of_month' => 1, 'day_of_week' => 5, 'week' => 27, 'month' => 7, 'year' => 2016, 'price' => 56.49]);
 		IndexPrice::create(['index_id'=>10, 'date' => '2016-07-08', 'day_of_year' => 190, 'day_of_month' => 8, 'day_of_week' => 5, 'week' => 28, 'month' => 7, 'year' => 2016, 'price' => 60.11]);
 		IndexPrice::create(['index_id'=>10, 'date' => '2016-07-15', 'day_of_year' => 197, 'day_of_month' => 15, 'day_of_week' => 5, 'week' => 29, 'month' => 7, 'year' => 2016, 'price' => 62.23]);
-		IndexPrice::create(['index_id'=>10, 'date' => '2016-07-22', 'day_of_year' => 204, 'day_of_month' => 22, 'day_of_week' => 5, 'week' => 30, 'month' => 7, 'year' => 2016, 'price' => 62.89]);
+		IndexPrice::create(['index_id'=>10, 'date' => '2016-07-22', 'day_of_year' => 204, 'day_of_month' => 22, 'day_of_week' => 5, 'week' => 30, 'month' => 7, 'year' => 2016, 'price' => 62.89]);*/
   }
 }
