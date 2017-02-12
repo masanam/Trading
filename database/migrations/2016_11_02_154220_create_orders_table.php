@@ -63,9 +63,10 @@ class CreateOrdersTable extends Migration
             $table->unique(['order_id', 'user_id']);
         });
 
-        Schema::create('currency', function (Blueprint $table) {
+        Schema::create('currencies', function (Blueprint $table) {
             $table->char('id',3);
-            $table->integer('value');
+            $table->string('value');
+            $table->timestamps();
         });
 
         Schema::create('exchange_rates', function (Blueprint $table) {
@@ -99,18 +100,14 @@ class CreateOrdersTable extends Migration
             $table->integer('order_detail_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->integer('volume');
-            $table->integer('price');
+            $table->char('base_currency_id',3);
+            $table->integer('base_price');
+            $table->char('deal_currency_id',3);
+            $table->integer('deal_price');
+            $table->decimal('exchange_rate', 20, 10);
             $table->string('trading_term');
             $table->string('payment_term');
             $table->text('notes');
-            $table->decimal('insurance_cost', 15, 3)->nullable();
-            $table->decimal('interest_cost', 15, 3)->nullable();
-            $table->decimal('surveyor_cost', 15, 3)->nullable();
-            $table->decimal('others_cost', 15, 3)->nullable();
-            $table->decimal('pit_to_port', 15, 3)->nullable();
-            $table->decimal('transhipment', 15, 3)->nullable();
-            $table->decimal('freight_cost', 15, 3)->nullable();
-            $table->decimal('port_to_factory', 15, 3)->nullable();
             $table->timestamps();
 
             $table->foreign('order_detail_id')->references('id')->on('order_details')->onDelete('restrict');
@@ -137,7 +134,7 @@ class CreateOrdersTable extends Migration
     {
         Schema::dropIfExists('order_additional_costs');
         Schema::dropIfExists('order_negotiations');
-        Schema::dropIfExists('currency');
+        Schema::dropIfExists('currencies');
         Schema::dropIfExists('order_details');
         Schema::dropIfExists('exchange_rates');
         Schema::dropIfExists('order_users');

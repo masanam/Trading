@@ -30,7 +30,7 @@
         <td>{{ lead.volume }} mt</td>
         <td>{{ lead.volume - getUsed(lead) }} mt</td>
         <td>{{ lead.order_expired | date : 'd MMMM yyyy' }}</td>
-        <td>{{ lead.price | currency : $ : 2}}</td>
+        <td>{{ lead.currency }} {{ lead.price | number:2}}</td>
         <td>{{ lead.city }}</td>
         <td ng-switch="lead.order_status">
           <span ng-switch-when="l">Lead</span>

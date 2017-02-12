@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('order').controller('AddLeadsModalController', ['$uibModalInstance', '$scope', 'Order', 'Term', 'items', 'lead',
-  function($uibModalInstance, $scope, Order, Term, items, lead) {
+angular.module('order').controller('AddLeadsModalController', ['$uibModalInstance', '$scope', 'Order', 'Term', 'items', 'lead', 'Currency',
+  function($uibModalInstance, $scope, Order, Term, items, lead, Currency) {
     $scope.items = items;
     console.log($scope.items);
     $scope.lead = lead;
@@ -11,6 +11,7 @@ angular.module('order').controller('AddLeadsModalController', ['$uibModalInstanc
 
     $scope.tradingTerm = Term.trading;
     $scope.paymentTerm = Term.payment;
+    $scope.currencies = Currency.currencies;
 
     $scope.getUsed = function(lead){
       $scope.used = 0;

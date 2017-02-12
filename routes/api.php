@@ -34,6 +34,7 @@ Route::group(['middleware' => ['cors', 'throttle']], function() {
     Route::post('user/password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
     Route::get('user/current', 'UserController@currentUser');
     Route::put('user/{id}/restore', 'UserController@restore');
+    Route::put('user/{id}/approve', 'UserController@approveUser');
     Route::resource('user', 'UserController', ['except' => [ 'create', 'edit' ]]);
 
 

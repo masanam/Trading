@@ -14,3 +14,15 @@ angular.module('user').factory('User', ['$resource',
     });
   }
 ]);
+
+angular.module('user').factory('Role', ['$resource',
+  function ($resource) {
+    return $resource('api/role/:id', {
+      id: undefined
+    }, {
+      update: {
+        method: 'PUT'
+      }
+    });
+  }
+]);

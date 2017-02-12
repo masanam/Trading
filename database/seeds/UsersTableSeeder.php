@@ -87,11 +87,11 @@ class UsersTableSeeder extends Seeder
 
         // GENERIC ARCHETYPE
         Role::create(['id' => 15,   'role' => 'trader']);
-		Role::create(['id' => 16,   'role' => 'intel']);
+		    Role::create(['id' => 16,   'role' => 'intel']);
         Role::create(['id' => 17,   'role' => 'bd']);
-		Role::create(['id' => 18,   'role' => 'scheduler']);
+		    Role::create(['id' => 18,   'role' => 'scheduler']);
         Role::create(['id' => 19,   'role' => 'sales']);
-		Role::create(['id' => 20,   'role' => 'marketing']);
+		    Role::create(['id' => 20,   'role' => 'marketing']);
 
         // SPECIFIC APPROVAL ROLES
         Role::create(['id' => 21,   'role' => 'cmo']);

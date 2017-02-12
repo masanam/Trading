@@ -53,6 +53,7 @@ class OrderController extends Controller
   // sequenceApproval --> gets approval sequence & get designated users,
   //                      calls requestApproval to add approval to designated user
   // resetApproval    --> detach all approval in an order, calls sequenceApproval after succession
+  // removeUpperAppr  --> detach all pending approval in upper sequence IF 1 guy rejected
   //
   //////////////////////////////////////
 
@@ -233,6 +234,38 @@ class OrderController extends Controller
     $res = $firebaseClient->push($path, $notification);
   }
 
+  private function getApprScheme ($order) {
+      // LEVEL 1: get approval scheme by area
+      $areas = [];
+      foreach($order->sells as $sell) $areas[] = $sell->company->area_id; // get all area to know
+
+      if(count(array_unique($areas)) === 1) $sell_area = $areas[0]; // if area are homogenous, go on
+      else $sell_area = config('app.default_area');                 // if not, get the default area
+
+      // NEXT LEVEL OF FILTERING GOES HERE //
+
+      // GET THE APPROVAL SCHEME TOGETHER WITH THE SEQUENCES IT HAS
+      $q = OrderApprovalScheme::with('sequences');
+      if($sell_area) $q->where('sell_area_id', $sell_area); // get only approval that has sell area id specified
+      // add more validation here
+      $app_scheme = $q->first();
+
+      return $app_scheme;
+  }
+
+  private function getApprSequence ($order, $app_scheme, $seq){
+    $next_seq = false;
+    if(!$order->approval_sequence) return $app_scheme->sequences[0];
+
+    // GET THE ORDER'S CURRENT APPROVAL SEQUENCE
+    foreach($app_scheme->sequences as $s){
+      if($s->sequence == $order->approval_sequence && $seq === 'curr') return $s;
+      if($s->sequence == $order->approval_sequence+1 && $seq === 'next') return $s;
+      if($s->sequence+1 == $order->approval_sequence && $seq === 'prev') return $s;
+    }
+
+  }
+
   /* The function to find out current order's approval scheme &
    * & do appropriate next action after these 3 possible scenario:
    * 1. updating order, request first approval
@@ -250,30 +283,10 @@ class OrderController extends Controller
     // * $next_seq (Object)   : the next sequence of the approval that is now
     // * $elevate (Bool)      : whether it passes condition to elevate the sequence
 
-    // LEVEL 1: get approval scheme by area
-    $areas = [];
-    foreach($order->sells as $sell) $areas[] = $sell->company->area_id; // get all area to know
-
-    if(count(array_unique($areas)) === 1) $sell_area = $areas[0]; // if area are homogenous, go on
-    else $sell_area = config('app.default_area');                 // if not, get the default area
-
-    // NEXT LEVEL OF FILTERING GOES HERE //
-
-
-    // GET THE APPROVAL SCHEME TOGETHER WITH THE SEQUENCES IT HAS
-    $q = OrderApprovalScheme::with('sequences');
-    if($sell_area) $q->where('sell_area_id', $sell_area); // get only approval that has sell area id specified
-    // add more validation here
-    $app_scheme = $q->first();
-
-    $next_seq = false;
-    // GET THE ORDER'S CURRENT APPROVAL SEQUENCE
-    foreach($app_scheme->sequences as $s){
-      if($s->sequence == $order->approval_sequence) $curr_seq = $s;
-      if($s->sequence == $order->approval_sequence+1) $next_seq = $s;
-    }
-
-    if(!$order->approval_sequence) $curr_seq = $app_scheme->sequences[0];
+    // get Approval Scheme
+    $app_scheme = $this->getApprScheme($order);
+    $curr_seq = $this->getApprSequence($order, $app_scheme, 'curr');
+    $next_seq = $this->getApprSequence($order, $app_scheme, 'next');
 
     // find out whether or not this order fulfills condition of current sequence
     // $curr_seq is the current sequence of approval which has all the necessary rules
@@ -382,6 +395,20 @@ class OrderController extends Controller
     $order->approvals()->detach();
 
     $this->sequenceApproval($order);
+  }
+
+  private function removeUpperAppr(&$order){
+    $app_scheme = $this->getApprScheme($order);
+    $curr_seq = $this->getApprSequence($order, $app_scheme, 'curr');
+    $prev_seq = $this->getApprSequence($order, $app_scheme, 'prev');
+
+    // in the case where this approval is rejected,
+    // add the other approval status into 'n' (auto-reject)
+    foreach($order->approvals as $a)
+      if($a->pivot->status == 'p')
+        foreach($a->roles as $r)
+          if($r->id == $curr_seq->role_id)
+            $order->approvals()->sync([$a->id => ['status' => 'n']], false);
   }
 
   //////////////////////////////////////
@@ -493,6 +520,8 @@ class OrderController extends Controller
    */
   public function store(Request $req)
   {
+    return response()->json($req, 200);
+    dd();
     // Check the availability of volume lead
     if(count($req->buys) > 0){
       foreach($req->buys as $buy){
@@ -548,7 +577,6 @@ class OrderController extends Controller
         ]);
       }
     }
-
     if(count($req->sells) > 0) {
       foreach($req->sells as $sell){
         $order->sells()->attach([ $sell['id'] => $sell['pivot'] ]);
@@ -568,8 +596,7 @@ class OrderController extends Controller
           'user_id' => Auth::user()->id,
         ]);
       }
-    }
-
+    }        
     $order->addAdditionalCosts($req->additional);
 
     $leads_notification = [
@@ -769,7 +796,8 @@ class OrderController extends Controller
       'buys', 'buys.trader', 'buys.company')->find($id);
 
     // Begin/Continue/End approval sequence
-    $this->sequenceApproval($order);
+    if($req->status === 'a') $this->sequenceApproval($order);
+    else $this->removeUpperAppr($order);
 
     return $this->show($id, $req);
   }

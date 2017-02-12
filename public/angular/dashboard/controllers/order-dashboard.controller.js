@@ -4,7 +4,7 @@ angular.module('dashboard').controller('OrderDashboardController', ['$scope', '$
   function($scope, $uibModal, $state, $log, Index, Order, Authentication, Environment) {
     $scope.Authentication = Authentication;
     $scope.showBuy = Environment.showBuy;
-    
+
     //find list of order in dashboard
     $scope.find = function () {
       var possession;
@@ -55,13 +55,22 @@ angular.module('dashboard').controller('OrderDashboardController', ['$scope', '$
     $scope.funnel=function () {
       var order_funnel = Order.get({ funnel:true }, function(res){
         $scope.funnel=res;
-        $scope.labels = ['Leads', 'Pending', 'Approve', 'Finalized'];
-        $scope.series = ['Buy', 'Sell', 'Order'];
-        $scope.data= [
-          [res['lead-sell'],0,0,0],
-          [res['lead-buy'],0,0,0],
-          [0,res.pending,res.approved,res.finalized]
-        ];
+
+        if($scope.showBuy){
+          $scope.labels = ['Leads', 'Pending', 'Approve', 'Finalized'];
+          $scope.series = ['Buy', 'Sell', 'Order'];
+          $scope.data= [
+            [res['lead-sell'],0,0,0],
+            [res['lead-buy'],0,0,0],
+            [0,res.pending,res.approved,res.finalized]
+          ];
+        } else {
+          $scope.labels = ['Leads', 'Pending', 'Approve', 'Finalized'];
+          $scope.series = ['Order'];
+          $scope.data= [
+            [res['lead-sell'],res.pending,res.approved,res.finalized]
+          ];
+        }
         $scope.onClick = function (point,evt) {
           console.log(point,evt);
         };
