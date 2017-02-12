@@ -1,7 +1,8 @@
 'use strict';
 
-angular.module('user').controller('UserController', ['$scope', '$http', '$stateParams', '$state', 'User', 'Authentication', 'S3Upload',
-  function($scope, $http, $stateParams, $state, User, Authentication, S3Upload) {
+angular.module('user').controller('UserController', ['$scope', '$http', '$stateParams', '$state', 'User', 'Authentication', 'Role', 'S3Upload',
+  function($scope, $http, $stateParams, $state, User, Authentication, Role, S3Upload) {
+    $scope.selectedRoles = [];
     $scope.user = {};
     $scope.password = '';
     $scope.cpassword = '';
@@ -58,7 +59,18 @@ angular.module('user').controller('UserController', ['$scope', '$http', '$stateP
         $scope.success = undefined;
         $scope.error = 'Password does not match!';
       }
+    };
 
+    $scope.updateRole = function(roles) {
+      var user = new User({
+        roles: roles
+      });
+
+      user.$update({ id: Authentication.user.id }, function(res) {
+        console.log(res);
+        Authentication = $scope.Authentication = {};
+        $state.go('auth.signin', {});
+      });
     };
 
     $scope.resetPassword = function() {
@@ -87,6 +99,10 @@ angular.module('user').controller('UserController', ['$scope', '$http', '$stateP
     $scope.findOne = function() {
       $scope.userId = Authentication.user.id;
       $scope.user = User.get({ id: $scope.userId });
+    };
+
+    $scope.findRoles = function() {
+      $scope.roles = Role.query();
     };
   }
 ]);

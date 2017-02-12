@@ -35,6 +35,7 @@ Route::group(['middleware' => ['cors', 'throttle']], function() {
     Route::get('user/current', 'UserController@currentUser');
     Route::put('user/{id}/restore', 'UserController@restore');
     Route::put('user/{id}/approve', 'UserController@approveUser');
+    // Route::put('user/{id}/role', 'UserController@addRoleUser');
     Route::resource('user', 'UserController', ['except' => [ 'create', 'edit' ]]);
 
 

@@ -92,6 +92,8 @@ class UserController extends Controller
 
         if($user->status == 'a') {
             return response()->json($user, 200);
+        } else if($user->status == 'p') {
+            return response()->json(['message' => 'record is currently on pending status, please wait until the admin approve this'], 200);
         } else {
             return response()->json(['message' => 'deactivated record'], 404);
         }
@@ -135,13 +137,14 @@ class UserController extends Controller
             else return response()->json(['message' => 'You entered a wrong old password.'], 400);
         }
 
-        $user->name = $req->name;
-        $user->image = $req->image;
-        $user->title = $req->title;
-        $user->email = $req->email;
-        $user->phone = $req->phone;
-        $user->employee_no = $req->employee_no;
-        $user->manager_id = $req->manager_id;
+        $user->name = $req->name ? $req->name : $user->name;
+        $user->image = $req->image ? $req->image : $user->image;
+        $user->title = $req->title ? $req->title : $user->title;
+        $user->email = $req->email ? $req->email : $user->email;
+        $user->phone = $req->phone ? $req->phone : $user->phone;
+        $user->employee_no = $req->employee_no ? $req->employee_no : $user->employee_no;
+        $user->manager_id = $req->manager_id ? $req->manager_id : $user->manager_id;
+        $user->status = 'a';
 
         if($req->roles){
             $roles = [];
@@ -150,12 +153,12 @@ class UserController extends Controller
             }
 
             $user->roles()->sync($roles);
+            $user->status = 'p';
         }
 
         // if($req->role_id) $user->roles()->attach($req->role_id);
         // $user->role = $req->role ? $req->role : 'user';
 
-        $user->status = 'a';
 
         $user->save();
 
@@ -240,5 +243,4 @@ class UserController extends Controller
       $user->status = 'a';
       return response()->json($user, 200);
     }
-
 }
