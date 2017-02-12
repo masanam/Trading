@@ -100,9 +100,5 @@ angular.module('user').controller('UserController', ['$scope', '$http', '$stateP
       $scope.userId = Authentication.user.id;
       $scope.user = User.get({ id: $scope.userId });
     };
-
-    $scope.findRoles = function() {
-      $scope.roles = Role.query();
-    };
   }
 ]);
