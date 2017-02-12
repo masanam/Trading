@@ -2,6 +2,7 @@
 
 angular.module('order').controller('OrderDetailController', ['$scope', '$uibModal', 'Lead', 'Order', 'Environment',
   function($scope,$uibModal, Lead, Order, Environment) {
+    if(Environment.trx === 'sell') $scope.order.in_house = true;
 
     $scope.productQuality = Environment.productQuality;
 
