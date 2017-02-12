@@ -14,7 +14,7 @@
           <span>Dashboard</span>
         </a>
       </li>
-      <li class="treeview">
+      <li class="treeview" ng-if="Authentication.user.role.indexOf('root') > -1 || Authentication.user.privilege.indexOf('coalpedia.edit') > -1 || Authentication.user.privilege.indexOf('coalpedia.edit') > -1">
         <a ui-sref="coalpedia.index" ng-click="lead = !lead; openCollapse(1)">
           <i class="ion ion-earth" style="font-size: 20px; margin-left: -3px;"></i>
           <span>Coalpedia</span>
@@ -31,20 +31,32 @@
       </li>
 
 
-      <li class="treeview">
+      <li class="treeview" ng-if="Authentication.user.role.indexOf('root') > -1
+        || Authentication.user.privilege.indexOf('order.edit') > -1
+        || Authentication.user.privilege.indexOf('order.view') > -1
+        || Authentication.user.privilege.indexOf('lead.edit') > -1
+        || Authentication.user.privilege.indexOf('lead.view') > -1">
         <a ng-click="order = !order; openCollapse(2)" ui-sref="order.list">
           <i class="ion ion-magnet" style="font-size: 20px; margin-left: -3px;"></i>
           <span>Deal Room</span>
           <span class="pull-right"><i ng-class="order ? 'fa fa-caret-down' : 'fa fa-caret-up'"></i></span>
         </a>
         <ul class="treeview-menu" ng-class="order ? 'menu-open' : ''" ng-style="{ 'display': style[2] }">
-          <li ng-if="showBuy"><a ui-sref="lead.list({ lead_type: 'buy' })"><i class="ion ion-log-out"></i> Buy Leads</a></li>
-          <li ng-if="showBuy"><a ui-sref="lead.list({ lead_type: 'sell' })"><i class="ion ion-log-in"></i> Sell Leads</a></li>
-          <li ng-if="!showBuy"><a ui-sref="lead.list({ lead_type: 'sell' })"><i class="ion ion-log-in"></i> Leads</a></li>
-          <li><a ui-sref="order.list"><i class="ion ion-ios-paperplane"></i> Orders</a></li>
+          <li ng-if="showBuy && (Authentication.user.role.indexOf('root') > -1
+            || Authentication.user.privilege.indexOf('lead.edit') > -1
+            || Authentication.user.privilege.indexOf('lead.view') > -1)"><a ui-sref="lead.list({ lead_type: 'buy' })"><i class="ion ion-log-out"></i> Buy Leads</a></li>
+          <li ng-if="showBuy && (Authentication.user.role.indexOf('root') > -1
+            || Authentication.user.privilege.indexOf('lead.edit') > -1
+            || Authentication.user.privilege.indexOf('lead.view') > -1)"><a ui-sref="lead.list({ lead_type: 'sell' })"><i class="ion ion-log-in"></i> Sell Leads</a></li>
+          <li ng-if="!showBuy && (Authentication.user.role.indexOf('root') > -1
+            || Authentication.user.privilege.indexOf('lead.edit') > -1
+            || Authentication.user.privilege.indexOf('lead.view') > -1)"><a ui-sref="lead.list({ lead_type: 'sell' })"><i class="ion ion-log-in"></i> Leads</a></li>
+          <li ng-if="Authentication.user.role.indexOf('root') > -1
+            || Authentication.user.privilege.indexOf('order.edit') > -1
+            || Authentication.user.privilege.indexOf('order.view') > -1"><a ui-sref="order.list"><i class="ion ion-ios-paperplane"></i> Orders</a></li>
         </ul>
       </li>
-      <li class="treeview">
+      <li class="treeview" ng-if="Authentication.user.role.indexOf('root') > -1 ||Authentication.user.privilege.indexOf('index.edit') > -1 || Authentication.user.privilege.indexOf('index.edit') > -1">
         <a ng-click="index = !index; openCollapse(3)">
           <i class="ion ion-gear-a" style="font-size: 20px; margin-left: -3px;"></i>
           <span>Administration</span>

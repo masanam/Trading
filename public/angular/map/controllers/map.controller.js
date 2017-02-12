@@ -107,9 +107,9 @@ angular.module('map').controller('MapController', ['$scope','$http', '$statePara
       }
       else {
 
-        $scope.companies = Company.query({ company_type: 'c' });
-        $scope.factories = Factory.query();
-        $scope.ports = Port.query();
+        $scope.companies = Company.query({ q: $scope.search.keyword, company_type: 'c' });
+        $scope.factories = Factory.query({ q: $scope.search.keyword });
+        $scope.ports = Port.query({ q: $scope.search.keyword });
         //console.log($scope.companies);
         //console.log($scope.factories);
         //console.log($scope.ports);
@@ -156,27 +156,30 @@ angular.module('map').controller('MapController', ['$scope','$http', '$statePara
     };
 
     $scope.showPortDetail = function(event, port) {
-      $scope.port = Port.get({ id: port }, function(port) {
+      Port.get({ id: port }, function(res) {
         $scope.map.hideInfoWindow('info-window');
-        $scope.map.showInfoWindow('info-window', 'port'+port.id);
+        $scope.map.showInfoWindow('info-window', 'port'+port);
         $scope.company = undefined; $scope.factory = undefined;
+        $scope.port = res;
       });
     };
 
     // hasapu add function 10-02-2017
     $scope.showCompanyDetail = function(event, company) {
-      $scope.company = Company.get({ id: company }, function(res) {
+      Company.get({ id: company }, function(res) {
         $scope.map.hideInfoWindow('info-window');
-        $scope.map.showInfoWindow('info-window', 'comp'+company);
+        $scope.map.showInfoWindow('info-window', 'comp'+res.id);
         $scope.port = undefined; $scope.factory = undefined;
+        $scope.company = res;
       });
     };
 
     $scope.showFactoryDetails = function(event, factory) {
-      $scope.factory = Factory.get({ id: factory.id }, function(res) {
+      Factory.get({ id: factory.id }, function(res) {
         $scope.map.hideInfoWindow('info-window');
         $scope.map.showInfoWindow('info-window', 'fact'+factory.id);
         $scope.company = undefined; $scope.port = undefined;
+        $scope.factory = res;
       });
     };
 
