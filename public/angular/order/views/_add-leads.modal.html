@@ -53,13 +53,13 @@
           <div class="col-sm-4">Base Currency + Price</div>
         </div>
         <div class="row">
-          <div class="col-sm-1 form-group" ng-init="selected.item.pivot.deal_currency_id = selected.item.currency_id">
+          <div class="col-sm-2 form-group" ng-init="selected.item.pivot.deal_currency_id = selected.item.currency_id">
             <select class="form-control" ng-model="selected.item.deal_currency_id"
               ng-options="o as o for o in currencies" required> 
               <option>Deal Currency</option>
             </select>
           </div>
-          <div class="col-sm-3 form-group" ng-init="selected.item.pivot.price =selected.item.price">
+          <div class="col-sm-2 form-group" ng-init="selected.item.pivot.price =selected.item.price">
             <input type="number" ng-model="selected.item.pivot.deal_price" class="form-control"
               ng-change="selected.item.pivot.base_price = selected.item.pivot.deal_price * selected.item.pivot.exchange_rate"
               placeholder="Deal Price" required>
@@ -71,13 +71,13 @@
               placeholder="Exch. Rate" required>
           </div>
 
-          <div class="col-sm-1 form-group">
+          <div class="col-sm-2 form-group">
             <select class="form-control" ng-model="selected.item.base_currency_id"
               ng-options="o as o for o in currencies" required>   
               <option>Base Currency</option>           
             </select>
           </div>
-          <div class="col-sm-3 form-group">
+          <div class="col-sm-2 form-group">
             <input type="number" ng-model="selected.item.pivot.base_price" class="form-control" placeholder="Base Price" required>
           </div>
 
