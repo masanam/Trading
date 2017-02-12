@@ -13,7 +13,7 @@ angular.module('order').controller('CreateOrderController', ['$scope', '$state',
 
     // Create new Article
     $scope.create = function (isValid) {
-      console.log($scope.order);
+      //console.log($scope.order);
       $scope.error = null;
 
       // Create new Article object
@@ -24,7 +24,7 @@ angular.module('order').controller('CreateOrderController', ['$scope', '$state',
         $state.go('order.view', { id: res.id });
 
         // // Clear form fields
-        // $scope.order = new Order();
+        $scope.order = new Order();
       }, function (err) {
         $scope.error = err;
       });
