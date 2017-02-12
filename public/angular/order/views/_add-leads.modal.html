@@ -31,31 +31,56 @@
       </div>
       <div class="col-sm-9" ng-if="selected.item">
         <div class="row">
-          <div class="col-sm-6 form-group" ng-init="selected.item.pivot.volume = selected.item.volume - getUsed(selected.item)">
+          <div class="col-sm-4 form-group" ng-init="selected.item.pivot.volume = selected.item.volume - getUsed(selected.item)">
             <input type="number" ng-model="selected.item.pivot.volume" class="form-control" placeholder="Volume (MT)" required>
           </div>
-          <div class="col-sm-2 form-group" ng-init="selected.item.pivot.deal_currency_id = selected.item.deal_currency_id">
-            <select class="form-control" ng-model="selected.item.deal_currency_id"
-              ng-options="o as o for o in currencies" required>              
-            </select>
-          </div>
-          <div class="col-sm-3 form-group" ng-init="selected.item.pivot.price = ( selected.item.price )">
-            <input type="number" ng-model="selected.item.pivot.price" class="form-control" placeholder="Price (USD)" required>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-6 form-group" ng-init="selected.item.pivot.trading_term = selected.item.trading_term">
+          <div class="col-sm-4 form-group" ng-init="selected.item.pivot.trading_term = selected.item.trading_term">
             <select class="form-control" ng-model="selected.item.pivot.trading_term"
               ng-options="o as o for o in tradingTerm" required>
               <option value="">-- Select Trading Term --</option>
             </select>
           </div>
-          <div class="col-sm-6 form-group" ng-init="selected.item.pivot.payment_term = selected.item.payment_term">
+          <div class="col-sm-4 form-group" ng-init="selected.item.pivot.payment_term = selected.item.payment_term">
             <select class="form-control" ng-model="selected.item.pivot.payment_term"
               ng-options="o as o for o in paymentTerm" required>
               <option value="">-- Select Payment Term --</option>
             </select>
           </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4">Deal Currency + Price</div>
+          <div class="col-sm-4">Exchange Rate</div>
+          <div class="col-sm-4">Base Currency + Price</div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2 form-group" ng-init="selected.item.pivot.deal_currency_id = selected.item.currency_id">
+            <select class="form-control" ng-model="selected.item.deal_currency_id"
+              ng-options="o as o for o in currencies" required> 
+              <option>Deal Currency</option>
+            </select>
+          </div>
+          <div class="col-sm-2 form-group" ng-init="selected.item.pivot.price =selected.item.price">
+            <input type="number" ng-model="selected.item.pivot.deal_price" class="form-control"
+              ng-change="selected.item.pivot.base_price = selected.item.pivot.deal_price * selected.item.pivot.exchange_rate"
+              placeholder="Deal Price" required>
+          </div>
+
+          <div class="col-sm-4 form-group" ng-init="selected.item.pivot.exchange_rate = 1">
+            <input type="number" ng-model="selected.item.pivot.exchange_rate" class="form-control" 
+              ng-change="selected.item.pivot.base_price = selected.item.pivot.deal_price * selected.item.pivot.exchange_rate"
+              placeholder="Exch. Rate" required>
+          </div>
+
+          <div class="col-sm-2 form-group">
+            <select class="form-control" ng-model="selected.item.base_currency_id"
+              ng-options="o as o for o in currencies" required>   
+              <option>Base Currency</option>           
+            </select>
+          </div>
+          <div class="col-sm-2 form-group">
+            <input type="number" ng-model="selected.item.pivot.base_price" class="form-control" placeholder="Base Price" required>
+          </div>
+
         </div>
         <div ng-static-include="'/angular/order/views/_add-leads-detail.modal.partial.html'"
           style="max-height:500px; overflow-y:scroll;"></div>

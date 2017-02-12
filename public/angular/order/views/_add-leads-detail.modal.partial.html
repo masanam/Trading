@@ -14,7 +14,10 @@
       </tr>
       <tr>
         <td><label>Price</label></td>
-        <td>{{ selected.item.price }}</td>
+        <td>
+          {{ selected.item.deal_currency }} {{ selected.item.deal_price }} -
+          {{ selected.item.base_currency }} {{ selected.item.base_price }}
+        </td>
       </tr>
       <tr>
         <td><label>Address</label></td>
