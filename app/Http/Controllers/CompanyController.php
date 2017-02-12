@@ -48,11 +48,11 @@ class CompanyController extends Controller
     if($req->company_type){
       $companies->where('company_type','=',$req->company_type);
       if($companies){
-        if($req->q) $companies->where('company_name', 'LIKE', '%'.$req->q.'%')
-          ->orWhere('address', 'LIKE', '%'.$req->q.'%')
-          ->orWhere('city', 'LIKE', '%'.$req->q.'%')
-          ->orWhere('country', 'LIKE', '%'.$req->q.'%')
-          ->orWhere('industry', 'LIKE', '%'.$req->q.'%');
+        if($req->q) $companies->where('company_name', 'LIKE', '%'.$req->q.'%')->where('company_type','c')
+          ->orWhere('address', 'LIKE', '%'.$req->q.'%')->where('company_type','c')
+          ->orWhere('city', 'LIKE', '%'.$req->q.'%')->where('company_type','c')
+          ->orWhere('country', 'LIKE', '%'.$req->q.'%')->where('company_type','c')
+          ->orWhere('industry', 'LIKE', '%'.$req->q.'%')->where('company_type','c');
       }
     }
 //hasapu add end

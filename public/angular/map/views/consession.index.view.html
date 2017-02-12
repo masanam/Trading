@@ -28,6 +28,15 @@
         destination="{{pos.port.latitude}} , {{pos.port.longitude}}">
       </directions>
     </span>
+    <span ng-repeat="company in companies" >
+      <marker
+        icon="{
+          url: '/images/Buildings.png'
+        }"
+        position="{{company.latitude}}, {{company.longitude}}"
+        id="comp{{company.id}}" on-click="showCompanyDetail(company.id)">
+      </marker>
+    </span>
     <info-window id="info-window" default-style="false" maxWidth="800px">
       <div ng-non-bindable="" style="width:500px" class="no-gutter">
         <h3>Name: {{concession.concession_name}}</h3>

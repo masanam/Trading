@@ -52,6 +52,6 @@
       <script src="{{ $js }}"></script>
   @endforeach
   <!-- <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script> -->
-  <script src="http://maps.google.com/maps/api/js?key=AIzaSyDYe6YgQqs0HRnu0mkLu5qcBJZ9zwtxUDA&sensor=false&libraries=placeses,visualization,drawing,geometry,places"></script>
+  <script src="http://maps.google.com/maps/api/js?key=AIzaSyDYe6YgQqs0HRnu0mkLu5qcBJZ9zwtxUDA&libraries=placeses,visualization,drawing,geometry,places"></script>
 </body>
 </html>
