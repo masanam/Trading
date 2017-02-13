@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('notification').controller('NotificationController', ['$scope', '$stateParams', 'Order', 'Authentication', '$location', 'Notification',
-	function($scope, $stateParams, Order, Authentication, $location, Notification) {
+angular.module('notification').controller('NotificationController', ['$scope', '$state','$stateParams', 'Order', 'Authentication', '$location', 'Notification',
+	function($scope, $state, $stateParams, Order, Authentication, $location, Notification) {
   $scope.unread_notifications = 0;
   $scope.notifications = [];
   $scope.notification = {};
@@ -12,7 +12,7 @@ angular.module('notification').controller('NotificationController', ['$scope', '
         for (var i = 0; i < res.length; i++) {
           res[i].created_at = new Date(res[i].created_at);
         }
-        $scope.notifications = res;
+        $scope.notifications = res;        
       });
     });
 
@@ -26,5 +26,11 @@ angular.module('notification').controller('NotificationController', ['$scope', '
       console.log(res);
     });
   };
-  
+  $scope.detail =function(a){
+    var id_notif = a.split('order/');
+    id_notif = id_notif[1];
+    $state.go('order.view', {id : id_notif});
+  };
+
+
 }]);

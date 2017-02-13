@@ -25,18 +25,16 @@
                   </div>
                 </div>
               </li>
-
               <li ng-if="notifications.length" ng-repeat="notif in notifications.slice().reverse()" ng-click="readNotification(notif.$id)">
                 
                 <i class="fa fa-envelope bg-blue" ng-if="notif.notification.indexOf('ORD') < 0"></i>
                 <i class="fa fa-user bg-red" ng-if="notif.notification.indexOf('ORD') >= 0"></i>
 
-                <div class="timeline-item">
-                  <span class="time"><i class="fa fa-clock-o"></i> {{ notif.created_at | date:'medium' }}</span>
-
-                  <div class="timeline-body">
-                    {{ notif.notification }}
-                  </div>
+                <div class="timeline-item" ng-click="detail(notif.url)">                                     
+                    <span class="time"><i class="fa fa-clock-o"></i> {{ notif.created_at | date:'medium' }}</span>
+                      <div class="timeline-body">
+                        {{ notif.notification }}
+                      </div>
                 </div>
               </li>
               <!-- END timeline item -->
