@@ -133,13 +133,13 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
     // Approve Order
     $scope.approve_reject = function (status) {
       $scope.error = null;
-
       Order.get({ id: $scope.order.id, action: 'approval', status : status }, function (res) {
-        $scope.order = res;
-        $scope.order.status = status;
+        $scope.order_approval = res;
+        $scope.order_approval.status = status;        
         if(status === 'r') $scope.approving = false;
         else $scope.approving = true;
-        Notification.sendNotification(status, $scope.order, false, false);
+        Notification.sendNotification(status, $scope.order_approval, false, false);
+        $scope.findOne();
       }, function (err) {
         $scope.error = err.data.message;
       });
