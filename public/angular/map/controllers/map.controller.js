@@ -137,6 +137,7 @@ angular.module('map').controller('MapController', ['$scope','$http', '$statePara
             $scope.search.keyword='';
           }
         }
+
         else if ($scope.value==='all' || $scope.value===undefined) {
           $scope.ports = Port.query();
           $scope.factories = Factory.query();

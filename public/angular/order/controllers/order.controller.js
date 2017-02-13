@@ -213,6 +213,7 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
         id: $stateParams.id
       }, function(res){
         $scope.order = res;
+        if(Environment.trx === 'sell') $scope.order.in_house = true;
         $scope.checkOrderUsers();
       });
     };
