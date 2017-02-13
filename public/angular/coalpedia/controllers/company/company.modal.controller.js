@@ -23,10 +23,10 @@ angular.module('coalpedia').controller('CompanyModalController', ['$scope', '$ui
         //     }
         //   });
         // }
-        GeoCoder.geocode({ address: $scope.company.address })
+      GeoCoder.geocode({ address: $scope.company.address })
         .then(function (result) {
-          $scope.company.latitude  = result[0].geometry.location.lat();
-          $scope.company.longitude  = result[0].geometry.location.lng();
+          $scope.company.latitude = result[0].geometry.location.lat();
+          $scope.company.longitude = result[0].geometry.location.lng();
 
         });
         //console.log($scope.company.latitude);
