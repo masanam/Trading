@@ -22,9 +22,9 @@ use DB;
 */
 class ShipmentController extends Controller
 {
-    public function __construct() {
-      $this->middleware('jwt.auth');
-    }
+    // public function __construct() {
+    //   $this->middleware('jwt.auth');
+    // }
     /**
      * Display a listing of the resource.
      *

@@ -172,6 +172,11 @@
         <td ng-if="!order.in_house">{{ display.buy.order_date | date:'mediumDate' }}</td>
   			<td>{{ display.sell.order_date | date:'mediumDate' }}</td>
 			</tr>
+      <tr>
+        <td>Validity Period</td>
+        <td ng-if="!order.in_house">{{ display.buy.order_expired | date:'mediumDate' }}</td>
+        <td>{{ display.sell.order_expired | date:'mediumDate' }}</td>
+      </tr>
 			<tr>
 				<td>LayCan</td>
         <td ng-if="!order.in_house">
