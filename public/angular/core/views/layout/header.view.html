@@ -44,7 +44,7 @@
         <li class="dropdown notifications-menu" uib-dropdown ng-if="Authentication.user" ng-init="findNotificationsByUser()">
           <a class="dropdown-toggle" data-toggle="dropdown" uib-dropdown-toggle>
             <i class="fa fa-bell"></i>
-            <span class="label label-danger" ng-if="unread_notifications">{{ unread_notifications }}</span>
+            <span class="label label-danger" ng-if="unread_notifications" style="font-size: 10px;">{{ unread_notifications }}</span>
           </a>
           <ul class="dropdown-menu" uib-dropdown-menu>
             <li ng-repeat="notif in notifications.slice().reverse() | limitTo:8" ng-click="readNotification(notif.$id)">
