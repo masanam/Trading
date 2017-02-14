@@ -21,7 +21,7 @@ class RoleController extends Controller
      */
     public function index(Request $req)
     {
-        $role = Role::get();
+        $role = Role::with('privileges')->get();
 
         return response()->json($role, 200);
     }
@@ -63,7 +63,7 @@ class RoleController extends Controller
      */
     public function show($id)
     {
-        $role = Role::find($id);
+        $role = Role::with('privileges')->find($id);
 
         return response()->json($role, 200);
     }
@@ -77,9 +77,14 @@ class RoleController extends Controller
      */
     public function update(Request $req, $id)
     {
-        $role = Role::find($id);
-        $role->role = $req->role;
-        $role->save();
+        $role = Role::with('privileges')->find($id);
+        $privileges = [];
+        foreach ($req->privileges as $p) {
+            $privileges[] = $p['id'];
+        }
+        // $privileges = pluck($req->privileges->id);
+        if($privileges) $role->privileges()->sync($privileges);
+        else $role->privileges()->detach();
 
         return $this->show($id);
     }
