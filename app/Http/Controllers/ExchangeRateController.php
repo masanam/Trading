@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Model\ExchangeRate;
 
+use DB;
+
 class ExchangeRateController extends Controller
 {
     /**
@@ -31,16 +33,6 @@ class ExchangeRateController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -48,7 +40,16 @@ class ExchangeRateController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      DB::table('exchange_rates')->where([['buy', 'LIKE', $request->buy], ['sell', 'LIKE', $request->sell]])->update(['in_use' => 0]);
+      $exchange_rate = new ExchangeRate();
+      $exchange_rate->buy = $request->buy;
+      $exchange_rate->sell = $request->sell;
+      $exchange_rate->value = $request->value;
+      $exchange_rate->in_use = true;
+
+      $exchange_rate->save();
+      
+      return response()->json($exchange_rate, 200);
     }
 
     /**
