@@ -115,7 +115,10 @@ Route::group(['middleware' => ['cors', 'throttle']], function() {
     Route::match(['get','put'], 'orders/{id}/approval', 'OrderController@approval');
     Route::resource('orders', 'OrderController', ['except' => [ 'create', 'edit' ]]);
 
+    Route::get('exchange-rate/{buy}/{sell}', 'ExchangeRateController@findOne');
     Route::get('exchange-rate/{buy}/{sell}/history', 'ExchangeRateController@findHistory');
+    Route::get('exchange-rate/{currency}/related', 'ExchangeRateController@findRelatedExchangeRate');
+    Route::get('exchange-rate/update', 'ExchangeRateController@updateLatestExchangeRate');
     Route::resource('exchange-rate', 'ExchangeRateController', ['except' => [ 'create', 'edit' ]]);
     Route::resource('currency', 'CurrencyController', ['except' => [ 'create', 'edit' ]]);
 
