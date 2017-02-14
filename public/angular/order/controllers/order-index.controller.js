@@ -17,7 +17,7 @@ angular.module('order').controller('OrderIndexController', ['$scope', '$statePar
     $scope.options = [];
 
     $scope.render = function(index){
-      $scope.display.index = index;
+      $scope.display.index = index || 1;
       $scope.series = [];
       $scope.data = [[],[],[]];
       $scope.labels = [];
