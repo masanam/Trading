@@ -88,6 +88,63 @@ class DocumentTableSeeder extends Seeder
             'status' => 'a'
         ]) ;
 
+        Document::create([   
+            'id' => 4,
+            'template_id' => 2,
+            'shipment_id' => 3,
+            'user_id' => 3,
+            'title' => 'Test3',
+            'remarks' => 'Testing Documents 2',
+            'url' => 'Testing3',
+            'older_version' => 3,
+            'newer_version' => 30,
+            'version' => 30,
+            'status' => 'a'
+        ]) ;
+
+        Document::create([   
+            'id' => 5,
+            'template_id' => 1,
+            'shipment_id' => 3,
+            'user_id' => 3,
+            'title' => 'Test3',
+            'remarks' => 'Testing Documents 1',
+            'url' => 'Testing3',
+            'older_version' => 3,
+            'newer_version' => 30,
+            'version' => 30,
+            'status' => 'a'
+        ]) ;
+
+        Document::create([   
+            'id' => 6,
+            'template_id' => 3,
+            'shipment_id' => 2,
+            'user_id' => 2,
+            'title' => 'Test2',
+            'remarks' => 'Testing Documents 3',
+            'url' => 'Testing2',
+            'older_version' => 2,
+            'newer_version' => 20,
+            'version' => 20,
+            'status' => 'a'
+        ]) ;
+
+        Document::create([   
+            'id' => 7,
+            'template_id' => 1,
+            'shipment_id' => 2,
+            'user_id' => 2,
+            'title' => 'Test2',
+            'remarks' => 'Testing Documents 1',
+            'url' => 'Testing2',
+            'older_version' => 2,
+            'newer_version' => 20,
+            'version' => 20,
+            'status' => 'a'
+        ]) ;
+
+
         DocumentDetail::create([   
             'id' => 1,
             'document_id' => 1,

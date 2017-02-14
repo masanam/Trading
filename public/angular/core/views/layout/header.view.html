@@ -44,7 +44,7 @@
         <li class="dropdown notifications-menu" uib-dropdown ng-if="Authentication.user" ng-init="findNotificationsByUser()">
           <a class="dropdown-toggle" data-toggle="dropdown" uib-dropdown-toggle>
             <i class="fa fa-bell"></i>
-            <span class="label label-danger" ng-if="unread_notifications">{{ unread_notifications }}</span>
+            <span class="label label-danger" ng-if="unread_notifications" style="font-size: 10px;">{{ unread_notifications }}</span>
           </a>
           <ul class="dropdown-menu" uib-dropdown-menu>
             <li ng-repeat="notif in notifications.slice().reverse() | limitTo:8" ng-click="readNotification(notif.$id)">
@@ -52,28 +52,40 @@
               <ul class="menu" ng-if="!notif.isRead">
                 <li style="background-color: #F0F8FF;" ng-if="notif.notification.indexOf('ORD') < 0">
                   <a ng-href="{{ notif.url }}" style="white-space:normal;">
-                    <small class="pull-right text-muted"> {{ notif.created_at | date:'medium' }} </small><br>
-                    <i class="fa fa-comment" style="color: gray;"></i>{{ notif.notification }}
+                    <small class="pull-right text-muted"> {{ notif.created_at | date:'mediumDate' }} {{ notif.created_at | date:'shortTime' }}</small><br>
+                    <p style="font-size: 16px;">
+                      <i class="fa fa-comment" style="color: gray;"></i>
+                        {{ notif.notification }}
+                    </p>
                   </a>
                 </li>
                 <li style="background-color: #F0F8FF;" ng-if="notif.notification.indexOf('ORD') >= 0">
                   <a ng-href="{{ notif.url }}" style="white-space:normal;">
-                    <small class="pull-right text-muted"> {{ notif.created_at | date:'medium' }} </small><br>
-                    <i class="fa fa-user" style="color: red;"></i>{{ notif.notification }}
+                    <small class="pull-right text-muted"> {{ notif.created_at | date:'mediumDate' }} {{ notif.created_at | date:'shortTime' }}</small><br>
+                    <p style="font-size: 16px;">
+                      <i class="fa fa-user" style="color: red;"></i>
+                        {{ notif.notification }}
+                    </p>
                   </a>
                 </li>
               </ul>
               <ul class="menu" ng-if="notif.isRead">
                 <li ng-if="notif.notification.indexOf('ORD') < 0">
                   <a ng-href="{{ notif.url }}" style="white-space:normal;">
-                    <small class="pull-right text-muted"> {{ notif.created_at | date:'medium' }} </small><br>
-                    <i class="fa fa-comment" style="color: gray;"></i>{{ notif.notification }}
+                    <small class="pull-right text-muted"> {{ notif.created_at | date:'mediumDate' }} {{ notif.created_at | date:'shortTime' }}</small><br>
+                    <p style="font-size: 16px;">
+                      <i class="fa fa-comment" style="color: gray;"></i>
+                        {{ notif.notification }}
+                    </p>
                   </a>
                 </li>
                 <li ng-if="notif.notification.indexOf('ORD') >= 0">
                   <a ng-href="{{ notif.url }}" style="white-space:normal;">
-                    <small class="pull-right text-muted"> {{ notif.created_at | date:'medium' }} </small><br>
-                    <i class="fa fa-user" style="color: red;"></i>{{ notif.notification }}
+                    <small class="pull-right text-muted"> {{ notif.created_at | date:'mediumDate' }} {{ notif.created_at | date:'shortTime' }}</small><br>
+                    <p style="font-size: 16px;">
+                      <i class="fa fa-user" style="color: red;"></i>
+                        {{ notif.notification }}
+                    </p>
                   </a>
                 </li>
               </ul>

@@ -29,7 +29,7 @@ angular.module('notification').controller('NotificationController', ['$scope', '
   $scope.detail =function(a){
     var id_notif = a.split('order/');
     id_notif = id_notif[1];
-    $state.go('order.view', {id : id_notif});
+    $state.go('order.view', { id : id_notif });
   };
 
 

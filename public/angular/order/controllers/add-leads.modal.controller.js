@@ -2,8 +2,7 @@
 
 angular.module('order').controller('AddLeadsModalController', ['$uibModalInstance', '$scope', 'Order', 'Term', 'items', 'lead', 'Currency',
   function($uibModalInstance, $scope, Order, Term, items, lead, Currency) {
-    $scope.items = items;
-    console.log($scope.items);
+    $scope.items = items;    
     $scope.lead = lead;
     $scope.selected = {
       item: $scope.items[0]
@@ -21,8 +20,7 @@ angular.module('order').controller('AddLeadsModalController', ['$uibModalInstanc
       return $scope.used;
     };
 
-    $scope.ok = function () {
-      console.log($scope.selected.item);
+    $scope.ok = function () {      
       $uibModalInstance.close($scope.selected.item);
     };
 
