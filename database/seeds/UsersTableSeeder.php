@@ -102,7 +102,7 @@ class UsersTableSeeder extends Seeder
         Role::create(['id' => 26,   'role' => 'trade-supervisor']);
         Role::create(['id' => 27,   'role' => 'general-manager']);
 
-        User::find(1)->roles()->attach([1, 11]); // Pras: root, executive
+        User::find(1)->roles()->attach([1, 2, 11]); // Pras: root, admin, executive
         User::find(2)->roles()->attach(21); // Martin: cmo
         User::find(3)->roles()->attach(21); // Aryo: cmo
         User::find(4)->roles()->attach(21); // Fahmi: cmo
