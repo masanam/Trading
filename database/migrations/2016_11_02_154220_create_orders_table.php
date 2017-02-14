@@ -21,7 +21,7 @@ class CreateOrdersTable extends Migration
             $table->string('cancel_reason')->nullable();
             $table->string('request_reason')->nullable();
             $table->string('finalize_reason')->nullable();
-            
+
             $table->integer('approval_sequence')->unsigned()->default(0);
             $table->char('status', 1);
             $table->timestamps();
@@ -64,16 +64,21 @@ class CreateOrdersTable extends Migration
         });
 
         Schema::create('currencies', function (Blueprint $table) {
-            $table->char('id',3);
+            $table->char('id',3)->primary();
             $table->string('value');
             $table->timestamps();
         });
 
         Schema::create('exchange_rates', function (Blueprint $table) {
+            $table->increments('id');
             $table->char('buy',3);
             $table->char('sell',3);
             $table->decimal('value', 20, 10);
+            $table->boolean('in_use');
             $table->timestamps();
+
+            $table->foreign('buy')->references('id')->on('currencies');
+            $table->foreign('sell')->references('id')->on('currencies');
         });
 
         Schema::create('order_details', function (Blueprint $table) {
@@ -134,9 +139,9 @@ class CreateOrdersTable extends Migration
     {
         Schema::dropIfExists('order_additional_costs');
         Schema::dropIfExists('order_negotiations');
+        Schema::dropIfExists('exchange_rates');
         Schema::dropIfExists('currencies');
         Schema::dropIfExists('order_details');
-        Schema::dropIfExists('exchange_rates');
         Schema::dropIfExists('order_users');
         Schema::dropIfExists('order_approvals');
         Schema::dropIfExists('order_approval_logs');

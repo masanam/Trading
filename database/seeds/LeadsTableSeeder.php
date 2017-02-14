@@ -821,28 +821,43 @@ class LeadsTableSeeder extends Seeder
       'progress_status' => NULL
     ]);
 
-    ExchangeRate::create([
-      'buy' => 'USD',
-      'sell' => 'IDR',
-      'value' => 13500
-    ]);
-
-    ExchangeRate::create([
-      'buy' => 'IDR',
-      'sell' => 'USD',
-      'value' => 0.00007407407
-    ]);
-
     Currency::create([
       'id' => 'USD',
       'value' => 'United States Dollar'
     ]);
 
-     Currency::create([
+    Currency::create([
       'id' => 'IDR',
       'value' => 'Indonesian Rupiah'
     ]);
 
+    ExchangeRate::create([
+      'buy' => 'USD',
+      'sell' => 'IDR',
+      'value' => 13500,
+      'in_use' => true
+    ]);
+
+    ExchangeRate::create([
+      'buy' => 'IDR',
+      'sell' => 'USD',
+      'value' => 0.00007407407,
+      'in_use' => false
+    ]);
+
+    ExchangeRate::create([
+      'buy' => 'USD',
+      'sell' => 'IDR',
+      'value' => 13300,
+      'in_use' => false
+    ]);
+
+    ExchangeRate::create([
+      'buy' => 'IDR',
+      'sell' => 'USD',
+      'value' => 0.00007507407,
+      'in_use' => true
+    ]);
 
    $orders = [
      [
