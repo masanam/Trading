@@ -24,6 +24,7 @@
     var dist = "{{ Config::get('app.deployment') }}";
     var trx = "{{ Config::get('app.defaultTrx') }}";
     var showBuy = "{{ Config::get('app.showBuy') }}";
+    var showAutoApproval = "{{ Config::get('app.showAutoApproval') }}";
     var destinationBy = "{{ Config::get('app.destinationBy') }}";
     var productQuality = "{{ Config::get('app.productQuality') }}";
     var defaultCurrency = "{{ Config::get('app.defaultCurrency') }}";
