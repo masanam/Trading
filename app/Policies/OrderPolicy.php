@@ -19,22 +19,34 @@ class OrderPolicy
    */
   public function view(User $user, Order &$order)
   {
-    $subs = $user->subordinates();
-    $users = $subs->pluck('id')->all(); 
-    $users[] = $user->id;
-
     // modify records based on the positions
-    foreach($order->sells as &$sell)
-      if(!in_array($sell->user_id, $users))
-        $sell->seller = $sell->location = $sell->port_name = $sell->address = '-hidden value-';
+    if(config('app.hideCrossingLead')){
+      $subs = $user->subordinates();
+      $users = $subs->pluck('id')->all(); 
+      $users[] = $user->id;
 
-    foreach($order->buys as &$buy)
-      if(!in_array($buy->user_id, $users))
-        $buy->buyer = $buy->location = $buy->port_name = $buy->address = '-hidden value-';
+      foreach($order->sells as &$sell)
+        if(!in_array($sell->user_id, $users))
+          $sell->company->company_name = $sell->company_id = $sell->location = $sell->port_name = $sell->address = '-hidden value-';
 
-    foreach($order->users as $orderUser){
-      if($orderUser->id === $user->id) return true;
+      foreach($order->buys as &$buy)
+        if(!in_array($buy->user_id, $users))
+          $buy->company->company_name = $buy->company_id = $buy->location = $buy->port_name = $buy->address = '-hidden value-';
+
+      foreach($order->users as $orderUser)
+        if($orderUser->id === $user->id) return true;
+    } else {
+      if(!in_array('order.approval', $user->privilege)){
+        foreach($order->sells as &$sell)
+          $sell->company->company_name = $sell->company_id = $sell->city = $sell->port_name = $sell->address = '-hidden value-';
+
+        foreach($order->buys as &$buy)
+          $buy->company->company_name = $buy->company_id = $buy->city = $buy->port_name = $buy->address = '-hidden value-';          
+      }
+
+      return true;
     }
+
     return $user->id === $order->user_id;
   }
 

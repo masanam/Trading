@@ -29,12 +29,13 @@
         <div class="col-lg-10" ng-include="'/angular/order/views/_order-detail.partial.html'"></div>
 
         <div class="col-lg-2" ng-controller="OrderIndexController" ng-init="getIndices()">
+          <button ng-click="order.index_id = undefined">x</button>          
           Price Index Reference
           <div class="btn-group-vertical">
             <label class="btn btn-default" ng-repeat="index in indices"
               ng-model="order.index_id" uib-btn-radio="index.id">
               <small>{{ index.index_provider }}
-              {{ index.index_name }} - </small>
+              {{ index.index_name }} - </small>              
               {{ index.price }}
             </label>
           </div>

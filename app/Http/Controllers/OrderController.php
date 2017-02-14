@@ -638,7 +638,7 @@ class OrderController extends Controller
   {
     $order = Order::with(['trader', 'users', 'sells', 'buys',
         'buys.trader', 'sells.trader',
-        'approvals', 'approvals.roles', 'approvalLogs', 'companies',
+        'approvals', 'approvals.roles', 'approvalLogs',
         'sells.company', 'buys.company', 'sells.factory', 'contracts',
         'buys.concession' => function ($q) {
           return $q->select('concession_name');
