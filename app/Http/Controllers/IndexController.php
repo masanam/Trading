@@ -291,6 +291,8 @@ class IndexController extends Controller
       });
     }
 
+    if($req->environment=="berau") $query-> whereIn('index.id',[1,2,3]);
+
     if($req->m){
       $query->where('frequency', '=', 'a');    
     }
