@@ -15,8 +15,5 @@ angular.module('dashboard').controller('MainDashboardController', ['$scope', '$s
       [65, 59, 80, 81, 56, 55, 40],
       [28, 48, 40, 19, 86, 27, 90]
     ];
-
-
-    $scope.ConnectionFlowByMonths = [12,13,14,12,13,14,13,12,12,3,18,9,13,12];
   }
 ]);

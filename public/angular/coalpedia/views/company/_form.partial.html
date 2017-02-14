@@ -108,8 +108,10 @@
 </div>
 <div class="form-group">
   <label for="headquarter_location">Address:</label>
-  <input name="address" type="text" class="form-control" id="address" ng-change="address()"  ng-model="company.address">
-
+  <div class="input-group">
+    <input name="address" type="text" class="form-control" id="address" ng-change="address()"  ng-model="company.address">
+    <a class="btn input-group-addon btn-primary" ng-click="mapShow = !mapShow">Show Map Preview</a>
+  </div>
 </div>
 
 <!-- hasapu 08-02-2017
@@ -124,7 +126,8 @@ mulai
     <input type="number" min="-180" max="180" step="any" string-to-number class="form-control" placeholder="Longitude" ng-model="company.longitude" required>
   </div>
 </div>
-<div class="form-group">
+
+<div class="form-group" ng-if="mapShow">
   <ng-map zoom="4" center="Indonesia" on-click="changePosition()" default-style="false" style="width:100%; height:300px;">
     <marker draggable="true" on-dragend="changePosition()"  id="mark{{factory.id}}"
       position="{{company.latitude}}, {{company.longitude}}"></marker>
