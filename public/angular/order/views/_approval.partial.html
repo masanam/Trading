@@ -10,7 +10,7 @@
       }
       .img-user img[class] { width: 30px }
     </style>
-		<tr ng-repeat="approval in order.approvals">
+		<tr ng-repeat="approval in order.approvals" ng-if="!(approval.pivot.status === 'y' || approval.pivot.status === 'n') || showAutoApproval">
 			<td>
         <div class="img-user">
           <img ng-src="{{approval.image}}" ng-fallback-src="./images/default.png"

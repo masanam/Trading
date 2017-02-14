@@ -7,6 +7,7 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
     $scope.display = {};
 
     $scope.showBuy = Environment.showBuy;
+    $scope.showAutoApproval = Environment.showAutoApproval;
 
     // Remove existing order
     $scope.remove = function (order) {

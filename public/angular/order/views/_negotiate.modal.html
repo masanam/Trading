@@ -17,10 +17,15 @@
               </tr>
               <tr>
                 <td width="15%"><label>Volume</label></td>
-                <td width="35%">{{ lead.item.pivot.volume }}</td>
+                <td width="35%">{{ lead.item.pivot.volume }} mt</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td width="15%"><label>Deal Price</label></td>
+                <td width="35%">{{lead.item.pivot.deal_currency_id}}. {{ lead.item.pivot.deal_price }}</td>
 
-                <td width="15%"><label>Price</label></td>
-                <td width="35%">{{ lead.item.pivot.price }}</td>
+                <td width="15%"><label>Base Price</label></td>
+                <td width="35%">{{lead.item.pivot.base_currency_id}}. {{ lead.item.pivot.base_price }}</td>
               </tr>
               <tr>
                 <td><label>Trading Term</label></td>
@@ -35,10 +40,37 @@
 
     	  <div class="row">
           <div class="col-sm-6 form-group">
-            <input ng-model="negotiation.volume" class="form-control" placeholder="Volume (MT)" required>
+            <label>Volume (MT)</label>
+            <input type="number" ng-model="negotiation.volume" class="form-control" required>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2 form-group">
+            <label>Deal Currency</label>
+            <select class="form-control" ng-model="negotiation.deal_currency_id"
+              ng-options="o as o for o in currencies" required>
+              <option>Deal Currency</option>
+            </select>
+          </div>          
+          <div class="col-sm-6 form-group">
+            <label>Deal Price</label>
+            <input type="number" ng-model="negotiation.deal_price" class="form-control" placeholder="Deal Price ({{negotiation.deal_currency_id}})" ng-change="negotiation.base_price = negotiation.deal_price * negotiation.exchange_rate" required>
+          </div>
+          <div class="col-sm-4 form-group" ng-init="negotiation.exchange_rate = 1">
+            <label>Exchange Rate</label>
+            <input type="number" ng-model="negotiation.exchange_rate" class="form-control"
+              ng-change="negotiation.base_price = negotiation.deal_price * negotiation.exchange_rate"
+              placeholder="Exch. Rate" required>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2 form-group">
+            <label>Base Currency</label>
+            <input ng-model="negotiation.base_currency_id" type="text" class="form-control" readonly>
           </div>
           <div class="col-sm-6 form-group">
-            <input ng-model="negotiation.price" class="form-control" placeholder="Price (USD)" required>
+            <label>Base Price</label>
+            <input ng-model="negotiation.base_price" readonly class="form-control" required>
           </div>
         </div>
         <div class="row">
@@ -76,6 +108,6 @@
   <div class="modal-footer">
     <button class="btn btn-default pull-left" type="button" ng-click="cancel()">Cancel</button>
 
-    <button class="btn btn-primary" type="submit">Update Price</button>
+    <button class="btn btn-primary pull-left" type="submit">Update Price</button>
   </div>
 </form>
