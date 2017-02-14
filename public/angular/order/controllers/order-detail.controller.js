@@ -112,7 +112,6 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
       });
 
       modalInstance.result.then(function (negotiation) {
-        console.log(negotiation);
         Order.update(
           { id:$scope.order.id, action: 'stage' },
           { lead_type:'buy', lead_id:negotiation.id, negotiation:true, volume:negotiation.volume,
