@@ -127,6 +127,7 @@ Route::group(['middleware' => ['cors', 'throttle']], function() {
     //roles & permission API
     Route::resource('role','RoleController', ['except' => [ 'create', 'edit' ]]);
     Route::resource('permission','PermissionController', ['except' => [ 'create', 'edit' ]]);
+    Route::resource('privilege','PrivilegeController', ['except' => [ 'create', 'edit' ]]);
 
     /*
      * IUP
