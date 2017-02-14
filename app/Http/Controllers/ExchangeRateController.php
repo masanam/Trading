@@ -4,16 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Model\Currency;
 use App\Model\ExchangeRate;
 
-use DB;
-
-class CurrencyController extends Controller
+class ExchangeRateController extends Controller
 {
-    public function __construct() {
-      $this->middleware('jwt.auth');
-    }
     /**
      * Display a listing of the resource.
      *
@@ -21,8 +15,29 @@ class CurrencyController extends Controller
      */
     public function index()
     {
-        $currencies = Currency::with('buy', 'sell')->get();
-        return response()->json($currencies, 200);
+      $exchange_rate = ExchangeRate::with('buy', 'sell')->where('in_use', true)->get();
+
+      return response()->json($exchange_rate, 200);
+    }
+
+    public function findHistory($buy, $sell) {
+      $value = []; $created_at = [];
+      $exchange_rates = ExchangeRate::where([['buy', $buy], ['sell', $sell]])->get();
+      foreach($exchange_rates as $e) {
+        $value[] = $e->value; $created_at[] = $e->created_at->format('d M Y - H:i:s');
+      }
+
+      return response()->json(['value' => $value, 'created_at' => $created_at], 200);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
     }
 
     /**
@@ -33,13 +48,7 @@ class CurrencyController extends Controller
      */
     public function store(Request $request)
     {
-      $currency = new Currency();
-      $currency->id = $request->id;
-      $currency->value = $request->value;
-
-      $currency->save();
-
-      return response()->json($currency, 200);
+        //
     }
 
     /**
@@ -50,9 +59,18 @@ class CurrencyController extends Controller
      */
     public function show($id)
     {
-      $currency = Currency::find($id);
+        //
+    }
 
-      return response()->json($currency, 200);
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
     }
 
     /**
@@ -64,14 +82,7 @@ class CurrencyController extends Controller
      */
     public function update(Request $request, $id)
     {
-      $currency = Currency::find($id);
-
-      $currency->id = $request->id;
-      $currency->value = $request->value;
-
-      $currency->save();
-
-      return response()->json($currency, 200);
+        //
     }
 
     /**
