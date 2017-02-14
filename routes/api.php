@@ -78,8 +78,8 @@ Route::group(['middleware' => ['cors', 'throttle']], function() {
      * this API contains ALL the things needed to manage
      * all documents
      */
-    Route::resource('documents', 'DocumentController', ['except' => [ 'create', 'edit' ]]);
-    Route::get('templates', 'TemplateController@index');
+    Route::resource('document', 'DocumentController', ['except' => [ 'create', 'edit' ]]);
+    Route::get('template', 'TemplateController@index');
 
     /*
      * INDEX API GROUP
@@ -109,6 +109,7 @@ Route::group(['middleware' => ['cors', 'throttle']], function() {
     Route::get('order/funnel','OrderController@funnel');
 
     Route::resource('leads', 'LeadController', ['except' => [ 'create', 'edit' ]]);
+    
     Route::put('orders/{id}/stage', 'OrderController@stage');
     Route::put('orders/{id}/unstage', 'OrderController@unstage');
     Route::match(['get','put'], 'orders/{id}/approval', 'OrderController@approval');
@@ -125,8 +126,9 @@ Route::group(['middleware' => ['cors', 'throttle']], function() {
     Route::get('shipments/{id}/status-log', 'ShipmentController@showShipmentLogByShipment');
     Route::get('shipments/history', 'ShipmentController@indexShipmentHistory');
     Route::get('shipments/{id}/history', 'ShipmentController@showShipmentHistoryByShipment');
-    Route::resource('contracts', 'ContractController', ['except' => [ 'create', 'edit' ]]);
     Route::resource('shipments', 'ShipmentController', ['except' => [ 'create', 'edit' ]]);
+
+    Route::resource('contracts', 'ContractController', ['except' => [ 'create', 'edit' ]]);
 
     //roles & permission API
     Route::resource('role','RoleController', ['except' => [ 'create', 'edit' ]]);
