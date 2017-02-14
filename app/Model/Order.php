@@ -20,18 +20,18 @@ class Order extends Model
    */
   public function buys() {
       return $this->belongsToMany(Lead::class, 'order_details', 'order_id', 'lead_id')
-        ->withPivot('id', 'price', 'deal_currency_id', 'deal_price', 'volume', 'payment_term', 'trading_term')->where('lead_type', 'b');
+        ->withPivot('id', 'price', 'base_currency_id', 'base_price', 'exchange_rate', 'deal_currency_id', 'deal_price', 'volume', 'payment_term', 'trading_term')->where('lead_type', 'b');
 	}
 
   public function sells() {
     return $this->belongsToMany(Lead::class, 'order_details', 'order_id', 'lead_id')
-        ->withPivot('id', 'price', 'deal_currency_id', 'deal_price', 'volume', 'payment_term', 'trading_term')->where('lead_type', 's');
+        ->withPivot('id', 'price', 'base_currency_id', 'base_price', 'exchange_rate', 'deal_currency_id', 'deal_price', 'volume', 'payment_term', 'trading_term')->where('lead_type', 's');
 	}
 
   public function leads()
   {
     return $this->belongsToMany(Lead::class, 'order_details', 'order_id', 'lead_id')
-      ->withPivot('id', 'price', 'volume', 'payment_term', 'trading_term');
+      ->withPivot('id', 'price', 'base_currency_id', 'base_price', 'exchange_rate', 'volume', 'payment_term', 'trading_term');
   }
 
   public function countLeads() {

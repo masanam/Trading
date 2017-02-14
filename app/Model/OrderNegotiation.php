@@ -10,20 +10,16 @@ class OrderNegotiation extends Model
 
     protected $fillable = [
     	'order_detail_id',
-			'notes',
-			'volume',
-			'price',
-			'user_id',
-			'trading_term',
-			'payment_term',
-			'insurance_cost',
-			'interest_cost',
-			'surveyor_cost',
-			'others_cost',
-			'pit_to_port',
-			'transhipment',
-			'freight_cost',
-			'port_to_factory'
+    	'user_id',
+		'volume',
+		'base_currency_id',
+		'base_price',
+		'deal_currency_id',
+		'deal_price',
+		'exchange_rate',
+		'trading_term',
+		'payment_term',
+		'notes'
     ];
 
     /*public function getCreatedAtAttribute($value)

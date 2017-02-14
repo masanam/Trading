@@ -112,6 +112,7 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
       });
 
       modalInstance.result.then(function (negotiation) {
+        console.log(negotiation);
         Order.update(
           { id:$scope.order.id, action: 'stage' },
           { lead_type:'buy', lead_id:negotiation.id, negotiation:true, volume:negotiation.volume,
@@ -147,7 +148,7 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
         }
       });
 
-      modalInstance.result.then(function (negotiation) {
+      modalInstance.result.then(function (negotiation) {            
         Order.update(
           { id:$scope.order.id, action: 'stage' },
           { lead_type:'sell', lead_id:negotiation.id, negotiation:true, volume:negotiation.volume,
@@ -158,7 +159,8 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
           function (res){
             $scope.order.sells = res.sells;
             negotiation.created_at = new Date();
-            $scope.display.sell.pivot.negotiations.push(negotiation);
+            $scope.display.sell.pivot.negotiations.push(negotiation);            
+            $scope.display.sell.pivot = res.sells[0].pivot
           });
       }, function () {
         console.log('Modal dismissed at: ' + new Date());
