@@ -34,6 +34,7 @@ return [
     'productQuality' => env('PRODUCT_QUALITY', 'productQuality'),
     'defaultArea' => env('DEFAULT_AREA', 4),
     'defaultCurrency' => env('DEFAULT_CURRENCY', 'USD'),
+    'hideCrossingLead' => env('HIDE_CROSSING_LEAD', false),
 
     /*
     |--------------------------------------------------------------------------
