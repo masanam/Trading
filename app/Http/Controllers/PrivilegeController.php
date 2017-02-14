@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\Role;
+use App\Model\Privilege;
 use App\Model\Permission;
 use Illuminate\Http\Request;
 
 use Auth;
 
-class RoleController extends Controller
+class PrivilegeController extends Controller
 {
     public function __construct() {
         $this->middleware(['jwt.auth', 'auth.admin'], ['except' => 'index']);
@@ -21,9 +21,9 @@ class RoleController extends Controller
      */
     public function index(Request $req)
     {
-        $role = Role::with('privileges')->get();
+        $privilege = Privilege::get();
 
-        return response()->json($role, 200);
+        return response()->json($privilege, 200);
     }
 
     /**
@@ -34,25 +34,7 @@ class RoleController extends Controller
      */
     public function store(Request $req)
     {
-        if(!$req) {
-            return response()->json([
-              'message' => 'Bad Request'
-            ], 400);
-        }
-
-        // if create role
-        if($req->role){
-            $role = new Role();
-            $role->role = $req->role;
-        }
-        // if create permission
-        // else if($req->permission){
-        //     $role = new Permission();
-        //     $role->permission = $req->permission;
-        // }
-
-        $role->save();
-        return response()->json($role, 200);
+       
     }
 
     /**
@@ -63,9 +45,7 @@ class RoleController extends Controller
      */
     public function show($id)
     {
-        $role = Role::with('privileges')->find($id);
-
-        return response()->json($role, 200);
+        
     }
 
     /**
@@ -77,16 +57,11 @@ class RoleController extends Controller
      */
     public function update(Request $req, $id)
     {
-        $role = Role::with('privileges')->find($id);
-        $privileges = [];
-        foreach ($req->privileges as $p) {
-            $privileges[] = $p['id'];
-        }
-        // $privileges = pluck($req->privileges->id);
-        if($privileges) $role->privileges()->sync($privileges);
-        else $role->privileges()->detach();
+        // $role = Role::find($id);
+        // $role->role = $req->role;
+        // $role->save();
 
-        return $this->show($id);
+        // return $this->show($id);
     }
 
     /**

@@ -116,6 +116,7 @@ Route::group(['middleware' => ['cors', 'throttle']], function() {
 
     Route::get('exchange-rate/{buy}/{sell}', 'ExchangeRateController@findOne');
     Route::get('exchange-rate/{buy}/{sell}/history', 'ExchangeRateController@findHistory');
+    Route::get('exchange-rate/update', 'ExchangeRateController@updateLatestExchangeRate');
     Route::resource('exchange-rate', 'ExchangeRateController', ['except' => [ 'create', 'edit' ]]);
     Route::resource('currency', 'CurrencyController', ['except' => [ 'create', 'edit' ]]);
 
@@ -132,6 +133,7 @@ Route::group(['middleware' => ['cors', 'throttle']], function() {
     //roles & permission API
     Route::resource('role','RoleController', ['except' => [ 'create', 'edit' ]]);
     Route::resource('permission','PermissionController', ['except' => [ 'create', 'edit' ]]);
+    Route::resource('privilege','PrivilegeController', ['except' => [ 'create', 'edit' ]]);
 
     /*
      * IUP
