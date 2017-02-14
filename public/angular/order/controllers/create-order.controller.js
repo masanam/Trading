@@ -12,10 +12,8 @@ angular.module('order').controller('CreateOrderController', ['$scope', '$state',
     };
 
     // Create new Article
-    $scope.create = function (isValid) {
-      //console.log($scope.order);
+    $scope.create = function (isValid) {      
       $scope.error = null;
-
       // Create new Article object
       var order = new Order($scope.order);
 
