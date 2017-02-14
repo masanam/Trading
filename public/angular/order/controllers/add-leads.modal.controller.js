@@ -3,6 +3,9 @@
 angular.module('order').controller('AddLeadsModalController', ['$uibModalInstance', '$scope', 'Order', 'Term', 'items', 'lead', 'Currency', 'Environment', 'Exchange_rate',
   function($uibModalInstance, $scope, Order, Term, items, lead, Currency, Environment, Exchange_rate) {
     $scope.items = items;            
+    
+    // console.log(items[0].length);
+    // console.log($scope.items[2]);
     $scope.defaultCurrency = Environment.defaultCurrency;    
     $scope.lead = lead;
     $scope.selected = {
