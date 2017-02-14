@@ -306,7 +306,7 @@ class IndexController extends Controller
           ->select('price')
           ->where('index_id', $r->id)
           ->orderBy('date', 'DESC')
-          ->limit(50)
+          ->limit(20)
           ->get();
         $r->latest = $latest->pluck('price');
       }
