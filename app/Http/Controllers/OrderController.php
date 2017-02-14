@@ -173,6 +173,7 @@ class OrderController extends Controller
     if ($volume > $lead_to_stage->volume) {
       $order->available_volume = 'error';
     }
+    // dd();    
   }
 
   private function mailApproval (&$order, $approval_properties, $user) {
@@ -519,8 +520,8 @@ class OrderController extends Controller
    * @return \Illuminate\Http\Response
    */
   public function store(Request $req)
-  {
-    // Check the availability of volume lead
+  {    
+    // Check the availability of volume lead    
     if(count($req->buys) > 0){
       foreach($req->buys as $buy){
         $used = 0;
@@ -817,7 +818,7 @@ class OrderController extends Controller
   public function stage(Request $req, $id)
   {
     $order = Order::with('buys', 'sells', 'approvals', 'approvals.roles', 'trader')->find($id);
-
+    // dd($req);
     // Check available volume
     $this->checkAvailable($order, $req);
     if ($order->available_volume === 'error') {
@@ -865,7 +866,7 @@ class OrderController extends Controller
     $order_detail_id = $order->leads()->find($req->lead_id)->pivot->id; // find the ID of the order details
     $negotiation  = new OrderNegotiation([
       'order_detail_id' => $order_detail_id,
-      'notes' => $req->notes || 'Initial Deal',
+      'notes' => $req->notes,
       'volume' => $req->volume,
       'base_currency_id' => $req->base_currency_id,
       'base_price' => $req->base_price,
@@ -876,8 +877,7 @@ class OrderController extends Controller
       'payment_term' => $req->payment_term,
       'user_id' => Auth::user()->id,
     ]);
-    $negotiation->save();
-
+    $negotiation->save();    
     return $this->show($id, $req);
   }
 
