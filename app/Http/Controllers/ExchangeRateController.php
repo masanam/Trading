@@ -48,8 +48,7 @@ class ExchangeRateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    
     //take latest exchange rate
     public function updateLatestExchangeRate() {
       DB::table('exchange_rates')->update(['in_use' => 0]);
