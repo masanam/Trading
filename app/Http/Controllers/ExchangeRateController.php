@@ -20,7 +20,7 @@ class ExchangeRateController extends Controller
      */
     public function index()
     {
-      $exchange_rate = ExchangeRate::with('buy', 'sell')->where('in_use', true)->get();
+      $exchange_rate = ExchangeRate::where('in_use', true)->get();
 
       return response()->json($exchange_rate, 200);
     }
