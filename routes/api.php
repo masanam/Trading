@@ -114,6 +114,8 @@ Route::group(['middleware' => ['cors', 'throttle']], function() {
     Route::match(['get','put'], 'orders/{id}/approval', 'OrderController@approval');
     Route::resource('orders', 'OrderController', ['except' => [ 'create', 'edit' ]]);
 
+    Route::get('exchange-rate/{buy}/{sell}/history', 'ExchangeRateController@findHistory');
+    Route::resource('exchange-rate', 'ExchangeRateController', ['except' => [ 'create', 'edit' ]]);
     Route::resource('currency', 'CurrencyController', ['except' => [ 'create', 'edit' ]]);
 
     Route::get('leads/{id}/test', 'LeadController@isSingleLeadInOrder');
@@ -129,6 +131,7 @@ Route::group(['middleware' => ['cors', 'throttle']], function() {
     //roles & permission API
     Route::resource('role','RoleController', ['except' => [ 'create', 'edit' ]]);
     Route::resource('permission','PermissionController', ['except' => [ 'create', 'edit' ]]);
+    Route::resource('privilege','PrivilegeController', ['except' => [ 'create', 'edit' ]]);
 
     /*
      * IUP

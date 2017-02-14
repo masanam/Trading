@@ -2,27 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Privilege;
+use App\Model\Permission;
 use Illuminate\Http\Request;
 
-use App\Model\Currency;
-use App\Model\ExchangeRate;
+use Auth;
 
-use DB;
-
-class CurrencyController extends Controller
+class PrivilegeController extends Controller
 {
     public function __construct() {
-      $this->middleware('jwt.auth');
+        $this->middleware(['jwt.auth', 'auth.admin'], ['except' => 'index']);
     }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $req)
     {
-        $currencies = Currency::with('buy', 'sell')->get();
-        return response()->json($currencies, 200);
+        $privilege = Privilege::get();
+
+        return response()->json($privilege, 200);
     }
 
     /**
@@ -31,15 +32,9 @@ class CurrencyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $req)
     {
-      $currency = new Currency();
-      $currency->id = $request->id;
-      $currency->value = $request->value;
-
-      $currency->save();
-
-      return response()->json($currency, 200);
+       
     }
 
     /**
@@ -50,9 +45,7 @@ class CurrencyController extends Controller
      */
     public function show($id)
     {
-      $currency = Currency::find($id);
-
-      return response()->json($currency, 200);
+        
     }
 
     /**
@@ -62,16 +55,13 @@ class CurrencyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $req, $id)
     {
-      $currency = Currency::find($id);
+        // $role = Role::find($id);
+        // $role->role = $req->role;
+        // $role->save();
 
-      $currency->id = $request->id;
-      $currency->value = $request->value;
-
-      $currency->save();
-
-      return response()->json($currency, 200);
+        // return $this->show($id);
     }
 
     /**

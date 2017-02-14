@@ -61,13 +61,13 @@
             </select>
           </div>
           <div class="col-sm-2 form-group" ng-init="selected.item.pivot.price =selected.item.price">
-            <input type="number" ng-model="selected.item.pivot.deal_price" class="form-control"
+            <input type="number" step="any" ng-model="selected.item.pivot.deal_price" class="form-control"
               ng-change="selected.item.pivot.base_price = selected.item.pivot.deal_price * selected.item.pivot.exchange_rate"
               placeholder="Deal Price" required>
           </div>
 
           <div class="col-sm-4 form-group" ng-init="selected.item.pivot.exchange_rate = 1">
-            <input type="number" ng-model="selected.item.pivot.exchange_rate" class="form-control"
+            <input type="number" step="any" ng-model="selected.item.pivot.exchange_rate" class="form-control"
               ng-change="selected.item.pivot.base_price = selected.item.pivot.deal_price * selected.item.pivot.exchange_rate"
               placeholder="Exch. Rate" required>
           </div>
@@ -79,7 +79,7 @@
             </select>
           </div>
           <div class="col-sm-2 form-group">
-            <input type="number" ng-model="selected.item.pivot.base_price" class="form-control" placeholder="Base Price" required>
+            <input type="number" step="any" ng-model="selected.item.pivot.base_price" class="form-control" placeholder="Base Price" required>
           </div>
 
         </div>

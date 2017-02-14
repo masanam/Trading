@@ -35,7 +35,7 @@
         Gross Caloric ADB
       </td>
       <td ng-if="productQuality === 'typical'">
-        <input type="number" class="form-control" placeholder="kcal" ng-model="lead.gcv_adb_min" ng-change="lead.gcv_adb_max = lead.gcv_adb_min">
+        <input type="number" class="form-control" placeholder="kcal" ng-model="lead.gcv_adb_min" ng-change="lead.gcv_adb_max = lead.gcv_adb_min" step="any">
       </td>
       <td ng-if="productQuality !== 'typical'">
         <input type="number" class="form-control" placeholder="kcal" ng-model="lead.gcv_adb_min" step="any">
