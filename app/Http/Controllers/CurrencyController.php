@@ -49,9 +49,12 @@ class CurrencyController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-      $currency = Currency::find($id);
-
+    {      
+      // $currency = Currency::find($id);
+      $currency = ExchangeRate::with('buy')->where('in_use', 1)->where('buy', $id)->get();
+      // if($req){
+      // }
+      
       return response()->json($currency, 200);
     }
 

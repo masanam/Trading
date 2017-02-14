@@ -30,6 +30,13 @@ class ExchangeRateController extends Controller
       return response()->json(['value' => $value, 'created_at' => $created_at], 200);
     }
 
+    public function findOne($buy, $sell) {
+     
+      $currency = ExchangeRate::where('in_use', 1)->where('buy', $buy)->where('sell', $sell)->first();
+     
+      return response()->json($currency, 200);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
