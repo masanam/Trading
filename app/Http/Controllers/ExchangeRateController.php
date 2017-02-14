@@ -69,6 +69,12 @@ class ExchangeRateController extends Controller
       }
     }
 
+    public function findRelatedExchangeRate($currency) {
+      $exchange_rate = ExchangeRate::where('buy', $currency)->orWhere('sell', $currency)->get();
+
+      return response()->json($exchange_rate, 200);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
