@@ -2,14 +2,16 @@
   <td  ng-if="buymin !== null || buymax !== null || buyreject !== null || buybonus !== null || sellmin !== null || sellmax !== null || sellreject !== null || sellbonus !== null"><b>{{quality}}
   </b></td>
 	<td  ng-if="( buymin !== null || buymax !== null || buyreject !== null || buybonus !== null || sellmin !== null || sellmax !== null || sellreject !== null || sellbonus !== null ) && !inhouse">
-		<span ng-if="buymin || buymax || buyreject || buybonus">
+		<span ng-if="buymin || buymax">
     <section ng-if="buymin !== null && buymax !== null">{{ buymin || 'N/A' }} ~ {{ buymax || 'N/A' }} kcal</section>
     <section ng-if="buymin !== null && buymax === null">{{ buymin || 'N/A' }} kcal</section>
     <section ng-if="buymax === null && buymax !== null">{{ buymax || 'N/A' }} kcal</section>
 		<br>
-		<section ng-if="buyreject !== null">{{ buyreject }} kcal reject;</section>
-    <section ng-if="buybonus !== null">{{ buybonus }} kcal bonus</section>
 		</span>
+    <span ng-if="buyreject || buybonus">
+    <section ng-if="buyreject !== null">{{ buyreject }} kcal reject;</section>
+    <section ng-if="buybonus !== null">{{ buybonus }} kcal bonus</section>
+    </span>
 	</td>
   <td  ng-if="buymin !== null || buymax !== null || buyreject !== null || buybonus !== null || sellmin !== null || sellmax !== null || sellreject !== null || sellbonus !== null">
     <span ng-if="sellmin || sellmax || sellreject || sellbonus">
