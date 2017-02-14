@@ -35,7 +35,7 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        if($request->status) $user = User::where('status', $request->status)->get();
+        if($request->status === 'x') $user = User::where('status', $request->status)->orWhere('status','p')->get();
         else $user = User::where('status', 'a')->get();
 
         return response()->json($user, 200);
@@ -153,7 +153,7 @@ class UserController extends Controller
             }
 
             $user->roles()->sync($roles);
-            $user->status = 'p';
+            if(!contains('admin',Auth::user()->role)) $user->status = 'p';
         }
 
         // if($req->role_id) $user->roles()->attach($req->role_id);
