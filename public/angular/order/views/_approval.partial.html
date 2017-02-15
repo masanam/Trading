@@ -10,21 +10,22 @@
       }
       .img-user img[class] { width: 30px }
     </style>
+
 		<tr ng-repeat="approval in order.approvals">
 			<td>
         <div class="img-user">
           <img ng-src="{{approval.image}}" ng-fallback-src="./images/default.png"
           	class="img-circle div-img-circle small" style="float:left; margin:2px;" />
-          {{ approval.name }}
+          {{ approval }}
         </div>
 			</td>
 			<td>
 				{{  approval.pivot.status === 'a' ? 'Accepted' :
-					approval.pivot.status === 'r' ? 'Rejected' : 
-					approval.pivot.status === 'y' ? 'Auto-Acc' : 
+					approval.pivot.status === 'r' ? 'Rejected' :
+					approval.pivot.status === 'y' ? 'Auto-Acc' :
 					approval.pivot.status === 'n' ? 'Auto-Rjct' : 'Pending' }}
 			</td>
-			<td>{{ approval.pivot.updated_at | date }}</td>
+			<td>{{ approval.pivot.updated_at }}</td>
 		</tr>
 	</tbody>
 </table>

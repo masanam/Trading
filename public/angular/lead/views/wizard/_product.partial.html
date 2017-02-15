@@ -76,13 +76,13 @@
         Nett Caloric Value ARB
       </td>
       <td ng-if="productQuality === 'typical'">
-        <input type="number" class="form-control" placeholder="kcal" ng-model="lead.ncv_min" ng-change="lead.ncv_max = lead.ncv_min">
+        <input type="number" class="form-control" placeholder="kcal/Kg" ng-model="lead.ncv_min" ng-change="lead.ncv_max = lead.ncv_min">
       </td>
       <td ng-if="productQuality !== 'typical'">
-        <input type="number" class="form-control" placeholder="kcal" ng-model="lead.ncv_min">
+        <input type="number" class="form-control" placeholder="kcal/Kg" ng-model="lead.ncv_min">
       </td>
       <td ng-if="productQuality !== 'typical'">
-        <input type="number" class="form-control" placeholder="kcal" ng-model="lead.ncv_max">
+        <input type="number" class="form-control" placeholder="kcal/Kg" ng-model="lead.ncv_max">
       </td>
       <td ng-if="productQuality !== 'typical'">
         <input type="text" class="form-control" placeholder="Ex : > 5700" ng-model="lead.ncv_bonus">
@@ -285,19 +285,19 @@
         AFT
       </td>
       <td ng-if="productQuality === 'typical'">
-        <input type="number" step="any" class="form-control" placeholder="&#176" ng-model="lead.aft_min" ng-change="lead.aft_max = lead.aft_min">
+        <input type="number" step="any" class="form-control" placeholder="Deg C" ng-model="lead.aft_min" ng-change="lead.aft_max = lead.aft_min">
       </td>
       <td ng-if="productQuality !== 'typical'">
-        <input type="number" step="any" class="form-control" placeholder="&#176" ng-model="lead.aft_min">
+        <input type="number" step="any" class="form-control" placeholder="Deg C" ng-model="lead.aft_min">
       </td>
       <td ng-if="productQuality !== 'typical'">
-        <input type="number" step="any" class="form-control" placeholder="&#176" ng-model="lead.aft_max">
+        <input type="number" step="any" class="form-control" placeholder="Deg C" ng-model="lead.aft_max">
       </td>
       <td ng-if="productQuality !== 'typical'">
-        <input type="text" class="form-control" placeholder="Ex : > 15&#176" ng-model="lead.aft_bonus">
+        <input type="text" class="form-control" placeholder="Ex : > 15 Deg C" ng-model="lead.aft_bonus">
       </td>
       <td>
-        <input type="text" class="form-control" placeholder="Ex : < 5&#176" ng-model="lead.aft_reject">
+        <input type="text" class="form-control" placeholder="Ex : < 5 Deg C" ng-model="lead.aft_reject">
       </td>
 
     </tr>

@@ -44,7 +44,7 @@ class Order extends Model
   }
 
 	public function approvalLogs() {
-		return $this->belongsToMany(User::class, 'order_approval_logs')->withPivot('status', 'updated_at');
+		return $this->belongsToMany(User::class, 'order_approval_logs')->withPivot('status','reason', 'updated_at');
 	}
 
   public function trader() {

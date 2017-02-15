@@ -4,6 +4,7 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
   function($scope,$uibModal, Lead, Order, Environment) {
 
     $scope.productQuality = Environment.productQuality;
+    $scope.showBuy = Environment.showBuy;
 
     $scope.init = function () {
       $scope.totalPriceBuy = 0;

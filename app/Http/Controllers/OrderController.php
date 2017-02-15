@@ -583,7 +583,7 @@ class OrderController extends Controller
       foreach($req->sells as $sell){
         $order->sells()->attach([ $sell['id'] => $sell['pivot'] ]);
         Lead::find($sell['id'])->reconcile();
-        
+
         // add negotiation log to the staged lead
         $order_detail_id = $order->sells()->find($sell['id'])->pivot->id;
 
@@ -790,11 +790,27 @@ class OrderController extends Controller
       $this->authorize('approve', $order);
     }
 
-    // put the approval to Log
-    $order->approvalLogs()->attach([ $user->id => [ 'status' => $req->status ] ]);
 
-    // put the user's approval status to replace old one
-    $order->approvals()->sync([ $user->id => [ 'status' => $req->status ] ], false);
+
+    //jika status == reject, dan reject reason !=NULL maka status akan berubah dan mencatat reason
+    if($req->status === 'r') {
+      if($req->reject_reason) {
+      // put the approval to Log
+      $order->approvalLogs()->attach([ $user->id => [ 'status' => $req->status , 'reason' => $req->reject_reason] ]);
+      // put the user's approval status to replace old one
+      $order->approvals()->sync([ $user->id => [ 'status' => $req->status ] ], false);
+      }
+    }
+    else {
+      // put the approval to Log
+      $order->approvalLogs()->attach([ $user->id => [ 'status' => $req->status ] ]);
+
+
+      // put the user's approval status to replace old one
+      $order->approvals()->sync([ $user->id => [ 'status' => $req->status ] ], false);
+    }
+
+
 
     // laravel belongsToMany sync bug, need to reload the order
     $order = Order::with( 'approvals', 'approvals.roles',
@@ -804,6 +820,9 @@ class OrderController extends Controller
     // Begin/Continue/End approval sequence
     if($req->status === 'a') $this->sequenceApproval($order);
     else $this->removeUpperAppr($order);
+
+
+    $order->save();
 
     return $this->show($id, $req);
   }

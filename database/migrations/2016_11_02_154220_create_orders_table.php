@@ -21,7 +21,8 @@ class CreateOrdersTable extends Migration
             $table->string('cancel_reason')->nullable();
             $table->string('request_reason')->nullable();
             $table->string('finalize_reason')->nullable();
-            
+            $table->string('reject_reason')->nullable();
+
             $table->integer('approval_sequence')->unsigned()->default(0);
             $table->char('status', 1);
             $table->timestamps();
@@ -47,6 +48,7 @@ class CreateOrdersTable extends Migration
             $table->integer('order_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->char('status', 1); // A = Approved ; R = Reject
+            $table->string('reason')->nullable();
             $table->timestamps();
 
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('restrict');
