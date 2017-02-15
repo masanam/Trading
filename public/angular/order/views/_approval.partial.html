@@ -1,6 +1,7 @@
 <table class="table table-striped table-bordered">
 	<thead>
-		<tr><th>Name</th><th>Status</th><th>Reason</th></tr>
+		<tr><th>Name</th><th>Status</th><th>Updated</th></tr>
+
 	</thead>
 	<tbody>
     <style>
@@ -10,22 +11,29 @@
       }
       .img-user img[class] { width: 30px }
     </style>
-		<!-- <tr ng-repeat="approval in order.approvals"> -->
-		<tr ng-repeat="approval in order.approvals" ng-if="!(approval.pivot.status === 'y' || approval.pivot.status === 'n') || showAutoApproval">
-			<td>
-        <div class="img-user">
-          <img ng-src="{{approval.image}}" ng-fallback-src="./images/default.png"
-          	class="img-circle div-img-circle small" style="float:left; margin:2px;" />
-          {{ approval.name }}</br>{{ approval.pivot.updated_at | date }}
-        </div>
-			</td>
-			<td>
-				{{  approval.pivot.status === 'a' ? 'Accepted' :
-					approval.pivot.status === 'r' ? 'Rejected' :
-					approval.pivot.status === 'y' ? 'Auto-Acc' :
-					approval.pivot.status === 'n' ? 'Auto-Rjct' : 'Pending' }}
-			</td>
-			<td>{{ approval.pivot.reason }}</td>
-		</tr>
+			<tr ng-repeat="approval in order.approvals" ng-if="!(approval.pivot.status === 'y' || approval.pivot.status === 'n') || showAutoApproval" >
+				<td>
+	        <div class="img-user">
+	          <img ng-src="{{approval.image}}" ng-fallback-src="./images/default.png"
+	          	class="img-circle div-img-circle small" style="float:left; margin:2px;" />
+	          {{ approval.name }}
+						<div ng-if="approval.pivot.status === 'r'">
+									<a ng-href="" ng-click="isCollapsed = !isCollapsed">
+				            Show Reason
+				            <span class="glyphicon glyphicon-triangle-bottom pull-right" ng-if="!isCollapsed"></span>
+				            <span class="glyphicon glyphicon-triangle-top pull-right" ng-if="isCollapsed"></span>
+				          </a>
+									<div id="detail-section" uib-collapse="!isCollapsed">{{ approval.pivot.reason }}</div>
+						</div>
+	        </div>
+				</td>
+				<td>
+					{{  approval.pivot.status === 'a' ? 'Accepted' :
+						approval.pivot.status === 'r' ? 'Rejected' :
+						approval.pivot.status === 'y' ? 'Auto-Acc' :
+						approval.pivot.status === 'n' ? 'Auto-Rjct' : 'Pending' }}
+				</td>
+				<td>{{ approval.pivot.updated_at | date }}</td>
+			</tr>
 	</tbody>
 </table>
