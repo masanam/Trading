@@ -27,7 +27,8 @@ class OrderApprovalSchemesTableSeeder extends Seeder
         ]);
 
         $seq = [
-          //untuk order area 1
+          //untuk order area 1 
+          // d = direct, o = or, a = and, 1/2/3/...  = angka
           //['order_approval_scheme_id' => 1,'sequence' => 1,'role_id' => 26, 'approval_scheme' => 'd'], // trade supervisor, direct
           ['order_approval_scheme_id' => 1,'sequence' => 1,'role_id' => 22, 'approval_scheme' => 'o'], // manager area 1, all
           ['order_approval_scheme_id' => 1,'sequence' => 2,'role_id' => 27, 'approval_scheme' => 'o'], // gm, 1 of all

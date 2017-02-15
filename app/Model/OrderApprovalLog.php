@@ -11,6 +11,7 @@ class OrderApprovalLog extends Model
     	'user_id',
     	'order_id',
     	'status'
+      'reason',
     ];
 
     /*public function getCreatedAtAttribute($value)

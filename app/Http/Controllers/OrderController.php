@@ -173,7 +173,7 @@ class OrderController extends Controller
     if ($volume > $lead_to_stage->volume) {
       $order->available_volume = 'error';
     }
-    // dd();    
+    // dd();
   }
 
   private function mailApproval (&$order, $approval_properties, $user) {
@@ -520,8 +520,8 @@ class OrderController extends Controller
    * @return \Illuminate\Http\Response
    */
   public function store(Request $req)
-  {    
-    // Check the availability of volume lead    
+  {
+    // Check the availability of volume lead
     if(count($req->buys) > 0){
       foreach($req->buys as $buy){
         $used = 0;
@@ -584,7 +584,7 @@ class OrderController extends Controller
       foreach($req->sells as $sell){
         $order->sells()->attach([ $sell['id'] => $sell['pivot'] ]);
         Lead::find($sell['id'])->reconcile();
-        
+
         // add negotiation log to the staged lead
         $order_detail_id = $order->sells()->find($sell['id'])->pivot->id;
 
@@ -791,11 +791,27 @@ class OrderController extends Controller
       $this->authorize('approve', $order);
     }
 
-    // put the approval to Log
-    $order->approvalLogs()->attach([ $user->id => [ 'status' => $req->status ] ]);
 
-    // put the user's approval status to replace old one
-    $order->approvals()->sync([ $user->id => [ 'status' => $req->status ] ], false);
+
+    //jika status == reject, dan reject reason !=NULL maka status akan berubah dan mencatat reason
+    if($req->status === 'r') {
+      if($req->reject_reason) {
+      // put the approval to Log
+      $order->approvalLogs()->attach([ $user->id => [ 'status' => $req->status , 'reason' => $req->reject_reason] ]);
+      // put the user's approval status to replace old one
+      $order->approvals()->sync([ $user->id => [ 'status' => $req->status, 'reason' => $req->reject_reason] ], false);
+      }
+    }
+    else {
+      // put the approval to Log
+      $order->approvalLogs()->attach([ $user->id => [ 'status' => $req->status ] ]);
+
+
+      // put the user's approval status to replace old one
+      $order->approvals()->sync([ $user->id => [ 'status' => $req->status, 'reason' => $req->reject_reason]  ], false);
+    }
+
+
 
     // laravel belongsToMany sync bug, need to reload the order
     $order = Order::with( 'approvals', 'approvals.roles',
@@ -805,6 +821,9 @@ class OrderController extends Controller
     // Begin/Continue/End approval sequence
     if($req->status === 'a') $this->sequenceApproval($order);
     else $this->removeUpperAppr($order);
+
+
+    $order->save();
 
     return $this->show($id, $req);
   }
@@ -877,7 +896,7 @@ class OrderController extends Controller
       'payment_term' => $req->payment_term,
       'user_id' => Auth::user()->id,
     ]);
-    $negotiation->save();    
+    $negotiation->save();
     return $this->show($id, $req);
   }
 
