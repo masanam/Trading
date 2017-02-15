@@ -1,6 +1,7 @@
 <div class="col-lg-12 ng-print callout callout-warning" ng-if="included === true && approver === true">
   <div ng-if="order.status === 'p' && approving === false">
-    <div class="small-loader" style="margin: 5px 45%;" ng-if="loadScreen"></div>
+    <!-- <div class="small-loader" style="margin: 5px 45%;" ng-if="loadScreen"></div> -->
+    <div class="orange-small-loader" style="margin: 5px 45%;" ng-if="loadScreen"></div>
     <h4 ng-if="order.status==='r'" ng-if="!loadScreen">
         This order is waiting for your approval.</p>
         <a class="btn btn-success" ng-click="approve_reject('a');">
@@ -18,7 +19,7 @@
     </h4>
   </div>
   <div ng-if="order.status === 'r' && approving === false">
-    <div class="small-loader" style="margin: 5px 45%;" ng-if="loadScreen"></div>
+    <div class="orange-small-loader" style="margin: 5px 45%;" ng-if="loadScreen"></div>
     <h4 ng-if="!loadScreen">
       Do you want to undo your rejection?
       <a class="btn btn-success" ng-click="approve_reject('a');">
@@ -27,7 +28,7 @@
     </h4>
   </div>
   <div ng-if="order.status !== 'a' && approving === true">
-    <div class="small-loader" style="margin: 5px 45%;" ng-if="loadScreen"></div>
+    <div class="orange-small-loader" style="margin: 5px 45%;" ng-if="loadScreen"></div>
     <h4 ng-if="!loadScreen">
       Do you want to undo your approval?
       <a class="btn btn-danger" ng-click="approve_reject('r');">

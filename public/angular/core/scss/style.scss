@@ -299,6 +299,43 @@ ul.nav-wizard.nav-wizard-backnav .active ~ li a:focus {
     cursor: pointer;
 }
 
+.big-loader{
+  border: 10px solid #3498db; /* Blue */
+  border-top: 10px solid #f3f3f3; /* Light grey */
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  margin: 50px 45%;
+  animation: spin 1s linear infinite;
+}
+
+/*loader orange*/
+.orange-small-loader{ 
+  border: 5px solid #f39c12 ; /* orange */
+  border-top: 5px solid #f3f3f3; /* Light grey */
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  margin: 10px 47%;
+  animation: spin 0.6s linear infinite;
+}
+
+/*small loader blue*/
+.blue-small-loader{ 
+  border: 5px solid #3498db; /* Blue */
+  border-top: 5px solid #f3f3f3; /* Light grey */
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  margin: 10px 47%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 /*.panel-body
 {
     overflow-y: scroll;

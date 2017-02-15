@@ -29,13 +29,14 @@ class CreateOrderApprovalSchemesTable extends Migration
         });
 
         Schema::create('order_approval_scheme_sequences', function (Blueprint $table) {
+            $table->increments('id');
             $table->integer('order_approval_scheme_id')->unsigned();
             $table->integer('sequence')->unsigned();
             $table->integer('role_id')->unsigned();
             $table->char('approval_scheme', 1); // [a] AND, [o] OR, [integer] number of approval, [s] direct supervisor
             $table->timestamps();
 
-            $table->primary(['order_approval_scheme_id', 'sequence'], 'orderapprovalseq_primary');
+            $table->unique(['order_approval_scheme_id', 'sequence'], 'orderapprovalseq_primary');
             $table->foreign('order_approval_scheme_id')->references('id')->on('order_approval_schemes')->onDelete('restrict');
             $table->foreign('role_id')->references('id')->on('roles')->onDelete('restrict');
         });

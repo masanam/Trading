@@ -90,6 +90,7 @@
         </div>
 
       </div>  
+
       <!--For Mobile-->
 
       <div class="row">
@@ -113,6 +114,11 @@
         </thead>
 
         <tbody>
+          <tr ng-if="!orders.$resolved">
+            <td colspan="6">
+              <div class="blue-small-loader"></div>
+            </td>
+          </tr>
           <tr ng-repeat="order in orderCollection">
             <td>{{ order.id }}</td>
             <td>{{ order.trader.name }}</td>

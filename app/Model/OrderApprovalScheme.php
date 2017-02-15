@@ -11,4 +11,8 @@ class OrderApprovalScheme extends Model
   public function sequences() {
     return $this->hasMany(OrderApprovalSchemeSequence::class);
   }
+
+  public function area() {
+	 return $this->belongsTo(Area::class, 'sell_area_id');
+  }
 }
