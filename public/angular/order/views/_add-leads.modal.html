@@ -29,6 +29,8 @@
       <div class="col-sm-9" ng-if="!selected.item">
         <h3 align="center">Choose one lead to see the detail</h3>
       </div>
+      <!-- <div class="loader" ng-if="loadScreen"></div> -->
+      <!-- <div ng-if="!loadScreen">hide</div> -->
       <div class="col-sm-9" ng-if="selected.item">
         <div class="row">
           <div class="col-sm-4 form-group" ng-init="selected.item.pivot.volume = selected.item.volume - getUsed(selected.item)">

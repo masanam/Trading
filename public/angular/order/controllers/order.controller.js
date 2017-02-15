@@ -134,6 +134,7 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
     // Approve Order
     $scope.approve_reject = function (status) {
       $scope.error = null;
+      $scope.loadScreen = true;
       Order.get({ id: $scope.order.id, action: 'approval', status : status }, function (res) {
         $scope.order_approval = res;
         $scope.order_approval.status = status;        
@@ -141,6 +142,7 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
         else $scope.approving = true;
         Notification.sendNotification(status, $scope.order_approval, false, false);
         $scope.findOne();
+        $scope.loadScreen = false;
       }, function (err) {
         $scope.error = err.data.message;
       });
