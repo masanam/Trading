@@ -115,29 +115,30 @@ class UsersTableSeeder extends Seeder
 
         Privilege::create([ 'id' => 1, 'menu' => 'order.view' ]);
         Privilege::create([ 'id' => 2, 'menu' => 'order.edit' ]);
-        Privilege::create([ 'id' => 3, 'menu' => 'lead.view' ]);
-        Privilege::create([ 'id' => 4, 'menu' => 'lead.edit' ]);
-        Privilege::create([ 'id' => 5, 'menu' => 'index.view' ]);
-        Privilege::create([ 'id' => 6, 'menu' => 'index.edit' ]);
-        Privilege::create([ 'id' => 7, 'menu' => 'coalpedia.view' ]);
-        Privilege::create([ 'id' => 8, 'menu' => 'coalpedia.edit' ]);
+        Privilege::create([ 'id' => 3, 'menu' => 'order.approval' ]);
+        Privilege::create([ 'id' => 4, 'menu' => 'lead.view' ]);
+        Privilege::create([ 'id' => 5, 'menu' => 'lead.edit' ]);
+        Privilege::create([ 'id' => 6, 'menu' => 'index.view' ]);
+        Privilege::create([ 'id' => 7, 'menu' => 'index.edit' ]);
+        Privilege::create([ 'id' => 8, 'menu' => 'coalpedia.view' ]);
+        Privilege::create([ 'id' => 9, 'menu' => 'coalpedia.edit' ]);
 
-        Role::find(11)->privileges()->attach(2); // executive
+        Role::find(11)->privileges()->attach(3); // executive
 
         Role::find(15)->privileges()->attach(2); // traders
         Role::find(15)->privileges()->attach(4);
         Role::find(15)->privileges()->attach(8);
 
-        Role::find(21)->privileges()->attach(2); // cmo
+        Role::find(21)->privileges()->attach(3); // cmo
 
-        Role::find(22)->privileges()->attach(2); // trade-manager-area-1
+        Role::find(22)->privileges()->attach(3); // trade-manager-area-1
 
-        Role::find(23)->privileges()->attach(2); // trade-manager-area-2
+        Role::find(23)->privileges()->attach(3); // trade-manager-area-2
 
-        Role::find(26)->privileges()->attach(2); // trade-supervisor
+        Role::find(26)->privileges()->attach(3); // trade-supervisor
         Role::find(26)->privileges()->attach(4);
         Role::find(26)->privileges()->attach(6);
 
-        Role::find(27)->privileges()->attach(2); // general-manager
+        Role::find(27)->privileges()->attach(3); // general-manager
     }
 }

@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Model\ExchangeRate;
+use App\Model\Currency;
+
+use Ixudra\Curl\Facades\Curl;
 
 use DB;
 
@@ -17,7 +20,7 @@ class ExchangeRateController extends Controller
      */
     public function index()
     {
-      $exchange_rate = ExchangeRate::with('buy', 'sell')->where('in_use', true)->get();
+      $exchange_rate = ExchangeRate::where('in_use', true)->get();
 
       return response()->json($exchange_rate, 200);
     }
@@ -26,10 +29,49 @@ class ExchangeRateController extends Controller
       $value = []; $created_at = [];
       $exchange_rates = ExchangeRate::where([['buy', $buy], ['sell', $sell]])->get();
       foreach($exchange_rates as $e) {
-        $value[] = $e->value; $created_at[] = $e->created_at->format('d M Y - H:i:s');
+        $value[] = $e->value; $created_at[] = $e->created_at->format('Y M d');
       }
 
       return response()->json(['value' => $value, 'created_at' => $created_at], 200);
+    }
+
+
+    public function findOne($buy, $sell) {
+     
+      $currency = ExchangeRate::where('in_use', 1)->where('buy', $buy)->where('sell', $sell)->first();
+     
+      return response()->json($currency, 200);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    
+    //take latest exchange rate
+    public function updateLatestExchangeRate() {
+      DB::table('exchange_rates')->update(['in_use' => 0]);
+      $currency = Currency::pluck('id');
+      foreach($currency as $c) {
+        $response = json_decode(Curl::to('api.fixer.io/latest?base='.$c)->get());
+        // dd($response->rates);
+        foreach ($response->rates as $key => $value) {
+          $exchange_rate = new ExchangeRate();
+          $exchange_rate->buy = $c;
+          $exchange_rate->sell = $key;
+          $exchange_rate->value = $value;
+          $exchange_rate->in_use = true;
+
+          $exchange_rate->save();
+        }
+      }
+    }
+
+    public function findRelatedExchangeRate($currency) {
+      $exchange_rate = ExchangeRate::where('buy', $currency)->orWhere('sell', $currency)->get();
+
+      return response()->json($exchange_rate, 200);
     }
 
     /**
@@ -48,7 +90,7 @@ class ExchangeRateController extends Controller
       $exchange_rate->in_use = true;
 
       $exchange_rate->save();
-      
+
       return response()->json($exchange_rate, 200);
     }
 

@@ -6,8 +6,9 @@ angular.module('dashboard').controller('MainDashboardController', ['$scope', '$s
     $scope.getIndices = function () {
       $scope.date = new Date();
       $scope.indexPage = 0;
-      $scope.indices = Index.query({ action: 'single-date', previousPrice: true });
+      $scope.indices = Index.query({ action: 'single-date', previousPrice: true, environment: Environment.deployment });
     };
+
 
     $scope.labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
     $scope.series = ['Series A', 'Series B'];

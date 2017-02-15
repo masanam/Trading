@@ -9,8 +9,8 @@
     <div class="row">
       <div class="col-sm-3" style="max-height:500px; overflow-y:scroll;">
         <ul class="nav nav-pills nav-stacked">
-          <li ng-if="items.length < 1">There is no lead, you can create a new one</li>
-          <li ng-repeat="item in items">
+          <li ng-if="items.length < 1">There is no lead, you can create a new one</li>          
+          <li ng-repeat="item in items" ng-if="item.volume-getUsed(item)">             
             <a href="#" ng-click="$event.preventDefault(); selected.item = item">
               {{ item.company.company_name }} ({{ item.city }}, {{ item.country }})
               <span ng-if="
@@ -56,9 +56,9 @@
           <div class="col-sm-4">Base Currency + Price</div>
         </div>
         <div class="row">
-          <div class="col-sm-2 form-group" ng-init="selected.item.pivot.deal_currency_id = selected.item.currency_id">
+          <div class="col-sm-2 form-group" ng-init="selected.item.pivot.deal_currency_id = selected.item.currency_id;">
             <select class="form-control" ng-model="selected.item.pivot.deal_currency_id"
-              ng-options="o as o for o in currencies" required>
+              ng-options="o as o for o in currencies" required ng-change="findExchange_rate(selected.item.pivot.deal_currency_id)">
               <option>Deal Currency</option>
             </select>
           </div>
@@ -74,14 +74,15 @@
               placeholder="Exch. Rate" required>
           </div>
 
-          <div class="col-sm-2 form-group">
-            <select class="form-control" ng-model="selected.item.pivot.base_currency_id"
+          <div class="col-sm-2 form-group" ng-init="selected.item.pivot.base_currency_id = defaultCurrency">
+            <input type="text" ng-model="selected.item.pivot.base_currency_id" class="form-control" readonly>
+            <!-- <select class="form-control" ng-model="selected.item.pivot.base_currency_id"
               ng-options="o as o for o in currencies" required>
               <option>Base Currency</option>
-            </select>
+            </select> -->
           </div>
           <div class="col-sm-2 form-group">
-            <input type="number" step="any" ng-model="selected.item.pivot.base_price" class="form-control" placeholder="Base Price" required>
+            <input readonly type="number" step="any" ng-model="selected.item.pivot.base_price" class="form-control" placeholder="Base Price" required>
           </div>
 
         </div>

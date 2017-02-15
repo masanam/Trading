@@ -33,6 +33,7 @@
 
       <li class="treeview" ng-if="Authentication.user.role.indexOf('root') > -1
         || Authentication.user.privilege.indexOf('order.edit') > -1
+        || Authentication.user.privilege.indexOf('order.approval') > -1
         || Authentication.user.privilege.indexOf('order.view') > -1
         || Authentication.user.privilege.indexOf('lead.edit') > -1
         || Authentication.user.privilege.indexOf('lead.view') > -1">
@@ -53,6 +54,7 @@
             || Authentication.user.privilege.indexOf('lead.view') > -1)"><a ui-sref="lead.list({ lead_type: 'sell' })"><i class="ion ion-log-in"></i> Leads</a></li>
           <li ng-if="Authentication.user.role.indexOf('root') > -1
             || Authentication.user.privilege.indexOf('order.edit') > -1
+            || Authentication.user.privilege.indexOf('order.approval') > -1
             || Authentication.user.privilege.indexOf('order.view') > -1"><a ui-sref="order.list"><i class="ion ion-ios-paperplane"></i> Orders</a></li>
         </ul>
       </li>
