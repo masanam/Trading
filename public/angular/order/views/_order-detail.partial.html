@@ -122,7 +122,7 @@
 			<tr>
 				<td>Company</td>
 
-        <td ng-switch="display.buy && (display.buy.user_id === Authentication.user.id || checkSubordinates(display.buy.user_id)) || !display.buy" ng-if="!order.in_house">
+        <td ng-switch="display.buy && display.buy.company.company_name !== '-hidden value-' || !display.buy" ng-if="!order.in_house">
           <span ng-switch-when="true">
             {{ display.buy.company.company_name }}
           </span>
@@ -134,7 +134,7 @@
           </span>
         </td>
 
-				<td ng-switch="display.sell && (display.sell.user_id === Authentication.user.id || checkSubordinates(display.sell.user_id)) || !display.sell">
+				<td ng-switch="display.sell && display.sell.company.company_name !== '-hidden value-'  || !display.sell">
 					<span ng-switch-when="true">
 						{{ display.sell.company.company_name }}
 					</span>
@@ -147,10 +147,10 @@
 				</td>
 			</tr>
 			<tr>
-				<td>Volume (mt) - Price (USD)</td>
+				<td>Volume (mt) - Price</td>
 				<td ng-if="!order.in_house">
           <span ng-if="display.buy">
-            {{ display.buy.pivot.volume | number }}mt - US$ {{ display.buy.pivot.price | number }}
+            {{ display.buy.pivot.volume | number }}mt - {{ display.buy.pivot.deal_currency_id }} {{ display.buy.pivot.deal_price | number }} || {{ display.buy.pivot.base_currency_id }} {{ display.buy.pivot.base_price | number }}
             <a ng-if="order.id && order.status !== 'a' && order.status !== 'x'" ng-if="display.buy.user_id === Authentication.user.id && order.id"
               ng-click="negoBuy()" class="pull-right">
               Nego
@@ -159,7 +159,7 @@
 				</td>
 				<td>
           <span ng-if="display.sell">
-            {{ display.sell.pivot.volume | number }}mt - US$ {{ display.sell.pivot.price | number }}
+            {{ display.sell.pivot.volume | number }}mt - {{ display.sell.pivot.deal_currency_id }} {{ display.sell.pivot.deal_price | number }} || {{ display.sell.pivot.base_currency_id }} {{ display.sell.pivot.base_price | number }}
             <a ng-if="order.id && order.status !== 'a' && order.status !== 'x'" ng-if="display.sell.user_id === Authentication.user.id && order.id"
               ng-click="negoSell()" class="pull-right">
               Nego
@@ -172,6 +172,11 @@
         <td ng-if="!order.in_house">{{ display.buy.order_date | date:'mediumDate' }}</td>
   			<td>{{ display.sell.order_date | date:'mediumDate' }}</td>
 			</tr>
+      <tr>
+        <td>Validity Period</td>
+        <td ng-if="!order.in_house">{{ display.buy.order_expired | date:'mediumDate' }}</td>
+        <td>{{ display.sell.order_expired | date:'mediumDate' }}</td>
+      </tr>
 			<tr>
 				<td>LayCan</td>
         <td ng-if="!order.in_house">
@@ -191,24 +196,24 @@
 			</tr>
 			<tr>
 				<td>Location</td>
-				<td ng-switch="display.buy.user_id === Authentication.user.id || checkSubordinates(display.buy.user_id) || !display.buy"
+				<td ng-switch="display.buy.city !== '-hidden value-' || !display.buy"
           ng-if="!order.in_house">
-					<span ng-switch-when="true">{{ display.buy.concession.city }}</span>
+					<span ng-switch-when="true">{{ display.buy.city }}</span>
 					<i ng-switch-default style="color:green">-Contact {{ display.buy.trader.name }}-</i>
 				</td>
         <td ng-switch="display.sell.user_id === Authentication.user.id || checkSubordinates(display.sell.user_id) || !display.sell">
-          <span ng-switch-when="true">{{ display.sell.factory.city }}/{{ display.sell.factory.country }}</span>
+          <span ng-switch-when="true">{{ display.sell.city }}/{{ display.sell.country }}</span>
           <i ng-switch-default style="color:green">-Contact {{ display.sell.trader.name }}-</i>
         </td>
 			</tr>
 			<tr ng-show="showBuy==true">
 				<td>Port</td>
-        <td ng-switch="display.buy.user_id === Authentication.user.id || checkSubordinates(display.buy.user_id) || !display.buy"
+        <td ng-switch="display.buy.port_name !== '-hidden value-' || !display.buy"
           ng-if="!order.in_house">
           <span ng-switch-when="true">{{ display.buy.port_name }}</span>
           <i ng-switch-default style="color:green">-Contact {{ display.buy.trader.name }}-</i>
         </td>
-				<td ng-switch="display.sell.user_id === Authentication.user.id || checkSubordinates(display.sell.user_id) || !display.sell">
+				<td ng-switch="display.sell.port_name !== '-hidden value-' || !display.sell">
 					<span ng-switch-when="true">{{ display.sell.port_name }}</span>
 					<i ng-switch-default style="color:green">-Contact {{ display.sell.trader.name }}-</i>
 				</td>
@@ -310,7 +315,7 @@
       sellbonus="display.sell.fe2o3_bonus" sellreject="display.sell.fe2o3_reject"
       >
       </tr>
-      <tr order-quality ng-if="(display.buy.aft_min && display.buy.aft_max) || (display.sell.aft_min && display.sell.aft_max)" inhouse="order.in_house" quality="'AFT'"
+      <tr order-quality ng-if="(display.buy.aft_min && display.buy.aft_max) || (display.sell.aft_min && display.sell.aft_max)" inhouse="order.in_house" quality="'AFT (IDT)'"
       buymin="display.buy.aft_min" buymax="display.buy.aft_max"
       buybonus="display.buy.aft_bonus" buyreject="display.buy.aft_reject"
       sellmin="display.sell.aft_min" sellmax="display.sell.aft_max"

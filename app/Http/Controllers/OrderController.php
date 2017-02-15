@@ -173,6 +173,7 @@ class OrderController extends Controller
     if ($volume > $lead_to_stage->volume) {
       $order->available_volume = 'error';
     }
+    // dd();
   }
 
   private function mailApproval (&$order, $approval_properties, $user) {
@@ -637,7 +638,7 @@ class OrderController extends Controller
   {
     $order = Order::with(['trader', 'users', 'sells', 'buys',
         'buys.trader', 'sells.trader',
-        'approvals', 'approvals.roles', 'approvalLogs', 'companies',
+        'approvals', 'approvals.roles', 'approvalLogs',
         'sells.company', 'buys.company', 'sells.factory', 'contracts',
         'buys.concession' => function ($q) {
           return $q->select('concession_name');
@@ -798,7 +799,7 @@ class OrderController extends Controller
       // put the approval to Log
       $order->approvalLogs()->attach([ $user->id => [ 'status' => $req->status , 'reason' => $req->reject_reason] ]);
       // put the user's approval status to replace old one
-      $order->approvals()->sync([ $user->id => [ 'status' => $req->status ] ], false);
+      $order->approvals()->sync([ $user->id => [ 'status' => $req->status, 'reason' => $req->reject_reason] ], false);
       }
     }
     else {
@@ -807,7 +808,7 @@ class OrderController extends Controller
 
 
       // put the user's approval status to replace old one
-      $order->approvals()->sync([ $user->id => [ 'status' => $req->status ] ], false);
+      $order->approvals()->sync([ $user->id => [ 'status' => $req->status, 'reason' => $req->reject_reason]  ], false);
     }
 
 
@@ -836,7 +837,7 @@ class OrderController extends Controller
   public function stage(Request $req, $id)
   {
     $order = Order::with('buys', 'sells', 'approvals', 'approvals.roles', 'trader')->find($id);
-
+    // dd($req);
     // Check available volume
     $this->checkAvailable($order, $req);
     if ($order->available_volume === 'error') {
@@ -884,7 +885,7 @@ class OrderController extends Controller
     $order_detail_id = $order->leads()->find($req->lead_id)->pivot->id; // find the ID of the order details
     $negotiation  = new OrderNegotiation([
       'order_detail_id' => $order_detail_id,
-      'notes' => $req->notes || 'Initial Deal',
+      'notes' => $req->notes,
       'volume' => $req->volume,
       'base_currency_id' => $req->base_currency_id,
       'base_price' => $req->base_price,
@@ -896,7 +897,6 @@ class OrderController extends Controller
       'user_id' => Auth::user()->id,
     ]);
     $negotiation->save();
-
     return $this->show($id, $req);
   }
 

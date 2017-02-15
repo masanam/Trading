@@ -291,6 +291,8 @@ class IndexController extends Controller
       });
     }
 
+    if($req->environment=="berau") $query-> whereIn('index.id',[1,2,3]);
+
     if($req->m){
       $query->where('frequency', '=', 'a');    
     }
@@ -306,7 +308,7 @@ class IndexController extends Controller
           ->select('price')
           ->where('index_id', $r->id)
           ->orderBy('date', 'DESC')
-          ->limit(50)
+          ->limit(20)
           ->get();
         $r->latest = $latest->pluck('price');
       }

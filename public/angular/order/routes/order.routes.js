@@ -13,17 +13,17 @@ angular.module('order').config(['$stateProvider',
       .state('order.list', {
         url: '',
         templateUrl: '/angular/order/views/list.view.html',
-        privileges: ['order.view', 'order.edit']
+        privileges: ['order.view', 'order.edit', 'order.approval']
       })
       .state('order.create', {
         url: '/create',
         templateUrl: '/angular/order/views/create.view.html',
-        privileges: ['order.edit']
+        privileges: ['order.edit', 'order.approval']
       })
       .state('order.view', {
         url: '/:id',
         templateUrl: '/angular/order/views/view.view.html',
-        privileges: ['order.view', 'order.edit']
+        privileges: ['order.view', 'order.edit', 'order.approval']
       });
 
     $stateProvider

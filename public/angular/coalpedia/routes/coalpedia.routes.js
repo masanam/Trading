@@ -13,7 +13,7 @@ angular.module('lead').config(['$stateProvider',
       .state('coalpedia.index', {
         url: '',
         templateUrl: '/angular/coalpedia/views/index.view.html',
-        privileges: ['coalpedia.view']
+        privileges: ['coalpedia.view', 'coalpedia.edit']
       });
   }
 ]);

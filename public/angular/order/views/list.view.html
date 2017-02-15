@@ -4,7 +4,7 @@
       <h1 class="box-title" style="font-size: 25px">Orders</h1>
 
       <div class="box-tools pull-right">
-        <button ui-sref="order.create" class="btn btn-primary hidden-xs hidden-sm hidden-md">+ Create New Order</button>
+        <button ui-sref="order.create" ng-if="Authentication.user.privilege.indexOf('order.edit') > -1" class="btn btn-primary hidden-xs hidden-sm hidden-md">+ Create New Order</button>
       </div>
     </div>
     <div class="box-body no-padding" ng-init="find();">

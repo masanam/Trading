@@ -29,10 +29,12 @@ return [
     'deployment' => env('APP_DEPLOYMENT', 'bib'),
     'defaultTrx' => env('DEFAULT_TRANSACTION', 'trade'),
     'showBuy' => env('SHOW_BUY', 'trade'),
+    'showAutoApproval' => env('SHOW_AUTO_APPROVAL', true),
     'destinationBy' => env('DESTINATION_BY', 'factory'),
     'productQuality' => env('PRODUCT_QUALITY', 'productQuality'),
     'defaultArea' => env('DEFAULT_AREA', 4),
     'defaultCurrency' => env('DEFAULT_CURRENCY', 'USD'),
+    'hideCrossingLead' => env('HIDE_CROSSING_LEAD', true),
 
     /*
     |--------------------------------------------------------------------------

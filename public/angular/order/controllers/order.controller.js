@@ -7,6 +7,7 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
     $scope.display = {};
 
     $scope.showBuy = Environment.showBuy;
+    $scope.showAutoApproval = Environment.showAutoApproval;
 
     // Remove existing order
     $scope.remove = function (order) {
@@ -134,6 +135,7 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
     $scope.approve_reject = function (status) {
       var modalInstance = null;
       $scope.error = null;
+      $scope.loadScreen = true;
       Order.get({ id: $scope.order.id, action: 'approval', status : status }, function (res) {
         $scope.order_approval = res;
         $scope.order_approval.status = status;
@@ -155,6 +157,7 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
         else $scope.approving = true;
         Notification.sendNotification(status, $scope.order_approval, false, false);
         $scope.findOne();
+        $scope.loadScreen = false;
       }, function (err) {
         $scope.error = err.data.message;
       });
