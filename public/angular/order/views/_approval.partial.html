@@ -1,6 +1,6 @@
 <table class="table table-striped table-bordered">
 	<thead>
-		<tr><th>Name</th><th>Status</th><th>Updated</th></tr>
+		<tr><th>Name</th><th>Status</th><th>Reason</th></tr>
 	</thead>
 	<tbody>
     <style>
@@ -10,21 +10,22 @@
       }
       .img-user img[class] { width: 30px }
     </style>
+		<!-- <tr ng-repeat="approval in order.approvals"> -->
 		<tr ng-repeat="approval in order.approvals" ng-if="!(approval.pivot.status === 'y' || approval.pivot.status === 'n') || showAutoApproval">
 			<td>
         <div class="img-user">
           <img ng-src="{{approval.image}}" ng-fallback-src="./images/default.png"
           	class="img-circle div-img-circle small" style="float:left; margin:2px;" />
-          {{ approval.name }}
+          {{ approval.name }}</br>{{ approval.pivot.updated_at | date }}
         </div>
 			</td>
 			<td>
 				{{  approval.pivot.status === 'a' ? 'Accepted' :
-					approval.pivot.status === 'r' ? 'Rejected' : 
-					approval.pivot.status === 'y' ? 'Auto-Acc' : 
+					approval.pivot.status === 'r' ? 'Rejected' :
+					approval.pivot.status === 'y' ? 'Auto-Acc' :
 					approval.pivot.status === 'n' ? 'Auto-Rjct' : 'Pending' }}
 			</td>
-			<td>{{ approval.pivot.updated_at | date }}</td>
+			<td>{{ approval.pivot.reason }}</td>
 		</tr>
 	</tbody>
 </table>

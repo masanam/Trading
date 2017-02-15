@@ -133,14 +133,31 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
 
     // Approve Order
     $scope.approve_reject = function (status) {
+      var modalInstance = null;
       $scope.error = null;
+      $scope.loadScreen = true;
       Order.get({ id: $scope.order.id, action: 'approval', status : status }, function (res) {
         $scope.order_approval = res;
-        $scope.order_approval.status = status;        
-        if(status === 'r') $scope.approving = false;
+        $scope.order_approval.status = status;
+        if(status === 'r') {
+          modalInstance = $uibModal.open({
+            windowClass: 'xl-modal',
+            templateUrl: './angular/order/views/_reason.modal.html',
+            controller: 'OrderReasonModalController',
+            scope: $scope,
+            resolve: {
+              status: function () { return status; },
+            }
+          });
+          modalInstance.result.then(function (order) {
+            $scope.findOne();
+          });
+          $scope.approving = false;
+        }
         else $scope.approving = true;
         Notification.sendNotification(status, $scope.order_approval, false, false);
         $scope.findOne();
+        $scope.loadScreen = false;
       }, function (err) {
         $scope.error = err.data.message;
       });

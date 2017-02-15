@@ -177,7 +177,7 @@ class ShipmentTableSeeder extends Seeder
 
       QualityMetric::create([
         'quality' => 'NCV',
-        'metric' => 'Kcal'
+        'metric' => 'Kcal/Kg'
       ]);
 
       QualityMetric::create([
