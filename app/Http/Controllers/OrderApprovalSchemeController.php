@@ -6,6 +6,7 @@ use App\Model\OrderApprovalScheme;
 use App\Model\OrderApprovalSchemeSequence;
 
 use Illuminate\Http\Request;
+use DB;
 
 use App\Http\Requests;
 
@@ -17,7 +18,7 @@ class OrderApprovalSchemeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $req)
+    public function index(Request $req = null)
     {
       $scheme = OrderApprovalScheme::with('sequences','area')->get();
 
@@ -63,22 +64,40 @@ class OrderApprovalSchemeController extends Controller
       $scheme->order_approval_scheme_name = $req->order_approval_scheme_name;
       $scheme->sell_area_id = $req->sell_area_id;
       $scheme->save();
-
-      foreach ($req->sequences as $s) {
-        $seq = null;
-        if($s['id']){
-          $seq = OrderApprovalSchemeSequence::find($s['id']);
-        }else{
+      $a = count($req->sequences);
+          
+      for ($i=0; $i < $a; $i++) { 
+        if(!isset($req->sequences[$i]['id'])){
           $seq = new OrderApprovalSchemeSequence();
-        }
           $seq->order_approval_scheme_id = $scheme->id;
-          $seq->sequence = $s['sequence'];
-          $seq->role_id = $s['role_id'];
-          $seq->approval_scheme = $s['approval_scheme'];
+          $seq->sequence = $req->sequences[$i]['sequence'];
+          $seq->role_id = $req->sequences[$i]['role_id'];
+          $seq->approval_scheme = $req->sequences[$i]['approval_scheme'];
           $seq->save();
+        }
+        else{
+          DB::table('order_approval_scheme_sequences')
+            ->where('id', $req->sequences[$i]['id'])
+            ->update(['role_id' => $req->sequences[$i]['role_id'], 
+              'approval_scheme' => $req->sequences[$i]['approval_scheme'],
+              'order_approval_scheme_id' => $scheme->id,
+              'sequence' => $req->sequences[$i]['sequence']]);
+        }
       }
-
-          return response()->json($seq, 400);
+      // foreach ($req->sequences as $s) {
+      //   if($s['id']){
+      //     DB::table('order_approval_scheme_sequences')
+      //       ->where('id', $s['id'])
+      //       ->update(['role_id' => $s['role_id']]);
+      //   }else{
+      //     $seq = new OrderApprovalSchemeSequence();
+      //     $seq->order_approval_scheme_id = $scheme->id;
+      //     $seq->sequence = $s['sequence'];
+      //     $seq->role_id = $s['role_id'];
+      //     $seq->approval_scheme = $s['approval_scheme'];
+      //     $seq->save();
+      //   }
+      // }
 
       return $this->show($id);
     }
