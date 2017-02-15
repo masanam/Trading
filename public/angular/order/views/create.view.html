@@ -11,6 +11,7 @@
 
 
     <div class="box-body">
+      <div class="big-loader" ng-if="!orders.$resolved"></div>
       <div class="form-group hidden-sm hidden-md hidden-lg">
         <div class="btn-group" uib-dropdown >
           <button type="button" class="btn btn-primary">Action</button>
@@ -20,15 +21,15 @@
           </button>
           <ul class="dropdown-menu" uib-dropdown-menu>
             <li><a ui-sref="order.list" ><i class="glyphicon glyphicon-chevron-left"></i> Back </a></li>
-            <li><a ng-click="create()" > Submit Order</a></li>
+            <li><a ng-click="create()"> Submit Order</a></li>
           </ul>
         </div>
       </div>
 
 	    <div class="no-padding">
-        <div class="col-lg-10" ng-include="'/angular/order/views/_order-detail.partial.html'"></div>
+        <div class="col-lg-9" ng-include="'/angular/order/views/_order-detail.partial.html'"></div>
 
-        <div class="col-lg-2" ng-controller="OrderIndexController" ng-init="getIndices()">
+        <div class="col-lg-3" ng-controller="OrderIndexController" ng-init="getIndices()" ng-if="orders.$resolved">
           <button ng-click="order.index_id = undefined">x</button>          
           Price Index Reference
           <div class="btn-group-vertical">
