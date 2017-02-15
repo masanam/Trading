@@ -13,6 +13,11 @@
     </thead>
 
     <tbody>
+      <tr ng-if="!indexPrices.$resolved">
+        <td colspan="5">
+          <div class="blue-small-loader"></div>
+        </td>
+      </tr>
       <tr ng-repeat="indexPrice in indexPrices">
         <td>{{ indexPrice.date | date: 'mediumDate' }}</td>
         <td>{{ indexPrice.price }}</td>
