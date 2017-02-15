@@ -36,6 +36,8 @@ class Product extends Model
         'fe2o3_max',
         'aft_min',
         'aft_max',
+        'na20_min',
+        'na20_max',
     ];
 
     /*public function getCreatedAtAttribute($value)

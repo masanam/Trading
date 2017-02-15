@@ -97,6 +97,11 @@ class CreateLeadsTable extends Migration
             $table->integer('aft_max')->nullable();
             $table->string('aft_reject')->nullable(); //size/piece
             $table->string('aft_bonus')->nullable();
+            $table->integer('na20_min')->nullable(); //size/piece
+            $table->integer('na20_max')->nullable();
+            $table->string('na20_reject')->nullable(); //size/piece
+            $table->string('na20_bonus')->nullable();
+
 
             $table->integer('volume')->nullable();
             $table->integer('price')->nullable();

@@ -82,6 +82,10 @@ class Lead extends Model
         'aft_max',
         'aft_reject',
         'aft_bonus',
+        'na20_min',
+        'na20_max',
+        'na20_reject',
+        'na20_bonus',
 
         'volume',
         'price',

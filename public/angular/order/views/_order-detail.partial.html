@@ -322,6 +322,13 @@
       sellbonus="display.sell.aft_bonus" sellreject="display.sell.aft_reject"
       >
       </tr>
+      <tr order-quality ng-if="(display.buy.na20_min && display.buy.na20_max) || (display.sell.na20_min && display.sell.na20_max)" inhouse="order.in_house" quality="'NA20'"
+      buymin="display.buy.na20_min" buymax="display.buy.na20_max"
+      buybonus="display.buy.na20_bonus" buyreject="display.buy.na20_reject"
+      sellmin="display.sell.na20_min" sellmax="display.sell.na20_max"
+      sellbonus="display.sell.na20_bonus" sellreject="display.sell.na20_reject"
+      >
+      </tr>
     </tbody>
     <tbody>
       <tr>

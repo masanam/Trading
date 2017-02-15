@@ -145,6 +145,7 @@ angular.module('lead').controller('LeadController', ['$scope', '$state', '$state
           $scope.lead.size_max = $scope.lead.size_min;
           $scope.lead.fe2o3_max = $scope.lead.fe2o3_min;
           $scope.lead.aft_max = $scope.lead.aft_min;
+          $scope.lead.na20_max = $scope.lead.na20_min;
         }
         else $scope.error = null;
       }

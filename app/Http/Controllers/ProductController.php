@@ -51,7 +51,7 @@ class ProductController extends Controller
       'gcv_arb_min', 'gcv_arb_max', 'gcv_adb_min', 'gcv_adb_max', 'ncv_min', 'ncv_max',
       'ash_min', 'ash_max', 'ts_min', 'ts_max', 'tm_min', 'tm_max', 'im_min', 'im_max',
       'fc_min', 'fc_max', 'vm_min', 'vm_max', 'hgi_min', 'hgi_max', 'size_min', 'size_max',
-      'fe2o3_min', 'fe2o3_max', 'aft_min', 'aft_max',
+      'fe2o3_min', 'fe2o3_max', 'aft_min', 'aft_max','na20_min','na20_max',
     ]));
 
     $product->company_id = $req->company_id ? $req->company_id : NULL;
@@ -99,7 +99,7 @@ class ProductController extends Controller
       'gcv_arb_min', 'gcv_arb_max', 'gcv_adb_min', 'gcv_adb_max', 'ncv_min', 'ncv_max',
       'ash_min', 'ash_max', 'ts_min', 'ts_max', 'tm_min', 'tm_max', 'im_min', 'im_max',
       'fc_min', 'fc_max', 'vm_min', 'vm_max', 'hgi_min', 'hgi_max', 'size_min', 'size_max',
-      'fe2o3_min', 'fe2o3_max', 'aft_min', 'aft_max',
+      'fe2o3_min', 'fe2o3_max', 'aft_min', 'aft_max','na20_min','na20_max',
     ]));
 
     $product->company_id = $req->company_id ? $req->company_id : NULL;
