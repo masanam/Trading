@@ -23,6 +23,9 @@ class RoleController extends Controller
     {
         $role = Role::with('privileges')->get();
 
+        // kamal used at order approval managements
+        if($req->role_id) $role = Role::with('users')->find($req->role_id);
+
         return response()->json($role, 200);
     }
 
