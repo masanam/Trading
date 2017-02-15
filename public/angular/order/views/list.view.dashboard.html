@@ -16,6 +16,11 @@
         </thead>
 
         <tbody>
+          <tr ng-if="!orders.$resolved">
+            <td colspan="6">
+              <div class="blue-small-loader"></div>
+            </td>
+          </tr>
           <tr ng-repeat="order in orders">
             <td>{{ order.id }}</td>
             <td>{{ order.trader.name }}</td>
