@@ -21,6 +21,11 @@
     </thead>
 
     <tbody>
+      <tr ng-if="!leads.$resolved">
+        <td colspan="12">
+          <div class="blue-small-loader"></div>
+        </td>
+      </tr>
       <tr ng-repeat="lead in displayedCollection">
         <td>{{ lead.id }}</td>
         <td>{{ lead.user.name }}</td>
