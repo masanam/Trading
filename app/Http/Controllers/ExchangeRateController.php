@@ -37,9 +37,9 @@ class ExchangeRateController extends Controller
 
 
     public function findOne($buy, $sell) {
-     
+
       $currency = ExchangeRate::where('in_use', 1)->where('buy', $buy)->where('sell', $sell)->first();
-     
+
       return response()->json($currency, 200);
     }
 
@@ -48,7 +48,7 @@ class ExchangeRateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    
+
     //take latest exchange rate
     public function updateLatestExchangeRate() {
       DB::table('exchange_rates')->update(['in_use' => 0]);
@@ -69,7 +69,9 @@ class ExchangeRateController extends Controller
     }
 
     public function findRelatedExchangeRate($currency) {
-      $exchange_rate = ExchangeRate::where('buy', $currency)->orWhere('sell', $currency)->get();
+      $exchange_rate = ExchangeRate::where('in_use', true)->where(function($query) use($currency){
+        $query->orWhere('buy', $currency)->orWhere('sell', $currency);
+      })->get();
 
       return response()->json($exchange_rate, 200);
     }
