@@ -306,22 +306,22 @@
 
     <tr>
       <td>
-        NA20
+        Na2O
       </td>
       <td ng-if="productQuality === 'typical'">
-        <input type="number" step="any" class="form-control" placeholder="%" ng-model="lead.na20_min" ng-change="lead.na20_max = lead.na20_min">
+        <input type="number" step="any" class="form-control" placeholder="%" ng-model="lead.na2o_min" ng-change="lead.na2o_max = lead.na2o_min">
       </td>
       <td ng-if="productQuality !== 'typical'">
-        <input type="number" step="any" class="form-control" placeholder="%" ng-model="lead.na20_min">
+        <input type="number" step="any" class="form-control" placeholder="%" ng-model="lead.na2o_min">
       </td>
       <td ng-if="productQuality !== 'typical'">
-        <input type="number" step="any" class="form-control" placeholder="%" ng-model="lead.na20_max">
+        <input type="number" step="any" class="form-control" placeholder="%" ng-model="lead.na2o_max">
       </td>
       <td ng-if="productQuality !== 'typical'">
-        <input type="text" class="form-control" placeholder="Ex : > 15 %" ng-model="lead.na20_bonus">
+        <input type="text" class="form-control" placeholder="Ex : > 15 %" ng-model="lead.na2o_bonus">
       </td>
       <td>
-        <input type="text" class="form-control" placeholder="Ex : < 5 %" ng-model="lead.na20_reject">
+        <input type="text" class="form-control" placeholder="Ex : < 5 %" ng-model="lead.na2o_reject">
       </td>
 
     </tr>

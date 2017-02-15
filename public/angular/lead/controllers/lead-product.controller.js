@@ -65,8 +65,8 @@ angular.module('lead').controller('LeadProductController', ['$scope', '$statePar
             $scope.lead.fe2o3_max = product.fe2o3_max;
             $scope.lead.aft_min = product.aft_min;
             $scope.lead.aft_max = product.aft_max;
-            $scope.lead.na20_min = product.na20_min;
-            $scope.lead.na20_max = product.na20_max;
+            $scope.lead.na2o_min = product.na2o_min;
+            $scope.lead.na2o_max = product.na2o_max;
           }else{
             $scope.lead.gcv_adb_min = product.gcv_adb_min;
             $scope.lead.gcv_adb_max = $scope.lead.gcv_adb_min;
@@ -94,8 +94,8 @@ angular.module('lead').controller('LeadProductController', ['$scope', '$statePar
             $scope.lead.fe2o3_max = $scope.lead.fe2o3_min;
             $scope.lead.aft_min = product.aft_min;
             $scope.lead.aft_max = $scope.lead.aft_min;
-            $scope.lead.na20_min = product.na20_min;
-            $scope.lead.na20_max = $scope.lead.na20_min;
+            $scope.lead.na2o_min = product.na2o_min;
+            $scope.lead.na2o_max = $scope.lead.na2o_min;
           }
         }
         else $scope.lead.product_id = undefined;

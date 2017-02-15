@@ -134,10 +134,10 @@ class CreateCompaniesTable extends Migration
             $table->integer('fe2o3_max')->nullable();
             $table->integer('aft_min')->nullable(); //size/piece
             $table->integer('aft_max')->nullable();
-            $table->integer('na20_min')->nullable(); //size/piece
-            $table->integer('na20_max')->nullable();
-            $table->string('na20_reject')->nullable(); //size/piece
-            $table->string('na20_bonus')->nullable();
+            $table->integer('na2o_min')->nullable(); //size/piece
+            $table->integer('na2o_max')->nullable();
+            $table->string('na2o_reject')->nullable(); //size/piece
+            $table->string('na2o_bonus')->nullable();
             $table->char('status', 1); // A = Active , X = Deleted
             $table->timestamps();
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('restrict');
