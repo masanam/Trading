@@ -5,7 +5,7 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
     $scope.browse = {};
     $scope.$watchGroup(['browse.status', 'browse.category'], function() { $scope.find(); });
     $scope.display = {};
-    $scope.showBuy
+    
     $scope.showBuy = Environment.showBuy;
     $scope.destinationBy = Environment.destinationBy;
     $scope.showAutoApproval = Environment.showAutoApproval;
