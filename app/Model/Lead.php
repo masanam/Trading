@@ -139,18 +139,18 @@ class Lead extends Model
     }
 
     public function orders() {
-        return $this->belongsToMany(Order::class, 'order_details', 'order_id', 'lead_id')
+        return $this->belongsToMany(Order::class, 'order_details')
             ->withPivot('id', 'price', 'deal_currency_id', 'deal_price', 'volume', 'payment_term', 'trading_term');
     }
 
     public function ordersSpecific($status = 'd') {
-        return $this->belongsToMany(Order::class, 'order_details', 'order_id', 'lead_id')
+        return $this->belongsToMany(Order::class, 'order_details')
             ->where('status','!=',$status)
             ->withPivot('id', 'price', 'deal_currency_id', 'deal_price', 'volume', 'payment_term', 'trading_term');
     }
 
     public function countInOrders() {
-        return $this->belongsToMany(Order::class, 'order_details', 'order_id', 'lead_id')
+        return $this->belongsToMany(Order::class, 'order_details')
                     // ->where('lead_id', $id)
                     ->groupBy('order_details.lead_id')
                     // ->havingRaw('COUNT(order_details.order_id) < 2')
