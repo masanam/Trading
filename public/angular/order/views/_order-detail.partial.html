@@ -201,7 +201,7 @@
 					<span ng-switch-when="true">{{ display.buy.city }}</span>
 					<i ng-switch-default style="color:green">-Contact {{ display.buy.trader.name }}-</i>
 				</td>
-        <td ng-switch="display.sell.user_id === Authentication.user.id || checkSubordinates(display.sell.user_id) || !display.sell">
+        <td ng-switch="display.sell.city !== '-hidden value-' || !display.sell">
           <span ng-switch-when="true">{{ display.sell.city }}/{{ display.sell.country }}</span>
           <i ng-switch-default style="color:green">-Contact {{ display.sell.trader.name }}-</i>
         </td>
