@@ -157,22 +157,25 @@ class OrderController extends Controller
     if(!$lead->lead_id) $volume = $lead->pivot->volume;
     else $volume = $lead->volume;
 
+    $id = $lead->lead_id ? $lead->lead_id : $lead->id;
+
     // Get all orders associated with this current lead to know its standing
-    $lead_to_stage = Lead::with('orders')->find($lead->id);
+    $lead_to_stage = Lead::with('orders')->find($id);
+
     // get total of the used volume
     // IF THEY ARE confirmed leads
     if(count($lead_to_stage->orders)>0){
       foreach($lead_to_stage->orders as $associated_orders) {
         // exclude draft and one that is current order
-        if($associated_orders->status != 'd' && $associated_orders->status != 'x' && $associated_orders->status != 'c' && $associated_orders->id != $order->id)
+        if($associated_orders->status != 'd' && $associated_orders->status != 'x' && $associated_orders->status != 'c' && $associated_orders->id != $order->id){
           $volume += $associated_orders->pivot->volume;
+        }
       }
     }
 
     if ($volume > $lead_to_stage->volume) {
       $order->available_volume = 'error';
     }
-    // dd();
   }
 
   private function mailApproval (&$order, $approval_properties, $user) {
