@@ -13,7 +13,8 @@
         <div class="row hidden-xs hidden-sm hidden-md">
           <div class="col-md-4">
           
-            <div class="box-tools btn-group btn-sm" ng-init="browse.category = 'my'">
+            <div class="box-tools btn-group btn-sm"
+              ng-init="browse.category = Authentication.user.privilege.indexOf('order.approval') > -1 ? 'approval' : 'my'">
               <label class="btn btn-default btn-sm" ng-model="browse.category" uib-btn-radio="'my'">My Orders</label>
               <label class="btn btn-default btn-sm" ng-model="browse.category" uib-btn-radio="'subordinates'">Subordinates</label>
               <label class="btn btn-default btn-sm" ng-model="browse.category" uib-btn-radio="'associated'">Associated</label>
