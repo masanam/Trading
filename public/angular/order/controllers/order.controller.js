@@ -228,6 +228,7 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
 
     // Find existing order
     $scope.findOne = function () {
+      $scope.loadBig = false;
       $scope.order = Order.get({
         id: $stateParams.id
       }, function(res){
@@ -239,6 +240,7 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
         }
 
         $scope.checkOrderUsers();
+        $scope.loadBig = true;
       });
     };
 

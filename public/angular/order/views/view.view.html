@@ -1,4 +1,4 @@
-<div class="col-lg-12 ng-print" ng-if="included === true && approver === true">
+<div class="col-lg-12 ng-print" ng-if="included === true && approver === true && !loadBig"">
   <div class="callout callout-warning" ng-if="order.status === 'p' && approving === false">
     <div class="orange-small-loader" style="margin: 5px 45%;" ng-if="loadScreen"></div>
     <h4 ng-if="myApproval.pivot.status==='p' && !loadScreen">
@@ -37,7 +37,7 @@
   </div>
 </div>
 
-<div class="big-loader" ng-if="!order.$resolved && loadScreen"></div>
+<div class="big-loader" ng-if="loadBig"></div>
 
 <div class="col-lg-8" id="order-detail" ng-init="findOne();" >
   <style>
@@ -49,7 +49,7 @@
         }
     }
   </style>
-  <div class="box" ng-if="order.$resolved">
+  <div class="box" ng-if="!loadBig">
     <div class="box-header with-border" >
       <h1 class="box-title">ORD#{{ ("10000"+order.id).slice(-4) }} - {{ order.trader.name }}</h1>
       <span class="badge badge-primary">
@@ -145,13 +145,13 @@
     <div class="box-body no-padding" ng-static-include="'/angular/order/views/_order-detail.partial.html'"></div>
   </div>
 
-  <div class="box" id="order-deviation" ng-if="order.$resolved">
+  <div class="box" id="order-deviation" ng-if="!loadBig">
     <div class="box-body" ng-static-include="'/angular/order/views/_index-deviation.partial.html'"></div>
   </div>
 </div>
 
-<div class="col-lg-4" ng-if="included === true || order.user_id === Authentication.user.id || order.$resolved" id="order-approval">
-  <div class="box">
+<div class="col-lg-4" ng-if="included === true || order.user_id === Authentication.user.id" id="order-approval">
+  <div class="box" ng-if="!loadBig">
     <div class="box-header">
       Approval
       <button class="btn btn-default pull-right" ng-click="showLog = !showLog">
