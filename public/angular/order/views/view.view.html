@@ -1,7 +1,7 @@
 <div class="col-lg-12 ng-print" ng-if="included === true && approver === true">
   <div class="callout callout-warning" ng-if="order.status === 'p' && approving === false">
     <div class="orange-small-loader" style="margin: 5px 45%;" ng-if="loadScreen"></div>
-    <h4 ng-if="order.status==='r'" ng-if="!loadScreen">
+    <h4 ng-if="order.status==='r' && !loadScreen">
         This order is waiting for your approval.</p>
         <a class="btn btn-success" ng-click="approve_reject('a');">
           <i class="glyphicon glyphicon-thumbs-up" title="Approve Order"></i> Approve Order
@@ -10,7 +10,7 @@
           <i class="glyphicon glyphicon-thumbs-down" title="Reject Order"></i> Reject Order
         </a>
     </h4>
-    <h4 ng-if="order.status==='p'" ng-if="!loadScreen">
+    <h4 ng-if="order.status==='p' && !loadScreen">
         This Order Rejected, Do you want to change your mind?</p>
         <a class="btn btn-success" ng-click="approve_reject('a');">
           <i class="glyphicon glyphicon-thumbs-up" title="Approve Order"></i> Approve Order
