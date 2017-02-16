@@ -1,21 +1,20 @@
 <div class="col-lg-12 ng-print" ng-if="included === true && approver === true">
   <div class="callout callout-warning" ng-if="order.status === 'p' && approving === false">
     <div class="orange-small-loader" style="margin: 5px 45%;" ng-if="loadScreen"></div>
-
-    <h4 ng-if="order.approvals[0].pivot.status==='p'" ng-if="!loadScreen">
-        This order is waiting for your approval.</p>
-        <a class="btn btn-success" ng-click="approve_reject('a');">
-          <i class="glyphicon glyphicon-thumbs-up" title="Approve Order"></i> Approve Order
-        </a>
-        <a class="btn btn-danger" ng-click="approve_reject('r');">
-          <i class="glyphicon glyphicon-thumbs-down" title="Reject Order"></i> Reject Order
-        </a>
+    <h4 ng-if="order.approvals[0].pivot.status==='p' && !loadScreen">
+      This order is waiting for your approval.</p>
+      <a class="btn btn-success" ng-click="approve_reject('a');">
+        <i class="glyphicon glyphicon-thumbs-up" title="Approve Order"></i> Approve Order
+      </a>
+      <a class="btn btn-danger" ng-click="approve_reject('r');">
+        <i class="glyphicon glyphicon-thumbs-down" title="Reject Order"></i> Reject Order
+      </a>
     </h4>
-    <h4 ng-if="order.approvals[0].pivot.status==='r'" ng-if="!loadScreen">
-        This Order Rejected, Do you want to change your mind?</p>
-        <a class="btn btn-success" ng-click="approve_reject('a');">
-          <i class="glyphicon glyphicon-thumbs-up" title="Approve Order"></i> Approve Order
-        </a>
+    <h4 ng-if="order.approvals[0].pivot.status==='r'&& !loadScreen">
+      This Order Rejected, Do you want to change your mind?</p>
+      <a class="btn btn-success" ng-click="approve_reject('a');">
+        <i class="glyphicon glyphicon-thumbs-up" title="Approve Order"></i> Approve Order
+      </a>
     </h4>
   </div>
   <div class="callout callout-warning" ng-if="order.status === 'r' && approving === false">
