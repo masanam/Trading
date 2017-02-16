@@ -823,8 +823,7 @@ class OrderController extends Controller
     else $this->removeUpperAppr($order);
 
 
-    $order->save();
-
+    
     return $this->show($id, $req);
   }
 
