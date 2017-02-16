@@ -68,7 +68,7 @@ angular.module('order').controller('OrderReasonModalController', ['$uibModalInst
           * Aryo Pradipta Gema 17 - 01 - 2017 12:42 pm
           * Create contract after finishing an order
           */
-          if(contract) {
+          if($scope.order.status === 'f') {
             contract.$save(function(res) {
               $scope.order.contracts = res;
             }, function(err) {
