@@ -24,6 +24,7 @@ angular.module('order').controller('OrderReasonModalController', ['$uibModalInst
     };
 
     $scope.submit = function () {
+      $scope.loading = true;
       if($scope.order.reason !== ''){
         var order = new Order($scope.order);
         if($scope.order.contracts) {
@@ -56,6 +57,7 @@ angular.module('order').controller('OrderReasonModalController', ['$uibModalInst
         else if($scope.status === 'r') order.reject_reason = $scope.order.reason;
 
         order.$update({ id:order.id, action:$scope.action, status:order.status }, function (res) {
+          $scope.loading = false;
           $scope.order = res;
           // if($scope.status === 'x') $scope.order.cancel_reason = $scope.reason;
           // else if($scope.status === 'f') $scope.order.finalize_reason = $scope.reason;
