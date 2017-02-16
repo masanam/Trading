@@ -307,6 +307,9 @@ class OrderController extends Controller
         $approver_role = Role::with('users')->find($curr_seq->role_id);
         $count_approvers = count($approver_role->users);
         break;
+
+      default :
+        $count_approvers = $curr_seq->approval_scheme;
     }
 
     foreach($order->approvals as $a){
