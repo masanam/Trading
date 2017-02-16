@@ -148,7 +148,7 @@ selesai
   <label for="country">Company origin (Country):</label>
   <select name="country" id="country" class="form-control"
     ng-model="company.country" required>
-    <option value="country.code" ng-repeat="country in countries | orderBy:'name'">{{ country.name }}</option>
+    <option value="{{ country.code }}" ng-repeat="country in countries | orderBy:'name'">{{ country.name }}</option>
   </select>
 
 </div>

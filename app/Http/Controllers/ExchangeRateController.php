@@ -18,9 +18,20 @@ class ExchangeRateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-      $exchange_rate = ExchangeRate::where('in_use', true)->get();
+      $exchange_rate = ExchangeRate::where('in_use', true);
+
+      if($request->q) {
+        $q = json_decode($request->q);
+        // dd(strtoupper($q->sell));
+        if($q->buy) $exchange_rate = $exchange_rate->where('buy', '=', strtoupper($q->buy));
+        if($q->sell) $exchange_rate = $exchange_rate->where('sell', '=', strtoupper($q->sell));
+      }
+      // if($request->qbuy) $exchange_rate = $exchange_rate->where('buy', '%'.strtoupper($request->qbuy).'%');
+      // if($request->qsell) $exchange_rate = $exchange_rate->where('sell', '%'.strtoupper($request->qsell).'%');
+
+      $exchange_rate = $exchange_rate->get();
 
       return response()->json($exchange_rate, 200);
     }
@@ -55,16 +66,18 @@ class ExchangeRateController extends Controller
       $currency = Currency::pluck('id');
       foreach($currency as $c) {
         $response = json_decode(Curl::to('api.fixer.io/latest?base='.$c)->get());
-        // dd($response->rates);
-        foreach ($response->rates as $key => $value) {
-          $exchange_rate = new ExchangeRate();
-          $exchange_rate->buy = $c;
-          $exchange_rate->sell = $key;
-          $exchange_rate->value = $value;
-          $exchange_rate->in_use = true;
+        if($response) {
+          foreach ($response->rates as $key => $value) {
+            $exchange_rate = new ExchangeRate();
+            $exchange_rate->buy = $c;
+            $exchange_rate->sell = $key;
+            $exchange_rate->value = $value;
+            $exchange_rate->in_use = true;
 
-          $exchange_rate->save();
+            $exchange_rate->save();
+          }
         }
+        else return response()->json(['message'=>'Cannot update with the current price, please check your internet connection'], 500);
       }
     }
 
