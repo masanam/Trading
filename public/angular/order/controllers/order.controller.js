@@ -232,9 +232,15 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
       }, function(res){
         $scope.order = res;
         if(Environment.trx === 'sell') $scope.order.in_house = true;
+
+        for(var x = 0; x < $scope.order.approvals.length; x++){
+          if($scope.order.approvals[x].id === $scope.Authentication.user.id) $scope.myApproval = $scope.order.approvals[x];
+        }
+
         $scope.checkOrderUsers();
       });
     };
+
 
     // $scope.addCostModal = function () {
     //   var modalInstance = $uibModal.open({
