@@ -39,6 +39,7 @@ class DocumentController extends Controller
      */
     public function store(Request $req)
     {
+        return $req->all();
         // $document = new Document();
         // $document->template_id = $req->template_id;
         // $document->shipment_id = $req->shipment_id;
