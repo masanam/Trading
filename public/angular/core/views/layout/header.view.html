@@ -46,8 +46,8 @@
             <i class="fa fa-bell"></i>
             <span class="label label-danger" ng-if="unread_notifications" style="font-size: 10px;">{{ unread_notifications }}</span>
           </a>
-          <ul class="dropdown-menu" uib-dropdown-menu>
-            <li ng-repeat="notif in notifications.slice().reverse() | limitTo:8" ng-click="readNotification(notif.$id)">
+          <ul class="dropdown-menu" uib-dropdown-menu>            
+            <li ng-repeat="notif in notifications.slice().reverse() | limitTo:5" ng-click="readNotification(notif.$id)">
               <!-- inner menu: contains the actual data -->
               <ul class="menu" ng-if="!notif.isRead">
                 <li style="background-color: #F0F8FF;" ng-if="notif.notification.indexOf('ORD') < 0">
@@ -90,8 +90,8 @@
                 </li>
               </ul>
             </li>
-            <li ng-if="!notifications.length" class="footer"><a>There is no notification !</a></li>
             <li ng-if="notifications.length" class="footer"><a ui-sref="notification">View all</a></li>
+            <li ng-if="!notifications.length" class="footer"><a>There is no notification !</a></li>
           </ul>
         </li>
 
