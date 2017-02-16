@@ -161,6 +161,8 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
             negotiation.created_at = new Date();
             $scope.display.sell.pivot.negotiations.push(negotiation);            
             $scope.display.sell.pivot = res.sells[0].pivot;
+          }, function (res){
+            alert(res.data.message + '. Try again with acceptable value!');
           });
       }, function () {
         console.log('Modal dismissed at: ' + new Date());

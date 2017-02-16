@@ -159,7 +159,6 @@ class OrderController extends Controller
 
     // Get all orders associated with this current lead to know its standing
     $lead_to_stage = Lead::with('orders')->find($lead->id);
-
     // get total of the used volume
     // IF THEY ARE confirmed leads
     if(count($lead_to_stage->orders)>0){
@@ -840,6 +839,7 @@ class OrderController extends Controller
     // dd($req);
     // Check available volume
     $this->checkAvailable($order, $req);
+
     if ($order->available_volume === 'error') {
       return response()->json([ 'message' => 'Volume not avaliable' ], 400);
     }

@@ -146,7 +146,7 @@ class LeadController extends Controller
     else
       foreach ($leads as $lead) {
         if ($lead->order_status!=='s') {
-          if(!in_array($lead->user_id, $users)){
+          if(!in_array($lead->user_id, $users) && !config('app.showAllLead')){
             $lead->cleanse();
           }
         }
@@ -236,7 +236,7 @@ class LeadController extends Controller
     if($lead->order_status == 'x')
       return response()->json(['message'=>'deactivated record'], 404);
 
-    if(!in_array($lead->user_id, $all_access)){
+    if(!in_array($lead->user_id, $all_access) && !config('app.showAllLead')){
       $lead->cleanse();
     }
 

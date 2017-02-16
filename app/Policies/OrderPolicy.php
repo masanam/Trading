@@ -20,7 +20,9 @@ class OrderPolicy
   public function view(User $user, Order &$order)
   {
     // modify records based on the positions
-    if(config('app.hideCrossingLead')){
+    if(config('app.showAllLead')){
+      return true;
+    } else if(config('app.hideCrossingLead')){
       $subs = $user->subordinates();
       $users = $subs->pluck('id')->all(); 
       $users[] = $user->id;
