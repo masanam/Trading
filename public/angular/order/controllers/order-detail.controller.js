@@ -113,6 +113,7 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
       });
 
       modalInstance.result.then(function (negotiation) {
+        $scope.loadingNego = true;
         Order.update(
           { id:$scope.order.id, action: 'stage' },
           { lead_type:'buy', lead_id:negotiation.id, negotiation:true, volume:negotiation.volume,
@@ -121,16 +122,20 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
             exchange_rate: negotiation.exchange_rate, trading_term:negotiation.trading_term, payment_term:negotiation.payment_term,
             notes:negotiation.notes },
           function (res){
+            $scope.loadingNego = false;
             $scope.order.buys = res.buys;
             negotiation.created_at = new Date();
             $scope.display.buy.pivot.negotiations.push(negotiation);
+          }, function (res){
+            $scope.loadingNego = false;
+            alert(res.data.message + '. Try again with acceptable value!');
           });
       }, function () {
         console.log('Modal dismissed at: ' + new Date());
       });
     };
 
-    $scope.negoSell = function () {
+    $scope.negoSell = function () { 
       var modalInstance = $uibModal.open({
         animation: true,
         ariaLabelledBy: 'modal-title',
@@ -149,6 +154,7 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
       });
 
       modalInstance.result.then(function (negotiation) {            
+        $scope.loadingNego = true;
         Order.update(
           { id:$scope.order.id, action: 'stage' },
           { lead_type:'sell', lead_id:negotiation.id, negotiation:true, volume:negotiation.volume,
@@ -157,11 +163,13 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
             exchange_rate: negotiation.exchange_rate, trading_term:negotiation.trading_term, payment_term:negotiation.payment_term,
             notes:negotiation.notes },
           function (res){
+            $scope.loadingNego = false;
             $scope.order.sells = res.sells;
             negotiation.created_at = new Date();
             $scope.display.sell.pivot.negotiations.push(negotiation);            
             $scope.display.sell.pivot = res.sells[0].pivot;
           }, function (res){
+            $scope.loadingNego = false;
             alert(res.data.message + '. Try again with acceptable value!');
           });
       }, function () {
