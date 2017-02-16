@@ -22,7 +22,7 @@ class DocumentTableSeeder extends Seeder
         	'desc' => 'Testing Documents 1',
         	'category' => 'Testing',
         	'sequence' => 1,
-        	'fields' => '[]',
+        	'fields' => '[{"key":"doc1","type":"input","templateOptions":{"type":"text","label":"doc1 address","placeholder":"Enter doc1"}},{"key":"password","type":"input","templateOptions":{"type":"password","label":"Password","placeholder":"Password"}},{"key":"checked","type":"checkbox","templateOptions":{"label":"Check me out"}}]',
         	'status' => 'a'
         ]) ;
         Template::create([	 
@@ -31,7 +31,7 @@ class DocumentTableSeeder extends Seeder
         	'desc' => 'Testing Documents 2',
         	'category' => 'Testing',
         	'sequence' => 2,
-        	'fields' => '[]',
+        	'fields' => '[{"key":"doc2","type":"input","templateOptions":{"type":"text","label":"doc2 address","placeholder":"Enter doc2"}},{"key":"password","type":"input","templateOptions":{"type":"password","label":"Password","placeholder":"Password"}},{"key":"checked","type":"checkbox","templateOptions":{"label":"Check me out"}}]',
         	'status' => 'a'
         ]) ;
         Template::create([   
@@ -40,9 +40,7 @@ class DocumentTableSeeder extends Seeder
             'desc' => 'Testing Documents 3',
             'category' => 'Testing',
             'sequence' => 3,
-            'fields' => '[
-
-            ]',
+            'fields' => '[{"key":"doc3","type":"input","templateOptions":{"type":"text","label":"doc3 address","placeholder":"Enter doc3"}},{"key":"password","type":"input","templateOptions":{"type":"password","label":"Password","placeholder":"Password"}},{"key":"checked","type":"checkbox","templateOptions":{"label":"Check me out"}}]',
             'status' => 'a'
         ]) ;
         
