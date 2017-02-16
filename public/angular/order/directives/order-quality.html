@@ -4,28 +4,28 @@
 	<td ng-if="( buymin !== null || buymax !== null || buyreject !== null || buybonus !== null || sellmin !== null || sellmax !== null || sellreject !== null || sellbonus !== null ) && !inhouse" class="col-sm-4">
 		<span ng-if="buymin || buymax || buyreject || buybonus">
       <span ng-if="buymin !== null && buymax !== null">
-        <span ng-if="buyreject || buybonus" class="col-sm-4 row">{{ buymin || 'N/A' }} ~ {{ buymax || 'N/A' }} kcal</span>
+        <span ng-if="buyreject || buybonus" class="col-sm-4 row">{{ buymin || 'N/A' }} ~ {{ buymax || 'N/A' }} {{unit}}</span>
         <span ng-if="!(buyreject || buybonus)">{{ buymin || 'N/A' }} ~ {{ buymax || 'N/A' }} kcal</span>
       </span>
-      <span ng-if="buymin !== null && buymax === null">{{ buymin || 'N/A' }} kcal</span>
-      <span ng-if="buymax === null && buymax !== null">{{ buymax || 'N/A' }} kcal</span>
+      <span ng-if="buymin !== null && buymax === null">{{ buymin || 'N/A' }} {{unit}}</span>
+      <span ng-if="buymax === null && buymax !== null">{{ buymax || 'N/A' }} {{unit}}</span>
 		</span>
     <span class="col-sm-1" ng-if="buyreject !== null"></span>
-    <span ng-if="buyreject !== null" class="col-sm-4 row">{{ buyreject }} kcal reject</span>
+    <span ng-if="buyreject !== null" class="col-sm-4 row">{{ buyreject }} Kcal reject</span>
     <span class="col-sm-1" ng-if="buybonus !== null" ></span>
-    <span ng-if="buybonus !== null" class="col-sm-4 row">{{ buybonus }} kcal bonus</span>
+    <span ng-if="buybonus !== null" class="col-sm-4 row">{{ buybonus }} Kcal bonus</span>
 	</td>
   <td  ng-if="buymin !== null || buymax !== null || buyreject !== null || buybonus !== null || sellmin !== null || sellmax !== null || sellreject !== null || sellbonus !== null" class="col-sm-4 row">
     <span ng-if="sellmin || sellmax || sellreject || sellbonus">
       <span ng-if="sellmin !== null && sellmax !== null">
-        <span ng-if="sellreject || sellbonus" class="col-sm-4 row">{{ sellmin || 'N/A' }} ~ {{ sellmax || 'N/A' }} kcal</span>
-        <span ng-if="!(sellreject || sellbonus)">{{ sellmin || 'N/A' }} ~ {{ sellmax || 'N/A' }} kcal</span>
+        <span ng-if="sellreject || sellbonus" class="col-sm-4 row">{{ sellmin || 'N/A' }} ~ {{ sellmax || 'N/A' }} {{unit}}</span>
+        <span ng-if="!(sellreject || sellbonus)">{{ sellmin || 'N/A' }} ~ {{ sellmax || 'N/A' }} {{unit}}</span>
       </span>
-      <span ng-if="sellmin !== null && sellmax === null">{{ sellmin || 'N/A' }} kcal</span>
-      <span ng-if="sellmax === null && sellmax !== null">{{ sellmax || 'N/A' }} kcal</span>
+      <span ng-if="sellmin !== null && sellmax === null">{{ sellmin || 'N/A' }} {{unit}}</span>
+      <span ng-if="sellmax === null && sellmax !== null">{{ sellmax || 'N/A' }} {{unit}}</span>
     </span>
     <span class="col-sm-1" ng-if="sellreject !== null"></span>
-    <span ng-if="sellreject !== null" class="col-sm-4 row">{{ sellreject }} kcal reject</span>
+    <span ng-if="sellreject !== null" class="col-sm-4 row">{{ sellreject }} Kcal reject</span>
     <span class="col-sm-1" ng-if="sellbonus !== null"></span>
-    <span ng-if="sellbonus !== null" class="col-sm-4 row">{{ sellbonus }} kcal bonus</span>
+    <span ng-if="sellbonus !== null" class="col-sm-4 row">{{ sellbonus }} Kcal bonus</span>
   </td>

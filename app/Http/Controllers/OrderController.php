@@ -825,7 +825,6 @@ class OrderController extends Controller
     if($req->status === 'a') $this->sequenceApproval($order);
     else $this->removeUpperAppr($order);
 
-
     return $this->show($id, $req);
   }
 

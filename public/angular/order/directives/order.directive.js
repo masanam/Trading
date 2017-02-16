@@ -29,6 +29,7 @@ angular.module('order').directive('orderQuality', function() {
       sellmax: '=sellmax',
       sellreject: '=sellreject',
       sellbonus: '=sellbonus',
+      unit: '=unit'
     },
     templateUrl: './angular/order/directives/order-quality.html'
   };
