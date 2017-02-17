@@ -63,14 +63,14 @@ class ShipmentController extends Controller
         $param = $req->q;
         $shipments = $shipments->where(function($query) use ($param){
           return $query->whereHas('contracts', function($q) use ($param) {
-                  $q->whereRaw('`contract_no` LIKE "%'.$param.'%"');
-                })
-                ->orwhereHas('suppliers', function($q) use ($param) {
-                  $q->whereRaw('`company_name` LIKE "%'.$param.'%"');
-                })
-                ->orWhereRaw('laycan_start LIKE "%'.$param.'%"')
-                ->orWhereRaw('laycan_end LIKE "%'.$param.'%"')
-                ->orWhereRaw('shipment_no LIKE "%'.$param.'%"');
+              $q->whereRaw('`contract_no` LIKE "%'.$param.'%"');
+            })
+            ->orwhereHas('suppliers', function($q) use ($param) {
+              $q->whereRaw('`company_name` LIKE "%'.$param.'%"');
+            })
+            ->orWhereRaw('laycan_start LIKE "%'.$param.'%"')
+            ->orWhereRaw('laycan_end LIKE "%'.$param.'%"')
+            ->orWhereRaw('shipment_no LIKE "%'.$param.'%"');
         });
       }
 
