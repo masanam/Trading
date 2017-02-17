@@ -11,12 +11,18 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
+use Auth;
+
 // Document Controller
 // Created by Myrtyl
 // 06/02/2017
 
 class DocumentController extends Controller
 {
+    public function __construct() {
+      $this->middleware('jwt.auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -27,7 +33,11 @@ class DocumentController extends Controller
         /*
          * Myrtyl 06/02/2017
          */
-        $document = Document::where('status', 'a');
+
+        if(!$req->status) $status = ['a', 'o'];
+        else $status = [$req->status];
+
+        $document = Document::whereIn('status', $status);
 
         if($req->template_id) $document->where('template_id', $req->template_id);
         if($req->shipment_id) $document->where('shipment_id', $req->shipment_id);
@@ -46,27 +56,50 @@ class DocumentController extends Controller
      */
     public function store(Request $req)
     {
-        return $req->all();
-        // $document = new Document();
-        // $document->template_id = $req->template_id;
-        // $document->shipment_id = $req->shipment_id;
-        // $document->user_id = $req->user_id;
-        // // $document->user_id = Auth::User()->id;
-        // $document->title = $req->title;
-        // $document->remarks = $req->remarks;
-        // $document->status = 'a';
+        // Get Previous Versions
+        $previous = Document::where('shipment_id', $req->shipment_id)
+            ->where('template_id', $req->template_id)
+            ->where('status', 'a')
+            ->first();
 
-        // $document->save();
+        if($previous){
+            $prev_id = $previous->id;
+            $prev_version = $previous->version;
+        }
 
-        // foreach ($document_detail as $document_details) {
-        //     $document_detail = new DocumentDetails();
-        //     $document_detail->document_id = 'document.id';
-        //     $document_detail->field = $req->field;
-        //     $document_detail->content = $req->content;
+        // Add id of previous version to this new order, version is added 1 from the previous ones
+        $document = new Document();
 
-        //     $document->save();
-        // }        
+        $document->title = $req->title;
+        $document->remarks = $req->remarks;
+        $document->shipment_id = $req->shipment_id;
+        $document->template_id = $req->template_id;
+        $document->user_id = Auth::user()->id;
+        $document->older_version = $prev_id;
+        $document->status = 'a';
+        $document->version = $prev_version+1;
 
+        $document->save();
+
+        if($previous){
+            $previous->newer_version = $document->id;
+            $previous->status = 'o';
+            $previous->save();
+        }
+
+        foreach($req->document_details as $d){
+            $detail = new DocumentDetail();
+
+            $detail->document_id = $document->id;
+            $detail->field = $d['field'];
+            $detail->content = $d['content'];
+
+            $detail->save();
+        }
+
+        // save the id of this new version to the next version of current document
+
+        return $this->show($document->id);
     }
 
     /**
@@ -88,9 +121,14 @@ class DocumentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $req, $id)
     {
-        //
+        $document = Document::find($id);
+
+        $req->shipment_id = $document->shipment_id;
+        $req->template_id = $document->template_id;
+
+        $this->store($req);
     }
 
     /**
