@@ -22,13 +22,20 @@ class DocumentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $req)
     {
         /*
          * Myrtyl 06/02/2017
          */
-        $document = Document::all()->where('status', 'a');
-        return response()->json($document, 200);
+        $document = Document::where('status', 'a');
+
+        if($req->template_id) $document->where('template_id', $req->template_id);
+        if($req->shipment_id) $document->where('shipment_id', $req->shipment_id);
+
+        $document->orderBy('created_at', 'DESC');
+        $document->orderBy('version', 'DESC');
+
+        return response()->json($document->get(), 200);
     }
 
     /**
@@ -70,7 +77,7 @@ class DocumentController extends Controller
      */
     public function show($id)
     {
-        $document = Document::with(['documentDetails'])->find($id);
+        $document = Document::with(['template', 'shipment', 'shipment.customer', 'user', 'documentDetails'])->find($id);
         return $document;
     }
 

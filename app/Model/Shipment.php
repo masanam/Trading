@@ -23,11 +23,11 @@ class Shipment extends Model
       return $this->belongsTo(Contract::class, 'contract_id');
     }
 
-    public function suppliers() {
+    public function supplier() {
       return $this->belongsTo(Company::class, 'supplier_id');
     }
 
-    public function customers() {
+    public function customer() {
       return $this->belongsTo(Company::class, 'customer_id');
     }
 
