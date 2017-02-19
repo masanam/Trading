@@ -41,22 +41,17 @@ angular.module('order').controller('OrderReasonModalController', ['$uibModalInst
           });
         }
 
-        $scope.action = 'approval';
-
         order.status = $scope.status;
         if($scope.status === 'x') order.cancel_reason = $scope.order.reason;
         else if($scope.status === 'f') order.finalize_reason = $scope.order.reason;
-        else if($scope.status === 'p') {
-          order.request_reason = $scope.order.reason;
-          $scope.action = undefined;
-        }
+        else if($scope.status === 'p') order.request_reason = $scope.order.reason;
         /*
         * hasapu 14 - 02 - 2017
         * Input reject reason for status 'r'
         */
         else if($scope.status === 'r') order.reject_reason = $scope.order.reason;
 
-        order.$update({ id:order.id, action:$scope.action, status:order.status }, function (res) {
+        order.$update({ id:order.id, status:order.status }, function (res) {
           $scope.loading = false;
           $scope.order = res;
           // if($scope.status === 'x') $scope.order.cancel_reason = $scope.reason;
