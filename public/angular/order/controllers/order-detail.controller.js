@@ -322,7 +322,7 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
       console.log($scope.order.additional_cost.length);
       for(i=0;i<$scope.order.additional_cost.length;i++){
         $scope.totalAdditional += $scope.order.additional_cost[i].cost;
-      };
+      }
       console.log($scope.totalAdditional);
     };
 
