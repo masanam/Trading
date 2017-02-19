@@ -43,7 +43,7 @@ class ShipmentController extends Controller
     public function index(Request $req)
     {
       $range = [];
-      $shipments = Shipment::with('contracts', 'contracts.orders', 'contracts.orders.sells', 'suppliers', 'customers', 'surveyors', 'products')->where('status', 'a');
+      $shipments = Shipment::with('contracts', 'contracts.orders', 'contracts.orders.sells', 'supplier', 'customer', 'surveyors', 'products')->where('status', 'a');
 
       // Document Controller
       // Created by Myrtyl
@@ -53,7 +53,7 @@ class ShipmentController extends Controller
       $limit = $req->pageSize ? $req->pageSize : 10;
       $skip = ( $req->pageSize * $req->page ) ? ( $req->pageSize * $req->page ) : 0;
 
-      if($req->area_id) $shipments = $shipments->whereHas('suppliers', function($q) use ($req) { $q->whereRaw('area_id = '.$req->area_id); });
+      if($req->area_id) $shipments = $shipments->whereHas('supplier', function($q) use ($req) { $q->whereRaw('area_id = '.$req->area_id); });
       if($req->company_id) $shipments = $shipments->whereRaw('supplier_id = "'.$req->company_id.'"');
 
       // Myrtyl 24 Jan 2017
@@ -63,14 +63,14 @@ class ShipmentController extends Controller
         $param = $req->q;
         $shipments = $shipments->where(function($query) use ($param){
           return $query->whereHas('contracts', function($q) use ($param) {
-                  $q->whereRaw('`contract_no` LIKE "%'.$param.'%"');
-                })
-                ->orwhereHas('suppliers', function($q) use ($param) {
-                  $q->whereRaw('`company_name` LIKE "%'.$param.'%"');
-                })
-                ->orWhereRaw('laycan_start LIKE "%'.$param.'%"')
-                ->orWhereRaw('laycan_end LIKE "%'.$param.'%"')
-                ->orWhereRaw('shipment_no LIKE "%'.$param.'%"');
+              $q->whereRaw('`contract_no` LIKE "%'.$param.'%"');
+            })
+            ->orwhereHas('supplier', function($q) use ($param) {
+              $q->whereRaw('`company_name` LIKE "%'.$param.'%"');
+            })
+            ->orWhereRaw('laycan_start LIKE "%'.$param.'%"')
+            ->orWhereRaw('laycan_end LIKE "%'.$param.'%"')
+            ->orWhereRaw('shipment_no LIKE "%'.$param.'%"');
         });
       }
 
@@ -132,7 +132,7 @@ class ShipmentController extends Controller
 
         $shipment_history = $this->storeShipmentHistory($shipment);
 
-        $shipment = Shipment::with('contracts', 'contracts.orders', 'contracts.orders.sells', 'suppliers', 'customers', 'surveyors', 'products')->find($shipment->id);
+        $shipment = Shipment::with('contracts', 'contracts.orders', 'contracts.orders.sells', 'supplier', 'customer', 'surveyors', 'products')->find($shipment->id);
 
         return response()->json($shipment, 200);
     }
@@ -145,7 +145,7 @@ class ShipmentController extends Controller
      */
     public function show($id)
     {
-        $shipment = Shipment::with('contracts', 'contracts.orders', 'contracts.orders.sells', 'suppliers', 'customers', 'surveyors', 'products')->where('status', 'a')->find($id);
+        $shipment = Shipment::with('contracts', 'contracts.orders', 'contracts.orders.sells', 'supplier', 'customer', 'surveyors', 'products')->where('status', 'a')->find($id);
 
         return response()->json($shipment, 200);
     }
@@ -159,7 +159,7 @@ class ShipmentController extends Controller
      */
     public function update(Request $request, $id)
     {
-      $shipment = Shipment::with('contracts', 'contracts.orders', 'contracts.orders.sells', 'suppliers', 'customers', 'surveyors', 'products')->find($id);
+      $shipment = Shipment::with('contracts', 'contracts.orders', 'contracts.orders.sells', 'supplier', 'customer', 'surveyors', 'products')->find($id);
 
       $shipment->contract_id = $request->contract_id;
       $shipment->supplier_id = $request->supplier_id;
@@ -220,7 +220,7 @@ class ShipmentController extends Controller
     * no params
     */
     public function indexShipmentHistory() {
-      $shipment_histories = ShipmentHistory::with('shipments', 'shipments.contracts', 'shipments.suppliers', 'shipments.customers', 'surveyors', 'shipments.products')->get();
+      $shipment_histories = ShipmentHistory::with('shipments', 'shipments.contracts', 'shipments.supplier', 'shipments.customer', 'surveyors', 'shipments.products')->get();
       return response()->json($shipment_histories, 200);
     }
 
@@ -231,7 +231,7 @@ class ShipmentController extends Controller
     * $id from routes is shipment history id
     */
     public function showShipmentHistory($id) {
-      $shipment_history = ShipmentHistory::with('shipments', 'shipments.contracts', 'shipments.suppliers', 'shipments.customers', 'surveyors', 'shipments.products')->find($id);
+      $shipment_history = ShipmentHistory::with('shipments', 'shipments.contracts', 'shipments.supplier', 'shipments.customer', 'surveyors', 'shipments.products')->find($id);
 
       return response()->json($shipment_history, 200);
     }
