@@ -113,7 +113,7 @@ class CreateOrdersTable extends Migration
             $table->decimal('exchange_rate', 20, 10);
             $table->string('trading_term');
             $table->string('payment_term');
-            $table->text('notes');
+            $table->text('notes')->nullable();
             $table->timestamps();
 
             $table->foreign('order_detail_id')->references('id')->on('order_details')->onDelete('restrict');

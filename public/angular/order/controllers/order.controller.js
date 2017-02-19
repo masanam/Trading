@@ -233,6 +233,7 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
       $scope.order = Order.get({
         id: $stateParams.id
       }, function(res){
+        console.log(res);
         $scope.order = res;
         if(Environment.trx === 'sell') $scope.order.in_house = true;
 

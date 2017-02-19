@@ -435,7 +435,7 @@ class OrderController extends Controller
    * @return \Illuminate\Http\Response
    */
   public function index(Request $req)
-  {
+  {    
     if($req->funnel == true) return $this->funnel();
 
     //DB::enableQueryLog();
@@ -609,7 +609,7 @@ class OrderController extends Controller
         ]);
       }
     }
-    $order->addAdditionalCosts($req->additional);
+    $order->addAdditionalCosts($req->additional_cost);
 
     $leads_notification = [
       'url' => 'order/' . $order->id,
@@ -640,15 +640,14 @@ class OrderController extends Controller
    * @return \Illuminate\Http\Response
    */
   public function show($id, Request $req = null)
-  {
-    $order = Order::with(['trader', 'users', 'sells', 'buys',
-        'buys.trader', 'sells.trader',
+  {    
+    $order = Order::with('trader', 'users', 'sells', 'buys', 
+        'buys.trader', 'sells.trader', 'additional_cost',
         'approvals', 'approvals.roles', 'approvalLogs',
-        'sells.company', 'buys.company', 'sells.factory', 'contracts',
-        'buys.concession' => function ($q) {
-          return $q->select('concession_name');
-        }
-      ])->find($id);
+        'sells.company', 'buys.company', 'sells.factory', 'contracts')
+        ->with(['buys.concession' => function ($q) {
+          $q->select(['concession_name']);
+        }])->with('additional_cost.company')->find($id);
 
     $this->authorize('view', $order);
 
@@ -741,7 +740,7 @@ class OrderController extends Controller
     $order->save();
 
     // Add new additional cost in the application
-    $order->addAdditionalCosts($req->additional);
+    $order->addAdditionalCosts($req->additional_cost);
 
     // If this is a delete operation, release all partials
     if($order->status == 'x'){

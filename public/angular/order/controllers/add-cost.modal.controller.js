@@ -1,12 +1,12 @@
 'use strict';
 
-angular.module('order').controller('AddCostModalController', ['$uibModalInstance', '$scope', 'Company', 'Order', 'Notification',
-  function($uibModalInstance, $scope, Company, Order, Notification) {
-    if($scope.order.additional) $scope.additionals = $scope.order.additional;
+angular.module('order').controller('AddCostModalController', ['$uibModalInstance', '$scope', 'Company', 'Order', 'Notification', 'Environment',
+  function($uibModalInstance, $scope, Company, Order, Notification, Environment) {
+    if($scope.order.additional_cost) $scope.additionals = $scope.order.additional_cost;
     else $scope.additionals = [];
 
     $scope.additionals.push({});
-
+    $scope.defaultCurrency = Environment.defaultCurrency;
     $scope.types = [
       'Insurance Cost',
       'Interest Rate',

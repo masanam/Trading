@@ -63,6 +63,10 @@ class Order extends Model
     return $this->hasOne(Contract::class);
   }
 
+  public function additional_cost() {
+    return $this->hasMany(OrderAdditionalCost::class);
+  }
+
   // Model Functions
   public function averageSell() {
     $price = $volume = 0;

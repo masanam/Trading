@@ -6,7 +6,8 @@ angular.module('order').controller('AddLeadsModalController', ['$uibModalInstanc
     
     // console.log(items[0].length);
     // console.log($scope.items[2]);
-    $scope.defaultCurrency = Environment.defaultCurrency;    
+    $scope.defaultCurrency = Environment.defaultCurrency;      
+    console.log($scope.defaultCurrency);
     $scope.lead = lead;
     $scope.selected = {
       item: $scope.items[0]

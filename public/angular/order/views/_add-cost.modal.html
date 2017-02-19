@@ -23,7 +23,7 @@
                 title="Choose a Company">
                 <ui-select-match placeholder="Name of the Company...">{{$select.selected.company_name}}</ui-select-match>
 
-                <ui-select-choices repeat="company in companies track by $index"
+                <ui-select-choices repeat="company as company in companies track by $index"
                   refresh="find($select.search)"
                   refresh-delay="0">
                   <div ng-bind-html="company.company_name  | highlight: $select.search | html"></div>
@@ -32,7 +32,7 @@
             </div>
               <div class="form-group col-lg-2">
                 <label>
-                  Cost (per mt) :
+                  Cost (per mt) ({{ defaultCurrency }}) :
                 </label>
                 <input type="number" class="form-control" ng-model="additional.cost" required step="any"/>
               </div>
