@@ -13,18 +13,20 @@
               <label for="id">Cost Types :</label>
               <select name="type" id="type" class="form-control"
                 ng-model="additional.label"  ng-options="type for type in types" required>
+                <option value="">Select Type</option>
               </select>
             </div>
             <div class="select-box form-group col-lg-5" class="col-sm-6">
               <label>Vendor :</label>
               <ui-select ng-model="additional.company"
-                reset-search-input="false"
+                required
+                reset-search-input="false"                
                 style="min-width: 30px;"
                 title="Choose a Company">
                 <ui-select-match placeholder="Name of the Company...">{{$select.selected.company_name}}</ui-select-match>
 
                 <ui-select-choices repeat="company as company in companies track by $index"
-                  refresh="find($select.search)"
+                  refresh="find($select.search)"                
                   refresh-delay="0">
                   <div ng-bind-html="company.company_name  | highlight: $select.search | html"></div>
                 </ui-select-choices>

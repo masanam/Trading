@@ -303,7 +303,6 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
         // $scope.order.additional_cost.push(res);
         //if existing order, directly upload
         if($stateParams.id) {
-          console.log(res);
           $scope.order.$update({ id:$stateParams.id },function (res) {
             $scope.order = res;
           }, function (err) {
@@ -315,7 +314,6 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
         }
         $scope.totalAdditional = 0;
         $scope.total();
-        console.log($scope.totalAdditional);
       });
     };
     $scope.totalAdditional = 0;
