@@ -15,7 +15,7 @@ class Shipment extends Model
 
   //hasapu
     public function qualities(){
-      return $this->hasOne(Quality::class);
+      return $this->hasMany(Quality::class);
     }
   //------
 

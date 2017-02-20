@@ -23,7 +23,7 @@ class CreateQualitiesTable extends Migration
 
             $table->foreign('shipment_id')->references('id')->on('shipments')->onDelete('cascade');
 
-            $table->unique('shipment_id');
+            // $table->unique('shipment_id');
             // $table->foreign('lead_id')->references('id')->on('leads')->onDelete('cascade');
         });
 

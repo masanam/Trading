@@ -3,6 +3,8 @@
 use Illuminate\Database\Seeder;
 
 use App\Model\Shipment;
+use App\Model\Quality;
+use App\Model\QualityDetail;
 use App\Model\QualityMetric;
 
 class ShipmentTableSeeder extends Seeder
@@ -188,6 +190,97 @@ class ShipmentTableSeeder extends Seeder
       QualityMetric::create([
         'quality' => 'GCV ARB',
         'metric' => 'Kcal'
+      ]);
+
+      QualityMetric::create([
+        'quality' => 'Ash',
+        'metric' => '%'
+      ]);
+
+      QualityMetric::create([
+        'quality' => 'Sulphur',
+        'metric' => '%'
+      ]);
+
+      QualityMetric::create([
+        'quality' => 'TM',
+        'metric' => '%'
+      ]);
+
+      QualityMetric::create([
+        'quality' => 'IM',
+        'metric' => '%'
+      ]);
+
+      QualityMetric::create([
+        'quality' => 'FC',
+        'metric' => '%'
+      ]);
+
+      QualityMetric::create([
+        'quality' => 'VM',
+        'metric' => '%'
+      ]);
+
+      QualityMetric::create([
+        'quality' => 'HTI',
+        'metric' => '%'
+      ]);
+
+      QualityMetric::create([
+        'quality' => 'Size',
+        'metric' => '%'
+      ]);
+
+      QualityMetric::create([
+        'quality' => 'AFT',
+        'metric' => '&#176'
+      ]);
+
+      QualityMetric::create([
+        'quality' => 'Na2O',
+        'metric' => '%'
+      ]);
+
+      Quality::create([
+        'shipment_id' => 1,
+        'status' => 'a',
+        'type' => 't'
+      ]);
+      Quality::create([
+        'shipment_id' => 1,
+        'status' => 'a',
+        'type' => 'a'
+      ]);
+      Quality::create([
+        'shipment_id' => 2,
+        'status' => 'a',
+        'type' => 't'
+      ]);
+      QualityDetail::create([
+        'quality_id' => 1,
+        'value' => 2000,
+        'quality_metrics_id' => 1
+      ]);
+      QualityDetail::create([
+        'quality_id' => 1,
+        'value' => 2300,
+        'quality_metrics_id' => 2
+      ]);
+      QualityDetail::create([
+        'quality_id' => 1,
+        'value' => 1300,
+        'quality_metrics_id' => 3
+      ]);
+      QualityDetail::create([
+        'quality_id' => 2,
+        'value' => 2100,
+        'quality_metrics_id' => 1
+      ]);
+      QualityDetail::create([
+        'quality_id' => 2,
+        'value' => 2200,
+        'quality_metrics_id' => 2
       ]);
 
     }
