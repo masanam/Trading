@@ -43,7 +43,7 @@ class ShipmentController extends Controller
     public function index(Request $req)
     {
       $range = [];
-      $shipments = Shipment::with('contracts', 'contracts.orders', 'contracts.orders.sells', 'supplier', 'customer', 'surveyors', 'products')->where('status', 'a');
+      $shipments = Shipment::with('contracts', 'contracts.orders', 'contracts.orders.sells', 'supplier', 'customer', 'surveyors', 'products', 'qualities.qualityDetail.qualityMetric')->where('status', 'a');
 
       // Document Controller
       // Created by Myrtyl
