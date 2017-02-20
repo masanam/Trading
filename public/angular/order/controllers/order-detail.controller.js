@@ -313,6 +313,9 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
         else {
 
         }
+        $scope.totalAdditional = 0;
+        $scope.total();
+        console.log($scope.totalAdditional);
       });
     };
     $scope.totalAdditional = 0;
