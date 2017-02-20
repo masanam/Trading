@@ -152,24 +152,26 @@
           <span ng-if="display.buy">
             <span style="color:{{ loadingNego ? 'grey' : 'black' }}">{{ display.buy.pivot.volume | number }}mt - {{ display.buy.pivot.deal_currency_id }} {{ display.buy.pivot.deal_price | number }} || {{ display.buy.pivot.base_currency_id }} {{ display.buy.pivot.base_price | number }}</span>
             <div class="inline-loader" ng-if="loadingNego"></div>
-
-            <a ng-if="order.id && order.status !== 'a' && order.status !== 'x'"
-              ng-if="display.buy.user_id === Authentication.user.id && order.id && !loadingNego"
-              ng-click="negoBuy()" class="pull-right">
-              Nego
-            </a>
+            <div ng-if="display.sell.user_id===Authentication.user.id">
+              <a ng-if="order.id && order.status !== 'a' && order.status !== 'x'"
+                ng-if="display.buy.user_id === Authentication.user.id && order.id && !loadingNego"
+                ng-click="negoBuy()" class="pull-right">
+                Nego a
+              </a>
+            </div>
           </span>
 				</td>
 				<td>
           <span ng-if="display.sell">
             <span style="color:{{ loadingNego ? 'grey' : 'black' }}">{{ display.sell.pivot.volume | number }}mt - {{ display.sell.pivot.deal_currency_id }} {{ display.sell.pivot.deal_price | number }} || {{ display.sell.pivot.base_currency_id }} {{ display.sell.pivot.base_price | number }}</span>
             <div class="inline-loader" ng-if="loadingNego"></div>
-
-            <a ng-if="order.id && order.status !== 'a' && order.status !== 'x'"
-              ng-if="display.sell.user_id === Authentication.user.id && order.id && !loadingNego"
-              ng-click="negoSell()" class="pull-right">
-              Nego
-            </a>
+            <div ng-if="display.sell.user_id===Authentication.user.id">
+              <a ng-if="order.id && order.status !== 'a' && order.status !== 'x'"
+                ng-if="display.sell.user_id === Authentication.user.id && order.id && !loadingNego"
+                ng-click="negoSell()" class="pull-right">
+                Nego b {{ display.sell.user_id }} || {{ Authentication.user.id }}
+              </a>
+            </div>
           </span>
 				</td>
 			</tr>
@@ -378,7 +380,7 @@
       <tr ng-init="total()">
 				<th>Coal Price</th>        
         <td>
-          <span ng-if="display.sell">          
+          <span ng-if="display.sell">
           <h3>{{ defaultCurrency }} {{ (totalAdditional + (totalBasePriceSell / totalVolumeSell)) | number }}</h3>
           </span>
         </td>
