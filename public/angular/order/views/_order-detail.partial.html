@@ -380,8 +380,7 @@
       <tr ng-init="total()">
 				<th>Coal Price</th>        
         <td>
-          <span ng-if="display.sell">     
-          {{ totalAdditional }}
+          <span ng-if="display.sell">
           <h3>{{ defaultCurrency }} {{ (totalAdditional + (totalBasePriceSell / totalVolumeSell)) | number }}</h3>
           </span>
         </td>

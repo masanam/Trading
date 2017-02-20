@@ -320,8 +320,7 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
     };
     $scope.totalAdditional = 0;
     $scope.total = function(){      
-      var i;
-      console.log($scope.order.additional_cost.length);
+      var i;      
       for(i=0;i<$scope.order.additional_cost.length;i++){
         $scope.totalAdditional += $scope.order.additional_cost[i].cost;
       }      
