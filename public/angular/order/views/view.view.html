@@ -53,7 +53,7 @@
     <div class="box-header with-border" >
       <h1 class="box-title">ORD#{{ ("10000"+order.id).slice(-4) }} - {{ order.trader.name }}</h1>
       <span class="badge badge-primary">
-        {{ order.status === 'c' ? 'Combined' : order.status === 'p' ? 'Pending Approval' : order.status === 'd' ? 'Draft' : order.status === 'a' ? 'Approved' : order.status === 'f' ? 'In Shipment' : 'loading ' }}
+        {{ order.status === 'c' ? 'Combined' : order.status === 'p' ? 'Pending Approval' : order.status === 'd' ? 'Draft' : order.status === 'a' ? 'Approved' : order.status === 'f' ? 'In Shipment' : 'cancel' }}
       </span>
       <div class="box-tools pull-right no-print">
         <a class="btn btn-default hidden-xs" ui-sref="order.list">
