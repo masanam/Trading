@@ -16,29 +16,33 @@ class CompaniesTableSeeder extends Seeder
    */
   public function run()
   {
-    // Area::create([
-    //   'id' => 1,
-    //   'description' => 'Area 1',
-    //   'status' => 'a'
-    // ]);
+    Area::create([
+      'id' => 1,
+      'area_name' => 'Area 1',
+      'description' => 'Area 1',
+      'status' => 'a'
+    ]);
 
-    // Area::create([
-    //   'id' => 2,
-    //   'description' => 'Area 2',
-    //   'status' => 'a'
-    // ]);
+    Area::create([
+      'id' => 2,
+      'area_name' => 'Area 2',
+      'description' => 'Area 2',
+      'status' => 'a'
+    ]);
 
-    // Area::create([
-    //   'id' => 3,
-    //   'description' => 'Area 3',
-    //   'status' => 'a'
-    // ]);
+    Area::create([
+      'id' => 3,
+      'area_name' => 'Area 3',
+      'description' => 'Area 3',
+      'status' => 'a'
+    ]);
 
-    // Area::create([
-    //   'id' => 4,
-    //   'description' => 'Area 4',
-    //   'status' => 'a'
-    // ]);
+    Area::create([
+      'id' => 4,
+      'area_name' => 'Area 4',
+      'description' => 'Area 4',
+      'status' => 'a'
+    ]);
 
     // Company::create([
     //   'id' => 1,
@@ -58,7 +62,7 @@ class CompaniesTableSeeder extends Seeder
     //   'preferred_payment_term'=> 'LC',
     //   'description' => 'This is an palm oil company' ,
     //   'company_type' => 'c',
-    //   'status' => 'a' 
+    //   'status' => 'a'
     // ]) ;
 
     // Company::create([
@@ -79,7 +83,7 @@ class CompaniesTableSeeder extends Seeder
     //   'address' => 'Jl. Kapten Darmo Sugondo No.56, Sidorukun, Kec. Gresik, Kabupaten Gresik, Jawa Timur' ,
     //   'description' => 'This is an palm oil company' ,
     //   'company_type' => 'c',
-    //   'status' => 'a' 
+    //   'status' => 'a'
     // ]) ;
 
     // Company::create([
@@ -93,7 +97,7 @@ class CompaniesTableSeeder extends Seeder
     //   'email' => 'info@mbs.com',
     //   'web' => 'https://www.mbs.com',
     //   'industry' => 'Freight',
-      
+
     //   'city' => 'Jakarta',
     //   'address' => 'JL. Telaga Biru No.5, Banjarmasin',
     //   'description' => 'PT Mitra Bahari Sentosa operates as a freight tansporting company. The company is based in Banjarmasin, Indonesia. This is a subsidiary of Sunarko Group.',
@@ -148,7 +152,7 @@ class CompaniesTableSeeder extends Seeder
       'status' => 'a'
     ]);
 
-    // Company::create([                
+    // Company::create([
     //   'id'=>6,
     //   'company_name' => 'PT Borneo Indobara',
     //   'user_id' => '3',
@@ -169,7 +173,7 @@ class CompaniesTableSeeder extends Seeder
     //   'company_type' => 't',
     //   'status' => 'a'
     // ]);
-    
+
     // Company::create([
     //   'id'=>7,
     //   'company_name' => 'Tiger Energy',
@@ -272,43 +276,43 @@ class CompaniesTableSeeder extends Seeder
     //   'status' => 'a'
     // ]);
 
-    
+
 
     //1-5
-    
+
     // Seller::create(['company_name' => 'Amanah','user_id' => '1','phone' => '','is_affiliated'=>'1','annual_sales'=>'0','preferred_trading_term'=>'FOB MV','preferred_payment_term'=>'LC at Sight','purchasing_countries'=>'','email' => '','web' => '','country'=> 'ID','industry' => 'Coal Mining','city' => 'Kalimantan Selatan','address' =>'','latitude' =>0,'longitude' => 0,'description' => '','status' => 'a']);
     // Seller::create(['company_name' => 'Bara Jaya Utama','user_id' => '1','phone' => '','is_affiliated'=>'1','annual_sales'=>'0','preferred_trading_term'=>'FOB MV','preferred_payment_term'=>'LC at Sight','purchasing_countries'=>'','email' => '','web' => '','country'=> 'ID','industry' => 'Coal Mining','city' => 'Kalimantan Timur','address' =>'','latitude' =>0,'longitude' => 0,'description' => '','status' => 'a']);
     // Seller::create(['company_name' => 'Bukit Baiduri Energi','user_id' => '1','phone' => '','is_affiliated'=>'1','annual_sales'=>'0','preferred_trading_term'=>'FOB MV','preferred_payment_term'=>'LC at Sight','purchasing_countries'=>'','email' => '','web' => '','country'=> 'ID','industry' => 'Coal Mining','city' => 'Kalimantan Timur','address' =>'','latitude' =>0,'longitude' => 0,'description' => '','status' => 'a']);
-    
+
     // //6-10
 
-    // Seller::create(['company_name' => 'Kaltim Jaya Bara','user_id' => '1','phone' => '','is_affiliated'=>'1','annual_sales'=>'0','preferred_trading_term'=>'FOB MV','preferred_payment_term'=>'LC at Sight','purchasing_countries'=>'','email' => '','web' => '','country'=> 'ID','industry' => 'Coal Mining','city' => 'Kalimantan Timur','address' =>'','latitude' =>0,'longitude' => 0,'description' => '','status' => 'a']);  
+    // Seller::create(['company_name' => 'Kaltim Jaya Bara','user_id' => '1','phone' => '','is_affiliated'=>'1','annual_sales'=>'0','preferred_trading_term'=>'FOB MV','preferred_payment_term'=>'LC at Sight','purchasing_countries'=>'','email' => '','web' => '','country'=> 'ID','industry' => 'Coal Mining','city' => 'Kalimantan Timur','address' =>'','latitude' =>0,'longitude' => 0,'description' => '','status' => 'a']);
     // Seller::create(['company_name' => 'Arutmin','user_id' => '1','phone' => '','is_affiliated'=>'1','annual_sales'=>'0','preferred_trading_term'=>'FOB MV','preferred_payment_term'=>'LC at Sight','purchasing_countries'=>'','email' => '','web' => '','country'=> 'ID','industry' => 'Coal Mining','city' => 'Kalimantan Selatan','address' =>'','latitude' =>0,'longitude' => 0,'description' => '','status' => 'a']);
     // Seller::create(['company_name' => 'PT. Kideco Jaya Agung','user_id' => '1','phone' => '021 5257626','is_affiliated'=>'1','annual_sales'=>'0','preferred_trading_term'=>'FOB MV','preferred_payment_term'=>'LC at Sight','purchasing_countries'=>'','email' => '','web' => '','country'=> 'ID','industry' => 'Coal Mining','city' => 'Kalimantan Timur','address' =>'Menara Mulia 17th Floor, Jl. Jend Gatot Subroto Kav 9, Central Jakarta 12930','latitude' =>0,'longitude' => 0,'description' => '','status' => 'a']);
     // Seller::create(['company_name' => 'Adaro','user_id' => '1','phone' => '','is_affiliated'=>'1','annual_sales'=>'0','preferred_trading_term'=>'FOB MV','preferred_payment_term'=>'LC at Sight','purchasing_countries'=>'','email' => '','web' => '','country'=> 'ID','industry' => 'Coal Mining','city' => 'Kalimantan Selatan','address' =>'','latitude' =>0,'longitude' => 0,'description' => '','status' => 'a']);
-    
+
     // //11-15
     // Seller::create(['company_name' => 'Jhonlin Group','user_id' => '1','phone' => '','is_affiliated'=>'1','annual_sales'=>'0','preferred_trading_term'=>'FOB MV','preferred_payment_term'=>'LC at Sight','purchasing_countries'=>'','email' => '','web' => '','country'=> 'ID','industry' => 'Coal Mining','city' => 'Kalimantan Selatan','address' =>'','latitude' =>0,'longitude' => 0,'description' => '','status' => 'a']);
     // Seller::create(['company_name' => 'Asmin Koalindo Tuhup','user_id' => '1','phone' => '','is_affiliated'=>'1','annual_sales'=>'0','preferred_trading_term'=>'FOB MV','preferred_payment_term'=>'LC at Sight','purchasing_countries'=>'','email' => '','web' => '','country'=> 'ID','industry' => 'Coal Mining','city' => 'Kalimantan Tengah','address' =>'','latitude' =>0,'longitude' => 0,'description' => '','status' => 'a']);
     // Seller::create(['company_name' => 'Sunfan','user_id' => '1','phone' => '','is_affiliated'=>'1','annual_sales'=>'0','preferred_trading_term'=>'','preferred_payment_term'=>'LC at Sight','purchasing_countries'=>'','email' => '','web' => '','country'=> 'ID','industry' => 'Coal Mining','city' => 'Kalimantan Selatan','address' =>'','latitude' =>0,'longitude' => 0,'description' => '','status' => 'a']);
     // Seller::create(['company_name' => 'Nugraha Jorong Pratama','user_id' => '1','phone' => '','is_affiliated'=>'1','annual_sales'=>'0','preferred_trading_term'=>'','preferred_payment_term'=>'LC at Sight','purchasing_countries'=>'','email' => '','web' => '','country'=> 'ID','industry' => 'Coal Mining','city' => 'Kalimantan Selatan','address' =>'','latitude' =>0,'longitude' => 0,'description' => '','status' => 'a']);
     // Seller::create(['company_name' => 'PT. Bengkulu Bio Energi','user_id' => '1','phone' => '','is_affiliated'=>'1','annual_sales'=>'0','preferred_trading_term'=>'FOB Barge','preferred_payment_term'=>'LC at Sight','purchasing_countries'=>'','email' => '','web' => '','country'=> 'ID','industry' => 'Coal Mining','city' => 'Bengkulu','address' =>'','latitude' =>0,'longitude' => 0,'description' => '','status' => 'a']);
-    
+
     // //16-20
     // Seller::create(['company_name' => 'PT. Bukit Asam. TBk','user_id' => '1','phone' => '','is_affiliated'=>'1','annual_sales'=>'0','preferred_trading_term'=>'FOB MV','preferred_payment_term'=>'LC at Sight','purchasing_countries'=>'','email' => '','web' => '','country'=> 'ID','industry' => 'Coal Mining','city' => 'Sumatera Selatan','address' =>'','latitude' =>0,'longitude' => 0,'description' => '','status' => 'a']);
     // Seller::create(['company_name' => 'CV. Surya Sunfan Dwi Bahtera','user_id' => '1','phone' => '','is_affiliated'=>'1','annual_sales'=>'0','preferred_trading_term'=>'','preferred_payment_term'=>'LC at Sight','purchasing_countries'=>'','email' => '','web' => '','country'=> 'ID','industry' => 'Coal Mining','city' => 'Kalimantan Selatan','address' =>'','latitude' =>0,'longitude' => 0,'description' => '','status' => 'a']);
     // Seller::create(['company_name' => 'Integra','user_id' => '1','phone' => '','is_affiliated'=>'1','annual_sales'=>'0','preferred_trading_term'=>'FOB Barge','preferred_payment_term'=>'LC at Sight','purchasing_countries'=>'','email' => '','web' => '','country'=> 'ID','industry' => 'Coal Mining','city' => 'Jambi','address' =>'','latitude' =>0,'longitude' => 0,'description' => '','status' => 'a']);
     // Seller::create(['company_name' => 'Pada Idi','user_id' => '1','phone' => '','is_affiliated'=>'1','annual_sales'=>'0','preferred_trading_term'=>'FOB MV','preferred_payment_term'=>'LC at Sight','purchasing_countries'=>'','email' => '','web' => '','country'=> 'ID','industry' => 'Coal Mining','city' => 'Kalimantan Tengah','address' =>'','latitude' =>0,'longitude' => 0,'description' => '','status' => 'a']);
     // Seller::create(['company_name' => 'PT. Inkor Prima Coal','user_id' => '1','phone' => '','is_affiliated'=>'1','annual_sales'=>'0','preferred_trading_term'=>'FOB MV','preferred_payment_term'=>'LC at Sight','purchasing_countries'=>'','email' => '','web' => '','country'=> 'ID','industry' => 'Coal Mining','city' => 'Kalimantan Timur','address' =>'','latitude' =>0,'longitude' => 0,'description' => '','status' => 'a']);
-    
+
     // //21-24
     // Seller::create(['company_name' => 'PT. Rain TBK','user_id' => '1','phone' => '','is_affiliated'=>'1','annual_sales'=>'0','preferred_trading_term'=>'FOB MV','preferred_payment_term'=>'LC at Sight','purchasing_countries'=>'','email' => '','web' => '','country'=> 'ID','industry' => 'Coal Mining','city' => 'Kalimantan Timur','address' =>'','latitude' =>0,'longitude' => 0,'description' => '','status' => 'a']);
     // Seller::create(['company_name' => 'Sentosa Laju Energi','user_id' => '1','phone' => '','is_affiliated'=>'1','annual_sales'=>'0','preferred_trading_term'=>'FOB MV','preferred_payment_term'=>'LC at Sight','purchasing_countries'=>'','email' => '','web' => '','country'=> 'ID','industry' => 'Coal Mining','city' => 'Kalimantan Timur','address' =>'','latitude' =>0,'longitude' => 0,'description' => '','status' => 'a']);
     // Seller::create(['company_name' => 'Sunfan','user_id' => '1','phone' => '','is_affiliated'=>'1','annual_sales'=>'0','preferred_trading_term'=>'','preferred_payment_term'=>'LC at Sight','purchasing_countries'=>'','email' => '','web' => '','country'=> 'ID','industry' => 'Coal Mining','city' => 'Kalimantan Selatan','address' =>'','latitude' =>0,'longitude' => 0,'description' => '','status' => 'a']);
     // Seller::create(['company_name' => 'PT. Bara Harmonis Batang Asam','user_id' => '1','phone' => '','is_affiliated'=>'1','annual_sales'=>'0','preferred_trading_term'=>'','preferred_payment_term'=>'LC at Sight','purchasing_countries'=>'','email' => '','web' => '','country'=> 'ID','industry' => 'Coal Mining','city' => 'Jambi','address' =>'','latitude' =>0,'longitude' => 0,'description' => '','status' => 'a']);
 
-    // Seller::create([                
-    //     'company_name' => 'PT Kuansing Inti Makmur',            
+    // Seller::create([
+    //     'company_name' => 'PT Kuansing Inti Makmur',
     //     'user_id' => '2',
     //     'phone' => '+6276132317',
     //     'is_affiliated'=>'1',
@@ -329,7 +333,7 @@ class CompaniesTableSeeder extends Seeder
     //     'status' => 'a'
     // ])/*->user()->attach(6)*/;
 
-    // Seller::create([                
+    // Seller::create([
     //     'company_name' => 'PT Borneo Indobara',
     //     'user_id' => '3',
     //     'is_affiliated'=>'1',
@@ -351,8 +355,8 @@ class CompaniesTableSeeder extends Seeder
     //     'status' => 'a'
     // ])/*->user()->attach(6)*/;
 
-    // Seller::create([                
-    //     'company_name' => 'PT Golden Energy Mines',        
+    // Seller::create([
+    //     'company_name' => 'PT Golden Energy Mines',
     //     'user_id' => '3',
     //     'is_affiliated'=>'1',
     //     'annual_sales'=>'02',
