@@ -190,8 +190,15 @@ class OrderController extends Controller
     // get latest GC NEWC price
     $index = $this->indexPrice();
 
-    if(count($index)) $mail = new ApprovalRequest($order, $approval_properties['approval_token'], $index[0]->price);
-    else $mail = new ApprovalRequest($order, $approval_properties['approval_token'], 0);
+    foreach($index as $i){
+      if($i->id == $order->index_id || $i->id == 1){
+        $index_price = $i->price;
+        $index_name = $i->index_provider . ' ' . $i->index_name;
+      }
+    }
+
+    if(count($index)) $mail = new ApprovalRequest($order, $approval_properties['approval_token'], $index_price, $index_name);
+    else $mail = new ApprovalRequest($order, $approval_properties['approval_token'], 0, 'NO-INDEX');
 
     Mail::to($user->email)->send($mail);
   }

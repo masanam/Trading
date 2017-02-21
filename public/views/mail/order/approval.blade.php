@@ -276,64 +276,6 @@
                                     <td align="center">{{ $order->trader->name }}</td>
                                     <td align="right">{{ date('d M y', strtotime($order->created_at)) }}</td>
                                   </tr>
-                                  <tr>
-                                    <td colspan=3>
-                                      Reason: {{ $order->request_reason }}
-                                    </td>
-                                  </tr>
-                                  <tr align="center">
-                                    <td style="font-size:18pt">
-                                      <p>Typical Quality</p>
-                                      @if (count($order->buys) > 0)
-                                      <p style="font-size:18pt">{{ $order->buys[0]->typical_quality }}</p>
-                                      @elseif (count($order->sells) > 0)
-                                      <p style="font-size:18pt">{{ $order->sells[0]->typical_quality }}</p>
-                                      @endif
-                                    </td>
-                                    <td>
-                                      <p>GC NEWC</p>
-                                      <p style="font-size:18pt">{{ $index_price }}</p>
-                                    </td>
-                                    <td>
-                                      <p>LayCan Period</p>
-                                      <p style="font-size:10pt">{{ date('d M y', strtotime($order->laycan_start)) }}<br>
-                                      {{ date('d M y', strtotime($order->laycan_end)) }}</p>
-                                    </td>
-                                  </tr>
-
-                                  @if (count($order->buys) > 0 && count($order->sells) > 0)
-                                  <tr align="center">
-                                    <td>
-                                      <p>BUY</p>
-                                      <p style="font-size:18pt">{{ config('app.defaultCurrency') }} {{ number_format($order->average_buy_price, 2) }}</p>
-                                      <small>{{ round(($order->average_buy_price-$index_price)*100 / $index_price, 2) }} %</small>
-                                    </td>
-                                    <td>
-                                      <p>MARGIN</p>
-                                      <p style="font-size:14pt">{{ config('app.defaultCurrency') }} {{ $order->average_sell_price - $order->average_buy_price }}</p>
-                                      <small></small>
-                                    </td>
-                                    <td>
-                                      <p>SELL</p>
-                                      <p style="font-size:14pt">{{ config('app.defaultCurrency') }} {{ number_format($order->average_sell_price, 2) }}</p>
-                                      <small>{{ round(($order->average_sell_price-$index_price)*100 / $index_price, 2) }} %</small>
-                                    </td>
-                                  </tr>
-                                  @elseif (count($order->buys) > 0 || !count($order->sells))
-                                  <tr align="center">
-                                    <td colspan="3">
-                                      <p>BUY</p>
-                                      <p style="font-size:14pt">{{ config('app.defaultCurrency') }} {{ number_format($order->average_buy_price, 2) }}</p>
-                                    </td>
-                                  </tr>
-                                  @elseif (count($order->sells) > 0 || !count($order->buys))
-                                  <tr align="center">
-                                    <td colspan="3">
-                                      <p>SELL</p>
-                                      <p style="font-size:14pt">{{ config('app.defaultCurrency') }} {{ number_format($order->average_sell_price, 2) }}</p>
-                                    </td>
-                                  </tr>
-                                  @endif
 
                                   <tr>
                                     <td colspan=3>
@@ -380,6 +322,70 @@
                                       </table>
                                     </td>
                                   </tr>
+
+                                  <tr align="center">
+                                    <td style="font-size:18pt">
+                                      <p>Typical Quality</p>
+                                      @if (count($order->buys) > 0)
+                                      <p style="font-size:18pt">{{ $order->buys[0]->typical_quality }}</p>
+                                      @elseif (count($order->sells) > 0)
+                                      <p style="font-size:18pt">{{ $order->sells[0]->typical_quality }}</p>
+                                      @endif
+                                    </td>
+                                    <td>
+                                      <p>{{ $index_name }}</p>
+                                      <p style="font-size:18pt">
+                                        {{ config('app.defaultCurrency') }}
+                                        {{ $index_price }}
+                                      </p>
+                                    </td>
+                                    <td>
+                                      <p>LayCan Period</p>
+                                      <p style="font-size:10pt">{{ date('d M y', strtotime($order->laycan_start)) }}<br>
+                                      {{ date('d M y', strtotime($order->laycan_end)) }}</p>
+                                    </td>
+                                  </tr>
+
+                                  @if (count($order->buys) > 0 && count($order->sells) > 0)
+                                  <tr align="center">
+                                    <td>
+                                      <p>BUY</p>
+                                      <p style="font-size:18pt">{{ config('app.defaultCurrency') }} {{ number_format($order->average_buy_price, 2) }}</p>
+                                      <small>{{ round(($order->average_buy_price-$index_price)*100 / $index_price, 2) }} %</small>
+                                    </td>
+                                    <td>
+                                      <p>MARGIN</p>
+                                      <p style="font-size:14pt">{{ config('app.defaultCurrency') }} {{ $order->average_sell_price - $order->average_buy_price }}</p>
+                                      <small></small>
+                                    </td>
+                                    <td>
+                                      <p>SELL</p>
+                                      <p style="font-size:14pt">{{ config('app.defaultCurrency') }} {{ number_format($order->average_sell_price, 2) }}</p>
+                                      <small>{{ round(($order->average_sell_price-$index_price)*100 / $index_price, 2) }} %</small>
+                                    </td>
+                                  </tr>
+                                  @elseif (count($order->buys) > 0 || !count($order->sells))
+                                  <tr align="center">
+                                    <td colspan="3">
+                                      <p>BUY</p>
+                                      <p style="font-size:14pt">{{ config('app.defaultCurrency') }} {{ number_format($order->average_buy_price, 2) }}</p>
+                                    </td>
+                                  </tr>
+                                  @elseif (count($order->sells) > 0 || !count($order->buys))
+                                  <tr align="center">
+                                    <td colspan="3">
+                                      <p>SELL</p>
+                                      <p style="font-size:14pt">{{ config('app.defaultCurrency') }} {{ number_format($order->average_sell_price, 2) }}</p>
+                                    </td>
+                                  </tr>
+                                  @endif
+
+                                  <tr>
+                                    <td colspan=3>
+                                      Reason: {{ $order->request_reason }}
+                                    </td>
+                                  </tr>
+                                  
                                 </tbody>
                               </table>
                             </td></tr>
