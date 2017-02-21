@@ -803,16 +803,14 @@ class OrderController extends Controller
       $this->authorize('approve', $order);
     }
 
-
-
     //jika status == reject, dan reject reason !=NULL maka status akan berubah dan mencatat reason
     if($req->status === 'r') {
-      if($req->reject_reason) {
+      //if($req->reject_reason) {
       // put the approval to Log
       $order->approvalLogs()->attach([ $user->id => [ 'status' => $req->status , 'reason' => $req->reject_reason] ]);
       // put the user's approval status to replace old one
       $order->approvals()->sync([ $user->id => [ 'status' => $req->status, 'reason' => $req->reject_reason] ], false);
-      }
+      //}
     }
     else {
       // put the approval to Log
