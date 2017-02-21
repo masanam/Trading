@@ -17,6 +17,7 @@ class CreateContractsTable extends Migration
           $table->increments('id');
           $table->string('contract_no');
           $table->integer('order_id')->unsigned();
+          $table->integer('area_id')->unsigned()->nullable();
           $table->integer('shipment_count');
           $table->string('term');
           $table->text('term_desc');
@@ -26,6 +27,7 @@ class CreateContractsTable extends Migration
           $table->timestamps();
 
           $table->foreign('order_id')->references('id')->on('orders')->onDelete('restrict');
+          $table->foreign('area_id')->references('id')->on('areas')->onDelete('restrict');
       });
 
       Schema::create('shipments', function (Blueprint $table) {
