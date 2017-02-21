@@ -45,16 +45,16 @@ class CreateLeadsTable extends Migration
             $table->string('typical_quality')->nullable();
             $table->integer('product_id')->nullable();
 
-            $table->integer('gcv_arb_min')->nullable(); //gross calorific value, as received basis
-            $table->integer('gcv_arb_max')->nullable();
+            $table->decimal('gcv_arb_min', 7,2)->nullable(); //gross calorific value, as received basis
+            $table->decimal('gcv_arb_max', 7,2)->nullable();
             $table->string('gcv_arb_reject')->nullable();
             $table->string('gcv_arb_bonus')->nullable();
-            $table->integer('gcv_adb_min')->nullable(); //gross calorific value, air dried basis
-            $table->integer('gcv_adb_max')->nullable();
+            $table->decimal('gcv_adb_min', 7,2)->nullable(); //gross calorific value, air dried basis
+            $table->decimal('gcv_adb_max', 7,2)->nullable();
             $table->string('gcv_adb_reject')->nullable();
             $table->string('gcv_adb_bonus')->nullable();
-            $table->integer('ncv_min')->nullable(); //nett calorific value
-            $table->integer('ncv_max')->nullable();
+            $table->decimal('ncv_min', 7,2)->nullable(); //nett calorific value
+            $table->decimal('ncv_max', 7,2)->nullable();
             $table->string('ncv_reject')->nullable();
             $table->string('ncv_bonus')->nullable();
             $table->decimal('ash_min', 5,2)->nullable(); //ash
@@ -81,29 +81,29 @@ class CreateLeadsTable extends Migration
             $table->decimal('vm_max', 5,2)->nullable();
             $table->string('vm_reject')->nullable();
             $table->string('vm_bonus')->nullable();
-            $table->integer('hgi_min')->nullable(); //hardness
-            $table->integer('hgi_max')->nullable();
+            $table->decimal('hgi_min', 7,2)->nullable(); //hardness
+            $table->decimal('hgi_max', 7,2)->nullable();
             $table->string('hgi_reject')->nullable();
             $table->string('hgi_bonus')->nullable();
-            $table->integer('size_min')->nullable(); //size/piece
-            $table->integer('size_max')->nullable();
+            $table->decimal('size_min', 7,2)->nullable(); //size/piece
+            $table->decimal('size_max', 7,2)->nullable();
             $table->string('size_reject')->nullable();
             $table->string('size_bonus')->nullable();
-            $table->integer('fe2o3_min')->nullable(); //size/piece
-            $table->integer('fe2o3_max')->nullable();
+            $table->decimal('fe2o3_min', 7,2)->nullable(); //size/piece
+            $table->decimal('fe2o3_max', 7,2)->nullable();
             $table->string('fe2o3_reject')->nullable(); //size/piece
             $table->string('fe2o3_bonus')->nullable();
-            $table->integer('aft_min')->nullable(); //size/piece
-            $table->integer('aft_max')->nullable();
+            $table->decimal('aft_min', 7,2)->nullable(); //size/piece
+            $table->decimal('aft_max', 7,2)->nullable();
             $table->string('aft_reject')->nullable(); //size/piece
             $table->string('aft_bonus')->nullable();
-            $table->integer('na2o_min')->nullable(); //size/piece
-            $table->integer('na2o_max')->nullable();
+            $table->decimal('na2o_min', 7,2)->nullable(); //size/piece
+            $table->decimal('na2o_max', 7,2)->nullable();
             $table->string('na2o_reject')->nullable(); //size/piece
             $table->string('na2o_bonus')->nullable();
 
 
-            $table->integer('volume')->nullable();
+            $table->decimal('volume', 11,2)->nullable();
             $table->decimal('price', 20, 10)->nullable();
             $table->char('currency',3);
             $table->string('carrier_type')->nullable(); // not specified, gear, gearless, gear & gearless

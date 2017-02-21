@@ -167,7 +167,7 @@
             <div class="inline-loader" ng-if="loadingNego"></div>
             <div ng-if="display.sell.user_id===Authentication.user.id">
               <a ng-if="order.id && order.status !== 'a' && order.status !== 'x'"
-                ng-if="display.sell.user_id === Authentication.user.id && order.id && !loadingNego"
+                ng-if="((!hideCrossingLeads && order.trader_id === Authentication.user.id) || (hideCrossingLeads && display.sell.user_id === Authentication.user.id)) && order.id && !loadingNego"
                 ng-click="negoSell()" class="pull-right">
                 Nego
               </a>
@@ -342,7 +342,7 @@
       <tr>
 				<th colspan="3" style="text-align:center; background: #efefef;">
           <a ng-href="" ng-click="financialCollapsed = !financialCollapsed">
-            Financial Summary 
+            Financial Summary
             <span class="glyphicon glyphicon-triangle-bottom pull-right" ng-if="!financialCollapsed"></span>
             <span class="glyphicon glyphicon-triangle-top pull-right" ng-if="financialCollapsed"></span>
           </a>
@@ -357,9 +357,9 @@
 					<h4>{{ buy_deal_currency_id }} {{ totalDealPriceBuy / totalVolumeBuy | number }} || {{ buy_base_currency_id }} {{ totalBasePriceBuy / totalVolumeBuy | number }}</h4>
 					from {{ order.buys.length }} Customers
 					</span>
-				</td>                
+				</td>
         <td>
-          <span ng-if="display.sell">          
+          <span ng-if="display.sell">
           <h4>{{ sell_deal_currency_id }} {{ totalDealPriceSell / totalVolumeSell | number }} || {{ sell_base_currency_id }} {{ totalBasePriceSell / totalVolumeSell | number }}</h4>
           </span>
         </td>
@@ -376,15 +376,15 @@
           <h4>{{ defaultCurrency }} {{additional.cost | number}}</h4>
           </span>
         </td>
-			</tr>     
+			</tr>
       <tr ng-init="total()">
-				<th>Coal Price</th>        
+				<th>Coal Price</th>
         <td>
           <span ng-if="display.sell">
           <h3>{{ defaultCurrency }} {{ (totalAdditional + (totalBasePriceSell / totalVolumeSell)) | number }}</h3>
           </span>
         </td>
-			</tr>			
+			</tr>
 		</tbody>
 
     <tbody ng-if="order.contracts && (order.status === 'f' || order.status === 'c')">
@@ -423,4 +423,3 @@
 	</table>
 	</div>
 </section>
-
