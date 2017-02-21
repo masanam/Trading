@@ -9,9 +9,9 @@
     <div class="row">
       <div class="col-sm-3" style="max-height:500px; overflow-y:scroll;">
         <ul class="nav nav-pills nav-stacked">
-          <li ng-if="items.length < 1">There is no lead, you can create a new one</li>          
-          <li ng-repeat="item in items" ng-if="item.volume-getUsed(item)">             
-            <a href="#" ng-click="$event.preventDefault(); selected.item = item">
+          <li ng-if="items.length < 1">There is no lead, you can create a new one</li>
+          <li ng-repeat="item in items" ng-if="item.volume-getUsed(item)">
+            <a href="#" ng-click="$event.preventDefault(); selected.item = item; changeLead(item);">
               {{ item.company.company_name }} ({{ item.city }}, {{ item.country }})
               <span ng-if="
                 (item.gcv_adb_min_diff<=150&&item.gcv_adb_max_diff<=150) ||
