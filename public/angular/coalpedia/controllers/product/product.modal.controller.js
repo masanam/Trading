@@ -18,6 +18,24 @@ angular.module('coalpedia').controller('ProductModalController', ['$scope', '$ui
 
     $scope.create = function() {
       var product = new Product($scope.product);
+
+      if(Environment.productQuality !== 'typical'){
+        product.gcv_adb_max = product.gcv_adb_min;
+        product.gcv_arb_max = product.gcv_arb_min;
+        product.ncv_max = product.ncv_min;
+        product.tm_max = product.tm_min;
+        product.im_max = product.im_min;
+        product.vm_max = product.vm_min;
+        product.ash_max = product.ash_min;
+        product.fc_max = product.fc_min;
+        product.ts_max = product.ts_min;
+        product.hgi_max = product.hgi_min;
+        product.size_max = product.size_min;
+        product.fe2o3_max = product.fe2o3_min;
+        product.aft_max = product.aft_min;
+        product.na2o_max = product.na2o_min;
+      }
+
       product.company_id = company.id;
 
       product.$save(function(response) {
