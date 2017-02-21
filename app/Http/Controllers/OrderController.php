@@ -435,7 +435,7 @@ class OrderController extends Controller
    * @return \Illuminate\Http\Response
    */
   public function index(Request $req)
-  {    
+  {
     if($req->funnel == true) return $this->funnel();
 
     //DB::enableQueryLog();
@@ -640,8 +640,8 @@ class OrderController extends Controller
    * @return \Illuminate\Http\Response
    */
   public function show($id, Request $req = null)
-  {    
-    $order = Order::with('trader', 'users', 'sells', 'buys', 
+  {
+    $order = Order::with('trader', 'users', 'sells', 'buys',
         'buys.trader', 'sells.trader', 'additional_cost',
         'approvals', 'approvals.roles', 'approvalLogs',
         'sells.company', 'buys.company', 'sells.factory', 'contracts')
@@ -663,6 +663,14 @@ class OrderController extends Controller
     $order->averageBuy();
 
     if (isset($req)) {
+      // Set approval_status for mobile apps
+
+      foreach($order->approvals as $approval){
+        if($approval->id === Auth::user()->id){
+          $order->approval_status = $approval->pivot->status;
+        }
+      }
+
       // IF envelope is requested, get all necessary components
       if($req->envelope == "true"){
         // dd($req);
