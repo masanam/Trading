@@ -236,13 +236,13 @@ class OrderController extends Controller
     if(config('app.env') == 'production') {
       if(config('app.deployment') == 'bib') {
         $firebaseClient = new FirebaseLib(config('services.firebase.database_url'), config('services.firebase.secret'));
-      } else if(config('app.deployment') == 'bce') {
+      } else if(config('app.deployment') == 'berau') {
         $firebaseClient = new FirebaseLib(config('services.firebase_bce.database_url'), config('services.firebase_bce.secret'));
       }
     } else {
       if(config('app.deployment') == 'bib') {
         $firebaseClient = new FirebaseLib(config('services.firebase_dev.database_url'), config('services.firebase_dev.secret'));
-      } else if(config('app.deployment') == 'bce') {
+      } else if(config('app.deployment') == 'berau') {
         $firebaseClient = new FirebaseLib(config('services.firebase_bce_dev.database_url'), config('services.firebase_bce_dev.secret'));
       }
     }
