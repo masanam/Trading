@@ -14,6 +14,16 @@ angular.module('coalpedia').controller('CompanyController', ['$scope', '$statePa
       });
     };
 
+    $scope.delete = function (company) {
+      if(confirm('Are you sure you want to delete ' + company.company_name + '?')){
+        var deletedCompany = company;
+        company = new Company(company);
+        company.$remove(function (res){
+          $scope.companies.splice($scope.companies.indexOf(deletedCompany), 1);
+        });
+      }
+    };
+
     $scope.findOne = function(id) {
       if(id !== undefined){
         $scope.companyId = id;
