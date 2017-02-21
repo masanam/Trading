@@ -41,6 +41,8 @@ angular.module('order').controller('OrderReasonModalController', ['$uibModalInst
           });
         }
 
+        $scope.approval = undefined;
+
         order.status = $scope.status;
         if($scope.status === 'x') order.cancel_reason = $scope.order.reason;
         else if($scope.status === 'f') order.finalize_reason = $scope.order.reason;
@@ -49,9 +51,12 @@ angular.module('order').controller('OrderReasonModalController', ['$uibModalInst
         * hasapu 14 - 02 - 2017
         * Input reject reason for status 'r'
         */
-        else if($scope.status === 'r') order.reject_reason = $scope.order.reason;
+        else if($scope.status === 'r') {
+          order.reject_reason = $scope.order.reason;
+          $scope.approval = 'approval';
+        }
 
-        order.$update({ id:order.id, status:order.status }, function (res) {
+        order.$update({ id:order.id, status:order.status, action: $scope.approval }, function (res) {
           $scope.loading = false;
           $scope.order = res;
           // if($scope.status === 'x') $scope.order.cancel_reason = $scope.reason;

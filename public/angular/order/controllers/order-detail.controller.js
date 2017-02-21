@@ -303,7 +303,6 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
         // $scope.order.additional_cost.push(res);
         //if existing order, directly upload
         if($stateParams.id) {
-          console.log(res);
           $scope.order.$update({ id:$stateParams.id },function (res) {
             $scope.order = res;
           }, function (err) {
@@ -313,12 +312,13 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
         else {
 
         }
+        $scope.totalAdditional = 0;
+        $scope.total();
       });
     };
     $scope.totalAdditional = 0;
     $scope.total = function(){      
-      var i;
-      console.log($scope.order.additional_cost.length);
+      var i;      
       for(i=0;i<$scope.order.additional_cost.length;i++){
         $scope.totalAdditional += $scope.order.additional_cost[i].cost;
       }      

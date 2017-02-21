@@ -1045,13 +1045,14 @@ class LeadsTableSeeder extends Seeder
       'value' => 0.00007507407,
       'in_use' => true
     ]);
+    
 
    $orders = [
      [
       'order' => [ 'id' => 1, 'user_id' => 3, 'index_id' => 3, 'status' => 'p', 'approval_sequence' => 0, 'in_house' => false || !config('app.showBuy') ],
       'leads' => [
-          1 => [ 'volume' => 1000, 'price' => 25, 'trading_term' => 'FOB MV', 'payment_term' => 'TT', 'base_currency_id' => 'IDR', 'base_price' => 50000, 'deal_currency_id' => 'USD', 'deal_price' => 50, 'exchange_rate' => 10000 ],
-          2 => [ 'volume' => 1000, 'price' => 53, 'trading_term' => 'FOB MV', 'payment_term' => 'TT', 'base_currency_id' => 'IDR', 'base_price' => 50000, 'deal_currency_id' => 'USD', 'deal_price' => 50, 'exchange_rate' => 10000  ]
+          1 => [ 'volume' => 1000, 'price' => 25, 'trading_term' => 'FOB MV', 'payment_term' => 'TT', 'base_currency_id' => config('app.defaultCurrency')==='USD' ? 'USD' : 'IDR', 'base_price' => config('app.defaultCurrency')==='USD' ? 50 : 500000, 'deal_currency_id' => config('app.defaultCurrency')==='USD' ? 'IDR' : 'USD', 'deal_price' => config('app.defaultCurrency')==='USD' ? 500000 : 50, 'exchange_rate' => 10000 ],
+          2 => [ 'volume' => 1000, 'price' => 53, 'trading_term' => 'FOB MV', 'payment_term' => 'TT', 'base_currency_id' => config('app.defaultCurrency')==='USD' ? 'USD' : 'IDR', 'base_price' => config('app.defaultCurrency')==='USD' ? 50 : 500000, 'deal_currency_id' => config('app.defaultCurrency')==='USD' ? 'IDR' : 'USD', 'deal_price' => config('app.defaultCurrency')==='USD' ? 500000 : 50, 'exchange_rate' => 10000  ]
       ],
       'user' => [ 1 => [ 'role' => 'approver' ], 2 => [ 'role' => 'associated' ], 3 => [ 'role' => 'admin' ] ],
       'approval' => [ 1 => [ 'status' => 'p', 'approval_token' => 'aaa' ], 2 => [ 'status' => 'a', 'approval_token' => 'bbb' ] ],
@@ -1060,7 +1061,7 @@ class LeadsTableSeeder extends Seeder
      [
       'order' => [ 'id' => 2, 'user_id' => 9, 'index_id' => 3, 'status' => 'a', 'approval_sequence' => 0, 'in_house' => true || !config('app.showBuy') ],
       'leads' => [
-          3 => [ 'volume' => 1000, 'price' => 51, 'trading_term' => 'FOB MV', 'payment_term' => 'TT', 'base_currency_id' => 'IDR', 'base_price' => 50000, 'deal_currency_id' => 'USD', 'deal_price' => 50, 'exchange_rate' => 10000  ]
+          3 => [ 'volume' => 1000, 'price' => 51, 'trading_term' => 'FOB MV', 'payment_term' => 'TT', 'base_currency_id' => config('app.defaultCurrency')==='USD' ? 'USD' : 'IDR', 'base_price' => config('app.defaultCurrency')==='USD' ? 50 : 500000, 'deal_currency_id' => config('app.defaultCurrency')==='USD' ? 'IDR' : 'USD', 'deal_price' => config('app.defaultCurrency')==='USD' ? 500000 : 50, 'exchange_rate' => 10000  ]
       ],
       'user' => [ 1 => [ 'role' => 'approver' ], 2 => [ 'role' => 'associated' ], 3 => [ 'role' => 'admin' ] ],
       'approval' => [ 1 => [ 'status' => 'a', 'approval_token' => 'aaa' ], 2 => [ 'status' => 'a', 'approval_token' => 'bbb' ] ],
@@ -1069,8 +1070,8 @@ class LeadsTableSeeder extends Seeder
      [
       'order' => [ 'id' => 3, 'user_id' => 10, 'index_id' => 2, 'status' => 'f', 'approval_sequence' => 0, 'in_house' => false || !config('app.showBuy') ],
       'leads' => [
-          4 => [ 'volume' => 2000, 'price' => 35, 'trading_term' => 'FOB MV', 'payment_term' => 'TT', 'base_currency_id' => 'IDR', 'base_price' => 50000, 'deal_currency_id' => 'USD', 'deal_price' => 50, 'exchange_rate' => 10000  ],
-          7 => [ 'volume' => 1600, 'price' => 55, 'trading_term' => 'FOB MV', 'payment_term' => 'TT', 'base_currency_id' => 'IDR', 'base_price' => 50000, 'deal_currency_id' => 'USD', 'deal_price' => 50, 'exchange_rate' => 10000  ]
+          4 => [ 'volume' => 2000, 'price' => 35, 'trading_term' => 'FOB MV', 'payment_term' => 'TT', 'base_currency_id' => config('app.defaultCurrency')==='USD' ? 'USD' : 'IDR', 'base_price' => config('app.defaultCurrency')==='USD' ? 50 : 500000, 'deal_currency_id' => config('app.defaultCurrency')==='USD' ? 'IDR' : 'USD', 'deal_price' => config('app.defaultCurrency')==='USD' ? 500000 : 50, 'exchange_rate' => 10000  ],
+          7 => [ 'volume' => 1600, 'price' => 55, 'trading_term' => 'FOB MV', 'payment_term' => 'TT', 'base_currency_id' => config('app.defaultCurrency')==='USD' ? 'USD' : 'IDR', 'base_price' => config('app.defaultCurrency')==='USD' ? 50 : 500000, 'deal_currency_id' => config('app.defaultCurrency')==='USD' ? 'IDR' : 'USD', 'deal_price' => config('app.defaultCurrency')==='USD' ? 500000 : 50, 'exchange_rate' => 10000  ]
       ],
       'user' => [ 4 => [ 'role' => 'associated' ], 3 => [ 'role' => 'associated' ], 1 => [ 'role' => 'approver' ] ],
       'approval' => [ 1 => [ 'status' => 'a', 'approval_token' => 'aaa' ], 2 => [ 'status' => 'a', 'approval_token' => 'bbb' ] ],
@@ -1079,8 +1080,8 @@ class LeadsTableSeeder extends Seeder
      [
       'order' => [ 'id' => 4, 'user_id' => 9, 'index_id' => 3, 'status' => 'd', 'approval_sequence' => 0, 'in_house' => false || !config('app.showBuy') ],
       'leads' => [
-          3 => [ 'volume' => 1300, 'price' => 45, 'trading_term' => 'FOB MV', 'payment_term' => 'TT', 'base_currency_id' => 'IDR', 'base_price' => 50000, 'deal_currency_id' => 'USD', 'deal_price' => 50, 'exchange_rate' => 10000  ],
-          6 => [ 'volume' => 1800, 'price' => 55, 'trading_term' => 'FOB MV', 'payment_term' => 'TT', 'base_currency_id' => 'IDR', 'base_price' => 50000, 'deal_currency_id' => 'USD', 'deal_price' => 50, 'exchange_rate' => 10000  ]
+          3 => [ 'volume' => 1300, 'price' => 45, 'trading_term' => 'FOB MV', 'payment_term' => 'TT', 'base_currency_id' => config('app.defaultCurrency')==='USD' ? 'USD' : 'IDR', 'base_price' => config('app.defaultCurrency')==='USD' ? 50 : 500000, 'deal_currency_id' => config('app.defaultCurrency')==='USD' ? 'IDR' : 'USD', 'deal_price' => config('app.defaultCurrency')==='USD' ? 500000 : 50, 'exchange_rate' => 10000  ],
+          6 => [ 'volume' => 1800, 'price' => 55, 'trading_term' => 'FOB MV', 'payment_term' => 'TT', 'base_currency_id' => config('app.defaultCurrency')==='USD' ? 'USD' : 'IDR', 'base_price' => config('app.defaultCurrency')==='USD' ? 50 : 500000, 'deal_currency_id' => config('app.defaultCurrency')==='USD' ? 'IDR' : 'USD', 'deal_price' => config('app.defaultCurrency')==='USD' ? 500000 : 50, 'exchange_rate' => 10000  ]
       ],
       'companies' => [ 1 => [ 'cost' => 3 ] ]
      ]
@@ -1094,12 +1095,12 @@ class LeadsTableSeeder extends Seeder
       $order->companies()->attach($obj['companies']);
       if(isset($obj['approval'])) $order->approvals()->attach($obj['approval']);
    }
-
+      
     OrderNegotiation::create([
       'order_detail_id' => 1,
       'user_id' => 3,
       'volume' => 1000,
-      'base_currency_id' => 'IDR', 'base_price' => 50000, 'deal_currency_id' => 'USD', 'deal_price' => 50, 'exchange_rate' => 10000,
+      'base_currency_id' => config('app.defaultCurrency')==='USD' ? 'USD' : 'IDR', 'base_price' => config('app.defaultCurrency')==='USD' ? 50 : 500000, 'deal_currency_id' => config('app.defaultCurrency')==='USD' ? 'IDR' : 'USD', 'deal_price' => config('app.defaultCurrency')==='USD' ? 500000 : 50, 'exchange_rate' => 10000,
       'trading_term' => 'FOB MV',
       'payment_term' => 'NET30',
       'notes' => 'Initial Deal',
@@ -1108,7 +1109,7 @@ class LeadsTableSeeder extends Seeder
       'order_detail_id' => 1,
       'user_id' => 3,
       'volume' => 1000,
-      'base_currency_id' => 'IDR', 'base_price' => 50000, 'deal_currency_id' => 'USD', 'deal_price' => 50, 'exchange_rate' => 10000,
+      'base_currency_id' => config('app.defaultCurrency')==='USD' ? 'USD' : 'IDR', 'base_price' => config('app.defaultCurrency')==='USD' ? 50 : 500000, 'deal_currency_id' => config('app.defaultCurrency')==='USD' ? 'IDR' : 'USD', 'deal_price' => config('app.defaultCurrency')==='USD' ? 500000 : 50, 'exchange_rate' => 10000,
       'trading_term' => 'FOB MV',
       'payment_term' => 'TT',
       'notes' => 'Price decreased, they agreed, but need to wire as fast as possible',
