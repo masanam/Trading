@@ -104,7 +104,7 @@ class CreateLeadsTable extends Migration
 
 
             $table->integer('volume')->nullable();
-            $table->integer('price')->nullable();
+            $table->decimal('price', 20, 10)->nullable();
             $table->char('currency',3);
             $table->string('carrier_type')->nullable(); // not specified, gear, gearless, gear & gearless
             $table->string('trading_term')->nullable();
