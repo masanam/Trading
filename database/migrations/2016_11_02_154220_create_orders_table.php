@@ -91,9 +91,9 @@ class CreateOrdersTable extends Migration
             $table->string('trading_term');
             $table->string('payment_term');
             $table->char('base_currency_id',3);
-            $table->integer('base_price');
+            $table->decimal('base_price', 20, 10);
             $table->char('deal_currency_id',3);
-            $table->integer('deal_price');
+            $table->decimal('deal_price', 20, 10);
             $table->decimal('exchange_rate', 20, 10);
             $table->timestamps();
 
@@ -107,9 +107,9 @@ class CreateOrdersTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->integer('volume');
             $table->char('base_currency_id',3);
-            $table->integer('base_price');
+            $table->decimal('base_price', 20, 10);
             $table->char('deal_currency_id',3);
-            $table->integer('deal_price');
+            $table->decimal('deal_price', 20, 10);
             $table->decimal('exchange_rate', 20, 10);
             $table->string('trading_term');
             $table->string('payment_term');

@@ -16,20 +16,20 @@ class DatabaseSeeder extends Seeder
 
         $this->call(UsersTableSeeder::class);
         $this->call(CompaniesTableSeeder::class);
-        $this->call(OrderApprovalSchemesTableSeeder::class);
+        // $this->call(OrderApprovalSchemesTableSeeder::class);
         $this->call(CountriesTableSeeder::class);
-        $this->call(ConcessionTableSeeder::class);
-        $this->call(ProductTableSeeder::class);
+        // $this->call(ConcessionTableSeeder::class);
+        // $this->call(ProductTableSeeder::class);
         $this->call(PortTableSeeder::class);
-        $this->call(FactoryTableSeeder::class);
-        $this->call(IndexTableSeeder::class);
-        $this->call(LeadsTableSeeder::class);
-        $this->call(MiningLicenseTableSeeder::class);
-        $this->call(SpatialDataTableSeeder::class);
-        $this->call(SalesTargetTableSeeder::class);
-        $this->call(ContractsTableSeeder::class);
-        $this->call(ShipmentTableSeeder::class);
-        $this->call(DocumentTableSeeder::class);
+        // $this->call(FactoryTableSeeder::class);
+        // $this->call(IndexTableSeeder::class);
+        // $this->call(LeadsTableSeeder::class);
+        // $this->call(MiningLicenseTableSeeder::class);
+        // $this->call(SpatialDataTableSeeder::class);
+        // $this->call(SalesTargetTableSeeder::class);
+        // $this->call(ContractsTableSeeder::class);
+        // $this->call(ShipmentTableSeeder::class);
+        // $this->call(DocumentTableSeeder::class);
 
         Model::reguard();
     }
