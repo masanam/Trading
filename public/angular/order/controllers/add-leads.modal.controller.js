@@ -56,8 +56,7 @@ angular.module('order').controller('AddLeadsModalController', ['$uibModalInstanc
       }
       else {
         Exchange_rate.get({ buy: curr , sell: $scope.defaultCurrency }, function(res){
-          console.log(res);
-          if(res){
+          if(!res.value){
             $scope.selected.item.pivot.exchange_rate = 1;
           }else{
             $scope.selected.item.pivot.exchange_rate = res.value;
