@@ -156,7 +156,7 @@
               <a ng-if="order.id && order.status !== 'a' && order.status !== 'x'"
                 ng-if="display.buy.user_id === Authentication.user.id && order.id && !loadingNego"
                 ng-click="negoBuy()" class="pull-right">
-                Nego a
+                Nego
               </a>
             </div>
           </span>
@@ -169,7 +169,7 @@
               <a ng-if="order.id && order.status !== 'a' && order.status !== 'x'"
                 ng-if="display.sell.user_id === Authentication.user.id && order.id && !loadingNego"
                 ng-click="negoSell()" class="pull-right">
-                Nego b {{ display.sell.user_id }} || {{ Authentication.user.id }}
+                Nego
               </a>
             </div>
           </span>
