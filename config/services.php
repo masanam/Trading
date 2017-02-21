@@ -45,6 +45,15 @@ return [
         'storage_bucket' => 'coal-trade.appspot.com',
     ],
 
+    'firebase_bce' => [
+        'api_key' => 'AIzaSyCxlQjskah9WwqykW9oU3k6250HQWfhfws',
+        'auth_domain' => 'coal-trade-bce.firebaseapp.com',
+        'database_url' => 'https://coal-trade-bce.firebaseio.com',
+        'secret' => 'GYCw3qfxhS0SKtU4fwZRdceGuSqJiZfmRkjci46t',
+        'storage_bucket' => 'coal-trade-bce.appspot.com',
+        'messaging_sender_id' => '202440433886'
+    ],
+
     'firebase_dev' => [
         'api_key' => 'AIzaSyASD5vZNA-DeS93cFU8oz40nycp1CIZ3bg',
         'auth_domain' => 'coal-trade-dev.firebaseapp.com',
@@ -54,4 +63,12 @@ return [
         'messaging_sender_id' => '328150955221'
     ],
 
+    'firebase_bce_dev' => [
+        'api_key' => 'AIzaSyCA9Y_d68CnRkKtZLeqNT0GheGx0SIlljM',
+        'auth_domain' => 'coal-trade-bce-dev.firebaseapp.com',
+        'database_url' => 'https://coal-trade-bce-dev.firebaseio.com',
+        'secret' => 'eqfunIbg6UuCXf9pr80ZYs94tZQCLC0F0Utmh5OU',
+        'storage_bucket' => 'coal-trade-bce-dev.appspot.com',
+        'messaging_sender_id' => '79426855083'
+    ],
 ];
