@@ -17,7 +17,7 @@ class CreateContractsTable extends Migration
           $table->increments('id');
           $table->string('contract_no');
           $table->integer('order_id')->unsigned();
-          $table->integer('area_id')->unsigned()->nullable();
+          $table->integer('area_id')->unsigned()->nullable()->default(1);
           $table->integer('shipment_count');
           $table->string('term');
           $table->text('term_desc');
