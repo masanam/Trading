@@ -13,7 +13,7 @@ angular.module('firebaseService').factory('FirebaseService', ['firebase', '$fire
           storageBucket: 'coal-trade.appspot.com',
           messagingSenderId: '407921708335'
         };
-      } else if(Environment.env.deployment === 'bce') {
+      } else if(Environment.env.deployment === 'berau') {
         config = {
           apiKey: 'AIzaSyCxlQjskah9WwqykW9oU3k6250HQWfhfws',
           authDomain: 'coal-trade-bce.firebaseapp.com',
@@ -31,7 +31,7 @@ angular.module('firebaseService').factory('FirebaseService', ['firebase', '$fire
           storageBucket: 'coal-trade-dev.appspot.com',
           messagingSenderId: '328150955221'
         };
-      } else if(Environment.env.deployment === 'bce') {
+      } else if(Environment.env.deployment === 'berau') {
         config = {
           apiKey: 'AIzaSyCA9Y_d68CnRkKtZLeqNT0GheGx0SIlljM',
           authDomain: 'coal-trade-bce-dev.firebaseapp.com',
