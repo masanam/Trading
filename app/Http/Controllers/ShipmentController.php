@@ -43,7 +43,7 @@ class ShipmentController extends Controller
     public function index(Request $req)
     {
       $range = [];
-      $shipments = Shipment::with('contracts', 'contracts.orders', 'contracts.orders.sells', 'supplier', 'customer', 'surveyors', 'products', 'qualities.qualityDetail.qualityMetric')->where('status', 'a');
+      $shipments = Shipment::with('contracts.area', 'contracts.orders', 'contracts.orders.sells', 'supplier', 'customer', 'surveyors', 'products', 'qualities.qualityDetail.qualityMetric')->where('status', 'a');
 
       // Document Controller
       // Created by Myrtyl
@@ -59,12 +59,18 @@ class ShipmentController extends Controller
       // Myrtyl 24 Jan 2017
       // Global Search
 
+      /* Kamal 21-02-2017
+       */
       if($req->startDate) {
         $shipments->where('laycan_start','>=',$req->startDate);
       }if($req->endDate) {
         $shipments->where('laycan_end','<=',$req->endDate);
       }if($req->status) {
         $shipments->where('status',$req->status);
+      }if($req->area) {
+        $shipments->whereHas('contracts', function($q) use ($req) {
+          $q->where('area_id', $req->area);
+        });
         // return response()->json($shipments->get(), 200);
       }
 

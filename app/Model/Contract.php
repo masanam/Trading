@@ -11,6 +11,10 @@ class Contract extends Model
     return $this->belongsTo(Order::class, 'order_id');
   }
 
+  public function area() {
+    return $this->belongsTo(Area::class);
+  }
+
   public function shipments() {
     return $this->hasMany(Shipment::class);
   }

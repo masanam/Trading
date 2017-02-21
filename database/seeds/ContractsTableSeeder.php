@@ -17,6 +17,7 @@ class ContractsTableSeeder extends Seeder
         array(
           'contract_no' => '086.PJ/061/YEC/2008',
           'order_id' => 3,
+          'area_id' => 1,
           'shipment_count' => 12,
           'term' => 'term',
           'term_desc' => 'Lorem Ipsum Doloret Sit Amet',
@@ -27,6 +28,7 @@ class ContractsTableSeeder extends Seeder
         array(
           'contract_no' => '065.PJ/061/NFW/2008',
           'order_id' => 1,
+          'area_id' => 2,
           'shipment_count' => 6,
           'term' => 'spot',
           'term_desc' => 'Lorem Ipsum Doloret Sit Amet',
@@ -37,6 +39,7 @@ class ContractsTableSeeder extends Seeder
         array(
           'contract_no' => '040.PJ/061/YWX/2008',
           'order_id' => 2,
+          'area_id' => 3,
           'shipment_count' => 8,
           'term' => 'term',
           'term_desc' => 'Lorem Ipsum Doloret Sit Amet',
@@ -47,6 +50,7 @@ class ContractsTableSeeder extends Seeder
         array(
           'contract_no' => '065.PJ/061/IRN/2008',
           'order_id' => 4,
+          'area_id' => 4,
           'shipment_count' => 9,
           'term' => 'term',
           'term_desc' => 'Lorem Ipsum Doloret Sit Amet',
