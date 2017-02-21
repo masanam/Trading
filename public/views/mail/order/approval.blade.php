@@ -295,7 +295,9 @@
 
                                           <td>
                                             <p>{{ $buy->company->company_name }}</p>
+                                            @if(count($order->buys)>1)
                                             <small>Sales: {{ $buy->trader->name }}</small>
+                                            @endif
                                           </td>
 
                                           <td>
@@ -323,7 +325,9 @@
 
                                           <td>
                                             <p>{{ $sell->company->company_name }}</p>
+                                            @if(count($order->sells)>1)
                                             <small>Sales: {{ $sell->trader->name }}</small>
+                                            @endif
                                           </td>
 
                                           @if(config('app.showBuy'))
