@@ -14,6 +14,7 @@ class Company extends Model
     'company_name',
     'company_no',
     'is_affiliated',
+    'area_id',
     'phone',
     'email',
     'web',

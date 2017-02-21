@@ -101,7 +101,7 @@ class CompanyController extends Controller
 
     event(new InputEditCoalpedia(Auth::user(), $company->id, 'companies', 'create'));
 
-    return response()->json($company, 200);
+    //return response()->json($company, 200);
   }
 
   /**
