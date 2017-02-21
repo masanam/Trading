@@ -304,7 +304,7 @@
                                           </td>
 
                                           <td>
-                                            <p>{{ $buy->pivot->deal_currency }} {{ number_format($buy->pivot->deal_price, 2) }}</p>
+                                            <p>{{ $buy->pivot->deal_currency_id }} {{ number_format($buy->pivot->deal_price, 2) }}</p>
                                           </td>
                                           <td>
                                             <p>
@@ -334,7 +334,7 @@
                                           @endif
 
                                           <td>
-                                            <p>{{ $sell->pivot->deal_currency }} {{ number_format($sell->pivot->deal_price, 2) }}</p>
+                                            <p>{{ $sell->pivot->deal_currency_id }} {{ number_format($sell->pivot->deal_price, 2) }}</p>
                                           </td>
                                           <td>
                                             <p>
