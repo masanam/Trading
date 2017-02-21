@@ -29,8 +29,13 @@ class QualityController extends Controller
        * hasapu 25-01-2017
        * kamal 7-02-2017 if shipement_id
        */
-      if($req->shipment_id) $quality = Quality::with('qualityDetail','qualityDetail.qualityMetric')->where('shipment_id', $req->shipment_id)->first();
+      if($req->shipment_id) {
+        $quality = Quality::with('qualityDetail','qualityDetail.qualityMetric')->where('shipment_id', $req->shipment_id);
+        if($req->type) $quality->where('type',$req->type);
+        $quality = $quality->first();
+      }
       else $quality = Shipment::with('contracts','customer','qualities.qualityDetail.qualityMetric','contracts.orders.leads')->get();
+
 
       return response()->json($quality, 200);
     }
@@ -63,10 +68,13 @@ class QualityController extends Controller
     public function checkAvailableQuality(Request $req){
       if(isset($req->quality['shipment_id'])) $shipment_id = $req->quality['shipment_id'];
       else $shipment_id = null;
-      $data = Quality::where('shipment_id',$shipment_id)->where('status', 'a')->first();
+      if(!isset($req->quality['type'])) $type = null;
+      else $type = $req->quality['type'];
+      $data = Quality::where('shipment_id',$shipment_id)->where('status', 'a')->where('type',$req->quality['type'])->first();
       if (!$data) {
         $data = new Quality();
         $data->shipment_id = $req->quality['shipment_id'];
+        $data->type = $req->quality['type'];
         $data->status = 'a';
         $data->save();
       }
