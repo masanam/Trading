@@ -12,7 +12,7 @@ angular.module('lead').controller('LeadController', ['$scope', '$state', '$state
     $scope.destinationBy = Environment.destinationBy;
     $scope.productQuality = Environment.productQuality;
 
-    $scope.today = $filter('date')(Date.now(), 'yyyy-MM-dd');
+    $scope.today = new Date();
 
     $scope.countries = Country.query();
     $scope.selected = {};
