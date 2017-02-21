@@ -92,6 +92,20 @@ class Order extends Model
     else $this->average_buy_price = 0;
   }
 
+  public function totalPrice() {
+    $this->total_buy_price = $this->total_sell_price = $this->total_buy_volume = $this->total_sell_volume = 0;
+
+    foreach($this->buys as &$buy){
+      $this->total_buy_price += $buy->pivot->base_price * $buy->pivot->volume;
+      $this->total_buy_volume += $buy->pivot->volume;
+    }
+
+    foreach($this->sells as &$sell){
+      $this->total_sell_price += $sell->pivot->base_price * $sell->pivot->volume;
+      $this->total_sell_volume += $sell->pivot->volume;
+    }
+  }
+
   public function earliestLaycan(){
     $this->laycan_start = min($this->buys->min('laycan_start'), $this->sells->min('laycan_start'));
   }

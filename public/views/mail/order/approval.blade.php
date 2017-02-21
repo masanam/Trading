@@ -272,9 +272,18 @@
                               <table class="table-bordered" border="0" cellpadding="0" cellspacing="0">
                                 <tbody>
                                   <tr>
-                                    <td align="left">ORD-{{ str_pad($order->id, 4, '0', STR_PAD_LEFT) }}</td>
-                                    <td align="center">{{ $order->trader->name }}</td>
-                                    <td align="right">{{ date('d M y', strtotime($order->created_at)) }}</td>
+                                    <td align="left">
+                                      Order ID<br>
+                                      #{{ str_pad($order->id, 4, '0', STR_PAD_LEFT) }}
+                                    </td>
+                                    <td align="center">
+                                      Requestor<br>
+                                      {{ $order->trader->name }}
+                                    </td>
+                                    <td align="right">
+                                      Order Created<br>
+                                      {{ date('d M y', strtotime($order->created_at)) }}
+                                    </td>
                                   </tr>
 
                                   <tr>
@@ -286,7 +295,7 @@
 
                                           <td>
                                             <p>{{ $buy->company->company_name }}</p>
-                                            <small>{{ $buy->trader->name }}</small>
+                                            <small>Sales: {{ $buy->trader->name }}</small>
                                           </td>
 
                                           <td>
@@ -296,57 +305,50 @@
 
                                           <td>
                                             <p>{{ $buy->pivot->deal_currency }} {{ number_format($buy->pivot->deal_price, 2) }}</p>
+                                          </td>
                                           <td>
-                                            <p>{{ $buy->pivot->volume }} mt</p>
+                                            <p>
+                                              Volume:
+                                              {{ $buy->pivot->volume }} mt
+                                            </p>
                                           </td>
                                         </tr>
                                         @endforeach
 
                                         @foreach ($order->sells as $sell)
                                         <tr>
+                                          @if(config('app.showBuy'))
                                           <td>SELL</td>
+                                          @endif
 
                                           <td>
                                             <p>{{ $sell->company->company_name }}</p>
-                                            <small>{{ $sell->trader->name }}</small>
+                                            <small>Sales: {{ $sell->trader->name }}</small>
                                           </td>
 
+                                          @if(config('app.showBuy'))
                                           <td>
                                             <p>{{ $sell->pivot->trading_term }}</p>
                                             <p>{{ $sell->pivot->payment_term }}</p>
                                           </td>
+                                          @endif
 
                                           <td>
                                             <p>{{ $sell->pivot->deal_currency }} {{ number_format($sell->pivot->deal_price, 2) }}</p>
+                                          </td>
                                           <td>
-                                            <p>{{ $sell->pivot->volume }} mt</p>
+                                            <p>
+                                              @if($sell->pivot->volume < 10000)
+                                              Volume:
+                                              @else
+                                              Tonnage:
+                                              @endif
+                                              {{ $sell->pivot->volume }} MT
+                                            </p>
                                           </td>
                                         </tr>
                                         @endforeach
                                       </table>
-                                    </td>
-                                  </tr>
-
-                                  <tr align="center">
-                                    <td>
-                                      <p>Typical Quality</p>
-                                      @if (count($order->buys) > 0)
-                                      <p style="font-size:14pt">{{ $order->buys[0]->typical_quality }}</p>
-                                      @elseif (count($order->sells) > 0)
-                                      <p style="font-size:14pt">{{ $order->sells[0]->typical_quality }}</p>
-                                      @endif
-                                    </td>
-                                    <td>
-                                      <p>{{ $index_name }}</p>
-                                      <p style="font-size:14pt">
-                                        {{ config('app.defaultCurrency') }}
-                                        {{ $index_price }}
-                                      </p>
-                                    </td>
-                                    <td>
-                                      <p>LayCan Period</p>
-                                      <p style="font-size:10pt">{{ date('d M y', strtotime($order->laycan_start)) }}<br>
-                                      {{ date('d M y', strtotime($order->laycan_end)) }}</p>
                                     </td>
                                   </tr>
 
@@ -371,18 +373,43 @@
                                   @elseif (count($order->buys) > 0 || !count($order->sells))
                                   <tr align="center">
                                     <td colspan="3">
-                                      <p>BUY</p>
-                                      <p style="font-size:14pt">{{ config('app.defaultCurrency') }} {{ number_format($order->average_buy_price, 2) }}</p>
+                                      <p>TOTAL PRICE</p>
+                                      <p style="font-size:14pt">{{ config('app.defaultCurrency') }} {{ number_format($order->total_buy_price, 2) }}</p>
+                                      <p>{{ number_format($order->total_buy_volume, 0) }} MT</p>
                                     </td>
                                   </tr>
                                   @elseif (count($order->sells) > 0 || !count($order->buys))
                                   <tr align="center">
                                     <td colspan="3">
-                                      <p>SELL</p>
-                                      <p style="font-size:14pt">{{ config('app.defaultCurrency') }} {{ number_format($order->average_sell_price, 2) }}</p>
+                                      <p>TOTAL PRICE</p>
+                                      <p style="font-size:14pt">{{ config('app.defaultCurrency') }} {{ number_format($order->total_sell_price, 2) }}</p>
+                                      <p>{{ number_format($order->total_sell_volume, 0) }} MT</p>
                                     </td>
                                   </tr>
                                   @endif
+
+                                  <tr align="center">
+                                    <td>
+                                      <p>Typical Quality</p>
+                                      @if (count($order->buys) > 0)
+                                      <p style="font-size:14pt">{{ $order->buys[0]->typical_quality }}</p>
+                                      @elseif (count($order->sells) > 0)
+                                      <p style="font-size:14pt">{{ $order->sells[0]->typical_quality }}</p>
+                                      @endif
+                                    </td>
+                                    <td>
+                                      <p>{{ $index_name }}</p>
+                                      <p style="font-size:14pt">
+                                        {{ config('app.defaultCurrency') }}
+                                        {{ $index_price }}
+                                      </p>
+                                    </td>
+                                    <td>
+                                      <p>LayCan Period</p>
+                                      <p style="font-size:10pt">{{ date('d M y', strtotime($order->laycan_start)) }}<br>
+                                      {{ date('d M y', strtotime($order->laycan_end)) }}</p>
+                                    </td>
+                                  </tr>
 
                                   <tr align="center">
                                     <td colspan=3>

@@ -193,6 +193,7 @@ class OrderController extends Controller
     // find all averages of the order details.
     $order->averageSell();
     $order->averageBuy();
+    $order->totalPrice();
 
     // get latest GC NEWC price
     $index = $this->indexPrice();
