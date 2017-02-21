@@ -72,7 +72,7 @@ class Order extends Model
     $price = $volume = 0;
 
     foreach($this->sells as &$sell){
-      $price += $sell->pivot->price * $sell->pivot->volume;
+      $price += $sell->pivot->base_price * $sell->pivot->volume;
       $volume += $sell->pivot->volume;
     }
 
@@ -84,7 +84,7 @@ class Order extends Model
     $price = $volume = 0;
 
     foreach($this->buys as &$buy){
-      $price += $buy->pivot->price * $buy->pivot->volume;
+      $price += $buy->pivot->base_price * $buy->pivot->volume;
       $volume += $buy->pivot->volume;
     }
 

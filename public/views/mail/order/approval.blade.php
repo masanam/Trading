@@ -300,23 +300,40 @@
                                       {{ date('d M y', strtotime($order->laycan_end)) }}</p>
                                     </td>
                                   </tr>
+
+                                  @if (count($order->buys) > 0 && count($order->sells) > 0)
                                   <tr align="center">
                                     <td>
                                       <p>BUY</p>
-                                      <p style="font-size:18pt">$ {{ number_format($order->average_buy_price, 2) }}</p>
+                                      <p style="font-size:18pt">{{ config('app.defaultCurrency') }} {{ number_format($order->average_buy_price, 2) }}</p>
                                       <small>{{ round(($order->average_buy_price-$index_price)*100 / $index_price, 2) }} %</small>
                                     </td>
                                     <td>
                                       <p>MARGIN</p>
-                                      <p style="font-size:18pt">$ {{ $order->average_sell_price - $order->average_buy_price }}</p>
+                                      <p style="font-size:14pt">{{ config('app.defaultCurrency') }} {{ $order->average_sell_price - $order->average_buy_price }}</p>
                                       <small></small>
                                     </td>
                                     <td>
                                       <p>SELL</p>
-                                      <p style="font-size:18pt">$ {{ number_format($order->average_sell_price, 2) }}</p>
+                                      <p style="font-size:14pt">{{ config('app.defaultCurrency') }} {{ number_format($order->average_sell_price, 2) }}</p>
                                       <small>{{ round(($order->average_sell_price-$index_price)*100 / $index_price, 2) }} %</small>
                                     </td>
                                   </tr>
+                                  @elseif (count($order->buys) > 0 || !count($order->sells))
+                                  <tr align="center">
+                                    <td colspan="3">
+                                      <p>BUY</p>
+                                      <p style="font-size:14pt">{{ config('app.defaultCurrency') }} {{ number_format($order->average_buy_price, 2) }}</p>
+                                    </td>
+                                  </tr>
+                                  @elseif (count($order->sells) > 0 || !count($order->buys))
+                                  <tr align="center">
+                                    <td colspan="3">
+                                      <p>SELL</p>
+                                      <p style="font-size:14pt">{{ config('app.defaultCurrency') }} {{ number_format($order->average_sell_price, 2) }}</p>
+                                    </td>
+                                  </tr>
+                                  @endif
 
                                   <tr>
                                     <td colspan=3>
@@ -335,7 +352,7 @@
                                             <p>{{ $buy->pivot->payment_term }}</p>
                                           </td>
 
-                                          <td>$ {{ number_format($buy->pivot->price, 2) }}</p>
+                                          <td>{{ $buy->pivot->deal_currency }} {{ number_format($buy->pivot->deal_price, 2) }}</p>
                                           <td>{{ $buy->pivot->volume }} mt</p>
                                           </td>
                                         </tr>
@@ -355,7 +372,7 @@
                                             <p>{{ $sell->pivot->payment_term }}</p>
                                           </td>
 
-                                          <td>$ {{ number_format($sell->pivot->price, 2) }}</p>
+                                          <td>{{ $sell->pivot->deal_currency }} {{ number_format($sell->pivot->deal_price, 2) }}</p>
                                           <td>{{ $sell->pivot->volume }} mt</p>
                                           </td>
                                         </tr>
