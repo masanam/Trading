@@ -144,6 +144,13 @@ class OrderController extends Controller
     return response()->json($funnel,200);
   }
 
+  private function getApproverByToken($order, $token){
+    foreach($order->approvals as $a){
+      if($a->pivot->approval_token == $token) return $a;
+    }
+    return false;
+  }
+
   /**
    * Check if current order CAN stage the lead
    *
@@ -817,10 +824,14 @@ class OrderController extends Controller
     // or using the JWT token.
 
     // if using token, get the specified approving user
-    if($req->approval_token) $user = $order->getApproverByToken($req->approval_token);
+    if($req->approval_token) $user = $this->getApproverByToken($order, $req->approval_token);
     else {  // or simply load the user if using Auth only.
       $user = JWTAuth::parseToken()->authenticate();
       $this->authorize('approve', $order);
+    }
+
+    if(!$user){
+      return response()->json([ 'message' => 'User Approval to this order not found' ], 400);
     }
 
     //jika status == reject, dan reject reason !=NULL maka status akan berubah dan mencatat reason
@@ -852,7 +863,8 @@ class OrderController extends Controller
     if($req->status === 'a') $this->sequenceApproval($order);
     else $this->removeUpperAppr($order);
 
-    return $this->show($id, $req);
+    if($req->approval_token) return 'Your approval has been recorded! (you can revisit the email if you change mind)';
+    else return $this->show($id, $req);
   }
 
   /**
