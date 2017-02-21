@@ -39,6 +39,7 @@ angular.module('coalpedia').controller('CompanyController', ['$scope', '$statePa
       });
 
       modalInstance.result.then(function (company) {
+        console.log(company);
         $scope.selected.company = company;
         $scope.companies.push(company);
       }, function () {
