@@ -276,23 +276,72 @@
                                     <td align="center">{{ $order->trader->name }}</td>
                                     <td align="right">{{ date('d M y', strtotime($order->created_at)) }}</td>
                                   </tr>
+
                                   <tr>
                                     <td colspan=3>
-                                      Reason: {{ $order->request_reason }}
+                                      <table border="0" cellpadding="0" cellspacing="0" class="table-bordered">
+                                        @foreach ($order->buys as $buy)
+                                        <tr>
+                                          <td>BUY</td>
+
+                                          <td>
+                                            <p>{{ $buy->company->company_name }}</p>
+                                            <small>{{ $buy->trader->name }}</small>
+                                          </td>
+
+                                          <td>
+                                            <p>{{ $buy->pivot->trading_term }}</p>
+                                            <p>{{ $buy->pivot->payment_term }}</p>
+                                          </td>
+
+                                          <td>
+                                            <p>{{ $buy->pivot->deal_currency }} {{ number_format($buy->pivot->deal_price, 2) }}</p>
+                                          <td>
+                                            <p>{{ $buy->pivot->volume }} mt</p>
+                                          </td>
+                                        </tr>
+                                        @endforeach
+
+                                        @foreach ($order->sells as $sell)
+                                        <tr>
+                                          <td>SELL</td>
+
+                                          <td>
+                                            <p>{{ $sell->company->company_name }}</p>
+                                            <small>{{ $sell->trader->name }}</small>
+                                          </td>
+
+                                          <td>
+                                            <p>{{ $sell->pivot->trading_term }}</p>
+                                            <p>{{ $sell->pivot->payment_term }}</p>
+                                          </td>
+
+                                          <td>
+                                            <p>{{ $sell->pivot->deal_currency }} {{ number_format($sell->pivot->deal_price, 2) }}</p>
+                                          <td>
+                                            <p>{{ $sell->pivot->volume }} mt</p>
+                                          </td>
+                                        </tr>
+                                        @endforeach
+                                      </table>
                                     </td>
                                   </tr>
+
                                   <tr align="center">
-                                    <td style="font-size:18pt">
+                                    <td>
                                       <p>Typical Quality</p>
                                       @if (count($order->buys) > 0)
-                                      <p style="font-size:18pt">{{ $order->buys[0]->typical_quality }}</p>
+                                      <p style="font-size:14pt">{{ $order->buys[0]->typical_quality }}</p>
                                       @elseif (count($order->sells) > 0)
-                                      <p style="font-size:18pt">{{ $order->sells[0]->typical_quality }}</p>
+                                      <p style="font-size:14pt">{{ $order->sells[0]->typical_quality }}</p>
                                       @endif
                                     </td>
                                     <td>
-                                      <p>GC NEWC</p>
-                                      <p style="font-size:18pt">{{ $index_price }}</p>
+                                      <p>{{ $index_name }}</p>
+                                      <p style="font-size:14pt">
+                                        {{ config('app.defaultCurrency') }}
+                                        {{ $index_price }}
+                                      </p>
                                     </td>
                                     <td>
                                       <p>LayCan Period</p>
@@ -335,51 +384,12 @@
                                   </tr>
                                   @endif
 
-                                  <tr>
+                                  <tr align="center">
                                     <td colspan=3>
-                                      <table border="0" cellpadding="0" cellspacing="0" class="table-bordered">
-                                        @foreach ($order->buys as $buy)
-                                        <tr>
-                                          <td>BUY</td>
-
-                                          <td>
-                                            <p>{{ $buy->company->company_name }}</p>
-                                            <small>{{ $buy->trader->name }}</small>
-                                          </td>
-
-                                          <td>
-                                            <p>{{ $buy->pivot->trading_term }}</p>
-                                            <p>{{ $buy->pivot->payment_term }}</p>
-                                          </td>
-
-                                          <td>{{ $buy->pivot->deal_currency }} {{ number_format($buy->pivot->deal_price, 2) }}</p>
-                                          <td>{{ $buy->pivot->volume }} mt</p>
-                                          </td>
-                                        </tr>
-                                        @endforeach
-
-                                        @foreach ($order->sells as $sell)
-                                        <tr>
-                                          <td>SELL</td>
-
-                                          <td>
-                                            <p>{{ $sell->company->company_name }}</p>
-                                            <small>{{ $sell->trader->name }}</small>
-                                          </td>
-
-                                          <td>
-                                            <p>{{ $sell->pivot->trading_term }}</p>
-                                            <p>{{ $sell->pivot->payment_term }}</p>
-                                          </td>
-
-                                          <td>{{ $sell->pivot->deal_currency }} {{ number_format($sell->pivot->deal_price, 2) }}</p>
-                                          <td>{{ $sell->pivot->volume }} mt</p>
-                                          </td>
-                                        </tr>
-                                        @endforeach
-                                      </table>
+                                      Reason: {{ $order->request_reason }}
                                     </td>
                                   </tr>
+                                  
                                 </tbody>
                               </table>
                             </td></tr>
@@ -389,12 +399,12 @@
                                   <tbody>
                                     <tr>
                                       <td class="btn btn-danger">
-                                        <a href="http://coaltrade.volantech.io/api/order/{{ $order->id }}/approval?status=r&approval_token={{ $approval_token }}">
+                                        <a href="{{ config('app.baseUrl') }}/api/orders/{{ $order->id }}/approval?status=r&approval_token={{ $approval_token }}">
                                           Reject
                                         </a>
                                       </td>
                                       <td class="btn btn-primary">
-                                        <a href="http://coaltrade.volantech.io/api/order/{{ $order->id }}/approval?status=a&approval_token={{ $approval_token }}">
+                                        <a href="{{ config('app.baseUrl') }}/api/orders/{{ $order->id }}/approval?status=a&approval_token={{ $approval_token }}">
                                           Approve
                                         </a>
                                       </td>
