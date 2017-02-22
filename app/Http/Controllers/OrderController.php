@@ -231,8 +231,19 @@ class OrderController extends Controller
     // $response = Curl::to(config('services.firebase.database_url') . 'notification/'. $user)
     //     ->withData($notification)
     //     ->post();
-
-    $firebaseClient = new FirebaseLib(config('services.firebase_dev.database_url'), config('services.firebase_dev.secret'));
+    if(config('app.env') == 'production') {
+      if(config('app.deployment') == 'bib') {
+        $firebaseClient = new FirebaseLib(config('services.firebase.database_url'), config('services.firebase.secret'));
+      } else if(config('app.deployment') == 'bce') {
+        $firebaseClient = new FirebaseLib(config('services.firebase_bce.database_url'), config('services.firebase_bce.secret'));
+      }
+    } else {
+      if(config('app.deployment') == 'bib') {
+        $firebaseClient = new FirebaseLib(config('services.firebase_dev.database_url'), config('services.firebase_dev.secret'));
+      } else if(config('app.deployment') == 'bce') {
+        $firebaseClient = new FirebaseLib(config('services.firebase_bce_dev.database_url'), config('services.firebase_bce_dev.secret'));
+      }
+    }
     $path = 'notification/' . $user;
     $res = $firebaseClient->push($path, $notification);
   }
@@ -435,7 +446,7 @@ class OrderController extends Controller
    * @return \Illuminate\Http\Response
    */
   public function index(Request $req)
-  {    
+  {
     if($req->funnel == true) return $this->funnel();
 
     //DB::enableQueryLog();
@@ -640,8 +651,8 @@ class OrderController extends Controller
    * @return \Illuminate\Http\Response
    */
   public function show($id, Request $req = null)
-  {    
-    $order = Order::with('trader', 'users', 'sells', 'buys', 
+  {
+    $order = Order::with('trader', 'users', 'sells', 'buys',
         'buys.trader', 'sells.trader', 'additional_cost',
         'approvals', 'approvals.roles', 'approvalLogs',
         'sells.company', 'buys.company', 'sells.factory', 'contracts')
@@ -663,6 +674,14 @@ class OrderController extends Controller
     $order->averageBuy();
 
     if (isset($req)) {
+      // Set approval_status for mobile apps
+
+      foreach($order->approvals as $approval){
+        if($approval->id === Auth::user()->id){
+          $order->approval_status = $approval->pivot->status;
+        }
+      }
+
       // IF envelope is requested, get all necessary components
       if($req->envelope == "true"){
         // dd($req);
@@ -795,16 +814,14 @@ class OrderController extends Controller
       $this->authorize('approve', $order);
     }
 
-
-
     //jika status == reject, dan reject reason !=NULL maka status akan berubah dan mencatat reason
     if($req->status === 'r') {
-      if($req->reject_reason) {
+      //if($req->reject_reason) {
       // put the approval to Log
       $order->approvalLogs()->attach([ $user->id => [ 'status' => $req->status , 'reason' => $req->reject_reason] ]);
       // put the user's approval status to replace old one
       $order->approvals()->sync([ $user->id => [ 'status' => $req->status, 'reason' => $req->reject_reason] ], false);
-      }
+      //}
     }
     else {
       // put the approval to Log

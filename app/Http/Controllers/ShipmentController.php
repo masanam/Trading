@@ -43,7 +43,7 @@ class ShipmentController extends Controller
     public function index(Request $req)
     {
       $range = [];
-      $shipments = Shipment::with('contracts', 'contracts.orders', 'contracts.orders.sells', 'supplier', 'customer', 'surveyors', 'products', 'qualities.qualityDetail.qualityMetric')->where('status', 'a');
+      $shipments = Shipment::with('contracts.area', 'contracts.orders', 'contracts.orders.sells', 'supplier', 'customer', 'surveyors', 'products', 'qualities.qualityDetail.qualityMetric')->where('status', 'a');
 
       // Document Controller
       // Created by Myrtyl
@@ -59,19 +59,48 @@ class ShipmentController extends Controller
       // Myrtyl 24 Jan 2017
       // Global Search
 
-      if($req->q){
-        $param = $req->q;
-        $shipments = $shipments->where(function($query) use ($param){
-          return $query->whereHas('contracts', function($q) use ($param) {
-              $q->whereRaw('`contract_no` LIKE "%'.$param.'%"');
-            })
-            ->orwhereHas('supplier', function($q) use ($param) {
-              $q->whereRaw('`company_name` LIKE "%'.$param.'%"');
-            })
-            ->orWhereRaw('laycan_start LIKE "%'.$param.'%"')
-            ->orWhereRaw('laycan_end LIKE "%'.$param.'%"')
-            ->orWhereRaw('shipment_no LIKE "%'.$param.'%"');
+      /* Kamal 21-02-2017
+       */
+      if($req->startDate) {
+        $shipments->where('laycan_start','>=',$req->startDate);
+      }if($req->endDate) {
+        $shipments->where('laycan_end','<=',$req->endDate);
+      }if($req->status) {
+        $shipments->where('status',$req->status);
+      }if($req->area) {
+        $shipments->whereHas('contracts', function($q) use ($req) {
+          $q->where('area_id', $req->area);
         });
+        // return response()->json($shipments->get(), 200);
+      }
+
+      if($req->q){
+        if($req->blending){
+          $param = $req->q;
+          $shipments = $shipments->where(function($query) use ($param){
+            return $query->whereHas('customer', function($q) use ($param) {
+                $q->whereRaw('`company_name` LIKE "%'.$param.'%"');
+              })
+              ->orWhereRaw('laycan_start LIKE "%'.$param.'%"')
+              ->orWhereRaw('laycan_end LIKE "%'.$param.'%"')
+              ->orWhereRaw('vessel LIKE "%'.$param.'%"')
+              ->orWhereRaw('volume LIKE "%'.$param.'%"');
+          });
+        }
+        else{
+          $param = $req->q;
+          $shipments = $shipments->where(function($query) use ($param){
+            return $query->whereHas('contracts', function($q) use ($param) {
+                $q->whereRaw('`contract_no` LIKE "%'.$param.'%"');
+              })
+              ->orwhereHas('supplier', function($q) use ($param) {
+                $q->whereRaw('`company_name` LIKE "%'.$param.'%"');
+              })
+              ->orWhereRaw('laycan_start LIKE "%'.$param.'%"')
+              ->orWhereRaw('laycan_end LIKE "%'.$param.'%"')
+              ->orWhereRaw('shipment_no LIKE "%'.$param.'%"');
+          });
+        }
       }
 
       if($req->scheduled) {
