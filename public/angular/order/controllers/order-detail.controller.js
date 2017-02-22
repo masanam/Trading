@@ -182,8 +182,7 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
             $scope.order.sells = res.sells;
             negotiation.created_at = new Date();
             $scope.display.sell.pivot.negotiations.push(negotiation);            
-            $scope.display.sell.pivot = res.sells[0].pivot;
-            console.log($scope.display.sell);
+            $scope.display.sell.pivot = res.sells[0].pivot;            
           }, function (res){
             $scope.loadingNego = false;
             alert(res.data.message + '. Try again with acceptable value!');
@@ -293,10 +292,19 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
         windowClass: 'xl-modal',
         templateUrl: './angular/order/views/_add-cost.modal.html',
         controller: 'AddCostModalController',
-        scope: $scope
+        resolve: {
+          additional: new Order(),
+          additionals: function (){ return angular.copy($scope.order.additional_cost); }
+        }
+        // scope: $scope
       });
 
-      modalInstance.result.then(function(res){
+      // modalInstance.result.finally(function(res){
+      //   console.log(res);
+      // });
+
+
+      modalInstance.result.then(function(res){        
         if(!$scope.order.additional_cost) $scope.order.additional_cost = [];
 
         angular.extend($scope.order.additional_cost, res);
@@ -312,12 +320,12 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
         else {
 
         }
-        $scope.totalAdditional = 0;
         $scope.total();
       });
     };
-    $scope.totalAdditional = 0;
+
     $scope.total = function(){      
+      $scope.totalAdditional = 0;
       var i;      
       for(i=0;i<$scope.order.additional_cost.length;i++){
         $scope.totalAdditional += $scope.order.additional_cost[i].cost;
