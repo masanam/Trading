@@ -93,7 +93,7 @@ class UsersTableSeeder extends Seeder
         Role::create(['id' => 19,   'role' => 'sales']);
 		    Role::create(['id' => 20,   'role' => 'marketing']);
 
-        // SPECIFIC APPROVAL ROLES
+        // SPECIFIC APPROVAL Berau ROLES
         Role::create(['id' => 21,   'role' => 'cmo']);
         Role::create(['id' => 22,   'role' => 'trade-manager-area-1']);
         Role::create(['id' => 23,   'role' => 'trade-manager-area-2']);
@@ -102,12 +102,16 @@ class UsersTableSeeder extends Seeder
         Role::create(['id' => 26,   'role' => 'trade-supervisor']);
         Role::create(['id' => 27,   'role' => 'general-manager']);
 
+        // SPECIFIC APPROVAL BIB ROLES
+        Role::create(['id' => 28,   'role' => 'sales-manager']);
+        Role::create(['id' => 29,   'role' => 'trading-head']);        
+
         User::find(1)->roles()->attach([1, 2, 11]); // Pras: root, admin, executive
         User::find(2)->roles()->attach(21); // Martin: cmo
         User::find(3)->roles()->attach(21); // Aryo: cmo
         User::find(4)->roles()->attach(21); // Fahmi: cmo
         User::find(5)->roles()->attach(27); // Gio: General Manager
-	      User::find(6)->roles()->attach(27); // Yudhi: General Manager
+        User::find(6)->roles()->attach(27); // Yudhi: General Manager
         User::find(7)->roles()->attach(22); // Rori: trade-manager-area-1
         User::find(8)->roles()->attach(23); // Andez: trade-manager-area-2
         User::find(9)->roles()->attach(15); // Kamal: trader

@@ -14,6 +14,7 @@ class OrderApprovalSchemesTableSeeder extends Seeder
      */
     public function run()
     {
+      if(config('app.deployment') == 'berau') {
         OrderApprovalScheme::create([
           'id' => 1,
           'order_approval_scheme_name' => 'Area 1 Trade Approval Sequence',
@@ -44,6 +45,18 @@ class OrderApprovalSchemesTableSeeder extends Seeder
           ['order_approval_scheme_id' => 2,'sequence' => 2,'role_id' => 21, 'approval_scheme' => 'a'], // cmo, all
           ['order_approval_scheme_id' => 2,'sequence' => 3,'role_id' => 11, 'approval_scheme' => 'a'], // ceo, all*/
         ];
+      }else if(config('app.deployment') == 'bib') {
+        OrderApprovalScheme::create([
+          'id' => 3,
+          'order_approval_scheme_name' => 'Bib Approval Sequence'
+        ]);
+
+        $seq = [                  
+          ['order_approval_scheme_id' => 3,'sequence' => 1,'role_id' => 28, 'approval_scheme' => 'o'], 
+          ['order_approval_scheme_id' => 3,'sequence' => 2,'role_id' => 29, 'approval_scheme' => 'o'], 
+          ['order_approval_scheme_id' => 3,'sequence' => 3,'role_id' => 11, 'approval_scheme' => 'o'], 
+        ];
+      }
 
         foreach($seq as $s) OrderApprovalSchemeSequence::create($s);
     }
