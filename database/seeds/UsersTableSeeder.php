@@ -40,23 +40,16 @@ class UsersTableSeeder extends Seeder
             // [ 'name' => 'Hilla', 'email' => 'hilla.sholihah@sinarmasmining.com', 'title' => 'MDP', 'image' => './images/default.png', 'phone'=> '1234567890', 'role'=>'user', 'manager_id'=>7],
             // [ 'name' => 'Fahmi Andrian', 'email' => 'fahmi.andrian@sinarmasmining.com', 'title' => 'MDP', 'image' => './images/default.png', 'phone'=> '1234567890', 'role'=>'user', 'manager_id'=>12],
 
-            [ 'id' => 1, 'name' => 'Prasetyo Nugraha Gema', 'email' => 'pras@volantech.io', 'title' => 'Admin', 'image' => './images/default.png', 'phone'=> '+6281517051234', 'employee_no'=>'VTI1', 'manager_id'=>null],
-            [ 'id' => 2, 'name' => 'Yudhi Saputra Intan', 'email' => 'yudhi.saputra@beraucoal.co.id', 'title' => 'Marketing & Sales Adm. Superintendence', 'image' => './images/default.png', 'phone'=> '1234567890', 'employee_no'=>'EMP-123', 'manager_id'=>4],
-            [ 'id' => 3, 'name' => 'Rory Surya Perdana', 'email' => 'rori@beraucoal.co.id', 'title' => 'Marketing Researcher Sr. Specialist', 'image' => './images/default.png', 'phone'=> '1234567890', 'employee_no'=>'EMP-123', 'manager_id'=>4],
-            [ 'id' => 4, 'name' => 'Supandri Yaman', 'email' => 'andri@beraucoal.co.id', 'title' => 'Dept. Head Marketing & Sales Adm. Supp.', 'image' => './images/default.png', 'phone'=> '1234567890', 'employee_no'=>'EMP-123', 'manager_id'=>null],
-            [ 'id' => 5, 'name' => 'Andry Octavianus', 'email' => 'andri.o@beraucoal.co.id', 'title' => 'Sales Specialist Area 3', 'image' => './images/default.png', 'phone'=> '1234567890', 'employee_no'=>'EMP-123', 'manager_id'=>null],
-
-
-            // [ 'name' => 'Prasetyo Nugraha Gema', 'email' => 'pras@volantech.io', 'title' => 'Admin', 'image' => './images/default.png', 'phone'=> '1234567890', 'employee_no'=>'EMP-123', 'manager_id'=>null],
-            // [ 'name' => 'Martin', 'email' => 'martin@volantech.io', 'title' => 'Admin', 'image' => './images/default.png', 'phone'=> '1234567890', 'employee_no'=>'EMP-123', 'manager_id'=>1],
-            // [ 'name' => 'Aryo Pradipta Gema', 'email' => 'aryo@volantech.io', 'title' => 'Admin', 'image' => './images/default.png', 'phone'=> '1234567890', 'employee_no'=>'EMP-123', 'manager_id'=>1],
-            // [ 'name' => 'Fahmi', 'email' => 'fahmi@volantech.io', 'title' => 'Admin', 'image' => './images/default.png', 'phone'=> '1234567890', 'employee_no'=>'EMP-123', 'manager_id'=>1],
-            // [ 'name' => 'Giovanny Sientoro', 'email' => 'giovanny.sientoro@borneo-indobara.com', 'title' => 'Supervisor', 'image' => './images/default.png', 'phone'=> '1234567890', 'employee_no'=>'EMP-123', 'manager_id'=>2],
-            // [ 'name' => 'Yudhi', 'email' => 'yudhi@berau.com', 'title' => 'Scheduler', 'image' => './images/default.png', 'phone'=> '1234567890', 'employee_no'=>'EMP-123', 'manager_id'=>3],
-            // [ 'name' => 'Rori', 'email' => 'rori@berau.com', 'title' => 'Intel', 'image' => './images/default.png', 'phone'=> '1234567890', 'employee_no'=>'EMP-123', 'manager_id'=>5],
-            // [ 'name' => 'Andez', 'email' => 'andez@volantech.io', 'title' => 'Supervisor', 'image' => './images/default.png', 'phone'=> '1234567890', 'employee_no'=>'EMP-123', 'manager_id'=>6],
-            // [ 'name' => 'Kamal', 'email' => 'kamal@volantech.io', 'title' => 'Staff', 'image' => './images/default.png', 'phone'=> '1234567890', 'employee_no'=>'EMP-123', 'manager_id'=>7],
-            // [ 'name' => 'Sakti', 'email' => 'hasapu@volantech.io', 'title' => 'Staff', 'image' => './images/default.png', 'phone'=> '1234567890', 'employee_no'=>'EMP-123', 'manager_id'=>8],
+            [ 'name' => 'Prasetyo Nugraha Gema', 'email' => 'pras@volantech.io', 'title' => 'Admin', 'image' => './images/default.png', 'phone'=> '1234567890', 'employee_no'=>'EMP-123', 'manager_id'=>null],
+            [ 'name' => 'Martin', 'email' => 'martin@volantech.io', 'title' => 'Admin', 'image' => './images/default.png', 'phone'=> '1234567890', 'employee_no'=>'EMP-123', 'manager_id'=>1],
+            [ 'name' => 'Aryo Pradipta Gema', 'email' => 'aryo@volantech.io', 'title' => 'Admin', 'image' => './images/default.png', 'phone'=> '1234567890', 'employee_no'=>'EMP-123', 'manager_id'=>1],
+            [ 'name' => 'Fahmi', 'email' => 'fahmi@volantech.io', 'title' => 'Admin', 'image' => './images/default.png', 'phone'=> '1234567890', 'employee_no'=>'EMP-123', 'manager_id'=>1],
+            [ 'name' => 'Giovanny Sientoro', 'email' => 'giovanny.sientoro@borneo-indobara.com', 'title' => 'Supervisor', 'image' => './images/default.png', 'phone'=> '1234567890', 'employee_no'=>'EMP-123', 'manager_id'=>2],
+            [ 'name' => 'Yudhi', 'email' => 'yudhi@berau.com', 'title' => 'Scheduler', 'image' => './images/default.png', 'phone'=> '1234567890', 'employee_no'=>'EMP-123', 'manager_id'=>3],
+            [ 'name' => 'Rori', 'email' => 'rori@berau.com', 'title' => 'Intel', 'image' => './images/default.png', 'phone'=> '1234567890', 'employee_no'=>'EMP-123', 'manager_id'=>5],
+            [ 'name' => 'Andez', 'email' => 'andez@volantech.io', 'title' => 'Supervisor', 'image' => './images/default.png', 'phone'=> '1234567890', 'employee_no'=>'EMP-123', 'manager_id'=>6],
+            [ 'name' => 'Kamal', 'email' => 'kamal@volantech.io', 'title' => 'Staff', 'image' => './images/default.png', 'phone'=> '1234567890', 'employee_no'=>'EMP-123', 'manager_id'=>7],
+            [ 'name' => 'Sakti', 'email' => 'hasapu@volantech.io', 'title' => 'Staff', 'image' => './images/default.png', 'phone'=> '1234567890', 'employee_no'=>'EMP-123', 'manager_id'=>8],
 
         ];
 
@@ -109,22 +102,16 @@ class UsersTableSeeder extends Seeder
         Role::create(['id' => 26,   'role' => 'trade-supervisor']);
         Role::create(['id' => 27,   'role' => 'general-manager']);
 
-        User::find(1)->roles()->attach([1, 2]); // Pras
-        User::find(2)->roles()->attach([1, 2]); // Yudhi
-        //User::find(3)->roles()->attach([1, 2]); // Rory
-        //User::find(4)->roles()->attach([1, 2]); // Supandri
-        User::find(5)->roles()->attach([19]); // Sales
-
-       //  User::find(1)->roles()->attach([1, 2, 11]); // Pras: root, admin, executive
-       //  User::find(2)->roles()->attach(21); // Martin: cmo
-       //  User::find(3)->roles()->attach(21); // Aryo: cmo
-       //  User::find(4)->roles()->attach(21); // Fahmi: cmo
-       //  User::find(5)->roles()->attach(27); // Gio: General Manager
-	      // User::find(6)->roles()->attach(27); // Yudhi: General Manager
-       //  User::find(7)->roles()->attach(22); // Rori: trade-manager-area-1
-       //  User::find(8)->roles()->attach(23); // Andez: trade-manager-area-2
-       //  User::find(9)->roles()->attach(15); // Kamal: trader
-       //  User::find(10)->roles()->attach(15); // Sakti: trader
+        User::find(1)->roles()->attach([1, 2, 11]); // Pras: root, admin, executive
+        User::find(2)->roles()->attach(21); // Martin: cmo
+        User::find(3)->roles()->attach(21); // Aryo: cmo
+        User::find(4)->roles()->attach(21); // Fahmi: cmo
+        User::find(5)->roles()->attach(27); // Gio: General Manager
+	      User::find(6)->roles()->attach(27); // Yudhi: General Manager
+        User::find(7)->roles()->attach(22); // Rori: trade-manager-area-1
+        User::find(8)->roles()->attach(23); // Andez: trade-manager-area-2
+        User::find(9)->roles()->attach(15); // Kamal: trader
+        User::find(10)->roles()->attach(15); // Sakti: trader
 
         Privilege::create([ 'id' => 1, 'menu' => 'order.view' ]);
         Privilege::create([ 'id' => 2, 'menu' => 'order.edit' ]);
@@ -139,22 +126,14 @@ class UsersTableSeeder extends Seeder
         Role::find(11)->privileges()->attach(3); // executive
 
         Role::find(15)->privileges()->attach(2); // traders
-        Role::find(15)->privileges()->attach(4);
-        Role::find(15)->privileges()->attach(8);
-
-        Role::find(19)->privileges()->attach(2); // sales
-        Role::find(19)->privileges()->attach(5);
-        Role::find(19)->privileges()->attach(9);
+        Role::find(15)->privileges()->attach(5);
+        Role::find(15)->privileges()->attach(9);
 
         Role::find(21)->privileges()->attach(3); // cmo
 
         Role::find(22)->privileges()->attach(3); // trade-manager-area-1
 
         Role::find(23)->privileges()->attach(3); // trade-manager-area-2
-
-        Role::find(24)->privileges()->attach(3); // trade-manager-area-3
-
-        Role::find(25)->privileges()->attach(3); // trade-manager-area-4
 
         Role::find(26)->privileges()->attach(3); // trade-supervisor
         Role::find(26)->privileges()->attach(4);

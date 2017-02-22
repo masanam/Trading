@@ -116,8 +116,8 @@ class CreateOrdersTable extends Migration
             $table->text('notes')->nullable();
             $table->timestamps();
 
-            $table->foreign('order_detail_id')->references('id')->on('order_details')->onDelete('restrict');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
+            $table->foreign('order_detail_id')->references('id')->on('order_details')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
 
         Schema::create('order_additional_costs', function (Blueprint $table) {
