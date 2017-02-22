@@ -1,8 +1,8 @@
 <div class="box box-default">
   <div class="box-header with-border" ng-click="isCollapsed = !isCollapsed" style="cursor: pointer">
     <h3 class="box-title">Recommended Leads</h3>
-    <span class="glyphicon glyphicon-triangle-bottom pull-right" ng-if="isCollapsed"></span> 
-    <span class="glyphicon glyphicon-triangle-top pull-right" ng-if="!isCollapsed"></span> 
+    <span class="glyphicon glyphicon-triangle-bottom pull-right" ng-if="isCollapsed"></span>
+    <span class="glyphicon glyphicon-triangle-top pull-right" ng-if="!isCollapsed"></span>
   </div>
   <div class="box-body" uib-collapse="isCollapsed" ng-init="findRecommendations()">
     <uib-tabset active="activeJustified" justified="true">
@@ -23,7 +23,7 @@
             <td>{{ rec.typical_quality }}</td>
             <td>{{ rec.company.company_name | date : 'd MMM yy' }}</td>
             <td>{{ rec.laycan_start | date : 'd MMM yy' }} - {{ rec.laycan_end | date : 'd MMM yy' }}</td>
-            <td><i class="glyphicon glyphicon-info-sign" ng-click="showInfo(rec.id)" style="cursor:pointer" uib-tooltip="Show Info"></i></td>
+            <td><i class="glyphicon glyphicon-info-sign" ui-sref="lead.view({id:rec.id})" style="cursor:pointer" uib-tooltip="Show Info"></i></td>
           </tr>
           <tr ng-if="leadRecommendations.length == 0">
             <td colspan="4" class="text-center">Not Available</td>

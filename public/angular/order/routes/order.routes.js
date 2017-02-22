@@ -16,7 +16,7 @@ angular.module('order').config(['$stateProvider',
         privileges: ['order.view', 'order.edit', 'order.approval']
       })
       .state('order.create', {
-        url: '/create',
+        url: '/create?lead_id&lead_type',
         templateUrl: '/angular/order/views/create.view.html',
         privileges: ['order.edit', 'order.approval']
       })
