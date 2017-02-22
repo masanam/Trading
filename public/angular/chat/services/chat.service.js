@@ -23,7 +23,7 @@ angular.module('chat').factory('Chat', ['Authentication', 'FirebaseService', '$f
           'created_at': Date.now()
         };
         //console.log(chat);
-        
+
         var chat_key = mainApp.database().ref('order_chat/' + orderId).push(chat).key;
 
         // sending notification
@@ -35,7 +35,7 @@ angular.module('chat').factory('Chat', ['Authentication', 'FirebaseService', '$f
         };
 
         for (var i = users.length - 1; i >= 0; i--) {
-          var notif_key = mainApp.database().ref('notification/' + users[i].id).push(notification).key;
+          if(users[i].id !== Authentication.user.id) var notif_key = mainApp.database().ref('notification/' + users[i].id).push(notification).key;
         }
       }
     };

@@ -91,9 +91,9 @@ class CreateOrdersTable extends Migration
             $table->string('trading_term');
             $table->string('payment_term');
             $table->char('base_currency_id',3);
-            $table->integer('base_price');
+            $table->decimal('base_price', 20, 10);
             $table->char('deal_currency_id',3);
-            $table->integer('deal_price');
+            $table->decimal('deal_price', 20, 10);
             $table->decimal('exchange_rate', 20, 10);
             $table->timestamps();
 
@@ -107,17 +107,17 @@ class CreateOrdersTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->integer('volume');
             $table->char('base_currency_id',3);
-            $table->integer('base_price');
+            $table->decimal('base_price', 20, 10);
             $table->char('deal_currency_id',3);
-            $table->integer('deal_price');
+            $table->decimal('deal_price', 20, 10);
             $table->decimal('exchange_rate', 20, 10);
             $table->string('trading_term');
             $table->string('payment_term');
             $table->text('notes')->nullable();
             $table->timestamps();
 
-            $table->foreign('order_detail_id')->references('id')->on('order_details')->onDelete('restrict');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
+            $table->foreign('order_detail_id')->references('id')->on('order_details')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
 
         Schema::create('order_additional_costs', function (Blueprint $table) {

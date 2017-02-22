@@ -107,13 +107,13 @@ class CreateCompaniesTable extends Migration
             $table->integer('concession_id')->unsigned()->nullable();
             $table->string('product_name');
             $table->string('typical_quality');
-            $table->integer('pit_to_port')->nullable(); // integer ini
-            $table->integer('gcv_arb_min')->nullable(); //gross calorific value, as received basis
-            $table->integer('gcv_arb_max')->nullable();
-            $table->integer('gcv_adb_min')->nullable(); //gross calorific value, air dried basis
-            $table->integer('gcv_adb_max')->nullable();
-            $table->integer('ncv_min')->nullable(); //nett calorific value
-            $table->integer('ncv_max')->nullable();
+            $table->decimal('pit_to_port',7,2)->nullable(); // decimal ini
+            $table->decimal('gcv_arb_min',7,2)->nullable(); //gross calorific value, as received basis
+            $table->decimal('gcv_arb_max',7,2)->nullable();
+            $table->decimal('gcv_adb_min',7,2)->nullable(); //gross calorific value, air dried basis
+            $table->decimal('gcv_adb_max',7,2)->nullable();
+            $table->decimal('ncv_min',7,2)->nullable(); //nett calorific value
+            $table->decimal('ncv_max',7,2)->nullable();
             $table->decimal('ash_min', 5,2)->nullable(); //ash
             $table->decimal('ash_max', 5,2)->nullable();
             $table->decimal('ts_min', 5,2)->nullable(); //total solid
@@ -126,16 +126,16 @@ class CreateCompaniesTable extends Migration
             $table->decimal('fc_max', 5,2)->nullable();
             $table->decimal('vm_min', 5,2)->nullable(); //volatile matter
             $table->decimal('vm_max', 5,2)->nullable();
-            $table->integer('hgi_min')->nullable(); //hardness
-            $table->integer('hgi_max')->nullable();
-            $table->integer('size_min')->nullable(); //size/piece
-            $table->integer('size_max')->nullable();
-            $table->integer('fe2o3_min')->nullable(); //size/piece
-            $table->integer('fe2o3_max')->nullable();
-            $table->integer('aft_min')->nullable(); //size/piece
-            $table->integer('aft_max')->nullable();
-            $table->integer('na2o_min')->nullable(); //size/piece
-            $table->integer('na2o_max')->nullable();
+            $table->decimal('hgi_min',7,2)->nullable(); //hardness
+            $table->decimal('hgi_max',7,2)->nullable();
+            $table->decimal('size_min',7,2)->nullable(); //size/piece
+            $table->decimal('size_max',7,2)->nullable();
+            $table->decimal('fe2o3_min',7,2)->nullable(); //size/piece
+            $table->decimal('fe2o3_max',7,2)->nullable();
+            $table->decimal('aft_min',7,2)->nullable(); //size/piece
+            $table->decimal('aft_max',7,2)->nullable();
+            $table->decimal('na2o_min',7,2)->nullable(); //size/piece
+            $table->decimal('na2o_max',7,2)->nullable();
             $table->string('na2o_reject')->nullable(); //size/piece
             $table->string('na2o_bonus')->nullable();
             $table->char('status', 1); // A = Active , X = Deleted

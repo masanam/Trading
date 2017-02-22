@@ -41,7 +41,7 @@
     	  <div class="row">
           <div class="col-sm-6 form-group">
             <label>Volume (MT)</label>
-            <input type="number" ng-model="negotiation.volume" class="form-control" required>
+            <input type="number" ng-model="negotiation.volume" step="any" class="form-control" required>
           </div>
         </div>
         <div class="row">
@@ -51,10 +51,10 @@
               ng-options="o as o for o in currencies" required>
               <option>Deal Currency</option>
             </select>
-          </div>          
+          </div>
           <div class="col-sm-6 form-group">
             <label>Deal Price</label>
-            <input type="number" ng-model="negotiation.deal_price" class="form-control" placeholder="Deal Price ({{negotiation.deal_currency_id}})" ng-change="negotiation.base_price = negotiation.deal_price * negotiation.exchange_rate" required>
+            <input type="number" ng-model="negotiation.deal_price" step="any" class="form-control" placeholder="Deal Price ({{negotiation.deal_currency_id}})" ng-change="negotiation.base_price = negotiation.deal_price * negotiation.exchange_rate" required>
           </div>
           <div class="col-sm-4 form-group" ng-init="negotiation.exchange_rate = 1">
             <label>Exchange Rate</label>

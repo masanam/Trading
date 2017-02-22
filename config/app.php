@@ -26,6 +26,7 @@ return [
     */
 
     'env' => env('APP_ENV', 'production'),
+    'baseUrl' => env('APP_BASE_URL', 'http://ct.volantech.io'),
     'deployment' => env('APP_DEPLOYMENT', 'bib'),
     'defaultTrx' => env('DEFAULT_TRANSACTION', 'trade'),
     'showBuy' => env('SHOW_BUY', 'trade'),

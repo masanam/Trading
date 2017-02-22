@@ -5,7 +5,7 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
 
     $scope.productQuality = Environment.productQuality;
     $scope.showBuy = Environment.showBuy;
-    $scope.defaultCurrency = Environment.defaultCurrency;      
+    $scope.defaultCurrency = Environment.defaultCurrency;
     $scope.init = function () {
       $scope.sell_base_currency_id = '';
       $scope.sell_deal_currency_id = '';
@@ -26,12 +26,12 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
     };
 
     $scope.calculateTotal = function(){
-      var i;     
+      var i;
 
-      if ($scope.order.sells){        
+      if ($scope.order.sells){
         for (i = 0; i < $scope.order.sells.length; i++) {
-          $scope.sell_deal_currency_id = $scope.order.sells[i].pivot.deal_currency_id; 
-          $scope.sell_base_currency_id = $scope.order.sells[i].pivot.base_currency_id; 
+          $scope.sell_deal_currency_id = $scope.order.sells[i].pivot.deal_currency_id;
+          $scope.sell_base_currency_id = $scope.order.sells[i].pivot.base_currency_id;
           $scope.totalDealPriceSell += $scope.order.sells[i].pivot.deal_price*$scope.order.sells[i].pivot.volume;
           $scope.totalBasePriceSell += $scope.order.sells[i].pivot.base_price*$scope.order.sells[i].pivot.volume;
           $scope.totalVolumeSell += $scope.order.sells[i].pivot.volume;
@@ -46,14 +46,14 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
           }
         }
       }
-      if ($scope.order.buys){      
+      if ($scope.order.buys){
         for (i = 0; i < $scope.order.buys.length; i++) {
-          $scope.buy_deal_currency_id = $scope.order.buys[i].pivot.deal_currency_id; 
-          $scope.buy_base_currency_id = $scope.order.buys[i].pivot.base_currency_id; 
+          $scope.buy_deal_currency_id = $scope.order.buys[i].pivot.deal_currency_id;
+          $scope.buy_base_currency_id = $scope.order.buys[i].pivot.base_currency_id;
           $scope.totalDealPriceBuy += $scope.order.buys[i].pivot.deal_price*$scope.order.buys[i].pivot.volume;
           $scope.totalBasePriceBuy += $scope.order.buys[i].pivot.base_price*$scope.order.buys[i].pivot.volume;
           $scope.totalVolumeBuy += $scope.order.buys[i].pivot.volume;
-          
+
           if ($scope.order.buys[i].additional !== undefined) {
             $scope.totalSelfBuy += (($scope.order.buys[i].pivot.base_price + $scope.order.buys[i].additional.freight_cost +
               $scope.order.buys[i].additional.port_to_factory) * $scope.order.buys[i].pivot.volume);
@@ -64,15 +64,15 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
             $scope.totalSelfAdditionalBuy += $scope.order.buys[i].pivot.volume;
           }
         }
-      }      
+      }
     };
 
     $scope.checkAlike = function (display){
-      Lead.query({ lead_id:display.id, matching:'alike', order:true }, function(res){        
+      Lead.query({ lead_id:display.id, matching:'alike', order:true }, function(res){
         if (display.lead_type === 'b')
           $scope.alikeBuys = res;
         else
-          $scope.alikeSells = res;        
+          $scope.alikeSells = res;
       });
     };
 
@@ -150,7 +150,7 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
       });
     };
 
-    $scope.negoSell = function () { 
+    $scope.negoSell = function () {
       var modalInstance = $uibModal.open({
         animation: true,
         ariaLabelledBy: 'modal-title',
@@ -168,7 +168,7 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
         }
       });
 
-      modalInstance.result.then(function (negotiation) {            
+      modalInstance.result.then(function (negotiation) {
         $scope.loadingNego = true;
         Order.update(
           { id:$scope.order.id, action: 'stage' },
@@ -182,7 +182,7 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
             $scope.order.sells = res.sells;
             negotiation.created_at = new Date();
             $scope.display.sell.pivot.negotiations.push(negotiation);            
-            $scope.display.sell.pivot = res.sells[0].pivot;            
+            $scope.display.sell.pivot = res.sells[0].pivot;
           }, function (res){
             $scope.loadingNego = false;
             alert(res.data.message + '. Try again with acceptable value!');
@@ -208,7 +208,8 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
               return Lead.query({ lead_type: 'buy', order: 'matching', lead_id: $scope.order.sells[0].id });
             }
           },
-          lead: function () { return 'buy'; }
+          lead: function () { return 'buy'; },
+          selected: function () { if($stateParams.lead_id) return Lead.get({ id: $stateParams.lead_id }); }
         }
       });
 
@@ -257,13 +258,14 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
               return Lead.query({ lead_type: 'sell', order: 'matching', lead_id: $scope.order.buys[0].id });
             }
           },
-          lead: function () { return 'sell'; }
+          lead: function () { return 'sell'; },
+          selected: function () { if($stateParams.lead_id) return Lead.get({ id: $stateParams.lead_id }); }
         }
       });
 
       modalInstance.result.then(function (selectedItem) {
         if(!$scope.order.buys) $scope.order.buys = [];
-        $scope.checkAlike(selectedItem);        
+        $scope.checkAlike(selectedItem);
         if($scope.order.id){
           Order.update(
             { id:$scope.order.id, action: 'stage' },
@@ -286,7 +288,7 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
       }, function () {
         console.log('Modal dismissed at: ' + new Date());
       });
-    };    
+    };
     $scope.addCostModal = function () {
       var modalInstance = $uibModal.open({
         windowClass: 'xl-modal',
@@ -323,15 +325,26 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
         $scope.total();
       });
     };
-
-    $scope.total = function(){      
-      $scope.totalAdditional = 0;
-      var i;      
-      for(i=0;i<$scope.order.additional_cost.length;i++){
-        $scope.totalAdditional += $scope.order.additional_cost[i].cost;
-      }      
+    $scope.totalAdditional = 0;
+    $scope.total = function(){
+      if($scope.order.additional_cost){
+        var i;
+        for(i=0;i<$scope.order.additional_cost.length;i++){
+          $scope.totalAdditional += $scope.order.additional_cost[i].cost;
+        }
+      }
     };
 
+    //to open modal directly after user choose to build order from a lead
+    if($stateParams.lead_id) {
+      if($stateParams.lead_type === 'Buy') {
+        $scope.addBuy();
+        // $scope.selected = Lead.get({ id: $stateParams.lead_id });
+      } else if($stateParams.lead_type === 'Sell') {
+        $scope.addSell();
+        // $scope.selected = Lead.get({ id: $stateParams.lead_id });
+      }
+    }
 
   }
 ]);

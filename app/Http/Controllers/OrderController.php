@@ -144,6 +144,13 @@ class OrderController extends Controller
     return response()->json($funnel,200);
   }
 
+  private function getApproverByToken($order, $token){
+    foreach($order->approvals as $a){
+      if($a->pivot->approval_token == $token) return $a;
+    }
+    return false;
+  }
+
   /**
    * Check if current order CAN stage the lead
    *
@@ -186,11 +193,21 @@ class OrderController extends Controller
     // find all averages of the order details.
     $order->averageSell();
     $order->averageBuy();
+    $order->totalPrice();
 
     // get latest GC NEWC price
     $index = $this->indexPrice();
 
-    $mail = new ApprovalRequest($order, $approval_properties['approval_token'], $index[0]->price);
+    foreach($index as $i){
+      if($i->id == $order->index_id || $i->id == 1){
+        $index_price = $i->price;
+        $index_name = $i->index_provider . ' ' . $i->index_name;
+      }
+    }
+
+    if(count($index)) $mail = new ApprovalRequest($order, $approval_properties['approval_token'], $index_price, $index_name);
+    else $mail = new ApprovalRequest($order, $approval_properties['approval_token'], 0, 'NO-INDEX');
+
     Mail::to($user->email)->send($mail);
   }
 
@@ -234,13 +251,13 @@ class OrderController extends Controller
     if(config('app.env') == 'production') {
       if(config('app.deployment') == 'bib') {
         $firebaseClient = new FirebaseLib(config('services.firebase.database_url'), config('services.firebase.secret'));
-      } else if(config('app.deployment') == 'bce') {
+      } else if(config('app.deployment') == 'berau') {
         $firebaseClient = new FirebaseLib(config('services.firebase_bce.database_url'), config('services.firebase_bce.secret'));
       }
     } else {
       if(config('app.deployment') == 'bib') {
         $firebaseClient = new FirebaseLib(config('services.firebase_dev.database_url'), config('services.firebase_dev.secret'));
-      } else if(config('app.deployment') == 'bce') {
+      } else if(config('app.deployment') == 'berau') {
         $firebaseClient = new FirebaseLib(config('services.firebase_bce_dev.database_url'), config('services.firebase_bce_dev.secret'));
       }
     }
@@ -808,10 +825,14 @@ class OrderController extends Controller
     // or using the JWT token.
 
     // if using token, get the specified approving user
-    if($req->approval_token) $user = $order->getApproverByToken($req->approval_token);
+    if($req->approval_token) $user = $this->getApproverByToken($order, $req->approval_token);
     else {  // or simply load the user if using Auth only.
       $user = JWTAuth::parseToken()->authenticate();
       $this->authorize('approve', $order);
+    }
+
+    if(!$user){
+      return response()->json([ 'message' => 'User Approval to this order not found' ], 400);
     }
 
     //jika status == reject, dan reject reason !=NULL maka status akan berubah dan mencatat reason
@@ -843,7 +864,8 @@ class OrderController extends Controller
     if($req->status === 'a') $this->sequenceApproval($order);
     else $this->removeUpperAppr($order);
 
-    return $this->show($id, $req);
+    if($req->approval_token) return 'Your approval has been recorded! (you can revisit the email if you change mind)';
+    else return $this->show($id, $req);
   }
 
   /**

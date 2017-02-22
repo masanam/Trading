@@ -84,7 +84,7 @@
       </td>
       <td ng-if="productQuality !== 'typical'">
         <input type="number" class="form-control" placeholder="kcal" ng-model="lead.ncv_max" step="any">
-      </td> 
+      </td>
 
       <td ng-if="productQuality !== 'typical'">
         <input type="text" class="form-control" placeholder="Ex : > 5700" ng-model="lead.ncv_bonus">
@@ -163,7 +163,7 @@
         Ash (ADB)
       </td>
       <td ng-if="productQuality === 'typical'">
-        <input type="number" step="any" class="form-control" placeholder="%" ng-model="lead.ash_min" ng-change="lead.ash_min = lead.ash_max">
+        <input type="number" step="any" class="form-control" placeholder="%" ng-model="lead.ash_min" ng-change="lead.ash_max = lead.ash_min">
       </td>
       <td ng-if="productQuality !== 'typical'">
         <input type="number" step="any" class="form-control" placeholder="%" ng-model="lead.ash_min">
@@ -177,7 +177,6 @@
       <td>
         <input type="text" class="form-control" placeholder="Ex : < 5%" ng-model="lead.ash_reject">
       </td>
-
     </tr>
     <tr>
       <td>

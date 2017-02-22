@@ -22,78 +22,79 @@
   <table class="table table-striped">
     <tr align="center">
       <th>Characteristics</th>
-      <th style="min-width:120px">Min</th>
-      <th style="min-width:120px">Max</th>
+      <th style="min-width:120px" ng-if="productQuality === 'typical'">Value</th>
+      <th style="min-width:120px" ng-if="productQuality === 'range'">Min</th>
+      <th style="min-width:120px" ng-if="productQuality === 'range'">Max</th>
     </tr>
     <tr>
       <td>Gross Caloric ARB</td>
       <td><input type="number" step="any"  class="form-control" placeholder="kcal" ng-model="product.gcv_arb_min" required></td>
-      <td><input type="number" step="any"  class="form-control" placeholder="kcal" ng-model="product.gcv_arb_max" required></td>
+      <td ng-if="productQuality === 'range'"><input type="number" step="any"  class="form-control" placeholder="kcal" ng-model="product.gcv_arb_max" required></td>
     </tr>
     <tr>
       <td>Gross Caloric ADB</td>
       <td><input type="number" step="any"  class="form-control" placeholder="kcal" ng-model="product.gcv_adb_min" required></td>
-      <td><input type="number" step="any" class="form-control" placeholder="kcal" ng-model="product.gcv_adb_max" required></td>
+      <td ng-if="productQuality === 'range'"><input type="number" step="any" class="form-control" placeholder="kcal" ng-model="product.gcv_adb_max" required></td>
     </tr>
     <tr>
       <td>Nett Caloric Value</td>
       <td><input type="number" step="any"  class="form-control" placeholder="kcal" ng-model="product.ncv_min" required></td>
-      <td><input type="number" step="any"  class="form-control" placeholder="kcal" ng-model="product.ncv_max" required></td>
+      <td ng-if="productQuality === 'range'"><input type="number" step="any"  class="form-control" placeholder="kcal" ng-model="product.ncv_max" required></td>
     </tr>
     <tr>
       <td>Ash</td>
       <td><input type="number" step="any" class="form-control" placeholder="%" ng-model="product.ash_min" required></td>
-      <td><input type="number" step="any" class="form-control" placeholder="%" ng-model="product.ash_max" required></td>
+      <td ng-if="productQuality === 'range'"><input type="number" step="any" class="form-control" placeholder="%" ng-model="product.ash_max" required></td>
     </tr>
     <tr>
       <td>Sulphur</td>
       <td><input type="number" step="any"  class="form-control" placeholder="%" ng-model="product.ts_min"></td>
-      <td><input type="number" step="any"  class="form-control" placeholder="%" ng-model="product.ts_max"></td>
+      <td ng-if="productQuality === 'range'"><input type="number" step="any"  class="form-control" placeholder="%" ng-model="product.ts_max"></td>
     </tr>
     <tr>
       <td>Total Moisture</td>
       <td><input type="number" step="any"  class="form-control" placeholder="%" ng-model="product.tm_min"></td>
-      <td><input type="number" step="any" class="form-control" placeholder="%" ng-model="product.tm_max"></td>
+      <td ng-if="productQuality === 'range'"><input type="number" step="any" class="form-control" placeholder="%" ng-model="product.tm_max"></td>
     </tr>
     <tr>
       <td>Inherent Moisture</td>
       <td><input type="number" step="any"  class="form-control" placeholder="%" ng-model="product.im_min"></td>
-      <td><input type="number" step="any"  class="form-control" placeholder="%" ng-model="product.im_max"></td>
+      <td ng-if="productQuality === 'range'"><input type="number" step="any"  class="form-control" placeholder="%" ng-model="product.im_max"></td>
     </tr>
     <tr>
       <td>Fixed Carbon</td>
       <td><input type="number" step="any"  class="form-control" placeholder="%" ng-model="product.fc_min"></td>
-      <td><input type="number" step="any"  class="form-control" placeholder="%" ng-model="product.fc_max"></td>
+      <td ng-if="productQuality === 'range'"><input type="number" step="any"  class="form-control" placeholder="%" ng-model="product.fc_max"></td>
     </tr>
     <tr>
       <td>Volatile Matter</td>
       <td><input type="number" step="any" class="form-control" placeholder="%" ng-model="product.vm_min"></td>
-      <td><input type="number" step="any"  class="form-control" placeholder="%" ng-model="product.vm_max"></td>
+      <td ng-if="productQuality === 'range'"><input type="number" step="any"  class="form-control" placeholder="%" ng-model="product.vm_max"></td>
     </tr>
     <tr>
       <td>Hardness</td>
       <td><input type="number" step="any"  class="form-control" placeholder="%" ng-model="product.hgi_min"></td>
-      <td><input type="number" step="any"  class="form-control" placeholder="%" ng-model="product.hgi_max"></td>
+      <td ng-if="productQuality === 'range'"><input type="number" step="any"  class="form-control" placeholder="%" ng-model="product.hgi_max"></td>
     </tr>
     <tr>
       <td>Size</td>
       <td><input type="number" step="any" class="form-control" placeholder="%" ng-model="product.size_min"></td>
-      <td><input type="number" step="any"  class="form-control" placeholder="%" ng-model="product.size_max"></td>
+      <td ng-if="productQuality === 'range'"><input type="number" step="any"  class="form-control" placeholder="%" ng-model="product.size_max"></td>
     </tr>
     <tr>
       <td>Fe 2o3</td>
       <td><input type="number" step="any" class="form-control" placeholder="%" ng-model="product.fe2o3_min"></td>
-      <td><input type="number" step="any" class="form-control" placeholder="%" ng-model="product.fe2o3_max"></td>
+      <td ng-if="productQuality === 'range'"><input type="number" step="any" class="form-control" placeholder="%" ng-model="product.fe2o3_max"></td>
     </tr>
     <tr>
       <td>AFT (IDT)</td>
       <td><input type="number" step="any" class="form-control" placeholder="&#176" ng-model="product.aft_min"></td>
-      <td><input type="number" step="any" class="form-control" placeholder="&#176" ng-model="product.aft_max"></td>
+      <td ng-if="productQuality === 'range'"><input type="number" step="any" class="form-control" placeholder="&#176" ng-model="product.aft_max"></td>
     </tr>
     <tr>
       <td>Na2O</td>
       <td><input type="number" step="any" class="form-control" placeholder="%" ng-model="product.na2o_min"></td>
-      <td><input type="number" step="any" class="form-control" placeholder="%" ng-model="product.na2o_max"></td>
+      <td ng-if="productQuality === 'range'"><input type="number" step="any" class="form-control" placeholder="%" ng-model="product.na2o_max"></td>
     </tr>
   </table>
   </div>
