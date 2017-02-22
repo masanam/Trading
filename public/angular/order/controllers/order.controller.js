@@ -7,6 +7,7 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
     $scope.display = {};
 
     $scope.deployment = Environment.deployment;
+    $scope.defaultCurrency = Environment.defaultCurrency;
     $scope.hideCrossingLeads = Environment.hideCrossingLeads;
     $scope.showBuy = Environment.showBuy;
     $scope.destinationBy = Environment.destinationBy;
