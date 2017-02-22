@@ -30,11 +30,11 @@ class CompanyController extends Controller
   {
     $companies = Company::with('user', 'area', 'ports', 'factories')->where('status', 'a');
 
-    // if($req->q) $companies->where('company_name', 'LIKE', '%'.$req->q.'%')
-    //   ->orWhere('address', 'LIKE', '%'.$req->q.'%')
-    //   ->orWhere('city', 'LIKE', '%'.$req->q.'%')
-    //   ->orWhere('country', 'LIKE', '%'.$req->q.'%')
-    //   ->orWhere('industry', 'LIKE', '%'.$req->q.'%');
+    if($req->q) $companies->where('company_name', 'LIKE', '%'.$req->q.'%')
+      ->orWhere('address', 'LIKE', '%'.$req->q.'%')
+      ->orWhere('city', 'LIKE', '%'.$req->q.'%')
+      ->orWhere('country', 'LIKE', '%'.$req->q.'%')
+      ->orWhere('industry', 'LIKE', '%'.$req->q.'%');
 
     if($req->type) {
       if ($req->type[0] == 'c' || $req->type[0] == 's')
