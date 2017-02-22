@@ -574,9 +574,9 @@ class OrderController extends Controller
       }
     }
 
-    if(!$req) {
+    if(!$req || (count($req->buys) <= 0 && count($req->sells) <= 0)) {
       return response()->json([
-        'message' => 'Bad Request'
+        'message' => 'Bad Request, please fill all the required data(s)'
       ], 400);
     }
 
