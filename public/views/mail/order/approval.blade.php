@@ -273,15 +273,15 @@
                                 <tbody>
                                   <tr>
                                     <td align="left">
-                                      Order ID<br>
+                                      <small style="color:#333">Order ID</small><br>
                                       #{{ str_pad($order->id, 4, '0', STR_PAD_LEFT) }}
                                     </td>
                                     <td align="center">
-                                      Requestor<br>
+                                      <small style="color:#333">Requestor</small><br>
                                       {{ $order->trader->name }}
                                     </td>
                                     <td align="right">
-                                      Order Created<br>
+                                      <small style="color:#333">Order Created</small><br>
                                       {{ date('d M y', strtotime($order->created_at)) }}
                                     </td>
                                   </tr>
@@ -291,9 +291,8 @@
                                       <table border="0" cellpadding="0" cellspacing="0" class="table-bordered">
                                         @foreach ($order->buys as $buy)
                                         <tr>
-                                          <td>BUY</td>
-
                                           <td>
+                                            <small style="color:#333">Seller</small>
                                             <p>{{ $buy->company->company_name }}</p>
                                             @if(count($order->buys)>1)
                                             <small>Sales: {{ $buy->trader->name }}</small>
@@ -306,11 +305,12 @@
                                           </td>
 
                                           <td>
+                                            <small style="color:#333">Price</small>
                                             <p>{{ $buy->pivot->deal_currency_id }} {{ number_format($buy->pivot->deal_price, 2) }}</p>
                                           </td>
                                           <td>
+                                            <small style="color:#333">Volume</small>
                                             <p>
-                                              Volume:
                                               {{ $buy->pivot->volume }} mt
                                             </p>
                                           </td>
@@ -319,11 +319,9 @@
 
                                         @foreach ($order->sells as $sell)
                                         <tr>
-                                          @if(config('app.showBuy'))
-                                          <td>SELL</td>
-                                          @endif
 
                                           <td>
+                                            <small style="color:#333">Buyer</small>
                                             <p>{{ $sell->company->company_name }}</p>
                                             @if(count($order->sells)>1)
                                             <small>Sales: {{ $sell->trader->name }}</small>
@@ -338,15 +336,18 @@
                                           @endif
 
                                           <td>
+                                            <small style="color:#333">Price</small>
                                             <p>{{ $sell->pivot->deal_currency_id }} {{ number_format($sell->pivot->deal_price, 2) }}</p>
                                           </td>
                                           <td>
-                                            <p>
+                                            <small style="color:#333">
                                               @if($sell->pivot->volume < 10000)
                                               Volume:
                                               @else
                                               Tonnage:
                                               @endif
+                                            </small>
+                                            <p>
                                               {{ $sell->pivot->volume }} MT
                                             </p>
                                           </td>
@@ -366,7 +367,7 @@
                                     <td>
                                       <p>MARGIN</p>
                                       <p style="font-size:14pt">{{ config('app.defaultCurrency') }} {{ $order->average_sell_price - $order->average_buy_price }}</p>
-                                      <small></small>
+                                      <small>Additional Cost: {{ config('app.defaultCurrency') }} {{ number_format($order->total_additional_costs, 2) }}</small>
                                     </td>
                                     <td>
                                       <p>SELL</p>
@@ -379,7 +380,8 @@
                                     <td colspan="3">
                                       <p>TOTAL PRICE</p>
                                       <p style="font-size:14pt">{{ config('app.defaultCurrency') }} {{ number_format($order->total_buy_price, 2) }}</p>
-                                      <p>{{ number_format($order->total_buy_volume, 0) }} MT</p>
+                                      <small>Volume: {{ number_format($order->total_buy_volume, 0) }} MT</small>
+                                      <small>Additional Cost: {{ config('app.defaultCurrency') }} {{ number_format($order->total_additional_costs, 2) }}</small>
                                     </td>
                                   </tr>
                                   @elseif (count($order->sells) > 0 || !count($order->buys))
@@ -387,7 +389,8 @@
                                     <td colspan="3">
                                       <p>TOTAL PRICE</p>
                                       <p style="font-size:14pt">{{ config('app.defaultCurrency') }} {{ number_format($order->total_sell_price, 2) }}</p>
-                                      <p>{{ number_format($order->total_sell_volume, 0) }} MT</p>
+                                      <small>Volume: {{ number_format($order->total_sell_volume, 0) }} MT</small>
+                                      <small>Additional Cost: {{ config('app.defaultCurrency') }} {{ number_format($order->total_additional_costs, 2) }}</small>
                                     </td>
                                   </tr>
                                   @endif

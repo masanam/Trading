@@ -116,6 +116,17 @@ class ProductionBerauSeeder extends Seeder
       'status' => 'a'
     ]);
 
+  	/*
+  	 * CONCESSION SEEDER
+  	 */
+
+
+
+  	/*
+  	 * PRODUCT SEEDER
+  	 */
+
+
 
   	/*
   	 * PORT SEEDER

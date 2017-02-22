@@ -93,16 +93,24 @@ class Order extends Model
   }
 
   public function totalPrice() {
-    $this->total_buy_price = $this->total_sell_price = $this->total_buy_volume = $this->total_sell_volume = 0;
+    $this->total_buy_price = $this->total_sell_price = $this->total_buy_volume = $this->total_sell_volume = $this->total_additional_costs = 0;
 
     foreach($this->buys as &$buy){
       $this->total_buy_price += $buy->pivot->base_price * $buy->pivot->volume;
       $this->total_buy_volume += $buy->pivot->volume;
     }
+    if($this->total_buy_volume) $this->total_buy_price = $this->total_buy_price / $this->total_buy_volume;
 
     foreach($this->sells as &$sell){
       $this->total_sell_price += $sell->pivot->base_price * $sell->pivot->volume;
       $this->total_sell_volume += $sell->pivot->volume;
+    }
+    if($this->total_sell_volume) $this->total_sell_price = $this->total_sell_price / $this->total_sell_volume;
+
+    foreach($this->additional_cost as &$add){
+      if(!count($this->buys)) $this->total_sell_price -= $add->cost;
+      if(!count($this->sells)) $this->total_buy_price += $add->cost;
+      $this->total_additional_costs += $add->cost;
     }
   }
 
