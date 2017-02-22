@@ -367,7 +367,7 @@
                                     <td>
                                       <p>MARGIN</p>
                                       <p style="font-size:14pt">{{ config('app.defaultCurrency') }} {{ $order->average_sell_price - $order->average_buy_price }}</p>
-                                      <small></small>
+                                      <small>Additional Cost: {{ config('app.defaultCurrency') }} {{ number_format($order->total_additional_costs, 2) }}</small>
                                     </td>
                                     <td>
                                       <p>SELL</p>
@@ -380,8 +380,8 @@
                                     <td colspan="3">
                                       <p>TOTAL PRICE</p>
                                       <p style="font-size:14pt">{{ config('app.defaultCurrency') }} {{ number_format($order->total_buy_price, 2) }}</p>
-                                      <p>Volume: {{ number_format($order->total_buy_volume, 0) }} MT</p>
-                                      <p>Additional Cost: {{ config('app.defaultCurrency') }} {{ number_format($order->total_additional_costs, 0) }}</p>
+                                      <small>Volume: {{ number_format($order->total_buy_volume, 0) }} MT</small>
+                                      <small>Additional Cost: {{ config('app.defaultCurrency') }} {{ number_format($order->total_additional_costs, 2) }}</small>
                                     </td>
                                   </tr>
                                   @elseif (count($order->sells) > 0 || !count($order->buys))
@@ -389,8 +389,8 @@
                                     <td colspan="3">
                                       <p>TOTAL PRICE</p>
                                       <p style="font-size:14pt">{{ config('app.defaultCurrency') }} {{ number_format($order->total_sell_price, 2) }}</p>
-                                      <p>Volume: {{ number_format($order->total_sell_volume, 0) }} MT</p>
-                                      <p>Additional Cost: {{ config('app.defaultCurrency') }} {{ number_format($order->total_additional_costs, 0) }}</p>
+                                      <small>Volume: {{ number_format($order->total_sell_volume, 0) }} MT</small>
+                                      <small>Additional Cost: {{ config('app.defaultCurrency') }} {{ number_format($order->total_additional_costs, 2) }}</small>
                                     </td>
                                   </tr>
                                   @endif
