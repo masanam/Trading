@@ -210,7 +210,7 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
             }
           },
           lead: function () { return 'buy'; },
-          selected: function () { if($stateParams.lead_id) return Lead.get({ id: $stateParams.lead_id }) }
+          selected: function () { if($stateParams.lead_id) return Lead.get({ id: $stateParams.lead_id }); }
         }
       });
 
@@ -260,7 +260,7 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
             }
           },
           lead: function () { return 'sell'; },
-          selected: function () { if($stateParams.lead_id) return Lead.get({ id: $stateParams.lead_id }) }
+          selected: function () { if($stateParams.lead_id) return Lead.get({ id: $stateParams.lead_id }); }
         }
       });
 
