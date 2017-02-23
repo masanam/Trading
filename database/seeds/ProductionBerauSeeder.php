@@ -85,14 +85,22 @@ class ProductionBerauSeeder extends Seeder
     Role::find(11)->privileges()->attach(3); // bc1
 
 
-  	/*
-  	 * COMPANY SEEDER
-  	 */
-
     Area::create(['id' => 1, 'area_name' => 'Area 1', 'description' => 'Area 1', 'status' => 'a']);
     Area::create(['id' => 2, 'area_name' => 'Area 2', 'description' => 'Area 2', 'status' => 'a']);
     Area::create(['id' => 3, 'area_name' => 'Area 3', 'description' => 'Area 3', 'status' => 'a']);
     Area::create(['id' => 4, 'area_name' => 'Area 4', 'description' => 'Area 4', 'status' => 'a']);
+
+
+  	/*
+  	 * APPROVAL SCHEME SEEDER
+  	 */
+
+
+
+
+  	/*
+  	 * COMPANY SEEDER
+  	 */
 
     Company::create([
       'company_name' => 'Berau Coal, PT',
@@ -181,6 +189,19 @@ class ProductionBerauSeeder extends Seeder
   	/*
   	 * PRODUCT SEEDER
   	 */
+
+		Product::create(['company_id' => 1,'concession_id' => 1,'product_name' => 'Ebony HS','typical_quality' => 'GAR5500','tm_min' => '20','tm_max' => '14','im_min' =>'14','im_max' =>'0.9','ash_min' =>'5','ash_max' => '55','fc_min' => null,'fc_max' => null,'vm_min' => null,'vm_max' => null,'ts_min' => '0.9','ts_max' => '5','ncv_min' => '20','ncv_max' => '90','gcv_arb_min' => '5500','gcv_arb_max' => '5900','gcv_adb_min' => '5500','gcv_adb_max' => '5900','hgi_min' => '40','hgi_max' => null,'size_min' => null,'size_max' => null,'fe2o3_min'=> '5300','fe2o3_max'=> null,'aft_min'=> null,'aft_max'=>null,'na2o_min'=> null,'na2o_max'=>null,'status' => 'a']);
+		Product::create(['company_id' => 1,'concession_id' => 1,'product_name' => 'Mahoni','typical_quality' => 'GAR5500','tm_min' => '20','tm_max' => '14','im_min' =>'14','im_max' =>'0.9','ash_min' =>'5','ash_max' => '55','fc_min' => null,'fc_max' => null,'vm_min' => null,'vm_max' => null,'ts_min' => '0.9','ts_max' => '5','ncv_min' => '20','ncv_max' => '90','gcv_arb_min' => '5500','gcv_arb_max' => '5900','gcv_adb_min' => '5500','gcv_adb_max' => '5900','hgi_min' => '40','hgi_max' => null,'size_min' => null,'size_max' => null,'fe2o3_min'=> '5300','fe2o3_max'=> null,'aft_min'=> null,'aft_max'=>null,'na2o_min'=> null,'na2o_max'=>null,'status' => 'a']);
+    Product::create(['company_id' => 1,'concession_id' => 1,'product_name' => 'Mahoni B','typical_quality' => 'GAR5800','tm_min' => '22.5','tm_max' => '16','im_min' =>'16','im_max' =>'0.9','ash_min' =>'5','ash_max' => '55','fc_min' => null,'fc_max' => null,'vm_min' => null,'vm_max' => null,'ts_min' => '0.9','ts_max' => '5','ncv_min' => '22.5','ncv_max' => '5900','gcv_arb_min' => '5300','gcv_arb_max' => '5750','gcv_adb_min' => '5300','gcv_adb_max' => '5750','hgi_min' => '40','hgi_max' => null,'size_min' => null,'size_max' => null,'fe2o3_min'=> '50','fe2o3_max'=> null,'aft_min'=> null,'aft_max'=>null,'na2o_min'=> null,'na2o_max'=>null,'status' => 'a']);
+    Product::create(['company_id' => 1,'concession_id' => 1,'product_name' => 'Sungkai','typical_quality' => 'NAR3200','tm_min' => '25','tm_max' => '28','im_min' =>'28','im_max' =>'1','ash_min' =>'5','ash_max' => '55','fc_min' => null,'fc_max' => null,'vm_min' => null,'vm_max' => null,'ts_min' => '1','ts_max' => '5','ncv_min' => '2500','ncv_max' => '90','gcv_arb_min' => '5000','gcv_arb_max' => '5500','gcv_adb_min' => '5000','gcv_adb_max' => '5500','hgi_min' => '40','hgi_max' => null,'size_min' => null,'size_max' => null,'fe2o3_min'=> '4600','fe2o3_max'=> null,'aft_min'=> null,'aft_max'=>null,'na2o_min'=> null,'na2o_max'=>null,'status' => 'a']);
+//     '1','1',NULL,'Mahoni','GAR5500',NULL,'5500.00','5900.00','5500.00','5900.00','20.00','90.00','5.00','55.00','0.90','5.00','20.00','14.00','14.00','0.90',NULL,NULL,NULL,NULL,'40.00',NULL,NULL,NULL,'5300.00',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'a','2017-02-16 23:57:51','2017-02-16 23:57:51'
+// '2','1',NULL,'Mahoni B','GAR5800',NULL,'5300.00','5750.00','5300.00','5750.00','23.00','5900.00','5.00','55.00','0.90','5.00','22.50','16.00','16.00','0.90',NULL,NULL,NULL,NULL,'40.00',NULL,NULL,NULL,'50.00',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'a','2017-02-16 23:57:51','2017-02-16 23:57:51'
+// '3','1',NULL,'Agathis','NAR3200',NULL,'5000.00','5500.00','5000.00','5500.00','2500.00','90.00','5.00','55.00','1.00','5.00','25.00','28.00','28.00','1.00',NULL,NULL,NULL,NULL,'40.00',NULL,NULL,NULL,'4600.00',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'a','2017-02-16 23:57:51','2017-02-16 23:57:51'
+// '4','1',NULL,'Ebony HS','GAR5500',NULL,NULL,'4200.00','4200.00','5500.00','5500.00','3800.00','6.00','6.00','0.30','0.30','37.00','37.00','15.00','15.00',NULL,NULL,'42.00',NULL,'55.00',NULL,'90.00',NULL,'20.00',NULL,'1150.00',NULL,NULL,NULL,NULL,NULL,'a','2017-02-16 23:57:51','2017-02-16 23:57:51'
+// '5','1',NULL,'Sungkai','GAR5500',NULL,NULL,'5500.00','4200.00','5500.00','5500.00','3800.00','6.00','6.00','0.30','0.30','37.00','37.00','15.00','15.00',NULL,NULL,'42.00',NULL,'55.00',NULL,'90.00',NULL,'20.00',NULL,'1150.00',NULL,NULL,NULL,NULL,NULL,'a','2017-02-16 23:57:51','2017-02-16 23:57:51'
+// '6','1',NULL,'Sungkai LS','GAR5500',NULL,NULL,'5500.00','4200.00','5500.00','5500.00','3800.00','6.00','6.00','0.30','0.30','37.00','37.00','15.00','15.00',NULL,NULL,'42.00',NULL,'55.00',NULL,'90.00',NULL,'20.00',NULL,'1150.00',NULL,NULL,NULL,NULL,NULL,'a','2017-02-16 23:57:51','2017-02-16 23:57:51'
+// '7','1',NULL,'Sungkai MS','GAR5500',NULL,NULL,'5500.00','4200.00','5500.00','5500.00','3800.00','6.00','6.00','0.30','0.30','37.00','37.00','15.00','15.00',NULL,NULL,'42.00',NULL,'55.00',NULL,'90.00',NULL,'20.00',NULL,'1150.00',NULL,NULL,NULL,NULL,NULL,'a','2017-02-16 23:57:51','2017-02-16 23:57:51'
+// '8','1',NULL,'Sungkai HS','GAR5500',NULL,NULL,'5500.00','4200.00','5500.00','5500.00','3800.00','6.00','6.00','0.30','0.30','37.00','37.00','15.00','15.00',NULL,NULL,'42.00',NULL,'55.00',NULL,'90.00',NULL,'20.00',NULL,'1150.00',NULL,NULL,NULL,NULL,NULL,'a','2017-02-16 23:57:51','2017-02-16 23:57:51'
 
 
 
