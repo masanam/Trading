@@ -53,6 +53,7 @@ angular.module('order').controller('AddLeadsModalController', ['$uibModalInstanc
       if(curr === $scope.defaultCurrency) {
         $scope.selected.item.pivot.exchange_rate = 1;
         $scope.selected.item.pivot.base_price = $scope.selected.item.pivot.deal_price;
+        $scope.selected.item.pivot.price = $scope.selected.item.pivot.exchange_rate * $scope.selected.item.pivot.deal_price;
       }
       else {
         Exchange_rate.get({ buy: curr , sell: $scope.defaultCurrency }, function(res){
@@ -62,6 +63,7 @@ angular.module('order').controller('AddLeadsModalController', ['$uibModalInstanc
             $scope.selected.item.pivot.exchange_rate = res.value;
           }
           $scope.selected.item.pivot.base_price = $scope.selected.item.pivot.exchange_rate * $scope.selected.item.pivot.deal_price;
+          $scope.selected.item.pivot.price = $scope.selected.item.pivot.exchange_rate * $scope.selected.item.pivot.deal_price;
         });
       }
     };

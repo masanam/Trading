@@ -574,9 +574,9 @@ class OrderController extends Controller
       }
     }
 
-    if(!$req) {
+    if(!$req || (count($req->buys) <= 0 && count($req->sells) <= 0)) {
       return response()->json([
-        'message' => 'Bad Request'
+        'message' => 'Bad Request, please fill all the required data(s)'
       ], 400);
     }
 
@@ -676,6 +676,13 @@ class OrderController extends Controller
         ->with(['buys.concession' => function ($q) {
           $q->select(['concession_name']);
         }])->with('additional_cost.company')->find($id);
+
+    $order->earliestLaycan();
+    $order->latestLaycan();
+
+    return response()->json([
+      'laycan_start' => $order->laycan_start
+    ]);
 
     $this->authorize('view', $order);
 

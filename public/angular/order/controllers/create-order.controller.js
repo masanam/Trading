@@ -12,7 +12,7 @@ angular.module('order').controller('CreateOrderController', ['$scope', '$state',
     };
 
     // Create new Article
-    $scope.create = function (isValid) {      
+    $scope.create = function (isValid) {
       $scope.error = null;
       // Create new Article object
       var order = new Order($scope.order);
@@ -22,9 +22,10 @@ angular.module('order').controller('CreateOrderController', ['$scope', '$state',
         $state.go('order.view', { id: res.id });
 
         // // Clear form fields
+        $scope.error = undefined;
         $scope.order = new Order();
       }, function (err) {
-        $scope.error = err;
+        $scope.error = err.data.message;
       });
     };
   }

@@ -115,7 +115,9 @@ class Order extends Model
   }
 
   public function earliestLaycan(){
-    $this->laycan_start = min($this->buys->min('laycan_start'), $this->sells->min('laycan_start'));
+    if(!count($this->buys)) $this->laycan_start = $this->sells->min('laycan_start');
+    else if(!count($this->sells)) $this->laycan_start = $this->buys->min('laycan_start');
+    else $this->laycan_start = min($this->buys->min('laycan_start'), $this->sells->min('laycan_start'));
   }
 
   public function latestLaycan(){

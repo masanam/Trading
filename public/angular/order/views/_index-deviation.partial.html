@@ -21,23 +21,23 @@
 	<div class="box-body">
 		<div class="col-sm-12 col-md-2 description-block border-right" ng-hide="order.in_house">
   		<p>BUY PRICE</p>
-  		<h3>$ {{ ( display.buy.pivot.price ) | number:2 }}</h3>
+  		<h3>{{display.buy.pivot.base_currency_id}} {{ ( display.buy.pivot.base_price ) | number:2 }}</h3>
   		<small class="text-muted">
         Deviation:
-        {{ (( display.buy.pivot.price - display.index.price )/display.index.price)*100 | number:2 }}%
+        {{ (( display.buy.pivot.base_price - display.index.price )/display.index.price)*100 | number:2 }}%
       </small>
   	</div>
 		<div ng-hide=" display.totalSellPrice === 0 || display.totalBuyPrice === 0 " class="col-sm-12 col-md-2 description-block border-right">
   		<p>{{ display.index.index_provider }} {{ display.index.index_name }}</p>
-  		<h3>$ {{ display.index.price | number:2 }}</h3>
+  		<h3>{{defaultCurrency}} {{ display.index.price | number:2 }}</h3>
   		<small class="text-muted">{{ display.index.date | date }}</small>
   	</div>
 		<div class="col-sm-12 col-md-2 description-block border-right">
   		<p>SELL PRICE</p>
-  		<h3>$ {{ (display.sell.pivot.price) | number:2 }}</h3>
+  		<h3>{{display.sell.pivot.base_currency_id}} {{ (display.sell.pivot.base_price) | number:2 }}</h3>
   		<small class="text-muted">
         {{ order.in_house ? 'Recovery Factor' : 'Deviation' }} :
-        {{ ((display.sell.pivot.price - display.index.price)/display.index.price)*100 | number:2 }}%
+        {{ ((display.sell.pivot.base_price - display.index.price)/display.index.price)*100 | number:2 }}%
       </small>
   	</div>
 		<div class="col-sm-12 col-md-6 description-block" id="lineChart">
