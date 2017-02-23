@@ -223,7 +223,7 @@ class ShipmentTableSeeder extends Seeder
       ]);
 
       QualityMetric::create([
-        'quality' => 'HTI',
+        'quality' => 'HGI',
         'metric' => '%'
       ]);
 
@@ -234,7 +234,7 @@ class ShipmentTableSeeder extends Seeder
 
       QualityMetric::create([
         'quality' => 'AFT',
-        'metric' => '&#176'
+        'metric' => '&#176;'
       ]);
 
       QualityMetric::create([

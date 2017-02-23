@@ -1,11 +1,13 @@
 'use strict';
 
-angular.module('order').controller('AddCostModalController', ['$uibModalInstance', '$scope', 'Company', 'Order', 'Notification', 'Environment',
-  function($uibModalInstance, $scope, Company, Order, Notification, Environment) {
-    if($scope.order.additional_cost) $scope.additionals = $scope.order.additional_cost;
+angular.module('order').controller('AddCostModalController', ['$uibModalInstance', '$scope', 'Company', 'Order', 'Notification', 'Environment', 'additionals',
+  function($uibModalInstance, $scope, Company, Order, Notification, Environment, additionals) {
+    
+    if(additionals) $scope.additionals = additionals;
     else $scope.additionals = [];
-
-    $scope.additionals.push({});
+  
+    $scope.additionals.push({});    
+    
     $scope.defaultCurrency = Environment.defaultCurrency;
     $scope.types = [
       'Insurance Cost',
@@ -48,6 +50,6 @@ angular.module('order').controller('AddCostModalController', ['$uibModalInstance
         $scope.error = undefined;
         $uibModalInstance.dismiss('cancel');
       }
-    };
+    };    
   }
 ]);
