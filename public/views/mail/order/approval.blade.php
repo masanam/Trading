@@ -413,8 +413,8 @@
                                     </td>
                                     <td>
                                       <p>LayCan Period</p>
-                                      <p style="font-size:10pt">{{ date('dd/MM/yy', strtotime($order->laycan_start)) }}<br>
-                                      {{ date('dd/MM/yy', strtotime($order->laycan_end)) }}</p>
+                                      <p style="font-size:10pt">{{ date('d/M/y', strtotime($order->laycan_start)) }}<br>
+                                      {{ date('d/M/y', strtotime($order->laycan_end)) }}</p>
                                     </td>
                                   </tr>
 
@@ -423,7 +423,7 @@
                                       Reason: {{ $order->request_reason }}
                                     </td>
                                   </tr>
-                                  
+
                                 </tbody>
                               </table>
                             </td></tr>

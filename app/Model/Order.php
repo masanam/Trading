@@ -96,15 +96,16 @@ class Order extends Model
     $this->total_buy_price = $this->total_sell_price = $this->total_buy_volume = $this->total_sell_volume = $this->total_additional_costs = 0;
 
     foreach($this->buys as &$buy){
-      $this->total_buy_price += $buy->pivot->base_price * $buy->pivot->volume;
-      $this->total_buy_volume += $buy->pivot->volume;
+      $this->total_buy_price += $buy->pivot->negotiations[count($buy->pivot->negotiations)-1]->base_price * $buy->pivot->negotiations[count($buy->pivot->negotiations)-1]->volume;
+      $this->total_buy_volume += $buy->pivot->negotiations[count($buy->pivot->negotiations)-1]->volume;
     }
     if($this->total_buy_volume) $this->total_buy_price = $this->total_buy_price / $this->total_buy_volume;
 
     foreach($this->sells as &$sell){
-      $this->total_sell_price += $sell->pivot->base_price * $sell->pivot->volume;
-      $this->total_sell_volume += $sell->pivot->volume;
+      $this->total_sell_price += $sell->pivot->negotiations[count($sell->pivot->negotiations)-1]->base_price * $sell->pivot->negotiations[count($sell->pivot->negotiations)-1]->volume;
+      $this->total_sell_volume += $sell->pivot->negotiations[count($sell->pivot->negotiations)-1]->volume;
     }
+
     if($this->total_sell_volume) $this->total_sell_price = $this->total_sell_price / $this->total_sell_volume;
 
     foreach($this->additional_cost as &$add){

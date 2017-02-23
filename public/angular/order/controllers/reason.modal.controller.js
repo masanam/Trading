@@ -47,12 +47,12 @@ angular.module('order').controller('OrderReasonModalController', ['$uibModalInst
         if($scope.status === 'x') order.cancel_reason = $scope.order.reason;
         else if($scope.status === 'f') order.finalize_reason = $scope.order.reason;
         else if($scope.status === 'p') order.request_reason = $scope.order.reason;
+        else if($scope.status === 'r') order.reject_reason = $scope.order.reason;
         /*
         * hasapu 14 - 02 - 2017
         * Input reject reason for status 'r'
         */
         else if($scope.status === 'r') {
-          order.reject_reason = $scope.order.reason;
           $scope.approval = 'approval';
         }
 
