@@ -208,8 +208,6 @@ class OrderController extends Controller
     if(count($index)) $mail = new ApprovalRequest($order, $approval_properties['approval_token'], $index_price, $index_name);
     else $mail = new ApprovalRequest($order, $approval_properties['approval_token'], 0, 'NO-INDEX');
 
-    var_dump($mail);
-
     Mail::to($user->email)->send($mail);
   }
 
@@ -685,7 +683,6 @@ class OrderController extends Controller
 
     // lazyloading semua negotiation log
     $order->getNegotiations();
-    $order->totalPrice();
 
     // get the earliest laycan and latest one
     $order->earliestLaycan();
