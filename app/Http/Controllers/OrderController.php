@@ -677,6 +677,8 @@ class OrderController extends Controller
           $q->select(['concession_name']);
         }])->with('additional_cost.company')->find($id);
 
+    if(!$order) return 'Your Order is not found';
+
     $this->authorize('view', $order);
 
     // lazyloading semua negotiation log
@@ -819,6 +821,8 @@ class OrderController extends Controller
     $order = Order::with( 'approvals', 'approvals.roles',
       'sells', 'sells.trader', 'sells.company',
       'buys', 'buys.trader', 'buys.company')->find($id);
+    
+    if(!$order) return 'Your Order is not found';
 
     // since approval does not use jwt middleware,
     // we need to try whether they are using approval token

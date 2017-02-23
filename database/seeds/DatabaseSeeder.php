@@ -14,12 +14,18 @@ class DatabaseSeeder extends Seeder
     {
     	Model::unguard();
 
-        if(config('app.deployment') == 'berau' && config('app.env') == 'production') $this->call(ProductionBerauSeeder::class);
-        else {
+        // models that is not bounded by conditions
+        $this->call(CountriesTableSeeder::class);
+        //
+        // currency
+        // exchange rate
+
+        if(config('app.deployment') == 'berau' && config('app.env') == 'production'){
+            $this->call(ProductionBerauSeeder::class);
+        } else {
             $this->call(UsersTableSeeder::class);
             $this->call(CompaniesTableSeeder::class);
             $this->call(OrderApprovalSchemesTableSeeder::class);
-            $this->call(CountriesTableSeeder::class);
             $this->call(ConcessionTableSeeder::class);
             $this->call(ProductTableSeeder::class);
             $this->call(PortTableSeeder::class);

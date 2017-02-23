@@ -16,7 +16,6 @@ angular.module('lead').controller('LeadController', ['$scope', '$state', '$state
 
     $scope.countries = Country.query();
     $scope.selected = {};
-
     if(!$stateParams.lead_type) $scope.lead = Lead.get({ id:$stateParams.id });
 
     $scope.findOne = function(id){
@@ -32,6 +31,7 @@ angular.module('lead').controller('LeadController', ['$scope', '$state', '$state
           else $scope.selected.location = $scope.lead.factory;
         }
       });
+      console.log($scope.lead);
     };
 
     $scope.find = function(status, $search) {
