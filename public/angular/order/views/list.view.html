@@ -12,7 +12,7 @@
 
         <div class="row hidden-xs hidden-sm hidden-md">
           <div class="col-md-4">
-          
+
             <div class="box-tools btn-group btn-sm"
               ng-init="browse.category = Authentication.user.privilege.indexOf('order.approval') > -1 ? 'approval' : 'my'">
               <label class="btn btn-default btn-sm" ng-model="browse.category" uib-btn-radio="'my'">My Orders</label>
@@ -21,7 +21,7 @@
               <label class="btn btn-default btn-sm" ng-model="browse.category" uib-btn-radio="'approval'">Approval</label>
             </div>
           </div>
-         
+
           <div class="col-md-5">
             <div class="box-tools btn-group btn-sm" ng-init="browse.status = 'p'">
               <label class="btn btn-default btn-sm" ng-model="browse.status" uib-btn-radio="'d'">Draft</label>
@@ -31,10 +31,10 @@
               <label class="btn btn-default btn-sm" ng-model="browse.status" uib-btn-radio="'c'">Combined</label>
               <label class="btn btn-default btn-sm" ng-model="browse.status" uib-btn-radio="'x'">Deleted</label>
            </div>
-         
+
         </div>
 
-         <div class="col-md-3">
+         <div class="col-md-3" ng-if="Authentication.user.privilege.indexOf('lead.edit') > -1" >
           <div class="box-tools btn-group btn-sm pull-right">
               <button ui-sref="lead.create({ type:'buy' })"  ng-if="showBuy" class="btn btn-primary btn-sm">
                 + Create buy lead
@@ -90,7 +90,7 @@
         </div>
         </div>
 
-      </div>  
+      </div>
 
       <!--For Mobile-->
 
@@ -150,7 +150,7 @@
       </div>
       <div class="callout callout-warning text-center" ng-if="orders.$resolved && !orders.length">
         No orders yet, why don't you <a ui-sref="order.create">create one</a>?
-      </div>  
+      </div>
     </div>
   </div>
 </section>

@@ -9,6 +9,11 @@
     	</span>
     </div>
 
+    <div class="box-header">
+      <div class="col-lg-12">
+        <div class="callout callout-danger" ng-show="error">{{error}}</div>
+      </div>
+    </div>
 
     <div class="box-body">
       <div class="big-loader" ng-if="!orders.$resolved"></div>
@@ -30,13 +35,13 @@
         <div class="col-lg-9" ng-include="'/angular/order/views/_order-detail.partial.html'"></div>
 
         <div class="col-lg-3" ng-controller="OrderIndexController" ng-init="getIndices()" ng-if="orders.$resolved">
-          <button ng-click="order.index_id = undefined">x</button>          
+          <button ng-click="order.index_id = undefined">x</button>
           Price Index Reference
           <div class="btn-group-vertical">
             <label class="btn btn-default" ng-repeat="index in indices"
               ng-model="order.index_id" uib-btn-radio="index.id">
               <small>{{ index.index_provider }}
-              {{ index.index_name }} - </small>              
+              {{ index.index_name }} - </small>
               {{ index.price }}
             </label>
           </div>

@@ -26,7 +26,7 @@
               <div class="col-sm-4 col-xs-4">
                 <div class="description-block border-right">
                   <h3 class="description-header text-green" style="font-size:40px !important;">{{funnel["lead-sell"]}}</h3>
-                  <span class="description-text text-green">Total Sell Leads</span>
+                  <span class="description-text text-green">Total <span ng-if="showBuy">Sell </span>Leads</span>
                 </div>
               </div>
             </div>
@@ -50,11 +50,11 @@
               <div class="col-sm-4 col-xs-4">
                 <div class="description-block border-right">
                   <h3 class="description-header text-blue" style="font-size:40px !important;">{{funnel["finalized"]}}</h3>
-                  <span class="description-text text-blue">Total Finalized</span>
+                  <span class="description-text text-blue">Total In Shipment</span>
                 </div>
               </div>
             </div>
-            
+
           </div>
         </div>
       </div>
