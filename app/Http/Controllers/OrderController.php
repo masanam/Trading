@@ -677,6 +677,8 @@ class OrderController extends Controller
           $q->select(['concession_name']);
         }])->with('additional_cost.company')->find($id);
 
+    if(!$order) return 'Your Order is not found';
+
     $this->authorize('view', $order);
 
     // lazyloading semua negotiation log
