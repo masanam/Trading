@@ -130,8 +130,8 @@ class UsersTableSeeder extends Seeder
         Role::find(11)->privileges()->attach(3); // executive
 
         Role::find(15)->privileges()->attach(2); // traders
-        Role::find(15)->privileges()->attach(4);
-        Role::find(15)->privileges()->attach(8);
+        Role::find(15)->privileges()->attach(5);
+        Role::find(15)->privileges()->attach(9);
 
         Role::find(21)->privileges()->attach(3); // cmo
 

@@ -50,7 +50,7 @@
         </td>
         <td>
           <a ui-sref="lead.view({ id: lead.id })" class="glyphicon glyphicon-info-sign"></a>
-          <a ng-click="status(lead, 'x')" uib-tooltip="Delete Order" class="glyphicon glyphicon-trash"
+          <a ng-click="changeStatus(lead, 'x')" uib-tooltip="Delete Order" class="glyphicon glyphicon-trash"
             ng-if="Authentication.user.id===lead.user_id && lead.status !== 's' && lead.status !== 'p'"></a>
         </td>
       </tr>

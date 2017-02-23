@@ -5,7 +5,9 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
     $scope.browse = {};
     $scope.$watchGroup(['browse.status', 'browse.category'], function() { $scope.find(); });
     $scope.display = {};
-    
+
+    $scope.deployment = Environment.deployment;
+    $scope.hideCrossingLeads = Environment.hideCrossingLeads;
     $scope.showBuy = Environment.showBuy;
     $scope.destinationBy = Environment.destinationBy;
     $scope.showAutoApproval = Environment.showAutoApproval;

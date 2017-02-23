@@ -39,7 +39,7 @@
 <div class="row">
   <div class="col-lg-3">
     <label>Date of Request : </label>
-    <input type="date" class="form-control" ng-model="lead.order_date" required ng-value="today"/>
+    <input type="date" class="form-control" ng-model="lead.order_date" required ng-value="today" ng-init="lead.order_date = today"/>
   </div>
   <div class="col-lg-3">
     <label>Order Validity : </label>

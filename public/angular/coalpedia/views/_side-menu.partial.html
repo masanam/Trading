@@ -24,7 +24,7 @@
      <a ui-sref="company.list({ type: 'supplier' })" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
   </div>
 
-  <div class="small-box bg-aqua" ng-if="deployment !== 'berau'">
+  <div class="small-box bg-aqua">
     <div class="inner">
       <h4>{{ total.vendor }} Records</h4>
 
@@ -36,7 +36,7 @@
      <a ui-sref="company.list({ type: 'vendor' })" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
   </div>
 
-  <div class="small-box bg-maroon">
+  <div class="small-box bg-maroon" ng-if="showBuy==true">
     <div class="inner">
       <h4>{{ total.concession }} Records</h4>
       <p>CONCESSION</p>
@@ -46,7 +46,7 @@
     </div>
     <a ui-sref="concession.list" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
   </div>
-    
+
   <div class="small-box bg-green">
     <div class="inner">
       <h4>Map</h4>

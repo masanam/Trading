@@ -13,11 +13,11 @@
   <div class="box-body" uib-collapse="isCollapsed">
     <!-- Button show on large screen -->
     <div class="pull-right btn-group">
-      <button type="button" class="btn btn-default" ng-click="status(lead, 'l')"
+      <button type="button" class="btn btn-default" ng-click="changeStatus(lead, 'l')"
         ng-if="(lead.order_status==='v' || lead.order_status===3) && Authentication.user.id===lead.user_id">
         <i class="glyphicon glyphicon-arrow-right"></i> Mark as Leads
       </button>
-      <button type="button" class="btn btn-default" ng-click="status(lead, 'v')"
+      <button type="button" class="btn btn-default" ng-click="changeStatus(lead, 'v')"
         ng-if="lead.order_status==='l' && Authentication.user.id===lead.user_id">
         <i class="glyphicon glyphicon-arrow-right"></i> Mark Verified
       </button>
@@ -25,7 +25,7 @@
         ng-if="lead.order_status!=='s' && lead.order_status!=='p' && Authentication.user.id===lead.user_id">
         <i class="glyphicon glyphicon-pencil"></i> Update
       </button>
-      <button type="button" class="btn btn-danger" ng-click="status(lead, 'x')"
+      <button type="button" class="btn btn-danger" ng-click="changeStatus(lead, 'x')"
         ng-if="lead.order_status!=='s' && lead.order_status!=='p' && Authentication.user.id===lead.user_id">
         <i class="glyphicon glyphicon-trash"></i> Delete
       </button>

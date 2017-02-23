@@ -19,7 +19,7 @@ angular.module('coalpedia').controller('FactoryController', ['$scope', '$statePa
 
       modalInstance.result.then(function (res) {
         if(!$scope.company.factories) $scope.company.factories = [];
-        
+
         $scope.company.factories.push(res);
       });
     };
@@ -46,7 +46,7 @@ angular.module('coalpedia').controller('FactoryController', ['$scope', '$statePa
     };
 
     $scope.delete = function (factory) {
-      if(confirm('Are you sure you want to delete ' + factory.name + '?')){
+      if(confirm('Are you sure you want to delete ' + factory.factory_name + '?')){
         factory = new Factory(factory);
         factory.$remove(function (res){
           $scope.company.factories.splice($scope.company.factories.indexOf(factory), 1);

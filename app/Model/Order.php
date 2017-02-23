@@ -72,7 +72,7 @@ class Order extends Model
     $price = $volume = 0;
 
     foreach($this->sells as &$sell){
-      $price += $sell->pivot->price * $sell->pivot->volume;
+      $price += $sell->pivot->base_price * $sell->pivot->volume;
       $volume += $sell->pivot->volume;
     }
 
@@ -84,12 +84,34 @@ class Order extends Model
     $price = $volume = 0;
 
     foreach($this->buys as &$buy){
-      $price += $buy->pivot->price * $buy->pivot->volume;
+      $price += $buy->pivot->base_price * $buy->pivot->volume;
       $volume += $buy->pivot->volume;
     }
 
     if($volume) $this->average_buy_price = $price/$volume;
     else $this->average_buy_price = 0;
+  }
+
+  public function totalPrice() {
+    $this->total_buy_price = $this->total_sell_price = $this->total_buy_volume = $this->total_sell_volume = $this->total_additional_costs = 0;
+
+    foreach($this->buys as &$buy){
+      $this->total_buy_price += $buy->pivot->base_price * $buy->pivot->volume;
+      $this->total_buy_volume += $buy->pivot->volume;
+    }
+    if($this->total_buy_volume) $this->total_buy_price = $this->total_buy_price / $this->total_buy_volume;
+
+    foreach($this->sells as &$sell){
+      $this->total_sell_price += $sell->pivot->base_price * $sell->pivot->volume;
+      $this->total_sell_volume += $sell->pivot->volume;
+    }
+    if($this->total_sell_volume) $this->total_sell_price = $this->total_sell_price / $this->total_sell_volume;
+
+    foreach($this->additional_cost as &$add){
+      if(!count($this->buys)) $this->total_sell_price -= $add->cost;
+      if(!count($this->sells)) $this->total_buy_price += $add->cost;
+      $this->total_additional_costs += $add->cost;
+    }
   }
 
   public function earliestLaycan(){

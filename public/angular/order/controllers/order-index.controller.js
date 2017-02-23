@@ -17,7 +17,9 @@ angular.module('order').controller('OrderIndexController', ['$scope', '$statePar
     $scope.options = [];
 
     $scope.render = function(index){
-      $scope.display.index = index || 1;
+      $scope.display.index = index;
+      if(!$scope.display.index) $scope.display.index = $scope.indices[0];
+
       $scope.series = [];
       $scope.data = [[],[],[]];
       $scope.labels = [];
@@ -38,7 +40,7 @@ angular.module('order').controller('OrderIndexController', ['$scope', '$statePar
 
         Index.query({ submodel:'price', indexId:$scope.display.index.id, date:date, latest:'7' },
           function (res){
-            $scope.series = [ index.index_provider + ' ' + index.index_name, 'buy', 'sell' ];
+            $scope.series = [ $scope.display.index.index_provider + ' ' + $scope.display.index.index_name, 'buy', 'sell' ];
 
             var mid = Math.round(res.length/2);
 

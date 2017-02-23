@@ -12,7 +12,7 @@ angular.module('lead').controller('LeadController', ['$scope', '$state', '$state
     $scope.destinationBy = Environment.destinationBy;
     $scope.productQuality = Environment.productQuality;
 
-    $scope.today = $filter('date')(Date.now(), 'yyyy-MM-dd');
+    $scope.today = new Date();
 
     $scope.countries = Country.query();
     $scope.selected = {};
@@ -78,7 +78,7 @@ angular.module('lead').controller('LeadController', ['$scope', '$state', '$state
       });
     };
 
-    $scope.status = function (lead, status) {
+    $scope.changeStatus = function (lead, status) {
       var action;
 
       switch(status){
@@ -96,7 +96,8 @@ angular.module('lead').controller('LeadController', ['$scope', '$state', '$state
           if(res.lead_type==='b') $scope.lead_type = 'buy';
           else $scope.lead_type = 'sell';
           if (status === 'x') {
-            $state.go('lead.list', { lead_type: $scope.lead_type });
+            $scope.leads.splice($scope.leads.indexOf(lead), 1);
+            //$state.go('lead.list', { lead_type: $scope.lead_type });
           }
           else lead = res;
         });

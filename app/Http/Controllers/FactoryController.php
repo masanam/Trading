@@ -135,7 +135,10 @@ class FactoryController extends Controller
             ] ,404);
         }
 
-        $factory = DB::table('factory')->where('id', $id)->update(['status' => 'x']);
+        $factory->status = 'x';
+        $factory->save();
+
+        //$factory = DB::table('factory')->where('id', $id)->update(['status' => 'x']);
 
         return response()->json($factory, 200);
     }

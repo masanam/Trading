@@ -12,7 +12,7 @@ class Lead extends Model
         'factory_id',
         'carrier_type',
         'concession_id',
-    	'address',
+        'address',
         'city',
         'country',
         'latitude',

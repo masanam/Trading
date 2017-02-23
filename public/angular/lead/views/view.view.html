@@ -5,7 +5,7 @@
       <i class="glyphicon glyphicon-arrow-left"></i> Back
     </button>
     <div class="pull-right">
-      <button type="button" class="btn btn-primary" ui-sref="order.create">
+      <button type="button" class="btn btn-primary" ui-sref="order.create({ lead_id: lead.id, lead_type: lead.lead_type === 's' ? 'Sell' : 'Buy' })">
         <i class="glyphicon glyphicon-arrow-right"></i> Start Deal
       </button>
     </div>
