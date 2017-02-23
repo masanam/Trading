@@ -31,6 +31,7 @@ angular.module('lead').controller('LeadController', ['$scope', '$state', '$state
           else $scope.selected.location = $scope.lead.factory;
         }
       });
+      console.log($scope.lead);
     };
 
     $scope.find = function(status, $search) {
