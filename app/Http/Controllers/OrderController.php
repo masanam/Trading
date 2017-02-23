@@ -677,6 +677,13 @@ class OrderController extends Controller
           $q->select(['concession_name']);
         }])->with('additional_cost.company')->find($id);
 
+    $order->earliestLaycan();
+    $order->latestLaycan();
+
+    return response()->json([
+      'laycan_start' => $order->laycan_start
+    ]);
+
     $this->authorize('view', $order);
 
     // lazyloading semua negotiation log
