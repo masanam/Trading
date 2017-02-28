@@ -147,11 +147,30 @@ class AuthenticateController extends Controller
             $mail = new ForgotPassword($request->email, $randPass);
             Mail::to($request->email)
                 ->send($mail);
+            if($request->envelope == "true") {
+              $json = [
+                'status' => 200,
+                'error' => 'ok',
+                'message' => 'Email Sent'
+              ];
+            } else {
+              $json = ['message' => 'Email Sent'];
+            }
 
-            return response()->json(['message' => 'Email Sent'], 200);
+            return response()->json($json, 200);
         }
         else {
-            return response()->json(['message' => 'Not Found'], 404);
+          if($request->envelope == "true") {
+            $json = [
+              'status' => 404,
+              'error' => 'Not Found',
+              'message' => 'Not Found'
+            ];
+          } else {
+            $json = ['message' => 'Not Found'];
+          }
+
+          return response()->json($json, 404);
         }
 
     }
