@@ -33,10 +33,10 @@
 
 	    <div class="no-padding">
         <div class="col-lg-9" ng-include="'/angular/order/views/_order-detail.partial.html'"></div>
-
-        <div class="col-lg-3" ng-controller="OrderIndexController" ng-init="getIndices()" ng-if="orders.$resolved">
-          <button ng-click="order.index_id = undefined">x</button>
-          Price Index Reference
+        <button ng-click="auto = true; manual = '' " class="btn btn-default">Price Index</button>
+        <div class="col-lg-3" ng-if="auto" ng-controller="OrderIndexController" ng-init="getIndices()" ng-if="orders.$resolved">
+        </br>  
+          Price Index Reference {{ order.index_id }}
           <div class="btn-group-vertical">
             <label class="btn btn-default" ng-repeat="index in indices"
               ng-model="order.index_id" uib-btn-radio="index.id">
@@ -44,6 +44,22 @@
               {{ index.index_name }} - </small>
               {{ index.price }}
             </label>
+            <button ng-click="order.index_id = undefined" class="btn btn-danger">Reset</button>
+          </div>
+        </div>
+        <button ng-click="auto = ''; manual = 'true'; order.index_id = undefined" class="btn btn-default">Add Manual</button>
+        <div class="col-lg-3" ng-if="manual" ng-if="orders.$resolved">
+        </br>  
+          Price Index Reference Manual
+          <div class="btn-group-vertical">
+            <label>Index Name</label>
+            <input type="text" class="form-control" ng-model="order.index_name" required step="any"/>
+            <label>Index Provider</label>
+            <input type="text" class="form-control" ng-model="order.index_provider" required step="any"/>
+            <label>Price</label>
+            <input type="number" class="form-control" ng-model="order.price" required step="any"/>
+            </br>
+            <button class="btn btn-danger" ng-click="order.index_name = undefined; order.index_provider = undefined; order.price = undefined">Reset</button>
           </div>
         </div>
       </div>

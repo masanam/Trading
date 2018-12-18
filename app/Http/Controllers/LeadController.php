@@ -40,11 +40,14 @@ class LeadController extends Controller
     $lead_type = strtolower($req->lead_type);
 
     // select statuses to include based on query category
-    if($req->order) $status = ['v', 'l', 'p']; // only v, l, p IF this is a lead added to orders
+    if($req->order) {
+      $status = ['v', 'l', 'p']; // only v, l, p IF this is a lead added to orders
+      $query->orderBy('updated_at', 'desc');
+    }
     else if($req->order_status=='all') $status = ['v', 'l', 's', 'p'];
     else if($req->order_status=='draft') { $status = ['0', '1', '2', '3', '4']; $user_id = true; }
     else if($req->order_status!=null) $query->where('order_status', $req->order_status);
-    
+
     //$query->orWhere('city', 'like', '%'.$param.'%');
 
     $query->where(
@@ -59,8 +62,6 @@ class LeadController extends Controller
         });
       }
     );
-   
-    
 
     if (isset($status)) $query->whereIn('order_status', $status);
 
@@ -84,7 +85,7 @@ class LeadController extends Controller
               ->orWhereRaw('laycan_start BETWEEN \'' . $ref->laycan_start . '\' AND \'' . $ref->laycan_end . '\'');
 
           });
-        
+
         return response()->json($query->get(), 200);
       }
 

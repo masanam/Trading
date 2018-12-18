@@ -32,8 +32,8 @@
         <td>{{ lead.order_date | date : 'd MMMM yyyy' }}</td>
         <td>{{ lead.company.company_name }}</td>
         <td>{{ lead.typical_quality }}</td>
-        <td>{{ lead.volume }} mt</td>
-        <td>{{ lead.volume - getUsed(lead) }} mt</td>
+        <td>{{ lead.volume | number}} mt</td>
+        <td>{{ lead.volume - getUsed(lead) | number}} mt</td>
         <td>{{ lead.order_expired | date : 'd MMMM yyyy' }}</td>
         <td>{{ lead.currency }} {{ lead.price | number:2}}</td>
         <td>{{ lead.city }}</td>

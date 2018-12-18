@@ -15,15 +15,16 @@ class CreateSalesTargetTable extends Migration
     {
         Schema::create('sales_target', function (Blueprint $table) {
             // $table->increments('id');
-            $table->integer('product_id')->unsigned();           
+            $table->integer('product_variant_id')->unsigned();           
             $table->integer('month')->unsigned();
             $table->integer('year')->unsigned();
-            $table->integer('value');
+            $table->integer('tonnage');
+            $table->integer('price');
             $table->char('status', 1);
             $table->timestamps();
 
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('restrict');
-            $table->primary(['product_id', 'month', 'year']);
+            $table->foreign('product_variant_id')->references('id')->on('product_variants')->onDelete('restrict');
+            $table->primary(['product_variant_id', 'month', 'year']);
         });
     }
 

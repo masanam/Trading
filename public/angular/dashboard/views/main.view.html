@@ -12,7 +12,7 @@
           <button class="btn btn-default" ng-click="indexPage = indexPage-1" ng-disabled="indexPage==0">Prev</button>
           <button class="btn btn-default" ng-click="indexPage = indexPage+1" ng-disabled="indexPage>(indices.length/3)-1">Next</button>
         </div>
-      </div>      
+      </div>
 
       <div class="btn-group  pull-right hidden-md hidden-sm hidden-lg">
           <button class="col-sm-6 btn btn-default" ng-click="indexPage = indexPage-1" ng-disabled="indexPage==0">Prev</button>
@@ -20,17 +20,21 @@
       </div>
 
 
-      <div class="box-body" ng-init="getIndices()"  >
+      <div class="box-body" ng-init="getIndices()" >
       	<div ng-repeat="index in indices | startFrom:indexPage*6 | limitTo:6"
-      		class="col-lg-2 col-sm-4 col-xs-12 border-right">
+      		class="col-lg-2 col-sm-4 col-xs-12 border-right" ng-click="showIndexDetails(index)">
           <div style="min-height: 50px;">
         		<small>{{ index.index_provider }} {{ index.index_name }}</small><br>
         		<span>$ {{ index.price | number:2 }}</span><br>
-        		<small class="text-muted">{{ index.date | date }}</small>
+            <small ng-if="index.frequency === 'd'">Daily Data</small>
+            <small ng-if="index.frequency === 'w'">Weekly Data</small>
+            <small ng-if="index.frequency === 'm'">Monthly Data</small>
           </div>
           <div style="height:50px; margin-top:-40px; vertical-align:top; text-align: right;">
             <spark-line-chart data="index.latest"></spark-line-chart>
           </div>
+          <small class="text-muted">{{ index.earliestDate | date }}</small> -
+          <small class="text-muted">{{ index.latestDate | date }}</small>
       	</div>
       </div>
 

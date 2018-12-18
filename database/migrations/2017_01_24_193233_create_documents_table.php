@@ -32,9 +32,11 @@ class CreateDocumentsTable extends Migration
             $table->string('title');
             $table->string('remarks');
             $table->string('url');
-            $table->integer('older_version')->unsigned();
-            $table->integer('newer_version')->unsigned();
+            $table->integer('older_version')->nullable()->unsigned();
+            $table->integer('newer_version')->nullable()->unsigned();
             $table->integer('version')->unsigned();
+            $table->integer('progress')->nullable();
+            $table->string('progress_desc')->nullable();
             $table->char('status', 1);
             $table->timestamps();
 

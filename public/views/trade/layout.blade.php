@@ -25,9 +25,12 @@
     var trx = "{{ Config::get('app.defaultTrx') }}";
     var showBuy = "{{ Config::get('app.showBuy') }}";
     var showAutoApproval = "{{ Config::get('app.showAutoApproval') }}";
+    var resetApprovalOnUpdate = "{{ Config::get('app.resetApprovalOnUpdate') }}";
     var destinationBy = "{{ Config::get('app.destinationBy') }}";
     var productQuality = "{{ Config::get('app.productQuality') }}";
     var defaultCurrency = "{{ Config::get('app.defaultCurrency') }}";
+    var allowRetrachApproval = "{{ Config::get('app.allowRetrachApproval') }}";
+    var allowEditAfterApproval = "{{ Config::get('app.allowEditAfterApproval') }}";
   </script>
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->

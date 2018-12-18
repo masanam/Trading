@@ -1,168 +1,173 @@
-<div class="col-lg-12 ng-print" ng-if="included === true && approver === true && !loadBig"">
-  <div class="callout callout-warning" ng-if="order.status === 'p' && approving === false">
-    <div class="orange-small-loader" style="margin: 5px 45%;" ng-if="loadScreen"></div>
-    <h4 ng-if="myApproval.pivot.status==='p' && !loadScreen">
-      This order is waiting for your approval.</p>
-      <a class="btn btn-success" ng-click="approve_reject('a');">
-        <i class="glyphicon glyphicon-thumbs-up" title="Approve Order"></i> Approve Order
-      </a>
-      <a class="btn btn-danger" ng-click="approve_reject('r');">
-        <i class="glyphicon glyphicon-thumbs-down" title="Reject Order"></i> Reject Order
-      </a>
-    </h4>
-    <h4 ng-if="myApproval.pivot.status==='r'&& !loadScreen">
-      This Order Rejected, Do you want to change your mind?</p>
-      <a class="btn btn-success" ng-click="approve_reject('a');">
-        <i class="glyphicon glyphicon-thumbs-up" title="Approve Order"></i> Approve Order
-      </a>
-    </h4>
+<style>
+  @page { size: landscape; }
+  @media print
+  {
+      .no-print, .no-print *
+      {
+          display: none !important;
+      }
+  }
+</style>
+<div class="row">
+  <div class="col-lg-12 ng-print" ng-if="included === true && approver === true && !loadBig">
+    <div class="callout callout-warning" ng-if="order.status === 'p' && approving === false">
+      <div class="orange-small-loader" style="margin: 5px 45%;" ng-if="loadScreen"></div>
+      <h4 ng-if="myApproval.pivot.status==='p' && !loadScreen">
+        This order is waiting for your approval.</p>
+        <a class="btn btn-success" ng-click="approve_reject('a');">
+          <i class="glyphicon glyphicon-thumbs-up" title="Approve Order"></i> Approve Order
+        </a>
+        <a class="btn btn-danger" ng-click="approve_reject('r');">
+          <i class="glyphicon glyphicon-thumbs-down" title="Reject Order"></i> Reject Order
+        </a>
+      </h4>
+      <h4 ng-if="myApproval.pivot.status==='r'&& !loadScreen">
+        This order has been rejected, do you want to change your mind?</p>
+        <a class="btn btn-success" ng-click="approve_reject('a');">
+          <i class="glyphicon glyphicon-thumbs-up" title="Approve Order"></i> Approve Order
+        </a>
+      </h4>
+    </div>
+    <div class="callout callout-warning" ng-if="order.status === 'r' && approving === false">
+      <div class="orange-small-loader" style="margin: 5px 45%;" ng-if="loadScreen"></div>
+      <h4 ng-if="!loadScreen">
+        Do you want to undo your rejection?
+        <a class="btn btn-success" ng-click="approve_reject('a');">
+          <i class="glyphicon glyphicon-thumbs-up" title="Approve Order"></i> Approve Order
+        </a>
+      </h4>
+    </div>
+    <div class="callout callout-warning" ng-if="order.status !== 'a' && approving === true && allowRetrachApproval !== 'bib'">
+      <div class="orange-small-loader" style="margin: 5px 45%;" ng-if="loadScreen"></div>
+      <h4 ng-if="!loadScreen">
+        Do you want to undo your approval?
+        <a class="btn btn-danger" ng-click="approve_reject('r');">
+          <i class="glyphicon glyphicon-thumbs-down" title="Retract Approval"></i> Retract Approval
+        </a>
+      </h4>
+    </div>
   </div>
-  <div class="callout callout-warning" ng-if="order.status === 'r' && approving === false">
-    <div class="orange-small-loader" style="margin: 5px 45%;" ng-if="loadScreen"></div>
-    <h4 ng-if="!loadScreen">
-      Do you want to undo your rejection?
-      <a class="btn btn-success" ng-click="approve_reject('a');">
-        <i class="glyphicon glyphicon-thumbs-up" title="Approve Order"></i> Approve Order
-      </a>
-    </h4>
-  </div>
-  <div class="callout callout-warning" ng-if="order.status !== 'a' && approving === true">
-    <div class="orange-small-loader" style="margin: 5px 45%;" ng-if="loadScreen"></div>
-    <h4 ng-if="!loadScreen">
-      Do you want to undo your approval?
-      <a class="btn btn-danger" ng-click="approve_reject('r');">
-        <i class="glyphicon glyphicon-thumbs-down" title="Retract Approval"></i> Retract Approval
-      </a>
-    </h4>
-  </div>
+  <div class="row">
 </div>
 
 <div class="big-loader" ng-if="loadBig"></div>
-
-<div class="col-lg-8" id="order-detail" ng-init="findOne();" >
-  <style>
-    @media print
-    {
-        .no-print, .no-print *
-        {
-            display: none !important;
-        }
-    }
-  </style>
-  <div class="box" ng-if="!loadBig">
-    <div class="box-header with-border" >
-      <h1 class="box-title">ORD#{{ ("10000"+order.id).slice(-4) }} - {{ order.trader.name }}</h1>
-      <span class="badge badge-primary">
-        {{ order.status === 'c' ? 'Combined' : order.status === 'p' ? 'Pending Approval' : order.status === 'd' ? 'Draft' : order.status === 'a' ? 'Approved' : order.status === 'f' ? 'In Shipment' : 'cancel' }}
-      </span>
-      <div class="box-tools pull-right no-print">
-        <a class="btn btn-default hidden-xs" ui-sref="order.list">
-          <i class="glyphicon glyphicon-chevron-left"></i> Back
-        </a>
-        <a class="btn btn-success hidden-xs" ng-click="editContract('f');" ng-show="order.status === 'f' && order.user_id === Authentication.user.id">
-          <i class="glyphicon glyphicon-floppy-saved" title="Edit Contract"></i> Edit Contract
-        </a>
-        <a class="btn btn-primary hidden-xs" ng-click="print(order);" ng-show="(order.status === 'a' || order.status === 'f') && (order.user_id === Authentication.user.id || approver === true)">
-          <i class="glyphicon glyphicon-print" title="Print"></i> Print
-        </a>
-        <a class="btn btn-success hidden-xs" ng-click="changeStatus('p');" ng-show="(order.status === 'd' || order.status === 'p') && order.user_id === Authentication.user.id">
-          <i class="glyphicon glyphicon-send" title="Request for Approval"></i> <span ng-if="order.status === 'p'">Re-</span>Request Approval
-        </a>
-        <a class="btn btn-success hidden-xs" ng-click="changeStatus('f');" ng-show="order.status === 'a' && order.user_id === Authentication.user.id">
-          <i class="glyphicon glyphicon-floppy-saved" title="Finalize Order"></i> In Shipment
-        </a>
-        <a class="btn btn-danger hidden-xs" ng-click="changeStatus('x');" ng-show="(order.status !== 'c' && order.status !== 'x' && order.status !== 'f') && order.user_id === Authentication.user.id">
-          <i class="glyphicon glyphicon-trash" title="Cancel Order"></i> Cancel Order
-        </a>
-      </div>
-      <!--For mobile-->
-
-      <div class="hidden-sm hidden-md hidden-lg">
-      <hr>
-          <div class="btn-group col-xs-12 " uib-dropdown >
-            <button type="button" class="btn btn-primary">Action</button>
-            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" uib-dropdown-toggle>
-              <span class="caret"></span>
-                <span class="sr-only">Toggle Dropdown</span>
-            </button>
-              <ul class="dropdown-menu" uib-dropdown-menu>
-                <li>
-                  <a ui-sref="order.list">
-                      <i class="glyphicon glyphicon-chevron-left"></i> Back
-                  </a>
-                </li>
-                <li>
-                  <a  ng-click="print(order);" ng-show="(order.status === 'a' || order.status === 'f') && (order.user_id === Authentication.user.id || approver === true)">
-                    <i class="glyphicon glyphicon-print" title="Print"></i> Print
-                  </a>
-                </li>
-                <li>
-                  <a  ng-click="changeStatus('p');" ng-show="order.status === 'd' && order.user_id === Authentication.user.id">
-                  <i class="glyphicon glyphicon-send" title="Request for Approval"></i> Request Approval
-                  </a>
-                </li>
-                <li>
-                  <a  ng-click="changeStatus('f');" ng-show="order.status === 'a' && order.user_id === Authentication.user.id">
-                    <i class="glyphicon glyphicon-floppy-saved" title="Finalize Order"></i> In Shipment
-                  </a>
-                </li>
-                <li>
-                  <a  ng-click="editContract('f');" ng-show="order.status === 'e' && order.user_id === Authentication.user.id">
-                    <i class="glyphicon glyphicon-floppy-saved" title="Edit Contract"></i> Edit Contract
-                  </a>
-                </li>
-                <li>
-                  <a ng-click="changeStatus('x');" ng-show="(order.status !== 'c' && order.status !== 'x' && order.status !== 'f') && order.user_id === Authentication.user.id">
-                    <i class="glyphicon glyphicon-trash" title="Cancel Order"></i> Cancel Order
-                  </a>
-                </li>
-
-              </ul>
+  <div class="col-lg-8" id="order-detail" ng-init="findOne();" >
+    <div class="box" ng-if="!loadBig">
+      <div class="box-header with-border" >
+        <h1 class="box-title">ORD#{{ ("10000"+order.id).slice(-4) }} - {{ order.trader.name }}</h1>
+        <span class="badge badge-primary">
+          {{ order.status === 'c' ? 'Combined' : order.status === 'p' ? 'Pending Approval' : order.status === 'd' ? 'Draft' : order.status === 'a' ? 'Approved' : order.status === 'f' ? 'In Shipment' : 'cancel' }}
+        </span>
+        <div class="box-tools pull-right no-print">
+          <a class="btn btn-default hidden-xs" onclick="window.history.back()">
+            <i class="glyphicon glyphicon-chevron-left"></i> Back
+          </a>
+          <a class="btn btn-success hidden-xs" ng-click="editContract('f');" ng-show="order.status === 'f' && order.user_id === Authentication.user.id">
+            <i class="glyphicon glyphicon-floppy-saved" title="Edit Contract"></i> Edit Contract
+          </a>
+          <!-- ng-click="print(order);" -->
+          <a class="btn btn-primary hidden-xs" href="./api/orders/print?token={{ Authentication.token }}&orderId={{ order.id }}&quality={{ productQuality }}&showBuy={{ showBuy }}" target="_blank" ng-show="(order.user_id === Authentication.user.id || approver === true)">
+            <i class="glyphicon glyphicon-print" title="Print"></i> Print
+          </a>
+          <a class="btn btn-success hidden-xs" ng-click="changeStatus('p');" ng-show="(order.status === 'd' || order.status === 'p') && order.user_id === Authentication.user.id">
+            <i class="glyphicon glyphicon-send" title="Request for Approval"></i> <span ng-if="order.status === 'p'">Re-</span>Request Approval
+          </a>
+          <!-- <a class="btn btn-success hidden-xs" ng-click="changeStatus('f');" ng-show="order.status === 'a' && order.user_id === Authentication.user.id">
+            <i class="glyphicon glyphicon-floppy-saved" title="Finalize Order"></i> In Shipment
+          </a> -->
+          <a class="btn btn-danger hidden-xs" ng-click="changeStatus('x');" ng-show="(order.status !== 'c' && order.status !== 'x' && order.status !== 'f') && order.user_id === Authentication.user.id">
+            <i class="glyphicon glyphicon-trash" title="Cancel Order"></i> Cancel Order
+          </a>
         </div>
+        <!--For mobile-->
+
+        <div class="hidden-sm hidden-md hidden-lg">
+        <hr>
+          <div class="btn-group col-xs-12 " uib-dropdown>
+              <button type="button" class="btn btn-primary">Action</button>
+              <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" uib-dropdown-toggle>
+                <span class="caret"></span>
+                  <span class="sr-only">Toggle Dropdown</span>
+              </button>
+                <ul class="dropdown-menu" uib-dropdown-menu>
+                  <li>
+                    <a onclick="window.history.back()">
+                        <i class="glyphicon glyphicon-chevron-left"></i> Back
+                    </a>
+                  </li>
+                  <li>
+                    <a  href="./api/orders/print?token={{ Authentication.token }}&orderId={{ order.id }}&quality={{ productQuality }}&showBuy={{ showBuy }}" ng-show="(order.status === 'a' || order.status === 'f') && (order.user_id === Authentication.user.id || approver === true)">
+                      <i class="glyphicon glyphicon-print" title="Print"></i> Print
+                    </a>
+                  </li>
+                  <li>
+                    <a  ng-click="changeStatus('p');" ng-show="order.status === 'd' && order.user_id === Authentication.user.id">
+                    <i class="glyphicon glyphicon-send" title="Request for Approval"></i> Request Approval
+                    </a>
+                  </li>
+                  <li>
+                    <a  ng-click="changeStatus('f');" ng-show="order.status === 'a' && order.user_id === Authentication.user.id">
+                      <i class="glyphicon glyphicon-floppy-saved" title="Finalize Order"></i> In Shipment
+                    </a>
+                  </li>
+                  <li>
+                    <a  ng-click="editContract('f');" ng-show="order.status === 'e' && order.user_id === Authentication.user.id">
+                      <i class="glyphicon glyphicon-floppy-saved" title="Edit Contract"></i> Edit Contract
+                    </a>
+                  </li>
+                  <li>
+                    <a ng-click="changeStatus('x');" ng-show="(order.status !== 'c' && order.status !== 'x' && order.status !== 'f') && order.user_id === Authentication.user.id">
+                      <i class="glyphicon glyphicon-trash" title="Cancel Order"></i> Cancel Order
+                    </a>
+                  </li>
+
+                </ul>
+          </div>
+        </div>
+        <!--For mobile-->
       </div>
-      <!--For mobile-->
+
+      <div class="box-header" ng-if="order.request_reason">
+        <h4 class="box-title">Request for Approval Notes : {{ order.request_reason }}</h4>
+      </div>
+      <div class="box-header" ng-if="order.cancel_reason">
+        <h4 class="box-title">Cancel Notes : {{ order.cancel_reason }}</h4>
+      </div>
+      <div class="box-header" ng-if="order.finalize_reason">
+        <h4 class="box-title">Finalize Notes : {{ order.finalize_reason }}</h4>
+      </div>
+      <div class="box-header">
+        <small>
+          <em class="text-muted">
+            Created at
+            {{ order.created_at | date:'mediumDate' }},
+            Last Update
+            {{ order.updated_at | date:'mediumDate' }}
+          </em>
+        </small>
+      </div>
+      <div class="box-body no-padding" ng-static-include="'/angular/order/views/_order-detail.partial.html'"></div>
     </div>
 
-    <div class="box-header" ng-if="order.request_reason">
-      <h4 class="box-title">Request for Approval Notes : {{ order.request_reason }}</h4>
+    <div class="box" id="order-deviation" ng-if="!loadBig">
+      <div class="box-body" ng-static-include="'/angular/order/views/_index-deviation.partial.html'"></div>
     </div>
-    <div class="box-header" ng-if="order.cancel_reason">
-      <h4 class="box-title">Cancel Notes : {{ order.cancel_reason }}</h4>
-    </div>
-    <div class="box-header" ng-if="order.finalize_reason">
-      <h4 class="box-title">Finalize Notes : {{ order.finalize_reason }}</h4>
-    </div>
-    <div class="box-header">
-      <small>
-        <em class="text-muted">
-          Created at
-          {{ order.created_at | date:'mediumDate' }},
-          Last Update
-          {{ order.updated_at | date:'mediumDate' }}
-        </em>
-      </small>
-    </div>
-    <div class="box-body no-padding" ng-static-include="'/angular/order/views/_order-detail.partial.html'"></div>
   </div>
 
-  <div class="box" id="order-deviation" ng-if="!loadBig">
-    <div class="box-body" ng-static-include="'/angular/order/views/_index-deviation.partial.html'"></div>
-  </div>
-</div>
+  <div class="col-lg-4" id="order-approval">
+    <div class="box" ng-if="!loadBig">
+      <div class="box-header">
+        Approval
+        <button class="btn btn-default pull-right" ng-click="showLog = !showLog">
+          {{ showLog ? 'Hide' : 'Show' }} Log
+        </button>
+      </div>
+      <div class="box-body no-padding with-border">
+        <div ng-if="showLog" c ng-static-include="'/angular/order/views/_approval-history.partial.html'"></div>
+        <div ng-static-include="'/angular/order/views/_approval.partial.html'"></div>
 
-<div class="col-lg-4" ng-if="included === true || order.user_id === Authentication.user.id" id="order-approval">
-  <div class="box" ng-if="!loadBig">
-    <div class="box-header">
-      Approval
-      <button class="btn btn-default pull-right" ng-click="showLog = !showLog">
-        {{ showLog ? 'Hide' : 'Show' }} Log
-      </button>
-    </div>
-    <div class="box-body no-padding with-border">
-      <div ng-if="showLog" c ng-static-include="'/angular/order/views/_approval-history.partial.html'"></div>
-      <div ng-static-include="'/angular/order/views/_approval.partial.html'"></div>
-
-      <div class="no-print" ng-static-include="'/angular/chat/views/_view-chat.partial.html'"></div>
+        <div class="no-print" ng-static-include="'/angular/chat/views/_view-chat.partial.html'"></div>
+      </div>
     </div>
   </div>
 </div>

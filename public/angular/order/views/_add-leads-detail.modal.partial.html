@@ -3,19 +3,19 @@
 <div class="row">
   <div class="col-sm-6">
   <div class="table-responsive">
-    <table class="table table-striped">
+    <table class="table table-striped" style="margin-bottom: 0">
       <tr>
         <td width="30%"><label>Product Name</label></td>
         <td width="70%">{{ selected.item.product_name || 'N/A' }}</td>
       </tr>
       <tr>
         <td><label>Volume / Available</label></td>
-        <td>{{ selected.item.volume }} / {{ (selected.item.volume - getUsed(selected.item) ) }}</td>
+        <td>{{ selected.item.volume | number }} / {{ (selected.item.volume - getUsed(selected.item) ) | number }}</td>
       </tr>
       <tr>
         <td><label>Price</label></td>
         <td>
-          {{ selected.item.currency }}. {{ selected.item.price }} 
+          {{ selected.item.currency }}. {{ selected.item.price | number }}
         </td>
       </tr>
       <tr>
@@ -25,7 +25,7 @@
       <tr>
         <td><label>Preferred Shipping Term</label></td>
         <td>{{ selected.item.trading_term }} {{ selected.item.trading_term_detail }}</td>
-      </tr>
+      </tr>      
     </table>
     </div>
   </div>
@@ -56,6 +56,16 @@
     </table>
     </div>
   </div>
+  <div class="col-sm-12" style="height: 100px; overflow: auto;">
+  <div class="table-responsive">
+    <table class="table">
+      <tr>
+        <td style="padding-right: 10px; vertical-align: top;"><label>Remarks</label></td>
+        <td>{{ selected.item.remarks }}</td>
+      </tr>
+    </table>
+  </div>
+  </div>
 
   <div class="col-sm-12">
   <div class="table-responsive">
@@ -76,27 +86,33 @@
       <tbody>
         <tr>
           <td><b>Gross Caloric ARB <div class="pull-right">:</div></b></td>
-          <td>{{selected.item.gcv_arb_min}} - {{selected.item.gcv_arb_max}} kcal</td>
+          <td ng-if="productQuality === 'typical'">{{selected.item.gcv_arb_min | number}} kcal/kg</td>
+          <td ng-if="productQuality === 'range'">{{selected.item.gcv_arb_min | number}} - {{selected.item.gcv_arb_max | number}} kcal/kg</td>
         </tr>
         <tr>
           <td><b>Gross Caloric ADB <div class="pull-right">:</div></b></td>
-          <td>{{selected.item.gcv_adb_min}} - {{selected.item.gcv_adb_max}} kcal</td>
+          <td ng-if="productQuality === 'typical'">{{selected.item.gcv_adb_min | number}} kcal/kg</td>
+          <td ng-if="productQuality === 'range'">{{selected.item.gcv_adb_min | number}} - {{selected.item.gcv_adb_max | number}} kcal/kg</td>
         </tr>
         <tr>
           <td><b>Nett Caloric <div class="pull-right">:</div></b></td>
-          <td>{{selected.item.ncv_min}} - {{selected.item.ncv_max}} kcal</td>
+          <td ng-if="productQuality === 'typical'">{{selected.item.ncv_min | number}} kcal/kg</td>
+          <td ng-if="productQuality === 'range'">{{selected.item.ncv_min | number}} - {{selected.item.ncv_max | number}} kcal/kg</td>
         </tr>
         <tr>
           <td><b>Ash <div class="pull-right">:</div></b></td>
-          <td>{{selected.item.ash_min}} - {{selected.item.ash_max}} %</td>
+          <td ng-if="productQuality === 'typical'">{{selected.item.ash_min | number}} %</td>
+          <td ng-if="productQuality === 'range'">{{selected.item.ash_min | number}} - {{selected.item.ash_max | number}} %</td>
         </tr>
         <tr>
           <td><b>Total Sulphur <div class="pull-right">:</div></b></td>
-          <td>{{selected.item.ts_min}} - {{selected.item.ts_max}} %</td>
+          <td ng-if="productQuality === 'typical'">{{selected.item.ts_min | number}} %</td>
+          <td ng-if="productQuality === 'range'">{{selected.item.ts_min | number}} - {{selected.item.ts_max | number}} %</td>
         </tr>
         <tr>
           <td><b>Size <div class="pull-right">:</div></b></td>
-          <td>{{selected.item.size_min}} - {{selected.item.size_max}} mm</td>
+          <td ng-if="productQuality === 'typical'">{{selected.item.size_min | number}} mm</td>
+          <td ng-if="productQuality === 'range'">{{selected.item.size_min | number}} - {{selected.item.size_max | number}} mm</td>
         </tr>
       </tbody>
     </table>
@@ -108,23 +124,28 @@
       <tbody>
         <tr>
           <td><b>Total Moisture <div class="pull-right">:</div></b></td>
-          <td>{{selected.item.tm_min}} - {{selected.item.tm_max}} %</td>
+          <td ng-if="productQuality === 'typical'">{{selected.item.tm_min | number}} %</td>
+          <td ng-if="productQuality === 'range'">{{selected.item.tm_min | number}} - {{selected.item.tm_max | number}} %</td>
         </tr>
         <tr>
           <td><b>Inherent Moisture <div class="pull-right">:</div></b></td>
-          <td>{{selected.item.im_min}} - {{selected.item.im_max}} %</td>
+          <td ng-if="productQuality === 'typical'">{{selected.item.im_min | number}} %</td>
+          <td ng-if="productQuality === 'range'">{{selected.item.im_min | number}} - {{selected.item.im_max | number}} %</td>
         </tr>
         <tr>
           <td><b>Fixed Carbon <div class="pull-right">:</div></b></td>
-          <td>{{selected.item.fc_min}} - {{selected.item.fc_max}} %</td>
+          <td ng-if="productQuality === 'typical'">{{selected.item.fc_min | number}} %</td>
+          <td ng-if="productQuality === 'range'">{{selected.item.fc_min | number}} - {{selected.item.fc_max | number}} %</td>
         </tr>
         <tr>
           <td><b>Volatile Matter <div class="pull-right">:</div></b></td>
-          <td>{{selected.item.vm_min}} - {{selected.item.vm_max}} %</td>
+          <td ng-if="productQuality === 'typical'">{{selected.item.vm_min | number}} %</td>
+          <td ng-if="productQuality === 'range'">{{selected.item.vm_min | number}} - {{selected.item.vm_max | number}} %</td>
         </tr>
         <tr>
           <td><b>Hardness <div class="pull-right">:</div></b></td>
-          <td>{{selected.item.hgi_min}} - {{selected.item.hgi_max}} %</td>
+          <td ng-if="productQuality === 'typical'">{{selected.item.hgi_min | number}}</td>
+          <td ng-if="productQuality === 'range'">{{selected.item.hgi_min | number}} - {{selected.item.hgi_max | number}}</td>
         </tr>
       </tbody>
     </table>

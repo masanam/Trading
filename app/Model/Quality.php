@@ -8,7 +8,7 @@ class Quality extends Model
 {
     protected $table = 'qualities';
     protected $fillable = [
-      'shipment_id' , 'status', 'type'
+      'shipment_id' , 'contract_id', 'status', 'type'
     ];
 
     public function qualityDetail() {

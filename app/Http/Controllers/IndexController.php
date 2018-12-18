@@ -7,16 +7,17 @@ use Illuminate\Support\Facades\DB;
 
 use App\Model\Index;
 use App\Model\IndexPrice;
+use App\Model\Settings;
 
 use App\Http\Requests;
 use Auth;
 
 class IndexController extends Controller
 {
-  // public function __construct(Index $index) {
-  //   $this->middleware('jwt.auth');
-  //   $this->index = $index;
-  // }
+  public function __construct(Index $index) {
+    $this->middleware('jwt.auth');
+    $this->index = $index;
+  }
 
   /**
    * Display a listing of the resource.
@@ -24,7 +25,8 @@ class IndexController extends Controller
    * @return \Illuminate\Http\Response
    */
   public function index(){
-    $indices = Index::get();
+    $indices = Index::with('latestIndexPrice', 'earliestIndexPrice')->where('status', 'a')->get();
+    //$indices = Index::where('status', 'a');
 
     return response()->json($indices, 200);
   }
@@ -37,6 +39,7 @@ class IndexController extends Controller
    */
   public function store(Request $req)
   {
+    // return response()->json($req, 200);
     if(!$req) {
       return response()->json([
         'message' => 'Bad Request'
@@ -45,7 +48,7 @@ class IndexController extends Controller
 
     $index = new Index();
     $this->authorize('create', $index);
-    
+
     $index->index_provider = $req->index_provider;
     $index->index_name = $req->index_name;
     $index->quality = $req->quality;
@@ -53,6 +56,7 @@ class IndexController extends Controller
 
     $index->created_at = Date('Y-m-d H:i:s');
     $index->updated_at = Date('Y-m-d H:i:s');
+    $index->status = 'a';
     $index->save();
 
     return response()->json($index, 200);
@@ -66,7 +70,8 @@ class IndexController extends Controller
    */
   public function show($id)
   {
-    $index = Index::find($id);
+    $index = Index::with('latestIndexPrice', 'earliestIndexPrice')->find($id);
+
     if(!$index) return response()->json([ 'message' => 'Not Found' ], 404);
     return response()->json($index, 200);
   }
@@ -114,11 +119,21 @@ class IndexController extends Controller
    * @return \Illuminate\Http\Response
    */
   public function destroy($id){
-    $index = DB::table('index')->where('id', $id);
-    $this->authorize('update', $index);
-    $index->update(['status' => 'x']);
+    $index = Index::find($id);
 
-    return response()->json(['message' => 'successfully deleted'], 200);
+    if (!$index) {
+        return response()->json([
+            'message' => 'Not found'
+        ] ,404);
+    }
+
+    $index->status = 'x';
+    $index->save();
+
+    $indexprice = IndexPrice::where('index_id', $id)->update(['status'=>'x']);
+    // $indexprice->status = 'x';
+    // $indexprice->save();
+    return response()->json($index, 200);
   }
 
   /**
@@ -128,10 +143,12 @@ class IndexController extends Controller
    * @return \Illuminate\Http\Response
    */
   public function indexPrice ($id, Request $req) {
-    $query = IndexPrice::where([ 'index_id' => $id ])->orderBy('date', 'DESC');
-    
+    $query = IndexPrice::where([ 'index_id' => $id ])->where('status','a')->orderBy('date', 'DESC');
+
     if($req->date) $query->where('date', '<', date('Y-m-d', strtotime($req->date)));
     if($req->latest) $query->limit(5);
+    // echo $query->toSql();
+    // dd();
 
     return response()->json($query->get(), 200);
   }
@@ -153,7 +170,7 @@ class IndexController extends Controller
   	$frequency = $req->frequency;
 
   	$indices = Index::whereIn('id', $indices)->get();
-    
+
     switch($frequency){
       case 'daily' : $column = 'MAX(DATE_FORMAT(date,"%d %M %Y")) "date", MAX(date) as real_date'; break;
     	case 'weekly' : $column = 'CONCAT("Week ", MAX(DATE_FORMAT(date,"%V - %M %Y"))) "date", MAX(date) as real_date'; break;
@@ -241,7 +258,7 @@ class IndexController extends Controller
           case 'monthly' : $query->groupBy('month', 'year'); break;
         }
         $result[date('Y', strtotime($date_start))] = $query->get();
-   
+
         $date_start = date('Y-m-d', strtotime($date_start . ' -1 year'));
         $date_end = date('Y-m-d', strtotime($date_end . ' -1 year'));
       }
@@ -266,7 +283,7 @@ class IndexController extends Controller
 
     $lastMonth = date('Y-m-t', strtotime($req->date));
     $day = date('l', strtotime($req->date));
-    if($day == "Friday"){      
+    if($day == "Friday"){
       $friday = date('Y-m-d', strtotime($req->date));
     }else if($day == "Saturday" || $day == "Sunday"){
       $friday = date('Y-m-d', strtotime($req->date.' last friday'));
@@ -294,7 +311,7 @@ class IndexController extends Controller
     if($req->environment=="berau") $query-> whereIn('index.id',[1,2,3]);
 
     if($req->m){
-      $query->where('frequency', '=', 'a');    
+      $query->where('frequency', '=', 'a');
     }
     // echo $query->toSql();
 
@@ -305,23 +322,28 @@ class IndexController extends Controller
     if($req->previousPrice){
       foreach($result as $r){
         $latest = DB::table('index_price')
-          ->select('price')
+          ->select('price', 'date')
           ->where('index_id', $r->id)
           ->orderBy('date', 'DESC')
           ->limit(20)
           ->get();
+
         $r->latest = $latest->pluck('price');
+        if($r->latest){
+          $r->latestDate = $latest->pluck('date')[0];
+          $r->earliestDate = $latest->pluck('date')[count($latest->pluck('date'))-1];
+        }
       }
     }
-        
+
     return response()->json($result, 200);
   }
 
   public function storeSingleDate(Request $req){
-    $date = strtotime($req->date);    
+    $date = strtotime($req->date);
     $lastMonth = strtotime(date('Y-m-t', strtotime($req->date)));
     $day = date('l', strtotime($req->date));
-    if($day == "Friday"){      
+    if($day == "Friday"){
       $friday = strtotime(date('Y-m-d', strtotime($req->date)));
     }else if($day == "Saturday" || $day == "Sunday"){
       $friday = strtotime(date('Y-m-d', strtotime($req->date.' last friday')));
@@ -357,26 +379,29 @@ class IndexController extends Controller
     $friday = date('Y-m-d', $friday);
     $lastMonth = date('Y-m-d', $lastMonth);
 
-    $is_autogenerated = false;    
-      
+    $is_autogenerated = false;
+
+
+
     foreach ($req->value as $key => $price) {
-      if($price){        
+      if($price){
         $query = DB::table('index')
           ->select('index.frequency')
-          ->where('index.id', '=', $key)  
+          ->where('index.id', '=', $key)
           ->orderBy('index.id');
-        $frequency = $query->get();         
-        if($price<>null){          
+        $frequency = $query->get();
+        if($price<>null){
           foreach($frequency as $a => $b){
             $frequency = $b->frequency;
           }
-          // echo $frequency;
+
         }
-        
-        if($frequency=='d'){          
+
+
+        if($frequency=='d'){
           $indexPrice = IndexPrice::updateOrCreate(
             [ 'date' => $date, 'index_id' => $key ],
-            [ 
+            [
               'price' => $price,
               'day_of_year' => $day_of_year,
               'day_of_month' => $day_of_month,
@@ -384,13 +409,15 @@ class IndexController extends Controller
               'week' => $week,
               'month' => $month,
               'year' => $year,
+              'status'=> 'a',
               'is_autogenerated' =>  $is_autogenerated
             ]
-          );        
+          );
+
         }else if($frequency=='w'){
           $indexPrice = IndexPrice::updateOrCreate(
             [ 'date' => $friday, 'index_id' => $key ],
-            [ 
+            [
               'price' => $price,
               'day_of_year' => $friday_day_of_year,
               'day_of_month' => $friday_day_of_month,
@@ -398,13 +425,15 @@ class IndexController extends Controller
               'week' => $friday_week,
               'month' => $friday_month,
               'year' => $friday_year,
+              'status'=> 'a',
               'is_autogenerated' =>  $is_autogenerated
             ]
           );
+
         }else if($frequency=='m'){
           $indexPrice = IndexPrice::updateOrCreate(
             [ 'date' => $lastMonth, 'index_id' => $key ],
-            [ 
+            [
               'price' => $price,
               'day_of_year' => $lastMonth_day_of_year,
               'day_of_month' => $lastMonth_day_of_month,
@@ -412,17 +441,20 @@ class IndexController extends Controller
               'week' => $lastMonth_week,
               'month' => $lastMonth_month,
               'year' => $lastMonth_year,
+              'status'=> 'a',
               'is_autogenerated' =>  $is_autogenerated
             ]
           );
+
         }
       }
-    }    
-  
-        
+    }
+
+
+
 
 
     return response()->json($req,200);
   }
-}
 
+}

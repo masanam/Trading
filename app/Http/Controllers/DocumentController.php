@@ -57,7 +57,7 @@ class DocumentController extends Controller
     public function store(Request $req)
     {
         // Get Previous Versions
-        $previous = Document::where('shipment_id', $req->shipment_id)
+        $previous = Document::where('shipment_id', (int)$req->shipment_id)
             ->where('template_id', $req->template_id)
             ->where('status', 'a')
             ->first();
@@ -70,14 +70,16 @@ class DocumentController extends Controller
         // Add id of previous version to this new order, version is added 1 from the previous ones
         $document = new Document();
 
-        $document->title = $req->title;
-        $document->remarks = $req->remarks;
+        // $document->title = $req->title;
+        // $document->remarks = $req->remarks;
         $document->shipment_id = $req->shipment_id;
         $document->template_id = $req->template_id;
         $document->user_id = Auth::user()->id;
-        $document->older_version = $prev_id;
+        $document->older_version = isset($prev_id) ? $prev_id : NULL;
+        $document->progress = $req->progress;
+        $document->progress_desc = $req->progress_desc;
         $document->status = 'a';
-        $document->version = $prev_version+1;
+        $document->version = isset($prev_version) ? $prev_version+1 : 1;
 
         $document->save();
 
@@ -88,15 +90,16 @@ class DocumentController extends Controller
         }
 
         foreach($req->document_details as $d){
-            $detail = new DocumentDetail();
-
-            $detail->document_id = $document->id;
-            $detail->field = $d['field'];
-            $detail->content = $d['content'];
-
-            $detail->save();
+          $detail = new DocumentDetail();
+          $detail->field = $d['field'];
+          $detail->document_id = $document->id;
+          if(gettype($d['content'])=="array"){
+            $detail->content  = json_encode($d['content']);
+          }else{
+            $detail->content  = $d['content'];
+          }
+          $detail->save();
         }
-
         // save the id of this new version to the next version of current document
 
         return $this->show($document->id);
@@ -111,6 +114,14 @@ class DocumentController extends Controller
     public function show($id)
     {
         $document = Document::with(['template', 'shipment', 'shipment.customer', 'user', 'documentDetails'])->find($id);
+        foreach ($document->documentDetails as $d) {
+          // if(json_decode($d->content)){
+          //   $d->content = json_decode($d->content);
+          // }
+          $d->content = json_decode($d->content) ? json_decode($d->content) : $d->content;
+        }
+
+
         return $document;
     }
 
@@ -125,10 +136,18 @@ class DocumentController extends Controller
     {
         $document = Document::find($id);
 
-        $req->shipment_id = $document->shipment_id;
-        $req->template_id = $document->template_id;
+        $document->shipment_id = $req->shipment_id;
+        $document->template_id = $req->template_id;
+        $document->remarks = $req->remarks;
+        if($req->progress == 50 || ($req->progress == 100 && $req->progress_desc != '')){
+          $document->progress = $req->progress;
+          $document->progress_desc = $req->progress_desc;
+        }
+        $document->url = $req->url;
 
-        $this->store($req);
+        $document->save();
+
+        return response()->json($document, 200);
     }
 
     /**

@@ -58,7 +58,7 @@
           </div>
           <div class="col-sm-4 form-group" ng-init="negotiation.exchange_rate = 1">
             <label>Exchange Rate</label>
-            <input type="number" ng-model="negotiation.exchange_rate" class="form-control"
+            <input type="number" step="any" ng-model="negotiation.exchange_rate" class="form-control"
               ng-change="negotiation.base_price = negotiation.deal_price * negotiation.exchange_rate"
               placeholder="Exch. Rate" required>
           </div>
@@ -96,7 +96,7 @@
       <div class="col-sm-4" style="max-height:500px;">
         <div ng-repeat="negotiation in lead.item.pivot.negotiations">
           <div class="row col-lg-12">
-            <small class="pull-left">[{{ negotiation.volume }}mt - USD {{ negotiation.price }}]</small>
+            <small class="pull-left">[{{ negotiation.volume }}mt - {{negotiation.base_currency_id}} {{ negotiation.base_price }}]</small>
             <small class="text-muted pull-right">{{ negotiation.created_at | date:'mediumDate' }}</small>
           </div>
           <div class="row col-lg-12">{{ negotiation.notes }}</div>

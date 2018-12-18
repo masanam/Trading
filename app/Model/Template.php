@@ -14,6 +14,9 @@ class Template extends Model
     protected $fillable = [
       'id', 'template_name', 'desc', 'category', 'sequence', 'fields', 'status'
     ];
+    protected $casts = [
+      'fields' => 'array',
+    ];
 
     public function documents() {
     	return $this->hasMany(Document::class);

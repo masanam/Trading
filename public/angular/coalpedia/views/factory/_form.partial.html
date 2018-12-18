@@ -31,11 +31,11 @@
 		    <span class="input-group-addon" style="width: 100px;">Port</span>
 		    <span ng-if="!update" class="input-group-addon bg-red">You can add the Port Related to this Factory in the next page.</span>
 		    <select ng-if="update" ng-model="factory.port_id" class="form-control"
-		    	ng-options='port.id as port.port_name for port in company.ports'>
+		    	ng-options='port.id as port.port_name for port in ports'>
 		    	<option value="">-NOT ASSOCIATED TO ANY PORT-</option>
 		    </select>
 		    <span class="input-group-addon" style="width: 100px;">Distance (km)</span>
-		    <input type="number" min="0" step="any" class="form-control" string-to-number id="port_distance" ng-model="factory.port_distance" required>
+		    <input type="number" min="0" step="any" class="form-control" string-to-number id="port_distance" ng-model="factory.port_distance">
 		  </div>
 		</div>
 	</div>

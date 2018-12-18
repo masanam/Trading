@@ -42,12 +42,11 @@ angular.module('coalpedia').controller('CompanyModalController', ['$scope', '$ui
     };
 
     $scope.create = function() {
-      //console.log('disini create');
       //valudation on company name
+
       if(!$scope.company.company_type) return alert('You must choose a company type!');
 
       var company = new Company($scope.company);
-      //console.log(company);
 
       company.$save({ type: company.company_type }, function(response) {
         $uibModalInstance.close(response);

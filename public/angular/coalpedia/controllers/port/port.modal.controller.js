@@ -20,6 +20,11 @@ angular.module('coalpedia').controller('PortModalController', ['$scope', '$uibMo
     };
 
     $scope.create = function(port) {
+      if(!port.is_private) {
+        $scope.error = 'Please Select Status of Port!';
+        return;
+      }
+      else $scope.error = null;
       port = new Port(port);
       port.company_id = company.id;
 

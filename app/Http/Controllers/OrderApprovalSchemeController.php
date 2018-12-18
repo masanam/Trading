@@ -102,19 +102,24 @@ class OrderApprovalSchemeController extends Controller
       return $this->show($id);
     }
 
-    public function destroy($id)
+    public function destroy(Request $req, $order_approval_scheme_id)
     {
-      // $data = QualityDetail::find($id);
-     
-      // if (!$data) {
-      //   return response()->json([
-      //     'message' => 'Not found'
-      //   ] ,404);
-      // }
+      if($req->action === 'scheme'){
+        OrderApprovalSchemeSequence::where('order_approval_scheme_id',$order_approval_scheme_id)->delete();
+        $data = OrderApprovalScheme::where('id',$order_approval_scheme_id)->delete();
+      }
+      else{
+        $data = OrderApprovalSchemeSequence::where('order_approval_scheme_id',$order_approval_scheme_id)->where('sequence',$req->sequence)->first();
+        $data->delete();
+      }
 
-      // $data->delete();
+      if (!$data) {
+        return response()->json([
+          'message' => 'Not found'
+        ] ,404);
+      }
 
-      // return response()->json(true, 200);
+      return response()->json($data, 200);
     }
 
 }

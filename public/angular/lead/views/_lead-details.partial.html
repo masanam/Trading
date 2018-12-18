@@ -43,7 +43,7 @@
         <label>City : </label>
         <p>{{ lead.city }}</p>
         <label>Volume of Coal : </label>
-        <p>{{ lead.volume }} mt, available {{ lead.volume - getUsed(lead) }} mt</p>
+        <p>{{ lead.volume | number}} mt, available {{ lead.volume - getUsed(lead) | number}} mt</p>
         <label>Input Date : </label>
         <p>{{ lead.order_date | date : 'd MMMM yyyy' }}</p>
       </div>

@@ -3,6 +3,15 @@
 use App\Model\User;
 use App\Model\Role;
 use App\Model\Privilege;
+use App\Model\Area;
+use App\Model\OrderApprovalScheme;
+use App\Model\OrderApprovalSchemeSequence;
+use App\Model\Company;
+use App\Model\Concession;
+use App\Model\Product;
+use App\Model\Port;
+use App\Model\Index;
+use App\Model\IndexPrice;
 
 use Illuminate\Database\Seeder;
 
@@ -20,11 +29,25 @@ class ProductionBerauSeeder extends Seeder
   	 */
 
     $users = [
-    	[ 'id' => 1, 'name' => 'Prasetyo Nugraha Gema', 'email' => 'pras@volantech.io', 'title' => 'Admin', 'image' => './images/default.png', 'phone'=> '+6281517051234', 'employee_no'=>'VTI1', 'manager_id'=>null],
-      [ 'id' => 2, 'name' => 'Yudhi Saputra Intan', 'email' => 'yudhi.saputra@beraucoal.co.id', 'title' => 'Marketing & Sales Adm. Superintendence', 'image' => './images/default.png', 'phone'=> '1234567890', 'employee_no'=>'EMP-123', 'manager_id'=>4],
-      [ 'id' => 3, 'name' => 'Rory Surya Perdana', 'email' => 'rori@beraucoal.co.id', 'title' => 'Marketing Researcher Sr. Specialist', 'image' => './images/default.png', 'phone'=> '1234567890', 'employee_no'=>'EMP-123', 'manager_id'=>4],
-      [ 'id' => 4, 'name' => 'Supandri Yaman', 'email' => 'andri@beraucoal.co.id', 'title' => 'Dept. Head Marketing & Sales Adm. Supp.', 'image' => './images/default.png', 'phone'=> '1234567890', 'employee_no'=>'EMP-123', 'manager_id'=>null],
-      [ 'id' => 5, 'name' => 'Andry Octavianus', 'email' => 'andri.o@beraucoal.co.id', 'title' => 'Sales Specialist Area 3', 'image' => './images/default.png', 'phone'=> '1234567890', 'employee_no'=>'EMP-123', 'manager_id'=>null],
+    	[ 'id' => 1, 'name' => 'Prasetyo Nugraha Gema', 'email' => 'pras@volantech.io', 'title' => 'Admin', 'image' => './images/default.png', 'phone'=> '+6281517051234', 'manager_id'=>null],
+      [ 'id' => 2, 'name' => 'Yudhi Saputra Intan', 'email' => 'yudhi.saputra@beraucoal.co.id', 'title' => 'Marketing & Sales Adm. Superintendence', 'image' => './images/default.png', 'phone'=> '1234567890', 'manager_id'=>4],
+      [ 'id' => 3, 'name' => 'Rory Surya Perdana', 'email' => 'rori@beraucoal.co.id', 'title' => 'Marketing Researcher Sr. Specialist', 'image' => './images/default.png', 'phone'=> '1234567890', 'manager_id'=>4],
+      [ 'id' => 4, 'name' => 'Supandri Yaman', 'email' => 'andri@beraucoal.co.id', 'title' => 'Dept. Head Marketing & Sales Adm. Supp.', 'image' => './images/default.png', 'phone'=> '1234567890', 'manager_id'=>null],
+      [ 'id' => 5, 'name' => 'Andry Octavianus', 'email' => 'andri.o@beraucoal.co.id', 'title' => 'Sales Specialist Area 3', 'image' => './images/default.png', 'phone'=> '1234567890', 'manager_id'=>null],
+      [ 'id' => 6, 'name' => 'M. Saly Putra ', 'email' => 'saly.putra@beraucoal.co.id', 'title' => 'Sales Sr. Specialist  Area 4', 'image' => './images/default.png', 'phone' => '1234567890', 'manager_id' => 13 ],
+			[ 'id' => 7, 'name' => 'Martin', 'email' => 'martin@volantech.io', 'title' => 'Trader Dummy', 'image' => './images/default.png', 'phone' => '1234567890', 'manager_id' => null ],
+			[ 'id' => 8, 'name' => 'Yayat Ruhiyat', 'email' => 'yayat@beraucoal.co.id', 'title' => 'Sales Sr. Specialist Area 2', 'image' => './images/default.png', 'phone' => '1234567890', 'manager_id' => 11 ],
+			[ 'id' => 9, 'name' => 'Yanuar Ilham', 'email' => 'yanuar.ilham@beraucoal.co.id', 'title' => 'Sales Specialist Area 1', 'image' => './images/default.png', 'phone' => '1234567890', 'manager_id' => 10 ],
+			[ 'id' => 10, 'name' => 'Agus Setiawan W', 'email' => 'setiawan@beraucoal.co.id', 'title' => 'Dept. Head MSD Area 1', 'image' => './images/default.png', 'phone' => '1234567891', 'manager_id' => 15 ],
+			[ 'id' => 11, 'name' => 'Herman Fasikhin', 'email' => 'h_fasikhin@beraucoal.co.id', 'title' => 'Dept. Head MSD Area 2', 'image' => './images/default.png', 'phone' => '1234567892', 'manager_id' => 15 ],
+			[ 'id' => 12, 'name' => 'Isman Anugerah A', 'email' => 'isman@beraucoal.co.id', 'title' => 'Dept. Head MSD Area 3', 'image' => './images/default.png', 'phone' => '1234567893', 'manager_id' => 15 ],
+			[ 'id' => 13, 'name' => 'Indah T.Sulistyowati', 'email' => 'lies@beraucoal.co.id', 'title' => 'Dept. Head MSD Area 4', 'image' => './images/default.png', 'phone' => '1234567894', 'manager_id' => 15 ],
+			[ 'id' => 14, 'name' => 'Rudy A.R. Hernawan', 'email' => 'rudi.ar@beraucoal.co.id', 'title' => 'GM - Marketing Deputy Director', 'image' => './images/default.png', 'phone' => '1234567895', 'manager_id' => 16 ],
+			[ 'id' => 15, 'name' => 'Eko Budy FN', 'email' => 'ekob@beraucoal.co.id', 'title' => 'GM - Marketinng  & Sales Div. Head', 'image' => './images/default.png', 'phone' => '1234567896', 'manager_id' => 14 ],
+			[ 'id' => 16, 'name' => 'Issei Watanabe', 'email' => 'issei.watanabe@beraucoal.co.id', 'title' => 'Chief Marketing Officer', 'image' => './images/default.png', 'phone' => '1234567897', 'manager_id' => 17 ],
+			[ 'id' => 17, 'name' => 'Fuganto Widjaja', 'email' => 'fuganto@beraucoal.co.id', 'title' => 'CEO', 'image' => './images/default.png', 'phone' => '1234567898', 'manager_id' => null ],
+			[ 'id' => 18, 'name' => 'Yus MSD-5', 'email' => 'yus.marcelina@gmail.com', 'title' => 'Dept. Head MSD Area 5', 'image' => './images/default.png', 'phone' => '1234567894', 'manager_id' => 19 ],
+			[ 'id' => 19, 'name' => 'Yus GMtest', 'email' => 'yus.marcelina@sinarmasmining.com', 'title' => 'GM - Test', 'image' => './images/default.png', 'phone' => '1234567894', 'manager_id' => null ],
     ];
 
     foreach($users as $user){
@@ -66,9 +89,11 @@ class ProductionBerauSeeder extends Seeder
     User::find(2)->roles()->attach([1, 2]); // Yudhi
     User::find(3)->roles()->attach([3, 4]); // Rory
     User::find(4)->roles()->attach([3]); // Supandri
-    User::find(5)->roles()->attach([3]); // Sales
+    User::find(5)->roles()->attach([3]); // Andry
 
-
+    Role::find(1)->privileges()->attach(7);
+    Role::find(2)->privileges()->attach(7);
+    
     Role::find(3)->privileges()->attach(2); // sales
     Role::find(3)->privileges()->attach(5);
     Role::find(3)->privileges()->attach(9);
@@ -95,8 +120,70 @@ class ProductionBerauSeeder extends Seeder
   	 * APPROVAL SCHEME SEEDER
   	 */
 
+		OrderApprovalScheme::create([
+		  'id' => 1,
+		  'order_approval_scheme_name' => 'Area 1 Approval',
+		  'sell_area_id' => 1
+		]);
+
+    OrderApprovalScheme::create([
+      'id' => 2,
+      'order_approval_scheme_name' => 'Area 2 Approval',
+      'sell_area_id' => 2
+    ]);
+
+    OrderApprovalScheme::create([
+      'id' => 3,
+      'order_approval_scheme_name' => 'Area 3 Approval',
+      'sell_area_id' => 3
+    ]);
+
+    OrderApprovalScheme::create([
+      'id' => 4,
+      'order_approval_scheme_name' => 'Area 4 Approval',
+      'sell_area_id' => 4
+    ]);
 
 
+    Role::create(['id' => 1,    'role' => 'root']);
+    Role::create(['id' => 2,    'role' => 'admin']);
+    Role::create(['id' => 3,   'role' => 'sales']);
+    Role::create(['id' => 4,   'role' => 'intel']);
+    Role::create(['id' => 5,   'role' => 'msd-area-1']);
+    Role::create(['id' => 6,   'role' => 'msd-area-2']);
+    Role::create(['id' => 7,   'role' => 'msd-area-3']);
+    Role::create(['id' => 8,   'role' => 'msd-area-4']);
+    Role::create(['id' => 9,   'role' => 'general-manager']);
+    Role::create(['id' => 10,   'role' => 'cmo']);
+    Role::create(['id' => 11,   'role' => 'bc1']);
+
+    $seq = [
+      //untuk order area 1 
+      ['order_approval_scheme_id' => 1,'sequence' => 1,'role_id' => 5, 'approval_scheme' => 'o'], // manager area 1, all
+      ['order_approval_scheme_id' => 1,'sequence' => 2,'role_id' => 9, 'approval_scheme' => 'o'], // gm, 1 of all
+      ['order_approval_scheme_id' => 1,'sequence' => 3,'role_id' => 10, 'approval_scheme' => 'a'], // cmo, 1 of all
+      ['order_approval_scheme_id' => 1,'sequence' => 4,'role_id' => 11, 'approval_scheme' => 'o'], // ceo, or
+
+      //untuk area 2
+      ['order_approval_scheme_id' => 2,'sequence' => 1,'role_id' => 6, 'approval_scheme' => 'o'], // manager area 2, all
+      ['order_approval_scheme_id' => 2,'sequence' => 2,'role_id' => 9, 'approval_scheme' => 'o'], // gm, 1 of all
+      ['order_approval_scheme_id' => 2,'sequence' => 3,'role_id' => 10, 'approval_scheme' => 'a'], // cmo, 1 of all
+      ['order_approval_scheme_id' => 2,'sequence' => 4,'role_id' => 11, 'approval_scheme' => 'o'], // ceo, or
+
+      //untuk area 3
+      ['order_approval_scheme_id' => 3,'sequence' => 1,'role_id' => 7, 'approval_scheme' => 'o'], // manager area 3, all
+      ['order_approval_scheme_id' => 3,'sequence' => 2,'role_id' => 9, 'approval_scheme' => 'o'], // gm, 1 of all
+      ['order_approval_scheme_id' => 3,'sequence' => 3,'role_id' => 10, 'approval_scheme' => 'a'], // cmo, 1 of all
+      ['order_approval_scheme_id' => 3,'sequence' => 4,'role_id' => 11, 'approval_scheme' => 'o'], // ceo, or
+
+      //untuk area 4
+      ['order_approval_scheme_id' => 4,'sequence' => 1,'role_id' => 8, 'approval_scheme' => 'o'], // manager area 3, all
+      ['order_approval_scheme_id' => 4,'sequence' => 2,'role_id' => 9, 'approval_scheme' => 'o'], // gm, 1 of all
+      ['order_approval_scheme_id' => 4,'sequence' => 3,'role_id' => 10, 'approval_scheme' => 'a'], // cmo, 1 of all
+      ['order_approval_scheme_id' => 4,'sequence' => 4,'role_id' => 11, 'approval_scheme' => 'o'], // ceo, or
+    ];
+    
+    foreach($seq as $s) OrderApprovalSchemeSequence::create($s);
 
   	/*
   	 * COMPANY SEEDER
@@ -190,10 +277,10 @@ class ProductionBerauSeeder extends Seeder
   	 * PRODUCT SEEDER
   	 */
 
-		Product::create(['company_id' => 1,'concession_id' => 1,'product_name' => 'Ebony HS','typical_quality' => 'GAR5500','tm_min' => '20','tm_max' => '14','im_min' =>'14','im_max' =>'0.9','ash_min' =>'5','ash_max' => '55','fc_min' => null,'fc_max' => null,'vm_min' => null,'vm_max' => null,'ts_min' => '0.9','ts_max' => '5','ncv_min' => '20','ncv_max' => '90','gcv_arb_min' => '5500','gcv_arb_max' => '5900','gcv_adb_min' => '5500','gcv_adb_max' => '5900','hgi_min' => '40','hgi_max' => null,'size_min' => null,'size_max' => null,'fe2o3_min'=> '5300','fe2o3_max'=> null,'aft_min'=> null,'aft_max'=>null,'na2o_min'=> null,'na2o_max'=>null,'status' => 'a']);
-		Product::create(['company_id' => 1,'concession_id' => 1,'product_name' => 'Mahoni','typical_quality' => 'GAR5500','tm_min' => '20','tm_max' => '14','im_min' =>'14','im_max' =>'0.9','ash_min' =>'5','ash_max' => '55','fc_min' => null,'fc_max' => null,'vm_min' => null,'vm_max' => null,'ts_min' => '0.9','ts_max' => '5','ncv_min' => '20','ncv_max' => '90','gcv_arb_min' => '5500','gcv_arb_max' => '5900','gcv_adb_min' => '5500','gcv_adb_max' => '5900','hgi_min' => '40','hgi_max' => null,'size_min' => null,'size_max' => null,'fe2o3_min'=> '5300','fe2o3_max'=> null,'aft_min'=> null,'aft_max'=>null,'na2o_min'=> null,'na2o_max'=>null,'status' => 'a']);
-    Product::create(['company_id' => 1,'concession_id' => 1,'product_name' => 'Mahoni B','typical_quality' => 'GAR5800','tm_min' => '22.5','tm_max' => '16','im_min' =>'16','im_max' =>'0.9','ash_min' =>'5','ash_max' => '55','fc_min' => null,'fc_max' => null,'vm_min' => null,'vm_max' => null,'ts_min' => '0.9','ts_max' => '5','ncv_min' => '22.5','ncv_max' => '5900','gcv_arb_min' => '5300','gcv_arb_max' => '5750','gcv_adb_min' => '5300','gcv_adb_max' => '5750','hgi_min' => '40','hgi_max' => null,'size_min' => null,'size_max' => null,'fe2o3_min'=> '50','fe2o3_max'=> null,'aft_min'=> null,'aft_max'=>null,'na2o_min'=> null,'na2o_max'=>null,'status' => 'a']);
-    Product::create(['company_id' => 1,'concession_id' => 1,'product_name' => 'Sungkai','typical_quality' => 'NAR3200','tm_min' => '25','tm_max' => '28','im_min' =>'28','im_max' =>'1','ash_min' =>'5','ash_max' => '55','fc_min' => null,'fc_max' => null,'vm_min' => null,'vm_max' => null,'ts_min' => '1','ts_max' => '5','ncv_min' => '2500','ncv_max' => '90','gcv_arb_min' => '5000','gcv_arb_max' => '5500','gcv_adb_min' => '5000','gcv_adb_max' => '5500','hgi_min' => '40','hgi_max' => null,'size_min' => null,'size_max' => null,'fe2o3_min'=> '4600','fe2o3_max'=> null,'aft_min'=> null,'aft_max'=>null,'na2o_min'=> null,'na2o_max'=>null,'status' => 'a']);
+		Product::create(['user_id' => 1, 'company_id' => 1,'concession_id' => 1,'product_name' => 'Ebony HS','typical_quality' => 'GAR5500','tm_min' => '20','tm_max' => '14','im_min' =>'14','im_max' =>'0.9','ash_min' =>'5','ash_max' => '55','fc_min' => null,'fc_max' => null,'vm_min' => null,'vm_max' => null,'ts_min' => '0.9','ts_max' => '5','ncv_min' => '20','ncv_max' => '90','gcv_arb_min' => '5500','gcv_arb_max' => '5900','gcv_adb_min' => '5500','gcv_adb_max' => '5900','hgi_min' => '40','hgi_max' => null,'size_min' => null,'size_max' => null,'fe2o3_min'=> '5300','fe2o3_max'=> null,'aft_min'=> null,'aft_max'=>null,'na2o_min'=> null,'na2o_max'=>null,'status' => 'a']);
+		Product::create(['user_id' => 1, 'company_id' => 1,'concession_id' => 1,'product_name' => 'Mahoni','typical_quality' => 'GAR5500','tm_min' => '20','tm_max' => '14','im_min' =>'14','im_max' =>'0.9','ash_min' =>'5','ash_max' => '55','fc_min' => null,'fc_max' => null,'vm_min' => null,'vm_max' => null,'ts_min' => '0.9','ts_max' => '5','ncv_min' => '20','ncv_max' => '90','gcv_arb_min' => '5500','gcv_arb_max' => '5900','gcv_adb_min' => '5500','gcv_adb_max' => '5900','hgi_min' => '40','hgi_max' => null,'size_min' => null,'size_max' => null,'fe2o3_min'=> '5300','fe2o3_max'=> null,'aft_min'=> null,'aft_max'=>null,'na2o_min'=> null,'na2o_max'=>null,'status' => 'a']);
+    Product::create(['user_id' => 1, 'company_id' => 1,'concession_id' => 1,'product_name' => 'Mahoni B','typical_quality' => 'GAR5800','tm_min' => '22.5','tm_max' => '16','im_min' =>'16','im_max' =>'0.9','ash_min' =>'5','ash_max' => '55','fc_min' => null,'fc_max' => null,'vm_min' => null,'vm_max' => null,'ts_min' => '0.9','ts_max' => '5','ncv_min' => '22.5','ncv_max' => '5900','gcv_arb_min' => '5300','gcv_arb_max' => '5750','gcv_adb_min' => '5300','gcv_adb_max' => '5750','hgi_min' => '40','hgi_max' => null,'size_min' => null,'size_max' => null,'fe2o3_min'=> '50','fe2o3_max'=> null,'aft_min'=> null,'aft_max'=>null,'na2o_min'=> null,'na2o_max'=>null,'status' => 'a']);
+    Product::create(['user_id' => 1, 'company_id' => 1,'concession_id' => 1,'product_name' => 'Sungkai','typical_quality' => 'NAR3200','tm_min' => '25','tm_max' => '28','im_min' =>'28','im_max' =>'1','ash_min' =>'5','ash_max' => '55','fc_min' => null,'fc_max' => null,'vm_min' => null,'vm_max' => null,'ts_min' => '1','ts_max' => '5','ncv_min' => '2500','ncv_max' => '90','gcv_arb_min' => '5000','gcv_arb_max' => '5500','gcv_adb_min' => '5000','gcv_adb_max' => '5500','hgi_min' => '40','hgi_max' => null,'size_min' => null,'size_max' => null,'fe2o3_min'=> '4600','fe2o3_max'=> null,'aft_min'=> null,'aft_max'=>null,'na2o_min'=> null,'na2o_max'=>null,'status' => 'a']);
 //     '1','1',NULL,'Mahoni','GAR5500',NULL,'5500.00','5900.00','5500.00','5900.00','20.00','90.00','5.00','55.00','0.90','5.00','20.00','14.00','14.00','0.90',NULL,NULL,NULL,NULL,'40.00',NULL,NULL,NULL,'5300.00',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'a','2017-02-16 23:57:51','2017-02-16 23:57:51'
 // '2','1',NULL,'Mahoni B','GAR5800',NULL,'5300.00','5750.00','5300.00','5750.00','23.00','5900.00','5.00','55.00','0.90','5.00','22.50','16.00','16.00','0.90',NULL,NULL,NULL,NULL,'40.00',NULL,NULL,NULL,'50.00',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'a','2017-02-16 23:57:51','2017-02-16 23:57:51'
 // '3','1',NULL,'Agathis','NAR3200',NULL,'5000.00','5500.00','5000.00','5500.00','2500.00','90.00','5.00','55.00','1.00','5.00','25.00','28.00','28.00','1.00',NULL,NULL,NULL,NULL,'40.00',NULL,NULL,NULL,'4600.00',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'a','2017-02-16 23:57:51','2017-02-16 23:57:51'
@@ -219,11 +306,138 @@ class ProductionBerauSeeder extends Seeder
      * INDEX SEEDER
      */
 
-    Index::create(['id'=>1, 'index_provider' => 'HBA', 'index_name' => 'GAR 6322', 'quality' => 'GAR 6322', 'frequency'=>'d']);
-		Index::create(['id'=>2, 'index_provider' => 'HBA*', 'index_name' => 'GAR 6322', 'quality' => 'GAR 6322', 'frequency'=>'d']);
-		Index::create(['id'=>3, 'index_provider' => 'GCI NEW', 'index_name' => 'GAR 6322', 'quality' => 'GAR 6322', 'frequency'=>'d']);
-		Index::create(['id'=>4, 'index_provider' => 'Coalfax Index', 'index_name' => 'GAR 6322', 'quality' => 'GAR 6322', 'frequency'=>'d']);
-		Index::create(['id'=>5, 'index_provider' => 'ICI 1 Index', 'index_name' => 'GAR 6322', 'quality' => 'GAR 6322', 'frequency'=>'d']);
-		Index::create(['id'=>6, 'index_provider' => 'Platts (FOB Kalimantan)', 'index_name' => 'GAR 6322', 'quality' => 'GAR 6322', 'frequency'=>'d']);
+    Index::create(['id'=>1, 'index_provider' => 'HBA', 'index_name' => 'GAR 6322', 'quality' => 'GAR 6322', 'frequency'=>'w']);
+		Index::create(['id'=>2, 'index_provider' => 'HBA*', 'index_name' => 'GAR 6322', 'quality' => 'GAR 6322', 'frequency'=>'w']);
+		Index::create(['id'=>3, 'index_provider' => 'GCI NEW', 'index_name' => 'GAR 6322', 'quality' => 'GAR 6322', 'frequency'=>'w']);
+		Index::create(['id'=>4, 'index_provider' => 'Coalfax Index', 'index_name' => 'GAR 6322', 'quality' => 'GAR 6322', 'frequency'=>'w']);
+		Index::create(['id'=>5, 'index_provider' => 'ICI 1 Index', 'index_name' => 'GAR 6322', 'quality' => 'GAR 6322', 'frequency'=>'w']);
+		Index::create(['id'=>6, 'index_provider' => 'Platts (FOB Kalimantan)', 'index_name' => 'GAR 6322', 'quality' => 'GAR 6322', 'frequency'=>'w']);
+
+		IndexPrice::create(['index_id' => '1', 'date' => '2017-02-17', 'day_of_year'=>'48','day_of_month'=>'17','day_of_week'=>'5','week'=>'7','month'=>'2','year'=>'2017','price'=>'83.32','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '1', 'date' => '2017-02-10', 'day_of_year'=>'41','day_of_month'=>'10','day_of_week'=>'5','week'=>'6','month'=>'2','year'=>'2017','price'=>'83.32','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '1', 'date' => '2017-02-03', 'day_of_year'=>'34','day_of_month'=>'3','day_of_week'=>'5','week'=>'5','month'=>'2','year'=>'2017','price'=>'83.32','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '1', 'date' => '2017-01-27', 'day_of_year'=>'27','day_of_month'=>'27','day_of_week'=>'5','week'=>'4','month'=>'1','year'=>'2017','price'=>'86.23','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '1', 'date' => '2017-01-20', 'day_of_year'=>'20','day_of_month'=>'20','day_of_week'=>'5','week'=>'3','month'=>'1','year'=>'2017','price'=>'86.23','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '1', 'date' => '2017-01-13', 'day_of_year'=>'13','day_of_month'=>'13','day_of_week'=>'5','week'=>'2','month'=>'1','year'=>'2017','price'=>'86.23','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '1', 'date' => '2017-01-06', 'day_of_year'=>'6','day_of_month'=>'6','day_of_week'=>'5','week'=>'1','month'=>'1','year'=>'2017','price'=>'86.23','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '1', 'date' => '2016-12-30', 'day_of_year'=>'365','day_of_month'=>'30','day_of_week'=>'5','week'=>'53','month'=>'12','year'=>'2016','price'=>'101.69','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '1', 'date' => '2016-12-23', 'day_of_year'=>'358','day_of_month'=>'23','day_of_week'=>'5','week'=>'52','month'=>'12','year'=>'2016','price'=>'101.69','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '1', 'date' => '2016-12-16', 'day_of_year'=>'351','day_of_month'=>'16','day_of_week'=>'5','week'=>'51','month'=>'12','year'=>'2016','price'=>'101.69','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '1', 'date' => '2016-12-09', 'day_of_year'=>'344','day_of_month'=>'9','day_of_week'=>'5','week'=>'50','month'=>'12','year'=>'2016','price'=>'101.69','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '1', 'date' => '2016-12-02', 'day_of_year'=>'337','day_of_month'=>'2','day_of_week'=>'5','week'=>'49','month'=>'12','year'=>'2016','price'=>'101.69','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '1', 'date' => '2016-11-28', 'day_of_year'=>'333','day_of_month'=>'28','day_of_week'=>'1','week'=>'49','month'=>'11','year'=>'2016','price'=>'84.89','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '1', 'date' => '2016-11-21', 'day_of_year'=>'326','day_of_month'=>'21','day_of_week'=>'1','week'=>'48','month'=>'11','year'=>'2016','price'=>'84.89','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '1', 'date' => '2016-11-14', 'day_of_year'=>'319','day_of_month'=>'14','day_of_week'=>'1','week'=>'47','month'=>'11','year'=>'2016','price'=>'84.89','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '1', 'date' => '2016-11-07', 'day_of_year'=>'312','day_of_month'=>'7','day_of_week'=>'1','week'=>'46','month'=>'11','year'=>'2016','price'=>'84.89','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '1', 'date' => '2016-10-31', 'day_of_year'=>'305','day_of_month'=>'31','day_of_week'=>'1','week'=>'45','month'=>'10','year'=>'2016','price'=>'69.07','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '1', 'date' => '2016-10-21', 'day_of_year'=>'295','day_of_month'=>'21','day_of_week'=>'5','week'=>'43','month'=>'10','year'=>'2016','price'=>'69.07','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '1', 'date' => '2016-10-14', 'day_of_year'=>'288','day_of_month'=>'14','day_of_week'=>'5','week'=>'42','month'=>'10','year'=>'2016','price'=>'69.07','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '1', 'date' => '2016-10-07', 'day_of_year'=>'281','day_of_month'=>'7','day_of_week'=>'5','week'=>'41','month'=>'10','year'=>'2016','price'=>'69.07','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '1', 'date' => '2016-09-30', 'day_of_year'=>'274','day_of_month'=>'30','day_of_week'=>'5','week'=>'40','month'=>'9','year'=>'2016','price'=>'63.93','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '1', 'date' => '2016-09-23', 'day_of_year'=>'267','day_of_month'=>'23','day_of_week'=>'5','week'=>'39','month'=>'9','year'=>'2016','price'=>'63.93','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '1', 'date' => '2016-09-16', 'day_of_year'=>'260','day_of_month'=>'16','day_of_week'=>'5','week'=>'38','month'=>'9','year'=>'2016','price'=>'63.93','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '1', 'date' => '2016-09-09', 'day_of_year'=>'253','day_of_month'=>'9','day_of_week'=>'5','week'=>'37','month'=>'9','year'=>'2016','price'=>'63.93','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '1', 'date' => '2016-09-02', 'day_of_year'=>'246','day_of_month'=>'2','day_of_week'=>'5','week'=>'36','month'=>'9','year'=>'2016','price'=>'63.93','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '3', 'date' => '2017-02-17', 'day_of_year'=>'48','day_of_month'=>'17','day_of_week'=>'5','week'=>'7','month'=>'2','year'=>'2017','price'=>'77.20','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '3', 'date' => '2017-02-10', 'day_of_year'=>'41','day_of_month'=>'10','day_of_week'=>'5','week'=>'6','month'=>'2','year'=>'2017','price'=>'79.11','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '3', 'date' => '2017-02-03', 'day_of_year'=>'34','day_of_month'=>'3','day_of_week'=>'5','week'=>'5','month'=>'2','year'=>'2017','price'=>'82.52','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '3', 'date' => '2017-01-27', 'day_of_year'=>'27','day_of_month'=>'27','day_of_week'=>'5','week'=>'4','month'=>'1','year'=>'2017','price'=>'84.17','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '3', 'date' => '2017-01-20', 'day_of_year'=>'20','day_of_month'=>'20','day_of_week'=>'5','week'=>'3','month'=>'1','year'=>'2017','price'=>'82.53','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '3', 'date' => '2017-01-13', 'day_of_year'=>'13','day_of_month'=>'13','day_of_week'=>'5','week'=>'2','month'=>'1','year'=>'2017','price'=>'81.52','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '3', 'date' => '2017-01-06', 'day_of_year'=>'6','day_of_month'=>'6','day_of_week'=>'5','week'=>'1','month'=>'1','year'=>'2017','price'=>'86.68','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '3', 'date' => '2016-12-30', 'day_of_year'=>'365','day_of_month'=>'30','day_of_week'=>'5','week'=>'53','month'=>'12','year'=>'2016','price'=>'94.44','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '3', 'date' => '2016-12-23', 'day_of_year'=>'358','day_of_month'=>'23','day_of_week'=>'5','week'=>'52','month'=>'12','year'=>'2016','price'=>'89.81','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '3', 'date' => '2016-12-16', 'day_of_year'=>'351','day_of_month'=>'16','day_of_week'=>'5','week'=>'51','month'=>'12','year'=>'2016','price'=>'84.08','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '3', 'date' => '2016-12-09', 'day_of_year'=>'344','day_of_month'=>'9','day_of_week'=>'5','week'=>'50','month'=>'12','year'=>'2016','price'=>'83.41','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '3', 'date' => '2016-12-02', 'day_of_year'=>'337','day_of_month'=>'2','day_of_week'=>'5','week'=>'49','month'=>'12','year'=>'2016','price'=>'88.97','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '3', 'date' => '2016-11-28', 'day_of_year'=>'333','day_of_month'=>'28','day_of_week'=>'1','week'=>'49','month'=>'11','year'=>'2016','price'=>'93.90','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '3', 'date' => '2016-11-21', 'day_of_year'=>'326','day_of_month'=>'21','day_of_week'=>'1','week'=>'48','month'=>'11','year'=>'2016','price'=>'100.52','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '3', 'date' => '2016-11-14', 'day_of_year'=>'319','day_of_month'=>'14','day_of_week'=>'1','week'=>'47','month'=>'11','year'=>'2016','price'=>'109.69','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '3', 'date' => '2016-11-07', 'day_of_year'=>'312','day_of_month'=>'7','day_of_week'=>'1','week'=>'46','month'=>'11','year'=>'2016','price'=>'109.64','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '3', 'date' => '2016-10-31', 'day_of_year'=>'305','day_of_month'=>'31','day_of_week'=>'1','week'=>'45','month'=>'10','year'=>'2016','price'=>'105.81','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '3', 'date' => '2016-10-21', 'day_of_year'=>'295','day_of_month'=>'21','day_of_week'=>'5','week'=>'43','month'=>'10','year'=>'2016','price'=>'98.89','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '3', 'date' => '2016-10-14', 'day_of_year'=>'288','day_of_month'=>'14','day_of_week'=>'5','week'=>'42','month'=>'10','year'=>'2016','price'=>'88.35','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '3', 'date' => '2016-10-07', 'day_of_year'=>'281','day_of_month'=>'7','day_of_week'=>'5','week'=>'41','month'=>'10','year'=>'2016','price'=>'83.69','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '3', 'date' => '2016-09-30', 'day_of_year'=>'274','day_of_month'=>'30','day_of_week'=>'5','week'=>'40','month'=>'9','year'=>'2016','price'=>'78.95','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '3', 'date' => '2016-09-23', 'day_of_year'=>'267','day_of_month'=>'23','day_of_week'=>'5','week'=>'39','month'=>'9','year'=>'2016','price'=>'74.30','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '3', 'date' => '2016-09-16', 'day_of_year'=>'260','day_of_month'=>'16','day_of_week'=>'5','week'=>'38','month'=>'9','year'=>'2016','price'=>'70.76','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '3', 'date' => '2016-09-09', 'day_of_year'=>'253','day_of_month'=>'9','day_of_week'=>'5','week'=>'37','month'=>'9','year'=>'2016','price'=>'70.61','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '3', 'date' => '2016-09-02', 'day_of_year'=>'246','day_of_month'=>'2','day_of_week'=>'5','week'=>'36','month'=>'9','year'=>'2016','price'=>'68.90','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '4', 'date' => '2017-02-17', 'day_of_year'=>'48','day_of_month'=>'17','day_of_week'=>'5','week'=>'7','month'=>'2','year'=>'2017','price'=>'78.49','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '4', 'date' => '2017-02-10', 'day_of_year'=>'41','day_of_month'=>'10','day_of_week'=>'5','week'=>'6','month'=>'2','year'=>'2017','price'=>'81.58','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '4', 'date' => '2017-02-03', 'day_of_year'=>'34','day_of_month'=>'3','day_of_week'=>'5','week'=>'5','month'=>'2','year'=>'2017','price'=>'84.20','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '4', 'date' => '2017-01-27', 'day_of_year'=>'27','day_of_month'=>'27','day_of_week'=>'5','week'=>'4','month'=>'1','year'=>'2017','price'=>'85.44','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '4', 'date' => '2017-01-20', 'day_of_year'=>'20','day_of_month'=>'20','day_of_week'=>'5','week'=>'3','month'=>'1','year'=>'2017','price'=>'83.80','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '4', 'date' => '2017-01-13', 'day_of_year'=>'13','day_of_month'=>'13','day_of_week'=>'5','week'=>'2','month'=>'1','year'=>'2017','price'=>'82.56','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '4', 'date' => '2017-01-06', 'day_of_year'=>'6','day_of_month'=>'6','day_of_week'=>'5','week'=>'1','month'=>'1','year'=>'2017','price'=>'92.25','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '4', 'date' => '2016-12-30', 'day_of_year'=>'365','day_of_month'=>'30','day_of_week'=>'5','week'=>'53','month'=>'12','year'=>'2016','price'=>'0.00','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '4', 'date' => '2016-12-23', 'day_of_year'=>'358','day_of_month'=>'23','day_of_week'=>'5','week'=>'52','month'=>'12','year'=>'2016','price'=>'88.50','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '4', 'date' => '2016-12-16', 'day_of_year'=>'351','day_of_month'=>'16','day_of_week'=>'5','week'=>'51','month'=>'12','year'=>'2016','price'=>'84.41','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '4', 'date' => '2016-12-09', 'day_of_year'=>'344','day_of_month'=>'9','day_of_week'=>'5','week'=>'50','month'=>'12','year'=>'2016','price'=>'86.06','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '4', 'date' => '2016-12-02', 'day_of_year'=>'337','day_of_month'=>'2','day_of_week'=>'5','week'=>'49','month'=>'12','year'=>'2016','price'=>'91.21','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '4', 'date' => '2016-11-28', 'day_of_year'=>'333','day_of_month'=>'28','day_of_week'=>'1','week'=>'49','month'=>'11','year'=>'2016','price'=>'94.37','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '4', 'date' => '2016-11-21', 'day_of_year'=>'326','day_of_month'=>'21','day_of_week'=>'1','week'=>'48','month'=>'11','year'=>'2016','price'=>'108.45','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '4', 'date' => '2016-11-14', 'day_of_year'=>'319','day_of_month'=>'14','day_of_week'=>'1','week'=>'47','month'=>'11','year'=>'2016','price'=>'112.90','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '4', 'date' => '2016-11-07', 'day_of_year'=>'312','day_of_month'=>'7','day_of_week'=>'1','week'=>'46','month'=>'11','year'=>'2016','price'=>'108.11','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '4', 'date' => '2016-10-31', 'day_of_year'=>'305','day_of_month'=>'31','day_of_week'=>'1','week'=>'45','month'=>'10','year'=>'2016','price'=>'102.69','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '4', 'date' => '2016-10-21', 'day_of_year'=>'295','day_of_month'=>'21','day_of_week'=>'5','week'=>'43','month'=>'10','year'=>'2016','price'=>'94.91','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '4', 'date' => '2016-10-14', 'day_of_year'=>'288','day_of_month'=>'14','day_of_week'=>'5','week'=>'42','month'=>'10','year'=>'2016','price'=>'84.47','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '4', 'date' => '2016-10-07', 'day_of_year'=>'281','day_of_month'=>'7','day_of_week'=>'5','week'=>'41','month'=>'10','year'=>'2016','price'=>'81.21','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '4', 'date' => '2016-09-30', 'day_of_year'=>'274','day_of_month'=>'30','day_of_week'=>'5','week'=>'40','month'=>'9','year'=>'2016','price'=>'75.97','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '4', 'date' => '2016-09-23', 'day_of_year'=>'267','day_of_month'=>'23','day_of_week'=>'5','week'=>'39','month'=>'9','year'=>'2016','price'=>'73.95','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '4', 'date' => '2016-09-16', 'day_of_year'=>'260','day_of_month'=>'16','day_of_week'=>'5','week'=>'38','month'=>'9','year'=>'2016','price'=>'71.40','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '4', 'date' => '2016-09-09', 'day_of_year'=>'253','day_of_month'=>'9','day_of_week'=>'5','week'=>'37','month'=>'9','year'=>'2016','price'=>'70.22','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '4', 'date' => '2016-09-02', 'day_of_year'=>'246','day_of_month'=>'2','day_of_week'=>'5','week'=>'36','month'=>'9','year'=>'2016','price'=>'68.78','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '5', 'date' => '2017-02-17', 'day_of_year'=>'48','day_of_month'=>'17','day_of_week'=>'5','week'=>'7','month'=>'2','year'=>'2017','price'=>'86.29','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '5', 'date' => '2017-02-10', 'day_of_year'=>'41','day_of_month'=>'10','day_of_week'=>'5','week'=>'6','month'=>'2','year'=>'2017','price'=>'86.88','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '5', 'date' => '2017-02-03', 'day_of_year'=>'34','day_of_month'=>'3','day_of_week'=>'5','week'=>'5','month'=>'2','year'=>'2017','price'=>'87.14','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '5', 'date' => '2017-01-27', 'day_of_year'=>'27','day_of_month'=>'27','day_of_week'=>'5','week'=>'4','month'=>'1','year'=>'2017','price'=>'86.78','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '5', 'date' => '2017-01-20', 'day_of_year'=>'20','day_of_month'=>'20','day_of_week'=>'5','week'=>'3','month'=>'1','year'=>'2017','price'=>'86.36','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '5', 'date' => '2017-01-13', 'day_of_year'=>'13','day_of_month'=>'13','day_of_week'=>'5','week'=>'2','month'=>'1','year'=>'2017','price'=>'85.87','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '5', 'date' => '2017-01-06', 'day_of_year'=>'6','day_of_month'=>'6','day_of_week'=>'5','week'=>'1','month'=>'1','year'=>'2017','price'=>'86.23','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '5', 'date' => '2016-12-30', 'day_of_year'=>'365','day_of_month'=>'30','day_of_week'=>'5','week'=>'53','month'=>'12','year'=>'2016','price'=>'85.42','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '5', 'date' => '2016-12-23', 'day_of_year'=>'358','day_of_month'=>'23','day_of_week'=>'5','week'=>'52','month'=>'12','year'=>'2016','price'=>'85.11','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '5', 'date' => '2016-12-16', 'day_of_year'=>'351','day_of_month'=>'16','day_of_week'=>'5','week'=>'51','month'=>'12','year'=>'2016','price'=>'84.96','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '5', 'date' => '2016-12-09', 'day_of_year'=>'344','day_of_month'=>'9','day_of_week'=>'5','week'=>'50','month'=>'12','year'=>'2016','price'=>'86.61','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '5', 'date' => '2016-12-02', 'day_of_year'=>'337','day_of_month'=>'2','day_of_week'=>'5','week'=>'49','month'=>'12','year'=>'2016','price'=>'91.91','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '5', 'date' => '2016-11-28', 'day_of_year'=>'333','day_of_month'=>'28','day_of_week'=>'1','week'=>'49','month'=>'11','year'=>'2016','price'=>'94.15','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '5', 'date' => '2016-11-21', 'day_of_year'=>'326','day_of_month'=>'21','day_of_week'=>'1','week'=>'48','month'=>'11','year'=>'2016','price'=>'99.60','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '5', 'date' => '2016-11-14', 'day_of_year'=>'319','day_of_month'=>'14','day_of_week'=>'1','week'=>'47','month'=>'11','year'=>'2016','price'=>'107.21','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '5', 'date' => '2016-11-07', 'day_of_year'=>'312','day_of_month'=>'7','day_of_week'=>'1','week'=>'46','month'=>'11','year'=>'2016','price'=>'102.87','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '5', 'date' => '2016-10-31', 'day_of_year'=>'305','day_of_month'=>'31','day_of_week'=>'1','week'=>'45','month'=>'10','year'=>'2016','price'=>'93.73','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '5', 'date' => '2016-10-21', 'day_of_year'=>'295','day_of_month'=>'21','day_of_week'=>'5','week'=>'43','month'=>'10','year'=>'2016','price'=>'74.76','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '5', 'date' => '2016-10-14', 'day_of_year'=>'288','day_of_month'=>'14','day_of_week'=>'5','week'=>'42','month'=>'10','year'=>'2016','price'=>'71.92','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '5', 'date' => '2016-10-07', 'day_of_year'=>'281','day_of_month'=>'7','day_of_week'=>'5','week'=>'41','month'=>'10','year'=>'2016','price'=>'70.11','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '5', 'date' => '2016-09-30', 'day_of_year'=>'274','day_of_month'=>'30','day_of_week'=>'5','week'=>'40','month'=>'9','year'=>'2016','price'=>'68.85','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '5', 'date' => '2016-09-23', 'day_of_year'=>'267','day_of_month'=>'23','day_of_week'=>'5','week'=>'39','month'=>'9','year'=>'2016','price'=>'67.29','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '5', 'date' => '2016-09-16', 'day_of_year'=>'260','day_of_month'=>'16','day_of_week'=>'5','week'=>'38','month'=>'9','year'=>'2016','price'=>'64.78','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '5', 'date' => '2016-09-09', 'day_of_year'=>'253','day_of_month'=>'9','day_of_week'=>'5','week'=>'37','month'=>'9','year'=>'2016','price'=>'62.56','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '5', 'date' => '2016-09-02', 'day_of_year'=>'246','day_of_month'=>'2','day_of_week'=>'5','week'=>'36','month'=>'9','year'=>'2016','price'=>'62.04','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '6', 'date' => '2017-02-17', 'day_of_year'=>'48','day_of_month'=>'17','day_of_week'=>'5','week'=>'7','month'=>'2','year'=>'2017','price'=>'79.29','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '6', 'date' => '2017-02-10', 'day_of_year'=>'41','day_of_month'=>'10','day_of_week'=>'5','week'=>'6','month'=>'2','year'=>'2017','price'=>'79.94','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '6', 'date' => '2017-02-03', 'day_of_year'=>'34','day_of_month'=>'3','day_of_week'=>'5','week'=>'5','month'=>'2','year'=>'2017','price'=>'79.23','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '6', 'date' => '2017-01-27', 'day_of_year'=>'27','day_of_month'=>'27','day_of_week'=>'5','week'=>'4','month'=>'1','year'=>'2017','price'=>'78.76','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '6', 'date' => '2017-01-20', 'day_of_year'=>'20','day_of_month'=>'20','day_of_week'=>'5','week'=>'3','month'=>'1','year'=>'2017','price'=>'77.15','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '6', 'date' => '2017-01-13', 'day_of_year'=>'13','day_of_month'=>'13','day_of_week'=>'5','week'=>'2','month'=>'1','year'=>'2017','price'=>'76.41','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '6', 'date' => '2017-01-06', 'day_of_year'=>'6','day_of_month'=>'6','day_of_week'=>'5','week'=>'1','month'=>'1','year'=>'2017','price'=>'76.35','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '6', 'date' => '2016-12-30', 'day_of_year'=>'365','day_of_month'=>'30','day_of_week'=>'5','week'=>'53','month'=>'12','year'=>'2016','price'=>'76.88','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '6', 'date' => '2016-12-23', 'day_of_year'=>'358','day_of_month'=>'23','day_of_week'=>'5','week'=>'52','month'=>'12','year'=>'2016','price'=>'78.76','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '6', 'date' => '2016-12-16', 'day_of_year'=>'351','day_of_month'=>'16','day_of_week'=>'5','week'=>'51','month'=>'12','year'=>'2016','price'=>'78.76','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '6', 'date' => '2016-12-09', 'day_of_year'=>'344','day_of_month'=>'9','day_of_week'=>'5','week'=>'50','month'=>'12','year'=>'2016','price'=>'82.51','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '6', 'date' => '2016-12-02', 'day_of_year'=>'337','day_of_month'=>'2','day_of_week'=>'5','week'=>'49','month'=>'12','year'=>'2016','price'=>'87.87','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '6', 'date' => '2016-11-28', 'day_of_year'=>'333','day_of_month'=>'28','day_of_week'=>'1','week'=>'49','month'=>'11','year'=>'2016','price'=>'90.54','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '6', 'date' => '2016-11-21', 'day_of_year'=>'326','day_of_month'=>'21','day_of_week'=>'1','week'=>'48','month'=>'11','year'=>'2016','price'=>'97.51','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '6', 'date' => '2016-11-14', 'day_of_year'=>'319','day_of_month'=>'14','day_of_week'=>'1','week'=>'47','month'=>'11','year'=>'2016','price'=>'101.79','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '6', 'date' => '2016-11-07', 'day_of_year'=>'312','day_of_month'=>'7','day_of_week'=>'1','week'=>'46','month'=>'11','year'=>'2016','price'=>'96.44','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '6', 'date' => '2016-10-31', 'day_of_year'=>'305','day_of_month'=>'31','day_of_week'=>'1','week'=>'45','month'=>'10','year'=>'2016','price'=>'85.72','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '6', 'date' => '2016-10-21', 'day_of_year'=>'295','day_of_month'=>'21','day_of_week'=>'5','week'=>'43','month'=>'10','year'=>'2016','price'=>'78.49','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '6', 'date' => '2016-10-14', 'day_of_year'=>'288','day_of_month'=>'14','day_of_week'=>'5','week'=>'42','month'=>'10','year'=>'2016','price'=>'75.01','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '6', 'date' => '2016-10-07', 'day_of_year'=>'281','day_of_month'=>'7','day_of_week'=>'5','week'=>'41','month'=>'10','year'=>'2016','price'=>'73.94','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '6', 'date' => '2016-09-30', 'day_of_year'=>'274','day_of_month'=>'30','day_of_week'=>'5','week'=>'40','month'=>'9','year'=>'2016','price'=>'71.26','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '6', 'date' => '2016-09-23', 'day_of_year'=>'267','day_of_month'=>'23','day_of_week'=>'5','week'=>'39','month'=>'9','year'=>'2016','price'=>'67.93','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '6', 'date' => '2016-09-16', 'day_of_year'=>'260','day_of_month'=>'16','day_of_week'=>'5','week'=>'38','month'=>'9','year'=>'2016','price'=>'66.97','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '6', 'date' => '2016-09-09', 'day_of_year'=>'253','day_of_month'=>'9','day_of_week'=>'5','week'=>'37','month'=>'9','year'=>'2016','price'=>'64.67','is_autogenerated'=>'1']);
+		IndexPrice::create(['index_id' => '6', 'date' => '2016-09-02', 'day_of_year'=>'246','day_of_month'=>'2','day_of_week'=>'5','week'=>'36','month'=>'9','year'=>'2016','price'=>'64.56','is_autogenerated'=>'1']);
+
   }
 }

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Model\Contact;
-
+use App\Model\Company;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -14,7 +14,7 @@ class ContactController extends Controller
   public function __construct() {
     $this->middleware('jwt.auth');
   }
-  
+
   /**
    * Display a listing of the resource.
    *
@@ -24,7 +24,7 @@ class ContactController extends Controller
   {
     $contact = Contact::where('status', 'a');
     $user_id = Contact::where('status', 'a')->where('company_id', $req->company_id)->pluck('user_id');
-    
+
     if($req->q) $contact->where('name', 'LIKE', '%'.$req->q.'%');
     //cek benar fungsinya? ori if($user_id)
     if($req->user_id) $contact->whereNotIn('user_id', $user_id);
@@ -44,7 +44,7 @@ class ContactController extends Controller
 
     if($contact->status != 'a')
       return response()->json(['message' => 'deactivated record'], 404);
-    
+
     return response()->json($contact, 200);
   }
 
@@ -62,9 +62,12 @@ class ContactController extends Controller
       ], 400);
     }
 
+    $company = Company::find($req->company_id);
+    $user_id = $company->user_id;
+
     $contact = new Contact($req->only(['name', 'phone', 'email']));
-    
-    $contact->user_id = $req->user_id  ? $req->user_id : NULL;
+
+    $contact->user_id = $req->user_id  ? $req->user_id : $user_id;
     $contact->company_id = $req->company_id  ? $req->company_id : NULL;
     $contact->status = 'a';
     $contact->save();
@@ -103,7 +106,7 @@ class ContactController extends Controller
   public function destroy($id)
   {
     $contact = Contact::where('status', 'a')->find($id);
-    
+
     if (!$contact) return response()->json([ 'message' => 'Not found or Deactivated Contact' ] ,404);
 
     $contact = DB::table('contacts')->where('id', $id)->update(['status' => 'x']);

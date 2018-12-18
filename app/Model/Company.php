@@ -12,7 +12,7 @@ class Company extends Model
 
   protected $fillable = [
     'company_name',
-    'company_no',
+    'company_code',
     'is_affiliated',
     'area_id',
     'phone',
@@ -95,5 +95,9 @@ class Company extends Model
 
   public function additional_cost() {
     return $this->hasMany(OrderAdditionalCost::class);
+  }
+
+  public function contracts() {
+    return $this->hasMany(Contract::class);
   }
 }

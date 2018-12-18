@@ -63,4 +63,8 @@ class Concession extends Model
     public function port() {
     	return $this->belongsTo(Port::class);
     }
+
+    public function costHeader() {
+        return $this->belongsTo(CostHeader::class);
+    }
 }

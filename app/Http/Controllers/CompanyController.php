@@ -28,13 +28,47 @@ class CompanyController extends Controller
   */
   public function index(Request $req)
   {
-    $companies = Company::with('user', 'area', 'ports', 'factories')->where('status', 'a');
+    $companies = Company::with('user', 'area', 'ports', 'factories', 'products')->where('status', 'a');
+    if($req->keyword) {
+      $key = $req->keyword;
+      if ($req->keyword == 'c' || $req->keyword == 's') {
+        $companies->whereHas('user', function($q) use ($key) {
+          $q->whereIn('company_type',[$key, 't']);
+        })
+        ->orWhereIn('company_type',[$req->keyword, 't']);
+      }
+      else {
+        $companies->whereHas('user', function($q) use ($key) {
+          $q->where('company_type', $key);
+        })
+        ->orWhere('company_type', $req->keyword);
+      }
+    }
+    if($req->keyword && $req->search) {
+      $param = $req->search;
+      $key = $req->keyword;
+      if ($req->keyword == 'c' || $req->keyword == 's') {
+        $companies->whereHas('user', function($q) use ($param,$key) {
+          $q->where('name', 'LIKE', '%'.$param.'%')->whereIn('company_type',[$key, 't']);
+        })
+        ->orWhere('company_name', 'LIKE', '%'.$req->search.'%')->whereIn('company_type',[$req->keyword, 't'])
+        ->orWhere('phone', 'LIKE', '%'.$req->search.'%')->whereIn('company_type',[$req->keyword, 't'])
+        ->orWhere('email', 'LIKE', '%'.$req->search.'%')->whereIn('company_type',[$req->keyword, 't']);
+      }
+      else {
+        $companies->whereHas('user', function($q) use ($param,$key) {
+          $q->where('name', 'LIKE', '%'.$param.'%')->where('company_type', $key);
+        })
+        ->orWhere('company_name', 'LIKE', '%'.$req->search.'%')->where('company_type', $req->keyword)
+        ->orWhere('phone', 'LIKE', '%'.$req->search.'%')->where('company_type', $req->keyword)
+        ->orWhere('email', 'LIKE', '%'.$req->search.'%')->where('company_type', $req->keyword);
+      }
+    }
 
-    if($req->q) $companies->where('company_name', 'LIKE', '%'.$req->q.'%')
-      ->orWhere('address', 'LIKE', '%'.$req->q.'%')
-      ->orWhere('city', 'LIKE', '%'.$req->q.'%')
-      ->orWhere('country', 'LIKE', '%'.$req->q.'%')
-      ->orWhere('industry', 'LIKE', '%'.$req->q.'%');
+    // $limit = $req->pageSize ? $req->pageSize : 10;
+    // $skip = ( $req->pageSize * $req->page ) ? ( $req->pageSize * $req->page ) : 0;
+
+
 
     if($req->type) {
       if ($req->type[0] == 'c' || $req->type[0] == 's')
@@ -42,20 +76,28 @@ class CompanyController extends Controller
 
       else $companies->where('company_type', $req->type[0]);
     }
+
     if($req->area_id) $companies->where('area_id','=',$req->area_id);
 
-//hasapu add 09-02-2017
-    if($req->company_type){
-      $companies->where('company_type','=',$req->company_type);
-      if($companies){
-        if($req->q) $companies->where('company_name', 'LIKE', '%'.$req->q.'%')->where('company_type','c')
-          ->orWhere('address', 'LIKE', '%'.$req->q.'%')->where('company_type','c')
-          ->orWhere('city', 'LIKE', '%'.$req->q.'%')->where('company_type','c')
-          ->orWhere('country', 'LIKE', '%'.$req->q.'%')->where('company_type','c')
-          ->orWhere('industry', 'LIKE', '%'.$req->q.'%')->where('company_type','c');
-      }
+    if($req->company_type){ $companies->where('company_type','=',$req->company_type); }
+
+    if($req->q) {
+      $param = $req->q;
+      $companies->whereHas('user', function($q) use ($param) {
+        $q->where('name', 'LIKE', '%'.$param.'%');
+      })
+        ->orWhere('company_name', 'LIKE', '%'.$req->q.'%')
+        ->orWhere('address', 'LIKE', '%'.$req->q.'%')
+        ->orWhere('city', 'LIKE', '%'.$req->q.'%')
+        ->orWhere('country', 'LIKE', '%'.$req->q.'%')
+        ->orWhere('phone', 'LIKE', '%'.$req->q.'%')
+        ->orWhere('email', 'LIKE', '%'.$req->q.'%')
+        ->orWhere('industry', 'LIKE', '%'.$req->q.'%');
     }
-//hasapu add end
+    
+
+    //for filter country
+    if($req->country) $companies->where('country',$req->country);
 
     $companies = $companies->get();
     return response()->json($companies, 200);

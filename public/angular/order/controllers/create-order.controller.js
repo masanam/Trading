@@ -16,9 +16,10 @@ angular.module('order').controller('CreateOrderController', ['$scope', '$state',
       $scope.error = null;
       // Create new Article object
       var order = new Order($scope.order);
-
+      console.log(order);
       // Redirect after save
       order.$save(function (res) {
+        console.log('mulai');
         $state.go('order.view', { id: res.id });
 
         // // Clear form fields

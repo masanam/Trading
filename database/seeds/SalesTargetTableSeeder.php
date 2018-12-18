@@ -13,25 +13,28 @@ class SalesTargetTableSeeder extends Seeder
      */
     public function run()
     {
-        SalesTarget::create([	    	
-	    	'product_id' => '1' ,
+        SalesTarget::create([
+	    	'product_variant_id' => '1' ,
 	    	'month' => '2' ,
 	    	'year'=>'2017',
-	    	'value' => '20000' ,
+	    	'tonnage' => '25000' ,
+	    	'price' => '50000' ,
 	    	'status' => 'a'
         ]) ;
         SalesTarget::create([
-	    	'product_id' => '2' ,
+	    	'product_variant_id' => '2' ,
 	    	'month' => '1' ,
 	    	'year'=>'2017',
-	    	'value' => '31142' ,
+	    	'tonnage' => '15023' ,
+	    	'price' => '31142' ,
 	    	'status' => 'a'
         ]) ;
         SalesTarget::create([
-	    	'product_id' => '1' ,
+	    	'product_variant_id' => '1' ,
 	    	'month' => '1' ,
 	    	'year'=>'2017',
-	    	'value' => '23142' ,
+	    	'tonnage' => '10200' ,
+	    	'price' => '23142' ,
 	    	'status' => 'a'
         ]) ;
     }

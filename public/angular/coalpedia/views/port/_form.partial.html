@@ -1,19 +1,19 @@
 <div class="row">
   <div class="col-lg-6">
     <div class="form-group">
-      <label for="port_name">Name of Port:</label>
+      <label for="port_name">Name of Port*:</label>
       <input name="port_name" type="text" class="form-control" id="port_name" ng-model="port.port_name" required>
     </div>
 
     <div class="form-group">
-      <label for="owner">Owner of Port:</label>
+      <label for="owner">Owner of Port*:</label>
       <input name="owner" type="text" class="form-control" id="owner" ng-model="port.owner" required>
     </div>
 
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
-          <label for="headquarter_location">Status of Port:</label>
+          <label for="headquarter_location">Status of Port*:</label>
           <div class="input-group" style="margin-bottom: 5px;">
             <div class="btn-group">
               <label class="btn btn-default" ng-model="port.is_private" uib-btn-radio="0">Public</label>
@@ -25,7 +25,7 @@
 
       <div class="col-md-6">
         <div class="form-group pull-right">
-          <label for="web">Port Facility* :</label>
+          <label for="web">Port Facility :</label>
           <div class="input-group" style="margin-bottom: 5px;">
             <div class="btn-group">
               <label class="btn btn-default" ng-model="port.has_conveyor" uib-btn-checkbox>Conveyor</label>
@@ -39,11 +39,11 @@
 
     <div class="form-group">
       <label for="size">Size of Port (Ha):</label>
-      <input name="size" type="number" class="form-control" min="0" id="size" ng-model="port.size" required>
+      <input name="size" type="number" class="form-control" min="0" id="size" ng-model="port.size">
     </div>
 
     <div class="form-group">
-      <label for="draft_height">Draft of Loading Port (m):</label>
+      <label for="draft_height">Draft of Loading Port (m)*:</label>
       <input name="draft_height" type="number" min="0" class="form-control" id="draft_height" ng-model="port.draft_height" required>
     </div>
 
@@ -54,12 +54,12 @@
 
     <div class="form-group">
       <label for="daily_discharge_rate">Daily discharge rate (mtpd):</label>
-      <input name="daily_discharge_rate" type="number" min="0" class="form-control" id="daily_discharge_rate" ng-model="port.daily_discharge_rate" required>
+      <input name="daily_discharge_rate" type="number" min="0" class="form-control" id="daily_discharge_rate" ng-model="port.daily_discharge_rate">
     </div>
   </div>
   <div class="col-lg-6">
     <div class="form-group">
-      <label for="location">Location:</label>
+      <label for="location">Location*:</label>
       <input name="location" type="text" class="form-control" id="location" ng-model="port.location" required>
     </div>
 

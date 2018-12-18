@@ -34,7 +34,7 @@
 					al.pivot.status === 'y' ? 'Auto-Acc' :
 					al.pivot.status === 'n' ? 'Auto-Rjct' : 'Pending' }}
 				</td>
-				<td>{{ al.pivot.updated_at | date }}</td>
+				<td>{{ al.pivot.updated_at | date:'MMM d, y HH:mm:ss' }}</td>
 			</tr>
 		</tbody>
 	</table>

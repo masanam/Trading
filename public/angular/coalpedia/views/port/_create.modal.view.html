@@ -30,7 +30,7 @@
 						<tr><td>Country</td><td>{{ selected.port.country }}</td></tr>
 						<tr><td>Lat</td><td>{{ selected.port.latitude }}</td></tr>
 						<tr><td>Lng</td><td>{{ selected.port.longitude }}</td></tr>
-						<tr><td>Port Size</td><td>{{ selected.port.size }}</td></tr>
+						<tr><td>Port Size</td><td>{{ selected.port.size | number }}</td></tr>
 	        </table>
         </div>
       	<div class="col-lg-4">
@@ -57,8 +57,9 @@
     </div>
 
     <div ng-if="createNew">
-		  <form name="createPort" role="form" ng-submit="create(port)" ng-init="port = {}">
+		  <form name="createPort" role="form" ng-submit="create(port)">
 		    <div ng-include="'/angular/coalpedia/views/port/_form.partial.html'"></div>
+        <div class="col-lg-12" ng-show="error" style="text-align:center;background:red;padding:10px;color:white;margin-top:10px">{{error}}</div>
 		  </form>
     </div>
 	</div>

@@ -18,249 +18,1169 @@ class CompaniesTableSeeder extends Seeder
   {
     Area::create([
       'id' => 1,
+      'area_name' => 'Area 1',
       'description' => 'Area 1',
       'status' => 'a'
     ]);
 
     Area::create([
       'id' => 2,
+      'area_name' => 'Area 2',
       'description' => 'Area 2',
       'status' => 'a'
     ]);
 
     Area::create([
       'id' => 3,
+      'area_name' => 'Area 3',
       'description' => 'Area 3',
       'status' => 'a'
     ]);
 
     Area::create([
       'id' => 4,
+      'area_name' => 'Area 4',
       'description' => 'Area 4',
       'status' => 'a'
     ]);
 
-    Company::create([
-      'id' => 1,
-      'user_id' => '2' ,
-      'area_id' =>  1,
-      'company_name' => 'PT.Wilmar Nabati Indonesia' ,
-      'is_affiliated'=>'1',
-      'phone' => '(031) 3979414' ,
-      'email' => 'info@wilmar-international.com' ,
-      'web' => 'www.wilmar-international.com' ,
-      'address' => 'Jl. Kapten Darmo Sugondo No.56, Sidorukun, Kec. Gresik, Kabupaten Gresik, Jawa Timur' ,
-      'city' => 'Gresik' ,
-      'country'=> 'ID',
-      'industry' => 'Palm Oil Manufacturer' ,
-      'annual_demand'=>'16800000',
-      'preferred_trading_term'=>'FOB MV',
-      'preferred_payment_term'=> 'LC',
-      'description' => 'This is an palm oil company' ,
-      'company_type' => 'c',
-      'status' => 'a' 
-    ]) ;
+    if (config('app.deployment') == 'berau'){
+      Company::create([
+        'id' => 1,
+        'user_id' => '2' ,
+        'area_id' =>  1,
+        'company_name' => 'PT.Wilmar Nabati Indonesia' ,
+        'company_code' => 'WNI',
+        'is_affiliated'=>'1',
+        'phone' => '(031) 3979414' ,
+        'email' => 'info@wilmar-international.com' ,
+        'web' => 'www.wilmar-international.com' ,
+        'address' => 'Jl. Kapten Darmo Sugondo No.56, Sidorukun, Kec. Gresik, Kabupaten Gresik, Jawa Timur' ,
+        'city' => 'Gresik' ,
+        'country'=> 'ID',
+        'industry' => 'Palm Oil Manufacturer' ,
+        'latitude' => -5,
+        'longitude' => 105,
+        'annual_demand'=>'16800000',
+        'preferred_trading_term'=>'FOB MV',
+        'preferred_payment_term'=> 'LC',
+        'description' => 'This is an palm oil company' ,
+        'company_type' => 'c',
+        'status' => 'a'
+      ]) ;
 
-    Company::create([
-      'id' => 2,
-      'user_id' => '1' ,
-      'area_id' =>  1,
-      'company_name' => 'PT.SMART' ,
-      'country'=> 'ID',
-      'is_affiliated'=>'1',
-      'phone' => '(031) 3979414' ,
-      'email' => 'info@wilmar-international.com' ,
-      'web' => 'www.wilmar-international.com' ,
-      'industry' => 'Palm Oil Manufacturer' ,
-      'annual_demand'=>'16800000',
-      'preferred_trading_term'=>'FOB MV',
-      'preferred_payment_term'=> 'LC',
-      'city' => 'Gresik' ,
-      'address' => 'Jl. Kapten Darmo Sugondo No.56, Sidorukun, Kec. Gresik, Kabupaten Gresik, Jawa Timur' ,
-      'description' => 'This is an palm oil company' ,
-      'company_type' => 'c',
-      'status' => 'a' 
-    ]) ;
+      Company::create([
+        'id' => 2,
+        'user_id' => '1' ,
+        'area_id' =>  1,
+        'company_name' => 'PT.SMART' ,
+        'company_code' => 'SMART',
+        'country'=> 'ID',
+        'is_affiliated'=>'1',
+        'phone' => '(031) 3979414' ,
+        'email' => 'info@wilmar-international.com' ,
+        'web' => 'www.wilmar-international.com' ,
+        'industry' => 'Palm Oil Manufacturer' ,
+        'latitude' => -5,
+        'longitude' => 106,
+        'annual_demand'=>'16800000',
+        'preferred_trading_term'=>'FOB MV',
+        'preferred_payment_term'=> 'LC',
+        'city' => 'Gresik' ,
+        'address' => 'Jl. Kapten Darmo Sugondo No.56, Sidorukun, Kec. Gresik, Kabupaten Gresik, Jawa Timur' ,
+        'description' => 'This is an palm oil company' ,
+        'company_type' => 'c',
+        'status' => 'a'
+      ]) ;
 
-    Company::create([
-      'id' => 3,
-      'user_id' => 1,
-      'area_id' =>  1,
-      'company_name' => 'PT Mitra Bahari Sentosa',
-      'country'=> 'ID',
-      'is_affiliated'=> 0,
-      'phone' => '+62712314',
-      'email' => 'info@mbs.com',
-      'web' => 'https://www.mbs.com',
-      'industry' => 'Freight',
+      Company::create([
+        'id' => 3,
+        'user_id' => 1,
+        'area_id' =>  1,
+        'company_name' => 'PT Mitra Bahari Sentosa',
+        'company_code' => 'MBS',
+        'country'=> 'ID',
+        'is_affiliated'=> 0,
+        'phone' => '+62712314',
+        'email' => 'info@mbs.com',
+        'web' => 'https://www.mbs.com',
+        'industry' => 'Freight',
+
+        'city' => 'Jakarta',
+        'address' => 'JL. Telaga Biru No.5, Banjarmasin',
+        'description' => 'PT Mitra Bahari Sentosa operates as a freight tansporting company. The company is based in Banjarmasin, Indonesia. This is a subsidiary of Sunarko Group.',
+
+        'company_type' => 'v',
+        'status' => 'a'
+      ]);
+
+      Company::create([
+        'id'=>4,
+        'company_code' => 'Index',
+        'company_name' => 'Indexim',
+        'user_id' => '1',
+        'area_id' =>  2,
+        'phone' => '',
+        'is_affiliated'=>'1',
+        'annual_sales'=>'0',
+        'preferred_trading_term'=>'FOB MV',
+        'preferred_payment_term'=> 'LC',
+        'purchasing_countries'=>'',
+        'email' => '',
+        'web' => '',
+        'country'=> 'ID',
+        'industry' => 'Coal Mining',
+        'city' => 'Kalimantan Timur',
+        'address' =>'',
+        'description' => '',
+        'company_type' => 's',
+        'purchasing_countries' => 'ID',
+        'status' => 'a'
+      ]);
+
+      Company::create([
+        'id'=>5,
+        'company_code' => 'BC',
+        'company_name' => 'Berau Coal, PT',
+        'user_id' => '1',
+        'area_id' =>  2,
+        'phone' => '021 29669700',
+        'is_affiliated'=>'1',
+        'annual_sales'=>'0',
+        'preferred_trading_term'=>'FOB MV',
+        'preferred_payment_term'=> 'LC',
+        'purchasing_countries'=>'',
+        'email' => '',
+        'web' => '',
+        'country'=> 'ID',
+        'industry' => 'Coal Mining',
+        'city' => 'Kalimantan Timur',
+        'address' =>'Menara Sunlife 17th Floor, Jl. Dr. Ide Anak Agung Gede Blok 63, South Jakarta 12950',
+        'description' => '',
+        'company_type' => 's',
+        'purchasing_countries' => 'ID',
+        'status' => 'a'
+      ]);
+
+      Company::create([
+        'id'=>6,
+        'company_code' => 'BI',
+        'company_name' => 'PT Borneo Indobara',
+        'user_id' => '3',
+        'area_id' =>  2,
+        'is_affiliated'=>'1',
+        'annual_sales'=>'02',
+        'preferred_trading_term'=>'FOB BARGE',
+        'preferred_payment_term'=> 'LC',
+        'purchasing_countries'=>'',
+        'phone' => '+622131990092',
+        'email' => 'info@borneo.com',
+        'web' => 'https://www.borneo-indobara.com',
+        'country'=> 'ID',
+        'industry' => 'Coal Mining',
+        'city' => 'Banjarmasin',
+        'address' => 'Plaza BII 2 Lt. 7 Jl. M. H. Thamrin No. 51',
+        'description' => 'In the initial stage, all the coal shipment is conducted at the Muara Satui anchorage point (Lat. 03’56 S / 115’30 E). Transshipment to the main vessel is done using barges from two ports on the banks of Satui River. Loading rate at the anchorage point is over 8,000 MT. Borneo Indobara is currently building a main port facility in the coast of Sebamban, which will enable the company to increase its throughput significantly. This port will be commisioned by the end of 2008.',
+        'company_type' => 't',
+        'status' => 'a'
+      ]);
+
+      Company::create([
+        'id'=>7,
+        'company_code' => 'TE',
+        'company_name' => 'Tiger Energy',
+        'user_id' => '1',
+        'area_id' =>  2,
+        'phone' => '',
+        'is_affiliated'=>'1',
+        'annual_sales'=>'0',
+        'preferred_trading_term'=>'FOB MV',
+        'preferred_payment_term'=> 'LC',
+        'purchasing_countries'=>'',
+        'email' => '',
+        'web' => '',
+        'country'=> 'ID',
+        'industry' => 'Coal Mining',
+        'city' => 'Kalimantan Timur',
+        'address' =>'',
+        'description' => '',
+        'company_type' => 's',
+        'purchasing_countries' => 'ID',
+        'status' => 'a'
+      ]);
+
+      Company::create([
+        'id'=>8,
+        'company_code' => 'AMN',
+        'company_name' => 'Amanah',
+        'user_id' => '1',
+        'area_id' =>  2,
+        'phone' => '',
+        'is_affiliated'=>'1',
+        'annual_sales'=>'0',
+        'preferred_trading_term'=>'FOB MV',
+        'preferred_payment_term'=> 'LC',
+        'purchasing_countries'=>'',
+        'email' => '',
+        'web' => '',
+        'country'=> 'ID',
+        'industry' => 'Coal Mining',
+        'city' => 'Kalimantan Selatan',
+        'address' =>'',
+        'description' => '',
+        'company_type' => 's',
+        'purchasing_countries' => 'ID',
+        'status' => 'a'
+      ]);
+
+      Company::create([
+        'id'=>9,
+        'company_code' => 'BBE',
+        'company_name' => 'Bukit Baiduri Energi',
+        'user_id' => '2',
+        'area_id' =>  2,
+        'phone' => '',
+        'is_affiliated'=>'1',
+        'annual_sales'=>'0',
+        'preferred_trading_term'=>'FOB MV',
+        'preferred_payment_term'=> 'LC',
+        'purchasing_countries'=>'',
+        'email' => '',
+        'web' => '',
+        'country'=> 'ID',
+        'industry' => 'Coal Mining',
+        'city' => 'Kalimantan Timur',
+        'address' =>'',
+        'description' => '',
+        'company_type' => 's',
+        'purchasing_countries' => 'ID',
+        'status' => 'a'
+      ]);
+
+      Company::create([
+        'id'=>10,
+        'company_code' => 'ARM',
+        'company_name' => 'Arutmin',
+        'user_id' => '3',
+        'area_id' =>  2,
+        'phone' => '',
+        'is_affiliated'=>'1',
+        'annual_sales'=>'0',
+        'preferred_trading_term'=>'FOB MV',
+        'preferred_payment_term'=> 'LC',
+        'purchasing_countries'=>'',
+        'email' => '',
+        'web' => '',
+        'country'=> 'ID',
+        'industry' => 'Coal Mining',
+        'city' => 'Kalimantan Timur',
+        'address' =>'',
+        'description' => '',
+        'company_type' => 's',
+        'purchasing_countries' => 'ID',
+        'status' => 'a'
+      ]);
+
+      Company::create([
+        'id'=>11,
+        'company_code' => 'BC',
+        'company_name' => 'Berau Coal, PT',
+        'user_id' => '1',
+        'area_id' =>  2,
+        'phone' => '021 29669700',
+        'is_affiliated'=>'1',
+        'annual_sales'=>'0',
+        'preferred_trading_term'=>'FOB MV',
+        'preferred_payment_term'=> 'LC',
+        'purchasing_countries'=>'',
+        'email' => '',
+        'web' => '',
+        'country'=> 'ID',
+        'industry' => 'Coal Mining',
+        'city' => 'Kalimantan Timur',
+        'address' =>'Menara Sunlife 17th Floor, Jl. Dr. Ide Anak Agung Gede Blok 63, South Jakarta 12950',
+        'description' => '',
+        'company_type' => 'c',
+        'purchasing_countries' => 'ID',
+        'status' => 'a'
+      ]);
+
+      Company::create([
+        'id'=>12,
+        'company_code' => 'ARM',
+        'company_name' => 'Arutmin',
+        'user_id' => '3',
+        'area_id' =>  2,
+        'phone' => '',
+        'is_affiliated'=>'1',
+        'annual_sales'=>'0',
+        'preferred_trading_term'=>'FOB MV',
+        'preferred_payment_term'=> 'LC',
+        'purchasing_countries'=>'',
+        'email' => '',
+        'web' => '',
+        'country'=> 'ID',
+        'industry' => 'Coal Mining',
+        'city' => 'Kalimantan Timur',
+        'address' =>'',
+        'description' => '',
+        'company_type' => 'c',
+        'purchasing_countries' => 'ID',
+        'status' => 'a'
+      ]);
+
+      Company::create([
+        'id'=>13,
+        'company_code' => 'BBE',
+        'company_name' => 'Bukit Baiduri Energi',
+        'user_id' => '2',
+        'area_id' =>  2,
+        'phone' => '',
+        'is_affiliated'=>'1',
+        'annual_sales'=>'0',
+        'preferred_trading_term'=>'FOB MV',
+        'preferred_payment_term'=> 'LC',
+        'purchasing_countries'=>'',
+        'email' => '',
+        'web' => '',
+        'country'=> 'ID',
+        'industry' => 'Coal Mining',
+        'city' => 'Kalimantan Timur',
+        'address' =>'',
+        'description' => '',
+        'company_type' => 'c',
+        'purchasing_countries' => 'ID',
+        'status' => 'a'
+      ]);
+
+      Company::create([
+        'id'=>14,
+        'company_code' => 'TE',
+        'company_name' => 'Tiger Energy',
+        'user_id' => '1',
+        'area_id' =>  2,
+        'phone' => '',
+        'is_affiliated'=>'1',
+        'annual_sales'=>'0',
+        'preferred_trading_term'=>'FOB MV',
+        'preferred_payment_term'=> 'LC',
+        'purchasing_countries'=>'',
+        'email' => '',
+        'web' => '',
+        'country'=> 'ID',
+        'industry' => 'Coal Mining',
+        'city' => 'Kalimantan Timur',
+        'address' =>'',
+        'description' => '',
+        'company_type' => 'c',
+        'purchasing_countries' => 'ID',
+        'status' => 'a'
+      ]);
+
+      Company::create([
+        'id'=>15,
+        'company_code' => 'AMN',
+        'company_name' => 'Amanah',
+        'user_id' => '1',
+        'area_id' =>  2,
+        'phone' => '',
+        'is_affiliated'=>'1',
+        'annual_sales'=>'0',
+        'preferred_trading_term'=>'FOB MV',
+        'preferred_payment_term'=> 'LC',
+        'purchasing_countries'=>'',
+        'email' => '',
+        'web' => '',
+        'country'=> 'ID',
+        'industry' => 'Coal Mining',
+        'city' => 'Kalimantan Selatan',
+        'address' =>'',
+        'description' => '',
+        'company_type' => 'c',
+        'purchasing_countries' => 'ID',
+        'status' => 'a'
+      ]);
+
+      Company::create([
+        'id'=>16,
+        'company_code' => 'BC',
+        'company_name' => 'Berau Coal, PT',
+        'user_id' => '1',
+        'area_id' =>  2,
+        'phone' => '021 29669700',
+        'is_affiliated'=>'1',
+        'annual_sales'=>'0',
+        'preferred_trading_term'=>'FOB MV',
+        'preferred_payment_term'=> 'LC',
+        'purchasing_countries'=>'',
+        'email' => '',
+        'web' => '',
+        'country'=> 'ID',
+        'industry' => 'Coal Mining',
+        'city' => 'Kalimantan Timur',
+        'address' =>'Menara Sunlife 17th Floor, Jl. Dr. Ide Anak Agung Gede Blok 63, South Jakarta 12950',
+        'description' => '',
+        'company_type' => 'c',
+        'purchasing_countries' => 'ID',
+        'status' => 'a'
+      ]);
+
+      Company::create([
+        'id'=>17,
+        'company_code' => 'BI',
+        'company_name' => 'PT Borneo Indobara',
+        'user_id' => '3',
+        'area_id' =>  2,
+        'is_affiliated'=>'1',
+        'annual_sales'=>'02',
+        'preferred_trading_term'=>'FOB BARGE',
+        'preferred_payment_term'=> 'LC',
+        'purchasing_countries'=>'',
+        'phone' => '+622131990092',
+        'email' => 'info@borneo.com',
+        'web' => 'https://www.borneo-indobara.com',
+        'country'=> 'ID',
+        'industry' => 'Coal Mining',
+        'city' => 'Banjarmasin',
+        'address' => 'Plaza BII 2 Lt. 7 Jl. M. H. Thamrin No. 51',
+        'description' => 'In the initial stage, all the coal shipment is conducted at the Muara Satui anchorage point (Lat. 03’56 S / 115’30 E). Transshipment to the main vessel is done using barges from two ports on the banks of Satui River. Loading rate at the anchorage point is over 8,000 MT. Borneo Indobara is currently building a main port facility in the coast of Sebamban, which will enable the company to increase its throughput significantly. This port will be commisioned by the end of 2008.',
+        'company_type' => 'c',
+        'status' => 'a'
+      ]);
+
+      Company::create([
+        'id'=>18,
+        'company_code' => 'BC',
+        'company_name' => 'Berau Coal, PT',
+        'user_id' => '1',
+        'area_id' =>  2,
+        'phone' => '021 29669700',
+        'is_affiliated'=>'1',
+        'annual_sales'=>'0',
+        'preferred_trading_term'=>'FOB MV',
+        'preferred_payment_term'=> 'LC',
+        'purchasing_countries'=>'',
+        'email' => '',
+        'web' => '',
+        'country'=> 'ID',
+        'industry' => 'Coal Mining',
+        'city' => 'Kalimantan Timur',
+        'address' =>'Menara Sunlife 17th Floor, Jl. Dr. Ide Anak Agung Gede Blok 63, South Jakarta 12950',
+        'description' => '',
+        'company_type' => 'v',
+        'purchasing_countries' => 'ID',
+        'status' => 'a'
+      ]);
+
+      Company::create([
+        'id'=>19,
+        'company_code' => 'ARM',
+        'company_name' => 'Arutmin',
+        'user_id' => '3',
+        'area_id' =>  2,
+        'phone' => '',
+        'is_affiliated'=>'1',
+        'annual_sales'=>'0',
+        'preferred_trading_term'=>'FOB MV',
+        'preferred_payment_term'=> 'LC',
+        'purchasing_countries'=>'',
+        'email' => '',
+        'web' => '',
+        'country'=> 'ID',
+        'industry' => 'Coal Mining',
+        'city' => 'Kalimantan Timur',
+        'address' =>'',
+        'description' => '',
+        'company_type' => 'v',
+        'purchasing_countries' => 'ID',
+        'status' => 'a'
+      ]);
+
+      Company::create([
+        'id'=>20,
+        'company_code' => 'BBE',
+        'company_name' => 'Bukit Baiduri Energi',
+        'user_id' => '2',
+        'area_id' =>  2,
+        'phone' => '',
+        'is_affiliated'=>'1',
+        'annual_sales'=>'0',
+        'preferred_trading_term'=>'FOB MV',
+        'preferred_payment_term'=> 'LC',
+        'purchasing_countries'=>'',
+        'email' => '',
+        'web' => '',
+        'country'=> 'ID',
+        'industry' => 'Coal Mining',
+        'city' => 'Kalimantan Timur',
+        'address' =>'',
+        'description' => '',
+        'company_type' => 'v',
+        'purchasing_countries' => 'ID',
+        'status' => 'a'
+      ]);
+
+      Company::create([
+        'id'=>21,
+        'company_code' => 'TE',
+        'company_name' => 'Tiger Energy',
+        'user_id' => '1',
+        'area_id' =>  2,
+        'phone' => '',
+        'is_affiliated'=>'1',
+        'annual_sales'=>'0',
+        'preferred_trading_term'=>'FOB MV',
+        'preferred_payment_term'=> 'LC',
+        'purchasing_countries'=>'',
+        'email' => '',
+        'web' => '',
+        'country'=> 'ID',
+        'industry' => 'Coal Mining',
+        'city' => 'Kalimantan Timur',
+        'address' =>'',
+        'description' => '',
+        'company_type' => 'v',
+        'purchasing_countries' => 'ID',
+        'status' => 'a'
+      ]);
+
+      Company::create([
+        'id'=>22,
+        'company_code' => 'AMN',
+        'company_name' => 'Amanah',
+        'user_id' => '1',
+        'area_id' =>  2,
+        'phone' => '',
+        'is_affiliated'=>'1',
+        'annual_sales'=>'0',
+        'preferred_trading_term'=>'FOB MV',
+        'preferred_payment_term'=> 'LC',
+        'purchasing_countries'=>'',
+        'email' => '',
+        'web' => '',
+        'country'=> 'ID',
+        'industry' => 'Coal Mining',
+        'city' => 'Kalimantan Selatan',
+        'address' =>'',
+        'description' => '',
+        'company_type' => 'v',
+        'purchasing_countries' => 'ID',
+        'status' => 'a'
+      ]);
+
+      Company::create([
+        'id'=>23,
+        'company_code' => 'BC',
+        'company_name' => 'Berau Coal, PT',
+        'user_id' => '1',
+        'area_id' =>  2,
+        'phone' => '021 29669700',
+        'is_affiliated'=>'1',
+        'annual_sales'=>'0',
+        'preferred_trading_term'=>'FOB MV',
+        'preferred_payment_term'=> 'LC',
+        'purchasing_countries'=>'',
+        'email' => '',
+        'web' => '',
+        'country'=> 'ID',
+        'industry' => 'Coal Mining',
+        'city' => 'Kalimantan Timur',
+        'address' =>'Menara Sunlife 17th Floor, Jl. Dr. Ide Anak Agung Gede Blok 63, South Jakarta 12950',
+        'description' => '',
+        'company_type' => 'v',
+        'purchasing_countries' => 'ID',
+        'status' => 'a'
+      ]);
+
+      Company::create([
+        'id'=>24,
+        'company_code' => 'BI',
+        'company_name' => 'PT Borneo Indobara',
+        'user_id' => '3',
+        'area_id' =>  2,
+        'is_affiliated'=>'1',
+        'annual_sales'=>'02',
+        'preferred_trading_term'=>'FOB BARGE',
+        'preferred_payment_term'=> 'LC',
+        'purchasing_countries'=>'',
+        'phone' => '+622131990092',
+        'email' => 'info@borneo.com',
+        'web' => 'https://www.borneo-indobara.com',
+        'country'=> 'ID',
+        'industry' => 'Coal Mining',
+        'city' => 'Banjarmasin',
+        'address' => 'Plaza BII 2 Lt. 7 Jl. M. H. Thamrin No. 51',
+        'description' => 'In the initial stage, all the coal shipment is conducted at the Muara Satui anchorage point (Lat. 03’56 S / 115’30 E). Transshipment to the main vessel is done using barges from two ports on the banks of Satui River. Loading rate at the anchorage point is over 8,000 MT. Borneo Indobara is currently building a main port facility in the coast of Sebamban, which will enable the company to increase its throughput significantly. This port will be commisioned by the end of 2008.',
+        'company_type' => 'v',
+        'status' => 'a'
+      ]);
+
+    }
+
+    if (config('app.deployment') == 'bib'){
+      Company::create([
+        'id' => 1,
+        'company_code' => 'WNI',
+        'user_id' => '2' ,
+        'company_name' => 'PT.Wilmar Nabati Indonesia' ,
+        'is_affiliated'=>'1',
+        'phone' => '(031) 3979414' ,
+        'email' => 'info@wilmar-international.com' ,
+        'web' => 'www.wilmar-international.com' ,
+        'address' => 'Jl. Kapten Darmo Sugondo No.56, Sidorukun, Kec. Gresik, Kabupaten Gresik, Jawa Timur' ,
+        'city' => 'Gresik' ,
+        'country'=> 'ID',
+        'industry' => 'Palm Oil Manufacturer' ,
+        'latitude' => -5,
+        'longitude' => 105,
+        'annual_demand'=>'16800000',
+        'preferred_trading_term'=>'FOB MV',
+        'preferred_payment_term'=> 'LC',
+        'description' => 'This is an palm oil company' ,
+        'company_type' => 'c',
+        'status' => 'a'
+      ]) ;
+
+      Company::create([
+        'id' => 2,
+        'user_id' => '1' ,
+        'company_name' => 'PT.SMART',
+        'company_code' => 'SMART' ,
+        'country'=> 'ID',
+        'is_affiliated'=>'1',
+        'phone' => '(031) 3979414' ,
+        'email' => 'info@wilmar-international.com' ,
+        'web' => 'www.wilmar-international.com' ,
+        'industry' => 'Palm Oil Manufacturer' ,
+        'latitude' => -5,
+        'longitude' => 106,
+        'annual_demand'=>'16800000',
+        'preferred_trading_term'=>'FOB MV',
+        'preferred_payment_term'=> 'LC',
+        'city' => 'Gresik' ,
+        'address' => 'Jl. Kapten Darmo Sugondo No.56, Sidorukun, Kec. Gresik, Kabupaten Gresik, Jawa Timur' ,
+        'description' => 'This is an palm oil company' ,
+        'company_type' => 'c',
+        'status' => 'a'
+      ]) ;
+
+      Company::create([
+        'id' => 3,
+        'user_id' => 1,
+        'company_code' => 'MBI',
+        'company_name' => 'PT Mitra Bahari Sentosa',
+        'country'=> 'ID',
+        'is_affiliated'=> 0,
+        'phone' => '+62712314',
+        'email' => 'info@mbs.com',
+        'web' => 'https://www.mbs.com',
+        'industry' => 'Freight',
+
+        'city' => 'Jakarta',
+        'address' => 'JL. Telaga Biru No.5, Banjarmasin',
+        'description' => 'PT Mitra Bahari Sentosa operates as a freight tansporting company. The company is based in Banjarmasin, Indonesia. This is a subsidiary of Sunarko Group.',
+
+        'company_type' => 'v',
+        'status' => 'a'
+      ]);
+
+      Company::create([
+        'id'=>4,
+        'company_code' => 'Index',
+        'company_name' => 'Indexim',
+        'user_id' => '1',
+        'phone' => '',
+        'is_affiliated'=>'1',
+        'annual_sales'=>'0',
+        'preferred_trading_term'=>'FOB MV',
+        'preferred_payment_term'=> 'LC',
+        'purchasing_countries'=>'',
+        'email' => '',
+        'web' => '',
+        'country'=> 'ID',
+        'industry' => 'Coal Mining',
+        'city' => 'Kalimantan Timur',
+        'address' =>'',
+        'description' => '',
+        'company_type' => 's',
+        'purchasing_countries' => 'ID',
+        'status' => 'a'
+      ]);
+
+      Company::create([
+        'id'=>5,
+        'company_code' => 'BC',
+        'company_name' => 'Berau Coal, PT',
+        'user_id' => '1',
+        'phone' => '021 29669700',
+        'is_affiliated'=>'1',
+        'annual_sales'=>'0',
+        'preferred_trading_term'=>'FOB MV',
+        'preferred_payment_term'=> 'LC',
+        'purchasing_countries'=>'',
+        'email' => '',
+        'web' => '',
+        'country'=> 'ID',
+        'industry' => 'Coal Mining',
+        'city' => 'Kalimantan Timur',
+        'address' =>'Menara Sunlife 17th Floor, Jl. Dr. Ide Anak Agung Gede Blok 63, South Jakarta 12950',
+        'description' => '',
+        'company_type' => 's',
+        'purchasing_countries' => 'ID',
+        'status' => 'a'
+      ]);
+
+      Company::create([
+        'id'=>6,
+        'company_code' => 'BI',
+        'company_name' => 'PT Borneo Indobara',
+        'user_id' => '3',
+        'is_affiliated'=>'1',
+        'annual_sales'=>'02',
+        'preferred_trading_term'=>'FOB BARGE',
+        'preferred_payment_term'=> 'LC',
+        'purchasing_countries'=>'',
+        'phone' => '+622131990092',
+        'email' => 'info@borneo.com',
+        'web' => 'https://www.borneo-indobara.com',
+        'country'=> 'ID',
+        'industry' => 'Coal Mining',
+        'city' => 'Banjarmasin',
+        'address' => 'Plaza BII 2 Lt. 7 Jl. M. H. Thamrin No. 51',
+        'description' => 'In the initial stage, all the coal shipment is conducted at the Muara Satui anchorage point (Lat. 03’56 S / 115’30 E). Transshipment to the main vessel is done using barges from two ports on the banks of Satui River. Loading rate at the anchorage point is over 8,000 MT. Borneo Indobara is currently building a main port facility in the coast of Sebamban, which will enable the company to increase its throughput significantly. This port will be commisioned by the end of 2008.',
+        'company_type' => 't',
+        'status' => 'a'
+      ]);
+
+      Company::create([
+        'id'=>7,
+        'company_code' => 'TE',
+        'company_name' => 'Tiger Energy',
+        'user_id' => '1',
+        'phone' => '',
+        'is_affiliated'=>'1',
+        'annual_sales'=>'0',
+        'preferred_trading_term'=>'FOB MV',
+        'preferred_payment_term'=> 'LC',
+        'purchasing_countries'=>'',
+        'email' => '',
+        'web' => '',
+        'country'=> 'ID',
+        'industry' => 'Coal Mining',
+        'city' => 'Kalimantan Timur',
+        'address' =>'',
+        'description' => '',
+        'company_type' => 's',
+        'purchasing_countries' => 'ID',
+        'status' => 'a'
+      ]);
+
+      Company::create([
+        'id'=>8,
+        'company_code' => 'AMN',
+        'company_name' => 'Amanah',
+        'user_id' => '1',
+        'phone' => '',
+        'is_affiliated'=>'1',
+        'annual_sales'=>'0',
+        'preferred_trading_term'=>'FOB MV',
+        'preferred_payment_term'=> 'LC',
+        'purchasing_countries'=>'',
+        'email' => '',
+        'web' => '',
+        'country'=> 'ID',
+        'industry' => 'Coal Mining',
+        'city' => 'Kalimantan Selatan',
+        'address' =>'',
+        'description' => '',
+        'company_type' => 's',
+        'purchasing_countries' => 'ID',
+        'status' => 'a'
+      ]);
+
+      Company::create([
+        'id'=>9,
+        'company_code' => 'BBE',
+        'company_name' => 'Bukit Baiduri Energi',
+        'user_id' => '2',
+        'phone' => '',
+        'is_affiliated'=>'1',
+        'annual_sales'=>'0',
+        'preferred_trading_term'=>'FOB MV',
+        'preferred_payment_term'=> 'LC',
+        'purchasing_countries'=>'',
+        'email' => '',
+        'web' => '',
+        'country'=> 'ID',
+        'industry' => 'Coal Mining',
+        'city' => 'Kalimantan Timur',
+        'address' =>'',
+        'description' => '',
+        'company_type' => 's',
+        'purchasing_countries' => 'ID',
+        'status' => 'a'
+      ]);
+
+      Company::create([
+        'id'=>10,
+        'company_code' => 'ARM',
+        'company_name' => 'Arutmin',
+        'user_id' => '3',
+        'phone' => '',
+        'is_affiliated'=>'1',
+        'annual_sales'=>'0',
+        'preferred_trading_term'=>'FOB MV',
+        'preferred_payment_term'=> 'LC',
+        'purchasing_countries'=>'',
+        'email' => '',
+        'web' => '',
+        'country'=> 'ID',
+        'industry' => 'Coal Mining',
+        'city' => 'Kalimantan Timur',
+        'address' =>'',
+        'description' => '',
+        'company_type' => 's',
+        'purchasing_countries' => 'ID',
+        'status' => 'a'
+      ]);
+
       
-      'city' => 'Jakarta',
-      'address' => 'JL. Telaga Biru No.5, Banjarmasin',
-      'description' => 'PT Mitra Bahari Sentosa operates as a freight tansporting company. The company is based in Banjarmasin, Indonesia. This is a subsidiary of Sunarko Group.',
+      Company::create([
+        'id'=>11,
+        'company_code' => 'BC',
+        'company_name' => 'Berau Coal, PT',
+        'user_id' => '1',
+        'area_id' =>  2,
+        'phone' => '021 29669700',
+        'is_affiliated'=>'1',
+        'annual_sales'=>'0',
+        'preferred_trading_term'=>'FOB MV',
+        'preferred_payment_term'=> 'LC',
+        'purchasing_countries'=>'',
+        'email' => '',
+        'web' => '',
+        'country'=> 'ID',
+        'industry' => 'Coal Mining',
+        'city' => 'Kalimantan Timur',
+        'address' =>'Menara Sunlife 17th Floor, Jl. Dr. Ide Anak Agung Gede Blok 63, South Jakarta 12950',
+        'description' => '',
+        'company_type' => 'c',
+        'purchasing_countries' => 'ID',
+        'status' => 'a'
+      ]);
 
-      'company_type' => 'v',
-      'status' => 'a'
-    ]);
+      Company::create([
+        'id'=>12,
+        'company_code' => 'ARM',
+        'company_name' => 'Arutmin',
+        'user_id' => '3',
+        'area_id' =>  2,
+        'phone' => '',
+        'is_affiliated'=>'1',
+        'annual_sales'=>'0',
+        'preferred_trading_term'=>'FOB MV',
+        'preferred_payment_term'=> 'LC',
+        'purchasing_countries'=>'',
+        'email' => '',
+        'web' => '',
+        'country'=> 'ID',
+        'industry' => 'Coal Mining',
+        'city' => 'Kalimantan Timur',
+        'address' =>'',
+        'description' => '',
+        'company_type' => 'c',
+        'purchasing_countries' => 'ID',
+        'status' => 'a'
+      ]);
 
-    Company::create([
-      'id'=>4,
-      'company_name' => 'Indexim',
-      'user_id' => '1',
-      'area_id' =>  2,
-      'phone' => '',
-      'is_affiliated'=>'1',
-      'annual_sales'=>'0',
-      'preferred_trading_term'=>'FOB MV',
-      'preferred_payment_term'=> 'LC',
-      'purchasing_countries'=>'',
-      'email' => '',
-      'web' => '',
-      'country'=> 'ID',
-      'industry' => 'Coal Mining',
-      'city' => 'Kalimantan Timur',
-      'address' =>'',
-      'description' => '',
-      'company_type' => 's',
-      'purchasing_countries' => 'ID',
-      'status' => 'a'
-    ]);
+      Company::create([
+        'id'=>13,
+        'company_code' => 'BBE',
+        'company_name' => 'Bukit Baiduri Energi',
+        'user_id' => '2',
+        'area_id' =>  2,
+        'phone' => '',
+        'is_affiliated'=>'1',
+        'annual_sales'=>'0',
+        'preferred_trading_term'=>'FOB MV',
+        'preferred_payment_term'=> 'LC',
+        'purchasing_countries'=>'',
+        'email' => '',
+        'web' => '',
+        'country'=> 'ID',
+        'industry' => 'Coal Mining',
+        'city' => 'Kalimantan Timur',
+        'address' =>'',
+        'description' => '',
+        'company_type' => 'c',
+        'purchasing_countries' => 'ID',
+        'status' => 'a'
+      ]);
 
-    Company::create([
-      'id'=>5,
-      'company_name' => 'Berau Coal, PT',
-      'user_id' => '1',
-      'area_id' =>  2,
-      'phone' => '021 29669700',
-      'is_affiliated'=>'1',
-      'annual_sales'=>'0',
-      'preferred_trading_term'=>'FOB MV',
-      'preferred_payment_term'=> 'LC',
-      'purchasing_countries'=>'',
-      'email' => '',
-      'web' => '',
-      'country'=> 'ID',
-      'industry' => 'Coal Mining',
-      'city' => 'Kalimantan Timur',
-      'address' =>'Menara Sunlife 17th Floor, Jl. Dr. Ide Anak Agung Gede Blok 63, South Jakarta 12950',
-      'description' => '',
-      'company_type' => 's',
-      'purchasing_countries' => 'ID',
-      'status' => 'a'
-    ]);
+      Company::create([
+        'id'=>14,
+        'company_code' => 'TE',
+        'company_name' => 'Tiger Energy',
+        'user_id' => '1',
+        'area_id' =>  2,
+        'phone' => '',
+        'is_affiliated'=>'1',
+        'annual_sales'=>'0',
+        'preferred_trading_term'=>'FOB MV',
+        'preferred_payment_term'=> 'LC',
+        'purchasing_countries'=>'',
+        'email' => '',
+        'web' => '',
+        'country'=> 'ID',
+        'industry' => 'Coal Mining',
+        'city' => 'Kalimantan Timur',
+        'address' =>'',
+        'description' => '',
+        'company_type' => 'c',
+        'purchasing_countries' => 'ID',
+        'status' => 'a'
+      ]);
 
-    Company::create([                
-      'id'=>6,
-      'company_name' => 'PT Borneo Indobara',
-      'user_id' => '3',
-      'area_id' =>  2,
-      'is_affiliated'=>'1',
-      'annual_sales'=>'02',
-      'preferred_trading_term'=>'FOB BARGE',
-      'preferred_payment_term'=> 'LC',
-      'purchasing_countries'=>'',
-      'phone' => '+622131990092',
-      'email' => 'info@borneo.com',
-      'web' => 'https://www.borneo-indobara.com',
-      'country'=> 'ID',
-      'industry' => 'Coal Mining',
-      'city' => 'Banjarmasin',
-      'address' => 'Plaza BII 2 Lt. 7 Jl. M. H. Thamrin No. 51',
-      'description' => 'In the initial stage, all the coal shipment is conducted at the Muara Satui anchorage point (Lat. 03’56 S / 115’30 E). Transshipment to the main vessel is done using barges from two ports on the banks of Satui River. Loading rate at the anchorage point is over 8,000 MT. Borneo Indobara is currently building a main port facility in the coast of Sebamban, which will enable the company to increase its throughput significantly. This port will be commisioned by the end of 2008.',
-      'company_type' => 't',
-      'status' => 'a'
-    ]);
-    
-    Company::create([
-      'id'=>7,
-      'company_name' => 'Tiger Energy',
-      'user_id' => '1',
-      'area_id' =>  2,
-      'phone' => '',
-      'is_affiliated'=>'1',
-      'annual_sales'=>'0',
-      'preferred_trading_term'=>'FOB MV',
-      'preferred_payment_term'=> 'LC',
-      'purchasing_countries'=>'',
-      'email' => '',
-      'web' => '',
-      'country'=> 'ID',
-      'industry' => 'Coal Mining',
-      'city' => 'Kalimantan Timur',
-      'address' =>'',
-      'description' => '',
-      'company_type' => 's',
-      'purchasing_countries' => 'ID',
-      'status' => 'a'
-    ]);
+      Company::create([
+        'id'=>15,
+        'company_code' => 'AMN',
+        'company_name' => 'Amanah',
+        'user_id' => '1',
+        'area_id' =>  2,
+        'phone' => '',
+        'is_affiliated'=>'1',
+        'annual_sales'=>'0',
+        'preferred_trading_term'=>'FOB MV',
+        'preferred_payment_term'=> 'LC',
+        'purchasing_countries'=>'',
+        'email' => '',
+        'web' => '',
+        'country'=> 'ID',
+        'industry' => 'Coal Mining',
+        'city' => 'Kalimantan Selatan',
+        'address' =>'',
+        'description' => '',
+        'company_type' => 'c',
+        'purchasing_countries' => 'ID',
+        'status' => 'a'
+      ]);
 
-    Company::create([
-      'id'=>8,
-      'company_name' => 'Amanah',
-      'user_id' => '1',
-      'area_id' =>  2,
-      'phone' => '',
-      'is_affiliated'=>'1',
-      'annual_sales'=>'0',
-      'preferred_trading_term'=>'FOB MV',
-      'preferred_payment_term'=> 'LC',
-      'purchasing_countries'=>'',
-      'email' => '',
-      'web' => '',
-      'country'=> 'ID',
-      'industry' => 'Coal Mining',
-      'city' => 'Kalimantan Selatan',
-      'address' =>'',
-      'description' => '',
-      'company_type' => 's',
-      'purchasing_countries' => 'ID',
-      'status' => 'a'
-    ]);
+      Company::create([
+        'id'=>16,
+        'company_code' => 'BC',
+        'company_name' => 'Berau Coal, PT',
+        'user_id' => '1',
+        'area_id' =>  2,
+        'phone' => '021 29669700',
+        'is_affiliated'=>'1',
+        'annual_sales'=>'0',
+        'preferred_trading_term'=>'FOB MV',
+        'preferred_payment_term'=> 'LC',
+        'purchasing_countries'=>'',
+        'email' => '',
+        'web' => '',
+        'country'=> 'ID',
+        'industry' => 'Coal Mining',
+        'city' => 'Kalimantan Timur',
+        'address' =>'Menara Sunlife 17th Floor, Jl. Dr. Ide Anak Agung Gede Blok 63, South Jakarta 12950',
+        'description' => '',
+        'company_type' => 'c',
+        'purchasing_countries' => 'ID',
+        'status' => 'a'
+      ]);
 
-    Company::create([
-      'id'=>9,
-      'company_name' => 'Bukit Baiduri Energi',
-      'user_id' => '2',
-      'area_id' =>  2,
-      'phone' => '',
-      'is_affiliated'=>'1',
-      'annual_sales'=>'0',
-      'preferred_trading_term'=>'FOB MV',
-      'preferred_payment_term'=> 'LC',
-      'purchasing_countries'=>'',
-      'email' => '',
-      'web' => '',
-      'country'=> 'ID',
-      'industry' => 'Coal Mining',
-      'city' => 'Kalimantan Timur',
-      'address' =>'',
-      'description' => '',
-      'company_type' => 's',
-      'purchasing_countries' => 'ID',
-      'status' => 'a'
-    ]);
+      Company::create([
+        'id'=>17,
+        'company_code' => 'BI',
+        'company_name' => 'PT Borneo Indobara',
+        'user_id' => '3',
+        'area_id' =>  2,
+        'is_affiliated'=>'1',
+        'annual_sales'=>'02',
+        'preferred_trading_term'=>'FOB BARGE',
+        'preferred_payment_term'=> 'LC',
+        'purchasing_countries'=>'',
+        'phone' => '+622131990092',
+        'email' => 'info@borneo.com',
+        'web' => 'https://www.borneo-indobara.com',
+        'country'=> 'ID',
+        'industry' => 'Coal Mining',
+        'city' => 'Banjarmasin',
+        'address' => 'Plaza BII 2 Lt. 7 Jl. M. H. Thamrin No. 51',
+        'description' => 'In the initial stage, all the coal shipment is conducted at the Muara Satui anchorage point (Lat. 03’56 S / 115’30 E). Transshipment to the main vessel is done using barges from two ports on the banks of Satui River. Loading rate at the anchorage point is over 8,000 MT. Borneo Indobara is currently building a main port facility in the coast of Sebamban, which will enable the company to increase its throughput significantly. This port will be commisioned by the end of 2008.',
+        'company_type' => 'c',
+        'status' => 'a'
+      ]);
 
-    Company::create([
-      'id'=>10,
-      'company_name' => 'Arutmin',
-      'user_id' => '3',
-      'area_id' =>  2,
-      'phone' => '',
-      'is_affiliated'=>'1',
-      'annual_sales'=>'0',
-      'preferred_trading_term'=>'FOB MV',
-      'preferred_payment_term'=> 'LC',
-      'purchasing_countries'=>'',
-      'email' => '',
-      'web' => '',
-      'country'=> 'ID',
-      'industry' => 'Coal Mining',
-      'city' => 'Kalimantan Timur',
-      'address' =>'',
-      'description' => '',
-      'company_type' => 's',
-      'purchasing_countries' => 'ID',
-      'status' => 'a'
-    ]);
+      Company::create([
+        'id'=>18,
+        'company_code' => 'BC',
+        'company_name' => 'Berau Coal, PT',
+        'user_id' => '1',
+        'area_id' =>  2,
+        'phone' => '021 29669700',
+        'is_affiliated'=>'1',
+        'annual_sales'=>'0',
+        'preferred_trading_term'=>'FOB MV',
+        'preferred_payment_term'=> 'LC',
+        'purchasing_countries'=>'',
+        'email' => '',
+        'web' => '',
+        'country'=> 'ID',
+        'industry' => 'Coal Mining',
+        'city' => 'Kalimantan Timur',
+        'address' =>'Menara Sunlife 17th Floor, Jl. Dr. Ide Anak Agung Gede Blok 63, South Jakarta 12950',
+        'description' => '',
+        'company_type' => 'v',
+        'purchasing_countries' => 'ID',
+        'status' => 'a'
+      ]);
+
+      Company::create([
+        'id'=>19,
+        'company_code' => 'ARM',
+        'company_name' => 'Arutmin',
+        'user_id' => '3',
+        'area_id' =>  2,
+        'phone' => '',
+        'is_affiliated'=>'1',
+        'annual_sales'=>'0',
+        'preferred_trading_term'=>'FOB MV',
+        'preferred_payment_term'=> 'LC',
+        'purchasing_countries'=>'',
+        'email' => '',
+        'web' => '',
+        'country'=> 'ID',
+        'industry' => 'Coal Mining',
+        'city' => 'Kalimantan Timur',
+        'address' =>'',
+        'description' => '',
+        'company_type' => 'v',
+        'purchasing_countries' => 'ID',
+        'status' => 'a'
+      ]);
+
+      Company::create([
+        'id'=>20,
+        'company_code' => 'BBE',
+        'company_name' => 'Bukit Baiduri Energi',
+        'user_id' => '2',
+        'area_id' =>  2,
+        'phone' => '',
+        'is_affiliated'=>'1',
+        'annual_sales'=>'0',
+        'preferred_trading_term'=>'FOB MV',
+        'preferred_payment_term'=> 'LC',
+        'purchasing_countries'=>'',
+        'email' => '',
+        'web' => '',
+        'country'=> 'ID',
+        'industry' => 'Coal Mining',
+        'city' => 'Kalimantan Timur',
+        'address' =>'',
+        'description' => '',
+        'company_type' => 'v',
+        'purchasing_countries' => 'ID',
+        'status' => 'a'
+      ]);
+
+      Company::create([
+        'id'=>21,
+        'company_code' => 'TE',
+        'company_name' => 'Tiger Energy',
+        'user_id' => '1',
+        'area_id' =>  2,
+        'phone' => '',
+        'is_affiliated'=>'1',
+        'annual_sales'=>'0',
+        'preferred_trading_term'=>'FOB MV',
+        'preferred_payment_term'=> 'LC',
+        'purchasing_countries'=>'',
+        'email' => '',
+        'web' => '',
+        'country'=> 'ID',
+        'industry' => 'Coal Mining',
+        'city' => 'Kalimantan Timur',
+        'address' =>'',
+        'description' => '',
+        'company_type' => 'v',
+        'purchasing_countries' => 'ID',
+        'status' => 'a'
+      ]);
+
+      Company::create([
+        'id'=>22,
+        'company_code' => 'AMN' ,
+        'company_name' => 'Amanah',
+        'user_id' => '1',
+        'area_id' =>  2,
+        'phone' => '',
+        'is_affiliated'=>'1',
+        'annual_sales'=>'0',
+        'preferred_trading_term'=>'FOB MV',
+        'preferred_payment_term'=> 'LC',
+        'purchasing_countries'=>'',
+        'email' => '',
+        'web' => '',
+        'country'=> 'ID',
+        'industry' => 'Coal Mining',
+        'city' => 'Kalimantan Selatan',
+        'address' =>'',
+        'description' => '',
+        'company_type' => 'v',
+        'purchasing_countries' => 'ID',
+        'status' => 'a'
+      ]);
+
+      Company::create([
+        'id'=>23,
+        'company_code' => 'BC',
+        'company_name' => 'Berau Coal, PT',
+        'user_id' => '1',
+        'area_id' =>  2,
+        'phone' => '021 29669700',
+        'is_affiliated'=>'1',
+        'annual_sales'=>'0',
+        'preferred_trading_term'=>'FOB MV',
+        'preferred_payment_term'=> 'LC',
+        'purchasing_countries'=>'',
+        'email' => '',
+        'web' => '',
+        'country'=> 'ID',
+        'industry' => 'Coal Mining',
+        'city' => 'Kalimantan Timur',
+        'address' =>'Menara Sunlife 17th Floor, Jl. Dr. Ide Anak Agung Gede Blok 63, South Jakarta 12950',
+        'description' => '',
+        'company_type' => 'v',
+        'purchasing_countries' => 'ID',
+        'status' => 'a'
+      ]);
+
+      Company::create([
+        'id'=>24,
+        'company_code' => 'BI',
+        'company_name' => 'PT Borneo Indobara',
+        'user_id' => '3',
+        'area_id' =>  2,
+        'is_affiliated'=>'1',
+        'annual_sales'=>'02',
+        'preferred_trading_term'=>'FOB BARGE',
+        'preferred_payment_term'=> 'LC',
+        'purchasing_countries'=>'',
+        'phone' => '+622131990092',
+        'email' => 'info@borneo.com',
+        'web' => 'https://www.borneo-indobara.com',
+        'country'=> 'ID',
+        'industry' => 'Coal Mining',
+        'city' => 'Banjarmasin',
+        'address' => 'Plaza BII 2 Lt. 7 Jl. M. H. Thamrin No. 51',
+        'description' => 'In the initial stage, all the coal shipment is conducted at the Muara Satui anchorage point (Lat. 03’56 S / 115’30 E). Transshipment to the main vessel is done using barges from two ports on the banks of Satui River. Loading rate at the anchorage point is over 8,000 MT. Borneo Indobara is currently building a main port facility in the coast of Sebamban, which will enable the company to increase its throughput significantly. This port will be commisioned by the end of 2008.',
+        'company_type' => 'v',
+        'status' => 'a'
+      ]);
+    }
+
+
 
     Contact::create([
       'id' => 1,
@@ -272,43 +1192,43 @@ class CompaniesTableSeeder extends Seeder
       'status' => 'a'
     ]);
 
-    
+
 
     //1-5
-    
+
     // Seller::create(['company_name' => 'Amanah','user_id' => '1','phone' => '','is_affiliated'=>'1','annual_sales'=>'0','preferred_trading_term'=>'FOB MV','preferred_payment_term'=>'LC at Sight','purchasing_countries'=>'','email' => '','web' => '','country'=> 'ID','industry' => 'Coal Mining','city' => 'Kalimantan Selatan','address' =>'','latitude' =>0,'longitude' => 0,'description' => '','status' => 'a']);
     // Seller::create(['company_name' => 'Bara Jaya Utama','user_id' => '1','phone' => '','is_affiliated'=>'1','annual_sales'=>'0','preferred_trading_term'=>'FOB MV','preferred_payment_term'=>'LC at Sight','purchasing_countries'=>'','email' => '','web' => '','country'=> 'ID','industry' => 'Coal Mining','city' => 'Kalimantan Timur','address' =>'','latitude' =>0,'longitude' => 0,'description' => '','status' => 'a']);
     // Seller::create(['company_name' => 'Bukit Baiduri Energi','user_id' => '1','phone' => '','is_affiliated'=>'1','annual_sales'=>'0','preferred_trading_term'=>'FOB MV','preferred_payment_term'=>'LC at Sight','purchasing_countries'=>'','email' => '','web' => '','country'=> 'ID','industry' => 'Coal Mining','city' => 'Kalimantan Timur','address' =>'','latitude' =>0,'longitude' => 0,'description' => '','status' => 'a']);
-    
+
     // //6-10
 
-    // Seller::create(['company_name' => 'Kaltim Jaya Bara','user_id' => '1','phone' => '','is_affiliated'=>'1','annual_sales'=>'0','preferred_trading_term'=>'FOB MV','preferred_payment_term'=>'LC at Sight','purchasing_countries'=>'','email' => '','web' => '','country'=> 'ID','industry' => 'Coal Mining','city' => 'Kalimantan Timur','address' =>'','latitude' =>0,'longitude' => 0,'description' => '','status' => 'a']);  
+    // Seller::create(['company_name' => 'Kaltim Jaya Bara','user_id' => '1','phone' => '','is_affiliated'=>'1','annual_sales'=>'0','preferred_trading_term'=>'FOB MV','preferred_payment_term'=>'LC at Sight','purchasing_countries'=>'','email' => '','web' => '','country'=> 'ID','industry' => 'Coal Mining','city' => 'Kalimantan Timur','address' =>'','latitude' =>0,'longitude' => 0,'description' => '','status' => 'a']);
     // Seller::create(['company_name' => 'Arutmin','user_id' => '1','phone' => '','is_affiliated'=>'1','annual_sales'=>'0','preferred_trading_term'=>'FOB MV','preferred_payment_term'=>'LC at Sight','purchasing_countries'=>'','email' => '','web' => '','country'=> 'ID','industry' => 'Coal Mining','city' => 'Kalimantan Selatan','address' =>'','latitude' =>0,'longitude' => 0,'description' => '','status' => 'a']);
     // Seller::create(['company_name' => 'PT. Kideco Jaya Agung','user_id' => '1','phone' => '021 5257626','is_affiliated'=>'1','annual_sales'=>'0','preferred_trading_term'=>'FOB MV','preferred_payment_term'=>'LC at Sight','purchasing_countries'=>'','email' => '','web' => '','country'=> 'ID','industry' => 'Coal Mining','city' => 'Kalimantan Timur','address' =>'Menara Mulia 17th Floor, Jl. Jend Gatot Subroto Kav 9, Central Jakarta 12930','latitude' =>0,'longitude' => 0,'description' => '','status' => 'a']);
     // Seller::create(['company_name' => 'Adaro','user_id' => '1','phone' => '','is_affiliated'=>'1','annual_sales'=>'0','preferred_trading_term'=>'FOB MV','preferred_payment_term'=>'LC at Sight','purchasing_countries'=>'','email' => '','web' => '','country'=> 'ID','industry' => 'Coal Mining','city' => 'Kalimantan Selatan','address' =>'','latitude' =>0,'longitude' => 0,'description' => '','status' => 'a']);
-    
+
     // //11-15
     // Seller::create(['company_name' => 'Jhonlin Group','user_id' => '1','phone' => '','is_affiliated'=>'1','annual_sales'=>'0','preferred_trading_term'=>'FOB MV','preferred_payment_term'=>'LC at Sight','purchasing_countries'=>'','email' => '','web' => '','country'=> 'ID','industry' => 'Coal Mining','city' => 'Kalimantan Selatan','address' =>'','latitude' =>0,'longitude' => 0,'description' => '','status' => 'a']);
     // Seller::create(['company_name' => 'Asmin Koalindo Tuhup','user_id' => '1','phone' => '','is_affiliated'=>'1','annual_sales'=>'0','preferred_trading_term'=>'FOB MV','preferred_payment_term'=>'LC at Sight','purchasing_countries'=>'','email' => '','web' => '','country'=> 'ID','industry' => 'Coal Mining','city' => 'Kalimantan Tengah','address' =>'','latitude' =>0,'longitude' => 0,'description' => '','status' => 'a']);
     // Seller::create(['company_name' => 'Sunfan','user_id' => '1','phone' => '','is_affiliated'=>'1','annual_sales'=>'0','preferred_trading_term'=>'','preferred_payment_term'=>'LC at Sight','purchasing_countries'=>'','email' => '','web' => '','country'=> 'ID','industry' => 'Coal Mining','city' => 'Kalimantan Selatan','address' =>'','latitude' =>0,'longitude' => 0,'description' => '','status' => 'a']);
     // Seller::create(['company_name' => 'Nugraha Jorong Pratama','user_id' => '1','phone' => '','is_affiliated'=>'1','annual_sales'=>'0','preferred_trading_term'=>'','preferred_payment_term'=>'LC at Sight','purchasing_countries'=>'','email' => '','web' => '','country'=> 'ID','industry' => 'Coal Mining','city' => 'Kalimantan Selatan','address' =>'','latitude' =>0,'longitude' => 0,'description' => '','status' => 'a']);
     // Seller::create(['company_name' => 'PT. Bengkulu Bio Energi','user_id' => '1','phone' => '','is_affiliated'=>'1','annual_sales'=>'0','preferred_trading_term'=>'FOB Barge','preferred_payment_term'=>'LC at Sight','purchasing_countries'=>'','email' => '','web' => '','country'=> 'ID','industry' => 'Coal Mining','city' => 'Bengkulu','address' =>'','latitude' =>0,'longitude' => 0,'description' => '','status' => 'a']);
-    
+
     // //16-20
     // Seller::create(['company_name' => 'PT. Bukit Asam. TBk','user_id' => '1','phone' => '','is_affiliated'=>'1','annual_sales'=>'0','preferred_trading_term'=>'FOB MV','preferred_payment_term'=>'LC at Sight','purchasing_countries'=>'','email' => '','web' => '','country'=> 'ID','industry' => 'Coal Mining','city' => 'Sumatera Selatan','address' =>'','latitude' =>0,'longitude' => 0,'description' => '','status' => 'a']);
     // Seller::create(['company_name' => 'CV. Surya Sunfan Dwi Bahtera','user_id' => '1','phone' => '','is_affiliated'=>'1','annual_sales'=>'0','preferred_trading_term'=>'','preferred_payment_term'=>'LC at Sight','purchasing_countries'=>'','email' => '','web' => '','country'=> 'ID','industry' => 'Coal Mining','city' => 'Kalimantan Selatan','address' =>'','latitude' =>0,'longitude' => 0,'description' => '','status' => 'a']);
     // Seller::create(['company_name' => 'Integra','user_id' => '1','phone' => '','is_affiliated'=>'1','annual_sales'=>'0','preferred_trading_term'=>'FOB Barge','preferred_payment_term'=>'LC at Sight','purchasing_countries'=>'','email' => '','web' => '','country'=> 'ID','industry' => 'Coal Mining','city' => 'Jambi','address' =>'','latitude' =>0,'longitude' => 0,'description' => '','status' => 'a']);
     // Seller::create(['company_name' => 'Pada Idi','user_id' => '1','phone' => '','is_affiliated'=>'1','annual_sales'=>'0','preferred_trading_term'=>'FOB MV','preferred_payment_term'=>'LC at Sight','purchasing_countries'=>'','email' => '','web' => '','country'=> 'ID','industry' => 'Coal Mining','city' => 'Kalimantan Tengah','address' =>'','latitude' =>0,'longitude' => 0,'description' => '','status' => 'a']);
     // Seller::create(['company_name' => 'PT. Inkor Prima Coal','user_id' => '1','phone' => '','is_affiliated'=>'1','annual_sales'=>'0','preferred_trading_term'=>'FOB MV','preferred_payment_term'=>'LC at Sight','purchasing_countries'=>'','email' => '','web' => '','country'=> 'ID','industry' => 'Coal Mining','city' => 'Kalimantan Timur','address' =>'','latitude' =>0,'longitude' => 0,'description' => '','status' => 'a']);
-    
+
     // //21-24
     // Seller::create(['company_name' => 'PT. Rain TBK','user_id' => '1','phone' => '','is_affiliated'=>'1','annual_sales'=>'0','preferred_trading_term'=>'FOB MV','preferred_payment_term'=>'LC at Sight','purchasing_countries'=>'','email' => '','web' => '','country'=> 'ID','industry' => 'Coal Mining','city' => 'Kalimantan Timur','address' =>'','latitude' =>0,'longitude' => 0,'description' => '','status' => 'a']);
     // Seller::create(['company_name' => 'Sentosa Laju Energi','user_id' => '1','phone' => '','is_affiliated'=>'1','annual_sales'=>'0','preferred_trading_term'=>'FOB MV','preferred_payment_term'=>'LC at Sight','purchasing_countries'=>'','email' => '','web' => '','country'=> 'ID','industry' => 'Coal Mining','city' => 'Kalimantan Timur','address' =>'','latitude' =>0,'longitude' => 0,'description' => '','status' => 'a']);
     // Seller::create(['company_name' => 'Sunfan','user_id' => '1','phone' => '','is_affiliated'=>'1','annual_sales'=>'0','preferred_trading_term'=>'','preferred_payment_term'=>'LC at Sight','purchasing_countries'=>'','email' => '','web' => '','country'=> 'ID','industry' => 'Coal Mining','city' => 'Kalimantan Selatan','address' =>'','latitude' =>0,'longitude' => 0,'description' => '','status' => 'a']);
     // Seller::create(['company_name' => 'PT. Bara Harmonis Batang Asam','user_id' => '1','phone' => '','is_affiliated'=>'1','annual_sales'=>'0','preferred_trading_term'=>'','preferred_payment_term'=>'LC at Sight','purchasing_countries'=>'','email' => '','web' => '','country'=> 'ID','industry' => 'Coal Mining','city' => 'Jambi','address' =>'','latitude' =>0,'longitude' => 0,'description' => '','status' => 'a']);
 
-    // Seller::create([                
-    //     'company_name' => 'PT Kuansing Inti Makmur',            
+    // Seller::create([
+    //     'company_name' => 'PT Kuansing Inti Makmur',
     //     'user_id' => '2',
     //     'phone' => '+6276132317',
     //     'is_affiliated'=>'1',
@@ -329,7 +1249,7 @@ class CompaniesTableSeeder extends Seeder
     //     'status' => 'a'
     // ])/*->user()->attach(6)*/;
 
-    // Seller::create([                
+    // Seller::create([
     //     'company_name' => 'PT Borneo Indobara',
     //     'user_id' => '3',
     //     'is_affiliated'=>'1',
@@ -351,8 +1271,8 @@ class CompaniesTableSeeder extends Seeder
     //     'status' => 'a'
     // ])/*->user()->attach(6)*/;
 
-    // Seller::create([                
-    //     'company_name' => 'PT Golden Energy Mines',        
+    // Seller::create([
+    //     'company_name' => 'PT Golden Energy Mines',
     //     'user_id' => '3',
     //     'is_affiliated'=>'1',
     //     'annual_sales'=>'02',

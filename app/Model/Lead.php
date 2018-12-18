@@ -25,7 +25,7 @@ class Lead extends Model
         'port_draft_height',
         'port_latitude',
         'port_longitude',
-
+        'remarks',
         'product_name',
         'typical_quality',
         'product_id',
@@ -87,8 +87,10 @@ class Lead extends Model
         'na2o_reject',
         'na2o_bonus',
 
+        'pricing_scheme',
         'volume',
         'price',
+        'price_remarks',
         'currency',
         'trading_term',
         'trading_term_detail',
@@ -131,7 +133,7 @@ class Lead extends Model
     }
 
     public function Product() {
-        return $this->hasOne('App\Model\Product', 'id', 'product_id');
+        return $this->hasOne('App\Model\ProductVariant', 'id', 'product_id');
     }
 
     public function trader() {
@@ -166,8 +168,8 @@ class Lead extends Model
     public function reconcile() {
         $volume = $this->orders->sum('pivot.volume');
 
-        if($this->volume >= $volume) $this->order_status = 's';
-        else $this->order_status = 'p';
+        if($this->volume > $volume) $this->order_status = 'p';
+        else $this->order_status = 's';
 
         $this->save();
     }

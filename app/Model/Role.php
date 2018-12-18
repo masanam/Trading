@@ -24,4 +24,9 @@ class Role extends Model {
   public function users() {
     return $this->belongsToMany(User::class, 'user_role', 'role_id', 'user_id');
 	}
+
+  public function approvalscheme() {
+    return $this->hasMany(OrderApprovalSchemeSequence::class);
+  }
+
 }

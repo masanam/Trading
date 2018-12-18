@@ -1,0 +1,118 @@
+<section ng-controller="SystemDashboardController" ng-init="init()" class="content">
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="small-box bg-red">
+        <div class="inner">
+          <p>USERS</p>
+
+          <p>{{ total.users }} Records</p>
+          <p>{{ total.logins }} Login</p>
+        </div>
+        <div class="icon">
+          <i class="fa fa-user"></i>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="small-box bg-teal">
+        <div class="inner">
+          <p>ORDERS</p>
+
+          <p>{{ total.leads }} Entries</p>
+          <p>{{ total.orders }} Orders, {{ total.approvedOrders }} Approved Orders</p>
+        </div>
+        <div class="icon">
+          <i class="fa fa-briefcase"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">Orders</h3>
+
+          <div class="box-tools pull-right">
+            <p>
+              <form style="display: inline;">
+                <span>Date : </span>
+                <md-input-container>
+                  <input type="date" ng-model="start_date">
+                </md-input-container>
+                <span> - </span>
+                <md-input-container>
+                  <input type="date" ng-model="end_date">
+                </md-input-container>
+              </form>
+              <button>
+                <a href="./api/orders?download=true&type=csv&token={{ Authentication.token }}" title="Download as CSV" target="_blank" class="fa fa-file-excel-o"></a>
+              </button>
+              <button>
+                <a href="./api/orders?download=true&type=pdf&token={{ Authentication.token }}" title="Download as PDF" target="_blank" class="fa fa-print"></a>
+              </button>
+            </p>
+          </div>
+        </div>
+
+        <div class="box-body">
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Tonnage</th>
+                  <th>Price</th>
+                  <th>Customers</th>
+                  <th>Products</th>
+                  <th>L/D</th>
+                  <th>Approval</th>
+                  <th>Created at</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="order in orders">
+                  <td>{{ $index+1 }}</td>
+                  <td>{{ order.total_sell_volume[0].volume }}</td>
+                  <td>{{ order.average_sell_price[0].price }}</td>
+                  <td>
+                    <span ng-repeat="s in order.sells track by $index">
+                      {{ s.company.company_name }}<span ng-if="$index !== order.sells.length-1">,</span>
+                    </span>
+                  </td>
+                  <td>
+                    <span ng-repeat="s in order.sells track by $index">
+                      {{ s.product_name }}<span ng-if="$index !== order.sells.length-1">,</span>
+                    </span>
+                  </td>
+                  <td>
+                    {{ order.earliest_sell_laycan[0].laycan_start | date:'d MMM' }} ~
+                    {{ order.latest_sell_laycan[0].laycan_end | date:'d MMM' }}
+                  </td>
+                  <td>
+                    <div ng-if="order.approvals.length > 0">
+                      {{ order.approvals[0].name | firstWord }} ({{order.approvals[0].pivot.status}}), {{ order.approvals[0].pivot.updated_at | date:'d MMM yy' }}
+                    </div>
+                  </td>
+                  <td>
+                    <div>
+                      {{ order.created_at | date: 'd MMM yy' }}
+                    </div>
+                  </td>
+                  <td>
+                    <a ui-sref="order.view({ id: order.id, dashborad:true })"><i class="glyphicon glyphicon-eye-open"></i></a>
+                  </td>
+                </tr>
+                <tr ng-if="orders.length == 0">
+                  <td colspan="7" class="text-center">No data available</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

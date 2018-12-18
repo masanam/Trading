@@ -1,8 +1,8 @@
 <svg height="50px" width="40%">
 	<line ng-repeat="(key, value) in display | limitTo:(display.length-1) track by $index"
 		stroke="teal" stroke-opacity="0.5" stroke-width="3"
-		ng-attr-y1="{{ value }}%" 
-		ng-attr-y2="{{ display[key+1] }}%" 
-		ng-attr-x1="{{ key/display.length*100 }}%" 
+		ng-attr-y1="{{ value }}%"
+		ng-attr-y2="{{ display[key+1] }}%"
+		ng-attr-x1="{{ key/display.length*100 }}%"
 		ng-attr-x2="{{ (key+1)/display.length*100 }}%"/>
 </svg>

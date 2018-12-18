@@ -27,7 +27,7 @@
             <td>{{ port.location }}</td>
             <td ng-show="port.is_private===1">Private</td>
             <td ng-show="port.is_private===0">Public</td>
-            <td>{{ port.size }}</td>
+            <td>{{ port.size | number }}</td>
             <td class="pull-right">
               <a ui-sref="port.view({ id: port.id })" target="_blank" class="glyphicon glyphicon-new-window"></a>
               <a ng-click="edit(port)" class="glyphicon glyphicon-pencil"></a>

@@ -28,6 +28,7 @@ return [
     'env' => env('APP_ENV', 'production'),
     'baseUrl' => env('APP_BASE_URL', 'http://ct.volantech.io'),
     'deployment' => env('APP_DEPLOYMENT', 'bib'),
+    'resetApprovalOnUpdate' => env('RESET_APPROVAL_ON_UPDATE', true),
     'defaultTrx' => env('DEFAULT_TRANSACTION', 'trade'),
     'showBuy' => env('SHOW_BUY', 'trade'),
     'showAutoApproval' => env('SHOW_AUTO_APPROVAL', true),
@@ -37,6 +38,8 @@ return [
     'defaultCurrency' => env('DEFAULT_CURRENCY', 'USD'),
     'hideCrossingLead' => env('HIDE_CROSSING_LEAD', true),
     'showAllLead' => env('SHOW_ALL_LEAD', false),
+    'allowRetrachApproval' => env('ALLOW_RETRACT_APPROVAL', false),
+    'allowEditAfterApproval' => env('ALLOW_EDIT_AFTER_APPROVAL', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -197,6 +200,8 @@ return [
         // Mpociot\Firebase\SyncsWithFirebase::class,
         Ixudra\Curl\CurlServiceProvider::class,
         Laravel\Scout\ScoutServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
     ],
 
     /*
@@ -246,6 +251,8 @@ return [
         'JWTAuth'   => Tymon\JWTAuth\Facades\JWTAuth::class,
         'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
         'Curl' => Ixudra\Curl\Facades\Curl::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         //'Throttle' => GrahamCampbell\Throttle\Facades\Throttle::class,
     ],
 

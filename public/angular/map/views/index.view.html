@@ -18,7 +18,7 @@
       <div class="col-lg-5" style="padding:15px">
         <select class="form-control" ng-model="filter_country" ng-change="find()">
           <option value="">-- Select Country --</option>
-          <option ng-value="country.name" ng-repeat="country in countries">{{ country.name }}</option>
+          <option value="{{country.code}}" ng-repeat="country in countries">{{ country.name }}</option>
         </select>
       </div>
       <!-- search box -->

@@ -32,12 +32,20 @@
                 <i class="fa fa-envelope bg-blue" ng-if="notif.notification.indexOf('ORD') < 0"></i>
                 <i class="fa fa-user bg-red" ng-if="notif.notification.indexOf('ORD') >= 0"></i>
 
-                <div class="timeline-item" ng-click="detail(notif.url)">                                     
+                <div class="timeline-item" ng-if="!notif.isRead" style="background-color: #F0F8FF;" ng-click="readNotification(notif.$id);detail(notif.url)">                                
                     <span class="time"><i class="fa fa-clock-o"></i> {{ notif.created_at | date:'mediumDate' }} {{ notif.created_at | date:'shortTime' }}</span>
                       <div class="timeline-body" style="font-size: 16px;">
                         {{ notif.notification }}
                       </div>
                 </div>
+
+                <div class="timeline-item" ng-if="notif.isRead" ng-click="detail(notif.url)">                                     
+                    <span class="time"><i class="fa fa-clock-o"></i> {{ notif.created_at | date:'mediumDate' }} {{ notif.created_at | date:'shortTime' }}</span>
+                      <div class="timeline-body" style="font-size: 16px;">
+                        {{ notif.notification }}
+                      </div>
+                </div>
+
               </li>
               <!-- END timeline item -->
               <!-- timeline item -->

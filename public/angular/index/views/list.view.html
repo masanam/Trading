@@ -1,15 +1,15 @@
 
 <div class="box-header with-border">
   <h1 class="box-title " style="font-size: 25px">Index</h1>
-  <div class="box-tools pull-right btn-group" ng-if="Authentication.user.role.indexOf('intel') !== -1">
+  <div class="box-tools pull-right btn-group" ng-if="Authentication.user.privilege.indexOf('index.edit') !== -1">
     <button ui-sref="index.today-price" class="btn btn-primary hidden-xs">+ Add Today Price</button>
     <button ui-sref="index.edit_previous-price" class="btn btn-primary hidden-xs">+ Edit Previous Price</button>
     <button ui-sref="index.create" class="btn btn-primary hidden-xs">+ Create New Index</button>
   </div>
 </div>
-<div class="box-body" ng-init="find()">
-  <button ui-sref="index.today-price" class="btn btn-primary btn-block hidden-sm hidden-md hidden-lg" ng-if="Authentication.user.role.indexOf('intel') !== -1">+ Add Today Price</button>
-  <button ui-sref="index.create" class="btn btn-primary hidden-sm btn-block hidden-md hidden-lg" ng-if="Authentication.user.role.indexOf('intel') !== -1">+ Create New Index</button><hr>
+<div class="box-body" ng-init="find()">  
+  <button ui-sref="index.today-price" class="btn btn-primary btn-block hidden-sm hidden-md hidden-lg" ng-if="Authentication.user.privilege.indexOf('index.edit') !== -1">+ Add Today Price</button>
+  <button ui-sref="index.create" class="btn btn-primary hidden-sm btn-block hidden-md hidden-lg" ng-if="Authentication.user.privilege.indexOf('index.edit') !== -1">+ Create New Index</button><hr>
  <div class="table-responsive">
   <table st-table="indices" st-safe-src="indexCollection" class="table table-striped">
     <thead>

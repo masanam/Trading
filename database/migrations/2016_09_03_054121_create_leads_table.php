@@ -102,9 +102,10 @@ class CreateLeadsTable extends Migration
             $table->string('na2o_reject')->nullable(); //size/piece
             $table->string('na2o_bonus')->nullable();
 
-
+            $table->char('pricing_scheme',1)->nullable();
             $table->decimal('volume', 11,2)->nullable();
             $table->decimal('price', 20, 10)->nullable();
+            $table->longText('price_remarks')->nullable();
             $table->char('currency',3);
             $table->string('carrier_type')->nullable(); // not specified, gear, gearless, gear & gearless
             $table->string('trading_term')->nullable();

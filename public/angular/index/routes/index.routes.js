@@ -42,7 +42,7 @@ angular.module('index').config(['$stateProvider',
       .state('index.edit_previous-price', {
         url: '/price/edit_previous',
         templateUrl: '/angular/index/views/index-price/edit_previous-price.view.html',
-        roles: ['intel']
+        roles: ['index.edit']
       })
       // Update Index Price
       .state('index.edit-price', {

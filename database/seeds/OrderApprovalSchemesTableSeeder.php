@@ -28,7 +28,7 @@ class OrderApprovalSchemesTableSeeder extends Seeder
         ]);
 
         $seq = [
-          //untuk order area 1 
+          //untuk order area 1
           // d = direct, o = or, a = and, 1/2/3/...  = angka
           //['order_approval_scheme_id' => 1,'sequence' => 1,'role_id' => 26, 'approval_scheme' => 'd'], // trade supervisor, direct
           ['order_approval_scheme_id' => 1,'sequence' => 1,'role_id' => 22, 'approval_scheme' => 'o'], // manager area 1, all
@@ -51,13 +51,13 @@ class OrderApprovalSchemesTableSeeder extends Seeder
           'order_approval_scheme_name' => 'Bib Approval Sequence'
         ]);
 
-        $seq = [                  
-          ['order_approval_scheme_id' => 3,'sequence' => 1,'role_id' => 28, 'approval_scheme' => 'o'], 
-          ['order_approval_scheme_id' => 3,'sequence' => 2,'role_id' => 29, 'approval_scheme' => 'o'], 
-          ['order_approval_scheme_id' => 3,'sequence' => 3,'role_id' => 11, 'approval_scheme' => 'o'], 
+        $seq = [
+          ['order_approval_scheme_id' => 3,'sequence' => 1,'role_id' => 28, 'approval_scheme' => 'o'],
+          ['order_approval_scheme_id' => 3,'sequence' => 2,'role_id' => 29, 'approval_scheme' => 'o'],
+          ['order_approval_scheme_id' => 3,'sequence' => 3,'role_id' => 11, 'approval_scheme' => 'o'],
         ];
       }
 
-        foreach($seq as $s) OrderApprovalSchemeSequence::create($s);
+      foreach($seq as $s) OrderApprovalSchemeSequence::create($s);
     }
 }

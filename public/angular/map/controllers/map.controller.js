@@ -27,7 +27,7 @@ angular.module('map').controller('MapController', ['$scope','$http', '$statePara
     };
 
     $scope.countries = Country.query();
-    $scope.filter_country = 'Indonesia';
+    $scope.filter_country = 'ID';
 
     $scope.customIcon = {
       scaledSize: [32, 32],
@@ -123,7 +123,7 @@ angular.module('map').controller('MapController', ['$scope','$http', '$statePara
         }
         else if($scope.value==='factory') {
           if($scope.res.length > 0) {
-            $scope.factories = Factory.query({ q:$scope.res });
+            $scope.factories = Factory.query({ q:$scope.res, country:$scope.filter_country });
             $scope.ports = undefined;
             $scope.companies = undefined;
             $scope.search.keyword='';
@@ -131,7 +131,7 @@ angular.module('map').controller('MapController', ['$scope','$http', '$statePara
         }
         else if($scope.value==='custumer') {
           if($scope.res.length > 0) {
-            $scope.companies = Company.query({ company_type: 'c', q:$scope.res });
+            $scope.companies = Company.query({ company_type: 'c', q:$scope.res, country:$scope.filter_country });
             $scope.factories = undefined;
             $scope.ports = undefined;
             $scope.search.keyword='';
@@ -139,9 +139,9 @@ angular.module('map').controller('MapController', ['$scope','$http', '$statePara
         }
 
         else if ($scope.value==='all' || $scope.value===undefined) {
-          $scope.ports = Port.query();
-          $scope.factories = Factory.query();
-          $scope.companies = Company.query({ company_type: 'c' });
+          $scope.ports = Port.query({ q:$scope.res });
+          $scope.factories = Factory.query({ q:$scope.res, country:$scope.filter_country });
+          $scope.companies = Company.query({ company_type: 'c', q:$scope.res, country:$scope.filter_country });
         }
       }
 

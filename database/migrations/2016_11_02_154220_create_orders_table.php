@@ -18,6 +18,9 @@ class CreateOrdersTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->integer('index_id')->unsigned()->nullable();
             $table->boolean('in_house')->default(false);
+            $table->string('index_name')->nullable();
+            $table->string('index_provider')->nullable();
+            $table->decimal('price', 20, 10)->nullable();
             $table->string('cancel_reason')->nullable();
             $table->string('request_reason')->nullable();
             $table->string('finalize_reason')->nullable();

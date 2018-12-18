@@ -117,9 +117,10 @@ class AuthenticateController extends Controller
         if($user) {
             $subordinates = $user->subordinates();
             $managers = $user->managers();
+            $token = JWTAuth::fromUser($user);
 
             // the token is valid and we have found the user via the sub claim
-            return response()->json(compact('user', 'subordinates', 'managers'), 200);
+            return response()->json(compact('token', 'user', 'subordinates', 'managers'), 200);
         }
         else {
             return response()->json(['message' => 'User is deactivated or not found'], 400);

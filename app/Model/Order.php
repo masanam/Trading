@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use App\Model\Lead;
 use App\Model\User;
+use App\Model\Index;
+use App\Model\IndexPrice;
 
 // use Mpociot\Firebase\SyncsWithFirebase;
 
@@ -13,6 +15,28 @@ class Order extends Model
 {
   // use SyncsWithFirebase;
   protected $table = 'orders';
+
+
+  public function totalSellVolume () {
+    return $this->belongsToMany(Lead::class, 'order_details', 'order_id', 'lead_id')
+            ->selectRaw('sum(order_details.volume) as volume')->where('lead_type', 's')->groupBy('order_id');
+  }
+
+  public function averageSellPrice () {
+    return $this->belongsToMany(Lead::class, 'order_details', 'order_id', 'lead_id')
+            ->selectRaw('avg(order_details.base_price) as price')->where('lead_type', 's')->groupBy('order_id');
+  }
+
+  public function earliestSellLayCan () {
+    return $this->belongsToMany(Lead::class, 'order_details', 'order_id', 'lead_id')
+            ->selectRaw('min(laycan_start) as laycan_start')->where('lead_type', 's')->groupBy('order_id');
+  }
+
+  public function latestSellLayCan () {
+    return $this->belongsToMany(Lead::class, 'order_details', 'order_id', 'lead_id')
+            ->selectRaw('max(laycan_end) as laycan_end')->where('lead_type', 's')->groupBy('order_id');
+  }
+
 
   /*
    * Relations
@@ -65,6 +89,14 @@ class Order extends Model
 
   public function additional_cost() {
     return $this->hasMany(OrderAdditionalCost::class);
+  }
+
+  public function index() {
+    return $this->belongsTo(Index::class);
+  }
+
+  public function index_price() {
+    return $this->belongsTo(IndexPrice::class,'index_id','index_id')->orderBy('date','asc');//->
   }
 
   // Model Functions

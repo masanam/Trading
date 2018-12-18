@@ -31,21 +31,29 @@ class FactoryController extends Controller
     {
       $factory = Factory::with('company','port');
 
+      //for filter country
+      if($req->country) $factory->where('country',$req->country);
+
       if($req->company_id){
         if($req->coalpedia)
-            $factory = $factory->where('status', 'a')->where('company_id', '!=', $req->company_id)->get();
+            $factory = $factory->where('status', 'a')->where('company_id', '=', $req->company_id);
         else
-            $factory = $factory->where('status', 'a')->where('company_id', $req->company_id)->get();
+            $factory = $factory->where('status', 'a')->where('company_id', $req->company_id);
         foreach ($factory as $fac) {
           $fac->latitude = floatval($fac->latitude);
           $fac->longitude = floatval($fac->longitude);
         }
       }
+      if($req->search) {
+        $factory = $factory->where('factory_name', 'LIKE', '%'.$req->search.'%')->where('company_id', '=', $req->company_id);
+      }
       else{
         $factory = $factory->where('status', 'a');
         if($req->q) $factory = $factory->where('factory_name', 'LIKE', '%' . $req->q . '%');
-        $factory = $factory->get();
+
       }
+
+      $factory = $factory->get();
 
       return response()->json($factory, 200);
     }
@@ -101,7 +109,7 @@ class FactoryController extends Controller
      */
     public function update(Request $req, $id)
     {
-        $factory = Factory::find($id);
+        $factory = Factory::with('company')->find($id);
 
         if (!$req) return response()->json([ 'message' => 'Bad Request' ], 400);
         if (!$factory) return response()->json([ 'message' => 'Not found' ] ,404);

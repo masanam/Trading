@@ -81,7 +81,7 @@
                   <td>Purchasing Countries:</td><td>{{ company.purchasing_countries }}</td>
                 </tr>
                 <tr ng-if="company.company_type === 'c'">
-                  <td>Annual Demand:</td><td>{{ company.annual_demand }} <span class='badge badger-danger'>Million Tonnes</span></td>
+                  <td>Annual Demand:</td><td>{{ company.annual_demand | number}} <span class='badge badger-danger'>Million Tonnes</span></td>
                 </tr>
                 <tr ng-if="company.company_type !== 'v'">
                   <td>Preferred Trading Term:</td><td>

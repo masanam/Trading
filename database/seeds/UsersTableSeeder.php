@@ -50,6 +50,7 @@ class UsersTableSeeder extends Seeder
             [ 'name' => 'Andez', 'email' => 'andez@volantech.io', 'title' => 'Supervisor', 'image' => './images/default.png', 'phone'=> '1234567890', 'employee_no'=>'EMP-123', 'manager_id'=>6],
             [ 'name' => 'Kamal', 'email' => 'kamal@volantech.io', 'title' => 'Staff', 'image' => './images/default.png', 'phone'=> '1234567890', 'employee_no'=>'EMP-123', 'manager_id'=>7],
             [ 'name' => 'Sakti', 'email' => 'hasapu@volantech.io', 'title' => 'Staff', 'image' => './images/default.png', 'phone'=> '1234567890', 'employee_no'=>'EMP-123', 'manager_id'=>8],
+            [ 'name' => 'Fuganto Widjaja', 'email' => 'fuganto@gmail.com', 'title' => 'CEO', 'image' => './images/default.png', 'phone'=> '1234567890', 'employee_no'=>'EMP-123', 'manager_id'=>null],
 
         ];
 
@@ -70,13 +71,13 @@ class UsersTableSeeder extends Seeder
         // RESERVED ADMIN ROLES
         Role::create(['id' => 1,    'role' => 'root']);
         Role::create(['id' => 2,    'role' => 'admin']);
-        Role::create(['id' => 3,    'role' => 'trade-admin']);
-        Role::create(['id' => 4,    'role' => 'index-admin']);
-        Role::create(['id' => 5,    'role' => 'bd-admin']);
-        Role::create(['id' => 6,    'role' => 'scheduler-admin']);
-        Role::create(['id' => 7,    'role' => 'docs-admin']);
-        Role::create(['id' => 8,    'role' => 'target-admin']);
-        Role::create(['id' => 9,    'role' => 'bi-admin']);
+        Role::create(['id' => 3,    'role' => 'admin-trade']);
+        Role::create(['id' => 4,    'role' => 'admin-index']);
+        Role::create(['id' => 5,    'role' => 'admin-bd']);
+        Role::create(['id' => 6,    'role' => 'admin-scheduler']);
+        Role::create(['id' => 7,    'role' => 'admin-docs']);
+        Role::create(['id' => 8,    'role' => 'admin-target']);
+        Role::create(['id' => 9,    'role' => 'admin-bi']);
         Role::create(['id' => 10,   'role' => 'audit']);
 
         // GENERIC MANAGER LEVELS
@@ -107,11 +108,29 @@ class UsersTableSeeder extends Seeder
         Role::create(['id' => 29,   'role' => 'trading-head']);        
 
         User::find(1)->roles()->attach([1, 2, 11]); // Pras: root, admin, executive
-        User::find(2)->roles()->attach(21); // Martin: cmo
-        User::find(3)->roles()->attach(21); // Aryo: cmo
-        User::find(4)->roles()->attach(21); // Fahmi: cmo
-        User::find(5)->roles()->attach(27); // Gio: General Manager
-        User::find(6)->roles()->attach(27); // Yudhi: General Manager
+        User::find(11)->roles()->attach(11);
+        
+        if(config('app.deployment') == 'berau'){
+            User::find(2)->roles()->attach(21); // Martin: cmo
+            User::find(3)->roles()->attach(21); // Aryo: cmo
+            User::find(4)->roles()->attach(21); // Fahmi: cmo
+        }
+        if(config('app.deployment') == 'bib'){
+            User::find(2)->roles()->attach(29); // Martin: cmo
+            User::find(3)->roles()->attach(29); // Aryo: cmo
+            User::find(4)->roles()->attach(29); // Fahmi: cmo
+        }
+
+        if(config('app.deployment') == 'berau'){
+          User::find(5)->roles()->attach(27); // Gio: General Manager
+          User::find(6)->roles()->attach(27); // Yudhi: General Manager            
+        }
+        if(config('app.deployment') == 'bib'){
+          User::find(5)->roles()->attach(28);
+          User::find(6)->roles()->attach(28);
+        }
+        
+
         User::find(7)->roles()->attach(22); // Rori: trade-manager-area-1
         User::find(8)->roles()->attach(23); // Andez: trade-manager-area-2
         User::find(9)->roles()->attach(15); // Kamal: trader
@@ -127,13 +146,14 @@ class UsersTableSeeder extends Seeder
         Privilege::create([ 'id' => 8, 'menu' => 'coalpedia.view' ]);
         Privilege::create([ 'id' => 9, 'menu' => 'coalpedia.edit' ]);
 
+        Role::find(1)->privileges()->attach(7);
+        Role::find(2)->privileges()->attach(7);
         Role::find(11)->privileges()->attach(3); // executive
 
         Role::find(15)->privileges()->attach(2); // traders
         Role::find(15)->privileges()->attach(5);
         Role::find(15)->privileges()->attach(9);
-
-        Role::find(21)->privileges()->attach(3); // cmo
+        
 
         Role::find(22)->privileges()->attach(3); // trade-manager-area-1
 
@@ -143,6 +163,13 @@ class UsersTableSeeder extends Seeder
         Role::find(26)->privileges()->attach(4);
         Role::find(26)->privileges()->attach(6);
 
-        Role::find(27)->privileges()->attach(3); // general-manager
+        if(config('app.deployment') == 'berau'){
+            Role::find(27)->privileges()->attach(3); // 
+            Role::find(21)->privileges()->attach(3);
+        }
+        if(config('app.deployment') == 'bib'){
+            Role::find(28)->privileges()->attach(3); // 
+            Role::find(29)->privileges()->attach(3);
+        }
     }
 }

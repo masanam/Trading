@@ -31,7 +31,9 @@ class IndexPolicy
    */
   public function create(User $user)
   {
-    return in_array('intel', $user->role);
+    // return in_array('intel', $user->role);
+    
+    return in_array('index.edit', $user->privilege);
   }
 
   /**
@@ -43,7 +45,7 @@ class IndexPolicy
    */
   public function update(User $user, Index $index)
   {
-    return in_array('intel', $user->role);
+    return in_array('index.edit', $user->privilege);
   }
 
   /**
@@ -55,6 +57,6 @@ class IndexPolicy
    */
   public function delete(User $user, Index $index)
   {
-    return in_array('intel', $user->role);
+    return in_array('index.edit', $user->privilege);
   }
 }

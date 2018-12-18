@@ -57,6 +57,7 @@ angular.module('lead').controller('LeadController', ['$scope', '$state', '$state
       $scope.lead_type=$stateParams.lead_type;
       if($stateParams.lead_type) $scope.lead.lead_type = $stateParams.lead_type;
       if(Environment.trx === 'sell') $scope.lead.lead_type = 'sell';
+      $scope.lead.pricing_scheme = 'n';
     };
 
     $scope.getUsed = function(lead){
@@ -70,8 +71,11 @@ angular.module('lead').controller('LeadController', ['$scope', '$state', '$state
     };
 
     $scope.create = function (lead) {
+      if(!$scope.selected.company) {
+        $scope.error = 'Please Select a Company!';
+        return;
+      }else $scope.error = null;
       lead = new Lead(lead);
-      console.log(lead);
       lead.company_id = $scope.selected.company.id;
 
       lead.$save(function(res) {
@@ -107,8 +111,6 @@ angular.module('lead').controller('LeadController', ['$scope', '$state', '$state
 
     $scope.update = function () {
       var next;
-
-      console.log($scope.lead);
 
       if($state.current.name === 'lead.update') next = 'lead.location';
       else if($state.current.name === 'lead.location'){

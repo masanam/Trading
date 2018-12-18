@@ -21,8 +21,16 @@ class RoleController extends Controller
      */
     public function index(Request $req)
     {
-        $role = Role::with('privileges')->get();
+        $role = Role::with('privileges');
 
+        if($req->q){
+          $param = $req->q;
+          $role = $role->where(
+            function($q) use ($param){
+              $q->where('role', 'like', '%'.$param.'%');
+          });
+        }
+        $role = $role->get();
         // kamal used at order approval managements
         if($req->role_id) $role = Role::with('users')->find($req->role_id);
 
@@ -100,6 +108,15 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        //
+      $role = Role::with('users', 'privileges', 'approvalscheme')->find($id);
+
+      if(count($role->users) || count($role->approvalscheme) || count ($role->privileges)){
+        
+      }else{
+        $role->delete();        
+      }
+      
+      return response()->json($role, 200);      
+      // Role::with('users')->find($req->role_id);
     }
 }

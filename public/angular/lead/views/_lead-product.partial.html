@@ -19,72 +19,72 @@
           </thead>
           <tbody>
             <tr lead-quality ng-if="lead.gcv_adb_min != null && lead.gcv_adb_max != null"
-            min="lead.gcv_adb_min" max="lead.gcv_adb_max"
+            min="lead.gcv_adb_min | number" max="lead.gcv_adb_max | number"
             bonus="lead.gcv_adb_bonus" reject="lead.gcv_adb_reject" quality="'GCV ADB'" typical="productQuality" unit="'Kcal'"
             >
             </tr>
             <tr lead-quality ng-if="lead.gcv_arb_min != null && lead.gcv_arb_max != null"
-            min="lead.gcv_arb_min" max="lead.gcv_arb_max"
+            min="lead.gcv_arb_min | number" max="lead.gcv_arb_max | number"
             bonus="lead.gcv_arb_bonus" reject="lead.gcv_arb_reject" quality="'GCV ARB'" typical="productQuality" unit="'Kcal'"
             >
             </tr>
             <tr lead-quality ng-if="lead.ncv_min != null && lead.ncv_max != null"
-            min="lead.ncv_min" max="lead.ncv_max"
+            min="lead.ncv_min | number" max="lead.ncv_max | number"
             bonus="lead.ncv_bonus" reject="lead.ncv_reject" quality="'NCV ARB'" typical="productQuality" unit="'Kcal/Kg'"
             >
             </tr>
             <tr lead-quality ng-if="lead.tm_min != null && lead.tm_max != null"
-            min="lead.tm_min" max="lead.tm_max"
+            min="lead.tm_min | number" max="lead.tm_max | number"
             bonus="lead.tm_bonus" reject="lead.tm_reject" quality="'Total Moisture (ARB)'" typical="productQuality" unit="'%'"
             >
             </tr>
             <tr lead-quality ng-if="lead.im_min != null && lead.im_max != null"
-            min="lead.im_min" max="lead.im_max"
+            min="lead.im_min | number" max="lead.im_max | number"
             bonus="lead.im_bonus" reject="lead.im_reject" quality="'Inherent Moisture (ADB)'" typical="productQuality" unit="'%'"
             >
             </tr>
             <tr lead-quality ng-if="lead.vm_min != null && lead.vm_max != null"
-            min="lead.vm_min" max="lead.vm_max"
+            min="lead.vm_min | number" max="lead.vm_max | number"
             bonus="lead.vm_bonus" reject="lead.vm_reject" quality="'Volatile Matter (ADB)'" typical="productQuality" unit="'%'"
             >
             </tr>
             <tr lead-quality ng-if="lead.ash_min != null && lead.ash_max != null"
-            min="lead.ash_min" max="lead.ash_max"
+            min="lead.ash_min | number" max="lead.ash_max | number"
             bonus="lead.ash_bonus" reject="lead.ash_reject" quality="'Ash (ADB)'" typical="productQuality" unit="'%'"
             >
             </tr>
             <tr lead-quality ng-if="lead.fc_min != null && lead.fc_max != null"
-            min="lead.fc_min" max="lead.fc_max"
+            min="lead.fc_min | number" max="lead.fc_max | number"
             bonus="lead.fc_bonus" reject="lead.fc_reject" quality="'Fixed Carbon (ADB)'" typical="productQuality" unit="'%'"
             >
             </tr>
             <tr lead-quality ng-if="lead.ts_min != null && lead.ts_max != null"
-            min="lead.ts_min" max="lead.ts_max"
+            min="lead.ts_min | number" max="lead.ts_max | number"
             bonus="lead.ts_bonus" reject="lead.ts_reject" quality="'Total Sulphur (ADB)'" typical="productQuality" unit="'%'"
             >
             </tr>
             <tr lead-quality ng-if="lead.hgi_min != null && lead.hgi_max != null"
-            min="lead.hgi_min" max="lead.hgi_max"
+            min="lead.hgi_min | number" max="lead.hgi_max | number"
             bonus="lead.hgi_bonus" reject="lead.hgi_reject" quality="'HGI'" typical="productQuality" unit=""
             >
             </tr>
             <tr lead-quality ng-if="lead.size_min != null && lead.size_max != null"
-            min="lead.size_min" max="lead.size_max"
+            min="lead.size_min | number" max="lead.size_max | number"
             bonus="lead.size_bonus" reject="lead.size_reject" quality="'SIZE (0-50mm)'" typical="productQuality" unit="'%'"
             >
             </tr>
             <tr lead-quality ng-if="lead.fe2o3_min != null && lead.fe2o3_max != null"
-            min="lead.fe2o3_min" max="lead.fe2o3_max"
+            min="lead.fe2o3_min | number" max="lead.fe2o3_max | number"
             bonus="lead.fe2o3_bonus" reject="lead.fe2o3_reject" quality="'Fe2O3'" typical="productQuality" unit="'%'"
             >
             </tr>
             <tr lead-quality ng-if="lead.aft_min != null && lead.aft_max != null"
-            min="lead.aft_min" max="lead.aft_max"
+            min="lead.aft_min | number" max="lead.aft_max | number"
             bonus="lead.aft_bonus" reject="lead.aft_reject" quality="'AFT (IDT)'" typical="productQuality" unit="'Deg C'"
             >
             </tr>
             <tr lead-quality ng-if="lead.na2o_min != null && lead.na2o_max != null"
-            min="lead.na2o_min" max="lead.na2o_max"
+            min="lead.na2o_min | number" max="lead.na2o_max | number"
             bonus="lead.na2o_bonus" reject="lead.na2o_reject" quality="'Na2O'" typical="productQuality" unit="'%'"
             >
             </tr>

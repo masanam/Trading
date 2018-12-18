@@ -4,6 +4,7 @@ angular.module('order').controller('OrderReasonModalController', ['$uibModalInst
   function($uibModalInstance, $scope, Order, status, Notification, Contract) {
 
     $scope.status = status;
+    console.log($scope.status);
     $scope.step = 1;
     $scope.init= function(){
       $scope.order.reason = '';

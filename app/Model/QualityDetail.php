@@ -13,7 +13,7 @@ class QualityDetail extends Model
     // ];
 
     public function quality() {
-      return $this->hasMany(Quality::class);
+      return $this->belongsTo(Quality::class, 'quality_id');
     }
 
     public function qualityMetric() {

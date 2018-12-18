@@ -16,6 +16,7 @@ class MiningLicenseTableSeeder extends Seeder
         
         MiningLicense::create([
             'no'=> '1012',
+            'province' => 'Kal-Tim',
             'company_id'=> 1,
             'concession_id'=> 1,
             'contact_id'=> 1,
@@ -65,6 +66,7 @@ class MiningLicenseTableSeeder extends Seeder
 
         MiningLicense::create([
             'no'=> '1034',
+            'province' => 'Kal-Sel',
             'company_id'=> 2,
             'concession_id'=> 2,
             'contact_id'=> 1,
@@ -103,6 +105,7 @@ class MiningLicenseTableSeeder extends Seeder
 
         MiningLicense::create([
             'no'=> '1044',
+            'province' => 'Kal-Tim',
             'company_id'=> 3,
             'concession_id'=> 3,
             'contact_id'=> 1,
@@ -128,6 +131,45 @@ class MiningLicenseTableSeeder extends Seeder
             'geological_description' => '75% APL, 25% H.Produksi',
             'geological_quality' => 'Good',
             'geological_cv' => 1928,
+            'geological_tm' => 30,
+            'geological_ts' => 20,
+            'geological_ash' => 10,
+            'geological_reserve' => 1,
+            'notes' => 'Practcal 33 22 ',
+            'polygon' => DB::raw("GeomFromText('POLYGON((-0.1 118, -0.8718984100899661 118.14378845149827, -1.8718984100899661 118.14378845149827, -0.1 118))')"),
+            'status' => 'p',
+            'checked_by' => 1,
+            'checked_at' => '2017-01-7'
+        ]);
+
+        MiningLicense::create([
+            'no'=> '1055',
+            'province' => 'Kal-Tim',
+            'company_id'=> 3,
+            'concession_id'=> 3,
+            'contact_id'=> 1,
+            'source' => 'Internal',
+            'type'=>'XPLT',
+            'expired' => '2018-1-2',
+            'total_area' => 313,
+            'overlap_other'=> 0,
+            'overlap_other_desc' => Null ,
+            'release_after' => 1,
+            'release_after_desc'=> Null,
+            'already_production'=> 0,
+            'already_production_desc'=> Null,
+            'restricted_area' => 'APL',
+            'description'=> '25% APL, 35% H.Produksi',
+            'overlap_smg' => 0,
+            'overlap_smg_desc'=> null,
+            'produce_kp' => 0 ,
+            'produce_kp_desc' => null ,
+            'land_use' => 'Overlap dengan area konsesi VICO Indonesia',
+            'location' => 'Kalimantan',
+            'coal_bearing_formation' => 'APL',
+            'geological_description' => '75% APL, 25% H.Produksi',
+            'geological_quality' => 'Good',
+            'geological_cv' => 204,
             'geological_tm' => 30,
             'geological_ts' => 20,
             'geological_ash' => 10,

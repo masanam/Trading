@@ -19,10 +19,12 @@ class CurrencyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $req)
     {
-        $currencies = Currency::with('buy', 'sell')->get();
-        return response()->json($currencies, 200);
+        $currencies = Currency::with('buy', 'sell');
+        if($req->q) $currencies->where('id', 'LIKE', $req->q.'%')->orwhere('value','LIKE','%'.$req->q.'%');
+
+        return response()->json($currencies->get(), 200);
     }
 
     /**

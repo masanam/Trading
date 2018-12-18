@@ -224,6 +224,8 @@ class ConcessionController extends Controller
     {
         $concession = Concession::find($concession);
 
+        unset($concession->polygon);
+
         if (!$req) {
             return response()->json([
                 'message' => 'Bad Request'
@@ -236,9 +238,9 @@ class ConcessionController extends Controller
             ] ,404);
         }
 
-        $concession->fill($req->except(['company_id', 'polygon', 'license_expiry_date', 'latitude', 'longitude', 'stripping_ratio']));
+        $concession->fill($req->except(['company_id', 'polygon', 'license_expiry_date', 'latitude', 'longitude']));
 
-        $concession->polygon = DB::raw('GeomFromText(\'POLYGON('.$req->polygon.')\')');
+        if($req->polygon) $concession->polygon = DB::raw('GeomFromText(\'POLYGON('.$req->polygon.')\')');
 
         $concession->save();
 

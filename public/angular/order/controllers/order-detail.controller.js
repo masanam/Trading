@@ -1,12 +1,14 @@
 'use strict';
 
-angular.module('order').controller('OrderDetailController', ['$scope', '$uibModal', '$stateParams', 'Lead', 'Order', 'Environment',
-  function($scope,$uibModal,$stateParams, Lead, Order, Environment) {
+angular.module('order').controller('OrderDetailController', ['$scope', '$uibModal', '$stateParams', 'Lead', 'Order', 'Environment', 'Authentication',
+  function($scope,$uibModal,$stateParams, Lead, Order, Environment, Authentication) {
 
     $scope.productQuality = Environment.productQuality;
     $scope.showBuy = Environment.showBuy;
     $scope.defaultCurrency = Environment.defaultCurrency;
+    $scope.allowEditAfterApproval = Environment.allowEditAfterApproval;
     $scope.init = function () {
+      console.log($scope.order);
       $scope.sell_base_currency_id = '';
       $scope.sell_deal_currency_id = '';
       $scope.buy_base_currency_id = '';
@@ -253,8 +255,10 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
         resolve: {
           items: function () {
             if($scope.order.buys.length===0){
+              console.log('aaa');
               return Lead.query({ lead_type: 'sell', order: true });
             }else{
+              console.log('bbb');
               return Lead.query({ lead_type: 'sell', order: 'matching', lead_id: $scope.order.buys[0].id });
             }
           },
@@ -335,6 +339,36 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
       }
     };
 
+    $scope.editOrderModal = function (dataOrder, type) {
+      console.log(dataOrder);
+      var modalInstance = $uibModal.open({
+        animation: true,
+        ariaLabelledBy: 'modal-title',
+        ariaDescribedBy: 'modal-body',
+        windowClass: 'xl-modal',
+        templateUrl: './angular/order/views/_edit-order-detail.modal.html',
+        controller: 'EditOrderDetailModalController',
+        resolve: {
+          data : dataOrder
+        }
+      });
+
+      modalInstance.result.then(function(res){
+        // if(type === 'buy') $scope.display.buy = res;
+        // if(type === 'sell') $scope.display.sell = res;
+      });
+    };
+
+    $scope.totalAdditional = 0;
+    $scope.total = function(){
+      if($scope.order.additional_cost){
+        var i;
+        for(i=0;i<$scope.order.additional_cost.length;i++){
+          $scope.totalAdditional += $scope.order.additional_cost[i].cost;
+        }
+      }
+    };
+
     //to open modal directly after user choose to build order from a lead
     if($stateParams.lead_id) {
       if($stateParams.lead_type === 'Buy') {
@@ -344,7 +378,6 @@ angular.module('order').controller('OrderDetailController', ['$scope', '$uibModa
         $scope.addSell();
         // $scope.selected = Lead.get({ id: $stateParams.lead_id });
       }
-    }
-
+    }    
   }
 ]);

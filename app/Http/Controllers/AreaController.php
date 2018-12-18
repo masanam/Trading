@@ -32,7 +32,8 @@ class AreaController extends Controller
     $areas = Area::where('status', 'a');
     if($req->q){
       $param = $req->q;  
-      $areas = $areas->where('description','LIKE','%'.$param.'%');
+      $areas = $areas->where('area_name','LIKE','%'.$param.'%');
+      $areas = $areas->orwhere('description','LIKE','%'.$param.'%');
     }
     $areas = $areas->get();
     // $areas = $areas->paginate(5);
@@ -61,12 +62,6 @@ class AreaController extends Controller
   */
   public function store(Request $req)
   {
-    if(!$req) {
-      return response()->json([
-        'message' => 'Bad Request'
-      ], 400);
-    }
-
     $area = new Area($req->all());    
     $area->status = 'a';
     $area->save();

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 use App\Model\User;
+use App\Model\LoginUser;
 use App\Model\Lead;
 use App\Model\Order;
 use App\Model\OrderUser;
@@ -17,14 +18,18 @@ use App\Model\OrderApprovalScheme;
 use App\Model\OrderApprovalSchemeSequence;
 use App\Model\Contract;
 use App\Model\Role;
+use App\Model\Company;
+use App\Model\Product;
 
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Ixudra\Curl\Facades\Curl;
 use Firebase\FirebaseInterface;
 use Firebase\FirebaseLib;
 use Auth;
+use Excel;
 
 use Carbon\Carbon;
+use PDF;
 
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ApprovalRequest;
@@ -112,10 +117,12 @@ class OrderController extends Controller
   private function funnel(){
     $order = Order::select(DB::raw('count(*) as count, status'))
       ->whereIn('status', ['p', 'a', 'f'])
+      ->where('user_id',Auth::User()->id)
       ->groupBy('status')->get();
 
     $lead = Lead::select(DB::raw('count(*) as count, lead_type'))
       ->whereIn('order_status',['v','l'])
+      ->where('user_id',Auth::User()->id)
       ->groupBy('lead_type');
 
     $funnel = [
@@ -213,6 +220,7 @@ class OrderController extends Controller
 
   private function requestApproval (&$order, $user) {
     // Add approval request to specific user
+    $order->approvals()->detach($user->id);
 
     // Add new approval request
     $approval_properties = [
@@ -428,21 +436,37 @@ class OrderController extends Controller
   public function resetApproval(&$order){
     $order->approvals()->detach();
 
+    $order = Order::with( 'approvals', 'approvals.roles',
+      'sells', 'sells.trader', 'sells.company',
+      'buys', 'buys.trader', 'buys.company')->find($id);
+
     $this->sequenceApproval($order);
   }
 
-  private function removeUpperAppr(&$order){
+  private function removeUpperAppr(&$order, $status){
     $app_scheme = $this->getApprScheme($order);
     $curr_seq = $this->getApprSequence($order, $app_scheme, 'curr');
     $prev_seq = $this->getApprSequence($order, $app_scheme, 'prev');
 
-    // in the case where this approval is rejected,
-    // add the other approval status into 'n' (auto-reject)
-    foreach($order->approvals as $a)
-      if($a->pivot->status == 'p')
-        foreach($a->roles as $r)
-          if($r->id == $curr_seq->role_id)
-            $order->approvals()->sync([$a->id => ['status' => 'n']], false);
+    if($curr_seq['approval_scheme']!='a'){
+      foreach($order->approvals as $a){
+        //if($a->pivot->status == 'p')
+        foreach($a->roles as $r){
+          if($r->id == $curr_seq->role_id){
+            $order->approvals()->sync([$a->id => ['status' => $status]], false);
+          }
+        }
+      }
+    }
+  }
+
+  public function getToken(Request $req)
+  {
+    $user = User::find(JWTAuth::parseToken()->authenticate()->id);
+    $token = array(
+      "value" => JWTAuth::fromUser($user),
+      );
+    return response()->json($token, 200);
   }
 
   //////////////////////////////////////
@@ -466,10 +490,16 @@ class OrderController extends Controller
   {
     if($req->funnel == true) return $this->funnel();
 
-    //DB::enableQueryLog();
-    $orders = Order::with('trader', 'approvals','users');
+    if($req->download == true)
+      {
+        if($req->type == 'pdf')return $this->getPdf();
+        if($req->type == 'csv') return $this->downloadCsvOrder($req);
+      }
 
-    if($req->status != '') $orders = $orders->where('status', $req->status);
+    //DB::enableQueryLog();
+    $orders = Order::with('trader', 'approvals','users','index','index_price', 'averageSellPrice', 'sells.company', 'sells.product', 'earliestSellLaycan', 'latestSellLaycan');
+
+    if($req->status) $orders = $orders->where('status', $req->status);
 
     if($req->q) $param = $req->q; else $param = '';
 
@@ -482,8 +512,7 @@ class OrderController extends Controller
       /*$orders->whereHas('trader', function ($query) use ($req){
         $query->where('name', 'like', '%'.$req->q.'%');
       });*/
-    }
-    else if($req->category == 'associated'){
+    } else if($req->category == 'associated'){
       $orders->whereHas('users', function($query) use ($req){
         $query->where('user_id', Auth::user()->id);
         //$query->where('name', 'like', '%'.$req->q.'%');
@@ -492,20 +521,25 @@ class OrderController extends Controller
         $param = $req->q;
                   $query->orwhereHas('name LIKE "%'.$param.'%"');
       }*/
-    }
-    else if($req->category == 'approval'){
+    } else if($req->category == 'approval'){
       $orders->whereHas('approvals', function ($query) use ($req){
         $query->where('users.id', Auth::user()->id);
         //$query->where('name', 'like', '%'.$req->q.'%');
-
         if($req->approval_status){
           $query->where('order_approvals.status', substr($req->approval_status,0,1));
         }
 
       });
 
-    }
-    else{
+    } else if($req->category == 'everyone'){
+      $orders->with([
+        'approvals' => function ($query){
+          $query->whereIn('order_approvals.status', ['a', 'r'])->orderBy('order_approvals.updated_at', 'desc');
+        },
+        'totalSellVolume', 'averageSellPrice', 'sells.company',
+        'earliestSellLaycan', 'latestSellLaycan'
+      ]);
+    } else{
       $orders->whereHas('trader', function($query) use ($req){
         $query->where('id', Auth::user()->id);
       });
@@ -515,8 +549,15 @@ class OrderController extends Controller
       $query->where('name', 'like', '%'.$req->q.'%');
     });
 
-    //var_dump($orders->toSql());
-
+    //filter date
+    if($req->start_date != '')  {
+      $orders = $orders->where('created_at','>=', $req->start_date = date("Y-m-d", strtotime($req->start_date)));
+    }
+    if($req->end_date != '') {
+      // $req->end_date = strtotime($req->end_date);
+      // $req->end_date = $req->end_date->add(new DateInterval('1 day'));
+      $orders = $orders->where('created_at','<=', $req->end_date = date("Y-m-d", strtotime($req->end_date . ' +1 day')));
+    }
     //limit order
     if (!$req->limit) $req->limit = 50;
     $orders->limit($req->limit);
@@ -554,6 +595,7 @@ class OrderController extends Controller
    */
   public function store(Request $req)
   {
+
     // Check the availability of volume lead
     if(count($req->buys) > 0){
       foreach($req->buys as $buy){
@@ -584,6 +626,11 @@ class OrderController extends Controller
     $order->user_id = Auth::User()->id;
     $order->index_id = $req->index_id;
     $order->status = 'd';
+    if($req->index_name){
+      $order->index_name = $req->index_name;
+      $order->index_provider = $req->index_provider;
+      $order->price = $req->price;
+    }
     $order->save();
 
     //add user as the admin for the current order
@@ -730,6 +777,8 @@ class OrderController extends Controller
   {
     $order = Order::with('buys','sells')->find($id);
 
+    // return response()->json($order, 200);
+    // dd($order);
     // Validations
     if(!$req) return response()->json([ 'message' => 'Bad Request' ], 400);
     if (!$order) return response()->json([ 'message' => 'Not found' ] ,404);
@@ -767,9 +816,13 @@ class OrderController extends Controller
     if(count($req->sells) > 0) {
       $message = $this->combineOrder($req->sells, $id);
     }
-
+    // dd($req->index_id);
 
     $order->index_id = $req->index_id;
+
+    $order->index_name = $req->index_name;
+    $order->index_provider = $req->index_provider;
+    $order->price = $req->price;
     $order->request_reason = $req->request_reason;
     $order->finalize_reason = $req->finalize_reason;
     $order->cancel_reason = $req->cancel_reason;
@@ -818,12 +871,15 @@ class OrderController extends Controller
    */
   public function approval(Request $req, $id)
   {
+    // if(config('app.allowRetrachApproval') == 'bib') {
+    //   echo 'masuk ke dalam bib ini';
+    // }
+
     $order = Order::with( 'approvals', 'approvals.roles',
       'sells', 'sells.trader', 'sells.company',
       'buys', 'buys.trader', 'buys.company')->find($id);
-    
-    if(!$order) return 'Your Order is not found';
 
+    if(!$order) return 'Your Order is not found';
     // since approval does not use jwt middleware,
     // we need to try whether they are using approval token
     // or using the JWT token.
@@ -833,31 +889,50 @@ class OrderController extends Controller
     else {  // or simply load the user if using Auth only.
       $user = JWTAuth::parseToken()->authenticate();
       $this->authorize('approve', $order);
+
+      // get approval object to contain pivot instead of Auth::user() object
+      foreach($order->approvals as $a){
+        if($a->id == $user->id) $user = $a;
+      }
     }
 
     if(!$user){
-      return response()->json([ 'message' => 'User Approval to this order not found' ], 400);
+      return response()->json([ 'message' => 'User Approval to this order is not found' ], 400);
+    }
+    // if user pivot status status = y or n, return response 'you cannot approve or reject this order because your interim has accepted/rejected the order'
+    else{
+      //dd($order->approvals());
+      foreach($order->approvals as $approval){
+        if($approval->pivot->user_id == $user->id && ($approval->pivot->status == 'y' || $approval->pivot->status == 'n')){
+          return response()->json([ 'message' => 'You cannot approve or reject this order because your interim has accepted/rejected this order!' ], 400);
+        }else if($approval->pivot->user_id == $user->id && $req->status == $approval->pivot->status){
+          if($req->status == 'r'){
+            return response()->json([ 'message' => 'You already rejected this order!' ], 400);
+          }
+          else if($req->status == 'a'){
+            return response()->json([ 'message' => 'You already approved this order!' ], 400);
+          }
+        }
+      }
     }
 
     //jika status == reject, dan reject reason !=NULL maka status akan berubah dan mencatat reason
     if($req->status === 'r') {
       //if($req->reject_reason) {
-      // put the approval to Log
-      $order->approvalLogs()->attach([ $user->id => [ 'status' => $req->status , 'reason' => $req->reject_reason] ]);
+      // put the approval to Log\
+      // $order->approvalLogs()->attach([ $user->id => [ 'status' => $req->status , 'reason' => $req->reject_reason] ]);
       // put the user's approval status to replace old one
       $order->approvals()->sync([ $user->id => [ 'status' => $req->status, 'reason' => $req->reject_reason] ], false);
       //}
     }
     else {
       // put the approval to Log
-      $order->approvalLogs()->attach([ $user->id => [ 'status' => $req->status ] ]);
+      // $order->approvalLogs()->attach([ $user->id => [ 'status' => $req->status ] ]);
 
 
       // put the user's approval status to replace old one
       $order->approvals()->sync([ $user->id => [ 'status' => $req->status, 'reason' => $req->reject_reason]  ], false);
     }
-
-
 
     // laravel belongsToMany sync bug, need to reload the order
     $order = Order::with( 'approvals', 'approvals.roles',
@@ -865,9 +940,22 @@ class OrderController extends Controller
       'buys', 'buys.trader', 'buys.company')->find($id);
 
     // Begin/Continue/End approval sequence
-    if($req->status === 'a') $this->sequenceApproval($order);
-    else $this->removeUpperAppr($order);
+    if($req->status === 'a') {
+      $this->removeUpperAppr($order, 'p');
+      $this->sequenceApproval($order);
+      // $order->approvalLogs()->attach([ $user->id => [ 'status' => $req->status ] ]);
+      $order->approvals()->sync([ $user->id => [ 'status' => $req->status, 'reason' => $req->reject_reason]  ], false);
+      $order->approvalLogs()->attach([ $user->id => [ 'status' => $req->status ] ]);
+    }
+    else{
+      $this->removeUpperAppr($order, 'n');
+      // $order->approvalLogs()->attach([ $user->id => [ 'status' => $req->status , 'reason' => $req->reject_reason] ]);
+      $order->approvals()->sync([ $user->id => [ 'status' => $req->status, 'reason' => $req->reject_reason] ], false);
+      $order->approvalLogs()->attach([ $user->id => [ 'status' => $req->status , 'reason' => $req->reject_reason] ]);
 
+    }
+
+    // dd($req->status);
     if($req->approval_token) return 'Your approval has been recorded! (you can revisit the email if you change mind)';
     else return $this->show($id, $req);
   }
@@ -924,7 +1012,7 @@ class OrderController extends Controller
     Lead::find($req->lead_id)->reconcile();
 
     // when details are changed, reset all approval
-    $this->resetApproval($order);
+    if(config('app.reset_approval_on_update') == 'true') $this->resetApproval($order);
 
     // add negotiation log to the staged lead
     $order_detail_id = $order->leads()->find($req->lead_id)->pivot->id; // find the ID of the order details
@@ -962,5 +1050,333 @@ class OrderController extends Controller
     $this->resetApproval($order);
 
     return $this->show($id, $req);
+  }
+
+  public function getPdf(){
+    $orders = Order::with('trader', 'approvals','users','index','index_price');
+    $orders->with([
+        'approvals' => function ($query){
+          $query->whereIn('order_approvals.status', ['a', 'r'])->orderBy('order_approvals.updated_at', 'desc');
+        },
+        'totalSellVolume', 'averageSellPrice', 'sells.company',
+        'earliestSellLaycan', 'latestSellLaycan'
+      ]);
+    $orders = $orders->get();
+    $total = [
+      'draft' => 0,
+      'finish' => 0,
+      'pending' => 0,
+      'approved' => 0,
+      'cancelled' => 0,
+    ];
+    // return($orders);
+
+    foreach ($orders as $o) {
+      $nol = '';
+      for ($i=3; $i >=strlen($o->id) ; $i--) {
+        $nol .='0';
+      }
+      if(count($o->approvals)) $o->approvals->created_at = date("d-M-y H:i:s",strtotime($o->approvals[0]->created_at));
+      $o->earliestSellLaycan[0]->laycan_start = date("d-M-y",strtotime($o->earliestSellLaycan[0]->laycan_start));
+      $o->latestSellLaycan[0]->laycan_end = date("d-M-y",strtotime($o->latestSellLaycan[0]->laycan_end));
+      $o->totalSellVolume[0]->volume = number_format($o->totalSellVolume[0]->volume, 0, ',', '.');
+      $o->sells[0]->product_name = $o->sells[0]->product_name;
+      $o->averageSellPrice[0]->price = floor($o->averageSellPrice[0]->price);
+      $o->order_no = "ORD#".$nol.$o->user_id;
+      $o->currency= config('app.defaultCurrency');
+      //untuk hitung ringkasan order
+      if($o->status === 'd'){
+        $total['draft'] ++;
+      }
+      else if($o->status === 'f'){
+        $total['finish'] ++;
+      }
+      else if($o->status === 'p'){
+        $total['pending'] ++;
+      }
+      else if($o->status === 'a'){
+        $total['approved'] ++;
+      }
+      else if($o->status === 'x'){
+        $total['cancelled'] ++;
+      }
+      // else if($o->status === 'c'){
+      //   $total['combined'] ++;
+      // }
+    }
+
+
+    $users = User::with('logins','leads','orders','companies','products')->get();
+    $total['logins'] = 0;
+    $total['leads'] = 0;
+    $total['orders'] = 0;
+    $total['companies'] = 0;
+    $total['products'] = 0;
+    foreach ($users as $u) {
+      $total['logins'] += intval($u->logins['num_login']);
+      $total['leads'] += count($u->leads);
+      $total['orders'] += count($u->orders);
+      $total['companies'] += count($u->companies);
+      $total['products'] += count($u->products);
+    }
+    // return response()->json($total, 200);
+
+    $pdf = PDF::loadView('pdf.order', ['orders' => $orders, 'users' => $users, 'total' => $total])->setPaper('a3', 'landscape');
+    return $pdf->stream('order.pdf');
+  }
+
+  public function printPdf(Request $req) {
+    $orderData = Order::with('trader', 'approvals','users','index','index_price', 'averageSellPrice', 'sells.company', 'buys.company', 'earliestSellLaycan', 'latestSellLaycan')->where('id',$req->orderId)->get();
+    $quality = $req->quality;
+    $showBuy = $req->showBuy;
+    $pdf = PDF::loadView('pdf.order-detail', ['orderData' => $orderData, 'quality' => $quality, 'showBuy' => $showBuy])->setPaper('a3', 'portrait');
+    return $pdf->stream('order-detail.pdf');
+  }
+
+  public function downloadCsvOrder($req)
+  {
+    $orders = Order::with([
+        'approvals' => function ($query){
+          $query->whereIn('order_approvals.status', ['a', 'r'])->orderBy('order_approvals.updated_at', 'desc');
+        }, 'index_price',
+        'totalSellVolume', 'averageSellPrice', 'sells.company', 'index',
+        'earliestSellLaycan', 'latestSellLaycan', 'trader','users'
+      ]);
+
+    if($req->startDate) $orders = $orders->where('created_at', '>=', $req->startDate);
+    if($req->endDate) $orders = $orders->where('created_at', '<=', $req->endDate);
+
+    // $totalUser = User::where('status', 'a')->count();
+    // $totalLogin = LoginUser::count();
+
+
+    $totalLogin = LoginUser::count();
+    $totalUser = User::where('status', 'a')->count();
+    $totalOrder = Order::count();
+    $totalLead = Lead::count();
+    $totalCompany = Company::count();
+    $totalProduct = Product::count();
+
+    $user_activities = DB::table('login_user')
+            ->select('users.id','users.name', 'users.email', 'users.phone', 'login_user.num_login')
+            ->rightJoin('users', 'users.id', '=', 'login_user.user_id')
+            ->get();
+
+    // $user_activities = LoginUser::with('User')->get()->toArray();
+    // dd($user_leads->toSql());
+    // dd($user_activities);
+    // dd($user_activities->toSql());
+
+    $act = [];
+    foreach ($user_activities as $u) {
+      $user_lead = DB::table('leads')
+            ->where('user_id', $u->id)
+            ->count();
+      $user_order = DB::table('orders')
+            ->where('user_id', $u->id)
+            ->count();
+      $user_company = DB::table('companies')
+            ->where('user_id', $u->id)
+            ->count();
+      $user_product = DB::table('products')
+            ->where('user_id', $u->id)
+            ->count();
+      if($u->num_login==null){
+        $u->num_login = '0';
+        $user_lead = '0';
+        $user_order = '0';
+        $user_company ='0';
+        $user_product ='0';
+      }else{
+        if($user_lead==0) $user_lead='0';
+        if($user_order==0) $user_order='0';
+        if($user_company==0) $user_company='0';
+        if($user_product==0) $user_product='0';
+      }
+      $act[] = array(
+          "name" => $u->name,
+          "email"=> $u->email,
+          "phone"=> $u->phone,
+          "num_login" => $u->num_login,
+          "num_lead" => $user_lead,
+          "num_order" => $user_order,
+          "num_company" => $user_company,
+          "num_product" => $user_product
+      );
+    }
+    $orders = $orders->get();//->toArray();
+
+    $ord = [];
+    $totalPending = 0;
+    $totalAccept = 0;
+    $totalInShipment = 0;
+    $totalDraft = 0;
+    $totalCombined = 0;
+    $totalCancel = 0;
+    foreach ($orders as $o) {
+
+      $nol = '';
+      for ($i=3; $i >=strlen($o->trader['id']) ; $i--) {
+        $nol .='0';
+      }
+      if($o->index_name){
+        $index_name = $o->index_name;
+        $index_provider = $o->index_provider;
+        $price = $o->price;
+      }else{
+        $index_name = $o->index['index_name'];
+        $index_provider = $o->index['index_provider'];
+        if($o->index_price!=NULL){
+          foreach ($o->index_price as $i) {
+            $price = $i['price'];
+          }
+        }else{
+          $price = 'N/A';
+        }
+      }
+      if($o->status=="p"){
+        $status = "Pending";
+        $totalPending++;
+      }
+      if($o->status=="a"){
+        $status = "Approved";
+        $totalAccept++;
+      }
+      if($o->status=="f"){
+        $status = "In Shipment";
+        $totalInShipment++;
+      }
+      if($o->status=="d"){
+        $status = "Draft";
+        $totalDraft++;
+      }
+      if($o->status=="c"){
+        $status = "Combined";
+        $totalCombined++;
+      }
+      if($o->status=="x"){
+        $status = "Cancel";
+        $totalCancel++;
+      }
+
+      foreach ($o->totalSellVolume as $tonage) {
+        $volume = $tonage['volume'];
+      }
+      foreach ($o->averageSellPrice as $average) {
+        $avgPrice = $average['price'];
+      }
+
+      $customer = '';
+      $product_name = '';
+      $n = count($o->sells);
+      $init = 0;
+      foreach ($o->sells as $sell) {
+        if($init == $n-1){
+          $customer .= $sell->company['company_name'];
+          $product_name .= $sell->product_name;
+        }else{
+          $customer .= $sell->company['company_name'].', ';
+          $product_name .= $sell->product_name.', ';
+        }
+        $base_currency = $sell->pivot['base_currency_id'];
+        $init ++;
+      }
+
+
+      foreach ($o->earliestSellLaycan as $laycan_start) {
+        $startDate = date('d M y',strtotime($laycan_start['laycan_start']));
+        $price = $o->index_price['price'];
+        // foreach ($o->index_price as $i) {
+        //   $price = $i['price'];
+        // }
+        // $price = $o->index_price[0];
+      }
+
+      foreach ($o->latestSellLaycan as $laycan_end) {
+        $endDate = date('d M y',strtotime($laycan_end['laycan_end']));
+      }
+
+      /*foreach ($o->approvals as $approvals) {
+        $arr = explode(' ',trim($approvals->name));
+        $approval_name = $arr[0];
+        $approval_status = $approvals->pivot->status;
+        $updated_at = date('d M y', strtotime($approvals->pivot->updated_at));
+      }*/
+
+      if(count($o->approvals)>0){
+        $approval_name = explode(' ', trim($o->approvals[0]->name));
+        $approval_name = $approval_name[0];
+        $approval_status = '('.$o->approvals[0]->pivot->status.')';
+        $updated_at =date('d M y', strtotime($o->approvals[0]->pivot->updated_at));
+      }
+      else{
+        $approval_name = '';
+        $approval_name = '';
+        $approval_status = '';
+        $updated_at = '';
+      }
+
+      if($o->in_house==1){
+        $in_house = 'Yes';
+      }else{
+        $in_house = 'No';
+      }
+      if($o->approval_sequence==0){
+        $o->approval_sequence = '0';
+      }
+      $ord[] = array(
+        "Order No" => "ORD#".$nol.$o->trader['id'],
+        "Email" => $o->trader['email'],
+        "In House" => $in_house,
+        "Index Name" => $index_name,
+        "Index Provider" => $index_provider,
+        "Price Index" => $price,
+        "Tonnage" => $volume,
+        "Base Currency" => $base_currency,
+        "Base Price" => $avgPrice,
+        "Customer" => $customer,
+        "Product" => $product_name,
+        "L/D" => $startDate.' ~ '.$endDate,
+        "Last Approval" => $approval_name.', '.$approval_status.' '.$updated_at,
+        "Approval Sequence" => $o->approval_sequence,
+        "Cancellation Reason" => $o->cancel_reason,
+        "Request Reason" => $o->request_reason,
+        "Finalize Reason" => $o->finalize_reason,
+        "Status" => $status,
+        "Created At" => $o->created_at->format('d M y'),
+        "Updated At" => $o->updated_at->format('d M y')
+      );
+    }
+    // dd($statusOrder['status']);
+
+    return Excel::create('order_csv_download', function($excel) use ($ord, $totalUser, $totalLogin, $totalOrder, $totalLead, $totalCompany, $totalProduct, $act, $totalDraft, $totalPending, $totalInShipment, $totalCombined, $totalAccept, $totalCancel) {
+      $excel->sheet('order_report', function($sheet) use ($ord, $totalDraft, $totalPending, $totalInShipment, $totalCombined, $totalAccept, $totalCancel) {
+        $sheet->rows([
+          $sheet->fromArray($ord),
+          [''],
+          ['Total Draft', $totalDraft],
+          ['Total Pending', $totalPending],
+          ['Total In Shipment', $totalInShipment],
+          //['Total Combined', $totalCombined],
+          ['Total Accept', $totalAccept],
+          ['Total Cancel', $totalCancel],
+        ]);
+      });
+      $excel->sheet('user_activity_report', function($sheet) use ($totalUser, $totalLogin, $totalOrder, $totalLead, $totalCompany, $totalProduct, $act, $totalDraft, $totalPending, $totalInShipment, $totalCombined, $totalAccept, $totalCancel) {
+        $sheet->rows([
+          $sheet->fromArray($act),
+          [''],
+          ['Total User',$totalUser],
+          ['Total Login',$totalLogin],
+          ['Total Order',$totalOrder],
+          ['Total Lead',$totalLead],
+          ['Total Company',$totalCompany],
+          ['Total Product',$totalProduct]
+        ]);
+      });
+      // $excel->sheet('order_activity_report', function($sheet) use ($orders) {
+      //   $sheet->fromArray($orders);
+      // });
+    })->download('xls');
   }
 }

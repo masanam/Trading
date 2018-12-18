@@ -21,8 +21,10 @@ class ContractsTableSeeder extends Seeder
           'shipment_count' => 12,
           'term' => 'term',
           'term_desc' => 'Lorem Ipsum Doloret Sit Amet',
+          'currency' => 'USD',
           'date_from' => '2016-09-12',
           'date_to' => '2017-01-12',
+          'label' => 'a',
           'status' => 'a'
         ),
         array(
@@ -32,8 +34,10 @@ class ContractsTableSeeder extends Seeder
           'shipment_count' => 6,
           'term' => 'spot',
           'term_desc' => 'Lorem Ipsum Doloret Sit Amet',
+          'currency' => 'IDR',
           'date_from' => '2016-12-12',
           'date_to' => '2017-12-12',
+          'label' => 'a',
           'status' => 'a'
         ),
         array(
@@ -43,8 +47,10 @@ class ContractsTableSeeder extends Seeder
           'shipment_count' => 8,
           'term' => 'term',
           'term_desc' => 'Lorem Ipsum Doloret Sit Amet',
+          'currency' => 'IDR',
           'date_from' => '2016-07-09',
           'date_to' => '2017-07-09',
+          'label' => 'a',
           'status' => 'a'
         ),
         array(
@@ -54,8 +60,10 @@ class ContractsTableSeeder extends Seeder
           'shipment_count' => 9,
           'term' => 'term',
           'term_desc' => 'Lorem Ipsum Doloret Sit Amet',
+          'currency' => 'USD',
           'date_from' => '2016-08-29',
           'date_to' => '2017-08-29',
+          'label' => 'a',
           'status' => 'a'
         )
       );

@@ -31,8 +31,8 @@
 						<tr><td>Country</td><td>{{ selected.factory.country }}</td></tr>
 						<tr><td>Lat</td><td>{{ selected.factory.latitude }}</td></tr>
 						<tr><td>Lng</td><td>{{ selected.factory.longitude }}</td></tr>
-						<tr><td>Factory Size</td><td>{{ selected.factory.size }}</td></tr>
-						<tr><td>Annual Consumption</td><td>{{ selected.factory.consumption }}</td></tr>
+						<tr><td>Factory Size</td><td>{{ selected.factory.size | number }}</td></tr>
+						<tr><td>Annual Consumption</td><td>{{ selected.factory.consumption | number }}</td></tr>
 	        </table>
         </div>
       	<div class="col-lg-4">

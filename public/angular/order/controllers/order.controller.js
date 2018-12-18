@@ -5,13 +5,14 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
     $scope.browse = {};
     $scope.$watchGroup(['browse.status', 'browse.category'], function() { $scope.find(); });
     $scope.display = {};
-
     $scope.deployment = Environment.deployment;
     $scope.defaultCurrency = Environment.defaultCurrency;
     $scope.hideCrossingLeads = Environment.hideCrossingLeads;
     $scope.showBuy = Environment.showBuy;
     $scope.destinationBy = Environment.destinationBy;
     $scope.showAutoApproval = Environment.showAutoApproval;
+    $scope.allowRetrachApproval = Environment.allowRetrachApproval;
+    $scope.productQuality = Environment.productQuality;
 
     // Remove existing order
     $scope.remove = function (order) {
@@ -140,31 +141,43 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
       var modalInstance = null;
       $scope.error = null;
       $scope.loadScreen = true;
-      Order.get({ id: $scope.order.id, action: 'approval', status : status }, function (res) {
-        $scope.order_approval = res;
-        $scope.order_approval.status = status;
-        if(status === 'r') {
-          modalInstance = $uibModal.open({
-            windowClass: 'xl-modal',
-            templateUrl: './angular/order/views/_reason.modal.html',
-            controller: 'OrderReasonModalController',
-            scope: $scope,
-            resolve: {
-              status: function () { return status; },
-            }
-          });
-          modalInstance.result.then(function (order) {
+
+      if(status === 'r') {
+        modalInstance = $uibModal.open({
+          windowClass: 'xl-modal',
+          templateUrl: './angular/order/views/_reason.modal.html',
+          controller: 'OrderReasonModalController',
+          scope: $scope,
+          resolve: {
+            status: function () { return status; },
+          }
+        });
+        modalInstance.result.then(function (order) {
+          $scope.findOne();
+          Order.get({ id: $scope.order.id, action: 'approval', status : status }, function (res) {
+            $scope.order_approval = res;
+            $scope.order_approval.status = status;
+            Notification.sendNotification(status, $scope.order_approval, false, false);
             $scope.findOne();
+            $scope.loadScreen = false;
+          }, function (err) {
+            $scope.error = err.data.message;
           });
-          $scope.approving = false;
-        }
-        else $scope.approving = true;
-        Notification.sendNotification(status, $scope.order_approval, false, false);
-        $scope.findOne();
-        $scope.loadScreen = false;
-      }, function (err) {
-        $scope.error = err.data.message;
-      });
+        });
+        $scope.approving = false;
+      }
+      else {
+        $scope.approving = true;
+        Order.get({ id: $scope.order.id, action: 'approval', status : status }, function (res) {
+          $scope.order_approval = res;
+          $scope.order_approval.status = status;
+          Notification.sendNotification(status, $scope.order_approval, false, false);
+          $scope.findOne();
+          $scope.loadScreen = false;
+        }, function (err) {
+          $scope.error = err.data.message;
+        });
+      }
     };
 
     $scope.checkOrderUsers = function(){
@@ -197,33 +210,6 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
       return false;
     };
 
-    $scope.print = function(){
-      $scope.orderCollapsed = false;
-      $scope.financialCollapsed = true;
-      $scope.qualityCollapsed = true;
-
-      setTimeout(function(){
-        var docHead = document.head.outerHTML;
-        var orderContent = document.getElementById('order-detail').outerHTML;
-        var approvalContent = document.getElementById('order-approval').outerHTML;
-        var canvas = document.getElementById('line');
-        var graph = canvas.toDataURL();
-
-        var winAttr = 'location=yes, statusbar=no, menubar=no, titlebar=no, toolbar=no,dependent=no, width=865, height=600, resizable=yes, screenX=200, screenY=200, personalbar=no, scrollbars=yes';
-
-        var newWin = window.open('', '_blank', winAttr);
-        var writeDoc = newWin.document;
-        writeDoc.open();
-        writeDoc.writeln('<!doctype html><html>' + docHead + '<body>' + orderContent + approvalContent + '</body></html>');
-        writeDoc.close();
-        newWin.onload = function() {
-          writeDoc.getElementById('lineChart').innerHTML = '<img src="'+graph+'" />';
-          newWin.print();
-        };
-        newWin.focus();
-      }, 1000);
-    };
-
     // Find list of order
     $scope.find = function (search) {
       $scope.orders = Order.query({ q:search, category: $scope.browse.category, status: $scope.browse.status });
@@ -243,9 +229,15 @@ angular.module('order').controller('OrderController', ['$scope', '$stateParams',
           if($scope.order.approvals[x].id === $scope.Authentication.user.id) $scope.myApproval = $scope.order.approvals[x];
         }
 
+
         $scope.checkOrderUsers();
         $scope.loadBig = false;
       });
+    };
+
+    $scope.printPDF = function () {
+      var orderData = new Order($scope.order);
+      console.log(orderData);
     };
 
 

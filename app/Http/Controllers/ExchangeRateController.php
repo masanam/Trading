@@ -22,12 +22,23 @@ class ExchangeRateController extends Controller
     {
       $exchange_rate = ExchangeRate::where('in_use', true);
 
-      if($request->q) {
-        $q = json_decode($request->q);
-        // dd(strtoupper($q->sell));
-        if($q->buy) $exchange_rate = $exchange_rate->where('buy', '=', strtoupper($q->buy));
-        if($q->sell) $exchange_rate = $exchange_rate->where('sell', '=', strtoupper($q->sell));
+      if($request->related) return $this->findRelatedExchangeRate($request->related);
+
+      if($request->latest == true){
+        if($request->buy)
+          if($request->sell)
+            return $this->findOne($request->buy, $request->sell);
       }
+      else return $this->findHistory($request->buy, $request->sell);
+
+
+      if(!($request->q_buy||$request->q_sell)) return response()->json('buy or sell query not found', 400);
+      // if($request->q) {
+        // $q = json_decode($request->q);
+        // dd(strtoupper($q->sell));
+        if($request->q_buy) $exchange_rate = $exchange_rate->where('buy', 'LIKE', $request->q_buy.'%');
+        if($request->q_sell) $exchange_rate = $exchange_rate->where('sell', 'LIKE', $request->q_sell.'%');
+      // }
       // if($request->qbuy) $exchange_rate = $exchange_rate->where('buy', '%'.strtoupper($request->qbuy).'%');
       // if($request->qsell) $exchange_rate = $exchange_rate->where('sell', '%'.strtoupper($request->qsell).'%');
 
@@ -61,30 +72,47 @@ class ExchangeRateController extends Controller
      */
 
     //take latest exchange rate
-    public function updateLatestExchangeRate() {
-      DB::table('exchange_rates')->update(['in_use' => 0]);
-      $currency = Currency::pluck('id');
-      foreach($currency as $c) {
-        $response = json_decode(Curl::to('api.fixer.io/latest?base='.$c)->get());
-        if($response) {
-          foreach ($response->rates as $key => $value) {
-            $exchange_rate = new ExchangeRate();
-            $exchange_rate->buy = $c;
-            $exchange_rate->sell = $key;
-            $exchange_rate->value = $value;
-            $exchange_rate->in_use = true;
+    // public function updateLatestExchangeRate($currency) {
+    //   DB::table('exchange_rates')->update(['in_use' => 0]);
+    //   $currency = Currency::pluck('id');
+    //   foreach($currency as $c) {
+    //     $response = json_decode(Curl::to('api.fixer.io/latest?base='.$c)->get());
+    //     if($response) {
+    //       foreach ($response->rates as $key => $value) {
+    //         $exchange_rate = new ExchangeRate();
+    //         $exchange_rate->buy = $c;
+    //         $exchange_rate->sell = $key;
+    //         $exchange_rate->value = $value;
+    //         $exchange_rate->in_use = true;
 
-            $exchange_rate->save();
-          }
+    //         $exchange_rate->save();
+    //       }
+    //     }
+    //     else return response()->json(['message'=>'Cannot update with the current price, please check your internet connection'], 500);
+    //   }
+    // }
+
+    public function saveInBulk($req) {
+      if(count($req->data)) {
+        DB::table('exchange_rates')->where('buy', $req->data[0]['buy'])->update(['in_use' => 0]);
+        foreach ($req->data as $value) {
+          $exchange_rate = new ExchangeRate();
+          $exchange_rate->buy = $value['buy'];
+          $exchange_rate->sell = $value['sell'];
+          $exchange_rate->value = $value['value'];
+          $exchange_rate->in_use = true;
+
+          $exchange_rate->save();
         }
-        else return response()->json(['message'=>'Cannot update with the current price, please check your internet connection'], 500);
+
+        return response()->json(['message'=>'Exchange rate update for '. $req->data[0]['buy'] .' as buy is done'], 200);
       }
     }
 
     public function findRelatedExchangeRate($currency) {
       $exchange_rate = ExchangeRate::where('in_use', true)->where(function($query) use($currency){
         $query->orWhere('buy', $currency)->orWhere('sell', $currency);
-      })->get();
+      })->orderByRaw('buy = ? desc',[$currency])->get();
 
       return response()->json($exchange_rate, 200);
     }
@@ -97,6 +125,8 @@ class ExchangeRateController extends Controller
      */
     public function store(Request $request)
     {
+      if($request->bulk == true) return $this->saveInBulk($request);
+
       DB::table('exchange_rates')->where([['buy', 'LIKE', $request->buy], ['sell', 'LIKE', $request->sell]])->update(['in_use' => 0]);
       $exchange_rate = new ExchangeRate();
       $exchange_rate->buy = $request->buy;
@@ -138,9 +168,9 @@ class ExchangeRateController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+      //
     }
 
     /**

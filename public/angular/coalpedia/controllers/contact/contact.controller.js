@@ -18,7 +18,7 @@ angular.module('coalpedia').controller('ContactController', ['$scope', '$statePa
 
       modalInstance.result.then(function (res) {
         if(!$scope.company.contacts) $scope.company.contacts = [];
-        
+
         $scope.company.contacts.push(res);
       });
     };

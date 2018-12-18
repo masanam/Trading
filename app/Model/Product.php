@@ -8,6 +8,7 @@ class Product extends Model
 {
     protected $table = 'products';
     protected $fillable = [
+        'user_id',
         'product_name',
         'typical_quality',
         'gcv_arb_min',
@@ -54,19 +55,39 @@ class Product extends Model
     	return $this->belongsTo(Company::class);
     }
 
+    public function contract() {
+    	return $this->belongsTo(Contract::class);
+    }
+
     public function concession() {
     	return $this->belongsTo(Concession::class);
     }
 
-    public function sales_target() {
-        return $this->hasMany(SalesTarget::class);
+    // Created By : Martin
+    // Tanggal : 27 Maret 2017
+    public function production_plan() {
+        return $this->hasMany(ProductionPlan::class);
     }
 
     public function shipment() {
         return $this->hasMany(Shipment::class);
     }
 
-    
+    public function shipmentPlan() {
+    return $this->hasMany(Product::class);
+  }
+
+    public function product_price() {
+        return $this->hasMany(ProductPrice::class);
+    }
+
+    public function product_variant() {
+        return $this->hasMany(ProductVariant::class);
+    }
+
+    public function yearlyPrice() {
+        return $this->hasMany(ProductPrice::class)->selectRaw('product_id, IFNULL(AVG(price),0) as price, YEAR(date) as year')->groupBy('product_id', 'year')->orderBy('year', 'DESC');
+    }
 
     public function difference($compare, $company_type){
         if($this->company->company_type = $company_type){

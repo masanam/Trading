@@ -66,6 +66,8 @@
               </li>
             </ul>
           </span>
+          <a title="edit" class="glyphicon glyphicon-pencil" ng-click="editOrderModal(display.buy, 'buy')" ng-if=" allowEditAfterApproval && order.user_id === Authentication.user.id && order.status !== 'a'">
+          </a>
 
           <span ng-if="order.buys.length > 0" uib-dropdown class="pull-right" ng-init="display.buy = order.buys[0]; display.buy.index = 0">
             <button type="button" ng-show="order.status !== 'x' && order.status !== 'f'" class="btn btn-default" uib-dropdown-toggle>
@@ -92,6 +94,8 @@
               </li>
             </ul>
           </span>
+          <a title="edit" class="glyphicon glyphicon-pencil" ng-click="editOrderModal(display.sell, 'sell')" ng-if=" allowEditAfterApproval && order.user_id === Authentication.user.id && order.status !== 'a'">
+          </a>
 
           <span ng-if="order.sells.length > 0" uib-dropdown class="pull-right" ng-init="display.sell = order.sells[0]; display.sell.index = 0">
             <button type="button" ng-show="order.status !== 'x' && order.status !== 'f'" class="btn btn-default" uib-dropdown-toggle>
@@ -118,6 +122,7 @@
         </th>
 			</tr>
     </tbody>
+    
     <tbody id="detail-section" uib-collapse="isCollapsed">
 			<tr>
 				<td>Company</td>
@@ -226,7 +231,17 @@
 					<i ng-switch-default style="color:green">-Contact {{ display.sell.trader.name }}-</i>
 				</td>
 			</tr>
+      <tr style="text-align: justify;">
+        <td>Remarks</td>
+        <td ng-if="!order.in_house">
+          <span>{{ display.buy.remarks }}</span>
+        </td>
+        <td>
+          <span>{{ display.sell.remarks }}</span>
+        </td>        
+      </tr>
     </tbody>
+      
     <tbody>
       <tr>
 				<th colspan=3 style="text-align:center; background: #efefef;">
@@ -238,106 +253,112 @@
         </th>
 			</tr>
     </tbody>
-    <tbody id="quality-section" uib-collapse="!qualityCollapsed">
+    <tbody id="quality-section" uib-collapse="!qualityCollapsed" ng-if="!edit">
       <tr order-quality ng-if="(display.buy.gcv_adb_min && display.buy.gcv_adb_max) || (display.sell.gcv_adb_min && display.sell.gcv_adb_max)" inhouse="order.in_house" quality="'GCV ADB'"
-      buymin="display.buy.gcv_adb_min" buymax="display.buy.gcv_adb_max"
+      buymin="display.buy.gcv_adb_min | number" buymax="display.buy.gcv_adb_max | number"
       buybonus="display.buy.gcv_adb_bonus" buyreject="display.buy.gcv_adb_reject"
-      sellmin="display.sell.gcv_adb_min" sellmax="display.sell.gcv_adb_max"
-      sellbonus="display.sell.gcv_adb_bonus" sellreject="display.sell.gcv_adb_reject" unit="'Kcal'"
+      sellmin="display.sell.gcv_adb_min | number" sellmax="display.sell.gcv_adb_max | number"
+      sellbonus="display.sell.gcv_adb_bonus" sellreject="display.sell.gcv_adb_reject" productquality="productQuality" unit="'Kcal/Kg'"
       >
       </tr>
       <tr order-quality ng-if="(display.buy.gcv_arb_min && display.buy.gcv_arb_max) || (display.sell.gcv_arb_min && display.sell.gcv_arb_max)" inhouse="order.in_house" quality="'GCV ARB'"
-      buymin="display.buy.gcv_arb_min" buymax="display.buy.gcv_arb_max"
+      buymin="display.buy.gcv_arb_min | number" buymax="display.buy.gcv_arb_max | number"
       buybonus="display.buy.gcv_arb_bonus" buyreject="display.buy.gcv_arb_reject"
-      sellmin="display.sell.gcv_arb_min" sellmax="display.sell.gcv_arb_max"
-      sellbonus="display.sell.gcv_arb_bonus" sellreject="display.sell.gcv_arb_reject" unit="'Kcal'"
+      sellmin="display.sell.gcv_arb_min | number" sellmax="display.sell.gcv_arb_max | number"
+      sellbonus="display.sell.gcv_arb_bonus" sellreject="display.sell.gcv_arb_reject" productquality="productQuality" unit="'Kcal/Kg'"
       >
       </tr>
       <tr order-quality ng-if="(display.buy.ncv_min && display.buy.ncv_max) || (display.sell.ncv_min && display.sell.ncv_max)" inhouse="order.in_house" quality="'NCV ARB'"
-      buymin="display.buy.ncv_min" buymax="display.buy.ncv_max"
+      buymin="display.buy.ncv_min | number" buymax="display.buy.ncv_max | number"
       buybonus="display.buy.ncv_bonus" buyreject="display.buy.ncv_reject"
-      sellmin="display.sell.ncv_min" sellmax="display.sell.ncv_max"
-      sellbonus="display.sell.ncv_bonus" sellreject="display.sell.ncv_reject" unit="'Kcal/Kg'"
+      sellmin="display.sell.ncv_min | number" sellmax="display.sell.ncv_max | number"
+      sellbonus="display.sell.ncv_bonus" sellreject="display.sell.ncv_reject" productquality="productQuality" unit="'Kcal/Kg'"
       >
       </tr>
       <tr order-quality ng-if="(display.buy.tm_min && display.buy.tm_max) || (display.sell.tm_min && display.sell.tm_max)" inhouse="order.in_house" quality="'Total Moisture (ARB)'"
-      buymin="display.buy.tm_min" buymax="display.buy.tm_max"
+      buymin="display.buy.tm_min | number" buymax="display.buy.tm_max | number"
       buybonus="display.buy.tm_bonus" buyreject="display.buy.tm_reject"
-      sellmin="display.sell.tm_min" sellmax="display.sell.tm_max"
-      sellbonus="display.sell.tm_bonus" sellreject="display.sell.tm_reject" unit="'%'"
+      sellmin="display.sell.tm_min | number" sellmax="display.sell.tm_max | number"
+      sellbonus="display.sell.tm_bonus" sellreject="display.sell.tm_reject" productquality="productQuality" unit="'%'"
       >
       </tr>
       <tr order-quality ng-if="(display.buy.im_min && display.buy.im_max) || (display.sell.im_min && display.sell.im_max)" inhouse="order.in_house" quality="'Inherent Moisture (ADB)'"
-      buymin="display.buy.im_min" buymax="display.buy.im_max"
+      buymin="display.buy.im_min | number" buymax="display.buy.im_max | number"
       buybonus="display.buy.im_bonus" buyreject="display.buy.im_reject"
-      sellmin="display.sell.im_min" sellmax="display.sell.im_max"
-      sellbonus="display.sell.im_bonus" sellreject="display.sell.im_reject" unit="'%'"
+      sellmin="display.sell.im_min | number" sellmax="display.sell.im_max | number"
+      sellbonus="display.sell.im_bonus" sellreject="display.sell.im_reject" productquality="productQuality" unit="'%'"
       >
       </tr>
       <tr order-quality ng-if="(display.buy.vm_min && display.buy.vm_max) || (display.sell.vm_min && display.sell.vm_max)" inhouse="order.in_house" quality="'Volatile Matter (ADB)'"
-      buymin="display.buy.vm_min" buymax="display.buy.vm_max"
+      buymin="display.buy.vm_min | number" buymax="display.buy.vm_max | number"
       buybonus="display.buy.vm_bonus" buyreject="display.buy.vm_reject"
-      sellmin="display.sell.vm_min" sellmax="display.sell.vm_max"
-      sellbonus="display.sell.vm_bonus" sellreject="display.sell.vm_reject" unit="'%'"
+      sellmin="display.sell.vm_min | number" sellmax="display.sell.vm_max | number"
+      sellbonus="display.sell.vm_bonus" sellreject="display.sell.vm_reject" productquality="productQuality" unit="'%'"
       >
       </tr>
       <tr order-quality ng-if="(display.buy.ash_min && display.buy.ash_max) || (display.sell.ash_min && display.sell.ash_max)" inhouse="order.in_house" quality="'Ash (ADB)'"
-      buymin="display.buy.ash_min" buymax="display.buy.ash_max"
+      buymin="display.buy.ash_min | number" buymax="display.buy.ash_max | number"
       buybonus="display.buy.ash_bonus" buyreject="display.buy.ash_reject"
-      sellmin="display.sell.ash_min" sellmax="display.sell.ash_max"
-      sellbonus="display.sell.ash_bonus" sellreject="display.sell.ash_reject" unit="'%'"
+      sellmin="display.sell.ash_min | number" sellmax="display.sell.ash_max | number"
+      sellbonus="display.sell.ash_bonus" sellreject="display.sell.ash_reject" productquality="productQuality" unit="'%'"
       >
       </tr>
       <tr order-quality ng-if="(display.buy.fc_min && display.buy.fc_max) || (display.sell.fc_min && display.sell.fc_max)" inhouse="order.in_house" quality="'Fixed Carbon (ADB)'"
-      buymin="display.buy.fc_min" buymax="display.buy.fc_max"
+      buymin="display.buy.fc_min | number" buymax="display.buy.fc_max | number"
       buybonus="display.buy.fc_bonus" buyreject="display.buy.fc_reject"
-      sellmin="display.sell.fc_min" sellmax="display.sell.fc_max"
-      sellbonus="display.sell.fc_bonus" sellreject="display.sell.fc_reject" unit="'%'"
+      sellmin="display.sell.fc_min | number" sellmax="display.sell.fc_max | number"
+      sellbonus="display.sell.fc_bonus" sellreject="display.sell.fc_reject" productquality="productQuality" unit="'%'"
       >
       </tr>
       <tr order-quality ng-if="(display.buy.ts_min && display.buy.ts_max) || (display.sell.ts_min && display.sell.ts_max)" inhouse="order.in_house" quality="'Total Sulphur (ADB)'"
-      buymin="display.buy.ts_min" buymax="display.buy.ts_max"
+      buymin="display.buy.ts_min | number" buymax="display.buy.ts_max | number"
       buybonus="display.buy.ts_bonus" buyreject="display.buy.ts_reject"
-      sellmin="display.sell.ts_min" sellmax="display.sell.ts_max"
-      sellbonus="display.sell.ts_bonus" sellreject="display.sell.ts_reject" unit="'%'"
+      sellmin="display.sell.ts_min | number" sellmax="display.sell.ts_max | number"
+      sellbonus="display.sell.ts_bonus" sellreject="display.sell.ts_reject" productquality="productQuality" unit="'%'"
       >
       </tr>
       <tr order-quality ng-if="(display.buy.hgi_min && display.buy.hgi_max) || (display.sell.hgi_min && display.sell.hgi_max)" inhouse="order.in_house" quality="'HGI'"
-      buymin="display.buy.hgi_min" buymax="display.buy.hgi_max"
+      buymin="display.buy.hgi_min | number" buymax="display.buy.hgi_max | number"
       buybonus="display.buy.hgi_bonus" buyreject="display.buy.hgi_reject"
-      sellmin="display.sell.hgi_min" sellmax="display.sell.hgi_max"
-      sellbonus="display.sell.hgi_bonus" sellreject="display.sell.hgi_reject" unit="'%'"
+      sellmin="display.sell.hgi_min | number" sellmax="display.sell.hgi_max | number"
+      sellbonus="display.sell.hgi_bonus" sellreject="display.sell.hgi_reject" productquality="productQuality" unit=""
       >
       </tr>
       <tr order-quality ng-if="(display.buy.size_min && display.buy.size_max) || (display.sell.size_min && display.sell.size_max)" inhouse="order.in_house" quality="'SIZE (0-50mm)'"
-      buymin="display.buy.size_min" buymax="display.buy.size_max"
+      buymin="display.buy.size_min | number" buymax="display.buy.size_max | number"
       buybonus="display.buy.size_bonus" buyreject="display.buy.size_reject"
-      sellmin="display.sell.size_min" sellmax="display.sell.size_max"
-      sellbonus="display.sell.size_bonus" sellreject="display.sell.size_reject" unit="'%'"
+      sellmin="display.sell.size_min | number" sellmax="display.sell.size_max | number"
+      sellbonus="display.sell.size_bonus" sellreject="display.sell.size_reject" productquality="productQuality" unit="'%'"
       >
       </tr>
       <tr order-quality ng-if="(display.buy.fe2o3_min && display.buy.fe2o3_max) || (display.sell.fe2o3_min && display.sell.fe2o3_max)" inhouse="order.in_house" quality="'Fe2O3'"
-      buymin="display.buy.fe2o3_min" buymax="display.buy.fe2o3_max"
+      buymin="display.buy.fe2o3_min | number" buymax="display.buy.fe2o3_max | number"
       buybonus="display.buy.fe2o3_bonus" buyreject="display.buy.fe2o3_reject"
-      sellmin="display.sell.fe2o3_min" sellmax="display.sell.fe2o3_max"
-      sellbonus="display.sell.fe2o3_bonus" sellreject="display.sell.fe2o3_reject" unit="'%'"
+      sellmin="display.sell.fe2o3_min | number" sellmax="display.sell.fe2o3_max | number"
+      sellbonus="display.sell.fe2o3_bonus" sellreject="display.sell.fe2o3_reject" productquality="productQuality" unit="'%'"
       >
       </tr>
       <tr order-quality ng-if="(display.buy.aft_min && display.buy.aft_max) || (display.sell.aft_min && display.sell.aft_max)" inhouse="order.in_house" quality="'AFT (IDT)'"
-      buymin="display.buy.aft_min" buymax="display.buy.aft_max"
+      buymin="display.buy.aft_min | number" buymax="display.buy.aft_max | number"
       buybonus="display.buy.aft_bonus" buyreject="display.buy.aft_reject"
-      sellmin="display.sell.aft_min" sellmax="display.sell.aft_max"
-      sellbonus="display.sell.aft_bonus" sellreject="display.sell.aft_reject" unit="'Deg C'"
+      sellmin="display.sell.aft_min | number" sellmax="display.sell.aft_max | number"
+      sellbonus="display.sell.aft_bonus" sellreject="display.sell.aft_reject" productquality="productQuality" unit="'Deg C'"
       >
       </tr>
       <tr order-quality ng-if="(display.buy.na2o_min && display.buy.na2o_max) || (display.sell.na2o_min && display.sell.na2o_max)" inhouse="order.in_house" quality="'Na2O'"
-      buymin="display.buy.na2o_min" buymax="display.buy.na2o_max"
+      buymin="display.buy.na2o_min | number" buymax="display.buy.na2o_max | number"
       buybonus="display.buy.na2o_bonus" buyreject="display.buy.na2o_reject"
-      sellmin="display.sell.na2o_min" sellmax="display.sell.na2o_max"
-      sellbonus="display.sell.na2o_bonus" sellreject="display.sell.na2o_reject" unit="'%'"
+      sellmin="display.sell.na2o_min | number" sellmax="display.sell.na2o_max | number"
+      sellbonus="display.sell.na2o_bonus" sellreject="display.sell.na2o_reject" productquality="productQuality" unit="'%'"
       >
       </tr>
     </tbody>
+    <tbody id="quality-section" uib-collapse="!qualityCollapsed" ng-if="edit">
+      <tr>
+        <td></td>
+      </tr>
+    </tbody>
+
     <tbody>
       <tr>
 				<th colspan="3" style="text-align:center; background: #efefef;">
@@ -368,14 +389,14 @@
 				<th>{{additional.label}} / mt</th>
         <td>
           <span ng-show="additional">
-          <h4>{{additional.company.company_name}}</h4>
+          <h4>{{additional.company.company_name}} ({{ defaultCurrency }} {{additional.cost | number}})</h4>
           </span>
 				</td>
-        <td>
+        <!-- <td>
           <span ng-show="additional">
           <h4>{{ defaultCurrency }} {{additional.cost | number}}</h4>
           </span>
-        </td>
+        </td> -->
 			</tr>
       <tr ng-init="total()">
 				<th>Coal Price</th>
@@ -405,7 +426,7 @@
 			</tr>
 			<tr>
 				<td>Number of Shipment</td>
-        <td colspan=2>{{order.contracts.shipment_count}}</td>
+        <td colspan=2>{{order.contracts.shipment_count | number}}</td>
 			</tr>
 			<tr>
 				<td>Term</td>
@@ -416,9 +437,6 @@
         <td colspan=2>{{order.contracts.term_desc}}</td>
 			</tr>
     </tbody>
-
-
-
 
 	</table>
 	</div>

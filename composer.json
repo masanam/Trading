@@ -18,7 +18,9 @@
         "guzzlehttp/guzzle": "^6.2",
         "aws/aws-sdk-php": "^3.19",
         "goodby/csv": "^1.3",
-        "ixudra/curl": "^6.7"
+        "ixudra/curl": "^6.7",
+        "barryvdh/laravel-dompdf": "^0.8.0",
+        "maatwebsite/excel": "~2.1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

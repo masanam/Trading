@@ -6,17 +6,21 @@ angular.module('order').controller('AddLeadsModalController', ['$uibModalInstanc
 
     // console.log(items[0].length);
     // console.log($scope.items[2]);
-    $scope.defaultCurrency = Environment.defaultCurrency;
 
-    $scope.lead = lead;
+    $scope.productQuality = Environment.productQuality;
+    $scope.defaultCurrency = Environment.defaultCurrency;
+    $scope.showBuy = Environment.showBuy;
+    if(lead){
+      $scope.lead = lead;
+    }
+
     $scope.selected = {
-      item: $scope.items[0]
+      item: null
     };
 
     $scope.tradingTerm = Term.trading;
     $scope.paymentTerm = Term.payment;
     $scope.currencies = Currency.currencies;
-
     $scope.changeLead = function(lead){
       if(lead){
         $scope.selected.item = lead;
@@ -55,23 +59,56 @@ angular.module('order').controller('AddLeadsModalController', ['$uibModalInstanc
 
     $scope.findExchange_rate = function (curr) {
       if(curr === $scope.defaultCurrency) {
+        $scope.different_currency = false;
+        $scope.switch_currency = false;
         $scope.selected.item.pivot.exchange_rate = 1;
         $scope.selected.item.pivot.base_price = $scope.selected.item.pivot.deal_price;
         $scope.selected.item.pivot.price = $scope.selected.item.pivot.exchange_rate * $scope.selected.item.pivot.deal_price;
       }
       else {
+        $scope.different_currency = true;
+        Exchange_rate.get({ buy: $scope.defaultCurrency , sell: curr }, function(res) {
+          $scope.exchange_rate = res.value;
+        });
         Exchange_rate.get({ buy: curr , sell: $scope.defaultCurrency }, function(res){
-          if(!res.value){
-            $scope.selected.item.pivot.exchange_rate = 1;
-          }else{
-            $scope.selected.item.pivot.exchange_rate = res.value;
+          if(res.value < 1){
+            $scope.switch_currency = true;
+            if(!res.value){
+              $scope.selected.item.pivot.exchange_rate = 1;
+            }else{
+              // $scope.selected.item.pivot.exchange_rate = res.value;
+
+              $scope.selected.item.pivot.exchange_rate = $scope.exchange_rate;
+              $scope.selected.item.pivot.hidden_rate = res.value;
+            }
+            $scope.base_rate = res.value;
+            $scope.selected.item.pivot.base_price = $scope.selected.item.pivot.hidden_rate * $scope.selected.item.pivot.deal_price;
+            $scope.selected.item.pivot.price = $scope.selected.item.pivot.hidden_rate * $scope.selected.item.pivot.deal_price;
           }
-          $scope.selected.item.pivot.base_price = $scope.selected.item.pivot.exchange_rate * $scope.selected.item.pivot.deal_price;
-          $scope.selected.item.pivot.price = $scope.selected.item.pivot.exchange_rate * $scope.selected.item.pivot.deal_price;
+          else{
+            $scope.switch_currency = false;
+            if(!res.value){
+              $scope.selected.item.pivot.exchange_rate = 1;
+            }else{
+              $scope.selected.item.pivot.exchange_rate = res.value;
+            }
+            $scope.selected.item.pivot.base_price = $scope.selected.item.pivot.exchange_rate * $scope.selected.item.pivot.deal_price;
+            $scope.selected.item.pivot.price = $scope.selected.item.pivot.exchange_rate * $scope.selected.item.pivot.deal_price;
+          }
         });
       }
     };
 
-    if(selected) $scope.changeLead(selected);
+    $scope.changeBasePrice = function(){
+      if(!$scope.different_currency || !$scope.switch_currency)
+      {
+        $scope.selected.item.pivot.base_price = $scope.selected.item.pivot.deal_price * $scope.selected.item.pivot.exchange_rate;
+      }else{
+        $scope.selected.item.pivot.hidden_rate = ($scope.exchange_rate / $scope.selected.item.pivot.exchange_rate) * $scope.base_rate;
+        $scope.selected.item.pivot.base_price = $scope.selected.item.pivot.hidden_rate * $scope.selected.item.pivot.deal_price;
+      }
+    };
+
+    // if(selected) $scope.changeLead(selected);
   }
 ]);

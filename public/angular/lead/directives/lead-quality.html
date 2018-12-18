@@ -1,11 +1,11 @@
 
   <td ng-if="min !== null || max !== null || bonus !== null || reject !== null"><b>{{quality}}</b></td>
-  <td ng-if="(min !== null || max !== null || bonus !== null || reject !== null) && (min && max) && productQuality === 'typical'">{{min}}</td>
+  <td ng-if="(min !== null || max !== null || bonus !== null || reject !== null) && (min && max) && productQuality === 'typical'">{{min}} {{unit}}</td>
   <td ng-if="(min !== null || max !== null || bonus !== null || reject !== null) && (min && max) && productQuality !== 'typical'">{{min}} - {{max}} {{unit}}</td>
-  <td ng-if="(min !== null || max !== null || bonus !== null || reject !== null) && (min && !max) && productQuality !== 'typical'">{{min}} - N/A</td>
-  <td ng-if="(min !== null || max !== null || bonus !== null || reject !== null) && (!min && max) && productQuality !== 'typical'">N/A - {{max}}</td>
+  <td ng-if="(min !== null || max !== null || bonus !== null || reject !== null) && (min && !max) && productQuality !== 'typical'">{{min}} - N/A {{unit}}</td>
+  <td ng-if="(min !== null || max !== null || bonus !== null || reject !== null) && (!min && max) && productQuality !== 'typical'">N/A - {{max}} {{unit}}</td>
   <td ng-if="(min !== null || max !== null || bonus !== null || reject !== null) && (!min && !max) && productQuality !== 'typical'">N/A</td>
-  <td ng-if="(min !== null || max !== null || bonus !== null || reject !== null) && bonus && productQuality !== 'typical'">{{bonus}}</td>
+  <td ng-if="(min !== null || max !== null || bonus !== null || reject !== null) && bonus && productQuality !== 'typical'">{{bonus}} {{unit}}</td>
   <td ng-if="(min !== null || max !== null || bonus !== null || reject !== null) && !bonus && productQuality !== 'typical'">N/A</td>
-  <td ng-if="(min !== null || max !== null || bonus !== null || reject !== null) && reject">{{reject}}</td>
+  <td ng-if="(min !== null || max !== null || bonus !== null || reject !== null) && reject">{{reject}} {{unit}}</td>
   <td ng-if="(min !== null || max !== null || bonus !== null || reject !== null) && !reject">N/A</td>

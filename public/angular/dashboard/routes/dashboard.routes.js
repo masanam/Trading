@@ -20,6 +20,16 @@ angular.module('dashboard').config(['$stateProvider',
           'index.view', 'index.edit',
         ]
       })
+      .state('dashboard.system', {
+        url: '/system',
+        templateUrl: '/angular/dashboard/views/system.view.html',
+        privileges: [
+          'order.view', 'order.edit', 'order.approval',
+          'lead.view', 'lead.edit',
+          'coalpedia.view', 'coalpedia.edit',
+          'index.view', 'index.edit',
+        ]
+      })
       .state('dashboard.index', {
         url: '/index',
         templateUrl: '/angular/dashboard/views/index.view.html',

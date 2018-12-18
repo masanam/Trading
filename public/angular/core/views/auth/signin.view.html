@@ -1,9 +1,10 @@
 <div class="container" ng-controller="AuthController">
   <div class="login-box">
-    <div class="login-logo">  
+    <div class="login-logo">
     <img src="./images/berau.jpg" style="width:40px; margin-right: 10px;" ng-if="deployment === 'berau'">
     <img src="./images/sinarmas.png" style="width:40px; margin-right: 10px;" ng-if="deployment === 'bib'">
-    <b> Coaltrade</b></a>
+    <b ng-if="deployment === 'bib'"> Coaltrade</b>
+    <b ng-if="deployment === 'berau'"> BC Price Approval</b>
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">

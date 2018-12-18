@@ -1,8 +1,7 @@
 <form ng-submit="ok()">
   <div class="modal-header" ng-switch="lead">
     <h3 class="modal-title" id="modal-title" ng-switch-when="buy">Add Existing Buy to Current Order</h3>
-    <h3 class="modal-title" id="modal-title" ng-switch-when="sell && showBuy">Add Existing Sell to Current Order</h3>
-    <h3 class="modal-title" id="modal-title" ng-switch-default>Add Existing Lead to Current Order</h3>
+    <h3 class="modal-title" id="modal-title" ng-switch-when="sell">Add Existing <span ng-if="showBuy">Sell</span><span ng-if="!showBuy">Lead</span> to Current Order</h3>
     <button type="button" class="close" ng-click="cancel()" aria-label="Close">x</button>
   </div>
 
@@ -21,6 +20,7 @@
                 item.volume_diff<=item.volume*0.1" style="color:green; font-style:italic;">
                 recomended
               </span><br>
+              Created at: {{ item.updated_at | date:'d MMM yy H:m:s' }}<br>
               exp: {{ item.order_expired | date:'d-M-yy' }}<br>
               LayCan: {{ item.laycan_start | date:'d-M-yy' }} to {{ item.laycan_end | date:'d-M-yy' }}
             </a>
@@ -36,16 +36,19 @@
       <div class="col-sm-9" ng-if="selected.item">
         <div class="row">
           <div class="col-sm-4 form-group">
+            <label>Volume (MT)</label>
             <input type="number" min="0" ng-model="selected.item.pivot.volume"
               class="form-control" placeholder="Volume (MT)" required>
           </div>
           <div class="col-sm-4 form-group">
+            <label>Trading Term</label>
             <select class="form-control" ng-model="selected.item.pivot.trading_term"
               ng-options="o as o for o in tradingTerm" required>
               <option value="">-- Select Trading Term --</option>
             </select>
           </div>
           <div class="col-sm-4 form-group">
+            <label>Payment Term</label>
             <select class="form-control" ng-model="selected.item.pivot.payment_term"
               ng-options="o as o for o in paymentTerm" required>
               <option value="">-- Select Payment Term --</option>
@@ -66,14 +69,16 @@
           </div>
           <div class="col-sm-2 form-group">
             <input type="number" step="any" ng-model="selected.item.pivot.deal_price" class="form-control"
-              ng-change="selected.item.pivot.base_price = selected.item.pivot.deal_price * selected.item.pivot.exchange_rate"
+              ng-change="changeBasePrice()"
               placeholder="Deal Price" required>
           </div>
 
           <div class="col-sm-4 form-group">
             <input type="number" step="any" ng-model="selected.item.pivot.exchange_rate" class="form-control"
-              ng-change="selected.item.pivot.base_price = selected.item.pivot.deal_price * selected.item.pivot.exchange_rate"
+              ng-change="changeBasePrice()"
               placeholder="Exch. Rate" required>
+
+            <input type="number" step="any" ng-model="selected.item.pivot.hidden_rate" class="form-control" style="visibility: hidden;" disabled>
           </div>
 
           <div class="col-sm-2 form-group">
@@ -101,14 +106,9 @@
       <button class="btn btn-primary" type="submit">Buy This</button>
     </span>
 
-    <span ng-switch-when="sell && showBuy">
-      <a class="btn btn-primary" type="button" ui-sref="lead.create" target="_blank">Create New Sell</a>
-      <button class="btn btn-primary" type="submit">Sell This</button>
-    </span>
-
-    <span ng-switch-default>
-      <a class="btn btn-primary" type="button" ui-sref="lead.create" target="_blank">Create New Lead</a>
-      <button class="btn btn-primary" type="submit">Use This Lead</button>
-    </span>
+    <span ng-switch-when="sell">
+      <a class="btn btn-primary" type="button" ui-sref="lead.create" target="_blank">Create New <span ng-if="showBuy">Sell</span><span ng-if="!showBuy">Lead</span></a>
+      <button class="btn btn-primary" type="submit"><span ng-if="showBuy">Sell This</span><span ng-if="!showBuy">Use This Lead</span></button>
+    </span>    
   </div>
 </form>

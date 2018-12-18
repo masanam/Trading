@@ -2,10 +2,21 @@
 	<div class="box-header with-divider no-padding">
 		Price Comparision
 		<span uib-dropdown class="pull-right" ng-init="getIndices()">
-      <button class="btn btn-default" ng-click="saveIndex()"
-        ng-if="display.index.id !== order.index_id && Authentication.user.id === order.user_id && order.status !== 'a'">Save</button>
-
-      <button type="button" class="btn btn-default" uib-dropdown-toggle>
+      <span ng-if="order.index_id">        
+        <button class="btn btn-default" ng-click="manual = 'false'; order.index_name=undefined; order.index_provider=undefined; order.price=undefined; saveIndex();"
+          ng-if="display.index.id !== order.index_id && Authentication.user.id === order.user_id && order.status !== 'a'">Save</button>      
+      </span>
+      <span ng-if="!order.index_id">
+        <span ng-if="!display.index.id">
+          <button type="button" class="btn btn-default" ng-click="manual = 'false'; saveIndex();"
+            ng-if="display.index.index_name !== order.index_name && Authentication.user.id === order.user_id && order.status !== 'a'">Save</button>
+        </span>
+        <span ng-if="display.index.id">
+          <button class="btn btn-default" ng-click="manual = 'false'; order.index_name=undefined; order.index_provider=undefined; order.price=undefined; saveIndex();"
+          ng-if="display.index.id !== order.index_id && Authentication.user.id === order.user_id && order.status !== 'a'">Save</button>
+        </span>
+      </span>
+      <button type="button" class="btn btn-default" ng-click="manual = 'false'" uib-dropdown-toggle>
         {{ display.index.index_provider }} {{ display.index.index_name }} <span class="caret"></span>
       </button>
       <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
@@ -14,12 +25,30 @@
 			  		{{ index.index_provider }} {{ index.index_name }}
 	        </a>
 				</li>
+        <li role="menuitem">
+          <a ng-click="render(display.index = undefined)">
+            {{ order.index_provider }} {{ order.index_name }}
+          </a>
+        </li>
       </ul>
+      <button class="btn btn-default" ng-click="manual = 'true'; order.index_id = undefined; display.index.id=undefined">Add Manual</button>
+      <div class="box-body" ng-if="manual==='true'" ng-if="orders.$resolved">
+        <button class="btn btn-default" ng-click="order.index_name = undefined; order.index_provider = undefined; order.price = undefined">x</button>
+        Price Index Reference Manual
+        <div >
+          <label>Index Name</label>
+          <input type="text" class="form-control" ng-model="order.index_name" required step="any"/>
+          <label>Index Provider</label>
+          <input type="text" class="form-control" ng-model="order.index_provider" required step="any"/>
+          <label>Price</label>
+          <input type="number" class="form-control" ng-model="order.price" required step="any"/>
+        </div>
+      </div>
     </span>
 	</div>
 
 	<div class="box-body">
-		<div class="col-sm-12 col-md-2 description-block border-right" ng-hide="order.in_house">
+		<div class="col-xs-2 col-sm-3 col-md-2 description-block border-right" ng-hide="order.in_house">
   		<p>BUY PRICE</p>
   		<h3>{{display.buy.pivot.base_currency_id}} {{ ( display.buy.pivot.base_price ) | number:2 }}</h3>
   		<small class="text-muted">
@@ -27,12 +56,12 @@
         {{ (( display.buy.pivot.base_price - display.index.price )/display.index.price)*100 | number:2 }}%
       </small>
   	</div>
-		<div ng-hide=" display.totalSellPrice === 0 || display.totalBuyPrice === 0 " class="col-sm-12 col-md-2 description-block border-right">
+		<div ng-hide=" display.totalSellPrice === 0 || display.totalBuyPrice === 0 " class="col-xs-2 col-sm-3 col-md-2 description-block border-right">
   		<p>{{ display.index.index_provider }} {{ display.index.index_name }}</p>
   		<h3>{{defaultCurrency}} {{ display.index.price | number:2 }}</h3>
   		<small class="text-muted">{{ display.index.date | date }}</small>
   	</div>
-		<div class="col-sm-12 col-md-2 description-block border-right">
+		<div class="col-xs-2 col-sm-3 col-md-2 description-block border-right">
   		<p>SELL PRICE</p>
   		<h3>{{display.sell.pivot.base_currency_id}} {{ (display.sell.pivot.base_price) | number:2 }}</h3>
   		<small class="text-muted">
@@ -40,11 +69,10 @@
         {{ ((display.sell.pivot.base_price - display.index.price)/display.index.price)*100 | number:2 }}%
       </small>
   	</div>
-		<div class="col-sm-12 col-md-6 description-block" id="lineChart">
+		<div class="col-xs-6 col-sm-3 col-md-6 description-block" id="lineChart">
       <canvas id="line" class="chart chart-line" chart-data="data" chart-dataset-override="datasetOverride"
         chart-labels="labels" chart-series="series" chart-colors="colors" style="min-height:20px;">
       </canvas>
   	</div>
 	</div>
-
 </section>

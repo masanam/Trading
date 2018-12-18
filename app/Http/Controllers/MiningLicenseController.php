@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Model\MiningLicense;
 use App\Model\MiningLicenseHistory;
+use App\Model\Settings;
+use App\Model\IndexPrice;
 use Auth;
 
 use App\Http\Requests;
@@ -26,9 +28,67 @@ class MiningLicenseController extends Controller
      */
     public function index(Request $req = null)
     {
-        $license = MiningLicense::with('Company','Contact','checked_by')->select('id','company_id','source','contact_id','type','status','checked_by','checked_at','expired','overlap_other','release_after','is_corrupt','is_operating','close_to_sinarmas_factory','close_to_sinarmas_concession','close_to_river','close_to_other_concession','coal_bearing_formation','is_mining_zone','is_settlement_zone','is_palm_plantation','is_farming_zone','is_sinarmas_forestry');
+        $license = MiningLicense::with(['Company','Contact','checked_by','CostHeader.costDetailSum','CostHeader.calculationType','CostHeader.costTotal','Concession.products.product_price.product']);
+        if($req->calculation_id)
+          $license->with(['CostHeader' => function($q) use ($req) { $q->where('calculation_id', $req->calculation_id);}]);
+        $license->select('id','no','company_id','concession_id','source','contact_id','type','status','checked_by','checked_at','expired','overlap_other','release_after','is_corrupt','is_operating','close_to_sinarmas_factory','close_to_sinarmas_concession','close_to_river','close_to_other_concession','coal_bearing_formation','is_mining_zone','is_settlement_zone','is_palm_plantation','is_farming_zone','is_sinarmas_forestry');
         if($req->draft) $license->whereIn('status',[1, 2, 3]);
         else $license->whereNotIn('status',[1, 2, 3]);
+
+        if($req->calculation_id){
+          $license->whereHas('CostHeader', function($q) use ($req) {
+            $q->whereRaw('calculation_id = '.$req->calculation_id);
+          });
+        }
+
+        if($req->q)
+          $license->where(function($q) use ($req) {
+            $q->whereHas('Company', function($q) use ($req){
+               $q->where('company_name','LIKE', '%'.$req->q.'%');
+             })->orwhereHas('Contact', function($q) use ($req){
+               $q->where('name','LIKE', '%'.$req->q.'%');
+             })->orwhereHas('Concession.products.product_price', function($q) use ($req){
+               $q->where('price','LIKE', '%'.$req->q.'%');
+             })->orwhereHas('CostHeader.costTotal', function($q) use ($req){
+               $q->where('cogs','LIKE', '%'.$req->q.'%');
+             })
+            ->orWhere('no', 'LIKE','%'.$req->q.'%')
+            ->orWhere('source', 'LIKE','%'.$req->q.'%')
+            ->orWhere('type', 'LIKE','%'.$req->q.'%');
+          });
+
+        // if($req->company) {
+        //   $company = $req->company;
+        //   $license->whereHas('Company', function($q) use ($company){
+        //     $q->where('company_name', 'LIKE', '%'.$company.'%');
+        //   })->whereHas('CostHeader.costTotal', function($q) use ($req){
+        //     $q->whereBetween('cogs', [$req->min,$req->max]);
+        //   })
+        //   ->where('no',$req->iup);
+        // }
+
+        if($req->company) {
+          $settings = Settings::where('application',$req->app)->where('variable',$req->variable)->first();
+          $indexprice = IndexPrice::where('status','a')->where('index_id',$settings->value)->orderBy('date', 'DESC')->first();
+          $indexprice = $indexprice->price;
+          $company = $req->company;
+          $sign = '';
+          $remark = $req->remarks;
+
+          if($remark==='1') $sign = '=';
+          elseif ($remark==='2') $sign = '>';
+          elseif ($remark==='3') $sign = '<';
+
+          $license->whereHas('Company', function($q) use ($company){
+            $q->where('company_name', 'LIKE', '%'.$company.'%');
+          })->whereHas('CostHeader.costTotal', function($q) use ($req){
+            $q->whereBetween('cogs', [$req->min,$req->max]);
+          })->whereHas('Concession.products.product_price', function($q) use ($sign,$indexprice){
+            $q->where('price',$sign,$indexprice);
+          })
+          ->where('no',$req->iup);
+        }
+
         $license = $license->get();
         foreach ($license as $l) {
             if($l->expired > Date('Y-m-d')) $l->filter_expired = 0;
@@ -37,6 +97,11 @@ class MiningLicenseController extends Controller
             else $l->filter_coal_bearing = 1;
             if($l->status == 1 || $l->status == 2 || $l->status == 3) $l->filter_draft = 1;
             else $l->filter_draft = 0;
+        }
+
+        if($req->select_iup_invetment_cogs){
+          $licenses_id = $license->pluck('id');
+          $license = MiningLicense::with('CostHeader.costDetailSum','CostHeader.costTotal','CostHeader.calculationType')->whereNotIn('id',$licenses_id)->get();
         }
 
         return response()->json($license, 200);
@@ -71,13 +136,20 @@ class MiningLicenseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, Request $req = null)
     {
+      $license = MiningLicense::with('Company','Contact','Concession.products.product_price','Concession.port','checked_by','MiningLicenseFile','spatial_data','MiningLicenseHistory', 'MiningLicenseHistory.User','CostHeader.costDetail');
+      if(!empty($req->calculation_id))
+          $license->with(['CostHeader' => function($q) use ($req) { $q->where('calculation_id', $req->calculation_id);}]);
+      $license->select('*', DB::raw('ST_AsGeoJSON(polygon, 8) AS polygon'))->where('id',$id);
 
-        $license = MiningLicense::with('Company','Contact','Concession','Concession.port','checked_by','MiningLicenseFile','spatial_data','MiningLicenseHistory', 'MiningLicenseHistory.User')->select('*', DB::raw('ST_AsGeoJSON(polygon, 8) AS polygon'))->where('id',$id)->first();
+      if(!empty($req->calculation_id)){
+        $license->whereHas('CostHeader', function($q) use ($req) {
+          $q->whereRaw('calculation_id = '.$req->calculation_id);
+        });
+      }
 
-
-        return response()->json($license, 200);
+      return response()->json($license->first(), 200);
     }
 
     /**
@@ -127,7 +199,7 @@ class MiningLicenseController extends Controller
           'message' => 'Bad Request'
         ], 400);
       }
-      
+
       $license = MiningLicense::find($id);
       $old_status = $license->status;
       $license ->status = $req->status;
@@ -141,7 +213,7 @@ class MiningLicenseController extends Controller
       $iuphistory->new_value = $req->status;
       $iuphistory->old_value = $old_status;
       if ($req->description){
-        $iuphistory->description = $req->description;  
+        $iuphistory->description = $req->description;
       }
 
       $iuphistory->save();

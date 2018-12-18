@@ -8,9 +8,12 @@
       <img src="./images/sinarmas.png" style="width:30px;" ng-if="deployment === 'bib'">
     </span>
     <!-- logo for regular state and mobile devices -->
-    <span class="logo-lg">
-      <img src="./images/berau.jpg" style="width:30px; margin-right: 10px;" ng-if="deployment === 'berau'">
-      <img src="./images/sinarmas.png" style="width:30px; margin-right: 10px;" ng-if="deployment === 'bib'">
+    <span class="logo-lg" ng-if="deployment === 'berau'">
+      <img src="./images/berau.jpg" style="width:30px; margin-right: 10px;">
+      <b>BC Price Approval</b>
+    </span>
+    <span class="logo-lg" ng-if="deployment === 'bib'">
+      <img src="./images/sinarmas.png" style="width:30px; margin-right: 10px;">
       <b>COALTRADE</b>
     </span>
   </a>
@@ -46,7 +49,7 @@
             <i class="fa fa-bell"></i>
             <span class="label label-danger" ng-if="unread_notifications" style="font-size: 10px;">{{ unread_notifications }}</span>
           </a>
-          <ul class="dropdown-menu" uib-dropdown-menu>            
+          <ul class="dropdown-menu" uib-dropdown-menu>
             <li ng-repeat="notif in notifications.slice().reverse() | limitTo:5" ng-click="readNotification(notif.$id)">
               <!-- inner menu: contains the actual data -->
               <ul class="menu" ng-if="!notif.isRead">
@@ -100,7 +103,7 @@
             <img ng-src="{{ Authentication.user.image }}" ng-src-fallback="/image/default.png" class="user-image" alt="User Image">
             <span class="hidden-xs">{{ Authentication.user.name }} <br> </span>
           </a>
-            
+
         </li>
 
         <li ng-if="Authentication.user" class="hidden-xs" >

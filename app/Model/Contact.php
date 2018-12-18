@@ -35,4 +35,8 @@ class Contact extends Model
     public function company() {
     	return $this->belongsTo('Company');
     }
+
+    public function miningLicense() {
+        return $this->hasMany('MiningLicense');
+    }
 }

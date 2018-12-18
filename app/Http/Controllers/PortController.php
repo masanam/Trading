@@ -60,7 +60,7 @@ class PortController extends Controller
 
         $port = new Port($req->only([
             'port_name', 'owner', 'is_private', 'location', 'size',
-            'river_capacity', 'latitude', 'longitude', 'anchorage_distance',
+            'river_capacity', 'address', 'latitude', 'longitude','anchorage_distance',
             'has_conveyor', 'has_crusher', 'has_blending', 'draft_height','daily_discharge_rate'
         ]));
 
@@ -113,7 +113,7 @@ class PortController extends Controller
 
         $port->fill($req->only([
             'port_name', 'owner', 'is_private', 'location', 'size',
-            'river_capacity', 'latitude', 'longitude', 'anchorage_distance',
+            'river_capacity', 'address', 'latitude', 'longitude','anchorage_distance',
             'has_conveyor', 'has_crusher', 'has_blending', 'draft_height','daily_discharge_rate'
         ]));
 

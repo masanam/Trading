@@ -33,7 +33,7 @@
 						approval.pivot.status === 'y' ? 'Auto-Acc' :
 						approval.pivot.status === 'n' ? 'Auto-Rjct' : 'Pending' }}
 				</td>
-				<td>{{ approval.pivot.updated_at | date }}</td>
+				<td>{{ approval.pivot.updated_at | date:'MMM d, y HH:mm:ss' }}</td>
 			</tr>
 	</tbody>
 </table>

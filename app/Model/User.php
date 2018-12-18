@@ -75,7 +75,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     public function logins() {
-        return $this->hasMany('LoginUser');
+        return $this->hasOne('App\Model\LoginUser');
     }
 
     //For Documents - By Myrtyl - 06/02/2017
@@ -125,5 +125,18 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             if($role->role == 'admin') return true;
         }
         return false;
+    }
+
+    public function leads() {
+        return  $this->hasMany('App\Model\Lead');
+    }
+    public function orders() {
+        return  $this->hasMany('App\Model\Order');
+    }
+    public function companies() {
+        return  $this->hasMany('App\Model\Company');
+    }
+    public function products() {
+        return  $this->hasMany('App\Model\Product');
     }
 }

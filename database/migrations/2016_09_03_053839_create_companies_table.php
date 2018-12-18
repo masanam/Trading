@@ -30,6 +30,7 @@ class CreateCompaniesTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->integer('area_id')->nullable();
             $table->string('company_name');
+            $table->string('company_code')->nullable();
             $table->boolean('is_affiliated')->nullable();
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
@@ -103,6 +104,7 @@ class CreateCompaniesTable extends Migration
 
         Schema::create('products', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id')->unsigned();
             $table->integer('company_id')->unsigned();
             $table->integer('concession_id')->unsigned()->nullable();
             $table->string('product_name');
@@ -177,6 +179,7 @@ class CreateCompaniesTable extends Migration
             $table->string('river')->nullable();
             $table->integer('river_capacity')->nullable();
             $table->integer('open_sea_distance')->nullable(); //
+            $table->string('address')->nullable();
             $table->decimal('latitude', 10, 8);
             $table->decimal('longitude', 11, 8);
             $table->integer('anchorage_distance')->nullable();
@@ -216,6 +219,7 @@ class CreateCompaniesTable extends Migration
         Schema::create('mining_licenses', function (Blueprint $table) {
             $table->increments('id');
             $table->string('no')->nullable();
+            $table->string('province')->nullable();
             $table->integer('company_id')->unsigned()->nullable(); //integer unsigned reference
             $table->integer('concession_id')->unsigned()->nullable();
             $table->integer('contact_id')->unsigned()->nullable();

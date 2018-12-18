@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Model\User;
+use App\Model\LoginUser;
 
 use Illuminate\Http\Request;
 use Auth;
@@ -35,10 +36,28 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        if($request->status === 'x') $user = User::where('status', $request->status)->orWhere('status','p')->get();
-        else $user = User::where('status', 'a')->get();
+        if($request->total) return response()->json([ 'count' => User::where('status', 'a')->count() ], 200);
+        if($request->login) return response()->json([ 'count' => LoginUser::count() ], 200);
 
-        return response()->json($user, 200);
+        $status = $request->status;
+        if($request->status == 'x') 
+          $user = User::where(function($q) use ($status) {
+            $q->where('status', $status)->orWhere('status','p');
+          });
+        else $user = User::where('status', 'a');
+
+        if($request->q){
+          $param = $request->q;
+          $user = $user->where(
+            function($q) use ($param){
+              $q->where('name', 'like', '%'.$param.'%')
+                ->orWhere('email', 'like', '%'.$param.'%')
+                ->orWhere('phone', 'like', '%'.$param.'%');             
+            }
+          );          
+        }
+
+        return response()->json($user->get(), 200);
     }
 
     /**
@@ -108,34 +127,48 @@ class UserController extends Controller
      */
     public function update(Request $req, $id)
     {
-        $user = User::find($id);
+        $user = User::find($id);        
 
         if (!$req) {
-            return response()->json([
-                'message' => 'Bad Request'
-            ], 400);
+          return response()->json([
+            'message' => 'Bad Request'
+          ], 400);
         }
 
         if (!$user) {
-            return response()->json([
-                'message' => 'User Not found'
-            ] ,404);
+          return response()->json([
+            'message' => 'User Not found'
+          ] ,404);
         }
 
         if($req->direct_subordinates){
-            foreach ($req->direct_subordinates as $sub) {
-                $temp_sub = User::find($sub['id']);
-                $temp_sub->manager_id = $id;
-                $temp_sub->save();
-            }
+          foreach ($req->direct_subordinates as $sub) {
+            $temp_sub = User::find($sub['id']);
+            $temp_sub->manager_id = $id;
+            $temp_sub->save();
+          }
         }
 
         $lastImage = $user->image;
 
-        if($req->old_password && $req->password){
-            if(Hash::check($req->old_password, $user->password)) $user->password = bcrypt($req->password);
-            else return response()->json(['message' => 'You entered a wrong old password.'], 400);
+        if($req->option=='reset-password'){          
+          $user->password = bcrypt($req->password);
         }
+
+        if($req->old_password && $req->password){
+          if(Hash::check($req->old_password, $user->password)) $user->password = bcrypt($req->password);
+          else return response()->json(['message' => 'You entered a wrong old password.'], 400);
+        }
+
+        if($req->currentPassword && $req->password){
+          if(Hash::check($req->currentPassword, $user->password)){
+            $user->password = bcrypt($req->password);
+          }
+          else {
+            return response()->json(['message' => 'You entered a wrong old password.'], 400); 
+          }
+        }
+
 
         $user->name = $req->name ? $req->name : $user->name;
         $user->image = $req->image ? $req->image : $user->image;

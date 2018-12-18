@@ -9,6 +9,7 @@ class MiningLicense extends Model {
 	protected $table = 'mining_licenses';
 	protected $fillable = [
         'no',
+        'province',
         'company_id',
     		'concession_id',
         'contact_id',
@@ -95,8 +96,12 @@ class MiningLicense extends Model {
 		 * hasapu 2017-01-27
 		 */
 
-		public function mininglicensehistories() {
+	public function mininglicensehistories() {
         return $this->belongsTo(MiningLicenseHistory::class);
+    }
+
+    public function CostHeader() {
+        return $this->hasOne(CostHeader::class);
     }
 
 }

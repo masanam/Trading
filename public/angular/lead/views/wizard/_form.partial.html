@@ -1,12 +1,24 @@
 <div class="row">
+  <div class="col-lg-2">
+    <label>Pricing Scheme:</label>
+    <select class="form-control" ng-model="lead.pricing_scheme" required>
+      <option value="n" selected>Normal</option>
+      <option value="i">Index</option>
+      <option value="c">Custom</option>
+    </select>
+  </div>
+</div>
+
+<div class="row" id="normal-scheme" ng-hide="lead.pricing_scheme=='i'">
   <div class="col-lg-1">
     <label>Currency: </label>
-    <select class="form-control" ng-model="lead.currency"
-      required>
+    <select class="form-control" ng-model="lead.currency" required>
+      <option></option>
       <option value="USD">USD</option>
       <option value="IDR">IDR</option>
     </select>
   </div>
+
   <div class="col-lg-3">
     <label>Asking Price: </label>
 
@@ -16,7 +28,16 @@
       <input type="number" step="any" class="form-control" ng-model="lead.price" required>
     </div>
   </div>
+</div>
 
+<div class="row" id="index-scheme" ng-hide="lead.pricing_scheme=='n'">
+  <div class="col-lg-3">
+    <label>Price Remarks : </label>
+    <textarea class="form-control" ng-model="lead.price_remarks"></textarea>
+  </div>
+</div>
+
+<div class="row">
   <div class="col-lg-3">
     <label>Volume of Coal : </label>
     <div class="input-group">
@@ -53,7 +74,7 @@
     <p class="input-group">
       <select class="form-control" ng-model="lead.trading_term"
         ng-options="o as o for o in tradingTerm" required>
-        <option value="">-- Select Trading Term --</option>
+        <option value="">-- Select Shipping Term --</option>
       </select>
       <span class="input-group-addon">Details:</span>
       <input type="text" class="form-control" ng-model="lead.trading_term_detail" placeholder="ex: Preferred Shipping Term" />

@@ -3,15 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Model\Product;
-
+use App\Model\ProductPrice;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Auth;
+
 
 class ProductController extends Controller
 {
   public function __construct() {
-    // $this->middleware('jwt.auth');
+    $this->middleware('jwt.auth');
   }
   /**
    * Display a listing of the resource.
@@ -20,16 +22,12 @@ class ProductController extends Controller
    */
   public function index(Request $req)
   {
-    $product = Product::where('status', 'a');
+    $product = Product::with('yearlyPrice')->where('status', 'a');
 
-    if($req->supplier_id) $product->where('company_id', $req->supplier_id);
-    if($req->q)
-      $product->where(function($query) use ($req) {
-        return $query->where('product_name', 'LIKE', '%' . $req->q . '%')
-          ->orWhere('typical_quality', 'LIKE', '%' . $req->q . '%');
-      });
+    if($req->q) $product->where('product_name', 'LIKE', '%'.$req->q.'%');
 
-    return response()->json($product->get(), 200);
+    $product = $product->get();
+    return response()->json($product, 200);
   }
 
   /**
@@ -40,6 +38,7 @@ class ProductController extends Controller
    */
   public function store(Request $req)
   {
+    $user = Auth::User();
     if(!$req) {
       return response()->json([
         'message' => 'Bad Request'
@@ -57,6 +56,7 @@ class ProductController extends Controller
     $product->company_id = $req->company_id ? $req->company_id : NULL;
     $product->concession_id = $req->concession_id ? $req->concession_id : NULL;
 
+    $product->user_id = $user->id;
     $product->status = 'a';
     $product->save();
 
@@ -76,7 +76,7 @@ class ProductController extends Controller
       }, 'company'])->find($id);
 
     if($product->status != 'a') return response()->json(['message' => 'deactivated record'], 404);
-    
+
     return response()->json($product, 200);
   }
 
@@ -89,7 +89,9 @@ class ProductController extends Controller
    */
   public function update(Request $req, $id)
   {
-    $product = Product::find($id);
+    $product = Product::with(['concession'=> function ($query) {
+        $query->select('id','concession_name','company_id','owner','reserves','city','country');
+      }, 'company'])->find($id);
 
     if (!$req) return response()->json([ 'message' => 'Bad Request' ], 400);
     if (!$product) return response()->json([ 'message' => 'Not found' ] ,404);
@@ -119,7 +121,7 @@ class ProductController extends Controller
   public function destroy($product)
   {
     $product = Product::find($product);
-   
+
     if (!$product) {
       return response()->json([
         'message' => 'Not found'

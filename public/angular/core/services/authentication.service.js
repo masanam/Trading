@@ -11,6 +11,7 @@ angular.module('user').factory('Authentication', ['$http', '$auth',
       if($auth.isAuthenticated() && !auth.user) {
         $http.get('/api/authenticate/user').success(function(res){
           auth.user = res.user;
+          auth.token = res.token;
           auth.subordinates = res.subordinates;
           auth.managers = res.managers;
 
